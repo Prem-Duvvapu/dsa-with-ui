@@ -5,6 +5,7 @@ import GraphCanvas from './components/GraphCanvas';
 import TreeCanvas from './components/TreeCanvas';
 import ArrayCanvas from './components/ArrayCanvas';
 import LinkedListCanvas from './components/LinkedListCanvas';
+import RecursionTreeCanvas from './components/RecursionTreeCanvas';
 import DataStructurePanel from './components/DataStructurePanel';
 import CodeViewer from './components/CodeViewer';
 import ComplexityPanel from './components/ComplexityPanel';
@@ -124,6 +125,10 @@ export default function App() {
 
   const renderCanvas = () => {
     if (!activeProblem) return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
+
+    if (activeProblem.defaultTreeNodes && activeProblem.defaultTreeNodes.length > 0 && activeProblem.category === 'Sorting Algorithms') {
+      return <RecursionTreeCanvas problem={activeProblem} currentStep={currentStep} />;
+    }
 
     switch (activeProblem.category) {
       case 'Binary Trees':
