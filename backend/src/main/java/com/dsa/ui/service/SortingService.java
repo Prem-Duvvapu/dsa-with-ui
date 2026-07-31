@@ -136,9 +136,9 @@ public class SortingService {
             "Array"
         ));
 
-        // 4. Merge Sort (with Recursion Tree support)
+        // 4. Merge Sort
         problems.put("merge-sort", new ProblemDetail(
-            "merge-sort", "Merge Sort (Divide & Conquer Recursion Tree)", "Sorting - Divide & Conquer", "Sorting Algorithms", "Medium",
+            "merge-sort", "Merge Sort (Divide & Conquer)", "Sorting - Divide & Conquer", "Sorting Algorithms", "Medium",
             "Merge Sort divides array into two halves recursively until base case (1 element), then merges sorted halves using 2 pointers.",
             """
             // Java Merge Sort (Striver A2Z Sheet)
