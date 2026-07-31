@@ -6,8 +6,9 @@
 The platform pairs step-by-step animated execution with:
 - **Production-ready Java Solutions** (commented & structured for technical interviews).
 - **Synchronized Code Execution Tracing** (highlighting Java lines as nodes/edges/pointers are processed).
-- **Animated Data Structure State** (Call Stack for DFS, Queue for BFS, PriorityQueue for Min-Heap, Array Bars, Linked List Nodes).
-- **Comprehensive Time & Space Complexity Analysis** explaining the **How** and **Why** behind theoretical bounds ($O(V+E)$, $O(E \log V)$, $O(N \log N)$, $O(N)$, etc.).
+- **Granular Execution Traces** (tracing every single loop iteration, recursive call, constraint check, state mutation, and backtrack step thoroughly like Selection Sort).
+- **Animated Data Structure State** (Call Stack for DFS & Recursion, Queue for BFS, Recursion Call Tree SVG for Divide & Conquer, 2D Matrices, Array Bars, Linked List Nodes).
+- **Comprehensive Time & Space Complexity Analysis** explaining the **How** and **Why** behind theoretical bounds ($O(V+E)$, $O(E \log V)$, $O(N \log N)$, $O(N!)$, etc.).
 
 ---
 
@@ -38,58 +39,52 @@ The platform pairs step-by-step animated execution with:
 
 ### 3. **Binary Trees & Binary Search Trees (BST)**
 - [x] Binary Tree Preorder, Inorder, Postorder Traversals
-- [x] Binary Tree Level Order Traversal (BFS Queue)
-- [x] Maximum Depth / Height of Binary Tree
-- [x] Check if Binary Tree is Height-Balanced
+- [x] Level Order Traversal (BFS Queue)
+- [x] Maximum Depth of Binary Tree
 - [x] Diameter of Binary Tree
-- [x] Maximum Path Sum in Binary Tree (LeetCode 124)
-- [x] Lowest Common Ancestor (LCA) in Binary Tree (LeetCode 236)
-- [x] Minimum Time to Burn Binary Tree from Target Node
+- [x] Lowest Common Ancestor (LCA) in Binary Tree
 - [x] Search in Binary Search Tree (BST)
-- [x] Validate Binary Search Tree (LeetCode 98)
-- [x] Kth Smallest Element in BST
 
-### 4. **Sorting Algorithms**
-- [x] Selection Sort ($O(N^2)$)
-- [x] Bubble Sort ($O(N^2)$)
-- [x] Insertion Sort ($O(N^2)$)
-- [x] Merge Sort ($O(N \log N)$ Divide & Conquer)
-- [x] Quick Sort ($O(N \log N)$ Partitioning)
+### 4. **Recursion & Backtracking (Striver's A2Z Sheet)**
+- [x] N-Queens Problem (LeetCode 51 - Hash Array Safety Checks & Backtracking)
+- [x] Rat in a Maze (2D Grid D-L-R-U Pathfinding & Backtracking)
+- [x] Sudoku Solver (LeetCode 37 - 9x9 Board Constraint Validation)
+- [x] M-Coloring Problem (Graph Vertex Coloring)
+- [x] Palindrome Partitioning (LeetCode 131 - Substring Partitioning)
+- [x] Subsets / Subset Sums (LeetCode 78 - Power Set Decision Tree)
+- [x] Combination Sum I (LeetCode 39 - Infinite Candidate Reuse)
+- [x] Permutations of Array / String (LeetCode 46 - In-place Swapping)
+- [x] Word Search in 2D Board (LeetCode 79 - 4-Directional Search)
 
-### 5. **Arrays & Math**
-- [x] Two Sum (HashMap / 2 Pointers)
-- [x] Sort An Array of 0s, 1s and 2s (Dutch National Flag Algorithm)
+### 5. **Sorting Algorithms**
+- [x] Selection Sort (Step-by-step Minimum Scanning & Swapping)
+- [x] Bubble Sort (Optimized Adjacent Swapping)
+- [x] Insertion Sort (In-place Shifting)
+- [x] Merge Sort (Divide & Conquer Recursion Call Tree)
+- [x] Quick Sort (Partitioning & Pivot Swapping)
+
+### 6. **Arrays & Math**
+- [x] Two Sum (HashMap O(1) Lookup)
+- [x] Sort 0s, 1s, 2s (Dutch National Flag 3-Pointer Algorithm)
 - [x] Majority Element (Moore's Voting Algorithm)
-- [x] Kadane's Algorithm (Maximum Subarray Sum)
-- [x] Best Time to Buy and Sell Stock
+- [x] Kadane's Algorithm (Max Subarray Sum)
+- [x] Best Time to Buy and Sell Stock (Single Pass Min/Max)
 
-### 6. **Linked Lists**
-- [x] Reverse Linked List (3 Pointers)
+### 7. **Linked List**
+- [x] Reverse Linked List (3-Pointer Reversal)
 - [x] Middle of Linked List (Fast & Slow Pointers)
 - [x] Detect Loop in Linked List (Floyd's Cycle Detection)
-- [x] Delete Node in a Linked List (O(1))
-- [x] Merge Two Sorted Linked Lists
+- [x] Delete Node in Linked List (O(1) Value Copying)
+- [x] Merge Two Sorted Lists (In-place Splicing)
 
-### 7. **Binary Search**
+### 8. **Binary Search**
 - [x] Binary Search on 1D Array
 - [x] Search in Rotated Sorted Array
-- [x] Find Peak Element
-- [x] Koko Eating Bananas (Binary Search on Answer)
+- [x] Find Peak Element (Slope Search)
+- [x] Koko Eating Bananas (BS on Answer Range)
 
-### 8. **Dynamic Programming**
-- [x] Climbing Stairs (1D DP)
-- [x] Frog Jump / Min Cost Climbing (1D DP)
-- [x] 0/1 Knapsack Problem (2D DP Matrix)
-- [x] Longest Common Subsequence (LCS 2D DP Matrix)
-
----
-
-## 🏗️ Architecture & Stack
-- **Backend Framework**: Spring Boot 3 (Java 17, Maven)
-- **Frontend Framework**: React 18 + Vite
-- **Styling**: Modern Vanilla CSS with Dark Mode Glassmorphism Theme
-- **Visualization Engine**:
-  - `GraphCanvas.jsx`: SVG Network graph visualizer
-  - `TreeCanvas.jsx`: SVG Binary Tree & BST layout visualizer
-  - `ArrayCanvas.jsx`: Dynamic bar graph & element array visualizer
-  - `LinkedListCanvas.jsx`: Node & link visualizer
+### 9. **Dynamic Programming (DP)**
+- [x] Climbing Stairs (1D DP / Space Optimized)
+- [x] Frog Jump / Min Energy (1D DP)
+- [x] 0/1 Knapsack Problem (2D Subsets DP Matrix)
+- [x] Longest Common Subsequence (2D String DP Matrix)

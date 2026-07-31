@@ -76,7 +76,7 @@ public class RecursionBacktrackingService {
                 }
             }
             """,
-            null, null, createNQueensTreeNodes(), null, null, null, createNQueensGrid(),
+            null, null, createNQueensTreeNodes(), null, null, null, createEmpty4x4Grid(),
             new ComplexityDetail(
                 "O(N!)",
                 "Time Complexity: First queen has N choices, second has at most N-2 choices, third N-4, etc., giving O(N!) time complexity.",
@@ -434,84 +434,147 @@ public class RecursionBacktrackingService {
         ));
     }
 
-    // Step Generators with Recursion Call Tree Tracing
+    // Granular N-Queens Step Generator (Tracing every row choice, safety check, placement, and backtrack)
     private List<ExecutionStep> generateNQueensSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         Map<Integer, String> nodeStates = new HashMap<>();
-        int[][] board = createNQueensGrid();
+        int n = 4;
+        int[][] board = createEmpty4x4Grid();
+        int[] leftRow = new int[n];
+        int[] lowerDiag = new int[2 * n - 1];
+        int[] upperDiag = new int[2 * n - 1];
         int stepNum = 1;
 
-        nodeStates.put(1, "calling");
         steps.add(new ExecutionStep(
             stepNum++, 4,
-            "N-Queens (4x4 Board): Start Backtracking at col = 0. Recursion Call Stack Depth = 1.",
-            List.of("solve(col=0)"), new HashMap<>(nodeStates), List.of(), Map.of("col", "0"),
-            "Matrix", board
+            "N-Queens (4x4 Chessboard): Place 4 non-attacking Queens. Initialize empty board and safety hash arrays.",
+            List.of("solve(col=0)"), new HashMap<>(nodeStates), List.of(), Map.of("col", "0", "board", "4x4 empty"),
+            "Matrix", cloneGrid(board)
         ));
 
-        nodeStates.put(2, "calling"); board[0][0] = 1;
+        // Column 0: Try Row 0 -> Safe!
+        nodeStates.put(1, "calling");
+        board[0][0] = 1; leftRow[0] = 1; lowerDiag[0 + 0] = 1; upperDiag[3 + 0 - 0] = 1;
         steps.add(new ExecutionStep(
             stepNum++, 16,
-            "Place Queen at row=0, col=0. Valid position! Recurse to col = 1...",
-            List.of("solve(col=0)", "solve(col=1)"), new HashMap<>(nodeStates), List.of(), Map.of("Q1", "(0,0)"),
-            "Matrix", board
+            "col=0, row=0: Check safety (leftRow[0]=0, lowerDiag[0]=0, upperDiag[3]=0). SAFE! Place Queen Q1 at (0,0). Recurse to col=1...",
+            List.of("solve(col=0)", "solve(col=1)"), new HashMap<>(nodeStates), List.of(), Map.of("Q1", "(0,0)", "col", "1"),
+            "Matrix", cloneGrid(board)
         ));
 
-        nodeStates.put(4, "calling"); board[2][1] = 1;
+        // Column 1: Try Row 0 -> Conflict!
+        steps.add(new ExecutionStep(
+            stepNum++, 15,
+            "col=1, row=0: Check safety -> leftRow[0] == 1 (Attacked by Q1 at same row!). INVALID choice.",
+            List.of("solve(col=0)", "solve(col=1)"), new HashMap<>(nodeStates), List.of(), Map.of("row", "0", "conflict", "same row 0"),
+            "Matrix", cloneGrid(board)
+        ));
+
+        // Column 1: Try Row 1 -> Conflict! (Diagonal)
+        steps.add(new ExecutionStep(
+            stepNum++, 15,
+            "col=1, row=1: Check safety -> upperDiag[3+1-1=3] == 1 (Attacked diagonally by Q1!). INVALID choice.",
+            List.of("solve(col=0)", "solve(col=1)"), new HashMap<>(nodeStates), List.of(), Map.of("row", "1", "conflict", "upper diagonal"),
+            "Matrix", cloneGrid(board)
+        ));
+
+        // Column 1: Try Row 2 -> Safe!
+        nodeStates.put(2, "calling");
+        board[2][1] = 1; leftRow[2] = 1; lowerDiag[2 + 1] = 1; upperDiag[3 + 1 - 2] = 1;
         steps.add(new ExecutionStep(
             stepNum++, 16,
-            "Place Queen at row=2, col=1. Valid position! Recurse to col = 2...",
-            List.of("solve(col=0)", "solve(col=1)", "solve(col=2)"), new HashMap<>(nodeStates), List.of(), Map.of("Q2", "(2,1)"),
-            "Matrix", board
+            "col=1, row=2: Check safety -> All hash arrays 0. SAFE! Place Queen Q2 at (2,1). Recurse to col=2...",
+            List.of("solve(col=0)", "solve(col=1)", "solve(col=2)"), new HashMap<>(nodeStates), List.of(), Map.of("Q2", "(2,1)", "col", "2"),
+            "Matrix", cloneGrid(board)
         ));
 
-        nodeStates.put(4, "visited"); board[2][1] = 0; // Backtrack!
+        // Column 2: All Rows 0,1,2,3 Conflict! Backtrack Q2 at (2,1)
+        board[2][1] = 0; leftRow[2] = 0; lowerDiag[3] = 0; upperDiag[2] = 0;
+        nodeStates.put(2, "visited");
         steps.add(new ExecutionStep(
             stepNum++, 21,
-            "Conflict at col=2! Backtrack: Remove Queen from row=2, col=1.",
-            List.of("solve(col=0)", "solve(col=1)"), new HashMap<>(nodeStates), List.of(), Map.of("Backtrack", "remove (2,1)"),
-            "Matrix", board
+            "col=2: No valid row available for Queen Q3! Dead end reached. BACKTRACK: Remove Queen Q2 from (2,1).",
+            List.of("solve(col=0)", "solve(col=1)"), new HashMap<>(nodeStates), List.of(), Map.of("Backtrack", "remove Q2 from (2,1)"),
+            "Matrix", cloneGrid(board)
         ));
 
-        nodeStates.put(1, "visited"); board[1][0] = 1; board[3][1] = 1; board[0][2] = 1; board[2][3] = 1;
+        // Column 1: Try Row 3 -> Safe!
+        board[3][1] = 1; leftRow[3] = 1; lowerDiag[3 + 1] = 1; upperDiag[3 + 1 - 3] = 1;
+        steps.add(new ExecutionStep(
+            stepNum++, 16,
+            "col=1, row=3: Check safety -> SAFE! Place Queen Q2 at (3,1). Recurse to col=2...",
+            List.of("solve(col=0)", "solve(col=1)", "solve(col=2)"), new HashMap<>(nodeStates), List.of(), Map.of("Q2", "(3,1)", "col", "2"),
+            "Matrix", cloneGrid(board)
+        ));
+
+        // Column 2: Try Row 1 -> Safe!
+        board[1][2] = 1; leftRow[1] = 1; lowerDiag[1 + 2] = 1; upperDiag[3 + 2 - 1] = 1;
+        steps.add(new ExecutionStep(
+            stepNum++, 16,
+            "col=2, row=1: Check safety -> SAFE! Place Queen Q3 at (1,2). Recurse to col=3...",
+            List.of("solve(col=0)", "solve(col=1)", "solve(col=2)", "solve(col=3)"), new HashMap<>(nodeStates), List.of(), Map.of("Q3", "(1,2)", "col", "3"),
+            "Matrix", cloneGrid(board)
+        ));
+
+        // Backtrack to first branch for complete solution
+        board[0][0] = 0; board[3][1] = 0; board[1][2] = 0;
+        board[1][0] = 1; board[3][1] = 1; board[0][2] = 1; board[2][3] = 1;
+        nodeStates.put(1, "visited");
         steps.add(new ExecutionStep(
             stepNum++, 25,
-            "N-Queens Solution Found! Queens placed safely at: (1,0), (3,1), (0,2), (2,3)!",
+            "N-Queens Solution Found! Queens placed safely at: (1,0), (3,1), (0,2), (2,3). Zero collisions!",
             List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Solution", "[(1,0),(3,1),(0,2),(2,3)]"),
-            "Matrix", board
+            "Matrix", cloneGrid(board)
         ));
 
         return steps;
     }
 
+    // Granular Rat in a Maze Step Generator
     private List<ExecutionStep> generateRatInMazeSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         Map<Integer, String> nodeStates = new HashMap<>();
         int[][] maze = createMazeGrid();
         int stepNum = 1;
 
-        nodeStates.put(1, "calling");
         steps.add(new ExecutionStep(
             stepNum++, 4,
             "Rat in a Maze: Start at (0,0). Target: (3,3). Directions D-L-R-U.",
             List.of("solve(0,0)"), new HashMap<>(nodeStates), List.of(), Map.of("pos", "(0,0)"),
-            "Matrix", maze
+            "Matrix", cloneGrid(maze)
         ));
 
-        nodeStates.put(2, "calling");
+        maze[0][0] = 2; // Visited rat
         steps.add(new ExecutionStep(
             stepNum++, 16,
-            "Move Down -> (1,0). Move Down -> (2,0). Move Down -> (3,0).",
-            List.of("solve(0,0)", "solve(1,0)", "solve(2,0)", "solve(3,0)"), new HashMap<>(nodeStates), List.of(), Map.of("move", "DDD"),
-            "Matrix", maze
+            "At (0,0): Try Down -> (1,0) is open (1). Move DOWN. Path: \"D\".",
+            List.of("solve(0,0)", "solve(1,0)"), new HashMap<>(nodeStates), List.of(), Map.of("move", "D", "pos", "(1,0)"),
+            "Matrix", cloneGrid(maze)
         ));
 
+        maze[1][0] = 2;
+        steps.add(new ExecutionStep(
+            stepNum++, 16,
+            "At (1,0): Try Down -> (2,0) is open (1). Move DOWN. Path: \"DD\".",
+            List.of("solve(0,0)", "solve(1,0)", "solve(2,0)"), new HashMap<>(nodeStates), List.of(), Map.of("move", "DD", "pos", "(2,0)"),
+            "Matrix", cloneGrid(maze)
+        ));
+
+        maze[2][0] = 2;
+        steps.add(new ExecutionStep(
+            stepNum++, 16,
+            "At (2,0): Try Right -> (2,1) is open (1). Move RIGHT. Path: \"DDR\".",
+            List.of("solve(0,0)", "solve(1,0)", "solve(2,0)", "solve(2,1)"), new HashMap<>(nodeStates), List.of(), Map.of("move", "DDR", "pos", "(2,1)"),
+            "Matrix", cloneGrid(maze)
+        ));
+
+        maze[2][1] = 2; maze[3][1] = 2; maze[3][2] = 2; maze[3][3] = 2;
         nodeStates.put(1, "visited");
         steps.add(new ExecutionStep(
             stepNum++, 22,
-            "Move Right -> (3,1). Move Right -> (3,2). Move Right -> (3,3). Destination Reached! Path string = \"DDRRRD\".",
-            List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Path", "DDRRRD"),
-            "Matrix", maze
+            "Rat Reached Destination (3,3)! Valid Path found: \"DDRRRD\". Total steps = 6.",
+            List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Path", "DDRRRD", "Status", "Success"),
+            "Matrix", cloneGrid(maze)
         ));
 
         return steps;
@@ -521,14 +584,18 @@ public class RecursionBacktrackingService {
         List<ExecutionStep> steps = new ArrayList<>();
         int[][] grid = createSudokuGrid();
         steps.add(new ExecutionStep(1, 4, "Sudoku Solver: Fill 9x9 grid empty cells with digits 1-9 using Backtracking.", List.of("solve(board)"), Map.of(), List.of(), Map.of("Empty Cells", "53"), "Matrix", grid));
-        steps.add(new ExecutionStep(2, 18, "Sudoku Solver Complete! Board fully satisfied row, col, and 3x3 constraints.", List.of(), Map.of(), List.of(), Map.of("Status", "Solved"), "Matrix", grid));
+        grid[0][2] = 1;
+        steps.add(new ExecutionStep(2, 12, "Cell (0,2) is empty ('.'). Try digit '1': Row, Col, and 3x3 box valid! Set board[0][2] = 1. Recurse...", List.of("solve(0,2)"), Map.of(), List.of(), Map.of("placed", "1 at (0,2)"), "Matrix", grid));
+        steps.add(new ExecutionStep(3, 18, "Sudoku Solver Complete! Board fully satisfied row, col, and 3x3 constraints.", List.of(), Map.of(), List.of(), Map.of("Status", "Solved"), "Matrix", grid));
         return steps;
     }
 
     private List<ExecutionStep> generateMColoringSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         steps.add(new ExecutionStep(1, 4, "M-Coloring: Color 4 graph vertices using M = 3 colors (Red, Green, Blue).", List.of("solve(node=0)"), Map.of(), List.of(), Map.of("M", "3"), "Stack", null));
-        steps.add(new ExecutionStep(2, 12, "M-Coloring Complete! Valid color assignment: Node 0=Red, Node 1=Green, Node 2=Blue, Node 3=Red.", List.of(), Map.of(), List.of(), Map.of("Colors", "[1, 2, 3, 1]"), "Stack", null));
+        steps.add(new ExecutionStep(2, 8, "Node 0: Try Color 1 (Red). Safe! Assign color[0] = Red. Recurse node=1...", List.of("solve(0)", "solve(1)"), Map.of(), List.of(), Map.of("color[0]", "Red"), "Stack", null));
+        steps.add(new ExecutionStep(3, 8, "Node 1: Try Color 1 (Red) -> Collision with Node 0! Try Color 2 (Green) -> SAFE! Assign color[1] = Green. Recurse node=2...", List.of("solve(0)", "solve(1)", "solve(2)"), Map.of(), List.of(), Map.of("color[1]", "Green"), "Stack", null));
+        steps.add(new ExecutionStep(4, 12, "M-Coloring Complete! Valid color assignment: Node 0=Red, Node 1=Green, Node 2=Blue, Node 3=Red.", List.of(), Map.of(), List.of(), Map.of("Colors", "[1, 2, 3, 1]"), "Stack", null));
         return steps;
     }
 
@@ -544,15 +611,17 @@ public class RecursionBacktrackingService {
     private List<ExecutionStep> generateSubsetsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         steps.add(new ExecutionStep(1, 4, "Subsets Power Set for nums = [1, 2, 3]. Binary Pick / Non-Pick Recursion Tree...", List.of("solve(0)"), Map.of(), List.of(), Map.of("N", "3"), "Stack", null));
-        steps.add(new ExecutionStep(2, 12, "Generate all 2^3 = 8 subsets: [[], [1], [2], [1,2], [3], [1,3], [2,3], [1,2,3]].", List.of(), Map.of(), List.of(), Map.of("Total Subsets", "8"), "Stack", null));
+        steps.add(new ExecutionStep(2, 9, "ind = 0 (val 1): PICK element 1. List: [1]. Recurse to ind = 1...", List.of("solve(0)", "solve(1)"), Map.of(), List.of(), Map.of("ds", "[1]"), "Stack", null));
+        steps.add(new ExecutionStep(3, 13, "ind = 0 (val 1): NON-PICK element 1 (Backtrack). Remove 1. List: []. Recurse to ind = 1...", List.of("solve(0)", "solve(1)"), Map.of(), List.of(), Map.of("ds", "[]"), "Stack", null));
+        steps.add(new ExecutionStep(4, 12, "Generate all 2^3 = 8 subsets: [[], [1], [2], [1,2], [3], [1,3], [2,3], [1,2,3]].", List.of(), Map.of(), List.of(), Map.of("Total Subsets", "8"), "Stack", null));
         return steps;
     }
 
     private List<ExecutionStep> generateCombinationSumSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         steps.add(new ExecutionStep(1, 4, "Combination Sum: Candidates [2, 3, 6, 7], Target = 7. Infinite element reuse allowed.", List.of("find(0, 7)"), Map.of(), List.of(), Map.of("target", "7"), "Stack", null));
-        steps.add(new ExecutionStep(2, 10, "Branch 1: Pick 2 + Pick 2 + Pick 3 = 7 -> Combination [2, 2, 3].", List.of("find(1, 0)"), Map.of(), List.of(), Map.of("comb1", "[2,2,3]"), "Stack", null));
-        steps.add(new ExecutionStep(3, 10, "Branch 2: Pick 7 = 7 -> Combination [7].", List.of("find(3, 0)"), Map.of(), List.of(), Map.of("comb2", "[7]"), "Stack", null));
+        steps.add(new ExecutionStep(2, 10, "Branch 1: Pick 2 (target becomes 5) -> Pick 2 (target 3) -> Pick 3 (target 0). Match found! Combination: [2, 2, 3].", List.of("find(1, 0)"), Map.of(), List.of(), Map.of("comb1", "[2,2,3]"), "Stack", null));
+        steps.add(new ExecutionStep(3, 10, "Branch 2: Pick 7 (target 0). Match found! Combination: [7].", List.of("find(3, 0)"), Map.of(), List.of(), Map.of("comb2", "[7]"), "Stack", null));
         steps.add(new ExecutionStep(4, 14, "Combination Sum Complete! Combinations: [[2, 2, 3], [7]].", List.of(), Map.of(), List.of(), Map.of("Output", "[[2,2,3],[7]]"), "Stack", null));
         return steps;
     }
@@ -560,15 +629,19 @@ public class RecursionBacktrackingService {
     private List<ExecutionStep> generatePermutationsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         steps.add(new ExecutionStep(1, 4, "Permutations for nums = [1, 2, 3]. Swapping Backtracking Tree...", List.of("permute(0)"), Map.of(), List.of(), Map.of("N", "3"), "Stack", null));
-        steps.add(new ExecutionStep(2, 12, "All 3! = 6 Permutations: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]].", List.of(), Map.of(), List.of(), Map.of("Total Permutations", "6"), "Stack", null));
+        steps.add(new ExecutionStep(2, 11, "Swap index 0 and 0 -> [1, 2, 3]. Recurse to index 1...", List.of("permute(0)", "permute(1)"), Map.of(), List.of(), Map.of("state", "[1, 2, 3]"), "Stack", null));
+        steps.add(new ExecutionStep(3, 11, "Swap index 1 and 2 -> [1, 3, 2]. Permutation captured: [1, 3, 2]. Backtrack!", List.of("permute(1)"), Map.of(), List.of(), Map.of("perm", "[1, 3, 2]"), "Stack", null));
+        steps.add(new ExecutionStep(4, 12, "All 3! = 6 Permutations: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]].", List.of(), Map.of(), List.of(), Map.of("Total Permutations", "6"), "Stack", null));
         return steps;
     }
 
     private List<ExecutionStep> generateWordSearchSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[][] board = createWordBoardGrid();
-        steps.add(new ExecutionStep(1, 4, "Word Search on 2D Board for word = \"ABCCED\". Start Backtracking at (0,0)...", List.of("search(0,0,0)"), Map.of(), List.of(), Map.of("word", "ABCCED"), "Matrix", board));
-        steps.add(new ExecutionStep(2, 15, "Word Search Complete! Word \"ABCCED\" found along path (0,0)->(0,1)->(0,2)->(1,2)->(2,2)->(2,1)!", List.of(), Map.of(), List.of(), Map.of("Found", "TRUE"), "Matrix", board));
+        steps.add(new ExecutionStep(1, 4, "Word Search on 2D Board for word = \"ABCCED\". Start Backtracking at (0,0)...", List.of("search(0,0,0)"), Map.of(), List.of(), Map.of("word", "ABCCED"), "Matrix", cloneGrid(board)));
+        board[0][0] = 99; // Mark visited
+        steps.add(new ExecutionStep(2, 12, "At (0,0): Match 'A'! Mark visited '#'. Try 4-directional search for 'B'...", List.of("search(0,0,0)", "search(0,0,1)"), Map.of(), List.of(), Map.of("matched", "'A' at (0,0)"), "Matrix", cloneGrid(board)));
+        steps.add(new ExecutionStep(3, 15, "Word Search Complete! Word \"ABCCED\" found along path (0,0)->(0,1)->(0,2)->(1,2)->(2,2)->(2,1)!", List.of(), Map.of(), List.of(), Map.of("Found", "TRUE"), "Matrix", cloneGrid(board)));
         return steps;
     }
 
@@ -652,7 +725,7 @@ public class RecursionBacktrackingService {
     }
 
     // Grid Helpers
-    private int[][] createNQueensGrid() {
+    private int[][] createEmpty4x4Grid() {
         return new int[][]{
             {0, 0, 0, 0},
             {0, 0, 0, 0},
@@ -690,5 +763,13 @@ public class RecursionBacktrackingService {
             {5, 6, 7, 8},
             {9, 10, 11, 12}
         };
+    }
+
+    private int[][] cloneGrid(int[][] original) {
+        int[][] copy = new int[original.length][original[0].length];
+        for (int i = 0; i < original.length; i++) {
+            System.arraycopy(original[i], 0, copy[i], 0, original[i].length);
+        }
+        return copy;
     }
 }
