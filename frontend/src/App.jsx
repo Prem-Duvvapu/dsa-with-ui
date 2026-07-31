@@ -55,10 +55,11 @@ export default function App() {
   const fetchAllProblems = async () => {
     try {
       setLoading(true);
-      const [resBfs, resAdv, resTree, resSort, resArr, resLl, resBs, resDp] = await Promise.allSettled([
+      const [resBfs, resAdv, resTree, resRec, resSort, resArr, resLl, resBs, resDp] = await Promise.allSettled([
         fetch('/api/graphs/bfs-dfs/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/graphs/advanced/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/trees/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/recursion-backtracking/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/sorting/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/arrays/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/linkedlist/problems').then(r => r.ok ? r.json() : []),
@@ -70,6 +71,7 @@ export default function App() {
         ...(resBfs.status === 'fulfilled' ? resBfs.value : []),
         ...(resAdv.status === 'fulfilled' ? resAdv.value : []),
         ...(resTree.status === 'fulfilled' ? resTree.value : []),
+        ...(resRec.status === 'fulfilled' ? resRec.value : []),
         ...(resSort.status === 'fulfilled' ? resSort.value : []),
         ...(resArr.status === 'fulfilled' ? resArr.value : []),
         ...(resLl.status === 'fulfilled' ? resLl.value : []),
@@ -98,6 +100,7 @@ export default function App() {
       if (prob) {
         if (prob.category === 'Advanced Graphs') endpoint = `/api/graphs/advanced`;
         else if (prob.category === 'Binary Trees' || prob.category === 'Binary Search Trees') endpoint = `/api/trees`;
+        else if (prob.category === 'Recursion & Backtracking') endpoint = `/api/recursion-backtracking`;
         else if (prob.category === 'Sorting Algorithms') endpoint = `/api/sorting`;
         else if (prob.category === 'Arrays') endpoint = `/api/arrays`;
         else if (prob.category === 'Linked List') endpoint = `/api/linkedlist`;
@@ -126,7 +129,7 @@ export default function App() {
   const renderCanvas = () => {
     if (!activeProblem) return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
 
-    if (activeProblem.defaultTreeNodes && activeProblem.defaultTreeNodes.length > 0 && activeProblem.category === 'Sorting Algorithms') {
+    if (activeProblem.category === 'Recursion & Backtracking' || (activeProblem.defaultTreeNodes && activeProblem.defaultTreeNodes.length > 0 && activeProblem.category === 'Sorting Algorithms')) {
       return <RecursionTreeCanvas problem={activeProblem} currentStep={currentStep} />;
     }
 
@@ -203,7 +206,7 @@ export default function App() {
           {/* Visualizers Grid */}
           <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
             {renderCanvas()}
-            <DataStructurePanel currentStep={currentStep} dsType={activeProblem?.dsType || 'Queue'} />
+            <DataStructurePanel currentStep={currentStep} dsType={activeProblem?.dsType || 'Stack'} />
           </div>
 
           {/* Code Viewer */}

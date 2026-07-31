@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, ChevronRight, PlayCircle, FolderTree, Network, Cpu, GitBranch, BarChart3, Binary, Link2, Search, Brain, Hash } from 'lucide-react';
+import { Layers, ChevronRight, PlayCircle, FolderTree, Network, Cpu, GitBranch, BarChart3, Binary, Link2, Search, Brain, Hash, RefreshCcw } from 'lucide-react';
 
 export default function Sidebar({ problems, activeProblemId, activeCategory, onSelectCategory, onSelectProblem }) {
   const categories = [
@@ -7,6 +7,7 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
     { id: 'Advanced Graphs', label: 'Advanced Graphs', icon: Cpu },
     { id: 'Binary Trees', label: 'Binary Trees', icon: FolderTree },
     { id: 'Binary Search Trees', label: 'Binary Search Trees', icon: GitBranch },
+    { id: 'Recursion & Backtracking', label: 'Recursion & Backtracking', icon: RefreshCcw },
     { id: 'Sorting Algorithms', label: 'Sorting', icon: BarChart3 },
     { id: 'Arrays', label: 'Arrays & Math', icon: Binary },
     { id: 'Linked List', label: 'Linked Lists', icon: Link2 },
@@ -65,59 +66,55 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
         </div>
       </div>
 
-      {/* Section Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingBottom: '8px', borderBottom: '1px solid var(--border-color)' }}>
-        <Layers size={18} color="var(--accent-indigo)" />
-        <h2 style={{ fontSize: '0.92rem', fontWeight: '700' }}>
-          {activeCategory || 'All Problems'} ({filteredProblems.length})
-        </h2>
-      </div>
+      {/* Problems List */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+            {activeCategory || 'All'} Problems ({filteredProblems.length})
+          </span>
+        </div>
 
-      {/* Problem List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {filteredProblems.map((p, idx) => {
-          const isActive = p.id === activeProblemId;
-          return (
-            <button
-              key={p.id}
-              onClick={() => onSelectProblem(p.id)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '12px 14px',
-                borderRadius: '12px',
-                border: isActive ? '1px solid var(--accent-indigo)' : '1px solid transparent',
-                background: isActive ? 'rgba(99, 102, 241, 0.16)' : 'rgba(255, 255, 255, 0.03)',
-                color: isActive ? '#ffffff' : 'var(--text-secondary)',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s ease',
-                boxShadow: isActive ? 'var(--glow-indigo)' : 'none'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: '700', color: isActive ? 'var(--accent-indigo)' : 'var(--text-muted)' }}>
-                  {idx + 1}.
-                </span>
-                <div>
-                  <div style={{ fontSize: '0.86rem', fontWeight: isActive ? '700' : '500', lineHeight: '1.3' }}>
-                    {p.title}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
-                    <span className={`badge ${getBadgeClass(p.difficulty)}`}>
-                      {p.difficulty}
-                    </span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                      {p.dsType}
-                    </span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          {filteredProblems.map((prob) => {
+            const isProblemActive = activeProblemId === prob.id;
+            return (
+              <div
+                key={prob.id}
+                onClick={() => onSelectProblem(prob.id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justify: 'space-between',
+                  padding: '10px 12px',
+                  borderRadius: '10px',
+                  border: isProblemActive ? '1px solid var(--accent-indigo)' : '1px solid rgba(255, 255, 255, 0.05)',
+                  background: isProblemActive ? 'rgba(99, 102, 241, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <PlayCircle size={15} color={isProblemActive ? 'var(--accent-purple)' : 'var(--text-muted)'} />
+                  <div>
+                    <div style={{ fontSize: '0.82rem', fontWeight: isProblemActive ? '700' : '500', color: isProblemActive ? '#ffffff' : 'var(--text-secondary)' }}>
+                      {prob.title}
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                      {prob.subcategory}
+                    </div>
                   </div>
                 </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span className={`badge ${getBadgeClass(prob.difficulty)}`}>
+                    {prob.difficulty}
+                  </span>
+                  <ChevronRight size={14} color="var(--text-muted)" />
+                </div>
               </div>
-              {isActive ? <PlayCircle size={18} color="var(--accent-indigo)" /> : <ChevronRight size={16} style={{ opacity: 0.4 }} />}
-            </button>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </aside>
   );
