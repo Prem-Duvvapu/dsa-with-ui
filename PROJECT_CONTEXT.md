@@ -7,12 +7,29 @@ The platform pairs step-by-step animated execution with:
 - **Production-ready Java Solutions** (commented & structured for technical interviews).
 - **Synchronized Code Execution Tracing** (highlighting Java lines as nodes/edges/pointers are processed).
 - **Granular Execution Traces** (tracing every single loop iteration, recursive call, constraint check, state mutation, and backtrack step thoroughly like Selection Sort).
+- **Human-Centric Pedagogical Visualizations** ($4 \times 4$ Alternating Tile Chessboard with Crown icons for N-Queens, $9 \times 9$ Board with $3 \times 3$ sub-box borders for Sudoku, SVG Call Trees for Divide & Conquer).
 - **Animated Data Structure State** (Call Stack for DFS & Recursion, Queue for BFS, Recursion Call Tree SVG for Divide & Conquer, 2D Matrices, Array Bars, Linked List Nodes).
 - **Comprehensive Time & Space Complexity Analysis** explaining the **How** and **Why** behind theoretical bounds ($O(V+E)$, $O(E \log V)$, $O(N \log N)$, $O(N!)$, etc.).
 
 ---
 
-## 🎯 Algorithm Categories
+## 🧠 Human-Centric Pedagogical Principles
+
+1. **Human Learner First Perspective**:
+   - Always evaluate visualizations from the eyes of a human student or software candidate trying to internalize the algorithm.
+   - Ask: *"Does this visual representation make the underlying state transition, decision branch, or constraint violation immediately obvious to a human?"*
+
+2. **Domain-Specific Realistic Canvas Views**:
+   - **N-Queens Problem**: Render a real $4 \times 4$ chessboard with alternating light/dark tiles, glowing Queen Crown icons (`👑`), and live diagonal/column conflict warnings.
+   - **Sudoku Solver**: Render a full $9 \times 9$ Sudoku grid with bold $3 \times 3$ sub-box borders (`#6366f1`), cell-by-cell digit placements ('1'-'9'), and invalid placement highlights.
+   - **Divide & Conquer / Recursion**: Render a dynamic SVG Recursion Call Tree showing active call stack nodes (`ms(0,5)`, `ms(0,2)`), 2-way array merging, and base-case completion states.
+
+3. **Granular Code-Line Synchronization**:
+   - Every single forward choice, constraint evaluation (`isSafe` / `isValid`), state mutation, array swap, and backtrack removal step MUST be explicitly traced with line numbers and human-readable narrative explanations.
+
+---
+
+## 🎯 Algorithm Categories (71 Implemented Problems)
 
 ### 1. **Graphs - BFS & DFS Problems**
 - [x] BFS Traversal of Graph
@@ -46,9 +63,9 @@ The platform pairs step-by-step animated execution with:
 - [x] Search in Binary Search Tree (BST)
 
 ### 4. **Recursion & Backtracking (Striver's A2Z Sheet)**
-- [x] N-Queens Problem (LeetCode 51 - Hash Array Safety Checks & Backtracking)
+- [x] N-Queens Problem (LeetCode 51 - 4x4 Chessboard with Queen Crown Icons)
 - [x] Rat in a Maze (2D Grid D-L-R-U Pathfinding & Backtracking)
-- [x] Sudoku Solver (LeetCode 37 - 9x9 Board Constraint Validation)
+- [x] Sudoku Solver (LeetCode 37 - 9x9 Board with 3x3 Sub-box Borders)
 - [x] M-Coloring Problem (Graph Vertex Coloring)
 - [x] Palindrome Partitioning (LeetCode 131 - Substring Partitioning)
 - [x] Subsets / Subset Sums (LeetCode 78 - Power Set Decision Tree)
@@ -88,3 +105,25 @@ The platform pairs step-by-step animated execution with:
 - [x] Frog Jump / Min Energy (1D DP)
 - [x] 0/1 Knapsack Problem (2D Subsets DP Matrix)
 - [x] Longest Common Subsequence (2D String DP Matrix)
+
+### 10. **Tries & Prefixes**
+- [x] Implement Trie (Prefix Tree)
+- [x] Longest Common Prefix
+- [x] Word Break Problem using Trie
+
+### 11. **Greedy Algorithms**
+- [x] N Meetings in One Room
+- [x] Jump Game I
+- [x] Job Sequencing Problem
+
+### 12. **Strings**
+- [x] Longest Substring Without Repeating Characters
+- [x] Valid Anagram
+
+### 13. **Bit Manipulation**
+- [x] Single Number (XOR Property)
+- [x] Subsets using Bitmasking
+
+### 14. **Heaps & PriorityQueue**
+- [x] Kth Largest Element in an Array
+- [x] Merge K Sorted Lists
