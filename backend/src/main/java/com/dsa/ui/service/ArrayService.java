@@ -391,7 +391,7 @@ public class ArrayService {
                 sum = 0;
                 steps.add(new ExecutionStep(
                     stepNum++, 8,
-                    String.format("Loop i = %d: Running sum dropped below 0 (%d < 0). Reset running sum = 0 to start fresh subarray!", i),
+                    String.format("Loop i = %d: Running sum dropped below 0. Reset running sum = 0 to start fresh subarray!", i),
                     List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "sum_reset", "0"),
                     "Array", null, createArrayState(nums, i, -1), null, null
                 ));
