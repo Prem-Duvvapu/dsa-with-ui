@@ -72,7 +72,7 @@ public class SortingService {
         // 2. Bubble Sort
         problems.put("bubble-sort", new ProblemDetail(
             "bubble-sort", "Bubble Sort", "Sorting - Basics", "Sorting Algorithms", "Easy",
-            "Repeatedly swap adjacent elements if they are in wrong order, bubbling maximum element to end.",
+            "Repeatedly swap adjacent elements if they are in wrong order, bubbling maximum element to end of array in each pass.",
             """
             // Java Bubble Sort with Optimization (Striver A2Z Sheet)
             public void bubbleSort(int arr[], int n) {
@@ -107,7 +107,7 @@ public class SortingService {
         // 3. Insertion Sort
         problems.put("insertion-sort", new ProblemDetail(
             "insertion-sort", "Insertion Sort", "Sorting - Basics", "Sorting Algorithms", "Easy",
-            "Build the sorted array one element at a time by inserting current element into correct position.",
+            "Build the sorted array one element at a time by inserting current element into correct position in sorted prefix.",
             """
             // Java Insertion Sort (Striver A2Z Sheet)
             public void insertionSort(int arr[], int n) {
@@ -223,14 +223,13 @@ public class SortingService {
         ));
     }
 
-    // Dynamic Step Generators for Selection Sort
+    // Granular Selection Sort Step Generator
     private List<ExecutionStep> generateSelectionSortSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] arr = new int[]{13, 46, 24, 52, 20, 9};
         int n = arr.length;
         int stepNum = 1;
 
-        // Step 1: Initial State
         steps.add(new ExecutionStep(
             stepNum++, 43,
             "Input Array: [13, 46, 24, 52, 20, 9] (Length N = 6). Target: Sort in ascending order using Selection Sort.",
@@ -241,7 +240,6 @@ public class SortingService {
         for (int i = 0; i < n - 1; i++) {
             int mini = i;
 
-            // Step: Pass start
             steps.add(new ExecutionStep(
                 stepNum++, 45,
                 String.format("Pass %d (i = %d): Set initial mini = %d (val = %d). Unsorted region is indices [%d..%d].", i + 1, i, mini, arr[mini], i, n - 1),
@@ -270,7 +268,6 @@ public class SortingService {
                 }
             }
 
-            // Swap step
             if (mini != i) {
                 int temp = arr[i];
                 arr[i] = arr[mini];
@@ -292,7 +289,6 @@ public class SortingService {
             }
         }
 
-        // Final step
         steps.add(new ExecutionStep(
             stepNum++, 56,
             "Selection Sort Complete! Input: [13, 46, 24, 52, 20, 9] -> Final Sorted Output: [9, 13, 20, 24, 46, 52].",
@@ -303,45 +299,229 @@ public class SortingService {
         return steps;
     }
 
+    // Granular Bubble Sort Step Generator
     private List<ExecutionStep> generateBubbleSortSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
-        int[] vals = new int[]{13, 46, 24, 52, 20, 9};
+        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
+        int n = arr.length;
+        int stepNum = 1;
 
-        steps.add(new ExecutionStep(1, 4, "Initial array: [13, 46, 24, 52, 20, 9]", List.of(), Map.of(), List.of(), Map.of("Pass", "1"), "Array", null, createDefaultArray(), null, null));
-        steps.add(new ExecutionStep(2, 7, "Compare adjacent 46 and 24 -> 46 > 24, swap!", List.of(), Map.of(), List.of(), Map.of("swap", "46 <-> 24"), "Array", null, createDetailedArrayState(new int[]{13, 24, 46, 52, 20, 9}, -1, 1, 2, 0), null, null));
-        steps.add(new ExecutionStep(3, 7, "Compare adjacent 52 and 20 -> 52 > 20, swap!", List.of(), Map.of(), List.of(), Map.of("swap", "52 <-> 20"), "Array", null, createDetailedArrayState(new int[]{13, 24, 46, 20, 52, 9}, -1, 3, 4, 0), null, null));
-        steps.add(new ExecutionStep(4, 7, "Bubble largest element 52 to last index!", List.of(), Map.of(), List.of(), Map.of("bubbled", "52"), "Array", null, createDetailedArrayState(new int[]{13, 24, 46, 20, 9, 52}, -1, 4, 5, 1), null, null));
-        steps.add(new ExecutionStep(5, 12, "Bubble Sort Completed! Final Sorted Array: [9, 13, 20, 24, 46, 52]", List.of(), Map.of(), List.of(), Map.of("Status", "Sorted"), "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null));
+        steps.add(new ExecutionStep(
+            stepNum++, 43,
+            "Input Array: [13, 46, 24, 52, 20, 9] (N = 6). Target: Bubbling largest element to end in each pass.",
+            List.of(), Map.of(), List.of(), Map.of("N", "6"),
+            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 0), null, null
+        ));
+
+        for (int i = n - 1; i >= 0; i--) {
+            boolean didSwap = false;
+
+            steps.add(new ExecutionStep(
+                stepNum++, 44,
+                String.format("Pass %d (i = %d): Bubbling largest element in unsorted range [0..%d] to index %d.", n - i, i, i, i),
+                List.of(), Map.of(), List.of(), Map.of("Pass", String.valueOf(n - i), "i", String.valueOf(i)),
+                "Array", null, createDetailedArrayState(arr, -1, -1, -1, n - 1 - i), null, null
+            ));
+
+            for (int j = 0; j <= i - 1; j++) {
+                boolean needsSwap = arr[j] > arr[j + 1];
+                if (needsSwap) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    didSwap = true;
+
+                    steps.add(new ExecutionStep(
+                        stepNum++, 48,
+                        String.format("Compare arr[j=%d] (%d) > arr[j+1=%d] (%d): TRUE! Swap arr[%d] and arr[%d]. Array: %s.", j, temp, j + 1, arr[j], j, j + 1, Arrays.toString(arr)),
+                        List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "swap", String.format("%d <-> %d", temp, arr[j])),
+                        "Array", null, createDetailedArrayState(arr, j, j + 1, -1, n - 1 - i), null, null
+                    ));
+                } else {
+                    steps.add(new ExecutionStep(
+                        stepNum++, 47,
+                        String.format("Compare arr[j=%d] (%d) > arr[j+1=%d] (%d): FALSE. Order is correct, no swap.", j, arr[j], j + 1, arr[j + 1]),
+                        List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "arr[j]", String.valueOf(arr[j]), "arr[j+1]", String.valueOf(arr[j + 1])),
+                        "Array", null, createDetailedArrayState(arr, j, j + 1, -1, n - 1 - i), null, null
+                    ));
+                }
+            }
+
+            if (!didSwap) {
+                steps.add(new ExecutionStep(
+                    stepNum++, 52,
+                    String.format("Pass %d Optimization Check: No swaps occurred in entire pass! Array is already fully sorted. Breaking loop early!", n - i),
+                    List.of(), Map.of(), List.of(), Map.of("didSwap", "false", "Status", "Sorted Early"),
+                    "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
+                ));
+                break;
+            } else {
+                steps.add(new ExecutionStep(
+                    stepNum++, 51,
+                    String.format("Pass %d Complete: Element %d bubbled to its final sorted position at index %d.", n - i, arr[i], i),
+                    List.of(), Map.of(), List.of(), Map.of("Bubbled Element", String.valueOf(arr[i]), "Sorted Position", String.valueOf(i)),
+                    "Array", null, createDetailedArrayState(arr, -1, -1, -1, n - i), null, null
+                ));
+            }
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 53,
+            "Bubble Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
+            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
+            "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
+        ));
 
         return steps;
     }
 
+    // Granular Insertion Sort Step Generator
     private List<ExecutionStep> generateInsertionSortSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
-        int[] vals = new int[]{13, 46, 24, 52, 20, 9};
+        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
+        int n = arr.length;
+        int stepNum = 1;
 
-        steps.add(new ExecutionStep(1, 4, "Initial array: [13, 46, 24, 52, 20, 9]", List.of(), Map.of(), List.of(), Map.of("i", "0"), "Array", null, createDefaultArray(), null, null));
-        steps.add(new ExecutionStep(2, 6, "Insert 24 into sorted part [13, 46] -> Shift 46 right, insert 24", List.of(), Map.of(), List.of(), Map.of("inserted", "24"), "Array", null, createDetailedArrayState(new int[]{13, 24, 46, 52, 20, 9}, -1, 1, 2, 0), null, null));
-        steps.add(new ExecutionStep(3, 6, "Insert 20 into sorted part -> Shift 52, 46, 24 right, insert 20", List.of(), Map.of(), List.of(), Map.of("inserted", "20"), "Array", null, createDetailedArrayState(new int[]{13, 20, 24, 46, 52, 9}, -1, 1, 4, 0), null, null));
-        steps.add(new ExecutionStep(4, 4, "Insertion Sort Completed! Final Sorted Array: [9, 13, 20, 24, 46, 52]", List.of(), Map.of(), List.of(), Map.of("Status", "Sorted"), "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null));
+        steps.add(new ExecutionStep(
+            stepNum++, 43,
+            "Input Array: [13, 46, 24, 52, 20, 9] (N = 6). Target: Insert elements one by one into sorted prefix.",
+            List.of(), Map.of(), List.of(), Map.of("N", "6"),
+            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 1), null, null
+        ));
+
+        for (int i = 0; i < n; i++) {
+            int j = i;
+
+            steps.add(new ExecutionStep(
+                stepNum++, 44,
+                String.format("Pass %d (i = %d): Pick element arr[%d] (%d) to insert into sorted prefix [0..%d].", i + 1, i, i, arr[i], Math.max(0, i - 1)),
+                List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "val", String.valueOf(arr[i])),
+                "Array", null, createDetailedArrayState(arr, i, -1, -1, i), null, null
+            ));
+
+            while (j > 0 && arr[j - 1] > arr[j]) {
+                int temp = arr[j];
+                arr[j] = arr[j - 1];
+                arr[j - 1] = temp;
+
+                steps.add(new ExecutionStep(
+                    stepNum++, 47,
+                    String.format("Compare arr[j-1=%d] (%d) > arr[j=%d] (%d): TRUE! Shift %d right and move %d left. Array: %s.", j - 1, arr[j], j, temp, arr[j], temp, Arrays.toString(arr)),
+                    List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "shift", String.format("%d <-> %d", arr[j], temp)),
+                    "Array", null, createDetailedArrayState(arr, j - 1, j, -1, i), null, null
+                ));
+                j--;
+            }
+
+            steps.add(new ExecutionStep(
+                stepNum++, 50,
+                String.format("Pass %d Complete: Element %d inserted at its correct position index %d. Sorted prefix length: %d.", i + 1, arr[j], j, i + 1),
+                List.of(), Map.of(), List.of(), Map.of("Inserted At", String.valueOf(j), "Sorted Prefix", String.valueOf(i + 1)),
+                "Array", null, createDetailedArrayState(arr, -1, -1, -1, i + 1), null, null
+            ));
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 52,
+            "Insertion Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
+            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
+            "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
+        ));
 
         return steps;
     }
 
+    // Granular Merge Sort Step Generator
     private List<ExecutionStep> generateMergeSortSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 4, "Divide array [13, 46, 24, 52, 20, 9] into left [13, 46, 24] and right [52, 20, 9]", List.of("mergeSort(0, 5)"), Map.of(), List.of(), Map.of("mid", "2"), "Array", null, createDefaultArray(), null, null));
-        steps.add(new ExecutionStep(2, 10, "Merge sorted left [13, 24, 46] and sorted right [9, 20, 52]", List.of("merge(0, 2, 5)"), Map.of(), List.of(), Map.of("merge", "2-way"), "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, 0, 5, 0), null, null));
-        steps.add(new ExecutionStep(3, 5, "Merge Sort Completed! Final Array: [9, 13, 20, 24, 46, 52]", List.of(), Map.of(), List.of(), Map.of("Status", "Sorted"), "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null));
+        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Input Array: [13, 46, 24, 52, 20, 9]. Merge Sort uses Divide & Conquer to split array into halves.",
+            List.of("mergeSort(0, 5)"), Map.of(), List.of(), Map.of("l", "0", "r", "5"),
+            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 0), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 6,
+            "Divide: Split [13, 46, 24, 52, 20, 9] at mid = 2 into Left [13, 46, 24] and Right [52, 20, 9].",
+            List.of("mergeSort(0, 2)", "mergeSort(3, 5)"), Map.of(), List.of(), Map.of("Left", "[0..2]", "Right", "[3..5]"),
+            "Array", null, createDetailedArrayState(arr, 0, 2, 5, 0), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 10,
+            "Sub-Task: Recursively sort Left half [13, 46, 24] -> [13, 24, 46].",
+            List.of("merge(0, 1, 2)"), Map.of(), List.of(), Map.of("Sorted Left", "[13, 24, 46]"),
+            "Array", null, createDetailedArrayState(new int[]{13, 24, 46, 52, 20, 9}, -1, 0, 2, 0), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 10,
+            "Sub-Task: Recursively sort Right half [52, 20, 9] -> [9, 20, 52].",
+            List.of("merge(3, 4, 5)"), Map.of(), List.of(), Map.of("Sorted Right", "[9, 20, 52]"),
+            "Array", null, createDetailedArrayState(new int[]{13, 24, 46, 9, 20, 52}, -1, 3, 5, 0), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 15,
+            "Merge Phase: Compare 2 pointers left [13, 24, 46] and right [9, 20, 52]. Merge into temporary array [9, 13, 20, 24, 46, 52].",
+            List.of("merge(0, 2, 5)"), Map.of(), List.of(), Map.of("Merged Result", "[9, 13, 20, 24, 46, 52]"),
+            "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, 0, 5, 6), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 20,
+            "Merge Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
+            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
+            "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null
+        ));
 
         return steps;
     }
 
+    // Granular Quick Sort Step Generator
     private List<ExecutionStep> generateQuickSortSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 4, "Quick Sort: Select pivot = arr[0] = 13", List.of("quickSort(0, 5)"), Map.of(), List.of(), Map.of("pivot", "13"), "Array", null, createDetailedArrayState(new int[]{13, 46, 24, 52, 20, 9}, 0, 0, -1, 0), null, null));
-        steps.add(new ExecutionStep(2, 11, "Partitioning: Elements <= 13 on left, > 13 on right -> Pivot 13 placed at correct index 1", List.of("partition"), Map.of(), List.of(), Map.of("pivot_index", "1"), "Array", null, createDetailedArrayState(new int[]{9, 13, 24, 52, 20, 46}, 1, 1, -1, 0), null, null));
-        steps.add(new ExecutionStep(3, 5, "Recursively partition left [9] and right [24, 52, 20, 46] -> Array Sorted!", List.of(), Map.of(), List.of(), Map.of("Status", "Sorted"), "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null));
+        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Input Array: [13, 46, 24, 52, 20, 9]. Quick Sort selects a pivot element to partition array in-place.",
+            List.of("quickSort(0, 5)"), Map.of(), List.of(), Map.of("low", "0", "high", "5"),
+            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 0), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 10,
+            "Partition Pass 1: Select pivot = arr[low=0] (13). Pointer i=0 scans right for elements > 13, pointer j=5 scans left for elements <= 13.",
+            List.of("partition(0, 5)"), Map.of(), List.of(), Map.of("pivot", "13", "i", "0", "j", "5"),
+            "Array", null, createDetailedArrayState(arr, 0, 0, 5, 0), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 18,
+            "Swap Pivot: Place pivot 13 at its correct sorted partition index j=1. Array: [9, 13, 24, 52, 20, 46].",
+            List.of("partition complete"), Map.of(), List.of(), Map.of("Pivot Index", "1", "Pivot Val", "13"),
+            "Array", null, createDetailedArrayState(new int[]{9, 13, 24, 52, 20, 46}, 1, 1, -1, 0), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 5,
+            "Recursively partition Left sub-array [9] and Right sub-array [24, 52, 20, 46]...",
+            List.of("quickSort(2, 5)"), Map.of(), List.of(), Map.of("Sub-Array", "[24, 52, 20, 46]"),
+            "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 7,
+            "Quick Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
+            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
+            "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null
+        ));
 
         return steps;
     }
@@ -359,9 +539,9 @@ public class SortingService {
             if (idx < sortedUpTo) {
                 state = "sorted";
             } else if (idx == miniIndex || idx == iIndex) {
-                state = "pivot"; // Highlight mini or current pass start i
+                state = "pivot";
             } else if (idx == jIndex) {
-                state = "comparing"; // Highlight comparing j element
+                state = "comparing";
             }
             list.add(new ArrayElement(idx, vals[idx], state));
         }

@@ -172,38 +172,95 @@ public class DpService {
         ));
     }
 
-    // Step Generators
+    // Dynamic Step Generators
     private List<ExecutionStep> generateClimbingStairsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
-        int[] dp = new int[]{1, 1, 2, 3, 5, 8};
-        steps.add(new ExecutionStep(1, 4, "Base cases: dp[0] = 1, dp[1] = 1", List.of(), Map.of(), List.of(), Map.of("dp[0]", "1", "dp[1]", "1"), "Array", null, createArrayState(dp, 0, 1), null, null));
-        steps.add(new ExecutionStep(2, 6, "Step i=2: dp[2] = dp[1] + dp[0] = 1 + 1 = 2 ways", List.of(), Map.of(), List.of(), Map.of("dp[2]", "2"), "Array", null, createArrayState(dp, 2, -1), null, null));
-        steps.add(new ExecutionStep(3, 6, "Step i=5: dp[5] = dp[4] + dp[3] = 5 + 3 = 8 ways", List.of(), Map.of(), List.of(), Map.of("Total Ways", "8"), "Array", null, createArrayState(dp, 5, -1), null, null));
+        int n = 5;
+        int[] dp = new int[n + 1];
+        dp[0] = 1; dp[1] = 1;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Base cases: dp[0] = 1 (1 way to stay at ground), dp[1] = 1 (1 way to take 1 step). Target: n = 5.",
+            List.of(), Map.of(), List.of(), Map.of("dp[0]", "1", "dp[1]", "1"),
+            "Array", null, createArrayState(new int[]{1, 1, 0, 0, 0, 0}, 0, 1), null, null
+        ));
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+            steps.add(new ExecutionStep(
+                stepNum++, 6,
+                String.format("Step i = %d: dp[%d] = dp[%d] (%d) + dp[%d] (%d) = %d distinct ways.", i, i, i - 1, dp[i - 1], i - 2, dp[i - 2], dp[i]),
+                List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), String.format("dp[%d]", i), String.valueOf(dp[i])),
+                "Array", null, createArrayState(dp, i - 2, i - 1), null, null
+            ));
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 9,
+            String.format("Climbing Stairs Complete! Total distinct ways to climb %d stairs = %d.", n, dp[n]),
+            List.of(), Map.of(), List.of(), Map.of("Total Ways", String.valueOf(dp[n])),
+            "Array", null, createArrayState(dp, -1, n), null, null
+        ));
+
         return steps;
     }
 
     private List<ExecutionStep> generateFrogJumpSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] heights = new int[]{10, 20, 30, 10};
-        steps.add(new ExecutionStep(1, 4, "Heights: [10, 20, 30, 10]. Calculate min energy to reach stair 3...", List.of(), Map.of(), List.of(), Map.of("stair_0", "0 energy"), "Array", null, createArrayState(heights, -1, -1), null, null));
-        steps.add(new ExecutionStep(2, 8, "i=1: jumpOne = 0 + |20-10| = 10 energy", List.of(), Map.of(), List.of(), Map.of("stair_1", "10 energy"), "Array", null, createArrayState(heights, 1, -1), null, null));
-        steps.add(new ExecutionStep(3, 8, "i=3: jumpOne = 20 + |10-30| = 40, jumpTwo = 10 + |10-20| = 20. Min Energy = 20!", List.of(), Map.of(), List.of(), Map.of("Min Energy", "20"), "Array", null, createArrayState(heights, 3, -1), null, null));
+        int n = heights.length;
+        int prev = 0, prev2 = 0;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Heights: [10, 20, 30, 10] (N = 4). Base case: energy at stair 0 = 0.",
+            List.of(), Map.of(), List.of(), Map.of("stair_0", "0 energy"),
+            "Array", null, createArrayState(heights, 0, -1), null, null
+        ));
+
+        for (int i = 1; i < n; i++) {
+            int jumpOne = prev + Math.abs(heights[i] - heights[i - 1]);
+            int jumpTwo = Integer.MAX_VALUE;
+            if (i > 1) jumpTwo = prev2 + Math.abs(heights[i] - heights[i - 2]);
+
+            int curi = Math.min(jumpOne, jumpTwo);
+            prev2 = prev;
+            prev = curi;
+
+            steps.add(new ExecutionStep(
+                stepNum++, 8,
+                String.format("Stair i = %d (height %d): 1-step energy = %d, 2-step energy = %d -> Min energy to stair %d = %d.", i, heights[i], jumpOne, jumpTwo == Integer.MAX_VALUE ? 0 : jumpTwo, i, curi),
+                List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "minEnergy", String.valueOf(curi)),
+                "Array", null, createArrayState(heights, i, -1), null, null
+            ));
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 12,
+            String.format("Frog Jump Complete! Minimum energy to reach top stair = %d.", prev),
+            List.of(), Map.of(), List.of(), Map.of("Min Energy", String.valueOf(prev)),
+            "Array", null, createArrayState(heights, n - 1, -1), null, null
+        ));
+
         return steps;
     }
 
     private List<ExecutionStep> generateKnapsackSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[][] dp = createKnapsackGrid();
-        steps.add(new ExecutionStep(1, 4, "Initialize DP Matrix for items [wt=[1,2,3], val=[10,15,40]] and capacity W = 5", List.of(), Map.of(), List.of(), Map.of("W", "5"), "Matrix", dp));
-        steps.add(new ExecutionStep(2, 12, "0/1 Knapsack DP completed! Maximum Profit = 55 (Item 1 + Item 2)", List.of(), Map.of(), List.of(), Map.of("Max Profit", "55"), "Matrix", dp));
+        steps.add(new ExecutionStep(1, 4, "Initialize 2D DP Matrix for items [wt=[1,2,3], val=[10,15,40]] and capacity W = 5.", List.of(), Map.of(), List.of(), Map.of("W", "5"), "Matrix", dp));
+        steps.add(new ExecutionStep(2, 12, "0/1 Knapsack DP completed! Maximum Profit = 55 (Item 1 + Item 2).", List.of(), Map.of(), List.of(), Map.of("Max Profit", "55"), "Matrix", dp));
         return steps;
     }
 
     private List<ExecutionStep> generateLcsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[][] dp = createLcsGrid();
-        steps.add(new ExecutionStep(1, 5, "LCS Matrix for text1=\"adebc\", text2=\"dcadb\"", List.of(), Map.of(), List.of(), Map.of("text1", "adebc", "text2", "dcadb"), "Matrix", dp));
-        steps.add(new ExecutionStep(2, 13, "LCS DP Table filled! Longest Common Subsequence Length = 3 (\"adb\")", List.of(), Map.of(), List.of(), Map.of("LCS Length", "3"), "Matrix", dp));
+        steps.add(new ExecutionStep(1, 5, "LCS Matrix for text1=\"adebc\", text2=\"dcadb\".", List.of(), Map.of(), List.of(), Map.of("text1", "adebc", "text2", "dcadb"), "Matrix", dp));
+        steps.add(new ExecutionStep(2, 13, "LCS DP Table filled! Longest Common Subsequence Length = 3 (\"adb\").", List.of(), Map.of(), List.of(), Map.of("LCS Length", "3"), "Matrix", dp));
         return steps;
     }
 

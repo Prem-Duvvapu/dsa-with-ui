@@ -196,72 +196,270 @@ public class ArrayService {
         ));
     }
 
-    // Step Generators
+    // Dynamic Step Generators
     private List<ExecutionStep> generateTwoSumSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{2, 7, 11, 15};
-        steps.add(new ExecutionStep(1, 4, "Array: [2, 7, 11, 15], Target = 9. Start HashMap scan...", List.of(), Map.of(), List.of(), Map.of("target", "9"), "Array", null, createArrayState(nums, -1, -1), null, null));
-        steps.add(new ExecutionStep(2, 5, "i = 0 (val 2): complement = 9 - 2 = 7. HashMap does not contain 7. Add map(2 -> 0)", List.of(), Map.of(), List.of(), Map.of("map", "{2:0}"), "Array", null, createArrayState(nums, 0, -1), null, null));
-        steps.add(new ExecutionStep(3, 6, "i = 1 (val 7): complement = 9 - 7 = 2. HashMap CONTAINS 2 at index 0! MATCH FOUND!", List.of(), Map.of(), List.of(), Map.of("Match", "[0, 1]"), "Array", null, createArrayState(nums, 0, 1), null, null));
-        steps.add(new ExecutionStep(4, 7, "Two Sum Result: Indices [0, 1]", List.of(), Map.of(), List.of(), Map.of("Result", "[0, 1]"), "Array", null, createArrayState(nums, 0, 1), null, null));
+        int target = 9;
+        Map<Integer, Integer> map = new HashMap<>();
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Input Array: [2, 7, 11, 15], Target = 9. Initialize empty HashMap for O(1) lookup.",
+            List.of(), Map.of(), List.of(), Map.of("target", "9", "map", "{}"),
+            "Array", null, createArrayState(nums, -1, -1), null, null
+        ));
+
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+
+            steps.add(new ExecutionStep(
+                stepNum++, 5,
+                String.format("Loop i = %d (val %d): Calculate complement = target - nums[i] = 9 - %d = %d.", i, nums[i], nums[i], complement),
+                List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "nums[i]", String.valueOf(nums[i]), "complement", String.valueOf(complement)),
+                "Array", null, createArrayState(nums, i, -1), null, null
+            ));
+
+            if (map.containsKey(complement)) {
+                int compIdx = map.get(complement);
+                steps.add(new ExecutionStep(
+                    stepNum++, 7,
+                    String.format("Complement Check: HashMap contains complement %d at index %d! Pair (%d, %d) sum to target 9!", complement, compIdx, nums[compIdx], nums[i]),
+                    List.of(), Map.of(), List.of(), Map.of("Match Indices", String.format("[%d, %d]", compIdx, i), "Values", String.format("%d + %d = 9", nums[compIdx], nums[i])),
+                    "Array", null, createArrayState(nums, compIdx, i), null, null
+                ));
+                steps.add(new ExecutionStep(
+                    stepNum++, 8,
+                    String.format("Two Sum Complete! Output indices: [%d, %d].", compIdx, i),
+                    List.of(), Map.of(), List.of(), Map.of("Result", String.format("[%d, %d]", compIdx, i)),
+                    "Array", null, createArrayState(nums, compIdx, i), null, null
+                ));
+                return steps;
+            } else {
+                map.put(nums[i], i);
+                steps.add(new ExecutionStep(
+                    stepNum++, 9,
+                    String.format("Complement %d NOT in HashMap. Put map.put(val=%d, index=%d). HashMap state: %s.", complement, nums[i], i, map.toString()),
+                    List.of(), Map.of(), List.of(), Map.of("map", map.toString()),
+                    "Array", null, createArrayState(nums, i, -1), null, null
+                ));
+            }
+        }
         return steps;
     }
 
     private List<ExecutionStep> generateSort012Steps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{2, 0, 2, 1, 1, 0};
-        steps.add(new ExecutionStep(1, 4, "Initial array: [2, 0, 2, 1, 1, 0]. Pointers: low=0, mid=0, high=5", List.of(), Map.of(), List.of(), Map.of("mid", "0"), "Array", null, createArrayState(nums, 0, 5), null, null));
-        steps.add(new ExecutionStep(2, 10, "nums[mid=0] == 2: Swap nums[0] and nums[5]. Decrement high=4. Array: [0, 0, 2, 1, 1, 2]", List.of(), Map.of(), List.of(), Map.of("high", "4"), "Array", null, createArrayState(new int[]{0, 0, 2, 1, 1, 2}, 0, 4), null, null));
-        steps.add(new ExecutionStep(3, 6, "nums[mid=0] == 0: Swap nums[0] and nums[0]. Increment low=1, mid=1", List.of(), Map.of(), List.of(), Map.of("low", "1", "mid", "1"), "Array", null, createArrayState(new int[]{0, 0, 2, 1, 1, 2}, 1, 4), null, null));
-        steps.add(new ExecutionStep(4, 15, "Dutch National Flag algorithm finished. Sorted Array: [0, 0, 1, 1, 2, 2]", List.of(), Map.of(), List.of(), Map.of("Status", "Sorted"), "Array", null, createArrayState(new int[]{0, 0, 1, 1, 2, 2}, -1, -1), null, null));
+        int low = 0, mid = 0, high = nums.length - 1;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Dutch National Flag Algorithm: Maintain 3 pointers low=0, mid=0, high=5. Invariants: [0..low-1]=0s, [low..mid-1]=1s, [high+1..n-1]=2s.",
+            List.of(), Map.of(), List.of(), Map.of("low", "0", "mid", "0", "high", "5"),
+            "Array", null, createArrayState(nums, mid, high), null, null
+        ));
+
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                int temp = nums[low]; nums[low] = nums[mid]; nums[mid] = temp;
+                steps.add(new ExecutionStep(
+                    stepNum++, 7,
+                    String.format("nums[mid=%d] == 0: Swap nums[low=%d] (%d) and nums[mid=%d] (%d). Increment low++, mid++. Array: %s.", mid, low, temp, mid, nums[low], Arrays.toString(nums)),
+                    List.of(), Map.of(), List.of(), Map.of("low", String.valueOf(low + 1), "mid", String.valueOf(mid + 1), "high", String.valueOf(high)),
+                    "Array", null, createArrayState(nums, low, mid), null, null
+                ));
+                low++; mid++;
+            } else if (nums[mid] == 1) {
+                steps.add(new ExecutionStep(
+                    stepNum++, 10,
+                    String.format("nums[mid=%d] == 1: Element 1 is already in correct region [low..mid-1]. Increment mid++.", mid),
+                    List.of(), Map.of(), List.of(), Map.of("mid", String.valueOf(mid + 1)),
+                    "Array", null, createArrayState(nums, mid, -1), null, null
+                ));
+                mid++;
+            } else { // nums[mid] == 2
+                int temp = nums[mid]; nums[mid] = nums[high]; nums[high] = temp;
+                steps.add(new ExecutionStep(
+                    stepNum++, 13,
+                    String.format("nums[mid=%d] == 2: Swap nums[mid=%d] (%d) and nums[high=%d] (%d). Decrement high--. Array: %s.", mid, mid, temp, high, nums[mid], Arrays.toString(nums)),
+                    List.of(), Map.of(), List.of(), Map.of("high", String.valueOf(high - 1)),
+                    "Array", null, createArrayState(nums, mid, high), null, null
+                ));
+                high--;
+            }
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 16,
+            "Dutch National Flag Complete! Array is sorted in single pass O(N) time: [0, 0, 1, 1, 2, 2].",
+            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[0, 0, 1, 1, 2, 2]"),
+            "Array", null, createArrayState(nums, -1, -1), null, null
+        ));
+
         return steps;
     }
 
     private List<ExecutionStep> generateMajorityElementSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{2, 2, 1, 1, 1, 2, 2};
-        steps.add(new ExecutionStep(1, 4, "Moore's Voting: Initialize count = 0, candidate el = 0", List.of(), Map.of(), List.of(), Map.of("count", "0"), "Array", null, createArrayState(nums, -1, -1), null, null));
-        steps.add(new ExecutionStep(2, 6, "i = 0 (val 2): count was 0 -> set candidate el = 2, count = 1", List.of(), Map.of(), List.of(), Map.of("candidate", "2", "count", "1"), "Array", null, createArrayState(nums, 0, -1), null, null));
-        steps.add(new ExecutionStep(3, 8, "i = 1 (val 2): nums[1] == candidate (2) -> count = 2", List.of(), Map.of(), List.of(), Map.of("candidate", "2", "count", "2"), "Array", null, createArrayState(nums, 1, -1), null, null));
-        steps.add(new ExecutionStep(4, 13, "Array scan finished. Majority Element (> N/2) = 2", List.of(), Map.of(), List.of(), Map.of("Majority Element", "2"), "Array", null, createArrayState(nums, -1, -1), null, null));
+        int count = 0, el = 0;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Moore's Voting Algorithm: Find candidate element > N/2 times. Initialize count = 0, candidate el = 0.",
+            List.of(), Map.of(), List.of(), Map.of("count", "0", "el", "0"),
+            "Array", null, createArrayState(nums, -1, -1), null, null
+        ));
+
+        for (int i = 0; i < nums.length; i++) {
+            if (count == 0) {
+                count = 1;
+                el = nums[i];
+                steps.add(new ExecutionStep(
+                    stepNum++, 6,
+                    String.format("Loop i = %d (val %d): count is 0. Set new candidate el = %d, count = 1.", i, nums[i], el),
+                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "candidate", String.valueOf(el), "count", "1"),
+                    "Array", null, createArrayState(nums, i, -1), null, null
+                ));
+            } else if (nums[i] == el) {
+                count++;
+                steps.add(new ExecutionStep(
+                    stepNum++, 8,
+                    String.format("Loop i = %d (val %d): nums[%d] matches candidate %d. Increment count = %d.", i, nums[i], i, el, count),
+                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "candidate", String.valueOf(el), "count", String.valueOf(count)),
+                    "Array", null, createArrayState(nums, i, -1), null, null
+                ));
+            } else {
+                count--;
+                steps.add(new ExecutionStep(
+                    stepNum++, 10,
+                    String.format("Loop i = %d (val %d): nums[%d] != candidate %d. Decrement count = %d.", i, nums[i], i, el, count),
+                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "candidate", String.valueOf(el), "count", String.valueOf(count)),
+                    "Array", null, createArrayState(nums, i, -1), null, null
+                ));
+            }
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 13,
+            String.format("Moore's Voting Complete! Majority Element (> N/2 times) = %d.", el),
+            List.of(), Map.of(), List.of(), Map.of("Majority Element", String.valueOf(el)),
+            "Array", null, createArrayState(nums, -1, -1), null, null
+        ));
+
         return steps;
     }
 
     private List<ExecutionStep> generateKadaneSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        steps.add(new ExecutionStep(1, 4, "Kadane's Algorithm: Initialize maxi = -INF, sum = 0", List.of(), Map.of(), List.of(), Map.of("maxi", "-INF"), "Array", null, createArrayState(nums, -1, -1), null, null));
-        steps.add(new ExecutionStep(2, 6, "Process subarray [4, -1, 2, 1] -> sum = 6. Update maxi = 6", List.of(), Map.of(), List.of(), Map.of("sum", "6", "maxi", "6"), "Array", null, createArrayState(nums, 3, 6), null, null));
-        steps.add(new ExecutionStep(3, 10, "Kadane's Complete! Maximum Subarray Sum = 6 (Subarray [4, -1, 2, 1])", List.of(), Map.of(), List.of(), Map.of("Max Subarray Sum", "6"), "Array", null, createArrayState(nums, 3, 6), null, null));
+        int maxi = Integer.MIN_VALUE, sum = 0;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Kadane's Algorithm: Find maximum contiguous subarray sum. Initialize maxi = -INF, running sum = 0.",
+            List.of(), Map.of(), List.of(), Map.of("maxi", "-INF", "sum", "0"),
+            "Array", null, createArrayState(nums, -1, -1), null, null
+        ));
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            if (sum > maxi) {
+                maxi = sum;
+                steps.add(new ExecutionStep(
+                    stepNum++, 7,
+                    String.format("Loop i = %d (val %d): Add to sum = %d. Running sum (%d) > maxi! Update maxi = %d.", i, nums[i], sum, sum, maxi),
+                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "sum", String.valueOf(sum), "maxi", String.valueOf(maxi)),
+                    "Array", null, createArrayState(nums, i, -1), null, null
+                ));
+            } else {
+                steps.add(new ExecutionStep(
+                    stepNum++, 6,
+                    String.format("Loop i = %d (val %d): Add to sum = %d. maxi remains %d.", i, nums[i], sum, maxi),
+                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "sum", String.valueOf(sum), "maxi", String.valueOf(maxi)),
+                    "Array", null, createArrayState(nums, i, -1), null, null
+                ));
+            }
+
+            if (sum < 0) {
+                sum = 0;
+                steps.add(new ExecutionStep(
+                    stepNum++, 8,
+                    String.format("Loop i = %d: Running sum dropped below 0 (%d < 0). Reset running sum = 0 to start fresh subarray!", i),
+                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "sum_reset", "0"),
+                    "Array", null, createArrayState(nums, i, -1), null, null
+                ));
+            }
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 11,
+            String.format("Kadane's Algorithm Complete! Maximum Subarray Sum = %d (Subarray [4, -1, 2, 1]).", maxi),
+            List.of(), Map.of(), List.of(), Map.of("Max Subarray Sum", String.valueOf(maxi)),
+            "Array", null, createArrayState(nums, 3, 6), null, null
+        ));
+
         return steps;
     }
 
     private List<ExecutionStep> generateStockSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] prices = new int[]{7, 1, 5, 3, 6, 4};
-        steps.add(new ExecutionStep(1, 4, "Prices: [7, 1, 5, 3, 6, 4]. Initialize minPrice = INF, maxProfit = 0", List.of(), Map.of(), List.of(), Map.of("minPrice", "INF"), "Array", null, createArrayState(prices, -1, -1), null, null));
-        steps.add(new ExecutionStep(2, 5, "Day 2: price = 1 -> minPrice updated to 1", List.of(), Map.of(), List.of(), Map.of("minPrice", "1"), "Array", null, createArrayState(prices, 1, -1), null, null));
-        steps.add(new ExecutionStep(3, 7, "Day 5: price = 6 -> profit = 6 - 1 = 5. Update maxProfit = 5", List.of(), Map.of(), List.of(), Map.of("buy", "1", "sell", "6", "maxProfit", "5"), "Array", null, createArrayState(prices, 1, 4), null, null));
-        steps.add(new ExecutionStep(4, 9, "Max Profit = 5 (Buy at 1, Sell at 6)", List.of(), Map.of(), List.of(), Map.of("Max Profit", "5"), "Array", null, createArrayState(prices, 1, 4), null, null));
+        int minPrice = Integer.MAX_VALUE, maxProfit = 0;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Stock Buy & Sell: Maximize profit by buying low and selling high. Initialize minPrice = INF, maxProfit = 0.",
+            List.of(), Map.of(), List.of(), Map.of("minPrice", "INF", "maxProfit", "0"),
+            "Array", null, createArrayState(prices, -1, -1), null, null
+        ));
+
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+            int profit = prices[i] - minPrice;
+            if (profit > maxProfit) {
+                maxProfit = profit;
+                steps.add(new ExecutionStep(
+                    stepNum++, 7,
+                    String.format("Day %d (price %d): New minimum buy price = %d! Potential profit = %d - %d = %d > maxProfit! Update maxProfit = %d.", i + 1, prices[i], minPrice, prices[i], minPrice, profit, maxProfit),
+                    List.of(), Map.of(), List.of(), Map.of("Day", String.valueOf(i + 1), "minPrice", String.valueOf(minPrice), "maxProfit", String.valueOf(maxProfit)),
+                    "Array", null, createArrayState(prices, 1, i), null, null
+                ));
+            } else {
+                steps.add(new ExecutionStep(
+                    stepNum++, 6,
+                    String.format("Day %d (price %d): Potential profit = %d - %d = %d <= maxProfit (%d). maxProfit remains %d.", i + 1, prices[i], prices[i], minPrice, profit, maxProfit, maxProfit),
+                    List.of(), Map.of(), List.of(), Map.of("Day", String.valueOf(i + 1), "profit", String.valueOf(profit), "maxProfit", String.valueOf(maxProfit)),
+                    "Array", null, createArrayState(prices, i, -1), null, null
+                ));
+            }
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 9,
+            String.format("Stock Buy & Sell Complete! Maximum Profit = %d (Buy at 1 on Day 2, Sell at 6 on Day 5).", maxProfit),
+            List.of(), Map.of(), List.of(), Map.of("Max Profit", String.valueOf(maxProfit), "Buy Price", "1", "Sell Price", "6"),
+            "Array", null, createArrayState(prices, 1, 4), null, null
+        ));
+
         return steps;
     }
 
     // Helper builders
-    private List<ArrayElement> createTwoSumArray() {
-        return createArrayState(new int[]{2, 7, 11, 15}, -1, -1);
-    }
-    private List<ArrayElement> createSort012Array() {
-        return createArrayState(new int[]{2, 0, 2, 1, 1, 0}, -1, -1);
-    }
-    private List<ArrayElement> createMajorityArray() {
-        return createArrayState(new int[]{2, 2, 1, 1, 1, 2, 2}, -1, -1);
-    }
-    private List<ArrayElement> createKadaneArray() {
-        return createArrayState(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}, -1, -1);
-    }
-    private List<ArrayElement> createStockArray() {
-        return createArrayState(new int[]{7, 1, 5, 3, 6, 4}, -1, -1);
-    }
+    private List<ArrayElement> createTwoSumArray() { return createArrayState(new int[]{2, 7, 11, 15}, -1, -1); }
+    private List<ArrayElement> createSort012Array() { return createArrayState(new int[]{2, 0, 2, 1, 1, 0}, -1, -1); }
+    private List<ArrayElement> createMajorityArray() { return createArrayState(new int[]{2, 2, 1, 1, 1, 2, 2}, -1, -1); }
+    private List<ArrayElement> createKadaneArray() { return createArrayState(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}, -1, -1); }
+    private List<ArrayElement> createStockArray() { return createArrayState(new int[]{7, 1, 5, 3, 6, 4}, -1, -1); }
 
     private List<ArrayElement> createArrayState(int[] vals, int activeIdx1, int activeIdx2) {
         List<ArrayElement> list = new ArrayList<>();

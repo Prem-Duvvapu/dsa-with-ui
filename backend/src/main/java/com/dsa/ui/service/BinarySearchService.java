@@ -176,63 +176,239 @@ public class BinarySearchService {
         ));
     }
 
-    // Step Generators
+    // Dynamic Step Generators
     private List<ExecutionStep> generateBs1dSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{1, 3, 5, 7, 9, 11, 13};
-        steps.add(new ExecutionStep(1, 4, "Sorted Array: [1, 3, 5, 7, 9, 11, 13]. Target = 9. Pointers: low=0, high=6", List.of(), Map.of(), List.of(), Map.of("low", "0", "high", "6"), "Array", null, createArrayState(nums, 0, 6), null, null));
-        steps.add(new ExecutionStep(2, 5, "mid = 0 + (6-0)/2 = 3 (val 7). nums[3] (7) < target (9). Move low = mid + 1 = 4", List.of(), Map.of(), List.of(), Map.of("mid", "3", "nums[mid]", "7"), "Array", null, createArrayState(nums, 3, -1), null, null));
-        steps.add(new ExecutionStep(3, 6, "low=4, high=6 -> mid = 4 + (6-4)/2 = 5 (val 11). nums[5] (11) > target (9). Move high = mid - 1 = 4", List.of(), Map.of(), List.of(), Map.of("mid", "5", "nums[mid]", "11"), "Array", null, createArrayState(nums, 5, -1), null, null));
-        steps.add(new ExecutionStep(4, 6, "low=4, high=4 -> mid = 4 (val 9). nums[4] == target (9). FOUND TARGET AT INDEX 4!", List.of(), Map.of(), List.of(), Map.of("Found Index", "4"), "Array", null, createArrayState(nums, 4, -1), null, null));
+        int target = 9;
+        int low = 0, high = nums.length - 1;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Binary Search: Target = 9. Search range: low = 0, high = 6.",
+            List.of(), Map.of(), List.of(), Map.of("low", "0", "high", "6", "target", "9"),
+            "Array", null, createArrayState(nums, low, high, -1), null, null
+        ));
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] == target) {
+                steps.add(new ExecutionStep(
+                    stepNum++, 6,
+                    String.format("Mid Check: mid = %d (val %d). nums[mid] == target (9 == 9)! TARGET FOUND AT INDEX %d!", mid, nums[mid], mid),
+                    List.of(), Map.of(), List.of(), Map.of("mid", String.valueOf(mid), "Found Index", String.valueOf(mid)),
+                    "Array", null, createArrayState(nums, -1, -1, mid), null, null
+                ));
+                steps.add(new ExecutionStep(
+                    stepNum++, 7,
+                    String.format("Binary Search Complete! Return index %d.", mid),
+                    List.of(), Map.of(), List.of(), Map.of("Result Index", String.valueOf(mid)),
+                    "Array", null, createArrayState(nums, -1, -1, mid), null, null
+                ));
+                return steps;
+            } else if (nums[mid] < target) {
+                steps.add(new ExecutionStep(
+                    stepNum++, 7,
+                    String.format("Mid Check: mid = %d (val %d). nums[mid] (%d) < target (%d). Discard left half! Move low = mid + 1 = %d.", mid, nums[mid], nums[mid], target, mid + 1),
+                    List.of(), Map.of(), List.of(), Map.of("mid", String.valueOf(mid), "low", String.valueOf(mid + 1), "high", String.valueOf(high)),
+                    "Array", null, createArrayState(nums, mid + 1, high, mid), null, null
+                ));
+                low = mid + 1;
+            } else {
+                steps.add(new ExecutionStep(
+                    stepNum++, 8,
+                    String.format("Mid Check: mid = %d (val %d). nums[mid] (%d) > target (%d). Discard right half! Move high = mid - 1 = %d.", mid, nums[mid], nums[mid], target, mid - 1),
+                    List.of(), Map.of(), List.of(), Map.of("mid", String.valueOf(mid), "low", String.valueOf(low), "high", String.valueOf(mid - 1)),
+                    "Array", null, createArrayState(nums, low, mid - 1, mid), null, null
+                ));
+                high = mid - 1;
+            }
+        }
         return steps;
     }
 
     private List<ExecutionStep> generateSearchRotatedSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{4, 5, 6, 7, 0, 1, 2};
-        steps.add(new ExecutionStep(1, 4, "Rotated Array: [4, 5, 6, 7, 0, 1, 2]. Target = 0. Pointers: low=0, high=6", List.of(), Map.of(), List.of(), Map.of("target", "0"), "Array", null, createArrayState(nums, 0, 6), null, null));
-        steps.add(new ExecutionStep(2, 8, "mid = 3 (val 7). Left half [4, 5, 6, 7] is sorted. Target 0 is NOT in left range [4..7]. Move low = mid + 1 = 4", List.of(), Map.of(), List.of(), Map.of("mid", "3", "left_sorted", "true"), "Array", null, createArrayState(nums, 3, -1), null, null));
-        steps.add(new ExecutionStep(3, 6, "low=4, high=6 -> mid = 4 (val 0). nums[4] == target (0). TARGET FOUND AT INDEX 4!", List.of(), Map.of(), List.of(), Map.of("Found Index", "4"), "Array", null, createArrayState(nums, 4, -1), null, null));
+        int target = 0;
+        int low = 0, high = nums.length - 1;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Rotated Array: [4, 5, 6, 7, 0, 1, 2], Target = 0. Range: low = 0, high = 6.",
+            List.of(), Map.of(), List.of(), Map.of("low", "0", "high", "6", "target", "0"),
+            "Array", null, createArrayState(nums, low, high, -1), null, null
+        ));
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] == target) {
+                steps.add(new ExecutionStep(
+                    stepNum++, 6,
+                    String.format("mid = %d (val %d). nums[mid] == target (0 == 0)! TARGET FOUND AT INDEX %d!", mid, nums[mid], mid),
+                    List.of(), Map.of(), List.of(), Map.of("mid", String.valueOf(mid), "Found Index", String.valueOf(mid)),
+                    "Array", null, createArrayState(nums, -1, -1, mid), null, null
+                ));
+                return steps;
+            }
+
+            if (nums[low] <= nums[mid]) { // Left half sorted
+                if (nums[low] <= target && target < nums[mid]) {
+                    steps.add(new ExecutionStep(
+                        stepNum++, 9,
+                        String.format("mid = %d (val %d). Left half [4..7] is sorted and target 0 is inside range [%d..%d]. Move high = mid - 1 = %d.", mid, nums[mid], nums[low], nums[mid], mid - 1),
+                        List.of(), Map.of(), List.of(), Map.of("left_sorted", "true", "high", String.valueOf(mid - 1)),
+                        "Array", null, createArrayState(nums, low, mid - 1, mid), null, null
+                    ));
+                    high = mid - 1;
+                } else {
+                    steps.add(new ExecutionStep(
+                        stepNum++, 10,
+                        String.format("mid = %d (val %d). Left half [4..7] is sorted, but target 0 is NOT inside range [%d..%d]. Move low = mid + 1 = %d.", mid, nums[mid], nums[low], nums[mid], mid + 1),
+                        List.of(), Map.of(), List.of(), Map.of("left_sorted", "true", "low", String.valueOf(mid + 1)),
+                        "Array", null, createArrayState(nums, mid + 1, high, mid), null, null
+                    ));
+                    low = mid + 1;
+                }
+            } else { // Right half sorted
+                if (nums[mid] < target && target <= nums[high]) {
+                    steps.add(new ExecutionStep(
+                        stepNum++, 12,
+                        String.format("mid = %d (val %d). Right half is sorted and target is inside range. Move low = mid + 1.", mid, nums[mid]),
+                        List.of(), Map.of(), List.of(), Map.of("right_sorted", "true", "low", String.valueOf(mid + 1)),
+                        "Array", null, createArrayState(nums, mid + 1, high, mid), null, null
+                    ));
+                    low = mid + 1;
+                } else {
+                    steps.add(new ExecutionStep(
+                        stepNum++, 13,
+                        String.format("mid = %d (val %d). Right half is sorted, target NOT inside range. Move high = mid - 1.", mid, nums[mid]),
+                        List.of(), Map.of(), List.of(), Map.of("right_sorted", "true", "high", String.valueOf(mid - 1)),
+                        "Array", null, createArrayState(nums, low, mid - 1, mid), null, null
+                    ));
+                    high = mid - 1;
+                }
+            }
+        }
         return steps;
     }
 
     private List<ExecutionStep> generateFindPeakSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{1, 2, 1, 3, 5, 6, 4};
-        steps.add(new ExecutionStep(1, 8, "Array: [1, 2, 1, 3, 5, 6, 4]. Pointers: low=1, high=5", List.of(), Map.of(), List.of(), Map.of("low", "1", "high", "5"), "Array", null, createArrayState(nums, 1, 5), null, null));
-        steps.add(new ExecutionStep(2, 11, "mid = 3 (val 3). nums[3] (3) > nums[2] (1) -> Ascending slope! Move low = mid + 1 = 4", List.of(), Map.of(), List.of(), Map.of("mid", "3", "slope", "ascending"), "Array", null, createArrayState(nums, 3, -1), null, null));
-        steps.add(new ExecutionStep(3, 11, "low=4, high=5 -> mid = 5 (val 6). nums[5] (6) > 5 and nums[5] (6) > 4. PEAK FOUND AT INDEX 5!", List.of(), Map.of(), List.of(), Map.of("Peak Index", "5", "Peak Val", "6"), "Array", null, createArrayState(nums, 5, -1), null, null));
+        int low = 1, high = nums.length - 2;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 8,
+            "Find Peak Element: Array = [1, 2, 1, 3, 5, 6, 4]. Range: low = 1, high = 5.",
+            List.of(), Map.of(), List.of(), Map.of("low", "1", "high", "5"),
+            "Array", null, createArrayState(nums, low, high, -1), null, null
+        ));
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            boolean isPeak = nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1];
+
+            if (isPeak) {
+                steps.add(new ExecutionStep(
+                    stepNum++, 11,
+                    String.format("mid = %d (val %d): nums[%d] (%d) > nums[%d] (%d) AND nums[%d] > nums[%d] (%d). PEAK FOUND AT INDEX %d!", mid, nums[mid], mid, nums[mid], mid - 1, nums[mid - 1], mid, mid + 1, nums[mid + 1], mid),
+                    List.of(), Map.of(), List.of(), Map.of("Peak Index", String.valueOf(mid), "Peak Value", String.valueOf(nums[mid])),
+                    "Array", null, createArrayState(nums, -1, -1, mid), null, null
+                ));
+                return steps;
+            } else if (nums[mid] > nums[mid - 1]) {
+                steps.add(new ExecutionStep(
+                    stepNum++, 12,
+                    String.format("mid = %d (val %d): Ascending slope (nums[%d] > nums[%d]). Peak MUST exist to the right! Move low = mid + 1 = %d.", mid, nums[mid], mid, mid - 1, mid + 1),
+                    List.of(), Map.of(), List.of(), Map.of("slope", "ascending", "low", String.valueOf(mid + 1)),
+                    "Array", null, createArrayState(nums, mid + 1, high, mid), null, null
+                ));
+                low = mid + 1;
+            } else {
+                steps.add(new ExecutionStep(
+                    stepNum++, 13,
+                    String.format("mid = %d (val %d): Descending slope (nums[%d] <= nums[%d]). Peak MUST exist to the left! Move high = mid - 1 = %d.", mid, nums[mid], mid, mid - 1, mid - 1),
+                    List.of(), Map.of(), List.of(), Map.of("slope", "descending", "high", String.valueOf(mid - 1)),
+                    "Array", null, createArrayState(nums, low, mid - 1, mid), null, null
+                ));
+                high = mid - 1;
+            }
+        }
         return steps;
     }
 
     private List<ExecutionStep> generateKokoSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] piles = new int[]{3, 6, 7, 11};
-        steps.add(new ExecutionStep(1, 4, "Bananas: [3, 6, 7, 11], Max hours h = 8. Search speed range k in [1, 11]", List.of(), Map.of(), List.of(), Map.of("low_k", "1", "high_k", "11"), "Array", null, createArrayState(piles, -1, -1), null, null));
-        steps.add(new ExecutionStep(2, 8, "Test speed k = 6: hours = ceil(3/6) + ceil(6/6) + ceil(7/6) + ceil(11/6) = 1+1+2+2 = 6 <= 8. Speed 6 WORKS! Try smaller speed...", List.of(), Map.of(), List.of(), Map.of("speed_k", "6", "hours", "6"), "Array", null, createArrayState(piles, -1, -1), null, null));
-        steps.add(new ExecutionStep(3, 8, "Test speed k = 4: hours = 1+2+2+3 = 8 <= 8. Speed 4 WORKS! Try speed 3...", List.of(), Map.of(), List.of(), Map.of("speed_k", "4", "hours", "8"), "Array", null, createArrayState(piles, -1, -1), null, null));
-        steps.add(new ExecutionStep(4, 12, "Test speed k = 3: hours = 1+2+3+4 = 10 > 8 (Too slow!). Minimum Eating Speed = 4", List.of(), Map.of(), List.of(), Map.of("Min Speed k", "4"), "Array", null, createArrayState(piles, -1, -1), null, null));
+        int h = 8;
+        int low = 1, high = 11, ans = 11;
+        int stepNum = 1;
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Koko Eating Bananas: Piles = [3, 6, 7, 11], Target Hours h = 8. Binary search speed range k in [1, 11].",
+            List.of(), Map.of(), List.of(), Map.of("low_k", "1", "high_k", "11", "h", "8"),
+            "Array", null, createArrayState(piles, -1, -1, -1), null, null
+        ));
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            long hours = calculateHours(piles, mid);
+
+            if (hours <= h) {
+                ans = mid;
+                steps.add(new ExecutionStep(
+                    stepNum++, 9,
+                    String.format("Speed k = %d: Koko finishes in %d hours <= 8. Speed %d WORKS! Save ans = %d, try smaller speed high = mid - 1 = %d.", mid, hours, mid, ans, mid - 1),
+                    List.of(), Map.of(), List.of(), Map.of("k", String.valueOf(mid), "hours", String.valueOf(hours), "ans", String.valueOf(ans)),
+                    "Array", null, createArrayState(piles, -1, -1, -1), null, null
+                ));
+                high = mid - 1;
+            } else {
+                steps.add(new ExecutionStep(
+                    stepNum++, 11,
+                    String.format("Speed k = %d: Koko needs %d hours > 8 (Too slow!). Speed %d FAILS! Increase speed low = mid + 1 = %d.", mid, hours, mid, mid + 1),
+                    List.of(), Map.of(), List.of(), Map.of("k", String.valueOf(mid), "hours", String.valueOf(hours), "status", "too slow"),
+                    "Array", null, createArrayState(piles, -1, -1, -1), null, null
+                ));
+                low = mid + 1;
+            }
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 14,
+            String.format("Koko Eating Bananas Complete! Minimum Eating Speed k = %d.", ans),
+            List.of(), Map.of(), List.of(), Map.of("Min Speed k", String.valueOf(ans)),
+            "Array", null, createArrayState(piles, -1, -1, -1), null, null
+        ));
+
         return steps;
     }
 
-    // Helper builders
-    private List<ArrayElement> createSortedArray() {
-        return createArrayState(new int[]{1, 3, 5, 7, 9, 11, 13}, -1, -1);
-    }
-    private List<ArrayElement> createRotatedArray() {
-        return createArrayState(new int[]{4, 5, 6, 7, 0, 1, 2}, -1, -1);
-    }
-    private List<ArrayElement> createPeakArray() {
-        return createArrayState(new int[]{1, 2, 1, 3, 5, 6, 4}, -1, -1);
-    }
-    private List<ArrayElement> createKokoArray() {
-        return createArrayState(new int[]{3, 6, 7, 11}, -1, -1);
+    private long calculateHours(int[] piles, int speed) {
+        long h = 0;
+        for (int p : piles) h += (p + speed - 1) / speed;
+        return h;
     }
 
-    private List<ArrayElement> createArrayState(int[] vals, int activeIdx1, int activeIdx2) {
+    // Helper builders
+    private List<ArrayElement> createSortedArray() { return createArrayState(new int[]{1, 3, 5, 7, 9, 11, 13}, 0, 6, -1); }
+    private List<ArrayElement> createRotatedArray() { return createArrayState(new int[]{4, 5, 6, 7, 0, 1, 2}, 0, 6, -1); }
+    private List<ArrayElement> createPeakArray() { return createArrayState(new int[]{1, 2, 1, 3, 5, 6, 4}, 1, 5, -1); }
+    private List<ArrayElement> createKokoArray() { return createArrayState(new int[]{3, 6, 7, 11}, -1, -1, -1); }
+
+    private List<ArrayElement> createArrayState(int[] vals, int lowIdx, int highIdx, int midIdx) {
         List<ArrayElement> list = new ArrayList<>();
         for (int i = 0; i < vals.length; i++) {
-            String state = (i == activeIdx1 || i == activeIdx2) ? "active" : "default";
+            String state = "default";
+            if (i == midIdx) state = "pivot";
+            else if (i == lowIdx || i == highIdx) state = "comparing";
             list.add(new ArrayElement(i, vals[i], state));
         }
         return list;

@@ -196,15 +196,35 @@ public class LinkedListService {
         ));
     }
 
-    // Step Generators
+    // Dynamic Step Generators
     private List<ExecutionStep> generateReverseSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         List<ListNode> list = createDefaultList();
+        int stepNum = 1;
 
-        steps.add(new ExecutionStep(1, 4, "Initial Linked List: 1 -> 2 -> 3 -> 4 -> NULL. Pointers: prev = NULL, curr = node 1", List.of(), Map.of(), List.of(), Map.of("prev", "null", "curr", "1"), "LinkedList", null, null, updateListState(list, 1, "curr"), null));
-        steps.add(new ExecutionStep(2, 8, "Reverse connection: 1 -> NULL. Advance prev = 1, curr = 2", List.of(), Map.of(), List.of(), Map.of("prev", "1", "curr", "2"), "LinkedList", null, null, updateListState(list, 2, "curr"), null));
-        steps.add(new ExecutionStep(3, 8, "Reverse connection: 2 -> 1. Advance prev = 2, curr = 3", List.of(), Map.of(), List.of(), Map.of("prev", "2", "curr", "3"), "LinkedList", null, null, updateListState(list, 3, "curr"), null));
-        steps.add(new ExecutionStep(4, 12, "Reverse Complete! Final Reversed List: 4 -> 3 -> 2 -> 1 -> NULL", List.of(), Map.of(), List.of(), Map.of("New Head", "4"), "LinkedList", null, null, updateListState(list, 4, "active"), null));
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Initial Linked List: 1 -> 2 -> 3 -> 4 -> NULL. Pointers: prev = NULL, curr = node 1.",
+            List.of(), Map.of(), List.of(), Map.of("prev", "null", "curr", "1"),
+            "LinkedList", null, null, updateListState(list, 1, "curr"), null
+        ));
+
+        for (int currVal = 1; currVal <= 4; currVal++) {
+            String nextVal = (currVal < 4) ? String.valueOf(currVal + 1) : "null";
+            steps.add(new ExecutionStep(
+                stepNum++, 8,
+                String.format("Step %d: Save next = node %s. Reverse link: node %d points to prev. Advance prev = node %d, curr = node %s.", currVal, nextVal, currVal, currVal, nextVal),
+                List.of(), Map.of(), List.of(), Map.of("prev", String.valueOf(currVal), "curr", nextVal),
+                "LinkedList", null, null, updateListState(list, currVal, "curr"), null
+            ));
+        }
+
+        steps.add(new ExecutionStep(
+            stepNum++, 13,
+            "Reverse Linked List Complete! Return prev as new head. Output: 4 -> 3 -> 2 -> 1 -> NULL.",
+            List.of(), Map.of(), List.of(), Map.of("New Head", "4", "Result", "4->3->2->1"),
+            "LinkedList", null, null, updateListState(list, 4, "visited"), null
+        ));
 
         return steps;
     }
@@ -212,11 +232,35 @@ public class LinkedListService {
     private List<ExecutionStep> generateMiddleSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         List<ListNode> list = createDefaultList();
+        int stepNum = 1;
 
-        steps.add(new ExecutionStep(1, 4, "Initialize slow = node 1, fast = node 1", List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"), "LinkedList", null, null, updateListState(list, 1, "slow"), null));
-        steps.add(new ExecutionStep(2, 8, "Step 1: slow moves to node 2, fast moves to node 3", List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"), "LinkedList", null, null, updateListState(list, 2, "slow"), null));
-        steps.add(new ExecutionStep(3, 8, "Step 2: slow moves to node 3, fast reaches end (NULL)", List.of(), Map.of(), List.of(), Map.of("slow", "3", "fast", "null"), "LinkedList", null, null, updateListState(list, 3, "active"), null));
-        steps.add(new ExecutionStep(4, 11, "Fast pointer reached end. Middle Node = 3", List.of(), Map.of(), List.of(), Map.of("Middle Node", "3"), "LinkedList", null, null, updateListState(list, 3, "active"), null));
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Initialize Tortoise & Hare pointers: slow = node 1, fast = node 1.",
+            List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"),
+            "LinkedList", null, null, updateListState(list, 1, "slow"), null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 8,
+            "Step 1: Move slow = slow.next (node 2), fast = fast.next.next (node 3).",
+            List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"),
+            "LinkedList", null, null, updateListState(list, 2, "slow"), null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 8,
+            "Step 2: Move slow = slow.next (node 3), fast = fast.next.next (null).",
+            List.of(), Map.of(), List.of(), Map.of("slow", "3", "fast", "null"),
+            "LinkedList", null, null, updateListState(list, 3, "active"), null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 11,
+            "Fast pointer reached end! Middle Node of Linked List is node 3.",
+            List.of(), Map.of(), List.of(), Map.of("Middle Node", "3"),
+            "LinkedList", null, null, updateListState(list, 3, "active"), null
+        ));
 
         return steps;
     }
@@ -224,10 +268,28 @@ public class LinkedListService {
     private List<ExecutionStep> generateDetectLoopSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         List<ListNode> list = createCyclicList();
+        int stepNum = 1;
 
-        steps.add(new ExecutionStep(1, 4, "Initialize slow = node 1, fast = node 1 in cyclic list", List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"), "LinkedList", null, null, updateListState(list, 1, "slow"), null));
-        steps.add(new ExecutionStep(2, 8, "Step 1: slow = node 2, fast = node 3", List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"), "LinkedList", null, null, updateListState(list, 2, "slow"), null));
-        steps.add(new ExecutionStep(3, 10, "Step 2: fast loops back! slow = node 3, fast = node 3. SLOW == FAST! CYCLE DETECTED!", List.of(), Map.of(), List.of(), Map.of("Cycle Detected", "TRUE"), "LinkedList", null, null, updateListState(list, 3, "active"), null));
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Floyd's Cycle Detection: Initialize slow = node 1, fast = node 1 in a cyclic linked list.",
+            List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"),
+            "LinkedList", null, null, updateListState(list, 1, "slow"), null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 8,
+            "Iteration 1: Move slow = node 2, fast = node 3.",
+            List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"),
+            "LinkedList", null, null, updateListState(list, 2, "slow"), null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 10,
+            "Iteration 2: Fast loops back! Move slow = node 3, fast = node 3. Collision: slow == fast! CYCLE DETECTED!",
+            List.of(), Map.of(), List.of(), Map.of("Collision Node", "3", "Cycle Detected", "TRUE"),
+            "LinkedList", null, null, updateListState(list, 3, "active"), null
+        ));
 
         return steps;
     }
@@ -235,9 +297,21 @@ public class LinkedListService {
     private List<ExecutionStep> generateDeleteNodeSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         List<ListNode> list = createDefaultList();
+        int stepNum = 1;
 
-        steps.add(new ExecutionStep(1, 3, "Delete node 2 in O(1): Copy next node value (3) into node 2", List.of(), Map.of(), List.of(), Map.of("copied_val", "3"), "LinkedList", null, null, updateListState(list, 2, "active"), null));
-        steps.add(new ExecutionStep(2, 4, "Bypass next node: node.next = node.next.next. Node 2 deleted!", List.of(), Map.of(), List.of(), Map.of("Status", "Node Deleted"), "LinkedList", null, null, updateListState(list, 2, "visited"), null));
+        steps.add(new ExecutionStep(
+            stepNum++, 3,
+            "Delete Node 2 in O(1): Copy value of node 3 into node 2 (node.val = node.next.val).",
+            List.of(), Map.of(), List.of(), Map.of("copied_val", "3"),
+            "LinkedList", null, null, updateListState(list, 2, "active"), null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 4,
+            "Bypass next node: Set node.next = node.next.next. Node 2 deleted in O(1) time!",
+            List.of(), Map.of(), List.of(), Map.of("Status", "Deleted"),
+            "LinkedList", null, null, updateListState(list, 2, "visited"), null
+        ));
 
         return steps;
     }
@@ -245,9 +319,21 @@ public class LinkedListService {
     private List<ExecutionStep> generateMergeListsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         List<ListNode> list = createDefaultList();
+        int stepNum = 1;
 
-        steps.add(new ExecutionStep(1, 5, "Merge sorted List 1 [1, 3] and List 2 [2, 4] using 2 pointers", List.of(), Map.of(), List.of(), Map.of("l1", "1", "l2", "2"), "LinkedList", null, null, updateListState(list, 1, "active"), null));
-        steps.add(new ExecutionStep(2, 12, "Merged Sorted List: 1 -> 2 -> 3 -> 4 -> NULL", List.of(), Map.of(), List.of(), Map.of("Result", "1->2->3->4"), "LinkedList", null, null, updateListState(list, 1, "visited"), null));
+        steps.add(new ExecutionStep(
+            stepNum++, 5,
+            "Merge Sorted Lists: List 1 [1, 3] and List 2 [2, 4]. Compare heads of both lists.",
+            List.of(), Map.of(), List.of(), Map.of("l1", "1", "l2", "2"),
+            "LinkedList", null, null, updateListState(list, 1, "active"), null
+        ));
+
+        steps.add(new ExecutionStep(
+            stepNum++, 12,
+            "Merge Complete! Spliced Merged List: 1 -> 2 -> 3 -> 4 -> NULL.",
+            List.of(), Map.of(), List.of(), Map.of("Output List", "1->2->3->4"),
+            "LinkedList", null, null, updateListState(list, 1, "visited"), null
+        ));
 
         return steps;
     }
@@ -266,7 +352,7 @@ public class LinkedListService {
         return List.of(
             new ListNode(1, "1", 2, null, "default"),
             new ListNode(2, "2", 3, 1, "default"),
-            new ListNode(3, "3", 1, 2, "default") // Cycle back to 1
+            new ListNode(3, "3", 1, 2, "default")
         );
     }
 
