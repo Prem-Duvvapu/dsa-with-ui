@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, ChevronRight, PlayCircle, FolderTree, Network, Cpu, GitBranch, BarChart3, Binary, Link2, Search, Brain, Hash, RefreshCcw } from 'lucide-react';
+import { Layers, ChevronRight, PlayCircle, FolderTree, Network, Cpu, GitBranch, BarChart3, Binary, Link2, Search, Brain, Hash, RefreshCcw, Zap, Type, Binary as BitIcon, Layers3 } from 'lucide-react';
 
 export default function Sidebar({ problems, activeProblemId, activeCategory, onSelectCategory, onSelectProblem }) {
   const categories = [
@@ -13,7 +13,11 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
     { id: 'Linked List', label: 'Linked Lists', icon: Link2 },
     { id: 'Binary Search', label: 'Binary Search', icon: Search },
     { id: 'Dynamic Programming', label: 'Dynamic Programming', icon: Brain },
-    { id: 'Tries', label: 'Tries & Prefixes', icon: Hash }
+    { id: 'Tries & Prefixes', label: 'Tries & Prefixes', icon: Hash },
+    { id: 'Greedy Algorithms', label: 'Greedy', icon: Zap },
+    { id: 'Strings', label: 'Strings', icon: Type },
+    { id: 'Bit Manipulation', label: 'Bit Manipulation', icon: BitIcon },
+    { id: 'Heaps & PriorityQueue', label: 'Heaps & PriorityQueue', icon: Layers3 }
   ];
 
   const filteredProblems = problems.filter((p) => !activeCategory || p.category === activeCategory);
@@ -32,7 +36,7 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
       {/* Category Grid */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
-          Algorithm Categories
+          Algorithm Categories ({categories.length})
         </span>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
           {categories.map((cat) => {

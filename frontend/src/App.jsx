@@ -55,7 +55,7 @@ export default function App() {
   const fetchAllProblems = async () => {
     try {
       setLoading(true);
-      const [resBfs, resAdv, resTree, resRec, resSort, resArr, resLl, resBs, resDp] = await Promise.allSettled([
+      const [resBfs, resAdv, resTree, resRec, resSort, resArr, resLl, resBs, resDp, resTrie, resGreedy, resStr, resBit, resHeap] = await Promise.allSettled([
         fetch('/api/graphs/bfs-dfs/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/graphs/advanced/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/trees/problems').then(r => r.ok ? r.json() : []),
@@ -64,7 +64,12 @@ export default function App() {
         fetch('/api/arrays/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/linkedlist/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/binarysearch/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/dp/problems').then(r => r.ok ? r.json() : [])
+        fetch('/api/dp/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/tries/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/greedy/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/strings/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/bitmanipulation/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/heaps/problems').then(r => r.ok ? r.json() : [])
       ]);
 
       const combined = [
@@ -76,7 +81,12 @@ export default function App() {
         ...(resArr.status === 'fulfilled' ? resArr.value : []),
         ...(resLl.status === 'fulfilled' ? resLl.value : []),
         ...(resBs.status === 'fulfilled' ? resBs.value : []),
-        ...(resDp.status === 'fulfilled' ? resDp.value : [])
+        ...(resDp.status === 'fulfilled' ? resDp.value : []),
+        ...(resTrie.status === 'fulfilled' ? resTrie.value : []),
+        ...(resGreedy.status === 'fulfilled' ? resGreedy.value : []),
+        ...(resStr.status === 'fulfilled' ? resStr.value : []),
+        ...(resBit.status === 'fulfilled' ? resBit.value : []),
+        ...(resHeap.status === 'fulfilled' ? resHeap.value : [])
       ];
 
       if (combined.length > 0) {
@@ -106,6 +116,11 @@ export default function App() {
         else if (prob.category === 'Linked List') endpoint = `/api/linkedlist`;
         else if (prob.category === 'Binary Search') endpoint = `/api/binarysearch`;
         else if (prob.category === 'Dynamic Programming') endpoint = `/api/dp`;
+        else if (prob.category === 'Tries & Prefixes') endpoint = `/api/tries`;
+        else if (prob.category === 'Greedy Algorithms') endpoint = `/api/greedy`;
+        else if (prob.category === 'Strings') endpoint = `/api/strings`;
+        else if (prob.category === 'Bit Manipulation') endpoint = `/api/bitmanipulation`;
+        else if (prob.category === 'Heaps & PriorityQueue') endpoint = `/api/heaps`;
       }
 
       const [probRes, stepsRes] = await Promise.allSettled([
@@ -129,7 +144,7 @@ export default function App() {
   const renderCanvas = () => {
     if (!activeProblem) return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
 
-    if (activeProblem.category === 'Recursion & Backtracking' || (activeProblem.defaultTreeNodes && activeProblem.defaultTreeNodes.length > 0 && activeProblem.category === 'Sorting Algorithms')) {
+    if (activeProblem.category === 'Recursion & Backtracking' || activeProblem.category === 'Tries & Prefixes' || (activeProblem.defaultTreeNodes && activeProblem.defaultTreeNodes.length > 0 && activeProblem.category === 'Sorting Algorithms')) {
       return <RecursionTreeCanvas problem={activeProblem} currentStep={currentStep} />;
     }
 
@@ -140,6 +155,10 @@ export default function App() {
       case 'Sorting Algorithms':
       case 'Arrays':
       case 'Binary Search':
+      case 'Greedy Algorithms':
+      case 'Strings':
+      case 'Bit Manipulation':
+      case 'Heaps & PriorityQueue':
         return <ArrayCanvas problem={activeProblem} currentStep={currentStep} />;
       case 'Linked List':
         return <LinkedListCanvas problem={activeProblem} currentStep={currentStep} />;
