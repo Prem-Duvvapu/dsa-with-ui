@@ -38,15 +38,14 @@ class SortingServiceTest {
     }
 
     @Test
-    @DisplayName("Should generate execution steps for Selection and Quick Sort")
-    void testGenerateSteps() {
-        List<ExecutionStep> selectionSteps = sortingService.generateSteps("selection-sort");
-        assertNotNull(selectionSteps);
-        assertFalse(selectionSteps.isEmpty());
-        assertNotNull(selectionSteps.get(0).getArrayState());
-
-        List<ExecutionStep> quickSteps = sortingService.generateSteps("quick-sort");
-        assertNotNull(quickSteps);
-        assertFalse(quickSteps.isEmpty());
+    @DisplayName("Should generate execution steps for ALL sorting algorithms")
+    void testGenerateStepsForAllSortingProblems() {
+        List<ProblemDetail> problems = sortingService.getAllProblems();
+        for (ProblemDetail p : problems) {
+            List<ExecutionStep> steps = sortingService.generateSteps(p.getId());
+            assertNotNull(steps, "Steps list should not be null for " + p.getId());
+            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+            assertTrue(steps.get(0).getStepNumber() > 0, "Step number should be positive for " + p.getId());
+        }
     }
 }

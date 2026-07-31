@@ -4,47 +4,42 @@ import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.service.BinarySearchService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BinarySearchServiceTest {
+public class BinarySearchServiceTest {
 
     private BinarySearchService service;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         service = new BinarySearchService();
     }
 
     @Test
-    @DisplayName("Should return all binary search problems")
-    void testGetAllProblems() {
+    public void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertEquals(4, problems.size(), "Should load 4 binary search problems");
+        assertEquals(4, problems.size());
     }
 
     @Test
-    @DisplayName("Should retrieve Koko Eating Bananas details")
-    void testGetProblemById() {
-        ProblemDetail koko = service.getProblemById("koko-eating-bananas");
-        assertNotNull(koko);
-        assertEquals("Koko Eating Bananas (BS on Answer)", koko.getTitle());
+    public void testGetProblemById() {
+        ProblemDetail problem = service.getProblemById("binary-search-1d");
+        assertNotNull(problem);
+        assertEquals("Binary Search on 1D Array", problem.getTitle());
     }
 
     @Test
-    @DisplayName("Should generate execution steps for 1D Binary Search and Rotated Array Search")
-    void testGenerateSteps() {
-        List<ExecutionStep> bsSteps = service.generateSteps("binary-search-1d");
-        assertNotNull(bsSteps);
-        assertFalse(bsSteps.isEmpty());
-
-        List<ExecutionStep> rotatedSteps = service.generateSteps("search-rotated-sorted");
-        assertNotNull(rotatedSteps);
-        assertFalse(rotatedSteps.isEmpty());
+    public void testGenerateStepsForAllBinarySearchProblems() {
+        List<ProblemDetail> problems = service.getAllProblems();
+        for (ProblemDetail p : problems) {
+            List<ExecutionStep> steps = service.generateSteps(p.getId());
+            assertNotNull(steps, "Steps list should not be null for " + p.getId());
+            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        }
     }
 }
