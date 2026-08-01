@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.trie.*;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -176,49 +178,10 @@ public class TrieService {
 
     // Step Generators
     private List<ExecutionStep> generateImplementTrieSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 14,
-            "Initialize empty Trie. Root node created with 26 null links.",
-            List.of("Trie()"), new HashMap<>(nodeStates), List.of(), Map.of("root", "Node[26]"),
-            "Stack", null
-        ));
-
-        nodeStates.put(1, "calling");
-        steps.add(new ExecutionStep(
-            stepNum++, 18,
-            "insert(\"apple\"): Character 'a' -> create link[0]. Character 'p' -> create link[15]. Character 'p' -> create link[15]. Character 'l' -> create link[11]. Character 'e' -> set flag = true (END OF WORD).",
-            List.of("insert(\"apple\")"), new HashMap<>(nodeStates), List.of(), Map.of("Inserted", "apple"),
-            "Stack", null
-        ));
-
-        nodeStates.put(1, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 26,
-            "search(\"apple\"): Traverse root -> 'a' -> 'p' -> 'p' -> 'l' -> 'e'. All characters exist AND isEnd() is TRUE! Return TRUE.",
-            List.of("search(\"apple\")"), new HashMap<>(nodeStates), List.of(), Map.of("Search Result", "TRUE"),
-            "Stack", null
-        ));
-
-        nodeStates.put(2, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 26,
-            "search(\"app\"): Traverse root -> 'a' -> 'p' -> 'p'. All characters exist, BUT isEnd() is FALSE! Return FALSE.",
-            List.of("search(\"app\")"), new HashMap<>(nodeStates), List.of(), Map.of("Search Result", "FALSE"),
-            "Stack", null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 33,
-            "startsWith(\"app\"): Traverse root -> 'a' -> 'p' -> 'p'. All prefix characters exist! Return TRUE.",
-            List.of("startsWith(\"app\")"), new HashMap<>(nodeStates), List.of(), Map.of("Prefix Result", "TRUE"),
-            "Stack", null
-        ));
-
-        return steps;
+        ImplementTrie.Node root = new ImplementTrie.Node();
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new ImplementTrie().insert(root, "apple", recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateLcpSteps() {

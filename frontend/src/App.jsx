@@ -144,6 +144,11 @@ export default function App() {
   const renderCanvas = () => {
     if (!activeProblem) return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
 
+    // Matrix / Grid / Chessboard problems render GraphCanvas (4x4 Chessboard, 9x9 Sudoku, 2D Grid)
+    if (activeProblem.id === 'n-queens' || activeProblem.id === 'sudoku-solver' || activeProblem.id === 'rat-in-a-maze' || activeProblem.dsType === 'Matrix' || currentStep?.gridState || activeProblem.defaultGrid) {
+      return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
+    }
+
     if (activeProblem.category === 'Recursion & Backtracking' || activeProblem.category === 'Tries & Prefixes' || (activeProblem.defaultTreeNodes && activeProblem.defaultTreeNodes.length > 0 && activeProblem.category === 'Sorting Algorithms')) {
       return <RecursionTreeCanvas problem={activeProblem} currentStep={currentStep} />;
     }
@@ -217,6 +222,7 @@ export default function App() {
             onPlayPause={() => setIsPlaying(!isPlaying)}
             onStepNext={() => setCurrentStepIndex((i) => Math.min(steps.length - 1, i + 1))}
             onStepPrev={() => setCurrentStepIndex((i) => Math.max(0, i - 1))}
+            onStepSelect={(idx) => setCurrentStepIndex(idx)}
             onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
             onSpeedChange={(val) => setSpeed(val)}
             stepDescription={currentStep?.description}

@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.linkedlist.ReverseLinkedList;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -198,35 +200,17 @@ public class LinkedListService {
 
     // Dynamic Step Generators
     private List<ExecutionStep> generateReverseSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> list = createDefaultList();
-        int stepNum = 1;
+        ReverseLinkedList.Node head = new ReverseLinkedList.Node(1);
+        ReverseLinkedList.Node n2 = new ReverseLinkedList.Node(2);
+        ReverseLinkedList.Node n3 = new ReverseLinkedList.Node(3);
+        ReverseLinkedList.Node n4 = new ReverseLinkedList.Node(4);
+        head.next = n2;
+        n2.next = n3;
+        n3.next = n4;
 
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Initial Linked List: 1 -> 2 -> 3 -> 4 -> NULL. Pointers: prev = NULL, curr = node 1.",
-            List.of(), Map.of(), List.of(), Map.of("prev", "null", "curr", "1"),
-            "LinkedList", null, null, updateListState(list, 1, "curr"), null
-        ));
-
-        for (int currVal = 1; currVal <= 4; currVal++) {
-            String nextVal = (currVal < 4) ? String.valueOf(currVal + 1) : "null";
-            steps.add(new ExecutionStep(
-                stepNum++, 8,
-                String.format("Step %d: Save next = node %s. Reverse link: node %d points to prev. Advance prev = node %d, curr = node %s.", currVal, nextVal, currVal, currVal, nextVal),
-                List.of(), Map.of(), List.of(), Map.of("prev", String.valueOf(currVal), "curr", nextVal),
-                "LinkedList", null, null, updateListState(list, currVal, "curr"), null
-            ));
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 13,
-            "Reverse Linked List Complete! Return prev as new head. Output: 4 -> 3 -> 2 -> 1 -> NULL.",
-            List.of(), Map.of(), List.of(), Map.of("New Head", "4", "Result", "4->3->2->1"),
-            "LinkedList", null, null, updateListState(list, 4, "visited"), null
-        ));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new ReverseLinkedList().solve(head, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateMiddleSteps() {

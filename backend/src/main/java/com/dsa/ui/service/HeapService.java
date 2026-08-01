@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.heap.*;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -105,40 +107,11 @@ public class HeapService {
     }
 
     private List<ExecutionStep> generateKthLargestSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{3, 2, 1, 5, 6, 4};
+        int[] nums = {3, 2, 1, 5, 6, 4};
         int k = 2;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Kth Largest Element: Array = [3, 2, 1, 5, 6, 4], K = 2. Initialize Min-Heap of max size K.",
-            List.of(), Map.of(), List.of(), Map.of("K", "2", "heap", "[]"),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 7,
-            "Process elements 3, 2, 1, 5: Add to Min-Heap. Size > 2 -> Evict smallest elements (1, 2). Heap contents: [3, 5].",
-            List.of(), Map.of(), List.of(), Map.of("heap", "[3, 5]"),
-            "Array", null, createArrayState(nums, 3, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 7,
-            "Process elements 6, 4: Add to Min-Heap. Evict smallest (3, 4). Heap contents: [5, 6].",
-            List.of(), Map.of(), List.of(), Map.of("heap", "[5, 6]"),
-            "Array", null, createArrayState(nums, 4, 5), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 10,
-            "Kth Largest Complete! Top of Min-Heap `pq.peek()` = 5. The 2nd Largest Element in Array is 5!",
-            List.of(), Map.of(), List.of(), Map.of("2nd Largest", "5"),
-            "Array", null, createArrayState(nums, 3, -1), null, null
-        ));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new KthLargestElement().solve(nums, k, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateMergeKListsSteps() {

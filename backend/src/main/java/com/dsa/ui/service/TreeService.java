@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.tree.*;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -523,36 +525,15 @@ public class TreeService {
     }
 
     private List<ExecutionStep> generateInorderSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> states = new HashMap<>();
-        for (int i = 1; i <= 7; i++) states.put(i, "unvisited");
+        TreeInorderTraversal.Node root = new TreeInorderTraversal.Node(1);
+        root.left = new TreeInorderTraversal.Node(2);
+        root.right = new TreeInorderTraversal.Node(3);
+        root.left.left = new TreeInorderTraversal.Node(4);
+        root.left.right = new TreeInorderTraversal.Node(5);
 
-        // 4 -> 2 -> 5 -> 1 -> 6 -> 3 -> 7
-        states.put(4, "visiting");
-        steps.add(new ExecutionStep(1, 10, "Recurse deepest left: Visit leaf node 4", List.of("inorder(4)"), new HashMap<>(states), List.of(), Map.of("inorder", "[4]"), "Stack", null));
-
-        states.put(4, "visited"); states.put(2, "visiting");
-        steps.add(new ExecutionStep(2, 10, "Backtrack to parent node 2. Visit node 2", List.of("inorder(2)"), new HashMap<>(states), List.of(), Map.of("inorder", "[4, 2]"), "Stack", null));
-
-        states.put(2, "visited"); states.put(5, "visiting");
-        steps.add(new ExecutionStep(3, 11, "Traverse Right to node 5. Visit node 5", List.of("inorder(5)"), new HashMap<>(states), List.of(), Map.of("inorder", "[4, 2, 5]"), "Stack", null));
-
-        states.put(5, "visited"); states.put(1, "visiting");
-        steps.add(new ExecutionStep(4, 10, "Backtrack to Root node 1. Visit node 1", List.of("inorder(1)"), new HashMap<>(states), List.of(), Map.of("inorder", "[4, 2, 5, 1]"), "Stack", null));
-
-        states.put(1, "visited"); states.put(6, "visiting");
-        steps.add(new ExecutionStep(5, 10, "Recurse left of node 3: Visit node 6", List.of("inorder(6)"), new HashMap<>(states), List.of(), Map.of("inorder", "[4, 2, 5, 1, 6]"), "Stack", null));
-
-        states.put(6, "visited"); states.put(3, "visiting");
-        steps.add(new ExecutionStep(6, 10, "Backtrack to node 3. Visit node 3", List.of("inorder(3)"), new HashMap<>(states), List.of(), Map.of("inorder", "[4, 2, 5, 1, 6, 3]"), "Stack", null));
-
-        states.put(3, "visited"); states.put(7, "visiting");
-        steps.add(new ExecutionStep(7, 11, "Traverse Right to node 7. Visit node 7", List.of("inorder(7)"), new HashMap<>(states), List.of(), Map.of("inorder", "[4, 2, 5, 1, 6, 3, 7]"), "Stack", null));
-
-        states.put(7, "visited");
-        steps.add(new ExecutionStep(8, 4, "Inorder Traversal Complete: [4, 2, 5, 1, 6, 3, 7]", List.of(), new HashMap<>(states), List.of(), Map.of("Result", "[4, 2, 5, 1, 6, 3, 7]"), "Stack", null));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new TreeInorderTraversal().solve(root, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generatePostorderSteps() {

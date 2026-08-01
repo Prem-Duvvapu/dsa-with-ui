@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.dp.Knapsack01;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -249,11 +251,13 @@ public class DpService {
     }
 
     private List<ExecutionStep> generateKnapsackSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] dp = createKnapsackGrid();
-        steps.add(new ExecutionStep(1, 4, "Initialize 2D DP Matrix for items [wt=[1,2,3], val=[10,15,40]] and capacity W = 5.", List.of(), Map.of(), List.of(), Map.of("W", "5"), "Matrix", dp));
-        steps.add(new ExecutionStep(2, 12, "0/1 Knapsack DP completed! Maximum Profit = 55 (Item 1 + Item 2).", List.of(), Map.of(), List.of(), Map.of("Max Profit", "55"), "Matrix", dp));
-        return steps;
+        int[] wt = {1, 2, 3};
+        int[] val = {10, 15, 40};
+        int capacity = 5;
+
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new Knapsack01().solve(wt, val, capacity, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateLcsSteps() {

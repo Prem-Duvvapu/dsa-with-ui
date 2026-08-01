@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.graph.*;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -594,23 +596,16 @@ public class AdvancedGraphService {
     }
 
     private List<ExecutionStep> generateDijkstraSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "queued");
-        steps.add(new ExecutionStep(1, 11, "Initialize dist[0]=0, others=INF. Add Pair(dist=0, node=0) to Min-Heap", List.of("(d:0, n:0)"), new HashMap<>(nodeStates), List.of(), Map.of("dist[0]", "0"), "PriorityQueue", null));
-
-        nodeStates.put(0, "visited"); nodeStates.put(1, "queued"); nodeStates.put(2, "queued");
-        steps.add(new ExecutionStep(2, 20, "Poll Min (d:0, n:0). Relax edge 0->1 (wt=4) and 0->2 (wt=1). Push to Min-Heap", List.of("(d:1, n:2)", "(d:4, n:1)"), new HashMap<>(nodeStates), List.of("0-2"), Map.of("dist", "[0, 4, 1, INF]"), "PriorityQueue", null));
-
-        nodeStates.put(2, "visited"); nodeStates.put(3, "queued");
-        steps.add(new ExecutionStep(3, 20, "Poll Min (d:1, n:2). Relax edge 2->3 (wt=2). Update dist[3]=1+2=3. Push (d:3, n:3) to Min-Heap", List.of("(d:3, n:3)", "(d:4, n:1)"), new HashMap<>(nodeStates), List.of("2-3"), Map.of("dist", "[0, 4, 1, 3]"), "PriorityQueue", null));
-
-        nodeStates.put(3, "visited"); nodeStates.put(1, "visited");
-        steps.add(new ExecutionStep(4, 23, "Dijkstra Min-Heap complete. Shortest Distances: [0, 4, 1, 3]", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Final dist", "[0, 4, 1, 3]"), "PriorityQueue", null));
-
-        return steps;
+        int v = 4;
+        Map<Integer, List<DijkstraShortestPath.Edge>> adj = Map.of(
+            0, List.of(new DijkstraShortestPath.Edge(1, 4), new DijkstraShortestPath.Edge(2, 1)),
+            1, List.of(new DijkstraShortestPath.Edge(3, 1)),
+            2, List.of(new DijkstraShortestPath.Edge(1, 2), new DijkstraShortestPath.Edge(3, 5)),
+            3, List.of()
+        );
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new DijkstraShortestPath().solve(v, adj, 0, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateBellmanFordSteps() {

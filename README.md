@@ -14,7 +14,7 @@ The application pairs step-by-step animated execution with:
 
 | Tier | Technology | Description |
 | :--- | :--- | :--- |
-| **Backend** | **Spring Boot (Java 17)** | REST APIs (`http://localhost:8082/api/*`), algorithm step engine |
+| **Backend** | **Spring Boot (Java 17)** | REST APIs (`http://localhost:8923/api/*`), algorithm step engine |
 | **Frontend** | **React 18 + Vite** | SVG Graph, Tree, Array & Linked List renderers, glassmorphism dark mode, player controls |
 | **Testing** | **JUnit 5 & Vitest** | End-to-end unit & integration test coverage for backend and frontend components |
 | **DevOps** | **Docker & Docker Compose** | Single-command deployment (`docker-compose up`) |
@@ -25,7 +25,7 @@ The application pairs step-by-step animated execution with:
 
 ### Option 1: Using Docker (One Command for FE & BE)
 
-Run both the Spring Boot backend (`port 8082`) and React frontend (`port 5174`) in one command:
+Run both the Spring Boot backend (`port 8923`) and React frontend (`port 5174`) in one command:
 
 ```bash
 docker-compose up --build
@@ -42,7 +42,7 @@ Open your browser at **`http://localhost:5174`**!
 cd backend
 mvn spring-boot:run
 ```
-*(Backend runs on `http://localhost:8082`)*
+*(Backend runs on `http://localhost:8923`)*
 
 #### 2. Start the React Frontend
 ```bash
@@ -50,7 +50,7 @@ cd frontend
 npm install
 npm run dev
 ```
-*(Frontend runs on `http://localhost:5173` with proxy configured to Spring Boot on `8082`)*
+*(Frontend runs on `http://localhost:5180` with proxy configured to Spring Boot on `8923`)*
 
 ---
 

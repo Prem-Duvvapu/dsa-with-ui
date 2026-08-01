@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.binarysearch.RotatedSortedArraySearch;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -230,71 +232,12 @@ public class BinarySearchService {
     }
 
     private List<ExecutionStep> generateSearchRotatedSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{4, 5, 6, 7, 0, 1, 2};
         int target = 0;
-        int low = 0, high = nums.length - 1;
-        int stepNum = 1;
 
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Rotated Array: [4, 5, 6, 7, 0, 1, 2], Target = 0. Range: low = 0, high = 6.",
-            List.of(), Map.of(), List.of(), Map.of("low", "0", "high", "6", "target", "0"),
-            "Array", null, createArrayState(nums, low, high, -1), null, null
-        ));
-
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-
-            if (nums[mid] == target) {
-                steps.add(new ExecutionStep(
-                    stepNum++, 6,
-                    String.format("mid = %d (val %d). nums[mid] == target (0 == 0)! TARGET FOUND AT INDEX %d!", mid, nums[mid], mid),
-                    List.of(), Map.of(), List.of(), Map.of("mid", String.valueOf(mid), "Found Index", String.valueOf(mid)),
-                    "Array", null, createArrayState(nums, -1, -1, mid), null, null
-                ));
-                return steps;
-            }
-
-            if (nums[low] <= nums[mid]) { // Left half sorted
-                if (nums[low] <= target && target < nums[mid]) {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 9,
-                        String.format("mid = %d (val %d). Left half [4..7] is sorted and target 0 is inside range [%d..%d]. Move high = mid - 1 = %d.", mid, nums[mid], nums[low], nums[mid], mid - 1),
-                        List.of(), Map.of(), List.of(), Map.of("left_sorted", "true", "high", String.valueOf(mid - 1)),
-                        "Array", null, createArrayState(nums, low, mid - 1, mid), null, null
-                    ));
-                    high = mid - 1;
-                } else {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 10,
-                        String.format("mid = %d (val %d). Left half [4..7] is sorted, but target 0 is NOT inside range [%d..%d]. Move low = mid + 1 = %d.", mid, nums[mid], nums[low], nums[mid], mid + 1),
-                        List.of(), Map.of(), List.of(), Map.of("left_sorted", "true", "low", String.valueOf(mid + 1)),
-                        "Array", null, createArrayState(nums, mid + 1, high, mid), null, null
-                    ));
-                    low = mid + 1;
-                }
-            } else { // Right half sorted
-                if (nums[mid] < target && target <= nums[high]) {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 12,
-                        String.format("mid = %d (val %d). Right half is sorted and target is inside range. Move low = mid + 1.", mid, nums[mid]),
-                        List.of(), Map.of(), List.of(), Map.of("right_sorted", "true", "low", String.valueOf(mid + 1)),
-                        "Array", null, createArrayState(nums, mid + 1, high, mid), null, null
-                    ));
-                    low = mid + 1;
-                } else {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 13,
-                        String.format("mid = %d (val %d). Right half is sorted, target NOT inside range. Move high = mid - 1.", mid, nums[mid]),
-                        List.of(), Map.of(), List.of(), Map.of("right_sorted", "true", "high", String.valueOf(mid - 1)),
-                        "Array", null, createArrayState(nums, low, mid - 1, mid), null, null
-                    ));
-                    high = mid - 1;
-                }
-            }
-        }
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new RotatedSortedArraySearch().solve(nums, target, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateFindPeakSteps() {

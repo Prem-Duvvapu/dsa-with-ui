@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.graph.*;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -569,82 +571,33 @@ public class GraphBfsDfsService {
 
     // Step Generators
     private List<ExecutionStep> generateBfsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 6; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "queued");
-        steps.add(new ExecutionStep(1, 4, "Initialize visited array and add start node 0 to Queue", List.of("0"), new HashMap<>(nodeStates), List.of(), Map.of("Queue", "[0]", "vis[0]", "true"), "Queue", null));
-
-        nodeStates.put(0, "visiting");
-        steps.add(new ExecutionStep(2, 8, "Poll node 0 from Queue. Process node 0", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("node", "0", "bfs", "[0]"), "Queue", null));
-
-        nodeStates.put(1, "queued"); nodeStates.put(2, "queued"); nodeStates.put(0, "visited");
-        steps.add(new ExecutionStep(3, 13, "Inspect unvisited neighbors of 0 -> Add 1 and 2 to Queue", List.of("1", "2"), new HashMap<>(nodeStates), List.of("0-1", "0-2"), Map.of("Queue", "[1, 2]", "bfs", "[0]"), "Queue", null));
-
-        nodeStates.put(1, "visiting");
-        steps.add(new ExecutionStep(4, 8, "Poll node 1 from Queue. Process node 1", List.of("2"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("node", "1", "bfs", "[0, 1]"), "Queue", null));
-
-        nodeStates.put(3, "queued"); nodeStates.put(1, "visited");
-        steps.add(new ExecutionStep(5, 13, "Inspect unvisited neighbors of 1 -> Add 3 to Queue", List.of("2", "3"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("Queue", "[2, 3]", "bfs", "[0, 1]"), "Queue", null));
-
-        nodeStates.put(2, "visiting");
-        steps.add(new ExecutionStep(6, 8, "Poll node 2 from Queue. Process node 2", List.of("3"), new HashMap<>(nodeStates), List.of("0-2"), Map.of("node", "2", "bfs", "[0, 1, 2]"), "Queue", null));
-
-        nodeStates.put(4, "queued"); nodeStates.put(5, "queued"); nodeStates.put(2, "visited");
-        steps.add(new ExecutionStep(7, 13, "Inspect unvisited neighbors of 2 -> Add 4 and 5 to Queue", List.of("3", "4", "5"), new HashMap<>(nodeStates), List.of("2-4", "2-5"), Map.of("Queue", "[3, 4, 5]", "bfs", "[0, 1, 2]"), "Queue", null));
-
-        nodeStates.put(3, "visiting");
-        steps.add(new ExecutionStep(8, 8, "Poll node 3 from Queue. Process node 3", List.of("4", "5"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("node", "3", "bfs", "[0, 1, 2, 3]"), "Queue", null));
-
-        nodeStates.put(3, "visited"); nodeStates.put(4, "visiting");
-        steps.add(new ExecutionStep(9, 8, "Poll node 4 from Queue. Process node 4", List.of("5"), new HashMap<>(nodeStates), List.of("2-4"), Map.of("node", "4", "bfs", "[0, 1, 2, 3, 4]"), "Queue", null));
-
-        nodeStates.put(4, "visited"); nodeStates.put(5, "visiting");
-        steps.add(new ExecutionStep(10, 8, "Poll node 5 from Queue. Process node 5", List.of(), new HashMap<>(nodeStates), List.of("2-5"), Map.of("node", "5", "bfs", "[0, 1, 2, 3, 4, 5]"), "Queue", null));
-
-        nodeStates.put(5, "visited");
-        steps.add(new ExecutionStep(11, 18, "Queue is empty. BFS Traversal Complete: [0, 1, 2, 3, 4, 5]", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Result", "[0, 1, 2, 3, 4, 5]"), "Queue", null));
-
-        return steps;
+        int v = 6;
+        Map<Integer, List<Integer>> adj = Map.of(
+            0, List.of(1, 2),
+            1, List.of(0, 3),
+            2, List.of(0, 4, 5),
+            3, List.of(1),
+            4, List.of(2),
+            5, List.of(2)
+        );
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new BfsTraversal().solve(v, adj, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateDfsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 6; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "visiting");
-        steps.add(new ExecutionStep(1, 9, "Invoke dfs(0). Mark node 0 visited", List.of("dfs(0)"), new HashMap<>(nodeStates), List.of(), Map.of("Stack", "[dfs(0)]", "ls", "[0]"), "Stack", null));
-
-        nodeStates.put(1, "visiting");
-        steps.add(new ExecutionStep(2, 14, "Unvisited neighbor 1 found. Invoke dfs(1)", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("Stack", "[dfs(0), dfs(1)]", "ls", "[0, 1]"), "Stack", null));
-
-        nodeStates.put(3, "visiting");
-        steps.add(new ExecutionStep(3, 14, "Unvisited neighbor 3 found. Invoke dfs(3)", List.of("dfs(0)", "dfs(1)", "dfs(3)"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("Stack", "[dfs(0), dfs(1), dfs(3)]", "ls", "[0, 1, 3]"), "Stack", null));
-
-        nodeStates.put(3, "visited");
-        steps.add(new ExecutionStep(4, 15, "No further unvisited neighbors for 3. Backtrack to dfs(1)", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of(), Map.of("Stack", "[dfs(0), dfs(1)]", "ls", "[0, 1, 3]"), "Stack", null));
-
-        nodeStates.put(1, "visited");
-        steps.add(new ExecutionStep(5, 15, "No further unvisited neighbors for 1. Backtrack to dfs(0)", List.of("dfs(0)"), new HashMap<>(nodeStates), List.of(), Map.of("Stack", "[dfs(0)]", "ls", "[0, 1, 3]"), "Stack", null));
-
-        nodeStates.put(2, "visiting");
-        steps.add(new ExecutionStep(6, 14, "Unvisited neighbor 2 found. Invoke dfs(2)", List.of("dfs(0)", "dfs(2)"), new HashMap<>(nodeStates), List.of("0-2"), Map.of("Stack", "[dfs(0), dfs(2)]", "ls", "[0, 1, 3, 2]"), "Stack", null));
-
-        nodeStates.put(4, "visiting");
-        steps.add(new ExecutionStep(7, 14, "Unvisited neighbor 4 found. Invoke dfs(4)", List.of("dfs(0)", "dfs(2)", "dfs(4)"), new HashMap<>(nodeStates), List.of("2-4"), Map.of("Stack", "[dfs(0), dfs(2), dfs(4)]", "ls", "[0, 1, 3, 2, 4]"), "Stack", null));
-
-        nodeStates.put(4, "visited");
-        steps.add(new ExecutionStep(8, 15, "Backtrack to dfs(2)", List.of("dfs(0)", "dfs(2)"), new HashMap<>(nodeStates), List.of(), Map.of("Stack", "[dfs(0), dfs(2)]", "ls", "[0, 1, 3, 2, 4]"), "Stack", null));
-
-        nodeStates.put(5, "visiting");
-        steps.add(new ExecutionStep(9, 14, "Unvisited neighbor 5 found. Invoke dfs(5)", List.of("dfs(0)", "dfs(2)", "dfs(5)"), new HashMap<>(nodeStates), List.of("2-5"), Map.of("Stack", "[dfs(0), dfs(2), dfs(5)]", "ls", "[0, 1, 3, 2, 4, 5]"), "Stack", null));
-
-        nodeStates.put(5, "visited"); nodeStates.put(2, "visited"); nodeStates.put(0, "visited");
-        steps.add(new ExecutionStep(10, 5, "DFS Traversal Complete: [0, 1, 3, 2, 4, 5]", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Result", "[0, 1, 3, 2, 4, 5]"), "Stack", null));
-
-        return steps;
+        int v = 6;
+        Map<Integer, List<Integer>> adj = Map.of(
+            0, List.of(1, 2),
+            1, List.of(0, 3),
+            2, List.of(0, 4, 5),
+            3, List.of(1),
+            4, List.of(2),
+            5, List.of(2)
+        );
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new DfsTraversal().solve(v, adj, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateProvincesSteps() {
@@ -695,19 +648,14 @@ public class GraphBfsDfsService {
     }
 
     private List<ExecutionStep> generateRottingOrangesSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] grid = createRottingGrid();
-
-        steps.add(new ExecutionStep(1, 7, "Initialize Queue with initial rotten oranges at (0,0) at t=0", List.of("(0,0,t=0)"), Map.of(), List.of(), Map.of("fresh", "4", "time", "0"), "Matrix", copyGrid(grid)));
-        grid[0][1] = 2; grid[1][0] = 2;
-        steps.add(new ExecutionStep(2, 21, "Minute 1: Rotten orange at (0,0) rots adjacent fresh oranges at (0,1) and (1,0)", List.of("(0,1,t=1)", "(1,0,t=1)"), Map.of(), List.of(), Map.of("fresh", "2", "time", "1"), "Matrix", copyGrid(grid)));
-        grid[1][1] = 2;
-        steps.add(new ExecutionStep(3, 21, "Minute 2: Rotten orange at (0,1) rots fresh orange at (1,1)", List.of("(1,1,t=2)"), Map.of(), List.of(), Map.of("fresh", "1", "time", "2"), "Matrix", copyGrid(grid)));
-        grid[2][1] = 2;
-        steps.add(new ExecutionStep(4, 21, "Minute 3: Rotten orange at (1,1) rots fresh orange at (2,1)", List.of("(2,1,t=3)"), Map.of(), List.of(), Map.of("fresh", "0", "time", "3"), "Matrix", copyGrid(grid)));
-        steps.add(new ExecutionStep(5, 26, "All oranges are rotten! Total Minimum Minutes = 3", List.of(), Map.of(), List.of(), Map.of("Result Time", "3"), "Matrix", copyGrid(grid)));
-
-        return steps;
+        int[][] grid = {
+            {2, 1, 1},
+            {1, 1, 0},
+            {0, 1, 1}
+        };
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new RottingOranges().solve(grid, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateFloodFillSteps() {

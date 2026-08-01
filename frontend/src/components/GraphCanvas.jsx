@@ -19,7 +19,7 @@ export default function GraphCanvas({ problem, currentStep }) {
   };
 
   const isSudoku = gridState && gridState.length === 9 && gridState[0].length === 9;
-  const isChessboard = gridState && gridState.length === 4 && gridState[0].length === 4 && problem?.id === 'n-queens';
+  const isChessboard = gridState && gridState.length === 4 && gridState[0].length === 4 && (problem?.id === 'n-queens' || problem?.title?.toLowerCase().includes('queen'));
 
   return (
     <div className="glass-panel" style={{ flex: 1, minHeight: '440px', padding: '20px', display: 'flex', flexDirection: 'column', position: 'relative' }}>

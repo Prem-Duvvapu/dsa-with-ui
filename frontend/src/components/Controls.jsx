@@ -9,27 +9,37 @@ export default function Controls({
   onPlayPause,
   onStepNext,
   onStepPrev,
+  onStepSelect,
   onReset,
   onSpeedChange,
   stepDescription
 }) {
+  const maxIndex = Math.max(0, (totalSteps || 1) - 1);
+
   return (
     <div className="glass-panel" style={{ padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-        {/* Step Counter */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-secondary)' }}>
+        {/* Step Counter & Scrubber */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: '1', minWidth: '240px' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
             Step <strong style={{ color: 'var(--accent-indigo)', fontSize: '1rem' }}>{currentStepIndex + 1}</strong> / {totalSteps || 1}
           </span>
-          {/* Progress Bar */}
-          <div style={{ width: '120px', height: '6px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{
-              width: `${((currentStepIndex + 1) / (totalSteps || 1)) * 100}%`,
-              height: '100%',
-              background: 'linear-gradient(90deg, var(--accent-indigo), var(--accent-cyan))',
-              transition: 'width 0.2s ease'
-            }} />
-          </div>
+          {/* Interactive Step Scrubber Slider */}
+          <input
+            type="range"
+            min="0"
+            max={maxIndex}
+            value={currentStepIndex}
+            onChange={(e) => onStepSelect && onStepSelect(Number(e.target.value))}
+            style={{
+              flex: '1',
+              accentColor: 'var(--accent-indigo)',
+              cursor: 'pointer',
+              height: '6px',
+              borderRadius: '3px'
+            }}
+            title="Drag to jump to any step in the complete execution trace"
+          />
         </div>
 
         {/* Control Buttons */}
@@ -46,7 +56,7 @@ export default function Controls({
             {isPlaying ? <><Pause size={18} /> Pause</> : <><Play size={18} /> Play</>}
           </button>
 
-          <button className="btn btn-secondary" onClick={onStepNext} disabled={currentStepIndex >= totalSteps - 1} style={{ padding: '8px 14px', opacity: currentStepIndex >= totalSteps - 1 ? 0.4 : 1 }}>
+          <button className="btn btn-secondary" onClick={onStepNext} disabled={currentStepIndex >= (totalSteps - 1)} style={{ padding: '8px 14px', opacity: currentStepIndex >= (totalSteps - 1) ? 0.4 : 1 }}>
             Next <SkipForward size={18} />
           </button>
         </div>

@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.greedy.*;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -153,54 +155,11 @@ public class GreedyService {
 
     // Step Generators
     private List<ExecutionStep> generateMeetingsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] start = new int[]{1, 3, 0, 5, 8, 5};
-        int[] end = new int[]{2, 4, 6, 7, 9, 9};
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Input Meetings (start, end): [(1,2), (3,4), (0,6), (5,7), (8,9), (5,9)]. Sort meetings by end time ascending.",
-            List.of(), Map.of(), List.of(), Map.of("Sorted Meetings", "[(1,2), (3,4), (0,6), (5,7), (8,9), (5,9)]"),
-            "Array", null, createArrayState(end, -1, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 14,
-            "Select Meeting 1 (1,2): End time limit = 2. Total meetings = 1.",
-            List.of(), Map.of(), List.of(), Map.of("limit", "2", "count", "1"),
-            "Array", null, createArrayState(end, 0, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 16,
-            "Select Meeting 2 (3,4): start (3) > limit (2)! Accept meeting. New limit = 4. Total meetings = 2.",
-            List.of(), Map.of(), List.of(), Map.of("limit", "4", "count", "2"),
-            "Array", null, createArrayState(end, 1, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 16,
-            "Select Meeting 4 (5,7): start (5) > limit (4)! Accept meeting. New limit = 7. Total meetings = 3.",
-            List.of(), Map.of(), List.of(), Map.of("limit", "7", "count", "3"),
-            "Array", null, createArrayState(end, 3, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 16,
-            "Select Meeting 5 (8,9): start (8) > limit (7)! Accept meeting. New limit = 9. Total meetings = 4.",
-            List.of(), Map.of(), List.of(), Map.of("limit", "9", "count", "4"),
-            "Array", null, createArrayState(end, 4, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 21,
-            "N Meetings Complete! Maximum non-overlapping meetings accommodated in 1 room = 4.",
-            List.of(), Map.of(), List.of(), Map.of("Max Meetings", "4"),
-            "Array", null, createArrayState(end, -1, -1), null, null
-        ));
-
-        return steps;
+        int[] start = {1, 3, 0, 5, 8, 5};
+        int[] end = {2, 4, 6, 7, 9, 9};
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new NMeetingsInOneRoom().solve(start, end, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateJumpGameSteps() {

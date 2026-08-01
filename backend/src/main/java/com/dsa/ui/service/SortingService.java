@@ -1,6 +1,8 @@
 package com.dsa.ui.service;
 
+import com.dsa.ui.algorithm.sorting.MergeSort;
 import com.dsa.ui.model.*;
+import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -431,175 +433,12 @@ public class SortingService {
         return steps;
     }
 
-    // Comprehensive Granular Merge Sort Step Generator with Recursion Call Tree!
+    // Full Execution Trace Merge Sort Generator using TraceRecorder
     private List<ExecutionStep> generateMergeSortSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
         int[] arr = new int[]{13, 46, 24, 52, 20, 9};
-        Map<Integer, String> nodeStates = new HashMap<>();
-        int stepNum = 1;
-
-        // 1. Initial State
-        nodeStates.put(1, "calling");
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Input Array: [13, 46, 24, 52, 20, 9] (N = 6). Call Root mergeSort(l=0, r=5). Recursion Tree Level 0.",
-            List.of("mergeSort(0, 5)"), new HashMap<>(nodeStates), List.of(), Map.of("Root Call", "ms(0,5)", "Call Stack Depth", "1"),
-            "Stack", null, createDetailedArrayState(arr, -1, -1, -1, 0), null, null
-        ));
-
-        // 2. Divide Left Half ms(0, 2)
-        nodeStates.put(2, "calling");
-        steps.add(new ExecutionStep(
-            stepNum++, 6,
-            "Divide Left: Call mergeSort(0, 2) for subarray [13, 46, 24]. Call Stack Depth = 2.",
-            List.of("mergeSort(0, 5)", "mergeSort(0, 2)"), new HashMap<>(nodeStates), List.of(), Map.of("Subarray", "[13, 46, 24]", "mid", "1"),
-            "Stack", null, createDetailedArrayState(arr, 0, 2, -1, 0), null, null
-        ));
-
-        // 3. Divide Left Half ms(0, 1)
-        nodeStates.put(4, "calling");
-        steps.add(new ExecutionStep(
-            stepNum++, 6,
-            "Divide Left: Call mergeSort(0, 1) for subarray [13, 46]. Call Stack Depth = 3.",
-            List.of("mergeSort(0, 5)", "mergeSort(0, 2)", "mergeSort(0, 1)"), new HashMap<>(nodeStates), List.of(), Map.of("Subarray", "[13, 46]", "mid", "0"),
-            "Stack", null, createDetailedArrayState(arr, 0, 1, -1, 0), null, null
-        ));
-
-        // 4. Base Case ms(0, 0)
-        nodeStates.put(8, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Base Case: mergeSort(0, 0) for single element [13] (l >= r). Single element is already sorted!",
-            List.of("mergeSort(0, 5)", "mergeSort(0, 2)", "mergeSort(0, 1)", "mergeSort(0, 0)"), new HashMap<>(nodeStates), List.of(), Map.of("Base Case", "ms(0,0)", "val", "13"),
-            "Stack", null, createDetailedArrayState(arr, 0, -1, -1, 0), null, null
-        ));
-
-        // 5. Base Case ms(1, 1)
-        nodeStates.put(9, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Base Case: mergeSort(1, 1) for single element [46] (l >= r). Single element is already sorted!",
-            List.of("mergeSort(0, 5)", "mergeSort(0, 2)", "mergeSort(0, 1)", "mergeSort(1, 1)"), new HashMap<>(nodeStates), List.of(), Map.of("Base Case", "ms(1,1)", "val", "46"),
-            "Stack", null, createDetailedArrayState(arr, 1, -1, -1, 0), null, null
-        ));
-
-        // 6. Merge ms(0, 1)
-        nodeStates.put(4, "merging");
-        steps.add(new ExecutionStep(
-            stepNum++, 11,
-            "Merge Phase merge(0, 0, 1): Compare 2 sorted halves [13] and [46] -> Combine to [13, 46]. Node ms(0,1) merged!",
-            List.of("merge(0, 0, 1)"), new HashMap<>(nodeStates), List.of(), Map.of("Merged Subarray", "[13, 46]"),
-            "Stack", null, createDetailedArrayState(arr, 0, 1, -1, 0), null, null
-        ));
-        nodeStates.put(4, "visited");
-
-        // 7. Base Case ms(2, 2)
-        nodeStates.put(5, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Base Case: mergeSort(2, 2) for single element [24]. Single element is already sorted!",
-            List.of("mergeSort(0, 5)", "mergeSort(0, 2)", "mergeSort(2, 2)"), new HashMap<>(nodeStates), List.of(), Map.of("Base Case", "ms(2,2)", "val", "24"),
-            "Stack", null, createDetailedArrayState(arr, 2, -1, -1, 0), null, null
-        ));
-
-        // 8. Merge ms(0, 2)
-        int[] arrLeftMerged = new int[]{13, 24, 46, 52, 20, 9};
-        nodeStates.put(2, "merging");
-        steps.add(new ExecutionStep(
-            stepNum++, 11,
-            "Merge Phase merge(0, 1, 2): Compare left sorted [13, 46] and right sorted [24] -> Combine to [13, 24, 46]. Node ms(0,2) merged!",
-            List.of("merge(0, 1, 2)"), new HashMap<>(nodeStates), List.of(), Map.of("Merged Subarray", "[13, 24, 46]"),
-            "Stack", null, createDetailedArrayState(arrLeftMerged, 0, 2, -1, 0), null, null
-        ));
-        nodeStates.put(2, "visited");
-
-        // 9. Divide Right Half ms(3, 5)
-        nodeStates.put(3, "calling");
-        steps.add(new ExecutionStep(
-            stepNum++, 6,
-            "Divide Right: Call mergeSort(3, 5) for subarray [52, 20, 9]. Call Stack Depth = 2.",
-            List.of("mergeSort(0, 5)", "mergeSort(3, 5)"), new HashMap<>(nodeStates), List.of(), Map.of("Subarray", "[52, 20, 9]", "mid", "4"),
-            "Stack", null, createDetailedArrayState(arrLeftMerged, 3, 5, -1, 0), null, null
-        ));
-
-        // 10. Divide Left Half of Right ms(3, 4)
-        nodeStates.put(6, "calling");
-        steps.add(new ExecutionStep(
-            stepNum++, 6,
-            "Divide Left: Call mergeSort(3, 4) for subarray [52, 20]. Call Stack Depth = 3.",
-            List.of("mergeSort(0, 5)", "mergeSort(3, 5)", "mergeSort(3, 4)"), new HashMap<>(nodeStates), List.of(), Map.of("Subarray", "[52, 20]", "mid", "3"),
-            "Stack", null, createDetailedArrayState(arrLeftMerged, 3, 4, -1, 0), null, null
-        ));
-
-        // 11. Base Case ms(3, 3)
-        nodeStates.put(10, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Base Case: mergeSort(3, 3) for single element [52]. Single element is already sorted!",
-            List.of("mergeSort(0, 5)", "mergeSort(3, 5)", "mergeSort(3, 4)", "mergeSort(3, 3)"), new HashMap<>(nodeStates), List.of(), Map.of("Base Case", "ms(3,3)", "val", "52"),
-            "Stack", null, createDetailedArrayState(arrLeftMerged, 3, -1, -1, 0), null, null
-        ));
-
-        // 12. Base Case ms(4, 4)
-        nodeStates.put(11, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Base Case: mergeSort(4, 4) for single element [20]. Single element is already sorted!",
-            List.of("mergeSort(0, 5)", "mergeSort(3, 5)", "mergeSort(3, 4)", "mergeSort(4, 4)"), new HashMap<>(nodeStates), List.of(), Map.of("Base Case", "ms(4,4)", "val", "20"),
-            "Stack", null, createDetailedArrayState(arrLeftMerged, 4, -1, -1, 0), null, null
-        ));
-
-        // 13. Merge ms(3, 4)
-        int[] arrSubRight = new int[]{13, 24, 46, 20, 52, 9};
-        nodeStates.put(6, "merging");
-        steps.add(new ExecutionStep(
-            stepNum++, 11,
-            "Merge Phase merge(3, 3, 4): Compare [52] and [20] -> Combine to [20, 52]. Node ms(3,4) merged!",
-            List.of("merge(3, 3, 4)"), new HashMap<>(nodeStates), List.of(), Map.of("Merged Subarray", "[20, 52]"),
-            "Stack", null, createDetailedArrayState(arrSubRight, 3, 4, -1, 0), null, null
-        ));
-        nodeStates.put(6, "visited");
-
-        // 14. Base Case ms(5, 5)
-        nodeStates.put(7, "visited");
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Base Case: mergeSort(5, 5) for single element [9]. Single element is already sorted!",
-            List.of("mergeSort(0, 5)", "mergeSort(3, 5)", "mergeSort(5, 5)"), new HashMap<>(nodeStates), List.of(), Map.of("Base Case", "ms(5,5)", "val", "9"),
-            "Stack", null, createDetailedArrayState(arrSubRight, 5, -1, -1, 0), null, null
-        ));
-
-        // 15. Merge ms(3, 5)
-        int[] arrRightMerged = new int[]{13, 24, 46, 9, 20, 52};
-        nodeStates.put(3, "merging");
-        steps.add(new ExecutionStep(
-            stepNum++, 11,
-            "Merge Phase merge(3, 4, 5): Compare left sorted [20, 52] and right sorted [9] -> Combine to [9, 20, 52]. Node ms(3,5) merged!",
-            List.of("merge(3, 4, 5)"), new HashMap<>(nodeStates), List.of(), Map.of("Merged Subarray", "[9, 20, 52]"),
-            "Stack", null, createDetailedArrayState(arrRightMerged, 3, 5, -1, 0), null, null
-        ));
-        nodeStates.put(3, "visited");
-
-        // 16. Final Root Merge ms(0, 5)
-        int[] finalSorted = new int[]{9, 13, 20, 24, 46, 52};
-        nodeStates.put(1, "merging");
-        steps.add(new ExecutionStep(
-            stepNum++, 11,
-            "FINAL ROOT MERGE merge(0, 2, 5): Compare left sorted [13, 24, 46] and right sorted [9, 20, 52] using 2 pointers. Combine to fully sorted array [9, 13, 20, 24, 46, 52]!",
-            List.of("merge(0, 2, 5)"), new HashMap<>(nodeStates), List.of(), Map.of("Final Merged Array", "[9, 13, 20, 24, 46, 52]"),
-            "Stack", null, createDetailedArrayState(finalSorted, 0, 5, -1, 6), null, null
-        ));
-        nodeStates.put(1, "visited");
-
-        // 17. Final Completion
-        steps.add(new ExecutionStep(
-            stepNum++, 16,
-            "Merge Sort Complete! Recursion Tree fully executed & merged. Output: [9, 13, 20, 24, 46, 52].",
-            List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
-            "Stack", null, createDetailedArrayState(finalSorted, -1, -1, -1, 6), null, null
-        ));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new MergeSort().solve(arr, recorder);
+        return recorder.toExecutionSteps();
     }
 
     // Granular Quick Sort Step Generator
