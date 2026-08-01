@@ -124,19 +124,22 @@ export default function GraphCanvas({ problem, currentStep }) {
                 return (
                   <div
                     key={`grid-${rIdx}-${cIdx}`}
+                    className={val !== 0 ? 'animate-ripple' : ''}
                     style={{
                       width: '55px',
                       height: '55px',
                       borderRadius: '8px',
-                      background: val === 1 || val === 2 ? 'rgba(59, 130, 246, 0.25)' : '#1e293b',
-                      border: val === 1 || val === 2 ? '1px solid #3b82f6' : '1px solid #334155',
+                      background: val === 2 ? 'rgba(16, 185, 129, 0.35)' : val === 1 || val === 99 ? 'rgba(59, 130, 246, 0.25)' : '#1e293b',
+                      border: val === 2 ? '1px solid #34d399' : val === 1 || val === 99 ? '1px solid #3b82f6' : '1px solid #334155',
+                      boxShadow: val === 2 ? '0 0 14px rgba(16,185,129,0.5)' : val === 1 || val === 99 ? '0 0 14px rgba(59,130,246,0.5)' : 'none',
                       color: val !== 0 ? '#ffffff' : '#64748b',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justify: 'center',
                       fontWeight: '700',
-                      fontSize: '0.9rem'
+                      fontSize: '0.9rem',
+                      transition: 'all var(--motion-normal) var(--ease-standard)'
                     }}
                   >
                     <span>{val}</span>

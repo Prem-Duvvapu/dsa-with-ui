@@ -31,52 +31,63 @@ export default function Controls({
             max={maxIndex}
             value={currentStepIndex}
             onChange={(e) => onStepSelect && onStepSelect(Number(e.target.value))}
-            style={{
-              flex: '1',
-              accentColor: 'var(--accent-indigo)',
-              cursor: 'pointer',
-              height: '6px',
-              borderRadius: '3px'
-            }}
+            className="step-scrubber-slider"
             title="Drag to jump to any step in the complete execution trace"
           />
         </div>
 
         {/* Control Buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button className="btn btn-secondary" onClick={onReset} title="Reset to Start" style={{ padding: '8px 12px' }}>
+          <button className="btn btn-secondary" onClick={onReset} title="Reset to Start (Shortcut: R)" style={{ padding: '8px 12px' }}>
             <RotateCcw size={16} /> Reset
           </button>
 
-          <button className="btn btn-secondary" onClick={onStepPrev} disabled={currentStepIndex <= 0} style={{ padding: '8px 14px', opacity: currentStepIndex <= 0 ? 0.4 : 1 }}>
+          <button className="btn btn-secondary" onClick={onStepPrev} disabled={currentStepIndex <= 0} title="Previous Step (Shortcut: Left Arrow)" style={{ padding: '8px 14px', opacity: currentStepIndex <= 0 ? 0.4 : 1 }}>
             <SkipBack size={18} /> Prev
           </button>
 
-          <button className={`btn ${isPlaying ? 'btn-danger' : 'btn-primary'}`} onClick={onPlayPause} style={{ padding: '8px 20px', minWidth: '100px', justifyContent: 'center' }}>
+          <button className={`btn ${isPlaying ? 'btn-danger' : 'btn-primary'}`} onClick={onPlayPause} title="Play / Pause (Shortcut: Spacebar)" style={{ padding: '8px 20px', minWidth: '100px', justifyContent: 'center' }}>
             {isPlaying ? <><Pause size={18} /> Pause</> : <><Play size={18} /> Play</>}
           </button>
 
-          <button className="btn btn-secondary" onClick={onStepNext} disabled={currentStepIndex >= (totalSteps - 1)} style={{ padding: '8px 14px', opacity: currentStepIndex >= (totalSteps - 1) ? 0.4 : 1 }}>
+          <button className="btn btn-secondary" onClick={onStepNext} disabled={currentStepIndex >= (totalSteps - 1)} title="Next Step (Shortcut: Right Arrow)" style={{ padding: '8px 14px', opacity: currentStepIndex >= (totalSteps - 1) ? 0.4 : 1 }}>
             Next <SkipForward size={18} />
           </button>
         </div>
 
-        {/* Speed Slider */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {/* Speed Selector Pills */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Sliders size={16} color="var(--text-muted)" />
           <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Speed:</span>
-          <input
-            type="range"
-            min="200"
-            max="2000"
-            step="100"
-            value={speed}
-            onChange={(e) => onSpeedChange(Number(e.target.value))}
-            style={{ accentColor: 'var(--accent-indigo)', cursor: 'pointer', width: '90px' }}
-          />
-          <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-code)', color: 'var(--accent-cyan)', width: '38px' }}>
-            {(2000 / speed).toFixed(1)}x
-          </span>
+          {[0.5, 1.0, 2.0, 4.0].map((spdVal) => {
+            const ms = Math.round(1000 / spdVal);
+            const isActive = Math.abs(speed - ms) < 50;
+            return (
+              <button
+                key={spdVal}
+                onClick={() => onSpeedChange(ms)}
+                style={{
+                  padding: '3px 8px',
+                  borderRadius: '6px',
+                  fontSize: '0.75rem',
+                  fontWeight: '700',
+                  border: isActive ? '1px solid var(--accent-indigo)' : '1px solid rgba(255, 255, 255, 0.1)',
+                  background: isActive ? 'rgba(99, 102, 241, 0.25)' : 'rgba(255, 255, 255, 0.05)',
+                  color: isActive ? '#ffffff' : 'var(--text-secondary)',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                {spdVal}x
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Keyboard Hotkey Indicator */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.72rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '4px 8px', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
+          <span>⌨ Hotkeys:</span>
+          <span style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-code)' }}>[Space] [←] [→] [R]</span>
         </div>
       </div>
 

@@ -15,6 +15,12 @@ export default function RecursionTreeCanvas({ problem, currentStep }) {
       case 'merging':
       case 'comparing':
         return { fill: '#f59e0b', stroke: '#fbbf24', glow: '0 0 18px rgba(245, 158, 11, 0.7)', label: 'Merging' };
+      case 'memo_hit':
+      case 'cache_hit':
+        return { fill: '#eab308', stroke: '#fde047', glow: 'var(--glow-gold)', label: 'Cache Hit' };
+      case 'pruned':
+      case 'backtrack':
+        return { fill: '#ef4444', stroke: '#f87171', glow: 'var(--glow-rose)', label: 'Backtracked' };
       case 'visited':
       case 'merged':
       case 'sorted':
@@ -41,19 +47,19 @@ export default function RecursionTreeCanvas({ problem, currentStep }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#475569' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Pending Call</span>
+            <span style={{ color: 'var(--text-secondary)' }}>Pending</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
             <span style={{ color: '#60a5fa' }}>Active Call</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }}></span>
-            <span style={{ color: '#fbbf24' }}>2-Way Merging</span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#eab308' }}></span>
+            <span style={{ color: '#fde047' }}>Cache Hit</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
-            <span style={{ color: '#34d399' }}>Sorted / Merged</span>
+            <span style={{ color: '#34d399' }}>Completed</span>
           </div>
         </div>
       </div>
@@ -75,7 +81,7 @@ export default function RecursionTreeCanvas({ problem, currentStep }) {
                       y1={node.y}
                       x2={leftChild.x}
                       y2={leftChild.y}
-                      stroke="#475569"
+                      stroke={nodeStates[leftChild.id] === 'pruned' ? '#ef4444' : '#475569'}
                       strokeWidth="2"
                       strokeDasharray={nodeStates[leftChild.id] ? 'none' : '4 4'}
                     />
@@ -86,7 +92,7 @@ export default function RecursionTreeCanvas({ problem, currentStep }) {
                       y1={node.y}
                       x2={rightChild.x}
                       y2={rightChild.y}
-                      stroke="#475569"
+                      stroke={nodeStates[rightChild.id] === 'pruned' ? '#ef4444' : '#475569'}
                       strokeWidth="2"
                       strokeDasharray={nodeStates[rightChild.id] ? 'none' : '4 4'}
                     />
@@ -99,6 +105,7 @@ export default function RecursionTreeCanvas({ problem, currentStep }) {
             {treeNodes.map((node) => {
               const colorInfo = getNodeColor(node.id);
               const isCalling = nodeStates[node.id] === 'calling' || nodeStates[node.id] === 'active';
+              const isCacheHit = nodeStates[node.id] === 'memo_hit' || nodeStates[node.id] === 'cache_hit';
 
               return (
                 <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} style={{ cursor: 'pointer' }}>
@@ -110,9 +117,10 @@ export default function RecursionTreeCanvas({ problem, currentStep }) {
                     rx="8"
                     fill={colorInfo.fill}
                     stroke={colorInfo.stroke}
-                    strokeWidth={isCalling ? 2.5 : 1.5}
+                    strokeWidth={isCalling || isCacheHit ? 2.5 : 1.5}
+                    className={isCacheHit ? 'animate-cache-hit' : ''}
                     style={{
-                      transition: 'all 0.3s ease',
+                      transition: 'all var(--motion-normal) var(--ease-standard)',
                       filter: colorInfo.glow !== 'none' ? `drop-shadow(${colorInfo.glow})` : 'none'
                     }}
                   />
@@ -125,6 +133,17 @@ export default function RecursionTreeCanvas({ problem, currentStep }) {
                   >
                     {node.val}
                   </text>
+                  {isCacheHit && (
+                    <text
+                      textAnchor="middle"
+                      y="-22"
+                      fill="#fde047"
+                      fontSize="9"
+                      fontWeight="800"
+                    >
+                      CACHE HIT
+                    </text>
+                  )}
                 </g>
               );
             })}

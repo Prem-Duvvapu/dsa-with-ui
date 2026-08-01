@@ -12,10 +12,10 @@ export default function ArrayCanvas({ problem, currentStep }) {
       case 'active':
         return { bg: 'linear-gradient(180deg, #f59e0b, #d97706)', border: '#fbbf24', glow: '0 0 16px rgba(245, 158, 11, 0.7)', label: 'comparing (j)' };
       case 'swapping':
-        return { bg: 'linear-gradient(180deg, #ef4444, #dc2626)', border: '#f87171', glow: '0 0 18px rgba(239, 68, 68, 0.8)', label: 'swapping' };
+        return { bg: 'linear-gradient(180deg, #f97316, #ea580c)', border: '#fb923c', glow: 'var(--glow-orange)', label: 'swapping' };
       case 'sorted':
       case 'visited':
-        return { bg: 'linear-gradient(180deg, #10b981, #059669)', border: '#34d399', glow: '0 0 14px rgba(16, 185, 129, 0.5)', label: 'sorted' };
+        return { bg: 'linear-gradient(180deg, #10b981, #059669)', border: '#34d399', glow: 'var(--glow-emerald)', label: 'sorted' };
       default:
         return { bg: 'linear-gradient(180deg, #334155, #1e293b)', border: '#475569', glow: 'none', label: 'unsorted' };
     }
@@ -41,11 +41,15 @@ export default function ArrayCanvas({ problem, currentStep }) {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#6366f1' }}></span>
-            <span style={{ color: '#818cf8' }}>Minimum (mini / i)</span>
+            <span style={{ color: '#818cf8' }}>Active / Minimum</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }}></span>
-            <span style={{ color: '#fbbf24' }}>Comparing (j)</span>
+            <span style={{ color: '#fbbf24' }}>Comparing</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f97316' }}></span>
+            <span style={{ color: '#fb923c' }}>Swapping</span>
           </div>
         </div>
       </div>
@@ -62,16 +66,16 @@ export default function ArrayCanvas({ problem, currentStep }) {
                 {el.value}
               </span>
 
-              {/* Animated Bar */}
+              {/* Animated Bar with Spring Overshoot Easing */}
               <div
                 style={{
-                  width: '42px',
+                  width: '44px',
                   height: `${heightPercent * 2.2}px`,
                   borderRadius: '8px 8px 4px 4px',
                   background: colorInfo.bg,
                   border: `2px solid ${colorInfo.border}`,
                   boxShadow: colorInfo.glow,
-                  transition: 'all 0.3s ease',
+                  transition: 'all var(--motion-slow) var(--ease-out-back)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'

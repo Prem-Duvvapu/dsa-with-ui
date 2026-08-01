@@ -139,6 +139,34 @@ export default function App() {
     }
   };
 
+  // Global Keyboard Shortcuts (Space: Play/Pause, ArrowLeft: Prev, ArrowRight: Next, R: Reset)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setIsPlaying(prev => !prev);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        setIsPlaying(false);
+        setCurrentStepIndex(prev => Math.max(0, prev - 1));
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        setIsPlaying(false);
+        setCurrentStepIndex(prev => Math.min((steps.length || 1) - 1, prev + 1));
+      } else if (e.code === 'KeyR') {
+        e.preventDefault();
+        setIsPlaying(false);
+        setCurrentStepIndex(0);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [steps.length]);
+
   const currentStep = steps[currentStepIndex] || null;
 
   const renderCanvas = () => {
