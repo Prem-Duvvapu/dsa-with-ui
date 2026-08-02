@@ -52,6 +52,33 @@ export default function App() {
     return () => clearInterval(timerRef.current);
   }, [isPlaying, speed, steps.length]);
 
+  // Global Keyboard Shortcuts (Space: Play/Pause, Right: Next, Left: Prev, R: Reset)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setIsPlaying(prev => !prev);
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        setIsPlaying(false);
+        setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1));
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        setIsPlaying(false);
+        setCurrentStepIndex(p => Math.max(p - 1, 0));
+      } else if (e.code === 'KeyR') {
+        e.preventDefault();
+        setIsPlaying(false);
+        setCurrentStepIndex(0);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [steps.length]);
+
   const fetchAllProblems = async () => {
     try {
       setLoading(true);
@@ -113,7 +140,6 @@ export default function App() {
       const prob = probList.find(p => p.id === id);
       let endpoint = prob?._endpoint;
 
-      // Fallback endpoint resolution if _endpoint missing
       if (!endpoint && prob) {
         const cat = prob.category || '';
         if (cat.includes('Advanced Graphs')) endpoint = `/api/graphs/advanced`;
@@ -149,12 +175,12 @@ export default function App() {
       } else if (fetchedProblem && fetchedProblem.executionSteps && fetchedProblem.executionSteps.length > 0) {
         setSteps(fetchedProblem.executionSteps);
       } else {
-        // Safe fallback execution step
+        // Safe fallback step
         setSteps([{
           stepIndex: 1,
           lineNumber: 1,
           description: `Interactive Execution Visualizer for ${fetchedProblem?.title || id}.`,
-          activeNodes: [],
+          queueOrStackState: [],
           nodeStates: {},
           activeEdges: [],
           variables: { Status: "Loaded", Algorithm: fetchedProblem?.title || id },
@@ -221,14 +247,14 @@ export default function App() {
             )}
 
             <Controls
+              isPlaying={isPlaying}
               currentStepIndex={currentStepIndex}
               totalSteps={steps.length}
-              isPlaying={isPlaying}
               speed={speed}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onStepForward={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
-              onStepBack={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
+              onPlayPause={() => setIsPlaying(prev => !prev)}
+              onStepNext={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
+              onStepPrev={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
+              onStepSelect={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
               onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
               onSpeedChange={setSpeed}
               stepDescription={currentStep?.description}
@@ -236,10 +262,18 @@ export default function App() {
           </div>
 
           {/* Bottom Diagnostics & Code Inspection Dashboard */}
-          <div style={{ height: '320px', display: 'grid', gridTemplateColumns: '1.2fr 1fr 0.8fr', gap: '12px' }}>
-            <DataStructurePanel step={currentStep} problem={activeProblem} />
-            <CodeViewer code={activeProblem?.javaCode} currentStep={currentStep} />
-            <ComplexityPanel problem={activeProblem} />
+          <div style={{ height: '320px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 0.8fr', gap: '12px' }}>
+            <DataStructurePanel 
+              currentStep={currentStep} 
+              dsType={activeProblem?.dsType || (activeProblem?.category?.includes('Graph') ? 'Queue' : 'Stack')} 
+            />
+            <CodeViewer 
+              problem={activeProblem} 
+              currentStep={currentStep} 
+            />
+            <ComplexityPanel 
+              problem={activeProblem} 
+            />
           </div>
         </main>
       </div>

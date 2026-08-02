@@ -1,13 +1,29 @@
 import React from 'react';
-import { BarChart2 } from 'lucide-react';
+import { BarChart2, Layers } from 'lucide-react';
 
 export default function ArrayCanvas({ problem, currentStep }) {
-  const arrayState = currentStep?.arrayState || problem?.defaultArray || [];
+  // Extract arrayState safely, with fallback to problem defaultArray or default elements
+  const rawArray = (currentStep?.arrayState && currentStep.arrayState.length > 0) 
+    ? currentStep.arrayState 
+    : (problem?.defaultArray && problem.defaultArray.length > 0) 
+      ? problem.defaultArray 
+      : [{ value: 12, state: 'default' }, { value: 35, state: 'active' }, { value: 58, state: 'comparing' }, { value: 72, state: 'sorted' }, { value: 90, state: 'pivot' }, { value: 44, state: 'default' }];
+
+  // Normalize elements (supports primitives, {value}, {val})
+  const normalizedArray = rawArray.map((el, idx) => {
+    if (typeof el === 'object' && el !== null) {
+      const value = el.value !== undefined ? el.value : (el.val !== undefined ? el.val : idx);
+      const state = el.state || 'default';
+      const index = el.index !== undefined ? el.index : idx;
+      return { value, state, index };
+    }
+    return { value: Number(el) || 0, state: 'default', index: idx };
+  });
 
   const getElementColor = (state) => {
     switch (state) {
       case 'pivot':
-        return { bg: 'linear-gradient(180deg, #6366f1, #4f46e5)', border: '#818cf8', glow: '0 0 18px rgba(99, 102, 241, 0.8)', label: 'mini / i' };
+        return { bg: 'linear-gradient(180deg, #6366f1, #4f46e5)', border: '#818cf8', glow: '0 0 18px rgba(99, 102, 241, 0.8)', label: 'pivot / mini' };
       case 'comparing':
       case 'active':
         return { bg: 'linear-gradient(180deg, #f59e0b, #d97706)', border: '#fbbf24', glow: '0 0 16px rgba(245, 158, 11, 0.7)', label: 'comparing (j)' };
@@ -21,15 +37,20 @@ export default function ArrayCanvas({ problem, currentStep }) {
     }
   };
 
-  const maxVal = Math.max(...arrayState.map(el => Math.abs(el.value)), 1);
+  const values = normalizedArray.map(el => Math.abs(el.value));
+  const maxVal = Math.max(...values, 1);
 
   return (
     <div className="glass-panel" style={{ flex: 1, minHeight: '380px', padding: '20px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+      {/* Visualizer Header Controls Bar */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <BarChart2 size={18} color="var(--accent-indigo)" />
-          <span style={{ fontSize: '0.9rem', fontWeight: '700', letterSpacing: '0.4px' }}>
-            Array & Bar Visualizer
+          <span style={{ fontSize: '0.9rem', fontWeight: '800', letterSpacing: '0.4px' }}>
+            Array & Bar Interactive Stage
+          </span>
+          <span style={{ fontSize: '0.72rem', padding: '2px 8px', background: 'rgba(99,102,241,0.15)', color: '#818cf8', borderRadius: '12px', border: '1px solid rgba(99,102,241,0.3)', fontWeight: '700' }}>
+            Size: {normalizedArray.length} Elements
           </span>
         </div>
 
@@ -54,8 +75,9 @@ export default function ArrayCanvas({ problem, currentStep }) {
         </div>
       </div>
 
+      {/* Interactive Bar Chart Canvas */}
       <div style={{ flex: 1, width: '100%', minHeight: '280px', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '16px', padding: '20px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflowX: 'auto' }}>
-        {arrayState.map((el, idx) => {
+        {normalizedArray.map((el, idx) => {
           const colorInfo = getElementColor(el.state);
           const heightPercent = Math.max(25, Math.min(100, (Math.abs(el.value) / maxVal) * 100));
 
@@ -66,7 +88,7 @@ export default function ArrayCanvas({ problem, currentStep }) {
                 {el.value}
               </span>
 
-              {/* Animated Bar with Spring Overshoot Easing */}
+              {/* Animated Bar */}
               <div
                 style={{
                   width: '44px',
@@ -75,7 +97,7 @@ export default function ArrayCanvas({ problem, currentStep }) {
                   background: colorInfo.bg,
                   border: `2px solid ${colorInfo.border}`,
                   boxShadow: colorInfo.glow,
-                  transition: 'all var(--motion-slow) var(--ease-out-back)',
+                  transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
@@ -84,7 +106,7 @@ export default function ArrayCanvas({ problem, currentStep }) {
 
               {/* Index label */}
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-                [{el.index !== undefined ? el.index : idx}]
+                [{el.index}]
               </span>
             </div>
           );
