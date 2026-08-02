@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dsa-spring-boot-backend
+    ports:
+      - "8923:8923"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: dsa-react-frontend
+    ports:
+      - "5174:80"
+    depends_on:
+      - backend
+    restart: always

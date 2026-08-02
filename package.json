@@ -1,0 +1,14 @@
+{
+  "name": "dsa-with-ui-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:frontend": "npm --prefix frontend run test",
+    "build:backend": "wsl --exec bash -c \"cd backend && mvn clean package -DskipTests\"",
+    "test:backend": "wsl --exec bash -c \"cd backend && mvn test\"",
+    "docker:up": "docker-compose up --build",
+    "docker:down": "docker-compose down"
+  }
+}
