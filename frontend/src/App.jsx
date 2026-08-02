@@ -225,7 +225,7 @@ export default function App() {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', overflow: 'hidden', background: 'var(--bg-dark)' }}>
       <Header problem={activeProblem} totalProblems={problems.length} />
 
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: '12px', gap: '12px' }}>
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: '10px 12px', gap: '12px' }}>
         <Sidebar
           problems={problems}
           activeProblemId={activeProblemId}
@@ -234,10 +234,11 @@ export default function App() {
           onSelectProblem={handleSelectProblem}
         />
 
-        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px', overflow: 'hidden' }}>
-          {/* Main Visualizer Stage Box */}
-          <div className="glass-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', overflow: 'hidden' }}>
+          {/* Top Main Visualizer Box with Canvas Stage & Pinned Controls */}
+          <div className="glass-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+            {/* Visualizer Canvas Area */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
               {loading ? (
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
                   <RefreshCw size={24} className="spin" />
@@ -248,7 +249,7 @@ export default function App() {
               )}
             </div>
 
-            {/* Pinned Execution Controls & Step Scrubber */}
+            {/* Pinned Execution Controls Toolbar */}
             <Controls
               isPlaying={isPlaying}
               currentStepIndex={currentStepIndex}
@@ -264,8 +265,8 @@ export default function App() {
             />
           </div>
 
-          {/* Bottom Diagnostics & Code Inspection Dashboard (3 Side-by-Side Columns) */}
-          <div style={{ height: '300px', minHeight: '300px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: '12px', overflow: 'hidden' }}>
+          {/* Bottom Diagnostics Dashboard (3 Equal Columns) */}
+          <div style={{ height: '220px', minHeight: '220px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: '10px', overflow: 'hidden', flexShrink: 0 }}>
             <DataStructurePanel 
               currentStep={currentStep} 
               dsType={activeProblem?.dsType || (activeProblem?.category?.includes('Graph') ? 'Queue' : 'Stack')} 

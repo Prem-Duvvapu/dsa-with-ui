@@ -21,10 +21,10 @@ export default function ArrayCanvas({ problem, currentStep }) {
   const getElementColor = (state) => {
     switch (state) {
       case 'pivot':
-        return { bg: 'linear-gradient(180deg, #6366f1, #4f46e5)', border: '#818cf8', glow: '0 0 16px rgba(99, 102, 241, 0.8)' };
+        return { bg: 'linear-gradient(180deg, #6366f1, #4f46e5)', border: '#818cf8', glow: '0 0 14px rgba(99, 102, 241, 0.8)' };
       case 'comparing':
       case 'active':
-        return { bg: 'linear-gradient(180deg, #f59e0b, #d97706)', border: '#fbbf24', glow: '0 0 16px rgba(245, 158, 11, 0.7)' };
+        return { bg: 'linear-gradient(180deg, #f59e0b, #d97706)', border: '#fbbf24', glow: '0 0 14px rgba(245, 158, 11, 0.7)' };
       case 'swapping':
         return { bg: 'linear-gradient(180deg, #f97316, #ea580c)', border: '#fb923c', glow: 'var(--glow-orange)' };
       case 'sorted':
@@ -39,9 +39,9 @@ export default function ArrayCanvas({ problem, currentStep }) {
   const maxVal = Math.max(...values, 1);
 
   return (
-    <div style={{ flex: 1, padding: '16px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
       {/* Header Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <BarChart2 size={18} color="var(--accent-indigo)" />
           <span style={{ fontSize: '0.88rem', fontWeight: '800', letterSpacing: '0.4px' }}>
@@ -73,38 +73,36 @@ export default function ArrayCanvas({ problem, currentStep }) {
         </div>
       </div>
 
-      {/* Array Bar Stage */}
-      <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '16px', padding: '16px 20px 24px 20px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflowX: 'auto' }}>
+      {/* Array Bars Container Stage */}
+      <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '18px', padding: '12px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflowX: 'auto', overflowY: 'hidden' }}>
         {normalizedArray.map((el, idx) => {
           const colorInfo = getElementColor(el.state);
           const ratio = Math.abs(el.value) / maxVal;
-          const barPx = Math.max(24, Math.round(ratio * 120));
+          const barPx = Math.max(16, Math.min(95, Math.round(ratio * 85)));
 
           return (
-            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
               {/* Value pill */}
-              <span style={{ fontSize: '0.84rem', fontWeight: '800', color: colorInfo.border }}>
+              <span style={{ fontSize: '0.84rem', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
                 {el.value}
               </span>
 
               {/* Bar */}
               <div
                 style={{
-                  width: '42px',
+                  width: '38px',
                   height: `${barPx}px`,
-                  borderRadius: '8px 8px 4px 4px',
+                  borderRadius: '6px 6px 3px 3px',
                   background: colorInfo.bg,
                   border: `2px solid ${colorInfo.border}`,
                   boxShadow: colorInfo.glow,
                   transition: 'all 0.3s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  flexShrink: 0
                 }}
               />
 
               {/* Index label */}
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: '600' }}>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: '600', lineHeight: '1' }}>
                 [{el.index}]
               </span>
             </div>

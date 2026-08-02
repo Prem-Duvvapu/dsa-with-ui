@@ -21,7 +21,7 @@ export default function LinkedListCanvas({ problem, currentStep }) {
   };
 
   return (
-    <div className="glass-panel" style={{ flex: 1, minHeight: '380px', padding: '20px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Link2 size={18} color="var(--accent-indigo)" />
