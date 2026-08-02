@@ -15,7 +15,7 @@ import { RefreshCw } from 'lucide-react';
 export default function App() {
   const [problems, setProblems] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
-  const [activeProblemId, setActiveProblemId] = useState('bfs-traversal');
+  const [activeProblemId, setActiveProblemId] = useState('two-sum');
   const [activeProblem, setActiveProblem] = useState(null);
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -121,7 +121,7 @@ export default function App() {
 
       if (combined.length > 0) {
         setProblems(combined);
-        const initialId = combined[0].id;
+        const initialId = combined.find(p => p.id === 'two-sum')?.id || combined[0].id;
         setActiveProblemId(initialId);
         fetchProblemDetailsAndSteps(initialId, combined);
       }
@@ -235,17 +235,20 @@ export default function App() {
         />
 
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px', overflow: 'hidden' }}>
-          {/* Main Visualizer Stage */}
-          <div className="glass-panel" style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            {loading ? (
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
-                <RefreshCw size={24} className="spin" />
-                <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
-              </div>
-            ) : (
-              renderCanvas()
-            )}
+          {/* Main Visualizer Stage Box */}
+          <div className="glass-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+              {loading ? (
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
+                  <RefreshCw size={24} className="spin" />
+                  <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
+                </div>
+              ) : (
+                renderCanvas()
+              )}
+            </div>
 
+            {/* Pinned Execution Controls & Step Scrubber */}
             <Controls
               isPlaying={isPlaying}
               currentStepIndex={currentStepIndex}
@@ -261,8 +264,8 @@ export default function App() {
             />
           </div>
 
-          {/* Bottom Diagnostics & Code Inspection Dashboard */}
-          <div style={{ height: '320px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 0.8fr', gap: '12px' }}>
+          {/* Bottom Diagnostics & Code Inspection Dashboard (3 Side-by-Side Columns) */}
+          <div style={{ height: '300px', minHeight: '300px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: '12px', overflow: 'hidden' }}>
             <DataStructurePanel 
               currentStep={currentStep} 
               dsType={activeProblem?.dsType || (activeProblem?.category?.includes('Graph') ? 'Queue' : 'Stack')} 
@@ -272,7 +275,8 @@ export default function App() {
               currentStep={currentStep} 
             />
             <ComplexityPanel 
-              problem={activeProblem} 
+              complexity={activeProblem?.complexity} 
+              problem={activeProblem}
             />
           </div>
         </main>

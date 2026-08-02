@@ -1,108 +1,99 @@
 import React from 'react';
-import { Cpu, HardDrive, HelpCircle, CheckCircle2, Zap } from 'lucide-react';
+import { Cpu, HardDrive, HelpCircle, Zap } from 'lucide-react';
 
-export default function ComplexityPanel({ complexity }) {
-  if (!complexity) return null;
+export default function ComplexityPanel({ complexity: complexityProp, problem }) {
+  const complexity = complexityProp || problem?.complexity;
+
+  if (!complexity) {
+    return (
+      <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '8px', borderBottom: '1px solid var(--border-color)' }}>
+          <Zap size={18} color="var(--accent-amber)" />
+          <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>Time & Space Complexity Proof</span>
+        </div>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '0.82rem', fontStyle: 'italic' }}>
+          Complexity analysis proof loading...
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingBottom: '10px', borderBottom: '1px solid var(--border-color)' }}>
-        <Zap size={20} color="var(--accent-amber)" />
-        <h3 style={{ fontSize: '1.05rem', fontWeight: '700' }}>
-          Time & Space Complexity Analysis (How & Why)
-        </h3>
+    <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '8px', borderBottom: '1px solid var(--border-color)' }}>
+        <Zap size={18} color="var(--accent-amber)" />
+        <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>Complexity Analysis (How & Why)</span>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {/* Time Complexity Card */}
         <div style={{
-          background: 'rgba(99, 102, 241, 0.06)',
-          borderRadius: '14px',
-          border: '1px solid rgba(99, 102, 241, 0.25)',
-          padding: '20px',
+          background: 'rgba(99, 102, 241, 0.08)',
+          borderRadius: '10px',
+          border: '1px solid rgba(99, 102, 241, 0.3)',
+          padding: '10px 14px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '12px'
+          gap: '6px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-indigo)' }}>
-              <Cpu size={20} />
-              <span style={{ fontWeight: '700', fontSize: '0.95rem' }}>Time Complexity</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-indigo)' }}>
+              <Cpu size={16} />
+              <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Time Complexity</span>
             </div>
             <span style={{
-              fontSize: '1.15rem',
+              fontSize: '0.95rem',
               fontWeight: '800',
               fontFamily: 'var(--font-code)',
               color: '#818cf8',
-              background: 'rgba(99, 102, 241, 0.2)',
-              padding: '4px 12px',
-              borderRadius: '8px',
-              border: '1px solid rgba(99, 102, 241, 0.4)'
+              background: 'rgba(99, 102, 241, 0.25)',
+              padding: '2px 8px',
+              borderRadius: '6px'
             }}>
-              {complexity.timeComplexity}
+              {complexity.timeComplexity || 'O(N)'}
             </span>
           </div>
 
-          <div style={{ fontSize: '0.86rem', lineHeight: '1.5', color: 'var(--text-primary)' }}>
-            <strong>Explanation: </strong> {complexity.timeExplanation}
-          </div>
-
-          <div style={{ background: 'rgba(0, 0, 0, 0.25)', borderRadius: '10px', padding: '12px', borderLeft: '3px solid var(--accent-indigo)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: '700', color: 'var(--accent-cyan)', marginBottom: '4px' }}>
-              <HelpCircle size={14} /> WHY is it {complexity.timeComplexity}?
+          {complexity.timeExplanation && (
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-primary)', lineHeight: '1.4' }}>
+              <strong>Proof: </strong>{complexity.timeExplanation}
             </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: '1.45' }}>
-              {complexity.timeWhy}
-            </p>
-          </div>
+          )}
         </div>
 
         {/* Space Complexity Card */}
         <div style={{
-          background: 'rgba(16, 185, 129, 0.06)',
-          borderRadius: '14px',
-          border: '1px solid rgba(16, 185, 129, 0.25)',
-          padding: '20px',
+          background: 'rgba(16, 185, 129, 0.08)',
+          borderRadius: '10px',
+          border: '1px solid rgba(16, 185, 129, 0.3)',
+          padding: '10px 14px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '12px'
+          gap: '6px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#34d399' }}>
-              <HardDrive size={20} />
-              <span style={{ fontWeight: '700', fontSize: '0.95rem' }}>Space Complexity</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#34d399' }}>
+              <HardDrive size={16} />
+              <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Space Complexity</span>
             </div>
             <span style={{
-              fontSize: '1.15rem',
+              fontSize: '0.95rem',
               fontWeight: '800',
               fontFamily: 'var(--font-code)',
               color: '#34d399',
-              background: 'rgba(16, 185, 129, 0.2)',
-              padding: '4px 12px',
-              borderRadius: '8px',
-              border: '1px solid rgba(16, 185, 129, 0.4)'
+              background: 'rgba(16, 185, 129, 0.25)',
+              padding: '2px 8px',
+              borderRadius: '6px'
             }}>
-              {complexity.spaceComplexity}
+              {complexity.spaceComplexity || 'O(1)'}
             </span>
           </div>
 
-          <div style={{ fontSize: '0.86rem', lineHeight: '1.5', color: 'var(--text-primary)' }}>
-            <strong>Explanation: </strong> {complexity.spaceExplanation}
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-            <div>🔹 <strong>Auxiliary Memory: </strong> {complexity.auxiliarySpace}</div>
-            <div>🔹 <strong>Data Structure Memory: </strong> {complexity.dataStructureSpace}</div>
-          </div>
-
-          <div style={{ background: 'rgba(0, 0, 0, 0.25)', borderRadius: '10px', padding: '12px', borderLeft: '3px solid #34d399' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: '700', color: '#34d399', marginBottom: '4px' }}>
-              <HelpCircle size={14} /> WHY is auxiliary space {complexity.spaceComplexity}?
+          {complexity.spaceExplanation && (
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-primary)', lineHeight: '1.4' }}>
+              <strong>Auxiliary Space: </strong>{complexity.spaceExplanation}
             </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: '1.45' }}>
-              {complexity.spaceWhy}
-            </p>
-          </div>
+          )}
         </div>
       </div>
     </div>
