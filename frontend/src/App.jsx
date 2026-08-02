@@ -30,10 +30,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (activeProblemId) {
+    if (activeProblemId && problems.length > 0) {
       fetchProblemDetailsAndSteps(activeProblemId);
     }
-  }, [activeProblemId]);
+  }, [activeProblemId, problems.length]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -55,54 +55,48 @@ export default function App() {
   const fetchAllProblems = async () => {
     try {
       setLoading(true);
-      const [
-        resBfs, resAdv, resTree, resRec, resSort, resArr, resLl, resBs, 
-        resDp, resTrie, resGreedy, resStr, resBit, resHeap, resSq, resSw, resMath, resBasicRec
-      ] = await Promise.allSettled([
-        fetch('/api/graphs/bfs-dfs/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/graphs/advanced/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/trees/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/recursion-backtracking/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/sorting/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/arrays/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/linkedlist/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/binarysearch/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/dp/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/tries/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/greedy/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/strings/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/bitmanipulation/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/heaps/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/stackqueue/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/slidingwindow/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/math/basic/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/recursion/basic/problems').then(r => r.ok ? r.json() : [])
-      ]);
-
-      const combined = [
-        ...(resBfs.status === 'fulfilled' ? resBfs.value : []),
-        ...(resAdv.status === 'fulfilled' ? resAdv.value : []),
-        ...(resTree.status === 'fulfilled' ? resTree.value : []),
-        ...(resRec.status === 'fulfilled' ? resRec.value : []),
-        ...(resSort.status === 'fulfilled' ? resSort.value : []),
-        ...(resArr.status === 'fulfilled' ? resArr.value : []),
-        ...(resLl.status === 'fulfilled' ? resLl.value : []),
-        ...(resBs.status === 'fulfilled' ? resBs.value : []),
-        ...(resDp.status === 'fulfilled' ? resDp.value : []),
-        ...(resTrie.status === 'fulfilled' ? resTrie.value : []),
-        ...(resGreedy.status === 'fulfilled' ? resGreedy.value : []),
-        ...(resStr.status === 'fulfilled' ? resStr.value : []),
-        ...(resBit.status === 'fulfilled' ? resBit.value : []),
-        ...(resHeap.status === 'fulfilled' ? resHeap.value : []),
-        ...(resSq.status === 'fulfilled' ? resSq.value : []),
-        ...(resSw.status === 'fulfilled' ? resSw.value : []),
-        ...(resMath.status === 'fulfilled' ? resMath.value : []),
-        ...(resBasicRec.status === 'fulfilled' ? resBasicRec.value : [])
+      const endpoints = [
+        { url: '/api/graphs/bfs-dfs/problems', base: '/api/graphs/bfs-dfs' },
+        { url: '/api/graphs/advanced/problems', base: '/api/graphs/advanced' },
+        { url: '/api/trees/problems', base: '/api/trees' },
+        { url: '/api/recursion-backtracking/problems', base: '/api/recursion-backtracking' },
+        { url: '/api/sorting/problems', base: '/api/sorting' },
+        { url: '/api/arrays/problems', base: '/api/arrays' },
+        { url: '/api/linkedlist/problems', base: '/api/linkedlist' },
+        { url: '/api/binarysearch/problems', base: '/api/binarysearch' },
+        { url: '/api/dp/problems', base: '/api/dp' },
+        { url: '/api/tries/problems', base: '/api/tries' },
+        { url: '/api/greedy/problems', base: '/api/greedy' },
+        { url: '/api/strings/problems', base: '/api/strings' },
+        { url: '/api/bitmanipulation/problems', base: '/api/bitmanipulation' },
+        { url: '/api/heaps/problems', base: '/api/heaps' },
+        { url: '/api/stackqueue/problems', base: '/api/stackqueue' },
+        { url: '/api/slidingwindow/problems', base: '/api/slidingwindow' },
+        { url: '/api/math/basic/problems', base: '/api/math/basic' },
+        { url: '/api/recursion/basic/problems', base: '/api/recursion/basic' }
       ];
+
+      const results = await Promise.allSettled(
+        endpoints.map(ep => fetch(ep.url).then(r => r.ok ? r.json() : []))
+      );
+
+      const combined = [];
+      results.forEach((res, idx) => {
+        if (res.status === 'fulfilled' && Array.isArray(res.value)) {
+          res.value.forEach(item => {
+            combined.push({
+              ...item,
+              _endpoint: endpoints[idx].base
+            });
+          });
+        }
+      });
 
       if (combined.length > 0) {
         setProblems(combined);
-        setActiveProblemId(combined[0].id);
+        const initialId = combined[0].id;
+        setActiveProblemId(initialId);
+        fetchProblemDetailsAndSteps(initialId, combined);
       }
     } catch (err) {
       console.warn('Backend connection failed:', err);
@@ -111,14 +105,16 @@ export default function App() {
     }
   };
 
-  const fetchProblemDetailsAndSteps = async (id) => {
+  const fetchProblemDetailsAndSteps = async (id, probList = problems) => {
     try {
       setIsPlaying(false);
       setCurrentStepIndex(0);
 
-      let endpoint = `/api/graphs/bfs-dfs`;
-      const prob = problems.find(p => p.id === id);
-      if (prob) {
+      const prob = probList.find(p => p.id === id);
+      let endpoint = prob?._endpoint;
+
+      // Fallback endpoint resolution if _endpoint missing
+      if (!endpoint && prob) {
         const cat = prob.category || '';
         if (cat.includes('Advanced Graphs')) endpoint = `/api/graphs/advanced`;
         else if (cat.includes('Binary Trees') || cat.includes('BST') || cat.includes('Tree')) endpoint = `/api/trees`;
@@ -135,23 +131,35 @@ export default function App() {
         else if (cat.includes('Heap') || cat.includes('Priority')) endpoint = `/api/heaps`;
         else if (cat.includes('Stack') || cat.includes('Queue')) endpoint = `/api/stackqueue`;
         else if (cat.includes('Sliding Window') || cat.includes('Window')) endpoint = `/api/slidingwindow`;
+        else endpoint = `/api/graphs/bfs-dfs`;
       }
+
+      if (!endpoint) endpoint = `/api/graphs/bfs-dfs`;
 
       const [probRes, stepsRes] = await Promise.allSettled([
         fetch(`${endpoint}/problems/${id}`).then(r => r.ok ? r.json() : null),
         fetch(`${endpoint}/execute/${id}`).then(r => r.ok ? r.json() : [])
       ]);
 
-      if (probRes.status === 'fulfilled' && probRes.value) {
-        setActiveProblem(probRes.value);
-      } else if (prob) {
-        setActiveProblem(prob);
-      }
+      const fetchedProblem = (probRes.status === 'fulfilled' && probRes.value) ? probRes.value : prob;
+      setActiveProblem(fetchedProblem);
 
       if (stepsRes.status === 'fulfilled' && stepsRes.value && stepsRes.value.length > 0) {
         setSteps(stepsRes.value);
-      } else if (prob && prob.executionSteps && prob.executionSteps.length > 0) {
-        setSteps(prob.executionSteps);
+      } else if (fetchedProblem && fetchedProblem.executionSteps && fetchedProblem.executionSteps.length > 0) {
+        setSteps(fetchedProblem.executionSteps);
+      } else {
+        // Safe fallback execution step
+        setSteps([{
+          stepIndex: 1,
+          lineNumber: 1,
+          description: `Interactive Execution Visualizer for ${fetchedProblem?.title || id}.`,
+          activeNodes: [],
+          nodeStates: {},
+          activeEdges: [],
+          variables: { Status: "Loaded", Algorithm: fetchedProblem?.title || id },
+          dsType: fetchedProblem?.dsType || 'Array'
+        }]);
       }
     } catch (err) {
       console.error('Error fetching details/steps:', err);
@@ -164,6 +172,7 @@ export default function App() {
 
   const handleSelectProblem = (id) => {
     setActiveProblemId(id);
+    fetchProblemDetailsAndSteps(id);
   };
 
   const currentStep = steps[currentStepIndex] || null;
