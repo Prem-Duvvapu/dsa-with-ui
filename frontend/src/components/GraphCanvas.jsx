@@ -1,10 +1,11 @@
 import React from 'react';
-import { Network, Grid, Crown } from 'lucide-react';
+import { Network, Grid, Crown, GitBranch, Layers } from 'lucide-react';
 
 export default function GraphCanvas({ problem, currentStep }) {
   const nodeStates = currentStep?.nodeStates || {};
   const activeEdges = currentStep?.activeEdges || [];
   const gridState = currentStep?.gridState || problem?.defaultGrid;
+  const variables = currentStep?.variables || {};
 
   // Determine state color for graph nodes
   const getNodeColor = (nodeId, stateOverride) => {
@@ -20,36 +21,139 @@ export default function GraphCanvas({ problem, currentStep }) {
 
   const isSudoku = gridState && gridState.length === 9 && gridState[0].length === 9;
   const isChessboard = gridState && gridState.length === 4 && gridState[0].length === 4 && (problem?.id === 'n-queens' || problem?.title?.toLowerCase().includes('queen'));
+  const isDsu = problem?.id === 'disjoint-set-dsu' || 
+                problem?.title?.toLowerCase().includes('disjoint set') || 
+                problem?.title?.toLowerCase().includes('dsu');
+
+  // Parse DSU array strings if present
+  const parentStr = variables['parent[]'] || '[0, 1, 2, 3, 4, 5, 6, 7]';
+  const rankStr = variables['rank[]'] || '[0, 0, 0, 0, 0, 0, 0, 0]';
+  const dsuSetsStr = variables['Disjoint Sets'] || '{1}, {2}, {3}, {4}, {5}, {6}, {7}';
+  const dsuOpStr = variables['Operation'] || 'Initialize DSU(7)';
+
+  const parentArr = parentStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
+  const rankArr = rankStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
 
   return (
     <div className="glass-panel" style={{ flex: 1, minHeight: '440px', padding: '20px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {gridState ? <Grid size={18} color="var(--accent-cyan)" /> : <Network size={18} color="var(--accent-indigo)" />}
+          {isDsu ? <GitBranch size={18} color="#a855f7" /> : gridState ? <Grid size={18} color="var(--accent-cyan)" /> : <Network size={18} color="var(--accent-indigo)" />}
           <span style={{ fontSize: '0.9rem', fontWeight: '800', letterSpacing: '0.4px' }}>
-            {isChessboard ? '4x4 Chessboard Visualizer (N-Queens)' : isSudoku ? '9x9 Sudoku Board Visualizer' : gridState ? '2D Matrix Grid Visualizer' : 'Graph Network Topology'}
+            {isDsu ? 'Disjoint Set Union (DSU) Visualizer (Path Compression & Rank)' : isChessboard ? '4x4 Chessboard Visualizer (N-Queens)' : isSudoku ? '9x9 Sudoku Board Visualizer' : gridState ? '2D Matrix Grid Visualizer' : 'Graph Network Topology'}
           </span>
         </div>
 
         {/* Legend */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#475569' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Unvisited</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
-            <span style={{ color: '#60a5fa' }}>Visiting / Active</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
-            <span style={{ color: '#34d399' }}>Placed / Safe</span>
-          </div>
+          {isDsu ? (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
+                <span style={{ color: '#60a5fa' }}>Root Parent</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
+                <span style={{ color: '#34d399' }}>Set Member</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#475569' }}></span>
+                <span style={{ color: 'var(--text-secondary)' }}>Unvisited</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
+                <span style={{ color: '#60a5fa' }}>Visiting / Active</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
+                <span style={{ color: '#34d399' }}>Placed / Safe</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflow: 'auto', padding: '16px' }}>
-        {gridState ? (
+        {isDsu ? (
+          /* Specialized DSU Component & Array Visualizer */
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
+            {/* Current DSU Operation Banner */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 16px', background: 'rgba(168, 85, 247, 0.15)', border: '1px solid rgba(168, 85, 247, 0.4)', borderRadius: '10px', boxShadow: '0 0 16px rgba(168, 85, 247, 0.3)' }}>
+              <Layers size={18} color="#a855f7" />
+              <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#ffffff' }}>
+                {dsuOpStr}
+              </span>
+            </div>
+
+            {/* Disjoint Sets Component Cards */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', justifyContent: 'center', maxWidth: '700px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px 18px', background: 'rgba(30, 41, 59, 0.6)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#a855f7', textTransform: 'uppercase', letterSpacing: '0.6px' }}>
+                  Connected Components / Disjoint Sets
+                </span>
+                <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#38bdf8' }}>
+                  {dsuSetsStr}
+                </span>
+              </div>
+            </div>
+
+            {/* Parent & Rank Interactive Tables */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', maxWidth: '650px', background: 'rgba(15, 23, 42, 0.6)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+              {/* Element Index Header */}
+              <div style={{ display: 'grid', gridTemplateColumns: '80px repeat(7, 1fr)', gap: '8px', alignItems: 'center', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--text-muted)' }}>Element i</span>
+                {[1, 2, 3, 4, 5, 6, 7].map(idx => (
+                  <div key={idx} style={{ padding: '4px', background: 'rgba(255,255,255,0.04)', borderRadius: '6px', fontSize: '0.8rem', fontWeight: '800', color: '#ffffff' }}>
+                    {idx}
+                  </div>
+                ))}
+              </div>
+
+              {/* parent[i] Row */}
+              <div style={{ display: 'grid', gridTemplateColumns: '80px repeat(7, 1fr)', gap: '8px', alignItems: 'center', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#38bdf8' }}>parent[i]</span>
+                {[1, 2, 3, 4, 5, 6, 7].map(idx => {
+                  const val = parentArr[idx] || idx;
+                  const isRoot = String(val) === String(idx);
+                  return (
+                    <div 
+                      key={idx} 
+                      style={{ 
+                        padding: '8px 4px', 
+                        background: isRoot ? 'rgba(56, 189, 248, 0.25)' : 'rgba(255,255,255,0.06)', 
+                        border: isRoot ? '1px solid #38bdf8' : '1px solid rgba(255,255,255,0.1)',
+                        boxShadow: isRoot ? '0 0 12px rgba(56, 189, 248, 0.4)' : 'none',
+                        borderRadius: '8px', 
+                        fontSize: '0.88rem', 
+                        fontWeight: '800', 
+                        color: isRoot ? '#38bdf8' : '#ffffff',
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      {val}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* rank[i] Row */}
+              <div style={{ display: 'grid', gridTemplateColumns: '80px repeat(7, 1fr)', gap: '8px', alignItems: 'center', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#a855f7' }}>rank[i]</span>
+                {[1, 2, 3, 4, 5, 6, 7].map(idx => {
+                  const rVal = rankArr[idx] || 0;
+                  return (
+                    <div key={idx} style={{ padding: '6px 4px', background: 'rgba(168, 85, 247, 0.15)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '8px', fontSize: '0.82rem', fontWeight: '800', color: '#e9d5ff' }}>
+                      {rVal}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        ) : gridState ? (
           /* Render 2D Grid / Chessboard / Sudoku */
           <div
             style={{
@@ -79,7 +183,7 @@ export default function GraphCanvas({ problem, currentStep }) {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        justify: 'center',
+                        justifyContent: 'center',
                         position: 'relative',
                         transition: 'all 0.3s ease',
                         boxShadow: val === 1 ? '0 0 18px rgba(16, 185, 129, 0.5)' : 'none'
@@ -110,7 +214,7 @@ export default function GraphCanvas({ problem, currentStep }) {
                         color: val !== 0 ? '#ffffff' : '#475569',
                         display: 'flex',
                         alignItems: 'center',
-                        justify: 'center',
+                        justifyContent: 'center',
                         fontWeight: '800',
                         fontSize: '0.95rem'
                       }}
@@ -136,7 +240,7 @@ export default function GraphCanvas({ problem, currentStep }) {
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      justify: 'center',
+                      justifyContent: 'center',
                       fontWeight: '700',
                       fontSize: '0.9rem',
                       transition: 'all var(--motion-normal) var(--ease-standard)'

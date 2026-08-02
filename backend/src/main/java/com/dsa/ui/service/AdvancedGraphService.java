@@ -436,7 +436,77 @@ public class AdvancedGraphService {
     private List<ExecutionStep> generateCitySmallestNeighborsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generatePrimsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateDisjointSetDsuSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateDisjointSetDsuSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        List<GraphNode> nodes = createDefaultGraphNodes();
+        List<GraphEdge> edges = createDefaultGraphEdges();
+
+        steps.add(new ExecutionStep(
+            1, 4,
+            "Initialize Disjoint Set (DSU) with N=7 elements: parent = [0, 1, 2, 3, 4, 5, 6, 7], rank = [0, 0, 0, 0, 0, 0, 0, 0]. Each element is its own root.",
+            List.of(), Map.of(), List.of(),
+            Map.of("parent[]", "[0, 1, 2, 3, 4, 5, 6, 7]", "rank[]", "[0, 0, 0, 0, 0, 0, 0, 0]", "Disjoint Sets", "{1}, {2}, {3}, {4}, {5}, {6}, {7}", "Operation", "Initialize DSU(7)"),
+            "Graph", nodes, edges, null
+        ));
+
+        steps.add(new ExecutionStep(
+            2, 12,
+            "Operation: union(1, 2). find(1)=1, find(2)=2. Ranks equal (0==0). Attach 2 to 1 (parent[2]=1, rank[1]=1).",
+            List.of("1", "2"), Map.of(1, "visiting", 2, "visited"), List.of("1-2"),
+            Map.of("parent[]", "[0, 1, 1, 3, 4, 5, 6, 7]", "rank[]", "[0, 1, 0, 0, 0, 0, 0, 0]", "Disjoint Sets", "{1, 2}, {3}, {4}, {5}, {6}, {7}", "Operation", "union(1, 2)"),
+            "Graph", nodes, edges, null
+        ));
+
+        steps.add(new ExecutionStep(
+            3, 18,
+            "Operation: union(2, 3). find(2)=1, find(3)=3. rank[1] (1) > rank[3] (0). Attach 3 under 1 (parent[3]=1).",
+            List.of("1", "2", "3"), Map.of(1, "visiting", 2, "visited", 3, "visited"), List.of("1-2", "1-3"),
+            Map.of("parent[]", "[0, 1, 1, 1, 4, 5, 6, 7]", "rank[]", "[0, 1, 0, 0, 0, 0, 0, 0]", "Disjoint Sets", "{1, 2, 3}, {4}, {5}, {6}, {7}", "Operation", "union(2, 3)"),
+            "Graph", nodes, edges, null
+        ));
+
+        steps.add(new ExecutionStep(
+            4, 24,
+            "Operation: union(4, 5). find(4)=4, find(5)=5. Ranks equal (0==0). Attach 5 under 4 (parent[5]=4, rank[4]=1).",
+            List.of("4", "5"), Map.of(4, "visiting", 5, "visited"), List.of("4-5"),
+            Map.of("parent[]", "[0, 1, 1, 1, 4, 4, 6, 7]", "rank[]", "[0, 1, 0, 0, 1, 0, 0, 0]", "Disjoint Sets", "{1, 2, 3}, {4, 5}, {6}, {7}", "Operation", "union(4, 5)"),
+            "Graph", nodes, edges, null
+        ));
+
+        steps.add(new ExecutionStep(
+            5, 30,
+            "Operation: union(6, 7). find(6)=6, find(7)=7. Ranks equal (0==0). Attach 7 under 6 (parent[7]=6, rank[6]=1).",
+            List.of("6", "7"), Map.of(6, "visiting", 7, "visited"), List.of("6-7"),
+            Map.of("parent[]", "[0, 1, 1, 1, 4, 4, 6, 6]", "rank[]", "[0, 1, 0, 0, 1, 0, 1, 0]", "Disjoint Sets", "{1, 2, 3}, {4, 5}, {6, 7}", "Operation", "union(6, 7)"),
+            "Graph", nodes, edges, null
+        ));
+
+        steps.add(new ExecutionStep(
+            6, 36,
+            "Operation: union(5, 6). find(5)=4 (rank 1), find(6)=6 (rank 1). Equal ranks! Attach 6 under 4 (parent[6]=4, rank[4]=2).",
+            List.of("4", "5", "6", "7"), Map.of(4, "visiting", 5, "visited", 6, "visited", 7, "visited"), List.of("4-5", "4-6", "6-7"),
+            Map.of("parent[]", "[0, 1, 1, 1, 4, 4, 4, 6]", "rank[]", "[0, 1, 0, 0, 2, 0, 1, 0]", "Disjoint Sets", "{1, 2, 3}, {4, 5, 6, 7}", "Operation", "union(5, 6)"),
+            "Graph", nodes, edges, null
+        ));
+
+        steps.add(new ExecutionStep(
+            7, 42,
+            "Operation: find(7) with Path Compression! Node 7 parent is 6, 6 parent is 4. Path compression updates parent[7] = 4 directly!",
+            List.of("4", "6", "7"), Map.of(4, "visiting", 6, "visited", 7, "visited"), List.of("4-7"),
+            Map.of("parent[]", "[0, 1, 1, 1, 4, 4, 4, 4]", "rank[]", "[0, 1, 0, 0, 2, 0, 1, 0]", "Disjoint Sets", "{1, 2, 3}, {4, 5, 6, 7}", "Operation", "find(7) Path Compression"),
+            "Graph", nodes, edges, null
+        ));
+
+        steps.add(new ExecutionStep(
+            8, 50,
+            "Operation: union(3, 7). find(3)=1 (rank 1), find(7)=4 (rank 2). rank[4] > rank[1] -> Attach root 1 under root 4 (parent[1]=4).",
+            List.of("1", "2", "3", "4", "5", "6", "7"), Map.of(4, "visiting", 1, "visited", 2, "visited", 3, "visited", 5, "visited", 6, "visited", 7, "visited"), List.of("4-1", "1-2", "1-3", "4-5", "4-6", "4-7"),
+            Map.of("parent[]", "[0, 4, 1, 1, 4, 4, 4, 4]", "rank[]", "[0, 1, 0, 0, 2, 0, 1, 0]", "Disjoint Sets", "{1, 2, 3, 4, 5, 6, 7} (Single Component!)", "Operation", "union(3, 7) Complete"),
+            "Graph", nodes, edges, null
+        ));
+
+        return steps;
+    }
     private List<ExecutionStep> generateKruskalsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNetworkConnectedOpsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMostStonesRemovedSteps() { return generateGraphIntroSteps(); }
