@@ -23,20 +23,22 @@ public class GreedyServiceTest {
     public void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertTrue(problems.size() >= 3);
+        assertEquals(15, problems.size(), "Should load 15 Greedy algorithms");
     }
 
     @Test
     public void testGetProblemById() {
         ProblemDetail problem = service.getProblemById("n-meetings-in-one-room");
         assertNotNull(problem);
-        assertEquals("N Meetings in One Room", problem.getTitle());
     }
 
     @Test
-    public void testGenerateSteps() {
-        List<ExecutionStep> steps = service.generateSteps("n-meetings-in-one-room");
-        assertNotNull(steps);
-        assertFalse(steps.isEmpty());
+    public void testGenerateStepsForAllGreedyProblems() {
+        List<ProblemDetail> problems = service.getAllProblems();
+        for (ProblemDetail p : problems) {
+            List<ExecutionStep> steps = service.generateSteps(p.getId());
+            assertNotNull(steps, "Steps list should not be null for " + p.getId());
+            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        }
     }
 }

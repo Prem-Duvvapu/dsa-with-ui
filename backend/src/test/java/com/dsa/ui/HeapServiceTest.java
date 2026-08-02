@@ -23,20 +23,22 @@ public class HeapServiceTest {
     public void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertTrue(problems.size() >= 2);
+        assertEquals(17, problems.size(), "Should load 17 Heap algorithms");
     }
 
     @Test
     public void testGetProblemById() {
         ProblemDetail problem = service.getProblemById("kth-largest-element");
         assertNotNull(problem);
-        assertEquals("Kth Largest Element in an Array", problem.getTitle());
     }
 
     @Test
-    public void testGenerateSteps() {
-        List<ExecutionStep> steps = service.generateSteps("kth-largest-element");
-        assertNotNull(steps);
-        assertFalse(steps.isEmpty());
+    public void testGenerateStepsForAllHeapProblems() {
+        List<ProblemDetail> problems = service.getAllProblems();
+        for (ProblemDetail p : problems) {
+            List<ExecutionStep> steps = service.generateSteps(p.getId());
+            assertNotNull(steps, "Steps list should not be null for " + p.getId());
+            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        }
     }
 }

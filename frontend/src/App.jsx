@@ -14,7 +14,7 @@ import { RefreshCw } from 'lucide-react';
 
 export default function App() {
   const [problems, setProblems] = useState([]);
-  const [activeCategory, setActiveCategory] = useState('Graph BFS/DFS');
+  const [activeCategory, setActiveCategory] = useState(null);
   const [activeProblemId, setActiveProblemId] = useState('bfs-traversal');
   const [activeProblem, setActiveProblem] = useState(null);
   const [steps, setSteps] = useState([]);
@@ -55,7 +55,10 @@ export default function App() {
   const fetchAllProblems = async () => {
     try {
       setLoading(true);
-      const [resBfs, resAdv, resTree, resRec, resSort, resArr, resLl, resBs, resDp, resTrie, resGreedy, resStr, resBit, resHeap] = await Promise.allSettled([
+      const [
+        resBfs, resAdv, resTree, resRec, resSort, resArr, resLl, resBs, 
+        resDp, resTrie, resGreedy, resStr, resBit, resHeap, resSq, resSw, resMath, resBasicRec
+      ] = await Promise.allSettled([
         fetch('/api/graphs/bfs-dfs/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/graphs/advanced/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/trees/problems').then(r => r.ok ? r.json() : []),
@@ -69,7 +72,11 @@ export default function App() {
         fetch('/api/greedy/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/strings/problems').then(r => r.ok ? r.json() : []),
         fetch('/api/bitmanipulation/problems').then(r => r.ok ? r.json() : []),
-        fetch('/api/heaps/problems').then(r => r.ok ? r.json() : [])
+        fetch('/api/heaps/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/stackqueue/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/slidingwindow/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/math/basic/problems').then(r => r.ok ? r.json() : []),
+        fetch('/api/recursion/basic/problems').then(r => r.ok ? r.json() : [])
       ]);
 
       const combined = [
@@ -86,7 +93,11 @@ export default function App() {
         ...(resGreedy.status === 'fulfilled' ? resGreedy.value : []),
         ...(resStr.status === 'fulfilled' ? resStr.value : []),
         ...(resBit.status === 'fulfilled' ? resBit.value : []),
-        ...(resHeap.status === 'fulfilled' ? resHeap.value : [])
+        ...(resHeap.status === 'fulfilled' ? resHeap.value : []),
+        ...(resSq.status === 'fulfilled' ? resSq.value : []),
+        ...(resSw.status === 'fulfilled' ? resSw.value : []),
+        ...(resMath.status === 'fulfilled' ? resMath.value : []),
+        ...(resBasicRec.status === 'fulfilled' ? resBasicRec.value : [])
       ];
 
       if (combined.length > 0) {
@@ -108,19 +119,22 @@ export default function App() {
       let endpoint = `/api/graphs/bfs-dfs`;
       const prob = problems.find(p => p.id === id);
       if (prob) {
-        if (prob.category === 'Advanced Graphs') endpoint = `/api/graphs/advanced`;
-        else if (prob.category === 'Binary Trees' || prob.category === 'Binary Search Trees') endpoint = `/api/trees`;
-        else if (prob.category === 'Recursion & Backtracking') endpoint = `/api/recursion-backtracking`;
-        else if (prob.category === 'Sorting Algorithms') endpoint = `/api/sorting`;
-        else if (prob.category === 'Arrays') endpoint = `/api/arrays`;
-        else if (prob.category === 'Linked List') endpoint = `/api/linkedlist`;
-        else if (prob.category === 'Binary Search') endpoint = `/api/binarysearch`;
-        else if (prob.category === 'Dynamic Programming') endpoint = `/api/dp`;
-        else if (prob.category === 'Tries & Prefixes') endpoint = `/api/tries`;
-        else if (prob.category === 'Greedy Algorithms') endpoint = `/api/greedy`;
-        else if (prob.category === 'Strings') endpoint = `/api/strings`;
-        else if (prob.category === 'Bit Manipulation') endpoint = `/api/bitmanipulation`;
-        else if (prob.category === 'Heaps & PriorityQueue') endpoint = `/api/heaps`;
+        const cat = prob.category || '';
+        if (cat.includes('Advanced Graphs')) endpoint = `/api/graphs/advanced`;
+        else if (cat.includes('Binary Trees') || cat.includes('BST') || cat.includes('Tree')) endpoint = `/api/trees`;
+        else if (cat.includes('Recursion') || cat.includes('Backtracking')) endpoint = `/api/recursion-backtracking`;
+        else if (cat.includes('Sort')) endpoint = `/api/sorting`;
+        else if (cat.includes('Array')) endpoint = `/api/arrays`;
+        else if (cat.includes('List') || cat.includes('Linked')) endpoint = `/api/linkedlist`;
+        else if (cat.includes('Binary Search')) endpoint = `/api/binarysearch`;
+        else if (cat.includes('DP') || cat.includes('Dynamic')) endpoint = `/api/dp`;
+        else if (cat.includes('Trie')) endpoint = `/api/tries`;
+        else if (cat.includes('Greedy')) endpoint = `/api/greedy`;
+        else if (cat.includes('String')) endpoint = `/api/strings`;
+        else if (cat.includes('Bit') || cat.includes('Math')) endpoint = `/api/bitmanipulation`;
+        else if (cat.includes('Heap') || cat.includes('Priority')) endpoint = `/api/heaps`;
+        else if (cat.includes('Stack') || cat.includes('Queue')) endpoint = `/api/stackqueue`;
+        else if (cat.includes('Sliding Window') || cat.includes('Window')) endpoint = `/api/slidingwindow`;
       }
 
       const [probRes, stepsRes] = await Promise.allSettled([
@@ -130,147 +144,94 @@ export default function App() {
 
       if (probRes.status === 'fulfilled' && probRes.value) {
         setActiveProblem(probRes.value);
+      } else if (prob) {
+        setActiveProblem(prob);
       }
-      if (stepsRes.status === 'fulfilled' && stepsRes.value) {
+
+      if (stepsRes.status === 'fulfilled' && stepsRes.value && stepsRes.value.length > 0) {
         setSteps(stepsRes.value);
+      } else if (prob && prob.executionSteps && prob.executionSteps.length > 0) {
+        setSteps(prob.executionSteps);
       }
     } catch (err) {
       console.error('Error fetching details/steps:', err);
     }
   };
 
-  // Global Keyboard Shortcuts (Space: Play/Pause, ArrowLeft: Prev, ArrowRight: Next, R: Reset)
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
-      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
+  const handleSelectCategory = (cat) => {
+    setActiveCategory(cat);
+  };
 
-      if (e.code === 'Space') {
-        e.preventDefault();
-        setIsPlaying(prev => !prev);
-      } else if (e.code === 'ArrowLeft') {
-        e.preventDefault();
-        setIsPlaying(false);
-        setCurrentStepIndex(prev => Math.max(0, prev - 1));
-      } else if (e.code === 'ArrowRight') {
-        e.preventDefault();
-        setIsPlaying(false);
-        setCurrentStepIndex(prev => Math.min((steps.length || 1) - 1, prev + 1));
-      } else if (e.code === 'KeyR') {
-        e.preventDefault();
-        setIsPlaying(false);
-        setCurrentStepIndex(0);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [steps.length]);
+  const handleSelectProblem = (id) => {
+    setActiveProblemId(id);
+  };
 
   const currentStep = steps[currentStepIndex] || null;
 
   const renderCanvas = () => {
-    if (!activeProblem) return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
+    if (!activeProblem) return null;
+    const cat = activeProblem.category || '';
+    const dsType = activeProblem.dsType || '';
 
-    // Matrix / Grid / Chessboard problems render GraphCanvas (4x4 Chessboard, 9x9 Sudoku, 2D Grid)
-    if (activeProblem.id === 'n-queens' || activeProblem.id === 'sudoku-solver' || activeProblem.id === 'rat-in-a-maze' || activeProblem.dsType === 'Matrix' || currentStep?.gridState || activeProblem.defaultGrid) {
-      return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
-    }
-
-    if (activeProblem.category === 'Recursion & Backtracking' || activeProblem.category === 'Tries & Prefixes' || (activeProblem.defaultTreeNodes && activeProblem.defaultTreeNodes.length > 0 && activeProblem.category === 'Sorting Algorithms')) {
-      return <RecursionTreeCanvas problem={activeProblem} currentStep={currentStep} />;
-    }
-
-    switch (activeProblem.category) {
-      case 'Binary Trees':
-      case 'Binary Search Trees':
-        return <TreeCanvas problem={activeProblem} currentStep={currentStep} />;
-      case 'Sorting Algorithms':
-      case 'Arrays':
-      case 'Binary Search':
-      case 'Greedy Algorithms':
-      case 'Strings':
-      case 'Bit Manipulation':
-      case 'Heaps & PriorityQueue':
-        return <ArrayCanvas problem={activeProblem} currentStep={currentStep} />;
-      case 'Linked List':
-        return <LinkedListCanvas problem={activeProblem} currentStep={currentStep} />;
-      default:
-        return <GraphCanvas problem={activeProblem} currentStep={currentStep} />;
+    if (cat.includes('Trees') || cat.includes('BST') || dsType === 'Tree') {
+      return <TreeCanvas step={currentStep} problem={activeProblem} />;
+    } else if (cat.includes('Recursion') || cat.includes('Backtracking') || dsType === 'RecursionTree') {
+      return <RecursionTreeCanvas step={currentStep} problem={activeProblem} />;
+    } else if (cat.includes('List') || cat.includes('Linked') || dsType === 'LinkedList') {
+      return <LinkedListCanvas step={currentStep} problem={activeProblem} />;
+    } else if (cat.includes('Array') || cat.includes('Sort') || cat.includes('Binary Search') || cat.includes('DP') || cat.includes('Heap') || cat.includes('Greedy') || cat.includes('Bit') || cat.includes('Stack') || cat.includes('Queue') || cat.includes('Window') || dsType === 'Array' || dsType === 'Matrix') {
+      return <ArrayCanvas step={currentStep} problem={activeProblem} />;
+    } else {
+      return <GraphCanvas step={currentStep} problem={activeProblem} />;
     }
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', paddingBottom: '40px' }}>
-      <Header totalProblems={problems.length} />
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', overflow: 'hidden', background: 'var(--bg-dark)' }}>
+      <Header problem={activeProblem} totalProblems={problems.length} />
 
-      <div style={{ flex: 1, display: 'flex', gap: '20px', margin: '20px 24px 0 24px', overflow: 'hidden' }}>
-        {/* Sidebar */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: '12px', gap: '12px' }}>
         <Sidebar
           problems={problems}
           activeProblemId={activeProblemId}
           activeCategory={activeCategory}
-          onSelectCategory={(cat) => {
-            setActiveCategory(cat);
-            if (cat) {
-              const firstInCat = problems.find(p => p.category === cat);
-              if (firstInCat) setActiveProblemId(firstInCat.id);
-            }
-          }}
-          onSelectProblem={(id) => setActiveProblemId(id)}
+          onSelectCategory={handleSelectCategory}
+          onSelectProblem={handleSelectProblem}
         />
 
-        {/* Main Content Workspace */}
-        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px', minWidth: 0, overflowY: 'auto' }}>
-          {/* Header Info Banner */}
-          {activeProblem && (
-            <div className="glass-panel" style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <h2 style={{ fontSize: '1.25rem', fontWeight: '800' }}>{activeProblem.title}</h2>
-                  <span className={`badge badge-${activeProblem.difficulty?.toLowerCase()}`}>
-                    {activeProblem.difficulty}
-                  </span>
-                </div>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                  {activeProblem.description}
-                </p>
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px', overflow: 'hidden' }}>
+          {/* Main Visualizer Stage */}
+          <div className="glass-panel" style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            {loading ? (
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
+                <RefreshCw size={24} className="spin" />
+                <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
               </div>
+            ) : (
+              renderCanvas()
+            )}
 
-              <button className="btn btn-secondary" onClick={fetchAllProblems} title="Synchronized Engine Status" style={{ fontSize: '0.8rem' }}>
-                <RefreshCw size={14} /> Synchronized
-              </button>
-            </div>
-          )}
-
-          {/* Controls Bar */}
-          <Controls
-            isPlaying={isPlaying}
-            currentStepIndex={currentStepIndex}
-            totalSteps={steps.length}
-            speed={speed}
-            onPlayPause={() => setIsPlaying(!isPlaying)}
-            onStepNext={() => setCurrentStepIndex((i) => Math.min(steps.length - 1, i + 1))}
-            onStepPrev={() => setCurrentStepIndex((i) => Math.max(0, i - 1))}
-            onStepSelect={(idx) => setCurrentStepIndex(idx)}
-            onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
-            onSpeedChange={(val) => setSpeed(val)}
-            stepDescription={currentStep?.description}
-          />
-
-          {/* Visualizers Grid */}
-          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-            {renderCanvas()}
-            <DataStructurePanel currentStep={currentStep} dsType={activeProblem?.dsType || 'Stack'} />
+            <Controls
+              currentStepIndex={currentStepIndex}
+              totalSteps={steps.length}
+              isPlaying={isPlaying}
+              speed={speed}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onStepForward={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
+              onStepBack={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
+              onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
+              onSpeedChange={setSpeed}
+              stepDescription={currentStep?.description}
+            />
           </div>
 
-          {/* Code Viewer */}
-          <CodeViewer problem={activeProblem} currentStep={currentStep} />
-
-          {/* Complexity Explanation Panel */}
-          {activeProblem?.complexity && (
-            <ComplexityPanel complexity={activeProblem.complexity} />
-          )}
+          {/* Bottom Diagnostics & Code Inspection Dashboard */}
+          <div style={{ height: '320px', display: 'grid', gridTemplateColumns: '1.2fr 1fr 0.8fr', gap: '12px' }}>
+            <DataStructurePanel step={currentStep} problem={activeProblem} />
+            <CodeViewer code={activeProblem?.javaCode} currentStep={currentStep} />
+            <ComplexityPanel problem={activeProblem} />
+          </div>
         </main>
       </div>
     </div>

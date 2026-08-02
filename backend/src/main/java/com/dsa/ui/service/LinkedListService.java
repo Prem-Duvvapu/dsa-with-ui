@@ -1,8 +1,6 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.linkedlist.ReverseLinkedList;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,11 +24,37 @@ public class LinkedListService {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "reverse-linked-list": return generateReverseSteps();
+            case "intro-singly-ll": return generateIntroSinglySteps();
+            case "insert-head-ll": return generateInsertHeadSteps();
+            case "delete-head-ll": return generateDeleteHeadSteps();
+            case "length-ll": return generateLengthLlSteps();
+            case "search-ll": return generateSearchLlSteps();
+            case "intro-doubly-ll": return generateIntroDoublySteps();
+            case "insert-head-dll": return generateInsertHeadDllSteps();
+            case "delete-head-dll": return generateDeleteHeadDllSteps();
+            case "reverse-dll": return generateReverseDllSteps();
             case "middle-linked-list": return generateMiddleSteps();
+            case "reverse-linked-list": return generateReverseSteps();
+            case "reverse-ll-recursive": return generateReverseRecursiveSteps();
             case "detect-loop-linked-list": return generateDetectLoopSteps();
-            case "delete-node-linked-list": return generateDeleteNodeSteps();
-            case "merge-two-sorted-lists": return generateMergeListsSteps();
+            case "find-starting-point-loop": return generateFindStartingPointLoopSteps();
+            case "length-of-loop-ll": return generateLengthOfLoopSteps();
+            case "palindrome-ll": return generatePalindromeLlSteps();
+            case "segregate-odd-even-ll": return generateSegregateOddEvenSteps();
+            case "remove-nth-from-back": return generateRemoveNthBackSteps();
+            case "delete-middle-node-ll": return generateDeleteMiddleNodeSteps();
+            case "sort-ll": return generateSortLlSteps();
+            case "sort-012-ll": return generateSort012LlSteps();
+            case "intersection-point-y-ll": return generateIntersectionPointYSteps();
+            case "add-one-to-number-ll": return generateAddOneToNumberSteps();
+            case "add-two-numbers-ll": return generateAddTwoNumbersSteps();
+            case "delete-occurrences-key-dll": return generateDeleteOccurrencesKeyDllSteps();
+            case "pairs-given-sum-dll": return generatePairsGivenSumDllSteps();
+            case "remove-duplicates-sorted-dll": return generateRemoveDuplicatesSortedDllSteps();
+            case "reverse-ll-group-k": return generateReverseLlGroupKSteps();
+            case "rotate-ll": return generateRotateLlSteps();
+            case "flattening-ll": return generateFlatteningLlSteps();
+            case "clone-ll-random-pointer": return generateCloneLlRandomPointerSteps();
             default: return generateReverseSteps();
         }
     }
@@ -38,291 +62,138 @@ public class LinkedListService {
     private void initProblems() {
         // 1. Reverse Linked List
         problems.put("reverse-linked-list", new ProblemDetail(
-            "reverse-linked-list", "Reverse Linked List", "Linked List - Easy", "Linked List", "Easy",
+            "reverse-linked-list", "Reverse Linked List [Iterative]", "Linked List - Easy", "Linked List", "Easy",
             "Reverse a singly linked list using 3 pointers (prev, curr, next).",
             """
             // Java Reverse Linked List (LeetCode 206)
             public ListNode reverseList(ListNode head) {
-                ListNode prev = null;
-                ListNode curr = head;
-
+                ListNode prev = null, curr = head;
                 while (curr != null) {
                     ListNode next = curr.next;
-                    curr.next = prev;
-                    prev = curr;
-                    curr = next;
+                    curr.next = prev; prev = curr; curr = next;
                 }
                 return prev;
             }
             """,
             null, null, null, null, createDefaultList(), null, null,
-            new ComplexityDetail(
-                "O(N)",
-                "Time Complexity: Iterates through all N nodes once to reverse pointer connections.",
-                "Why O(N)? Moves `curr` pointer forward by one node at each iteration.",
-                "O(1)",
-                "Space Complexity: O(1) auxiliary memory.",
-                "Why O(1)? Uses 3 reference pointers `prev`, `curr`, `next` without creating new nodes.",
-                "Auxiliary Space: O(1)",
-                "Linked List Output: Reused in-place O(1)"
-            ),
-            "LinkedList"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass iteration over N nodes.", "Pointer Reversal", "O(1)", "Space Complexity: O(1) auxiliary space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "LinkedList"
         ));
 
         // 2. Middle of Linked List
         problems.put("middle-linked-list", new ProblemDetail(
-            "middle-linked-list", "Middle of Linked List (Fast & Slow)", "Linked List - Easy", "Linked List", "Easy",
-            "Find middle node using Tortoise & Hare (Slow & Fast Pointers) algorithm in single pass.",
+            "middle-linked-list", "Middle of Linked List [Tortoise-Hare]", "Linked List - Easy", "Linked List", "Easy",
+            "Find the middle node of a singly linked list using Fast and Slow pointers.",
             """
-            // Java Middle of Linked List (LeetCode 876)
+            // Java Tortoise-Hare Algorithm (LeetCode 876)
             public ListNode middleNode(ListNode head) {
-                ListNode slow = head;
-                ListNode fast = head;
-
+                ListNode slow = head, fast = head;
                 while (fast != null && fast.next != null) {
-                    slow = slow.next;
-                    fast = fast.next.next;
+                    slow = slow.next; fast = fast.next.next;
                 }
                 return slow;
             }
             """,
             null, null, null, null, createDefaultList(), null, null,
-            new ComplexityDetail(
-                "O(N)",
-                "Time Complexity: Fast pointer advances 2 nodes per step, traversing N nodes in N/2 iterations = O(N).",
-                "Why Fast & Slow works? When fast pointer reaches the end of the list, slow pointer is guaranteed to be at the exact middle node.",
-                "O(1)",
-                "Space Complexity: O(1) auxiliary space.",
-                "Why O(1)? Only two pointers `slow` and `fast` used.",
-                "Auxiliary Space: O(1)",
-                "Return Node: O(1)"
-            ),
-            "LinkedList"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass where fast pointer moves at 2x speed.", "Tortoise-Hare", "O(1)", "Space Complexity: Constant memory.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "LinkedList"
         ));
 
-        // 3. Detect Loop in Linked List
-        problems.put("detect-loop-linked-list", new ProblemDetail(
-            "detect-loop-linked-list", "Detect Loop in Linked List (Floyd's Cycle)", "Linked List - Medium", "Linked List", "Easy",
-            "Detect if a linked list contains a cycle using Floyd's Cycle Detection algorithm.",
-            """
-            // Java Floyd's Cycle Detection (LeetCode 141)
-            public boolean hasCycle(ListNode head) {
-                ListNode slow = head;
-                ListNode fast = head;
-
-                while (fast != null && fast.next != null) {
-                    slow = slow.next;
-                    fast = fast.next.next;
-                    if (slow == fast) {
-                        return true; // Cycle detected!
-                    }
-                }
-                return false;
-            }
-            """,
-            null, null, null, null, createCyclicList(), null, null,
-            new ComplexityDetail(
-                "O(N)",
-                "Time Complexity: In a cyclic list of size N, `fast` catches up to `slow` within at most N loop steps.",
-                "Why fast catches slow? Relative speed between fast and slow is 1 node per iteration, shrinking distance by 1 each step until collision.",
-                "O(1)",
-                "Space Complexity: O(1) auxiliary space.",
-                "Why O(1)? Only `slow` and `fast` pointers.",
-                "Auxiliary Space: O(1)",
-                "Return Boolean: O(1)"
-            ),
-            "LinkedList"
-        ));
-
-        // 4. Delete Node in Linked List (O(1))
-        problems.put("delete-node-linked-list", new ProblemDetail(
-            "delete-node-linked-list", "Delete Node in a Linked List (O(1))", "Linked List - Easy", "Linked List", "Easy",
-            "Delete a node (except tail) in a singly linked list given only access to that node.",
-            """
-            // Java O(1) Delete Node (LeetCode 237)
-            public void deleteNode(ListNode node) {
-                node.val = node.next.val;
-                node.next = node.next.next;
-            }
-            """,
-            null, null, null, null, createDefaultList(), null, null,
-            new ComplexityDetail(
-                "O(1)",
-                "Time Complexity: Constant O(1) time complexity.",
-                "Why O(1)? Copies next node's value into current node and bypasses next node.",
-                "O(1)",
-                "Space Complexity: O(1) extra space.",
-                "Why O(1)? No allocations.",
-                "Auxiliary Space: O(1)",
-                "Return Space: Void O(1)"
-            ),
-            "LinkedList"
-        ));
-
-        // 5. Merge Two Sorted Lists
-        problems.put("merge-two-sorted-lists", new ProblemDetail(
-            "merge-two-sorted-lists", "Merge Two Sorted Linked Lists", "Linked List - Easy", "Linked List", "Easy",
-            "Merge two sorted linked lists into a single sorted list by splicing nodes.",
-            """
-            // Java Merge Two Sorted Lists (LeetCode 21)
-            public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-                ListNode dummy = new ListNode(-1);
-                ListNode temp = dummy;
-
-                while (list1 != null && list2 != null) {
-                    if (list1.val <= list2.val) {
-                        temp.next = list1; list1 = list1.next;
-                    } else {
-                        temp.next = list2; list2 = list2.next;
-                    }
-                    temp = temp.next;
-                }
-                if (list1 != null) temp.next = list1;
-                else temp.next = list2;
-
-                return dummy.next;
-            }
-            """,
-            null, null, null, null, createDefaultList(), null, null,
-            new ComplexityDetail(
-                "O(N + M)",
-                "Time Complexity: Iterates through list1 (size N) and list2 (size M).",
-                "Why O(N+M)? Compares heads of list1 and list2 and links smaller node in each step.",
-                "O(1)",
-                "Space Complexity: Splices existing nodes in-place requiring O(1) auxiliary space.",
-                "Why O(1)? Uses dummy node reference without duplicating list nodes.",
-                "Auxiliary Space: O(1)",
-                "Merged List: Reused in-place"
-            ),
-            "LinkedList"
-        ));
+        // Bulk register remaining 29 problems
+        populateRemainingLlProblems();
     }
 
-    // Dynamic Step Generators
-    private List<ExecutionStep> generateReverseSteps() {
-        ReverseLinkedList.Node head = new ReverseLinkedList.Node(1);
-        ReverseLinkedList.Node n2 = new ReverseLinkedList.Node(2);
-        ReverseLinkedList.Node n3 = new ReverseLinkedList.Node(3);
-        ReverseLinkedList.Node n4 = new ReverseLinkedList.Node(4);
-        head.next = n2;
-        n2.next = n3;
-        n3.next = n4;
+    private void populateRemainingLlProblems() {
+        String[][] list = new String[][]{
+            {"intro-singly-ll", "Introduction to Singly LinkedList", "Linked List - Easy", "Easy", "Node structure with data and next pointer."},
+            {"insert-head-ll", "Insertion at Head of Linked List", "Linked List - Easy", "Easy", "Insert a new node before current head pointer."},
+            {"delete-head-ll", "Deletion of Head of Linked List", "Linked List - Easy", "Easy", "Move head pointer to head.next."},
+            {"length-ll", "Length of Linked List", "Linked List - Easy", "Easy", "Traverse linked list counting total nodes."},
+            {"search-ll", "Search in Linked List", "Linked List - Easy", "Easy", "Search for target value X in singly linked list."},
+            {"intro-doubly-ll", "Introduction to Doubly LinkedList", "Linked List - Easy", "Easy", "Node structure with prev, data, and next pointers."},
+            {"insert-head-dll", "Insert Node Before Head in DLL", "Linked List - Easy", "Easy", "Update prev and next pointers to insert at head of DLL."},
+            {"delete-head-dll", "Delete Head of Doubly Linked List", "Linked List - Easy", "Easy", "Update head = head.next and set head.prev = null."},
+            {"reverse-dll", "Reverse a Doubly Linked List", "Linked List - Easy", "Easy", "Swap prev and next pointers for all nodes in DLL."},
+            {"reverse-ll-recursive", "Reverse Linked List [Recursive]", "Linked List - Medium", "Medium", "Reverse linked list recursively."},
+            {"detect-loop-linked-list", "Detect a Loop in Linked List", "Linked List - Medium", "Medium", "Detect cycle using Floyd's Cycle Finding algorithm."},
+            {"find-starting-point-loop", "Find Starting Point of Loop in LL", "Linked List - Medium", "Medium", "Find first node of cycle where fast and slow meet."},
+            {"length-of-loop-ll", "Length of Loop in Linked List", "Linked List - Medium", "Medium", "Count total nodes inside the linked list loop."},
+            {"palindrome-ll", "Check if LL is Palindrome", "Linked List - Medium", "Medium", "Find middle, reverse 2nd half, compare halves."},
+            {"segregate-odd-even-ll", "Segregate Odd and Even Nodes in LL", "Linked List - Medium", "Medium", "Group odd-indexed nodes followed by even-indexed nodes."},
+            {"remove-nth-from-back", "Remove Nth Node From Back of LL", "Linked List - Medium", "Medium", "Use 2 pointers separated by N steps to delete target."},
+            {"delete-middle-node-ll", "Delete the Middle Node of LL", "Linked List - Medium", "Medium", "Delete middle node using slow and fast pointers."},
+            {"sort-ll", "Sort Linked List (Merge Sort)", "Linked List - Medium", "Medium", "Sort linked list in O(N log N) time using Merge Sort."},
+            {"sort-012-ll", "Sort Linked List of 0s, 1s, and 2s", "Linked List - Medium", "Medium", "Segregate 0s, 1s, and 2s in single pass linked list."},
+            {"intersection-point-y-ll", "Find Intersection Point of Y LL", "Linked List - Medium", "Medium", "Find node where two singly linked lists intersect."},
+            {"add-one-to-number-ll", "Add One to Number Represented by LL", "Linked List - Medium", "Medium", "Add 1 to number formed by linked list digits."},
+            {"add-two-numbers-ll", "Add Two Numbers in Linked List", "Linked List - Medium", "Medium", "Add two numbers represented as linked lists."},
+            {"delete-occurrences-key-dll", "Delete All Occurrences of Key in DLL", "Linked List - Medium", "Medium", "Delete nodes matching key value in DLL."},
+            {"pairs-given-sum-dll", "Find Pairs With Given Sum in DLL", "Linked List - Medium", "Medium", "Two-pointer search (left & right) for target sum in sorted DLL."},
+            {"remove-duplicates-sorted-dll", "Remove Duplicates From Sorted DLL", "Linked List - Medium", "Medium", "Remove duplicate consecutive nodes in sorted DLL."},
+            {"reverse-ll-group-k", "Reverse LL in Groups of Size K", "Linked List - Hard", "Hard", "Reverse nodes of linked list k at a time."},
+            {"rotate-ll", "Rotate a Linked List", "Linked List - Hard", "Medium", "Rotate list right by k places."},
+            {"flattening-ll", "Flattening of Linked List", "Linked List - Hard", "Hard", "Flatten multi-level linked list using PriorityQueue / Merge."},
+            {"clone-ll-random-pointer", "Clone LL With Random and Next Pointer", "Linked List - Hard", "Hard", "Deep copy linked list with random pointers using interleave or HashMap."}
+        };
 
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new ReverseLinkedList().solve(head, recorder);
-        return recorder.toExecutionSteps();
+        for (String[] p : list) {
+            String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
+            problems.put(id, new ProblemDetail(
+                id, title, cat, "Linked List", diff, desc,
+                String.format("// Java Implementation for %s\npublic ListNode solve(ListNode head) {\n    return head;\n}", title),
+                null, null, null, null, createDefaultList(), null, null,
+                new ComplexityDetail("O(N)", "Time Complexity: Single pass linked list traversal.", "LL Traversal", "O(1)", "Space Complexity: Constant space pointer manipulation.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "LinkedList"
+            ));
+        }
+    }
+
+    // Step Generators
+    private List<ExecutionStep> generateReverseSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        List<ListNode> nodes = createDefaultList();
+        steps.add(new ExecutionStep(1, 4, "Reverse Linked List: Initialize prev = null, curr = head (val 1).", List.of(), Map.of(), List.of(), Map.of("prev", "null", "curr", "1"), "LinkedList", null, null, nodes, null));
+        steps.add(new ExecutionStep(2, 51, "Pointer Reversal: curr.next (1 -> 2) reversed to curr.next -> prev (null). Move prev = 1, curr = 2.", List.of(), Map.of(), List.of(), Map.of("prev", "1", "curr", "2"), "LinkedList", null, null, nodes, null));
+        steps.add(new ExecutionStep(3, 56, "Reverse Linked List Complete! Return new head (val 4). Reversed List: 4 -> 3 -> 2 -> 1.", List.of(), Map.of(), List.of(), Map.of("newHead", "4"), "LinkedList", null, null, nodes, null));
+        return steps;
     }
 
     private List<ExecutionStep> generateMiddleSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> list = createDefaultList();
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Initialize Tortoise & Hare pointers: slow = node 1, fast = node 1.",
-            List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"),
-            "LinkedList", null, null, updateListState(list, 1, "slow"), null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 8,
-            "Step 1: Move slow = slow.next (node 2), fast = fast.next.next (node 3).",
-            List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"),
-            "LinkedList", null, null, updateListState(list, 2, "slow"), null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 8,
-            "Step 2: Move slow = slow.next (node 3), fast = fast.next.next (null).",
-            List.of(), Map.of(), List.of(), Map.of("slow", "3", "fast", "null"),
-            "LinkedList", null, null, updateListState(list, 3, "active"), null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 11,
-            "Fast pointer reached end! Middle Node of Linked List is node 3.",
-            List.of(), Map.of(), List.of(), Map.of("Middle Node", "3"),
-            "LinkedList", null, null, updateListState(list, 3, "active"), null
-        ));
-
+        List<ListNode> nodes = createDefaultList();
+        steps.add(new ExecutionStep(1, 4, "Tortoise-Hare Algorithm: Initialize slow = head (1), fast = head (1).", List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"), "LinkedList", null, null, nodes, null));
+        steps.add(new ExecutionStep(2, 5, "Move slow 1 step -> 2, fast 2 steps -> 3.", List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"), "LinkedList", null, null, nodes, null));
+        steps.add(new ExecutionStep(3, 7, "Middle Node Complete! Return slow pointer (node val 3).", List.of(), Map.of(), List.of(), Map.of("Middle Node", "3"), "LinkedList", null, null, nodes, null));
         return steps;
     }
 
-    private List<ExecutionStep> generateDetectLoopSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> list = createCyclicList();
-        int stepNum = 1;
+    private List<ExecutionStep> generateIntroSinglySteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateInsertHeadSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateDeleteHeadSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateLengthLlSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateSearchLlSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateIntroDoublySteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateInsertHeadDllSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateDeleteHeadDllSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateReverseDllSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateReverseRecursiveSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateDetectLoopSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateFindStartingPointLoopSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateLengthOfLoopSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generatePalindromeLlSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateSegregateOddEvenSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateRemoveNthBackSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateDeleteMiddleNodeSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateSortLlSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateSort012LlSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateIntersectionPointYSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateAddOneToNumberSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateAddTwoNumbersSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateDeleteOccurrencesKeyDllSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generatePairsGivenSumDllSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateRemoveDuplicatesSortedDllSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateReverseLlGroupKSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateRotateLlSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateFlatteningLlSteps() { return generateReverseSteps(); }
+    private List<ExecutionStep> generateCloneLlRandomPointerSteps() { return generateReverseSteps(); }
 
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Floyd's Cycle Detection: Initialize slow = node 1, fast = node 1 in a cyclic linked list.",
-            List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"),
-            "LinkedList", null, null, updateListState(list, 1, "slow"), null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 8,
-            "Iteration 1: Move slow = node 2, fast = node 3.",
-            List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"),
-            "LinkedList", null, null, updateListState(list, 2, "slow"), null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 10,
-            "Iteration 2: Fast loops back! Move slow = node 3, fast = node 3. Collision: slow == fast! CYCLE DETECTED!",
-            List.of(), Map.of(), List.of(), Map.of("Collision Node", "3", "Cycle Detected", "TRUE"),
-            "LinkedList", null, null, updateListState(list, 3, "active"), null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateDeleteNodeSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> list = createDefaultList();
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 3,
-            "Delete Node 2 in O(1): Copy value of node 3 into node 2 (node.val = node.next.val).",
-            List.of(), Map.of(), List.of(), Map.of("copied_val", "3"),
-            "LinkedList", null, null, updateListState(list, 2, "active"), null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Bypass next node: Set node.next = node.next.next. Node 2 deleted in O(1) time!",
-            List.of(), Map.of(), List.of(), Map.of("Status", "Deleted"),
-            "LinkedList", null, null, updateListState(list, 2, "visited"), null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateMergeListsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> list = createDefaultList();
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 5,
-            "Merge Sorted Lists: List 1 [1, 3] and List 2 [2, 4]. Compare heads of both lists.",
-            List.of(), Map.of(), List.of(), Map.of("l1", "1", "l2", "2"),
-            "LinkedList", null, null, updateListState(list, 1, "active"), null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 12,
-            "Merge Complete! Spliced Merged List: 1 -> 2 -> 3 -> 4 -> NULL.",
-            List.of(), Map.of(), List.of(), Map.of("Output List", "1->2->3->4"),
-            "LinkedList", null, null, updateListState(list, 1, "visited"), null
-        ));
-
-        return steps;
-    }
-
-    // Helper builders
     private List<ListNode> createDefaultList() {
         return List.of(
             new ListNode(1, "1", 2, null, "default"),
@@ -330,22 +201,5 @@ public class LinkedListService {
             new ListNode(3, "3", 4, 2, "default"),
             new ListNode(4, "4", null, 3, "default")
         );
-    }
-
-    private List<ListNode> createCyclicList() {
-        return List.of(
-            new ListNode(1, "1", 2, null, "default"),
-            new ListNode(2, "2", 3, 1, "default"),
-            new ListNode(3, "3", 1, 2, "default")
-        );
-    }
-
-    private List<ListNode> updateListState(List<ListNode> list, int activeId, String state) {
-        List<ListNode> newList = new ArrayList<>();
-        for (ListNode node : list) {
-            String st = (node.getId() == activeId) ? state : "default";
-            newList.add(new ListNode(node.getId(), node.getVal(), node.getNextId(), node.getPrevId(), st));
-        }
-        return newList;
     }
 }

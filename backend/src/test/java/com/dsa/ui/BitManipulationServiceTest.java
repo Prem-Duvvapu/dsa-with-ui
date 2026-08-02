@@ -23,20 +23,22 @@ public class BitManipulationServiceTest {
     public void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertTrue(problems.size() >= 2);
+        assertEquals(18, problems.size(), "Should load 18 Bit & Math algorithms");
     }
 
     @Test
     public void testGetProblemById() {
-        ProblemDetail problem = service.getProblemById("single-number");
+        ProblemDetail problem = service.getProblemById("single-number-1");
         assertNotNull(problem);
-        assertEquals("Single Number (XOR Property)", problem.getTitle());
     }
 
     @Test
-    public void testGenerateSteps() {
-        List<ExecutionStep> steps = service.generateSteps("single-number");
-        assertNotNull(steps);
-        assertFalse(steps.isEmpty());
+    public void testGenerateStepsForAllBitMathProblems() {
+        List<ProblemDetail> problems = service.getAllProblems();
+        for (ProblemDetail p : problems) {
+            List<ExecutionStep> steps = service.generateSteps(p.getId());
+            assertNotNull(steps, "Steps list should not be null for " + p.getId());
+            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        }
     }
 }

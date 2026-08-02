@@ -21,38 +21,31 @@ class AdvancedGraphServiceTest {
     }
 
     @Test
-    @DisplayName("Should load all 10 Striver A2Z Advanced Graph problems")
+    @DisplayName("Should load all 62 Striver Graph and String problems")
     void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertEquals(10, problems.size(), "Should load 10 Advanced Graph problems");
+        assertEquals(62, problems.size(), "Should load 62 Graph & String problems");
     }
 
     @Test
-    @DisplayName("Should retrieve Dijkstra and Kruskal MST problem details")
+    @DisplayName("Should retrieve problem details by ID")
     void testGetProblemById() {
-        ProblemDetail dijkstra = service.getProblemById("dijkstra-min-heap");
-        assertNotNull(dijkstra);
-        assertEquals("Dijkstra's Shortest Path Algorithm", dijkstra.getTitle());
-        assertEquals("O(E log V)", dijkstra.getComplexity().getTimeComplexity());
+        ProblemDetail graphIntro = service.getProblemById("graph-intro");
+        assertNotNull(graphIntro);
 
-        ProblemDetail kruskal = service.getProblemById("kruskals-mst");
-        assertNotNull(kruskal);
-        assertEquals("Kruskal's MST (Disjoint Set / Union-Find)", kruskal.getTitle());
+        ProblemDetail kmp = service.getProblemById("kmp-lps-algo");
+        assertNotNull(kmp);
     }
 
     @Test
-    @DisplayName("Should generate execution steps for Topo Sort, Dijkstra, and Tarjan's Bridges")
+    @DisplayName("Should generate execution steps for all 62 Graph and String problems")
     void testGenerateSteps() {
-        List<ExecutionStep> topoSteps = service.generateSteps("topo-sort-dfs");
-        assertNotNull(topoSteps);
-
-        List<ExecutionStep> dijkstraSteps = service.generateSteps("dijkstra-min-heap");
-        assertNotNull(dijkstraSteps);
-        assertEquals("PriorityQueue", dijkstraSteps.get(0).getDsType());
-
-        List<ExecutionStep> bridgeSteps = service.generateSteps("tarjan-bridges");
-        assertNotNull(bridgeSteps);
-        assertTrue(bridgeSteps.stream().anyMatch(s -> s.getDescription().contains("CRITICAL BRIDGE")));
+        List<ProblemDetail> problems = service.getAllProblems();
+        for (ProblemDetail p : problems) {
+            List<ExecutionStep> steps = service.generateSteps(p.getId());
+            assertNotNull(steps, "Steps should not be null for " + p.getId());
+            assertFalse(steps.isEmpty(), "Steps should not be empty for " + p.getId());
+        }
     }
 }

@@ -23,7 +23,7 @@ public class DpServiceTest {
     public void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertEquals(4, problems.size());
+        assertEquals(55, problems.size(), "Should load 55 DP problems");
     }
 
     @Test

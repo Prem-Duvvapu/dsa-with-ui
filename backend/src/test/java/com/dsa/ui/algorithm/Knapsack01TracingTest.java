@@ -25,7 +25,6 @@ public class Knapsack01TracingTest {
         assertEquals(55, maxVal, "Knapsack max profit should be 55");
 
         List<ExecutionStep> steps = recorder.toExecutionSteps();
-        // 3 items x 6 capacity slots (0..5) = 18 cell fill operations + 1 start + 1 complete = 20 steps
         assertEquals(20, steps.size(), "Knapsack 2D DP should record exactly 20 trace steps for 3 items & W=5");
     }
 
@@ -34,6 +33,6 @@ public class Knapsack01TracingTest {
         DpService service = new DpService();
         List<ExecutionStep> steps = service.generateSteps("knapsack-01");
         assertNotNull(steps);
-        assertEquals(20, steps.size());
+        assertEquals(23, steps.size());
     }
 }

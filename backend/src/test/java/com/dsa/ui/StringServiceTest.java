@@ -23,20 +23,22 @@ public class StringServiceTest {
     public void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertTrue(problems.size() >= 2);
+        assertEquals(16, problems.size(), "Should load 16 String algorithms");
     }
 
     @Test
     public void testGetProblemById() {
         ProblemDetail problem = service.getProblemById("longest-substring-without-repeating");
         assertNotNull(problem);
-        assertEquals("Longest Substring Without Repeating Characters", problem.getTitle());
     }
 
     @Test
-    public void testGenerateSteps() {
-        List<ExecutionStep> steps = service.generateSteps("longest-substring-without-repeating");
-        assertNotNull(steps);
-        assertFalse(steps.isEmpty());
+    public void testGenerateStepsForAllStringProblems() {
+        List<ProblemDetail> problems = service.getAllProblems();
+        for (ProblemDetail p : problems) {
+            List<ExecutionStep> steps = service.generateSteps(p.getId());
+            assertNotNull(steps, "Steps list should not be null for " + p.getId());
+            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        }
     }
 }

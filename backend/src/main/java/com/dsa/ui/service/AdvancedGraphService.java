@@ -1,8 +1,6 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.graph.*;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,719 +24,454 @@ public class AdvancedGraphService {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
+            case "graph-intro": return generateGraphIntroSteps();
+            case "graph-rep-cpp": return generateGraphRepCppSteps();
+            case "graph-rep-java": return generateGraphRepJavaSteps();
+            case "connected-components-intro": return generateConnectedComponentsIntroSteps();
+            case "bfs-dfs-intro": return generateBfsDfsIntroSteps();
+            case "dfs-traversal": return generateDfsTraversalSteps();
+            case "num-provinces": return generateNumProvincesSteps();
+            case "connected-matrix": return generateConnectedMatrixSteps();
+            case "rotten-oranges": return generateRottenOrangesSteps();
+            case "flood-fill": return generateFloodFillSteps();
+            case "cycle-undirected-bfs": return generateCycleUndirectedBfsSteps();
+            case "cycle-undirected-dfs": return generateCycleUndirectedDfsSteps();
+            case "nearest-cell-1": return generateNearestCell1Steps();
+            case "surrounded-regions": return generateSurroundedRegionsSteps();
+            case "number-of-enclaves": return generateNumberOfEnclavesSteps();
+            case "word-ladder-1": return generateWordLadder1Steps();
+            case "word-ladder-2": return generateWordLadder2Steps();
+            case "number-of-islands": return generateNumberOfIslandsSteps();
+            case "bipartite-graph-dfs": return generateBipartiteGraphDfsSteps();
+            case "cycle-directed-dfs": return generateCycleDirectedDfsSteps();
             case "topo-sort-dfs": return generateTopoSortDfsSteps();
             case "kahn-algo-bfs": return generateKahnAlgoSteps();
+            case "cycle-directed-bfs": return generateCycleDirectedBfsSteps();
+            case "course-schedule-1": return generateCourseSchedule1Steps();
+            case "course-schedule-2": return generateCourseSchedule2Steps();
+            case "find-eventual-safe-states": return generateFindEventualSafeStatesSteps();
+            case "alien-dictionary": return generateAlienDictionarySteps();
             case "shortest-path-undirected": return generateShortestPathUndirectedSteps();
+            case "shortest-path-dag": return generateShortestPathDagSteps();
             case "dijkstra-min-heap": return generateDijkstraSteps();
+            case "dijkstra-pq-theory": return generateDijkstraPqTheorySteps();
+            case "shortest-path-binary-maze": return generateShortestPathBinaryMazeSteps();
+            case "path-min-effort": return generatePathMinEffortSteps();
+            case "cheapest-flights-k-stops": return generateCheapestFlightsKStopsSteps();
+            case "network-delay-time": return generateNetworkDelayTimeSteps();
+            case "number-of-ways-destination": return generateNumberOfWaysDestinationSteps();
+            case "min-multiplications-reach-end": return generateMinMultiplicationsReachEndSteps();
             case "bellman-ford": return generateBellmanFordSteps();
             case "floyd-warshall": return generateFloydWarshallSteps();
+            case "city-smallest-neighbors": return generateCitySmallestNeighborsSteps();
+            case "mst-theory": return generateMstTheorySteps();
             case "prims-mst": return generatePrimsSteps();
+            case "disjoint-set-dsu": return generateDisjointSetDsuSteps();
             case "kruskals-mst": return generateKruskalsSteps();
-            case "kosaraju-scc": return generateKosarajuSteps();
+            case "network-connected-ops": return generateNetworkConnectedOpsSteps();
+            case "most-stones-removed": return generateMostStonesRemovedSteps();
+            case "accounts-merge": return generateAccountsMergeSteps();
+            case "number-of-islands-2": return generateNumberOfIslands2Steps();
+            case "making-large-island": return generateMakingLargeIslandSteps();
+            case "swim-in-rising-water": return generateSwimInRisingWaterSteps();
             case "tarjan-bridges": return generateTarjanBridgesSteps();
-            default: return generateTopoSortDfsSteps();
+            case "articulation-points": return generateArticulationPointsSteps();
+            case "kosaraju-scc": return generateKosarajuSteps();
+            case "bracket-reversals": return generateBracketReversalsSteps();
+            case "count-and-say": return generateCountAndSaySteps();
+            case "string-hashing-theory": return generateStringHashingTheorySteps();
+            case "rabin-karp-algo": return generateRabinKarpSteps();
+            case "z-function-algo": return generateZFunctionSteps();
+            case "kmp-lps-algo": return generateKmpLpsSteps();
+            case "shortest-palindrome": return generateShortestPalindromeSteps();
+            case "longest-happy-prefix": return generateLongestHappyPrefixSteps();
+            case "count-palindromic-subsequences": return generateCountPalindromicSubsequencesSteps();
+            default: return generateGraphIntroSteps();
         }
     }
 
     private void initProblems() {
-        // 1. Topological Sort (DFS)
-        problems.put("topo-sort-dfs", new ProblemDetail(
-            "topo-sort-dfs", "Topological Sort (DFS)", "Graphs - Topo Sort", "Advanced Graphs", "Medium",
-            "Given a Directed Acyclic Graph (DAG) with V vertices and E edges, return a linear ordering of vertices such that for every directed edge u -> v, u appears before v.",
+        // 1. Introduction to Graph
+        problems.put("graph-intro", new ProblemDetail(
+            "graph-intro", "1. Introduction to Graph", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "A Graph is a non-linear data structure consisting of Vertices (Nodes) and Edges connecting pairs of vertices.",
             """
-            // Java Topological Sort DFS (Striver A2Z Sheet)
-            public int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) {
-                boolean vis[] = new boolean[V];
-                Stack<Integer> st = new Stack<>();
+            // Graph Definition in Java
+            // V = Number of Vertices, E = Number of Edges
+            // Graph types: Directed vs Undirected, Weighted vs Unweighted, Cyclic vs Acyclic
+            """,
+            createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Time Complexity: Traversal over V vertices and E edges.", "Graph Size", "O(V + E)", "Space Complexity: Storage for adjacency list representation.", "Adjacency List", "Auxiliary Space: O(V + E)", "Storage"), "Graph"
+        ));
 
-                for (int i = 0; i < V; i++) {
-                    if (!vis[i]) {
-                        findTopoSort(i, vis, st, adj);
-                    }
-                }
+        // 2. Graph Representation C++
+        problems.put("graph-rep-cpp", new ProblemDetail(
+            "graph-rep-cpp", "2. Graph Representation | C++", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "Graph representation using Adjacency Matrix and Adjacency List in C++.",
+            """
+            // C++ Adjacency List Representation
+            vector<int> adj[V + 1];
+            adj[u].push_back(v);
+            adj[v].push_back(u); // for undirected graph
+            """,
+            createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Space efficient adjacency list representation.", "Adjacency List", "O(V + E)", "Auxiliary space for adjacency list.", "Adjacency List", "Space: O(V + E)", "Memory"), "Graph"
+        ));
 
-                int topo[] = new int[V];
-                int i = 0;
-                while (!st.isEmpty()) {
-                    topo[i++] = st.pop();
+        // 3. Graph Representation Java
+        problems.put("graph-rep-java", new ProblemDetail(
+            "graph-rep-java", "3. Graph Representation | Java", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "Graph representation using ArrayList of ArrayLists in Java.",
+            """
+            // Java Adjacency List Representation
+            List<List<Integer>> adj = new ArrayList<>();
+            for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+            """,
+            createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Java ArrayList representation.", "Adjacency List", "O(V + E)", "Auxiliary space for ArrayList structure.", "ArrayList", "Space: O(V + E)", "Memory"), "Graph"
+        ));
+
+        // 4. Connected Components
+        problems.put("connected-components-intro", new ProblemDetail(
+            "connected-components-intro", "4. Connected Components", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "A connected component of an undirected graph is a maximal connected subgraph.",
+            """
+            // Java Connected Components Count
+            int components = 0;
+            boolean[] vis = new boolean[V];
+            for (int i = 0; i < V; i++) {
+                if (!vis[i]) {
+                    components++;
+                    dfs(i, vis, adj);
                 }
-                return topo;
             }
+            """,
+            createProvinceNodes(), createProvinceEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Time Complexity: Single pass outer loop visits each vertex once.", "DFS Outer Pass", "O(V)", "Space Complexity: Boolean visited array of size V.", "Visited Array", "Auxiliary Space: O(V)", "Memory"), "Graph"
+        ));
 
-            private void findTopoSort(int node, boolean vis[], Stack<Integer> st, ArrayList<ArrayList<Integer>> adj) {
+        // 5. Traversal Techniques
+        problems.put("bfs-dfs-intro", new ProblemDetail(
+            "bfs-dfs-intro", "5. Traversal Techniques (BFS vs DFS)", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "Breadth First Search (BFS) explores level-by-level using a Queue. Depth First Search (DFS) explores as deep as possible using a Stack/Recursion.",
+            """
+            // BFS Uses Queue (FIFO), DFS Uses Recursion/Stack (LIFO)
+            """,
+            createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Time Complexity: Traverses all V vertices and E edges.", "Traversal", "O(V)", "Space Complexity: Queue/Stack memory.", "Queue/Stack", "Auxiliary Space: O(V)", "Memory"), "Graph"
+        ));
+
+        // 6. DFS Traversal
+        problems.put("dfs-traversal", new ProblemDetail(
+            "dfs-traversal", "6. Depth First Search Traversal", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "Traverse an undirected graph using Depth First Search (DFS) recursion.",
+            """
+            // Java DFS Traversal (Striver A2Z Sheet)
+            public void dfs(int node, boolean vis[], ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> ls) {
                 vis[node] = true;
+                ls.add(node);
                 for (int it : adj.get(node)) {
-                    if (!vis[it]) {
-                        findTopoSort(it, vis, st, adj);
-                    }
-                }
-                st.push(node); // Push node to stack AFTER visiting all adjacent nodes!
-            }
-            """,
-            createDagNodes(), createDagEdges(), null, null,
-            new ComplexityDetail(
-                "O(V + E)",
-                "Time Complexity: DFS visit runs once for every vertex O(V) and traverses each directed edge once O(E).",
-                "Why O(V + E)? Every vertex is pushed to stack exactly once upon function call finish.",
-                "O(V)",
-                "Space Complexity: Visited array O(V), Auxiliary Recursion Call Stack O(V), and Output Stack O(V).",
-                "Why O(V)? Output stack stores all V vertices.",
-                "Auxiliary Space: O(V)",
-                "Adjacency List Space: O(V + E)"
-            ),
-            "Stack"
-        ));
-
-        // 2. Kahn's Algorithm (BFS Topo Sort)
-        problems.put("kahn-algo-bfs", new ProblemDetail(
-            "kahn-algo-bfs", "Kahn's Algorithm (BFS Topo Sort)", "Graphs - Topo Sort", "Advanced Graphs", "Medium",
-            "Topological Sorting using Indegree Array & BFS Queue.",
-            """
-            // Java Kahn's Algorithm (Striver A2Z Sheet)
-            public int[] topoSortKahn(int V, ArrayList<ArrayList<Integer>> adj) {
-                int indegree[] = new int[V];
-                for (int i = 0; i < V; i++) {
-                    for (int it : adj.get(i)) indegree[it]++;
-                }
-
-                Queue<Integer> q = new LinkedList<>();
-                for (int i = 0; i < V; i++) {
-                    if (indegree[i] == 0) q.add(i);
-                }
-
-                int topo[] = new int[V];
-                int i = 0;
-                while (!q.isEmpty()) {
-                    int node = q.poll();
-                    topo[i++] = node;
-
-                    for (int it : adj.get(node)) {
-                        indegree[it]--;
-                        if (indegree[it] == 0) q.add(it);
-                    }
-                }
-                return topo;
-            }
-            """,
-            createDagNodes(), createDagEdges(), null, null,
-            new ComplexityDetail(
-                "O(V + E)",
-                "Time Complexity: Indegree calculation takes O(V + E). Queue processes nodes with indegree 0.",
-                "Why Kahn's works? A node with indegree 0 has no prerequisite incoming edges, so it can safely be placed first in topological order.",
-                "O(V)",
-                "Space Complexity: Indegree array O(V) + Queue memory O(V).",
-                "Why O(V)? Bounded by number of graph vertices V.",
-                "Auxiliary Space: O(V)",
-                "Adjacency List Space: O(V + E)"
-            ),
-            "Queue"
-        ));
-
-        // 3. Shortest Path in Undirected Graph
-        problems.put("shortest-path-undirected", new ProblemDetail(
-            "shortest-path-undirected", "Shortest Path in Undirected Graph (Unit Weights)", "Graphs - Shortest Path", "Advanced Graphs", "Medium",
-            "Find shortest path distance from source node 0 to all vertices in an unweighted undirected graph using BFS.",
-            """
-            // Java Shortest Path BFS (Striver A2Z Sheet)
-            public int[] shortestPath(int[][] edges, int N, int M, int src) {
-                ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-                for (int i = 0; i < N; i++) adj.add(new ArrayList<>());
-                for (int i = 0; i < M; i++) {
-                    adj.get(edges[i][0]).add(edges[i][1]);
-                    adj.get(edges[i][1]).add(edges[i][0]);
-                }
-
-                int dist[] = new int[N];
-                Arrays.fill(dist, (int) 1e9);
-                dist[src] = 0;
-
-                Queue<Integer> q = new LinkedList<>();
-                q.add(src);
-
-                while (!q.isEmpty()) {
-                    int node = q.poll();
-                    for (int it : adj.get(node)) {
-                        if (dist[node] + 1 < dist[it]) {
-                            dist[it] = dist[node] + 1;
-                            q.add(it);
-                        }
-                    }
-                }
-                return dist;
-            }
-            """,
-            createShortestPathNodes(), createShortestPathEdges(), null, null,
-            new ComplexityDetail(
-                "O(V + 2E)",
-                "Time Complexity: Level-by-level BFS queue traversal.",
-                "Why BFS yields shortest path for unit weights? First time BFS reaches any node is guaranteed to be via minimum edges.",
-                "O(V)",
-                "Space Complexity: Distance array dist[] of size O(V) + Queue O(V).",
-                "Why O(V)? Max queue capacity is V.",
-                "Auxiliary Space: O(V)",
-                "Adjacency List Space: O(V + 2E)"
-            ),
-            "Queue"
-        ));
-
-        // 4. Dijkstra's Algorithm
-        problems.put("dijkstra-min-heap", new ProblemDetail(
-            "dijkstra-min-heap", "Dijkstra's Shortest Path Algorithm", "Graphs - Shortest Path", "Advanced Graphs", "Medium",
-            "Find shortest path distance from source vertex to all vertices in a weighted graph using PriorityQueue (Min-Heap).",
-            """
-            // Java Dijkstra Implementation (LeetCode / Striver A2Z)
-            class Pair {
-                int distance, node;
-                Pair(int distance, int node) { this.distance = distance; this.node = node; }
-            }
-
-            public int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
-                PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) -> x.distance - y.distance);
-                int dist[] = new int[V];
-                Arrays.fill(dist, (int) 1e9);
-
-                dist[S] = 0;
-                pq.add(new Pair(0, S));
-
-                while (!pq.isEmpty()) {
-                    int dis = pq.peek().distance;
-                    int node = pq.peek().node;
-                    pq.poll();
-
-                    for (ArrayList<Integer> it : adj.get(node)) {
-                        int adjNode = it.get(0);
-                        int edgeWeight = it.get(1);
-
-                        if (dis + edgeWeight < dist[adjNode]) {
-                            dist[adjNode] = dis + edgeWeight;
-                            pq.add(new Pair(dist[adjNode], adjNode));
-                        }
-                    }
-                }
-                return dist;
-            }
-            """,
-            createWeightedNodes(), createWeightedEdges(), null, null,
-            new ComplexityDetail(
-                "O(E log V)",
-                "Time Complexity: Every vertex can be pushed to Min-Heap up to its degree times. Total heap insertions = E, each taking O(log V).",
-                "Why Min-Heap vs Array? Min-Heap retrieves min distance vertex in O(log V) instead of O(V) array scan, improving overall runtime from O(V^2) to O(E log V).",
-                "O(V + E)",
-                "Space Complexity: PriorityQueue stores pairs up to O(E) elements + dist[] array O(V).",
-                "Why PriorityQueue can store E elements? Multiple path updates for same vertex can coexist in queue before stale entries poll.",
-                "Auxiliary Space: O(V + E)",
-                "Adjacency List Space: O(V + E)"
-            ),
-            "PriorityQueue"
-        ));
-
-        // 5. Bellman-Ford Algorithm
-        problems.put("bellman-ford", new ProblemDetail(
-            "bellman-ford", "Bellman-Ford Algorithm (Negative Cycles)", "Graphs - Shortest Path", "Advanced Graphs", "Medium",
-            "Shortest path algorithm handling negative edge weights and detecting negative weight cycles.",
-            """
-            // Java Bellman-Ford (Striver A2Z Sheet)
-            public int[] bellmanFord(int V, ArrayList<ArrayList<Integer>> edges, int S) {
-                int dist[] = new int[V];
-                Arrays.fill(dist, (int) 1e8);
-                dist[S] = 0;
-
-                // Relax all edges V - 1 times
-                for (int i = 0; i < V - 1; i++) {
-                    for (ArrayList<Integer> it : edges) {
-                        int u = it.get(0), v = it.get(1), wt = it.get(2);
-                        if (dist[u] != 1e8 && dist[u] + wt < dist[v]) {
-                            dist[v] = dist[u] + wt;
-                        }
-                    }
-                }
-
-                // Vth relaxation check for negative cycle
-                for (ArrayList<Integer> it : edges) {
-                    int u = it.get(0), v = it.get(1), wt = it.get(2);
-                    if (dist[u] != 1e8 && dist[u] + wt < dist[v]) {
-                        return new int[]{-1}; // Negative cycle detected!
-                    }
-                }
-                return dist;
-            }
-            """,
-            createWeightedNodes(), createWeightedEdges(), null, null,
-            new ComplexityDetail(
-                "O(V x E)",
-                "Time Complexity: We relax all E edges V-1 times = (V-1) * E operations. One additional pass checks for negative cycles.",
-                "Why V-1 iterations? In a graph with V vertices, the longest simple path contains at most V-1 edges.",
-                "O(V)",
-                "Space Complexity: Distance array dist[] of size V.",
-                "Why O(V)? Only distance array is maintained.",
-                "Auxiliary Space: O(V)",
-                "Edge List Space: O(E)"
-            ),
-            "Queue"
-        ));
-
-        // 6. Floyd-Warshall Algorithm
-        problems.put("floyd-warshall", new ProblemDetail(
-            "floyd-warshall", "Floyd-Warshall All-Pairs Shortest Path", "Graphs - Shortest Path", "Advanced Graphs", "Medium",
-            "Find shortest distances between every pair of vertices in a weighted directed graph using DP Matrix.",
-            """
-            // Java Floyd-Warshall (Striver A2Z Sheet)
-            public void floydWarshall(int[][] matrix) {
-                int n = matrix.length;
-                for (int k = 0; k < n; k++) {
-                    for (int i = 0; i < n; i++) {
-                        for (int j = 0; j < n; j++) {
-                            if (matrix[i][k] != -1 && matrix[k][j] != -1) {
-                                int dist = matrix[i][k] + matrix[k][j];
-                                if (matrix[i][j] == -1 || dist < matrix[i][j]) {
-                                    matrix[i][j] = dist;
-                                }
-                            }
-                        }
-                    }
+                    if (!vis[it]) dfs(it, vis, adj, ls);
                 }
             }
             """,
-            createProvinceNodes(), createProvinceEdges(), null, null,
-            new ComplexityDetail(
-                "O(V^3)",
-                "Time Complexity: 3 nested loops from k=0 to V, i=0 to V, j=0 to V.",
-                "Why k is outer loop? Node k acts as intermediate waypoint. Matrix[i][j] updates if path via k is shorter.",
-                "O(1)",
-                "Space Complexity: Updates input adjacency matrix in-place.",
-                "Why O(1) auxiliary? Uses original N x N input matrix.",
-                "Auxiliary Space: O(1)",
-                "Matrix Input Space: O(V^2)"
-            ),
-            "Matrix"
+            createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Time Complexity: Every vertex and edge processed once.", "DFS Recursion", "O(V)", "Space Complexity: Recursion call stack O(V).", "Call Stack", "Auxiliary Space: O(V)", "Memory"), "Graph"
         ));
 
-        // 7. Prim's MST Algorithm
-        problems.put("prims-mst", new ProblemDetail(
-            "prims-mst", "Prim's Minimum Spanning Tree (MST)", "Graphs - MST & Disjoint Set", "Advanced Graphs", "Medium",
-            "Find Minimum Spanning Tree weight sum using Greedy Min-Heap approach.",
+        // Populate remaining problems 7 to 62...
+        populateGraphProblems7To62();
+    }
+
+    private void populateGraphProblems7To62() {
+        // 7. Number of Provinces
+        problems.put("num-provinces", new ProblemDetail(
+            "num-provinces", "7. Number of Provinces", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "Given an N x N matrix isConnected where isConnected[i][j] = 1 if city i and city j are directly connected, return total number of provinces.",
             """
-            // Java Prim's MST (Striver A2Z Sheet)
-            class Pair {
-                int node, distance;
-                Pair(int node, int distance) { this.node = node; this.distance = distance; }
-            }
-
-            public int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) {
-                PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) -> x.distance - y.distance);
-                boolean[] vis = new boolean[V];
-                pq.add(new Pair(0, 0));
-                int sum = 0;
-
-                while (!pq.isEmpty()) {
-                    int wt = pq.peek().distance;
-                    int node = pq.peek().node;
-                    pq.poll();
-
-                    if (vis[node]) continue;
-                    vis[node] = true;
-                    sum += wt;
-
-                    for (ArrayList<Integer> it : adj.get(node)) {
-                        int adjNode = it.get(0);
-                        int edW = it.get(1);
-                        if (!vis[adjNode]) {
-                            pq.add(new Pair(adjNode, edW));
-                        }
-                    }
-                }
-                return sum;
-            }
-            """,
-            createWeightedNodes(), createWeightedEdges(), null, null,
-            new ComplexityDetail(
-                "O(E log V)",
-                "Time Complexity: Priority queue stores up to E edge pairs. Heap push/pop takes O(log V).",
-                "Why Prim's is Greedy? Always expands MST by choosing the smallest weight edge connecting an unvisited vertex.",
-                "O(V + E)",
-                "Space Complexity: Visited array O(V) + Min-Heap O(E).",
-                "Why O(V+E)? Min-Heap contains edge pairs.",
-                "Auxiliary Space: O(V + E)",
-                "Adjacency List Space: O(V + E)"
-            ),
-            "PriorityQueue"
-        ));
-
-        // 8. Kruskal's MST Algorithm
-        problems.put("kruskals-mst", new ProblemDetail(
-            "kruskals-mst", "Kruskal's MST (Disjoint Set / Union-Find)", "Graphs - MST & Disjoint Set", "Advanced Graphs", "Medium",
-            "Sort all graph edges by weight and pick non-cyclic edges using Disjoint Set (Union-Find).",
-            """
-            // Java Kruskal's MST with Disjoint Set (Striver A2Z Sheet)
-            class DisjointSet {
-                int[] parent, rank;
-                DisjointSet(int n) {
-                    parent = new int[n + 1]; rank = new int[n + 1];
-                    for (int i = 0; i <= n; i++) parent[i] = i;
-                }
-                int findUPar(int node) {
-                    if (node == parent[node]) return node;
-                    return parent[node] = findUPar(parent[node]); // Path compression!
-                }
-                void unionByRank(int u, int v) {
-                    int ulp_u = findUPar(u), ulp_v = findUPar(v);
-                    if (ulp_u == ulp_v) return;
-                    if (rank[ulp_u] < rank[ulp_v]) parent[ulp_u] = ulp_v;
-                    else if (rank[ulp_v] < rank[ulp_u]) parent[ulp_v] = ulp_u;
-                    else { parent[ulp_v] = ulp_u; rank[ulp_u]++; }
-                }
-            }
-
-            public int kruskalMST(int V, List<int[]> edges) {
-                edges.sort((a, b) -> a[2] - b[2]); // Sort by edge weight
-                DisjointSet ds = new DisjointSet(V);
-                int mstWeight = 0;
-
-                for (int[] edge : edges) {
-                    int u = edge[0], v = edge[1], wt = edge[2];
-                    if (ds.findUPar(u) != ds.findUPar(v)) {
-                        mstWeight += wt;
-                        ds.unionByRank(u, v);
-                    }
-                }
-                return mstWeight;
-            }
-            """,
-            createWeightedNodes(), createWeightedEdges(), null, null,
-            new ComplexityDetail(
-                "O(E log E)",
-                "Time Complexity: Sorting E edges takes O(E log E). Union-Find operations take near-constant O(4 alpha) amortized time.",
-                "Why Disjoint Set Path Compression is fast? Collapses tree depth so find parent operation takes amortized O(4 alpha) = O(1) time.",
-                "O(V + E)",
-                "Space Complexity: Parent & Rank arrays in Disjoint Set of size O(V) + Edge list O(E).",
-                "Why O(V+E)? Bounded by vertex count and edge list storage.",
-                "Auxiliary Space: O(V)",
-                "Edge List Space: O(E)"
-            ),
-            "Stack"
-        ));
-
-        // 9. Kosaraju's SCC Algorithm
-        problems.put("kosaraju-scc", new ProblemDetail(
-            "kosaraju-scc", "Kosaraju's Strongly Connected Components", "Graphs - Hard Problems", "Advanced Graphs", "Hard",
-            "Find all Strongly Connected Components (SCCs) in a Directed Graph using 3-Step DFS & Transpose.",
-            """
-            // Java Kosaraju's Algorithm (Striver A2Z Sheet)
-            public int kosaraju(int V, ArrayList<ArrayList<Integer>> adj) {
-                boolean vis[] = new boolean[V];
-                Stack<Integer> st = new Stack<>();
-                for (int i = 0; i < V; i++) {
-                    if (!vis[i]) dfs1(i, vis, st, adj);
-                }
-
-                // Step 2: Transpose Graph
-                ArrayList<ArrayList<Integer>> adjT = new ArrayList<>();
-                for (int i = 0; i < V; i++) adjT.add(new ArrayList<>());
-                for (int i = 0; i < V; i++) {
-                    vis[i] = false;
-                    for (int it : adj.get(i)) adjT.get(it).add(i);
-                }
-
-                // Step 3: DFS on transposed graph in stack order
-                int scc = 0;
-                while (!st.isEmpty()) {
-                    int node = st.pop();
-                    if (!vis[node]) {
-                        scc++;
-                        dfs2(node, vis, adjT);
-                    }
-                }
-                return scc;
-            }
-            """,
-            createDirectedGraphNodes(), createDirectedGraphEdges(), null, null,
-            new ComplexityDetail(
-                "O(V + E)",
-                "Time Complexity: Step 1 DFS1 O(V+E), Step 2 Transpose Graph O(V+E), Step 3 DFS2 O(V+E). Total = 3 * O(V+E) = O(V+E).",
-                "Why Transpose reverses edges? Reversing directed edges prevents DFS from spilling across SCC boundaries during step 3.",
-                "O(V + E)",
-                "Space Complexity: Transposed graph adjacency list O(V+E) + Stack O(V) + Visited array O(V).",
-                "Why O(V+E)? Stores transposed graph.",
-                "Auxiliary Space: O(V)",
-                "Transposed Adjacency List: O(V + E)"
-            ),
-            "Stack"
-        ));
-
-        // 10. Tarjan's Bridges
-        problems.put("tarjan-bridges", new ProblemDetail(
-            "tarjan-bridges", "Bridges in Graph (Tarjan's Algorithm)", "Graphs - Hard Problems", "Advanced Graphs", "Hard",
-            "An edge is a bridge if removing it increases the number of connected components. Find all bridges using tin[] and low[] arrays.",
-            """
-            // Java Tarjan's Bridge Finding (LeetCode 1192)
-            private int timer = 1;
-            public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
-                ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-                for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
-                for (List<Integer> edge : connections) {
-                    adj.get(edge.get(0)).add(edge.get(1));
-                    adj.get(edge.get(1)).add(edge.get(0));
-                }
-
-                int[] tin = new int[n];
-                int[] low = new int[n];
+            // Java Number of Provinces (LeetCode 547)
+            public int findCircleNum(int[][] isConnected) {
+                int n = isConnected.length, provinces = 0;
                 boolean[] vis = new boolean[n];
-                List<List<Integer>> bridges = new ArrayList<>();
-
-                dfs(0, -1, vis, adj, tin, low, bridges);
-                return bridges;
-            }
-
-            private void dfs(int node, int parent, boolean[] vis, ArrayList<ArrayList<Integer>> adj, int[] tin, int[] low, List<List<Integer>> bridges) {
-                vis[node] = true;
-                tin[node] = low[node] = timer++;
-
-                for (int it : adj.get(node)) {
-                    if (it == parent) continue;
-                    if (!vis[it]) {
-                        dfs(it, node, vis, adj, tin, low, bridges);
-                        low[node] = Math.min(low[node], low[it]);
-                        if (low[it] > tin[node]) {
-                            bridges.add(Arrays.asList(node, it)); // Bridge found!
-                        }
-                    } else {
-                        low[node] = Math.min(low[node], tin[it]);
-                    }
+                for (int i = 0; i < n; i++) {
+                    if (!vis[i]) { provinces++; dfs(i, isConnected, vis); }
                 }
+                return provinces;
             }
             """,
-            createCyclicGraphNodes(), createCyclicGraphEdges(), null, null,
-            new ComplexityDetail(
-                "O(V + 2E)",
-                "Time Complexity: Single DFS traversal tracks discovery time `tin[]` and lowest reach time `low[]` for every node and edge.",
-                "Why low[it] > tin[node] condition indicates bridge? If lowest reachable time from node `it` is greater than insertion time of `node`, there is NO BACK-EDGE to node or ancestors -> Edge is a critical bridge!",
-                "O(V + 2E)",
-                "Space Complexity: Visited array O(V), tin[] O(V), low[] O(V), recursion call stack O(V), adjacency list O(V+2E).",
-                "Why O(V)? Arrays tin[] and low[] take size V.",
-                "Auxiliary Space: O(V)",
-                "Adjacency List Space: O(V + 2E)"
-            ),
-            "Stack"
+            createProvinceNodes(), createProvinceEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V^2)", "Time Complexity: Traverses adjacency matrix of size V x V.", "Matrix Scan", "O(V)", "Space Complexity: Visited array.", "Visited Array", "Auxiliary Space: O(V)", "Memory"), "Graph"
         ));
+
+        // 8. Connected Components in Matrix
+        problems.put("connected-matrix", new ProblemDetail(
+            "connected-matrix", "8. Connected Components Problem in Matrix", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "Find number of connected components in a 2D matrix grid.",
+            """
+            // Java Connected Components Matrix
+            public int numComponents(int[][] grid) {
+                int n = grid.length, m = grid[0].length, cnt = 0;
+                boolean[][] vis = new boolean[n][m];
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++) {
+                        if (grid[i][j] == 1 && !vis[i][j]) { cnt++; dfs(i, j, grid, vis); }
+                    }
+                }
+                return cnt;
+            }
+            """,
+            null, null, null, null, null, null, createDefaultMatrix(),
+            new ComplexityDetail("O(N * M)", "Time Complexity: Iterates through N x M grid.", "Grid Traversal", "O(N * M)", "Space Complexity: Visited grid matrix.", "Visited Matrix", "Auxiliary Space: O(N * M)", "Memory"), "Matrix"
+        ));
+
+        // 9. Rotten Oranges
+        problems.put("rotten-oranges", new ProblemDetail(
+            "rotten-oranges", "9. Rotten Oranges", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "Given an N x M grid where 0=empty, 1=fresh, 2=rotten, find minimum minutes to rot all fresh oranges using Multi-Source BFS.",
+            """
+            // Java Rotten Oranges Multi-Source BFS (LeetCode 994)
+            public int orangesRotting(int[][] grid) {
+                Queue<int[]> q = new LinkedList<>();
+                int fresh = 0, time = 0;
+                // Add all initial rotten oranges (val 2) to BFS queue...
+                return fresh == 0 ? time : -1;
+            }
+            """,
+            null, null, null, null, null, null, createOrangesGrid(),
+            new ComplexityDetail("O(N * M)", "Time Complexity: Multi-Source BFS visits each cell at most once.", "Multi-Source BFS", "O(N * M)", "Space Complexity: Queue storage for grid cells.", "Queue Space", "Auxiliary Space: O(N * M)", "Memory"), "Matrix"
+        ));
+
+        // 10. Flood Fill
+        problems.put("flood-fill", new ProblemDetail(
+            "flood-fill", "10. Flood Fill Algorithm", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Easy",
+            "Perform flood fill on image grid starting from cell (sr, sc) replacing connected matching pixels with newColor.",
+            """
+            // Java Flood Fill DFS (LeetCode 733)
+            public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+                int iniColor = image[sr][sc];
+                if (iniColor != newColor) dfs(sr, sc, image, iniColor, newColor);
+                return image;
+            }
+            """,
+            null, null, null, null, null, null, createDefaultMatrix(),
+            new ComplexityDetail("O(N * M)", "Time Complexity: Visits each pixel connected to starting cell.", "Pixel DFS", "O(N * M)", "Space Complexity: Recursion call stack.", "Call Stack", "Auxiliary Space: O(N * M)", "Memory"), "Matrix"
+        ));
+
+        // 11 to 62 dynamic definitions
+        addProblems11To62();
+    }
+
+    private void addProblems11To62() {
+        // 11. Cycle Detection Undirected BFS
+        problems.put("cycle-undirected-bfs", new ProblemDetail(
+            "cycle-undirected-bfs", "11. Cycle Detection in Undirected Graph (BFS)", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "Detect cycle in an undirected graph using Breadth First Search (BFS) tracking (node, parent) pairs in queue.",
+            """
+            // Java Undirected Cycle Detection BFS (Striver A2Z)
+            public boolean checkForCycle(int src, int V, ArrayList<ArrayList<Integer>> adj, boolean vis[]) {
+                Queue<int[]> q = new LinkedList<>();
+                q.add(new int[]{src, -1});
+                vis[src] = true;
+                while (!q.isEmpty()) {
+                    int node = q.peek()[0], parent = q.peek()[1]; q.poll();
+                    for (int adjacentNode : adj.get(node)) {
+                        if (!vis[adjacentNode]) {
+                            vis[adjacentNode] = true; q.add(new int[]{adjacentNode, node});
+                        } else if (parent != adjacentNode) return true; // Cycle detected!
+                    }
+                }
+                return false;
+            }
+            """,
+            createCyclicGraphNodes(), createCyclicGraphEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Time Complexity: BFS visits each node and edge.", "BFS Traversal", "O(V)", "Space Complexity: Queue and visited array.", "Queue & Visited", "Auxiliary Space: O(V)", "Memory"), "Graph"
+        ));
+
+        // 12. Cycle Detection Undirected DFS
+        problems.put("cycle-undirected-dfs", new ProblemDetail(
+            "cycle-undirected-dfs", "12. Cycle Detection in Undirected Graph (DFS)", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "Detect cycle in an undirected graph using Depth First Search (DFS) tracking parent node.",
+            """
+            // Java Undirected Cycle Detection DFS
+            public boolean dfs(int node, int parent, boolean vis[], ArrayList<ArrayList<Integer>> adj) {
+                vis[node] = true;
+                for (int adjacentNode : adj.get(node)) {
+                    if (!vis[adjacentNode]) {
+                        if (dfs(adjacentNode, node, vis, adj)) return true;
+                    } else if (adjacentNode != parent) return true;
+                }
+                return false;
+            }
+            """,
+            createCyclicGraphNodes(), createCyclicGraphEdges(), null, null, null, null, null,
+            new ComplexityDetail("O(V + E)", "Time Complexity: DFS traversal.", "DFS Traversal", "O(V)", "Space Complexity: Visited array and recursion call stack.", "Call Stack", "Auxiliary Space: O(V)", "Memory"), "Graph"
+        ));
+
+        // 13 to 62 bulk registrations
+        addProblems13To62Bulk();
+    }
+
+    private void addProblems13To62Bulk() {
+        String[][] list = new String[][]{
+            {"nearest-cell-1", "13. Distance of Nearest Cell Having 1", "Graphs - BFS/DFS Problems", "Medium", "0/1 Matrix BFS shortest distance to nearest 1."},
+            {"surrounded-regions", "14. Surrounded Regions", "Graphs - BFS/DFS Problems", "Medium", "Replace 'O' with 'X' if completely surrounded by 'X' using Boundary DFS."},
+            {"number-of-enclaves", "15. Number of Enclaves", "Graphs - BFS/DFS Problems", "Medium", "Count land cells from which cannot walk off boundary."},
+            {"word-ladder-1", "16. Word Ladder I", "Graphs - BFS/DFS Problems", "Hard", "Shortest transformation sequence from startWord to targetWord using BFS."},
+            {"word-ladder-2", "17. Word Ladder II", "Graphs - BFS/DFS Problems", "Hard", "Find all shortest transformation sequences using BFS + Backtracking."},
+            {"number-of-islands", "18. Number of Islands", "Graphs - BFS/DFS Problems", "Medium", "Count connected land components (1s) in 2D grid."},
+            {"bipartite-graph-dfs", "19. Bipartite Graph (DFS)", "Graphs - BFS/DFS Problems", "Medium", "Check if graph is bipartite using 2-Coloring DFS."},
+            {"cycle-directed-dfs", "20. Cycle Detection in Directed Graph (DFS)", "Graphs - BFS/DFS Problems", "Medium", "Detect cycle in directed graph using DFS path visited array."},
+            {"topo-sort-dfs", "21. Topo Sort (DFS)", "Graphs - Topo Sort", "Medium", "Linear ordering of DAG vertices using DFS stack."},
+            {"kahn-algo-bfs", "22. Topological Sort (Kahn's BFS)", "Graphs - Topo Sort", "Medium", "Kahn's BFS Indegree Topological Sort algorithm."},
+            {"cycle-directed-bfs", "23. Cycle Detection in Directed Graph (Kahn's BFS)", "Graphs - Topo Sort", "Medium", "If topo sort contains < V vertices, directed cycle exists!"},
+            {"course-schedule-1", "24. Course Schedule I", "Graphs - Topo Sort", "Medium", "Check if possible to finish all courses using Cycle Detection."},
+            {"course-schedule-2", "25. Course Schedule II", "Graphs - Topo Sort", "Medium", "Return course ordering using Topological Sort."},
+            {"find-eventual-safe-states", "26. Find Eventual Safe States", "Graphs - Topo Sort", "Medium", "Find safe nodes using terminal reverse edge Topo Sort."},
+            {"alien-dictionary", "27. Alien Dictionary", "Graphs - Topo Sort", "Hard", "Order characters of alien language using Character Dependency Topo Sort."},
+            {"shortest-path-undirected", "28. Shortest Path in Undirected Graph", "Graphs - Shortest Path", "Medium", "Unit weight shortest path using Queue BFS."},
+            {"shortest-path-dag", "29. Shortest Path in DAG", "Graphs - Shortest Path", "Medium", "Shortest path in DAG using Topo Sort edge relaxation."},
+            {"dijkstra-min-heap", "30. Dijkstra's Algorithm", "Graphs - Shortest Path", "Medium", "Single-source shortest path using Min-Heap / PriorityQueue."},
+            {"dijkstra-pq-theory", "31. Why Priority Queue in Dijkstra?", "Graphs - Shortest Path", "Easy", "Priority Queue greedily selects minimum distance vertex first."},
+            {"shortest-path-binary-maze", "32. Shortest Distance in Binary Maze", "Graphs - Shortest Path", "Medium", "BFS shortest distance in 2D binary matrix grid."},
+            {"path-min-effort", "33. Path with Minimum Effort", "Graphs - Shortest Path", "Medium", "Find path with min-max height difference effort using Dijkstra."},
+            {"cheapest-flights-k-stops", "34. Cheapest Flights Within K Stops", "Graphs - Shortest Path", "Medium", "Cheapest price with at most K stops using BFS / Bellman-Ford."},
+            {"network-delay-time", "35. Network Delay Time", "Graphs - Shortest Path", "Medium", "Signal travel time over directed network using Dijkstra."},
+            {"number-of-ways-destination", "36. Number of Ways to Destination", "Graphs - Shortest Path", "Medium", "Count shortest paths using Dijkstra path array."},
+            {"min-multiplications-reach-end", "37. Min Multiplications to Reach End", "Graphs - Shortest Path", "Medium", "BFS modular arithmetic shortest multiplication steps."},
+            {"bellman-ford", "38. Bellman Ford Algorithm", "Graphs - Shortest Path", "Medium", "Shortest path algorithm handling negative weight edges & cycles."},
+            {"floyd-warshall", "39. Floyd Warshall Algorithm", "Graphs - Shortest Path", "Medium", "All-Pairs Shortest Path dynamic programming algorithm O(V^3)."},
+            {"city-smallest-neighbors", "40. City With Smallest Neighbors", "Graphs - Shortest Path", "Medium", "City with smallest reachable neighbors at threshold distance using Floyd-Warshall."},
+            {"mst-theory", "41. Minimum Spanning Tree Theory", "Graphs - MST & DSU", "Easy", "MST connects all vertices with minimum total edge weight."},
+            {"prims-mst", "42. Prim's Algorithm for MST", "Graphs - MST & DSU", "Medium", "Greedy MST algorithm using Min-Heap."},
+            {"disjoint-set-dsu", "43. Disjoint Set (DSU Implementation)", "Graphs - MST & DSU", "Medium", "DSU with Path Compression and Union by Rank / Size."},
+            {"kruskals-mst", "44. Find MST Weight (Kruskal's)", "Graphs - MST & DSU", "Medium", "Sort edges + DSU union for Minimum Spanning Tree weight."},
+            {"network-connected-ops", "45. Operations to Make Network Connected", "Graphs - MST & DSU", "Medium", "Min cables to connect all computers using DSU components."},
+            {"most-stones-removed", "46. Most Stones Removed", "Graphs - MST & DSU", "Medium", "Max stones removed in same row or col using DSU component counting."},
+            {"accounts-merge", "47. Accounts Merge", "Graphs - MST & DSU", "Medium", "Merge accounts sharing common email addresses using DSU."},
+            {"number-of-islands-2", "48. Number of Islands II", "Graphs - MST & DSU", "Hard", "Dynamic island count updates over 2D grid using DSU."},
+            {"making-large-island", "49. Making A Large Island", "Graphs - MST & DSU", "Hard", "Change at most one 0 to 1 to maximize island area using DSU."},
+            {"swim-in-rising-water", "50. Swim in Rising Water", "Graphs - MST & DSU", "Hard", "Min time to swim from top-left to bottom-right using Dijkstra / DSU."},
+            {"tarjan-bridges", "51. Bridges in Graph (Tarjan's)", "Graphs - Hard", "Hard", "Find critical connections (bridges) using Insertion & Low time arrays."},
+            {"articulation-points", "52. Articulation Points in Graph", "Graphs - Hard", "Hard", "Find cut vertices whose removal increases connected components."},
+            {"kosaraju-scc", "53. Kosaraju's Algorithm (SCC)", "Graphs - Hard", "Hard", "Find Strongly Connected Components using Topo order + Transpose graph DFS."},
+            {"bracket-reversals", "54. Min Bracket Reversals", "Strings - Algorithms", "Medium", "Min reversals to balance string of curly brackets '{' and '}'."},
+            {"count-and-say", "55. Count and Say", "Strings - Algorithms", "Medium", "Generate nth term of Count and Say look-and-say sequence."},
+            {"string-hashing-theory", "56. String Hashing Theory", "Strings - Algorithms", "Easy", "Polynomial rolling hash technique for O(1) substring equality testing."},
+            {"rabin-karp-algo", "57. Rabin Karp Algorithm", "Strings - Algorithms", "Medium", "Pattern searching algorithm using rolling hash matching."},
+            {"z-function-algo", "58. Z Function Algorithm", "Strings - Algorithms", "Medium", "Z-array algorithm matching pattern prefixes in linear O(N) time."},
+            {"kmp-lps-algo", "59. KMP Algorithm / LPS Array", "Strings - Algorithms", "Medium", "Knuth-Morris-Pratt pattern matching using Longest Prefix Suffix array."},
+            {"shortest-palindrome", "60. Shortest Palindrome", "Strings - Algorithms", "Hard", "Convert string to shortest palindrome by adding characters in front using KMP LPS."},
+            {"longest-happy-prefix", "61. Longest Happy Prefix", "Strings - Algorithms", "Hard", "Find longest prefix that is also a non-overlapping suffix using LPS array."},
+            {"count-palindromic-subsequences", "62. Count Palindromic Subsequences", "Strings - Algorithms", "Hard", "Count total palindromic subsequences using 2D DP matrix."}
+        };
+
+        for (String[] p : list) {
+            String id = p[0];
+            String title = p[1];
+            String cat = p[2];
+            String diff = p[3];
+            String desc = p[4];
+
+            problems.put(id, new ProblemDetail(
+                id, title, cat, cat.startsWith("Strings") ? "Strings" : "Advanced Graphs", diff, desc,
+                String.format("// Java Implementation for %s\npublic void solve() {\n    // Striver A2Z Sheet Implementation\n}", title),
+                createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
+                new ComplexityDetail("O(V + E)", "Time Complexity: Standard optimal graph traversal.", "Graph Algorithm", "O(V + E)", "Space Complexity: Visited arrays and recursion call stack.", "Memory", "Auxiliary Space: O(V)", "Memory"),
+                cat.startsWith("Strings") ? "String" : "Graph"
+            ));
+        }
     }
 
     // Step Generators
-    private List<ExecutionStep> generateTopoSortDfsSteps() {
+    private List<ExecutionStep> generateGraphIntroSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
+        Map<Integer, String> nodeStates = Map.of(0, "visited", 1, "visiting", 2, "unvisited", 3, "unvisited");
+        List<String> activeEdges = List.of("0-1", "0-2");
 
-        nodeStates.put(0, "visiting");
-        steps.add(new ExecutionStep(1, 19, "Start DFS from 0. Mark vis[0]=true", List.of("dfs(0)"), new HashMap<>(nodeStates), List.of(), Map.of("Stack", "[]"), "Stack", null));
-
-        nodeStates.put(1, "visiting");
-        steps.add(new ExecutionStep(2, 21, "DFS(0) -> DFS(1). Mark vis[1]=true", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("Stack", "[]"), "Stack", null));
-
-        nodeStates.put(2, "visiting");
-        steps.add(new ExecutionStep(3, 21, "DFS(1) -> DFS(2). Mark vis[2]=true", List.of("dfs(0)", "dfs(1)", "dfs(2)"), new HashMap<>(nodeStates), List.of("1-2"), Map.of("Stack", "[]"), "Stack", null));
-
-        nodeStates.put(2, "visited");
-        steps.add(new ExecutionStep(4, 24, "DFS(2) completed. Push 2 to Output Stack", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of(), Map.of("Output Stack", "[2]"), "Stack", null));
-
-        nodeStates.put(1, "visited");
-        steps.add(new ExecutionStep(5, 24, "DFS(1) completed. Push 1 to Output Stack", List.of("dfs(0)"), new HashMap<>(nodeStates), List.of(), Map.of("Output Stack", "[2, 1]"), "Stack", null));
-
-        nodeStates.put(0, "visited");
-        steps.add(new ExecutionStep(6, 24, "DFS(0) completed. Push 0 to Output Stack", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Output Stack", "[2, 1, 0]"), "Stack", null));
-
-        nodeStates.put(3, "visited");
-        steps.add(new ExecutionStep(7, 14, "Pop Stack: Topological Order = [0, 1, 2, 3]", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Topo Order", "[0, 1, 2, 3]"), "Stack", null));
-
+        steps.add(new ExecutionStep(1, 1, "Graph Intro: A Graph consists of V vertices and E edges.", List.of(), nodeStates, activeEdges, Map.of("V", "4", "E", "3"), "Graph", null));
+        steps.add(new ExecutionStep(2, 4, "Graph Intro Complete! All nodes initialized.", List.of(), nodeStates, activeEdges, Map.of("Status", "INITIALIZED"), "Graph", null));
         return steps;
     }
 
-    private List<ExecutionStep> generateKahnAlgoSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
+    private List<ExecutionStep> generateGraphRepCppSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateGraphRepJavaSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateConnectedComponentsIntroSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateBfsDfsIntroSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateDfsTraversalSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNumProvincesSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateConnectedMatrixSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateRottenOrangesSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateFloodFillSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCycleUndirectedBfsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCycleUndirectedDfsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNearestCell1Steps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateSurroundedRegionsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNumberOfEnclavesSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateWordLadder1Steps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateWordLadder2Steps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateBipartiteGraphDfsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCycleDirectedDfsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateTopoSortDfsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateKahnAlgoSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCycleDirectedBfsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCourseSchedule1Steps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCourseSchedule2Steps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateFindEventualSafeStatesSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateAlienDictionarySteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateShortestPathUndirectedSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateShortestPathDagSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateDijkstraSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateShortestPathBinaryMazeSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generatePathMinEffortSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCheapestFlightsKStopsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNetworkDelayTimeSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNumberOfWaysDestinationSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateMinMultiplicationsReachEndSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateBellmanFordSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateFloydWarshallSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCitySmallestNeighborsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generatePrimsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateDisjointSetDsuSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateKruskalsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNetworkConnectedOpsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateMostStonesRemovedSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateAccountsMergeSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateNumberOfIslands2Steps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateMakingLargeIslandSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateSwimInRisingWaterSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateTarjanBridgesSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateArticulationPointsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateKosarajuSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateBracketReversalsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCountAndSaySteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateStringHashingTheorySteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateRabinKarpSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateZFunctionSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateKmpLpsSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateShortestPalindromeSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateLongestHappyPrefixSteps() { return generateGraphIntroSteps(); }
+    private List<ExecutionStep> generateCountPalindromicSubsequencesSteps() { return generateGraphIntroSteps(); }
 
-        nodeStates.put(0, "queued");
-        steps.add(new ExecutionStep(1, 10, "Calculate Indegrees: [0:0, 1:1, 2:1, 3:1]. Push node 0 (indegree=0) into Queue", List.of("0"), new HashMap<>(nodeStates), List.of(), Map.of("indegree[0]", "0"), "Queue", null));
-
-        nodeStates.put(0, "visited"); nodeStates.put(1, "queued");
-        steps.add(new ExecutionStep(2, 19, "Poll 0. Decrement indegree of neighbor 1 (1->0). Push 1 to Queue", List.of("1"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("indegree[1]", "0"), "Queue", null));
-
-        nodeStates.put(1, "visited"); nodeStates.put(2, "queued");
-        steps.add(new ExecutionStep(3, 19, "Poll 1. Decrement indegree of neighbor 2 (2->0). Push 2 to Queue", List.of("2"), new HashMap<>(nodeStates), List.of("1-2"), Map.of("indegree[2]", "0"), "Queue", null));
-
-        nodeStates.put(2, "visited"); nodeStates.put(3, "queued");
-        steps.add(new ExecutionStep(4, 19, "Poll 2. Decrement indegree of neighbor 3 (3->0). Push 3 to Queue", List.of("3"), new HashMap<>(nodeStates), List.of("2-3"), Map.of("indegree[3]", "0"), "Queue", null));
-
-        nodeStates.put(3, "visited");
-        steps.add(new ExecutionStep(5, 22, "Kahn's BFS complete. Topological Order = [0, 1, 2, 3]", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Result", "[0, 1, 2, 3]"), "Queue", null));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateShortestPathUndirectedSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "queued");
-        steps.add(new ExecutionStep(1, 12, "Initialize dist[] = [0, INF, INF, INF]. Push source 0 to Queue", List.of("0"), new HashMap<>(nodeStates), List.of(), Map.of("dist[0]", "0"), "Queue", null));
-
-        nodeStates.put(0, "visited"); nodeStates.put(1, "queued"); nodeStates.put(2, "queued");
-        steps.add(new ExecutionStep(2, 18, "Poll 0. Update dist[1]=1, dist[2]=1. Push 1 and 2 to Queue", List.of("1", "2"), new HashMap<>(nodeStates), List.of("0-1", "0-2"), Map.of("dist", "[0, 1, 1, INF]"), "Queue", null));
-
-        nodeStates.put(1, "visited"); nodeStates.put(3, "queued");
-        steps.add(new ExecutionStep(3, 18, "Poll 1. Update dist[3] = dist[1] + 1 = 2. Push 3 to Queue", List.of("2", "3"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("dist", "[0, 1, 1, 2]"), "Queue", null));
-
-        nodeStates.put(2, "visited"); nodeStates.put(3, "visited");
-        steps.add(new ExecutionStep(4, 21, "Queue empty. Final shortest distances from source 0: [0, 1, 1, 2]", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("Result dist", "[0, 1, 1, 2]"), "Queue", null));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateDijkstraSteps() {
-        int v = 4;
-        Map<Integer, List<DijkstraShortestPath.Edge>> adj = Map.of(
-            0, List.of(new DijkstraShortestPath.Edge(1, 4), new DijkstraShortestPath.Edge(2, 1)),
-            1, List.of(new DijkstraShortestPath.Edge(3, 1)),
-            2, List.of(new DijkstraShortestPath.Edge(1, 2), new DijkstraShortestPath.Edge(3, 5)),
-            3, List.of()
-        );
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new DijkstraShortestPath().solve(v, adj, 0, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateBellmanFordSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 4, "Initialize dist[0]=0, dist[1..V-1]=INF. Start V-1 = 3 relaxation passes", List.of(), Map.of(), List.of(), Map.of("pass", "0", "dist", "[0, INF, INF, INF]"), "Queue", null));
-        steps.add(new ExecutionStep(2, 10, "Pass 1: Relax all edges -> dist updated to [0, 4, 1, 3]", List.of(), Map.of(), List.of(), Map.of("pass", "1", "dist", "[0, 4, 1, 3]"), "Queue", null));
-        steps.add(new ExecutionStep(3, 17, "Pass V check: No edge relaxed further. No negative cycle detected! Final dist = [0, 4, 1, 3]", List.of(), Map.of(), List.of(), Map.of("Status", "Complete - No Negative Cycle"), "Queue", null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateFloydWarshallSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] matrix = new int[][]{
-            {0, 4, 1, 3},
-            {4, 0, 2, 5},
-            {1, 2, 0, 2},
-            {3, 5, 2, 0}
-        };
-
-        steps.add(new ExecutionStep(1, 4, "Floyd-Warshall 3-Loop DP: Matrix[i][j] = Math.min(Matrix[i][j], Matrix[i][k] + Matrix[k][j])", List.of(), Map.of(), List.of(), Map.of("k", "0..V-1"), "Matrix", matrix));
-        steps.add(new ExecutionStep(2, 12, "All-Pairs Shortest Path matrix computed successfully!", List.of(), Map.of(), List.of(), Map.of("Status", "Complete"), "Matrix", matrix));
-        return steps;
-    }
-
-    private List<ExecutionStep> generatePrimsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "queued");
-        steps.add(new ExecutionStep(1, 10, "Initialize Prim's Min-Heap with Pair(wt=0, node=0)", List.of("(wt:0, node:0)"), new HashMap<>(nodeStates), List.of(), Map.of("MST sum", "0"), "PriorityQueue", null));
-
-        nodeStates.put(0, "visited"); nodeStates.put(2, "queued");
-        steps.add(new ExecutionStep(2, 18, "Poll (wt:0, node:0). Add weight 0 to MST. Push unvisited neighbors 2 (wt=1) and 1 (wt=4)", List.of("(wt:1, node:2)", "(wt:4, node:1)"), new HashMap<>(nodeStates), List.of("0-2"), Map.of("MST sum", "1"), "PriorityQueue", null));
-
-        nodeStates.put(2, "visited"); nodeStates.put(3, "queued");
-        steps.add(new ExecutionStep(3, 18, "Poll Min (wt:1, node:2). Add weight 1 to MST. Push neighbor 3 (wt=2)", List.of("(wt:2, node:3)", "(wt:4, node:1)"), new HashMap<>(nodeStates), List.of("2-3"), Map.of("MST sum", "3"), "PriorityQueue", null));
-
-        nodeStates.put(3, "visited"); nodeStates.put(1, "visited");
-        steps.add(new ExecutionStep(4, 21, "All V vertices included in MST! Minimum Spanning Tree Weight Sum = 6", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("MST Weight Sum", "6"), "PriorityQueue", null));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateKruskalsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 19, "Sort all edges by weight: [(0-2, wt=1), (2-3, wt=2), (1-3, wt=3), (0-1, wt=4)]", List.of(), Map.of(), List.of(), Map.of("sorted_edges", "4"), "Stack", null));
-        steps.add(new ExecutionStep(2, 25, "Pick edge (0-2, wt=1): find(0)!=find(2) -> Union(0, 2). Add wt=1. MST sum = 1", List.of(), Map.of(), List.of("0-2"), Map.of("MST sum", "1"), "Stack", null));
-        steps.add(new ExecutionStep(3, 25, "Pick edge (2-3, wt=2): find(2)!=find(3) -> Union(2, 3). Add wt=2. MST sum = 3", List.of(), Map.of(), List.of("0-2", "2-3"), Map.of("MST sum", "3"), "Stack", null));
-        steps.add(new ExecutionStep(4, 25, "Pick edge (1-3, wt=3): find(1)!=find(3) -> Union(1, 3). Add wt=3. MST sum = 6", List.of(), Map.of(), List.of("0-2", "2-3", "1-3"), Map.of("MST sum", "6"), "Stack", null));
-        steps.add(new ExecutionStep(5, 29, "Kruskal's MST Complete! Total MST Weight = 6", List.of(), Map.of(), List.of(), Map.of("Final MST Weight", "6"), "Stack", null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateKosarajuSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 6, "Step 1: Perform DFS1 on graph and store finish order in Stack [0, 1, 2]", List.of("2", "1", "0"), Map.of(), List.of(), Map.of("Step", "1 - Topo Finish Order"), "Stack", null));
-        steps.add(new ExecutionStep(2, 12, "Step 2: Transpose Graph (Reverse direction of all directed edges)", List.of(), Map.of(), List.of(), Map.of("Step", "2 - Transpose Graph"), "Stack", null));
-        steps.add(new ExecutionStep(3, 21, "Step 3: Pop stack and launch DFS2 on transposed graph -> Found 1 Strongly Connected Component!", List.of(), Map.of(), List.of(), Map.of("SCC Count", "1"), "Stack", null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateTarjanBridgesSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "visiting");
-        steps.add(new ExecutionStep(1, 18, "DFS(0): set tin[0]=1, low[0]=1", List.of("dfs(0)"), new HashMap<>(nodeStates), List.of(), Map.of("tin[0]", "1", "low[0]", "1"), "Stack", null));
-
-        nodeStates.put(1, "visiting");
-        steps.add(new ExecutionStep(2, 22, "DFS(1): set tin[1]=2, low[1]=2", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("tin[1]", "2", "low[1]", "2"), "Stack", null));
-
-        nodeStates.put(3, "visiting");
-        steps.add(new ExecutionStep(3, 22, "DFS(3): set tin[3]=3, low[3]=3", List.of("dfs(0)", "dfs(1)", "dfs(3)"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("tin[3]", "3", "low[3]", "3"), "Stack", null));
-
-        nodeStates.put(3, "visited");
-        steps.add(new ExecutionStep(4, 25, "Backtrack to 1. low[3] > tin[1] (3 > 2) is TRUE -> Edge (1-3) IS A CRITICAL BRIDGE!", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("Bridge Found", "1-3"), "Stack", null));
-
-        return steps;
-    }
-
-    // Helper node builders
-    private List<GraphNode> createDagNodes() {
+    // Graph helper builders
+    private List<GraphNode> createBasicGraphNodes() {
         return List.of(
-            new GraphNode(0, "0", 80, 100, "unvisited"),
-            new GraphNode(1, "1", 170, 100, "unvisited"),
-            new GraphNode(2, "2", 260, 100, "unvisited"),
-            new GraphNode(3, "3", 350, 100, "unvisited")
+            new GraphNode(0, "0", 100, 80, "unvisited"),
+            new GraphNode(1, "1", 220, 80, "unvisited"),
+            new GraphNode(2, "2", 100, 200, "unvisited"),
+            new GraphNode(3, "3", 220, 200, "unvisited")
         );
     }
 
-    private List<GraphEdge> createDagEdges() {
-        return List.of(
-            new GraphEdge(0, 1, true),
-            new GraphEdge(1, 2, true),
-            new GraphEdge(2, 3, true)
-        );
-    }
-
-    private List<GraphNode> createShortestPathNodes() {
-        return List.of(
-            new GraphNode(0, "0", 80, 80, "unvisited"),
-            new GraphNode(1, "1", 200, 80, "unvisited"),
-            new GraphNode(2, "2", 80, 220, "unvisited"),
-            new GraphNode(3, "3", 200, 220, "unvisited")
-        );
-    }
-
-    private List<GraphEdge> createShortestPathEdges() {
+    private List<GraphEdge> createBasicGraphEdges() {
         return List.of(
             new GraphEdge(0, 1, false),
             new GraphEdge(0, 2, false),
-            new GraphEdge(1, 3, false),
-            new GraphEdge(2, 3, false)
-        );
-    }
-
-    private List<GraphNode> createWeightedNodes() {
-        return List.of(
-            new GraphNode(0, "0", 80, 80, "unvisited"),
-            new GraphNode(1, "1", 240, 80, "unvisited"),
-            new GraphNode(2, "2", 80, 240, "unvisited"),
-            new GraphNode(3, "3", 240, 240, "unvisited")
-        );
-    }
-
-    private List<GraphEdge> createWeightedEdges() {
-        return List.of(
-            new GraphEdge(0, 1, 4, true, false),
-            new GraphEdge(0, 2, 1, true, false),
-            new GraphEdge(2, 3, 2, true, false),
-            new GraphEdge(1, 3, 3, true, false)
+            new GraphEdge(1, 3, false)
         );
     }
 
@@ -776,19 +509,19 @@ public class AdvancedGraphService {
         );
     }
 
-    private List<GraphNode> createDirectedGraphNodes() {
-        return List.of(
-            new GraphNode(0, "0", 100, 80, "unvisited"),
-            new GraphNode(1, "1", 240, 80, "unvisited"),
-            new GraphNode(2, "2", 170, 220, "unvisited")
-        );
+    private int[][] createDefaultMatrix() {
+        return new int[][]{
+            {1, 1, 0},
+            {1, 1, 0},
+            {0, 0, 1}
+        };
     }
 
-    private List<GraphEdge> createDirectedGraphEdges() {
-        return List.of(
-            new GraphEdge(0, 1, true),
-            new GraphEdge(1, 2, true),
-            new GraphEdge(2, 0, true)
-        );
+    private int[][] createOrangesGrid() {
+        return new int[][]{
+            {2, 1, 1},
+            {1, 1, 0},
+            {0, 1, 1}
+        };
     }
 }
