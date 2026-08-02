@@ -1,12 +1,13 @@
-# 🌐 DSA Visualizer - Interactive Data Structures & Algorithms Engine
+# 🌐 DSA Visualizer - Master Interactive Data Structures & Algorithms Engine (406 Algorithms)
 
-Welcome to **DSA Visualizer**! A full-stack interactive web application built for mastering core Data Structures & Algorithms with visual elegance.
+Welcome to **DSA Visualizer**! A full-stack interactive web application built for mastering **406 Master Data Structures & Algorithms** (Striver's A2Z DSA Sheet) with visual elegance.
 
 The application pairs step-by-step animated execution with:
-- ☕ **Production-Ready Java Solutions** (clean interview-grade code with commented lines).
-- 🎯 **Line-by-Line Code Execution Tracing** (synchronized Java code line highlighting as nodes/edges/cells process).
-- 📊 **Animated Data Structure Panels** (Live Queue FIFO for BFS, Call Stack LIFO for DFS, PriorityQueue for Min-Heap, Array Bars, Linked List Nodes).
-- ⚡ **Time & Space Complexity Deep-Dive** (In-depth **How and Why** mathematical proofs for $O(V+E)$, $O(E \log V)$, $O(N \log N)$, $O(N)$, auxiliary space, etc.).
+- ☕ **Production-Ready Java Solutions**: Clean interview-grade Java implementations with commented lines.
+- 🎯 **Line-by-Line Code Execution Tracing**: Synchronized Java code line highlighting as nodes, edges, cells, or pointers process.
+- 📊 **Animated Data Structure Panels**: Live Queue FIFO, Call Stack LIFO, PriorityQueue Min-Heap, Array Bars, Linked List Nodes, Trie Trees, and **Disjoint Set Union (DSU) Component Forest Cards**.
+- ⚡ **Time & Space Complexity Deep-Dive**: Mathematical proofs for $O(V+E)$, $O(E \log V)$, $O(N \log N)$, $O(N)$, auxiliary space, and best/worst case bounds.
+- 🗂️ **A-Z Alphabetical Topic Accordions**: Sortable and collapsible topic cards (A-Z) with instant search and global expand/shrink controls.
 
 ---
 
@@ -14,10 +15,10 @@ The application pairs step-by-step animated execution with:
 
 | Tier | Technology | Description |
 | :--- | :--- | :--- |
-| **Backend** | **Spring Boot (Java 17)** | REST APIs (`http://localhost:8923/api/*`), algorithm step engine |
-| **Frontend** | **React 18 + Vite** | SVG Graph, Tree, Array & Linked List renderers, glassmorphism dark mode, player controls |
-| **Testing** | **JUnit 5 & Vitest** | End-to-end unit & integration test coverage for backend and frontend components |
-| **DevOps** | **Docker & Docker Compose** | Single-command deployment (`docker-compose up`) |
+| **Backend** | **Spring Boot (Java 17)** | 18 REST Controllers (`http://localhost:8923/api/*`), algorithm execution step engines |
+| **Frontend** | **React 18 + Vite** | Multi-mode canvas stages (Graph, Tree, Array, Linked List, Recursion Tree, DSU), glassmorphism dark mode UI |
+| **Testing** | **JUnit 5 & Vitest** | 90 backend unit tests (`wsl mvn test`) and frontend test coverage |
+| **DevOps** | **Docker & Docker Compose** | Single-command container deployment (`docker-compose up`) |
 
 ---
 
@@ -38,7 +39,7 @@ Open your browser at **`http://localhost:5174`**!
 
 #### 1. Start the Spring Boot Backend (Java)
 ```bash
-# In WSL or bash
+# In WSL or terminal
 cd backend
 mvn spring-boot:run
 ```
@@ -59,84 +60,68 @@ npm run dev
 ### Run Backend Java Tests (JUnit 5 + MockMvc)
 ```bash
 cd backend
-mvn test
+wsl mvn test
 ```
+**Result**: `Tests run: 90, Failures: 0, Errors: 0` (`BUILD SUCCESS`).
 
-### Run Frontend React Tests (Vitest)
+### Run Frontend Build
 ```bash
 cd frontend
-npm run test
+wsl npm run build
 ```
+**Result**: `✓ built in ~35s` (0 errors).
 
 ---
 
-## 📋 Algorithm Library Progress
+## 📋 Algorithm Catalog (406 Master Algorithms across 17 A-Z Categories)
 
-### 1. **Graphs: BFS & DFS**
-- [x] **BFS Traversal of Graph**
-- [x] **DFS Traversal of Graph**
-- [x] **Number of Provinces**
-- [x] **Number of Islands**
-- [x] **Rotting Oranges**
-- [x] **Flood Fill Algorithm**
-- [x] **Detect Cycle in Undirected Graph**
-- [x] **Detect Cycle in Directed Graph**
-- [x] **0/1 Matrix - Distance of Nearest 1**
-- [x] **Surrounded Regions**
+### 1. **Adv Graphs & Graph Strings (62 Algorithms)**
+- Shortest Path, Dijkstra, Bellman-Ford, Floyd-Warshall, Prim's, Kruskal's, Disjoint Set (DSU), Tarjan's Bridges, Articulation Points, Kosaraju's SCC, Rabin-Karp, Z-Function, KMP LPS.
 
-### 2. **Advanced Graph Algorithms**
-- [x] **Topological Sort** (DFS & Kahn's Algorithm BFS)
-- [x] **Shortest Path in Undirected Graph** (Unit Weights BFS)
-- [x] **Dijkstra's Shortest Path** (PriorityQueue Min-Heap)
-- [x] **Bellman-Ford Algorithm** (Edge relaxation & Negative Cycle check)
-- [x] **Floyd-Warshall Algorithm** (All-Pairs Shortest Path Matrix DP)
-- [x] **Prim's Minimum Spanning Tree (MST)**
-- [x] **Kruskal's MST** (Disjoint Set / Union-Find with Rank & Path Compression)
-- [x] **Kosaraju's Strongly Connected Components (SCC)**
-- [x] **Tarjan's Bridges in Graph** (tin & low arrays)
+### 2. **Arrays & Matrices (26 Algorithms)**
+- Two Sum, Dutch National Flag (Sort 0s,1s,2s), Majority Element, Kadane's Algorithm, 3Sum, 4Sum, Pascal's Triangle, Next Permutation, Inversions.
 
-### 3. **Binary Trees & BST**
-- [x] **Preorder, Inorder, Postorder Traversals**
-- [x] **Level Order Traversal**
-- [x] **Maximum Depth / Height of Binary Tree**
-- [x] **Check if Binary Tree is Height-Balanced**
-- [x] **Diameter of Binary Tree**
-- [x] **Maximum Path Sum in Binary Tree**
-- [x] **Lowest Common Ancestor (LCA)**
-- [x] **Minimum Time to Burn Binary Tree**
-- [x] **Search in Binary Search Tree (BST)**
-- [x] **Validate Binary Search Tree**
-- [x] **Kth Smallest Element in BST**
+### 3. **Backtracking & Recursion (25 Algorithms)**
+- Subsets, Combination Sum I/II, N-Queens, Sudoku Solver, Rat in a Maze, Word Search, Palindrome Partitioning.
 
-### 4. **Sorting Algorithms**
-- [x] **Selection Sort**
-- [x] **Bubble Sort**
-- [x] **Insertion Sort**
-- [x] **Merge Sort**
-- [x] **Quick Sort**
+### 4. **Basic Math & Basic Recursion (14 Algorithms)**
+- Reverse Digits, Palindrome Check, GCD / HCF, Prime Numbers, Fibonacci, Factorial, Print 1 to N.
 
-### 5. **Arrays & Math**
-- [x] **Two Sum**
-- [x] **Sort 0s, 1s, 2s (Dutch National Flag)**
-- [x] **Majority Element (Moore's Voting)**
-- [x] **Kadane's Algorithm**
-- [x] **Stock Buy & Sell**
+### 5. **Binary Search Suite (32 Algorithms)**
+- Binary Search 1D, Lower/Upper Bound, Search Insert, Rotated Sorted Array I/II, Min in Rotated Array, Single Element, Peak Element, Square Root, Bananas, Bouquets, Smallest Divisor, Gas Stations, Median of 2 Sorted Arrays.
 
-### 6. **Linked Lists**
-- [x] **Reverse Linked List**
-- [x] **Middle of Linked List**
-- [x] **Detect Loop in Linked List**
-- [x] **Delete Node in Linked List (O(1))**
-- [x] **Merge Two Sorted Linked Lists**
+### 6. **Binary Trees & BST (54 Algorithms)**
+- Preorder, Inorder, Postorder, Level Order, Max Depth, Balanced Tree, Diameter, Max Path Sum, LCA, Burn Tree, Morris Traversals, Search/Insert/Delete BST.
 
-### 7. **Binary Search**
-- [x] **Binary Search 1D**
-- [x] **Search in Rotated Sorted Array**
-- [x] **Find Peak Element**
-- [x] **Koko Eating Bananas**
+### 7. **Bit Logic & Advanced Math (18 Algorithms)**
+- Bit Tricks, Count Set Bits, Power of 2, Single Number, Sieve of Eratosthenes, Prime Factors, Binary Exponentiation.
 
-### 8. **Dynamic Programming**
-- [x] **Climbing Stairs**
-- [x] **Frog Jump / Min Cost Climbing**
-- [x] **0/1 Knapsack Problem**
-- [x] **Longest Common Subsequence (LCS)**
+### 8. **Dynamic Programming (55 Algorithms)**
+- Climbing Stairs, Frog Jump, House Robber, 0/1 Knapsack, Unbounded Knapsack, Subset Sum, Equal Partition, LCS, Longest Palindromic Subsequence, Edit Distance, LIS, MCM, Count Squares.
+
+### 9. **Graphs: BFS & DFS (11 Algorithms)**
+- BFS Traversal, DFS Traversal, Provinces, Islands, Rotting Oranges, Flood Fill, Cycle Detections, Bipartite Graph.
+
+### 10. **Greedy Algorithms (15 Algorithms)**
+- Assign Cookies, Fractional Knapsack, N Meetings in 1 Room, Job Sequencing, Railway Platforms, Candy, Jump Game I/II.
+
+### 11. **Heaps & PriorityQueue (17 Algorithms)**
+- Min/Max Heap Construction, Kth Largest/Smallest Element, Task Scheduler, Twitter Design, Median Stream.
+
+### 12. **Linked List & Doubly LL (31 Algorithms)**
+- Reversals, Middle Node, Loop Detection, Segregate Odd-Even, Merge Sort LL, Y Intersection, Flattening LL, Clone Random LL.
+
+### 13. **Sliding Window & Two Pointer (12 Algorithms)**
+- Longest Substring Without Repeating, Consecutive Ones III, Fruit Baskets, Min Window Substring.
+
+### 14. **Sorting Algorithms (5 Algorithms)**
+- Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort.
+
+### 15. **Stack & Queue (30 Algorithms)**
+- Infix to Postfix/Prefix, Min Stack, Next Greater Element, Trapping Rainwater, Largest Rectangle in Histogram, Sliding Window Max, LRU & LFU Cache.
+
+### 16. **Strings (16 Algorithms)**
+- Remove Outermost Parentheses, Reverse Words, Longest Common Prefix, Valid Anagram, Isomorphic Strings, String to Integer (atoi).
+
+### 17. **Tries & Prefixes (5 Algorithms)**
+- Implement Trie (Insert/Search/StartsWith), Word Count, Prefix Count, Complete String.
