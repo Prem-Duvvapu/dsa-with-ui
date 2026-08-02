@@ -40,7 +40,7 @@ export default function ArrayCanvas({ problem, currentStep }) {
 
   return (
     <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
-      {/* Header Bar */}
+      {/* Visualizer Header Bar */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <BarChart2 size={18} color="var(--accent-indigo)" />
@@ -73,24 +73,24 @@ export default function ArrayCanvas({ problem, currentStep }) {
         </div>
       </div>
 
-      {/* Array Bars Container Stage */}
-      <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '18px', padding: '12px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflowX: 'auto', overflowY: 'hidden' }}>
+      {/* Array Bars Ground Floor Baseline Stage */}
+      <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '20px', padding: '16px 20px 16px 20px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', borderBottom: '2px solid rgba(255, 255, 255, 0.12)', overflowX: 'auto', overflowY: 'hidden' }}>
         {normalizedArray.map((el, idx) => {
           const colorInfo = getElementColor(el.state);
           const ratio = Math.abs(el.value) / maxVal;
-          const barPx = Math.max(16, Math.min(95, Math.round(ratio * 85)));
+          const barPx = Math.max(18, Math.min(100, Math.round(ratio * 90)));
 
           return (
-            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-              {/* Value pill */}
+            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
+              {/* Value pill on top of bar */}
               <span style={{ fontSize: '0.84rem', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
                 {el.value}
               </span>
 
-              {/* Bar */}
+              {/* Bar sitting on baseline floor */}
               <div
                 style={{
-                  width: '38px',
+                  width: '42px',
                   height: `${barPx}px`,
                   borderRadius: '6px 6px 3px 3px',
                   background: colorInfo.bg,
@@ -101,8 +101,8 @@ export default function ArrayCanvas({ problem, currentStep }) {
                 }}
               />
 
-              {/* Index label */}
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: '600', lineHeight: '1' }}>
+              {/* Index label below bar */}
+              <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: '600', lineHeight: '1' }}>
                 [{el.index}]
               </span>
             </div>
