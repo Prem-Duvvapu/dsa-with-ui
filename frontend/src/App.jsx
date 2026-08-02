@@ -212,8 +212,10 @@ export default function App() {
           activeCategory={activeCategory}
           onSelectCategory={(cat) => {
             setActiveCategory(cat);
-            const firstInCat = problems.find(p => p.category === cat);
-            if (firstInCat) setActiveProblemId(firstInCat.id);
+            if (cat) {
+              const firstInCat = problems.find(p => p.category === cat);
+              if (firstInCat) setActiveProblemId(firstInCat.id);
+            }
           }}
           onSelectProblem={(id) => setActiveProblemId(id)}
         />

@@ -58,7 +58,8 @@ public class ListTraceRecorder implements TraceRecorder {
                 gridState,
                 arrayState,
                 listState,
-                trieState
+                trieState,
+                ev.getTreeNodes()
             ));
         }
         return steps;

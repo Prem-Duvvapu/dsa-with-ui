@@ -16,6 +16,7 @@ public class ExecutionStep {
     private List<ArrayElement> arrayState; // Optional array state for sorting & array algorithms
     private List<ListNode> listState; // Optional linked list state
     private List<TrieNodeModel> trieState; // Optional trie state
+    private List<TreeNode> treeNodes; // Optional dynamic recursion tree nodes state
 
     public ExecutionStep() {}
 
@@ -23,7 +24,7 @@ public class ExecutionStep {
                          List<String> queueOrStackState, Map<Integer, String> nodeStates,
                          List<String> activeEdges, Map<String, String> variables,
                          String dsType, int[][] gridState) {
-        this(stepNumber, activeLine, description, queueOrStackState, nodeStates, activeEdges, variables, dsType, gridState, null, null, null);
+        this(stepNumber, activeLine, description, queueOrStackState, nodeStates, activeEdges, variables, dsType, gridState, null, null, null, null);
     }
 
     public ExecutionStep(int stepNumber, int activeLine, String description,
@@ -31,6 +32,15 @@ public class ExecutionStep {
                          List<String> activeEdges, Map<String, String> variables,
                          String dsType, int[][] gridState, List<ArrayElement> arrayState,
                          List<ListNode> listState, List<TrieNodeModel> trieState) {
+        this(stepNumber, activeLine, description, queueOrStackState, nodeStates, activeEdges, variables, dsType, gridState, arrayState, listState, trieState, null);
+    }
+
+    public ExecutionStep(int stepNumber, int activeLine, String description,
+                         List<String> queueOrStackState, Map<Integer, String> nodeStates,
+                         List<String> activeEdges, Map<String, String> variables,
+                         String dsType, int[][] gridState, List<ArrayElement> arrayState,
+                         List<ListNode> listState, List<TrieNodeModel> trieState,
+                         List<TreeNode> treeNodes) {
         this.stepNumber = stepNumber;
         this.activeLine = activeLine;
         this.description = description;
@@ -43,6 +53,7 @@ public class ExecutionStep {
         this.arrayState = arrayState;
         this.listState = listState;
         this.trieState = trieState;
+        this.treeNodes = treeNodes;
     }
 
     public int getStepNumber() { return stepNumber; }
@@ -80,4 +91,7 @@ public class ExecutionStep {
 
     public List<TrieNodeModel> getTrieState() { return trieState; }
     public void setTrieState(List<TrieNodeModel> trieState) { this.trieState = trieState; }
+
+    public List<TreeNode> getTreeNodes() { return treeNodes; }
+    public void setTreeNodes(List<TreeNode> treeNodes) { this.treeNodes = treeNodes; }
 }

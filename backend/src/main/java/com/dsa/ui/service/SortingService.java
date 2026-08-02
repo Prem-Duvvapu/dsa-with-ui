@@ -1,6 +1,7 @@
 package com.dsa.ui.service;
 
 import com.dsa.ui.algorithm.sorting.MergeSort;
+import com.dsa.ui.algorithm.sorting.QuickSort;
 import com.dsa.ui.model.*;
 import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
@@ -111,16 +112,18 @@ public class SortingService {
             "insertion-sort", "Insertion Sort", "Sorting - Basics", "Sorting Algorithms", "Easy",
             "Build the sorted array one element at a time by inserting current element into correct position in sorted prefix.",
             """
-            // Java Insertion Sort (Striver A2Z Sheet)
-            public void insertionSort(int arr[], int n) {
-                for (int i = 0; i < n; i++) {
-                    int j = i;
-                    while (j > 0 && arr[j - 1] > arr[j]) {
-                        int temp = arr[j];
-                        arr[j] = arr[j - 1];
-                        arr[j - 1] = temp;
+            // Java Insertion Sort (Shifting with Key)
+            public void insertionSort(int arr[]) {
+                int n = arr.length;
+                for (int i = 1; i < n; i++) {
+                    int key = arr[i];
+                    int j = i - 1;
+                    
+                    while (j >= 0 && arr[j] > key) {
+                        arr[j + 1] = arr[j];
                         j--;
                     }
+                    arr[j + 1] = key;
                 }
             }
             """,
@@ -186,7 +189,7 @@ public class SortingService {
             "quick-sort", "Quick Sort (Partitioning)", "Sorting - Divide & Conquer", "Sorting Algorithms", "Medium",
             "Pick a pivot element and partition array such that elements smaller than pivot are on left and larger on right.",
             """
-            // Java Quick Sort (Striver A2Z Sheet)
+            // Java Quick Sort (Lomuto Partitioning with Pivot = arr[low])
             public void quickSort(int[] arr, int low, int high) {
                 if (low < high) {
                     int pIndex = partition(arr, low, high);
@@ -197,17 +200,22 @@ public class SortingService {
 
             private int partition(int[] arr, int low, int high) {
                 int pivot = arr[low];
-                int i = low, j = high;
+                int i = low;
 
-                while (i < j) {
-                    while (arr[i] <= pivot && i <= high - 1) i++;
-                    while (arr[j] > pivot && j >= low + 1) j--;
-                    if (i < j) {
-                        int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+                for (int j = low + 1; j <= high; j++) {
+                    if (arr[j] < pivot) {
+                        i++;
+                        swap(arr, i, j);
                     }
                 }
-                int temp = arr[low]; arr[low] = arr[j]; arr[j] = temp;
-                return j;
+                swap(arr, low, i);
+                return i;
+            }
+
+            private void swap(int[] arr, int i, int j) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
             """,
             null, null, null, createDefaultArray(), null, null, null,
@@ -377,7 +385,7 @@ public class SortingService {
         return steps;
     }
 
-    // Granular Insertion Sort Step Generator
+    // Granular Insertion Sort Step Generator (Key-based Shifting)
     private List<ExecutionStep> generateInsertionSortSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] arr = new int[]{13, 46, 24, 52, 20, 9};
@@ -385,46 +393,47 @@ public class SortingService {
         int stepNum = 1;
 
         steps.add(new ExecutionStep(
-            stepNum++, 43,
-            "Input Array: [13, 46, 24, 52, 20, 9] (N = 6). Target: Insert elements one by one into sorted prefix.",
+            stepNum++, 1,
+            "Input Array: [13, 46, 24, 52, 20, 9] (N = 6). Target: Insert elements one by one into sorted prefix using key-based shifting.",
             List.of(), Map.of(), List.of(), Map.of("N", "6"),
             "Array", null, createDetailedArrayState(arr, -1, -1, -1, 1), null, null
         ));
 
-        for (int i = 0; i < n; i++) {
-            int j = i;
+        for (int i = 1; i < n; i++) {
+            int key = arr[i];
+            int j = i - 1;
 
             steps.add(new ExecutionStep(
-                stepNum++, 44,
-                String.format("Pass %d (i = %d): Pick element arr[%d] (%d) to insert into sorted prefix [0..%d].", i + 1, i, i, arr[i], Math.max(0, i - 1)),
-                List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "val", String.valueOf(arr[i])),
-                "Array", null, createDetailedArrayState(arr, i, -1, -1, i), null, null
+                stepNum++, 4,
+                String.format("Pass %d (i = %d): Set key = arr[%d] (%d). Compare with sorted prefix elements at indices [0..%d].", i, i, i, key, i - 1),
+                List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "key", String.valueOf(key)),
+                "Array", null, createDetailedArrayState(arr, i, -1, j, i), null, null
             ));
 
-            while (j > 0 && arr[j - 1] > arr[j]) {
-                int temp = arr[j];
-                arr[j] = arr[j - 1];
-                arr[j - 1] = temp;
-
+            while (j >= 0 && arr[j] > key) {
                 steps.add(new ExecutionStep(
-                    stepNum++, 47,
-                    String.format("Compare arr[j-1=%d] (%d) > arr[j=%d] (%d): TRUE! Shift %d right and move %d left. Array: %s.", j - 1, arr[j], j, temp, arr[j], temp, Arrays.toString(arr)),
-                    List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "shift", String.format("%d <-> %d", arr[j], temp)),
-                    "Array", null, createDetailedArrayState(arr, j - 1, j, -1, i), null, null
+                    stepNum++, 8,
+                    String.format("Compare arr[j=%d] (%d) > key (%d): TRUE! Shift arr[%d] (%d) right to arr[%d].", j, arr[j], key, j, arr[j], j + 1),
+                    List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "arr[j]", String.valueOf(arr[j]), "key", String.valueOf(key), "shiftedTo", String.valueOf(j + 1)),
+                    "Array", null, createDetailedArrayState(arr, j, -1, j + 1, i), null, null
                 ));
+
+                arr[j + 1] = arr[j];
                 j--;
             }
 
+            arr[j + 1] = key;
+
             steps.add(new ExecutionStep(
-                stepNum++, 50,
-                String.format("Pass %d Complete: Element %d inserted at its correct position index %d. Sorted prefix length: %d.", i + 1, arr[j], j, i + 1),
-                List.of(), Map.of(), List.of(), Map.of("Inserted At", String.valueOf(j), "Sorted Prefix", String.valueOf(i + 1)),
-                "Array", null, createDetailedArrayState(arr, -1, -1, -1, i + 1), null, null
+                stepNum++, 11,
+                String.format("Insert key (%d) at index %d (arr[j+1]). Sorted prefix length is now %d.", key, j + 1, i + 1),
+                List.of(), Map.of(), List.of(), Map.of("key", String.valueOf(key), "insertedAt", String.valueOf(j + 1), "Sorted Prefix", String.valueOf(i + 1)),
+                "Array", null, createDetailedArrayState(arr, -1, j + 1, -1, i + 1), null, null
             ));
         }
 
         steps.add(new ExecutionStep(
-            stepNum++, 52,
+            stepNum++, 13,
             "Insertion Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
             List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
             "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
@@ -441,64 +450,28 @@ public class SortingService {
         return recorder.toExecutionSteps();
     }
 
-    // Granular Quick Sort Step Generator
+    // Full Execution Trace Quick Sort Generator using TraceRecorder
     private List<ExecutionStep> generateQuickSortSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
         int[] arr = new int[]{13, 46, 24, 52, 20, 9};
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Input Array: [13, 46, 24, 52, 20, 9]. Quick Sort selects a pivot element to partition array in-place.",
-            List.of("quickSort(0, 5)"), Map.of(), List.of(), Map.of("low", "0", "high", "5"),
-            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 0), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 10,
-            "Partition Pass 1: Select pivot = arr[low=0] (13). Pointer i=0 scans right for elements > 13, pointer j=5 scans left for elements <= 13.",
-            List.of("partition(0, 5)"), Map.of(), List.of(), Map.of("pivot", "13", "i", "0", "j", "5"),
-            "Array", null, createDetailedArrayState(arr, 0, 0, 5, 0), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 18,
-            "Swap Pivot: Place pivot 13 at its correct sorted partition index j=1. Array: [9, 13, 24, 52, 20, 46].",
-            List.of("partition complete"), Map.of(), List.of(), Map.of("Pivot Index", "1", "Pivot Val", "13"),
-            "Array", null, createDetailedArrayState(new int[]{9, 13, 24, 52, 20, 46}, 1, 1, -1, 0), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 5,
-            "Recursively partition Left sub-array [9] and Right sub-array [24, 52, 20, 46]...",
-            List.of("quickSort(2, 5)"), Map.of(), List.of(), Map.of("Sub-Array", "[24, 52, 20, 46]"),
-            "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 7,
-            "Quick Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
-            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
-            "Array", null, createDetailedArrayState(new int[]{9, 13, 20, 24, 46, 52}, -1, -1, -1, 6), null, null
-        ));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new QuickSort().solve(arr, recorder);
+        return recorder.toExecutionSteps();
     }
 
     // Helper tree nodes for Merge Sort Recursion Tree
     private List<TreeNode> createMergeSortTreeNodes() {
         return List.of(
-            new TreeNode(1, "ms(0,5)", 190, 35, 2, 3, "unvisited"),
-            new TreeNode(2, "ms(0,2)", 100, 90, 4, 5, "unvisited"),
-            new TreeNode(3, "ms(3,5)", 280, 90, 6, 7, "unvisited"),
-            new TreeNode(4, "ms(0,1)", 60, 145, 8, 9, "unvisited"),
-            new TreeNode(5, "ms(2,2)", 140, 145, null, null, "unvisited"),
-            new TreeNode(6, "ms(3,4)", 240, 145, 10, 11, "unvisited"),
-            new TreeNode(7, "ms(5,5)", 320, 145, null, null, "unvisited"),
-            new TreeNode(8, "ms(0,0)", 35, 200, null, null, "unvisited"),
-            new TreeNode(9, "ms(1,1)", 85, 200, null, null, "unvisited"),
-            new TreeNode(10, "ms(3,3)", 215, 200, null, null, "unvisited"),
-            new TreeNode(11, "ms(4,4)", 265, 200, null, null, "unvisited")
+            new TreeNode(1, "[0..5]:13,46,24,52,20,9", 190, 35, 2, 3, "unvisited"),
+            new TreeNode(2, "[0..2]:13,46,24", 100, 90, 4, 5, "unvisited"),
+            new TreeNode(3, "[3..5]:52,20,9", 280, 90, 6, 7, "unvisited"),
+            new TreeNode(4, "[0..1]:13,46", 60, 145, 8, 9, "unvisited"),
+            new TreeNode(5, "[2]:24", 140, 145, null, null, "unvisited"),
+            new TreeNode(6, "[3..4]:52,20", 240, 145, 10, 11, "unvisited"),
+            new TreeNode(7, "[5]:9", 320, 145, null, null, "unvisited"),
+            new TreeNode(8, "[0]:13", 35, 200, null, null, "unvisited"),
+            new TreeNode(9, "[1]:46", 85, 200, null, null, "unvisited"),
+            new TreeNode(10, "[3]:52", 215, 200, null, null, "unvisited"),
+            new TreeNode(11, "[4]:20", 265, 200, null, null, "unvisited")
         );
     }
 
