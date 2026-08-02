@@ -492,36 +492,15 @@ public class TreeService {
 
     // Step Generators
     private List<ExecutionStep> generatePreorderSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> states = new HashMap<>();
-        for (int i = 1; i <= 7; i++) states.put(i, "unvisited");
+        TreePreorderTraversal.Node root = new TreePreorderTraversal.Node(1);
+        root.left = new TreePreorderTraversal.Node(2);
+        root.right = new TreePreorderTraversal.Node(3);
+        root.left.left = new TreePreorderTraversal.Node(4);
+        root.left.right = new TreePreorderTraversal.Node(5);
 
-        // 1 -> 2 -> 4 -> 5 -> 3 -> 6 -> 7
-        states.put(1, "visiting");
-        steps.add(new ExecutionStep(1, 9, "Visit Root node 1. Add to preorder list", List.of("preorder(1)"), new HashMap<>(states), List.of(), Map.of("preorder", "[1]"), "Stack", null));
-
-        states.put(1, "visited"); states.put(2, "visiting");
-        steps.add(new ExecutionStep(2, 10, "Traverse Left to node 2. Add to preorder list", List.of("preorder(1)", "preorder(2)"), new HashMap<>(states), List.of(), Map.of("preorder", "[1, 2]"), "Stack", null));
-
-        states.put(2, "visited"); states.put(4, "visiting");
-        steps.add(new ExecutionStep(3, 10, "Traverse Left to node 4. Add to preorder list", List.of("preorder(1)", "preorder(2)", "preorder(4)"), new HashMap<>(states), List.of(), Map.of("preorder", "[1, 2, 4]"), "Stack", null));
-
-        states.put(4, "visited"); states.put(5, "visiting");
-        steps.add(new ExecutionStep(4, 11, "Backtrack to 2 and traverse Right to node 5", List.of("preorder(1)", "preorder(2)", "preorder(5)"), new HashMap<>(states), List.of(), Map.of("preorder", "[1, 2, 4, 5]"), "Stack", null));
-
-        states.put(5, "visited"); states.put(3, "visiting");
-        steps.add(new ExecutionStep(5, 11, "Backtrack to Root 1 and traverse Right to node 3", List.of("preorder(1)", "preorder(3)"), new HashMap<>(states), List.of(), Map.of("preorder", "[1, 2, 4, 5, 3]"), "Stack", null));
-
-        states.put(3, "visited"); states.put(6, "visiting");
-        steps.add(new ExecutionStep(6, 10, "Traverse Left to node 6. Add to preorder list", List.of("preorder(1)", "preorder(3)", "preorder(6)"), new HashMap<>(states), List.of(), Map.of("preorder", "[1, 2, 4, 5, 3, 6]"), "Stack", null));
-
-        states.put(6, "visited"); states.put(7, "visiting");
-        steps.add(new ExecutionStep(7, 11, "Traverse Right to node 7. Add to preorder list", List.of("preorder(1)", "preorder(3)", "preorder(7)"), new HashMap<>(states), List.of(), Map.of("preorder", "[1, 2, 4, 5, 3, 6, 7]"), "Stack", null));
-
-        states.put(7, "visited");
-        steps.add(new ExecutionStep(8, 4, "Preorder Traversal Complete: [1, 2, 4, 5, 3, 6, 7]", List.of(), new HashMap<>(states), List.of(), Map.of("Result", "[1, 2, 4, 5, 3, 6, 7]"), "Stack", null));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new TreePreorderTraversal().solve(root, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateInorderSteps() {
@@ -537,59 +516,27 @@ public class TreeService {
     }
 
     private List<ExecutionStep> generatePostorderSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> states = new HashMap<>();
-        for (int i = 1; i <= 7; i++) states.put(i, "unvisited");
+        TreePostorderTraversal.Node root = new TreePostorderTraversal.Node(1);
+        root.left = new TreePostorderTraversal.Node(2);
+        root.right = new TreePostorderTraversal.Node(3);
+        root.left.left = new TreePostorderTraversal.Node(4);
+        root.left.right = new TreePostorderTraversal.Node(5);
 
-        // 4 -> 5 -> 2 -> 6 -> 7 -> 3 -> 1
-        states.put(4, "visiting");
-        steps.add(new ExecutionStep(1, 11, "Deepest left leaf: Visit 4", List.of("postorder(4)"), new HashMap<>(states), List.of(), Map.of("postorder", "[4]"), "Stack", null));
-
-        states.put(4, "visited"); states.put(5, "visiting");
-        steps.add(new ExecutionStep(2, 10, "Right child of 2: Visit 5", List.of("postorder(5)"), new HashMap<>(states), List.of(), Map.of("postorder", "[4, 5]"), "Stack", null));
-
-        states.put(5, "visited"); states.put(2, "visiting");
-        steps.add(new ExecutionStep(3, 11, "Both subtrees of 2 processed. Visit root node 2", List.of("postorder(2)"), new HashMap<>(states), List.of(), Map.of("postorder", "[4, 5, 2]"), "Stack", null));
-
-        states.put(2, "visited"); states.put(6, "visiting");
-        steps.add(new ExecutionStep(4, 9, "Left child of 3: Visit 6", List.of("postorder(6)"), new HashMap<>(states), List.of(), Map.of("postorder", "[4, 5, 2, 6]"), "Stack", null));
-
-        states.put(6, "visited"); states.put(7, "visiting");
-        steps.add(new ExecutionStep(5, 10, "Right child of 3: Visit 7", List.of("postorder(7)"), new HashMap<>(states), List.of(), Map.of("postorder", "[4, 5, 2, 6, 7]"), "Stack", null));
-
-        states.put(7, "visited"); states.put(3, "visiting");
-        steps.add(new ExecutionStep(6, 11, "Both subtrees of 3 processed. Visit node 3", List.of("postorder(3)"), new HashMap<>(states), List.of(), Map.of("postorder", "[4, 5, 2, 6, 7, 3]"), "Stack", null));
-
-        states.put(3, "visited"); states.put(1, "visiting");
-        steps.add(new ExecutionStep(7, 11, "Both subtrees of 1 processed. Visit Root node 1", List.of("postorder(1)"), new HashMap<>(states), List.of(), Map.of("postorder", "[4, 5, 2, 6, 7, 3, 1]"), "Stack", null));
-
-        states.put(1, "visited");
-        steps.add(new ExecutionStep(8, 4, "Postorder Traversal Complete: [4, 5, 2, 6, 7, 3, 1]", List.of(), new HashMap<>(states), List.of(), Map.of("Result", "[4, 5, 2, 6, 7, 3, 1]"), "Stack", null));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new TreePostorderTraversal().solve(root, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateLevelOrderSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> states = new HashMap<>();
-        for (int i = 1; i <= 7; i++) states.put(i, "unvisited");
+        TreeLevelOrderTraversal.Node root = new TreeLevelOrderTraversal.Node(1);
+        root.left = new TreeLevelOrderTraversal.Node(2);
+        root.right = new TreeLevelOrderTraversal.Node(3);
+        root.left.left = new TreeLevelOrderTraversal.Node(4);
+        root.left.right = new TreeLevelOrderTraversal.Node(5);
 
-        states.put(1, "queued");
-        steps.add(new ExecutionStep(1, 6, "Add root node 1 to Queue", List.of("1"), new HashMap<>(states), List.of(), Map.of("Level 1", "[1]"), "Queue", null));
-
-        states.put(1, "visited"); states.put(2, "queued"); states.put(3, "queued");
-        steps.add(new ExecutionStep(2, 13, "Process Level 1 (node 1). Push children 2 and 3 to Queue", List.of("2", "3"), new HashMap<>(states), List.of(), Map.of("Level 1", "[1]", "Queue", "[2, 3]"), "Queue", null));
-
-        states.put(2, "visited"); states.put(4, "queued"); states.put(5, "queued");
-        steps.add(new ExecutionStep(3, 13, "Process Level 2: Poll 2, push children 4 and 5", List.of("3", "4", "5"), new HashMap<>(states), List.of(), Map.of("Level 2", "[2, 3]"), "Queue", null));
-
-        states.put(3, "visited"); states.put(6, "queued"); states.put(7, "queued");
-        steps.add(new ExecutionStep(4, 13, "Process Level 2: Poll 3, push children 6 and 7", List.of("4", "5", "6", "7"), new HashMap<>(states), List.of(), Map.of("Level 2 Complete", "[2, 3]"), "Queue", null));
-
-        states.put(4, "visited"); states.put(5, "visited"); states.put(6, "visited"); states.put(7, "visited");
-        steps.add(new ExecutionStep(5, 17, "Process Level 3: Poll 4, 5, 6, 7. Level Order Complete: [[1], [2, 3], [4, 5, 6, 7]]", List.of(), new HashMap<>(states), List.of(), Map.of("Result", "[[1], [2, 3], [4, 5, 6, 7]]"), "Queue", null));
-
-        return steps;
+        ListTraceRecorder recorder = new ListTraceRecorder();
+        new TreeLevelOrderTraversal().solve(root, recorder);
+        return recorder.toExecutionSteps();
     }
 
     private List<ExecutionStep> generateHeightSteps() {

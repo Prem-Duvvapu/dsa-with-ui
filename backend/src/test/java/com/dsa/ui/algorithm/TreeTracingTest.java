@@ -24,4 +24,25 @@ public class TreeTracingTest {
         assertNotNull(steps);
         assertTrue(steps.size() >= 10, "Tree Inorder should have >=10 steps, actual: " + steps.size());
     }
+
+    @Test
+    void testPreorderTraversalTracing() {
+        List<ExecutionStep> steps = treeService.generateSteps("tree-preorder");
+        assertNotNull(steps);
+        assertTrue(steps.size() >= 6, "Tree Preorder should have >=6 steps, actual: " + steps.size());
+    }
+
+    @Test
+    void testPostorderTraversalTracing() {
+        List<ExecutionStep> steps = treeService.generateSteps("tree-postorder");
+        assertNotNull(steps);
+        assertTrue(steps.size() >= 6, "Tree Postorder should have >=6 steps, actual: " + steps.size());
+    }
+
+    @Test
+    void testLevelOrderTraversalTracing() {
+        List<ExecutionStep> steps = treeService.generateSteps("tree-level-order");
+        assertNotNull(steps);
+        assertTrue(steps.size() >= 6, "Tree Level Order should have >=6 steps, actual: " + steps.size());
+    }
 }
