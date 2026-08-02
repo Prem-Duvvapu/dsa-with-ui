@@ -1,59 +1,70 @@
-# Implementation Plan - Master DSA Sheet (Complete 249 Questions)
+# Implementation Plan - Master DSA Sheet Interactive Visualizer
 
-Implement full step-by-step interactive visualizers, Java reference implementations (LeetCode / Striver A2Z Sheet), complexity analysis proofs, and dynamic UI renderings for all **249 Master DSA Sheet Algorithms** in `dsa-with-ui`.
+Complete architectural plan and execution blueprint for the 406 algorithm interactive visualizer application (`dsa-with-ui`).
 
-## Proposed Algorithms
+---
 
-### Module Breakdown (249 Questions)
-1. **Binary Search Suite** (1D Arrays, BS on Answers, 2D Matrices) [Q1 - Q32]
-2. **String Algorithms Suite** (Easy & Medium String Manipulation) [Q33 - Q47]
-3. **LinkedList & Doubly LL Suite** (1D/2D LL, Cycle, Reverse, Sort, Intersections, Flattening) [Q48 - Q78]
-4. **Recursion & Backtracking Suite** (Subsequences, N-Queens, Sudoku, Rat in Maze, Phone Keypad) [Q79 - Q103]
-5. **Bit Manipulation & Advanced Maths Suite** (Bit Tricks, Single Number, Primes, Divisors, Pow(x,n)) [Q104 - Q121]
-6. **Stack & Queues Suite** (Conversions, Monotonic Stack, Trapping Rainwater, Histogram Area, LRU/LFU) [Q122 - Q151]
-7. **Sliding Window & Two Pointer Suite** (Longest Substring, Subarrays with K Distinct, Min Window) [Q152 - Q163]
-8. **Heaps & Priority Queue Suite** (Kth Largest, Task Scheduler, Twitter Design, Median Stream) [Q164 - Q180]
-9. **Greedy Algorithms Suite** (Fractional Knapsack, N Meetings, Railway Platforms, Candy, Jump Game) [Q181 - Q195]
-10. **Binary Trees Suite** (Traversals, Level-order, Views, Diameter, LCA, Burn Tree, Morris Traversal) [Q196 - Q233]
-11. **Binary Search Trees (BST) Suite** (Insert, Delete, Floor/Ceil, Swap Fix, Merge 2 BSTs, Largest BST) [Q234 - Q249]
+## 🎯 Architecture Overview
 
-## Proposed Changes
+```
+                        +-------------------------------------+
+                        |          Vite React Frontend        |
+                        |   - Sidebar.jsx (A-Z Accordions)    |
+                        |   - Canvas Stages (Graph, Tree, etc)|
+                        |   - Controls & Diagnostic Dashboard |
+                        +------------------+------------------+
+                                           | HTTP REST API
+                                           v
+                        +-------------------------------------+
+                        |        Spring Boot 3 Backend        |
+                        |   - 18 REST Controller Endpoints    |
+                        |   - 18 Algorithm Domain Services    |
+                        |   - Step Trace Generators & Models  |
+                        +-------------------------------------+
+```
 
-### Backend - Spring Boot Services (`com.dsa.ui.service`)
+---
 
-#### [MODIFY] [BinarySearchService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/BinarySearchService.java)
-- Populate problem details & step trace generators for all 32 Binary Search algorithms.
+## 🧩 Proposed Component Architecture
 
-#### [MODIFY] [StringService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/StringService.java)
-- Populate problem details & step trace generators for all 15 String algorithms.
+### Backend Services & Controllers (18 REST Modules)
+1. **`AdvancedGraphService.java` & `AdvancedGraphController.java`**: 62 Graph & String algorithms (DSU, Dijkstra, Bellman-Ford, Floyd-Warshall, Prim's, Kruskal's, Tarjan's, Kosaraju's, KMP, Z-Function, Rabin-Karp).
+2. **`DpService.java` & `DpController.java`**: 55 Dynamic Programming algorithms (Basic DP, Grids, Subsequences, Strings, Stocks, LIS, MCM, Squares).
+3. **`TreeService.java` & `TreeController.java`**: 54 Binary Tree & BST algorithms (Traversals, Views, LCA, Burn Tree, Morris, BST Operations).
+4. **`BinarySearchService.java` & `BinarySearchController.java`**: 32 Binary Search algorithms (1D, BS on Answers, 2D Matrix).
+5. **`LinkedListService.java` & `LinkedListController.java`**: 31 Singly & Doubly LinkedList algorithms.
+6. **`StackQueueService.java` & `StackQueueController.java`**: 30 Stack & Queue algorithms (Conversions, Monotonic Stack, LRU/LFU).
+7. **`ArrayService.java` & `ArrayController.java`**: 26 Array & Matrix algorithms.
+8. **`RecursionBacktrackingService.java` & `RecursionBacktrackingController.java`**: 25 Recursion & Backtracking algorithms.
+9. **`BitManipulationService.java` & `BitManipulationController.java`**: 18 Bit Manipulation & Advanced Maths algorithms.
+10. **`HeapService.java` & `HeapController.java`**: 17 Heap & PriorityQueue algorithms.
+11. **`StringService.java` & `StringController.java`**: 16 String algorithms.
+12. **`GreedyService.java` & `GreedyController.java`**: 15 Greedy algorithms.
+13. **`SlidingWindowService.java` & `SlidingWindowController.java`**: 12 Sliding Window algorithms.
+14. **`GraphBfsDfsService.java` & `GraphBfsDfsController.java`**: 11 Graph BFS & DFS algorithms.
+15. **`BasicMathService.java` & `BasicMathController.java`**: 6 Basic Math algorithms.
+16. **`BasicRecursionService.java` & `BasicRecursionController.java`**: 8 Basic Recursion algorithms.
+17. **`TrieService.java` & `TrieController.java`**: 5 Trie algorithms.
+18. **`SortingService.java` & `SortingController.java`**: 5 Sorting algorithms.
 
-#### [MODIFY] [LinkedListService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/LinkedListService.java)
-- Populate problem details & step trace generators for all 31 LinkedList & Doubly LL algorithms.
+---
 
-#### [MODIFY] [RecursionBacktrackingService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/RecursionBacktrackingService.java)
-- Populate problem details & step trace generators for all 25 Recursion & Backtracking algorithms.
+### Frontend Components (`frontend/src/`)
+- **`Sidebar.jsx`**: Alphabetical (A-Z) Topic Accordions with expandable/collapsible category cards and real-time search filtering.
+- **`GraphCanvas.jsx`**: Multi-mode visualizer stage supporting SVG Graph Networks, 2D Grids, Chessboards (N-Queens), Sudoku, and **Disjoint Set Union (DSU) Component Forest Cards & Array Tables**.
+- **`TreeCanvas.jsx`**: Dynamic SVG Binary Tree & BST Topology renderer.
+- **`ArrayCanvas.jsx`**: Height-based bar chart and array element visualizer with spring animations.
+- **`LinkedListCanvas.jsx`**: Linear node pointer and link visualizer.
+- **`RecursionTreeCanvas.jsx`**: Dynamic recursion call tree visualizer stage.
 
-#### [MODIFY] [BitManipulationService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/BitManipulationService.java) & [BasicMathService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/BasicMathService.java)
-- Populate problem details & step trace generators for all 18 Bit & Math algorithms.
+---
 
-#### [MODIFY] [StackQueueService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/StackQueueService.java)
-- Populate problem details & step trace generators for all 30 Stack & Queue algorithms.
+## 🧪 Verification Plan
 
-#### [MODIFY] [SlidingWindowService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/SlidingWindowService.java)
-- Populate problem details & step trace generators for all 12 Sliding Window algorithms.
+### Backend Unit Tests
+- Execute full JUnit test suite: `wsl mvn test`
+- Expected: `Tests run: 90, Failures: 0, Errors: 0` (`BUILD SUCCESS`).
 
-#### [MODIFY] [HeapService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/HeapService.java) & [GreedyService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/GreedyService.java)
-- Populate problem details & step trace generators for all 32 Heap & Greedy algorithms.
-
-#### [MODIFY] [TreeService.java](file:///c:/Users/Hp/OneDrive/Desktop/dsa-with-ui/backend/src/main/java/com/dsa/ui/service/TreeService.java)
-- Populate problem details & step trace generators for all 54 Binary Tree & BST algorithms.
-
-## Verification Plan
-
-### Automated Tests
-- Run full suite unit tests for all services via `wsl mvn test`.
-
-### Manual Verification
-- Launch backend and frontend dev servers.
-- Select algorithms from each of the 11 domain modules in the UI sidebar.
-- Step through visualizer steps to verify line highlights, pointer states, tree nodes, stacks, queues, and array animations.
+### Frontend Production Build
+- Execute Vite production build: `wsl npm run build`
+- Expected: `✓ built in ~35s` (0 errors).
