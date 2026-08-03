@@ -22,15 +22,17 @@ export default function ArrayCanvas({ problem, currentStep, step }) {
   const getElementColor = (state) => {
     switch (state) {
       case 'pivot':
-        return { bg: 'linear-gradient(180deg, var(--state-pivot), #7e22ce)', border: '#c084fc', glow: 'var(--glow-indigo)' };
+      case 'max':
+        return { bg: 'linear-gradient(180deg, #a855f7, #7e22ce)', border: '#c084fc', glow: '0 0 16px rgba(168,85,247,0.7)' };
       case 'comparing':
       case 'active':
         return { bg: 'linear-gradient(180deg, var(--state-comparing), #d97706)', border: '#fbbf24', glow: 'var(--glow-amber)' };
       case 'swapping':
         return { bg: 'linear-gradient(180deg, var(--state-swapping), #dc2626)', border: '#f87171', glow: 'var(--glow-rose)' };
       case 'sorted':
-      case 'visited':
         return { bg: 'linear-gradient(180deg, var(--state-sorted), #059669)', border: '#34d399', glow: 'var(--glow-emerald)' };
+      case 'visited':
+        return { bg: 'linear-gradient(180deg, #475569, #334155)', border: '#64748b', glow: 'none' };
       default:
         return { bg: 'linear-gradient(180deg, #334155, #1e293b)', border: 'var(--border-color)', glow: 'none' };
     }
@@ -56,20 +58,20 @@ export default function ArrayCanvas({ problem, currentStep, step }) {
         {/* Legend Badges */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', fontSize: 'var(--text-xs)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-sorted)' }}></span>
-            <span style={{ color: '#34d399' }}>Sorted</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-indigo)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Active / Target</span>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#a855f7' }}></span>
+            <span style={{ color: '#c084fc' }}>Max Element</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-comparing)' }}></span>
-            <span style={{ color: '#fbbf24' }}>Comparing</span>
+            <span style={{ color: '#fbbf24' }}>Current (i)</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-swapping)' }}></span>
-            <span style={{ color: '#fb923c' }}>Swapping</span>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#64748b' }}></span>
+            <span style={{ color: 'var(--text-muted)' }}>Visited</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-sorted)' }}></span>
+            <span style={{ color: '#34d399' }}>Sorted / Done</span>
           </div>
         </div>
       </div>

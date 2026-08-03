@@ -2758,11 +2758,12 @@ public class ArrayService {
         List<ArrayElement> list = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             String state = "default";
-            if (i == currentIdx) {
+            if (i == maxIdx) {
+                state = "pivot";
+            }
+            if (i == currentIdx && currentIdx != maxIdx) {
                 state = "comparing";
-            } else if (i == maxIdx) {
-                state = "sorted";
-            } else if (currentIdx != -1 && i < currentIdx) {
+            } else if (i != maxIdx && currentIdx != -1 && i < currentIdx) {
                 state = "visited";
             }
             list.add(new ArrayElement(i, arr[i], state));
