@@ -1,9 +1,10 @@
 import React from 'react';
 import { GitCommit, Sparkles } from 'lucide-react';
 
-export default function TreeCanvas({ problem, currentStep }) {
+export default function TreeCanvas({ problem, currentStep, step }) {
+  const activeStep = currentStep || step;
   const treeNodes = problem?.defaultTreeNodes || [];
-  const nodeStates = currentStep?.nodeStates || {};
+  const nodeStates = activeStep?.nodeStates || {};
 
   const getNodeColor = (nodeId) => {
     const state = nodeStates[nodeId] || 'unvisited';

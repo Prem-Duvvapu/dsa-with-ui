@@ -1,11 +1,12 @@
 import React from 'react';
 import { Network, Grid, Crown, GitBranch, Layers } from 'lucide-react';
 
-export default function GraphCanvas({ problem, currentStep }) {
-  const nodeStates = currentStep?.nodeStates || {};
-  const activeEdges = currentStep?.activeEdges || [];
-  const gridState = currentStep?.gridState || problem?.defaultGrid;
-  const variables = currentStep?.variables || {};
+export default function GraphCanvas({ problem, currentStep, step }) {
+  const activeStep = currentStep || step;
+  const nodeStates = activeStep?.nodeStates || {};
+  const activeEdges = activeStep?.activeEdges || [];
+  const gridState = activeStep?.gridState || problem?.defaultGrid;
+  const variables = activeStep?.variables || {};
 
   // Determine state color for graph nodes
   const getNodeColor = (nodeId, stateOverride) => {

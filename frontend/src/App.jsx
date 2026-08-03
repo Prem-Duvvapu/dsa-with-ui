@@ -228,15 +228,15 @@ export default function App() {
     const dsType = activeProblem.dsType || '';
 
     if (cat.includes('Trees') || cat.includes('BST') || dsType === 'Tree') {
-      return <TreeCanvas step={currentStep} problem={activeProblem} />;
+      return <TreeCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
     } else if (cat.includes('Recursion') || cat.includes('Backtracking') || dsType === 'RecursionTree') {
-      return <RecursionTreeCanvas step={currentStep} problem={activeProblem} />;
+      return <RecursionTreeCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
     } else if (cat.includes('List') || cat.includes('Linked') || dsType === 'LinkedList') {
-      return <LinkedListCanvas step={currentStep} problem={activeProblem} />;
+      return <LinkedListCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
     } else if (cat.includes('Array') || cat.includes('Sort') || cat.includes('Binary Search') || cat.includes('DP') || cat.includes('Heap') || cat.includes('Greedy') || cat.includes('Bit') || cat.includes('Stack') || cat.includes('Queue') || cat.includes('Window') || dsType === 'Array' || dsType === 'Matrix') {
-      return <ArrayCanvas step={currentStep} problem={activeProblem} />;
+      return <ArrayCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
     } else {
-      return <GraphCanvas step={currentStep} problem={activeProblem} />;
+      return <GraphCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
     }
   };
 

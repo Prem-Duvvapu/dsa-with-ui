@@ -1,12 +1,13 @@
 import React from 'react';
 import { GitBranch, Layers, ArrowDown } from 'lucide-react';
 
-export default function RecursionTreeCanvas({ problem, currentStep }) {
-  const treeNodes = (currentStep?.treeNodes && currentStep.treeNodes.length > 0)
-    ? currentStep.treeNodes
+export default function RecursionTreeCanvas({ problem, currentStep, step }) {
+  const activeStep = currentStep || step;
+  const treeNodes = (activeStep?.treeNodes && activeStep.treeNodes.length > 0)
+    ? activeStep.treeNodes
     : (problem?.defaultTreeNodes || []);
-  const nodeStates = currentStep?.nodeStates || {};
-  const arrayState = currentStep?.arrayState || problem?.defaultArray || [];
+  const nodeStates = activeStep?.nodeStates || {};
+  const arrayState = activeStep?.arrayState || problem?.defaultArray || [];
 
   const getNodeColor = (nodeId, explicitState) => {
     const state = explicitState || nodeStates[nodeId] || 'unvisited';

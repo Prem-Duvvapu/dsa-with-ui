@@ -1,9 +1,10 @@
 import React from 'react';
 import { BarChart2 } from 'lucide-react';
 
-export default function ArrayCanvas({ problem, currentStep }) {
-  const rawArray = (currentStep?.arrayState && currentStep.arrayState.length > 0) 
-    ? currentStep.arrayState 
+export default function ArrayCanvas({ problem, currentStep, step }) {
+  const activeStep = currentStep || step;
+  const rawArray = (activeStep?.arrayState && activeStep.arrayState.length > 0) 
+    ? activeStep.arrayState 
     : (problem?.defaultArray && problem.defaultArray.length > 0) 
       ? problem.defaultArray 
       : [{ value: 2, state: 'default' }, { value: 7, state: 'comparing' }, { value: 11, state: 'active' }, { value: 15, state: 'sorted' }];

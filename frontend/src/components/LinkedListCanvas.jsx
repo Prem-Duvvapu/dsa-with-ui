@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link2, ArrowRight } from 'lucide-react';
 
-export default function LinkedListCanvas({ problem, currentStep }) {
-  const listState = currentStep?.listState || problem?.defaultList || [];
+export default function LinkedListCanvas({ problem, currentStep, step }) {
+  const activeStep = currentStep || step;
+  const listState = activeStep?.listState || problem?.defaultList || [];
 
   const getNodeColor = (state) => {
     switch (state) {
