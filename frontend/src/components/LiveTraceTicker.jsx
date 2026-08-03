@@ -1,58 +1,32 @@
 import React from 'react';
-import { Activity } from 'lucide-react';
 
 export default function LiveTraceTicker({ stepDescription }) {
   return (
-    <footer 
+    <div 
       style={{ 
         width: '100%', 
-        height: '32px', 
-        minHeight: '32px', 
-        background: 'rgba(15, 23, 42, 0.95)', 
-        borderTop: '1px solid rgba(99, 102, 241, 0.3)', 
+        padding: '7px 14px', 
+        borderRadius: 'var(--radius-sm)',
+        background: 'rgba(15, 23, 42, 0.6)', 
+        border: '1px solid var(--border-default)', 
+        borderLeft: '3px solid var(--accent-violet)',
         display: 'flex', 
         alignItems: 'center', 
-        padding: '0 var(--space-md)', 
-        gap: 'var(--space-md)', 
-        zIndex: 100, 
-        flexShrink: 0,
-        boxShadow: '0 -4px 12px rgba(0, 0, 0, 0.3)'
+        gap: '8px', 
+        fontSize: '0.74rem', 
+        fontFamily: 'var(--font-code)',
+        flexShrink: 0
       }}
     >
-      <div 
-        style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '6px', 
-          background: 'linear-gradient(135deg, var(--accent-indigo), var(--accent-purple))', 
-          color: '#ffffff', 
-          padding: '2px 8px', 
-          borderRadius: '4px', 
-          fontSize: '0.68rem', 
-          fontWeight: '800', 
-          letterSpacing: '0.6px', 
-          textTransform: 'uppercase',
-          flexShrink: 0
-        }}
-      >
-        <Activity size={12} className="spin" color="#ffffff" />
-        <span>LIVE TRACE</span>
-      </div>
+      <div className="pulse-dot" style={{ flexShrink: 0 }} />
 
-      <div 
-        style={{ 
-          flex: 1, 
-          fontSize: '0.76rem', 
-          fontFamily: 'var(--font-code)', 
-          color: 'var(--text-primary)', 
-          whiteSpace: 'nowrap', 
-          overflow: 'hidden', 
-          textOverflow: 'ellipsis',
-          lineHeight: '1'
-        }}
-      >
-        {stepDescription || 'Input String s = \'abcabcbb\'. Initialize Sliding Window pointers left = 0, right = 0, maxLen = 0.'}
-      </div>
-    </footer>
+      <span style={{ color: 'var(--text-primary)', fontWeight: '700', flexShrink: 0 }}>
+        Live trace
+      </span>
+
+      <span style={{ color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        {stepDescription || 'Input string s = "abcabcbb". Initialize sliding window pointers left = 0, right = 0, maxLen = 0.'}
+      </span>
+    </div>
   );
 }

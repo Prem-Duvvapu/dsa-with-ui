@@ -10,43 +10,53 @@ export default function TreeCanvas({ problem, currentStep, step }) {
     const state = nodeStates[nodeId] || 'unvisited';
     switch (state) {
       case 'active':
-      case 'queued':
-        return { fill: '#f59e0b', stroke: '#fbbf24', glow: '0 0 16px rgba(245,158,11,0.7)' };
       case 'visiting':
-        return { fill: '#3b82f6', stroke: '#60a5fa', glow: '0 0 20px rgba(59,130,246,0.8)' };
+      case 'current':
+      case 'queued':
+        return { fill: 'var(--state-current)', stroke: '#fbbf24', glow: 'var(--state-current-glow)' };
+      case 'target':
+      case 'root':
+      case 'found':
+        return { fill: 'var(--state-target)', stroke: '#a78bfa', glow: 'var(--state-target-glow)' };
       case 'visited':
-        return { fill: '#10b981', stroke: '#34d399', glow: '0 0 14px rgba(16,185,129,0.5)' };
-      case 'burned':
-      case 'cycle':
-        return { fill: '#ef4444', stroke: '#f87171', glow: '0 0 22px rgba(239,68,68,0.8)' };
+      case 'processed':
+        return { fill: 'var(--state-visited-bg)', stroke: 'var(--state-visited)', glow: 'none' };
+      case 'done':
+      case 'completed':
+      case 'sorted':
+        return { fill: 'var(--state-done)', stroke: '#2dd4bf', glow: 'var(--state-done-glow)' };
       default:
-        return { fill: '#1e293b', stroke: '#475569', glow: 'none' };
+        return { fill: '#1e293b', stroke: 'var(--border-default)', glow: 'none' };
     }
   };
 
   return (
-    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitCommit size={18} color="var(--accent-purple)" />
-          <span style={{ fontSize: '0.9rem', fontWeight: '700', letterSpacing: '0.4px' }}>
-            Binary Tree & BST Topology Visualizer
+          <GitCommit size={16} color="var(--accent-violet)" />
+          <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
+            Binary tree & BST topology visualizer
           </span>
         </div>
 
-        {/* Legend */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.75rem' }}>
+        {/* 4 Semantic Legend Badges */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.72rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#475569' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Unvisited</span>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-current)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Current</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
-            <span style={{ color: '#60a5fa' }}>Visiting</span>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-target)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Target</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
-            <span style={{ color: '#34d399' }}>Visited</span>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-visited)' }}></span>
+            <span style={{ color: 'var(--text-muted)' }}>Visited</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-done)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Done</span>
           </div>
         </div>
       </div>

@@ -8,15 +8,29 @@ export default function GraphCanvas({ problem, currentStep, step }) {
   const gridState = activeStep?.gridState || problem?.defaultGrid;
   const variables = activeStep?.variables || {};
 
-  // Determine state color for graph nodes
+  // Determine state color for graph nodes using 4 semantic state tokens
   const getNodeColor = (nodeId, stateOverride) => {
     const st = stateOverride || nodeStates[nodeId] || 'unvisited';
     switch (st) {
-      case 'queued': return { fill: '#f59e0b', stroke: '#fbbf24', glow: '0 0 15px rgba(245,158,11,0.6)' };
-      case 'visiting': return { fill: '#3b82f6', stroke: '#60a5fa', glow: '0 0 20px rgba(59,130,246,0.8)' };
-      case 'visited': return { fill: '#10b981', stroke: '#34d399', glow: '0 0 12px rgba(16,185,129,0.5)' };
-      case 'cycle': return { fill: '#ef4444', stroke: '#f87171', glow: '0 0 22px rgba(239,68,68,0.8)' };
-      default: return { fill: '#1e293b', stroke: '#475569', glow: 'none' };
+      case 'queued':
+      case 'visiting':
+      case 'current':
+      case 'active':
+        return { fill: 'var(--state-current)', stroke: '#fbbf24', glow: 'var(--state-current-glow)' };
+      case 'target':
+      case 'root':
+      case 'cycle':
+        return { fill: 'var(--state-target)', stroke: '#a78bfa', glow: 'var(--state-target-glow)' };
+      case 'visited':
+      case 'processed':
+        return { fill: 'var(--state-visited-bg)', stroke: 'var(--state-visited)', glow: 'none' };
+      case 'done':
+      case 'placed':
+      case 'safe':
+      case 'sorted':
+        return { fill: 'var(--state-done)', stroke: '#2dd4bf', glow: 'var(--state-done-glow)' };
+      default:
+        return { fill: '#1e293b', stroke: 'var(--border-default)', glow: 'none' };
     }
   };
 
@@ -36,44 +50,33 @@ export default function GraphCanvas({ problem, currentStep, step }) {
   const rankArr = rankStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
 
   return (
-    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {isDsu ? <GitBranch size={18} color="#a855f7" /> : gridState ? <Grid size={18} color="var(--accent-cyan)" /> : <Network size={18} color="var(--accent-indigo)" />}
-          <span style={{ fontSize: '0.9rem', fontWeight: '800', letterSpacing: '0.4px' }}>
-            {isDsu ? 'Disjoint Set Union (DSU) Visualizer (Path Compression & Rank)' : isChessboard ? '4x4 Chessboard Visualizer (N-Queens)' : isSudoku ? '9x9 Sudoku Board Visualizer' : gridState ? '2D Matrix Grid Visualizer' : 'Graph Network Topology'}
+          {isDsu ? <GitBranch size={16} color="var(--accent-violet)" /> : gridState ? <Grid size={16} color="var(--accent-violet)" /> : <Network size={16} color="var(--accent-violet)" />}
+          <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
+            {isDsu ? 'Disjoint Set Union (DSU) Visualizer' : isChessboard ? '4x4 Chessboard Visualizer (N-Queens)' : isSudoku ? '9x9 Sudoku Board Visualizer' : gridState ? '2D Matrix Grid Visualizer' : 'Graph Network Topology'}
           </span>
         </div>
 
-        {/* Legend */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.75rem' }}>
-          {isDsu ? (
-            <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
-                <span style={{ color: '#60a5fa' }}>Root Parent</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
-                <span style={{ color: '#34d399' }}>Set Member</span>
-              </div>
-            </>
-          ) : (
-            <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#475569' }}></span>
-                <span style={{ color: 'var(--text-secondary)' }}>Unvisited</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
-                <span style={{ color: '#60a5fa' }}>Visiting / Active</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
-                <span style={{ color: '#34d399' }}>Placed / Safe</span>
-              </div>
-            </>
-          )}
+        {/* 4 Semantic Legend Badges */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.72rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-current)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Current</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-target)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Target</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-visited)' }}></span>
+            <span style={{ color: 'var(--text-muted)' }}>Visited</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-done)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Done</span>
+          </div>
         </div>
       </div>
 

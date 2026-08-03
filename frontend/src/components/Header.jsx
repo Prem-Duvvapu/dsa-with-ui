@@ -1,83 +1,62 @@
 import React from 'react';
-import { Network, Cpu, Menu, X, User, HelpCircle, BookOpen } from 'lucide-react';
+import { Layers, Menu, X, BookOpen } from 'lucide-react';
 
 export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar }) {
   return (
-    <header className="glass-panel" style={{ margin: 'var(--space-xs) var(--space-md) 0 var(--space-md)', padding: '8px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border-color)', flexShrink: 0, height: '48px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
+    <header className="glass-panel" style={{ margin: 'var(--space-xs) var(--space-md) 0 var(--space-md)', padding: '8px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border-default)', flexShrink: 0, height: '46px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         {/* Mobile/Tablet Hamburger Toggle */}
         <button 
-          className="btn btn-secondary" 
+          className="btn btn-outline" 
           onClick={onToggleSidebar}
           aria-label={isSidebarOpen ? "Close navigation menu" : "Open navigation menu"}
           style={{ padding: '4px 8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          {isSidebarOpen ? <X size={18} /> : <Menu size={18} />}
+          {isSidebarOpen ? <X size={16} /> : <Menu size={16} />}
         </button>
 
         <div style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: 'var(--radius-md)',
-          background: 'linear-gradient(135deg, var(--accent-indigo), var(--accent-purple))',
+          width: '28px',
+          height: '28px',
+          borderRadius: 'var(--radius-sm)',
+          background: 'var(--accent-violet)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: 'var(--glow-indigo)'
+          boxShadow: 'var(--accent-violet-glow)'
         }}>
-          <Network size={18} color="#ffffff" />
+          <Layers size={16} color="#ffffff" />
         </div>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <h1 style={{ fontSize: '0.98rem', fontWeight: '800', background: 'linear-gradient(90deg, #ffffff, #cbd5e1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.3px', margin: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h1 style={{ fontSize: '0.94rem', fontWeight: '800', color: 'var(--text-primary)', letterSpacing: '-0.3px', margin: 0 }}>
               DSA Visualizer
             </h1>
-            <span style={{ fontSize: '0.62rem', padding: '2px 7px', borderRadius: 'var(--radius-full)', background: 'rgba(168, 85, 247, 0.25)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.4)', fontWeight: '800', letterSpacing: '0.6px', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '0.6rem', padding: '1px 6px', borderRadius: 'var(--radius-full)', background: 'var(--accent-violet-tint)', color: 'var(--accent-violet)', border: '1px solid var(--border-accent)', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
               PRO ENGINE
             </span>
           </div>
-          <p style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: '0px', margin: 0 }}>
-            Interactive Algorithm Execution, Memory Tracing & Mathematical Proofs
+          <p style={{ fontSize: '0.67rem', color: 'var(--text-muted)', marginTop: '0px', margin: 0 }}>
+            Interactive algorithm execution, memory tracing and mathematical proofs
           </p>
         </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-        {/* Module Counter Badge */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
-          background: 'rgba(255, 255, 255, 0.04)',
+          background: 'rgba(255, 255, 255, 0.03)',
           padding: '4px 10px',
-          borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-color)'
+          borderRadius: 'var(--radius-sm)',
+          border: '1px solid var(--border-default)',
+          fontSize: '0.72rem'
         }}>
-          <BookOpen size={14} color="var(--accent-cyan)" />
-          <div style={{ fontSize: '0.72rem' }}>
-            <span style={{ color: 'var(--text-secondary)' }}>Library: </span>
-            <strong style={{ color: 'var(--state-sorted)', fontWeight: '700' }}>{totalProblems || 426}+ Algorithms</strong>
-          </div>
+          <BookOpen size={13} color="var(--text-muted)" />
+          <span style={{ color: 'var(--text-muted)' }}>Library: </span>
+          <strong style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{totalProblems || 426} algorithms</strong>
         </div>
-
-        {/* User Profile Button */}
-        <button 
-          title="User Profile" 
-          aria-label="User profile options"
-          style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.08)', border: '1px solid var(--border-color)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-        >
-          <User size={15} />
-        </button>
-
-        {/* Help Button */}
-        <button 
-          title="Help & Guidance" 
-          aria-label="Help and guidance documentation"
-          style={{ padding: '4px 10px', borderRadius: 'var(--radius-md)', background: 'rgba(255, 255, 255, 0.06)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)', fontSize: '0.72rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
-        >
-          <HelpCircle size={14} />
-          <span>Help</span>
-        </button>
       </div>
     </header>
   );

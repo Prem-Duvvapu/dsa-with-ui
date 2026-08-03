@@ -23,18 +23,21 @@ export default function ArrayCanvas({ problem, currentStep, step }) {
     switch (state) {
       case 'pivot':
       case 'max':
-        return { bg: 'linear-gradient(180deg, #a855f7, #7e22ce)', border: '#c084fc', glow: '0 0 16px rgba(168,85,247,0.7)' };
+      case 'target':
+        return { bg: 'linear-gradient(180deg, var(--state-target), #5b46e0)', border: 'var(--state-target)', glow: 'var(--state-target-glow)' };
       case 'comparing':
       case 'active':
-        return { bg: 'linear-gradient(180deg, var(--state-comparing), #d97706)', border: '#fbbf24', glow: 'var(--glow-amber)' };
+      case 'current':
+        return { bg: 'linear-gradient(180deg, var(--state-current), #d97706)', border: 'var(--state-current)', glow: 'var(--state-current-glow)' };
       case 'swapping':
-        return { bg: 'linear-gradient(180deg, var(--state-swapping), #dc2626)', border: '#f87171', glow: 'var(--glow-rose)' };
+        return { bg: 'linear-gradient(180deg, #f43f5e, #dc2626)', border: '#f43f5e', glow: '0 0 14px rgba(244, 63, 94, 0.5)' };
       case 'sorted':
-        return { bg: 'linear-gradient(180deg, var(--state-sorted), #059669)', border: '#34d399', glow: 'var(--glow-emerald)' };
+      case 'done':
+        return { bg: 'linear-gradient(180deg, var(--state-done), #0d9488)', border: 'var(--state-done)', glow: 'var(--state-done-glow)' };
       case 'visited':
-        return { bg: 'linear-gradient(180deg, #475569, #334155)', border: '#64748b', glow: 'none' };
+      case 'eliminated':
       default:
-        return { bg: 'linear-gradient(180deg, #334155, #1e293b)', border: 'var(--border-color)', glow: 'none' };
+        return { bg: 'linear-gradient(180deg, #334155, #1e293b)', border: 'var(--border-default)', glow: 'none' };
     }
   };
 
@@ -42,71 +45,87 @@ export default function ArrayCanvas({ problem, currentStep, step }) {
   const maxVal = Math.max(...values, 1);
 
   return (
-    <div style={{ flex: 1, padding: 'var(--space-md) var(--space-xl)', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
+    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
       {/* Visualizer Header Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-sm)', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-          <BarChart2 size={18} color="var(--accent-indigo)" />
-          <span style={{ fontSize: 'var(--text-base)', fontWeight: '800', letterSpacing: '0.4px', color: 'var(--text-primary)' }}>
-            Array & Bar Visualizer
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <BarChart2 size={16} color="var(--accent-violet)" />
+          <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
+            Array & bar visualizer
           </span>
-          <span style={{ fontSize: 'var(--text-xs)', padding: '2px 8px', background: 'rgba(99,102,241,0.15)', color: 'var(--accent-sky)', borderRadius: 'var(--radius-full)', border: '1px solid rgba(99,102,241,0.3)', fontWeight: '700' }}>
-            Size: {normalizedArray.length} Elements
+          <span style={{ fontSize: '0.66rem', padding: '2px 7px', background: 'var(--accent-violet-tint)', color: 'var(--accent-violet)', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-accent)', fontWeight: '700' }}>
+            Size: {normalizedArray.length} elements
           </span>
         </div>
 
-        {/* Legend Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', fontSize: 'var(--text-xs)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#a855f7' }}></span>
-            <span style={{ color: '#c084fc' }}>Max Element</span>
+        {/* 4 Semantic State Legend Badges */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.72rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-current)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Current</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-comparing)' }}></span>
-            <span style={{ color: '#fbbf24' }}>Current (i)</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-target)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Target</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#64748b' }}></span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-visited)' }}></span>
             <span style={{ color: 'var(--text-muted)' }}>Visited</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-sorted)' }}></span>
-            <span style={{ color: '#34d399' }}>Sorted / Done</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-done)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Done</span>
           </div>
         </div>
       </div>
 
-      {/* Array Bars Ground Floor Baseline Stage */}
-      <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 'var(--space-xl)', padding: 'var(--space-lg)', background: 'rgba(0, 0, 0, 0.25)', borderRadius: 'var(--radius-md)', borderBottom: '2px solid var(--border-color)', overflowX: 'auto', overflowY: 'hidden' }}>
+      {/* Array Stage with Faint Horizontal Gridlines */}
+      <div 
+        style={{ 
+          flex: 1, 
+          width: '100%', 
+          display: 'flex', 
+          alignItems: 'flex-end', 
+          justifyContent: 'center', 
+          gap: '24px', 
+          padding: '20px', 
+          background: 'radial-gradient(ellipse at center, rgba(15, 23, 42, 0.6), rgba(9, 13, 22, 0.9)), repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255, 255, 255, 0.035) 35px, rgba(255, 255, 255, 0.035) 36px)', 
+          borderRadius: 'var(--radius-md)', 
+          border: '1px solid var(--border-default)', 
+          borderBottom: '2px solid var(--border-strong)', 
+          overflowX: 'auto', 
+          overflowY: 'hidden' 
+        }}
+      >
         {normalizedArray.map((el, idx) => {
           const colorInfo = getElementColor(el.state);
           const ratio = Math.abs(el.value) / maxVal;
-          const barPx = Math.max(18, Math.min(100, Math.round(ratio * 90)));
+          const barHeightPercent = Math.max(15, Math.min(85, Math.round(ratio * 75)));
 
           return (
-            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-xs)' }}>
-              {/* Value pill on top of bar */}
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
+            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: '6px', height: '100%' }}>
+              {/* Value label on top of bar */}
+              <span style={{ fontSize: '0.78rem', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
                 {el.value}
               </span>
 
-              {/* Bar sitting on baseline floor */}
+              {/* Bar proportional height */}
               <div
                 style={{
-                  width: '42px',
-                  height: `${barPx}px`,
-                  borderRadius: 'var(--radius-xs) var(--radius-xs) 2px 2px',
+                  width: '38px',
+                  height: `${barHeightPercent}%`,
+                  minHeight: '24px',
+                  borderRadius: 'var(--radius-sm) var(--radius-sm) 2px 2px',
                   background: colorInfo.bg,
-                  border: `2px solid ${colorInfo.border}`,
+                  border: `1.5px solid ${colorInfo.border}`,
                   boxShadow: colorInfo.glow,
-                  transition: 'all var(--motion-normal) var(--ease-standard)',
-                  flexShrink: 0
+                  transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               />
 
-              {/* Index label below bar */}
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: '600', lineHeight: '1' }}>
-                [{el.index}]
+              {/* Index label underneath bar */}
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)', fontWeight: '600' }}>
+                [{idx}]
               </span>
             </div>
           );

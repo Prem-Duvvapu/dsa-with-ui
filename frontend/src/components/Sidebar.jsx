@@ -236,25 +236,25 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                justify: 'space-between',
+                justifyContent: 'space-between',
                 gap: '4px',
                 padding: '7px 9px',
-                borderRadius: '8px',
-                border: !activeCategory ? '1px solid var(--accent-indigo)' : '1px solid var(--border-color)',
-                background: !activeCategory ? 'rgba(99, 102, 241, 0.22)' : 'rgba(255, 255, 255, 0.025)',
-                color: !activeCategory ? '#ffffff' : 'var(--text-secondary)',
-                fontSize: '0.75rem',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-default)',
+                borderLeft: !activeCategory ? '3px solid var(--accent-violet)' : '1px solid var(--border-default)',
+                background: !activeCategory ? 'var(--accent-violet-tint)' : 'rgba(255, 255, 255, 0.02)',
+                color: !activeCategory ? 'var(--text-primary)' : 'var(--text-secondary)',
+                fontSize: '0.74rem',
                 fontWeight: !activeCategory ? '700' : '500',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                boxShadow: !activeCategory ? '0 0 10px rgba(99, 102, 241, 0.3)' : 'none'
+                transition: 'all 0.15s ease'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px', overflow: 'hidden' }}>
-                <Sparkles size={13} color={!activeCategory ? '#38bdf8' : 'var(--text-muted)'} />
+                <Sparkles size={13} color={!activeCategory ? 'var(--accent-violet)' : 'var(--text-muted)'} />
                 <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>All Topics</span>
               </div>
-              <span style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--text-muted)' }}>{problems.length}</span>
+              <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--text-muted)' }}>{problems.length}</span>
             </button>
 
             {categories.map((cat) => {
@@ -269,26 +269,26 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    justify: 'space-between',
+                    justifyContent: 'space-between',
                     gap: '4px',
                     padding: '7px 9px',
-                    borderRadius: '8px',
-                    border: isCatActive ? `1px solid ${cat.color}` : '1px solid var(--border-color)',
-                    background: isCatActive ? `${cat.color}25` : 'rgba(255, 255, 255, 0.025)',
-                    color: isCatActive ? '#ffffff' : 'var(--text-secondary)',
-                    fontSize: '0.75rem',
+                    borderRadius: 'var(--radius-sm)',
+                    border: '1px solid var(--border-default)',
+                    borderLeft: isCatActive ? '3px solid var(--accent-violet)' : '1px solid var(--border-default)',
+                    background: isCatActive ? 'var(--accent-violet-tint)' : 'rgba(255, 255, 255, 0.02)',
+                    color: isCatActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    fontSize: '0.74rem',
                     fontWeight: isCatActive ? '700' : '500',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: isCatActive ? `0 0 10px ${cat.color}35` : 'none'
+                    transition: 'all 0.15s ease'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', overflow: 'hidden' }}>
-                    <Icon size={13} color={isCatActive ? cat.color : 'var(--text-muted)'} />
+                    <Icon size={13} color={isCatActive ? 'var(--accent-violet)' : 'var(--text-muted)'} />
                     <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{cat.label}</span>
                   </div>
                   {count > 0 && (
-                    <span style={{ fontSize: '0.65rem', fontWeight: '700', color: isCatActive ? cat.color : 'var(--text-muted)' }}>
+                    <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--text-muted)' }}>
                       {count}
                     </span>
                   )}
@@ -302,7 +302,7 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
       {/* Problems List */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+          <span style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
             {activeCategory || 'All'} Problems ({filteredProblems.length})
           </span>
         </div>
@@ -318,34 +318,29 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    justify: 'space-between',
-                    padding: '9px 11px',
-                    borderRadius: '9px',
-                    border: isProblemActive ? '1px solid var(--accent-indigo)' : '1px solid rgba(255, 255, 255, 0.05)',
-                    background: isProblemActive ? 'rgba(99, 102, 241, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                    justifyContent: 'space-between',
+                    padding: '8px 10px',
+                    borderRadius: 'var(--radius-sm)',
+                    border: '1px solid var(--border-default)',
+                    borderLeft: isProblemActive ? '3px solid var(--accent-violet)' : '1px solid var(--border-default)',
+                    background: isProblemActive ? 'var(--accent-violet-tint)' : 'rgba(255, 255, 255, 0.02)',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: isProblemActive ? '0 0 10px rgba(99, 102, 241, 0.25)' : 'none'
+                    transition: 'all 0.15s ease'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '9px', overflow: 'hidden' }}>
-                    <PlayCircle size={15} color={isProblemActive ? 'var(--accent-purple)' : 'var(--text-muted)'} style={{ flexShrink: 0 }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+                    <PlayCircle size={14} color={isProblemActive ? 'var(--accent-violet)' : 'var(--text-muted)'} style={{ flexShrink: 0 }} />
                     <div style={{ overflow: 'hidden' }}>
-                      <div style={{ fontSize: '0.81rem', fontWeight: isProblemActive ? '700' : '500', color: isProblemActive ? '#ffffff' : 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <div style={{ fontSize: '0.78rem', fontWeight: isProblemActive ? '700' : '500', color: isProblemActive ? 'var(--text-primary)' : 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {prob.title}
                       </div>
-                      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <div style={{ fontSize: '0.66rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {prob.subcategory || prob.category}
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
-                    <span className={`badge ${getBadgeClass(prob.difficulty)}`}>
-                      {prob.difficulty}
-                    </span>
-                    <ChevronRight size={14} color="var(--text-muted)" />
-                  </div>
+                  <ChevronRight size={13} color="var(--text-muted)" style={{ flexShrink: 0 }} />
                 </div>
               );
             })
