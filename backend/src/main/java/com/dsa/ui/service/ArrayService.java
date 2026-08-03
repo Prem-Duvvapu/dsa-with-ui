@@ -2771,6 +2771,25 @@ public class ArrayService {
         return list;
     }
 
+    private List<ArrayElement> createSecondLargestArrayState(int[] arr, int currentIdx, int largestIdx, int secondLargestIdx) {
+        List<ArrayElement> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            String state = "default";
+            if (i == largestIdx) {
+                state = "pivot"; // Purple for Largest
+            } else if (i == secondLargestIdx) {
+                state = "sorted"; // Green for Second Largest
+            }
+            if (i == currentIdx && currentIdx != largestIdx && currentIdx != secondLargestIdx) {
+                state = "comparing"; // Orange for Current (i)
+            } else if (currentIdx != -1 && i < currentIdx && i != largestIdx && i != secondLargestIdx) {
+                state = "visited"; // Slate for Visited
+            }
+            list.add(new ArrayElement(i, arr[i], state));
+        }
+        return list;
+    }
+
     // ==================== 14 EASY ARRAY STEP GENERATORS ====================
 
     private List<ExecutionStep> generateLargestElementSteps() {
@@ -2797,23 +2816,29 @@ public class ArrayService {
     private List<ExecutionStep> generateSecondLargestElementSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] arr = {12, 35, 1, 10, 34, 1};
+        int largestIdx = 0;
+        int secondLargestIdx = -1;
         int largest = arr[0];
         int secondLargest = -1;
         int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Initialize largest = " + largest + ", secondLargest = -1", createArrayState(arr, 0, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", "0")));
+
+        steps.add(createStep(stepNum++, 3, "Initialize largest = arr[0] = " + largest + " (idx 0), secondLargest = -1", createSecondLargestArrayState(arr, 0, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", "0", "secondLargest", "-1", "secondLargestIdx", "-1", "i", "0")));
 
         for (int i = 1; i < arr.length; i++) {
-            steps.add(createStep(stepNum++, 5, "Inspect arr[" + i + "] = " + arr[i], createArrayState(arr, i, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]))));
+            steps.add(createStep(stepNum++, 5, "Inspect arr[" + i + "] = " + arr[i] + ". Compare with largest (" + largest + ") & secondLargest (" + (secondLargest == -1 ? "NONE" : secondLargest) + ").", createSecondLargestArrayState(arr, i, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx), "i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]))));
             if (arr[i] > largest) {
                 secondLargest = largest;
+                secondLargestIdx = largestIdx;
                 largest = arr[i];
-                steps.add(createStep(stepNum++, 7, "arr[" + i + "] > largest! secondLargest = " + secondLargest + ", largest = " + largest, createArrayState(arr, i, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", String.valueOf(i))));
+                largestIdx = i;
+                steps.add(createStep(stepNum++, 7, "arr[" + i + "] (" + arr[i] + ") > largest! Shift largest to secondLargest (" + secondLargest + " at idx " + secondLargestIdx + "), new largest = " + largest + " at idx " + largestIdx, createSecondLargestArrayState(arr, i, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx), "i", String.valueOf(i))));
             } else if (arr[i] < largest && arr[i] > secondLargest) {
                 secondLargest = arr[i];
-                steps.add(createStep(stepNum++, 9, "arr[" + i + "] between secondLargest and largest! secondLargest = " + secondLargest, createArrayState(arr, i, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", String.valueOf(i))));
+                secondLargestIdx = i;
+                steps.add(createStep(stepNum++, 9, "arr[" + i + "] (" + arr[i] + ") is between secondLargest & largest! New secondLargest = " + secondLargest + " at idx " + secondLargestIdx, createSecondLargestArrayState(arr, i, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx), "i", String.valueOf(i))));
             }
         }
-        steps.add(createStep(stepNum++, 12, "Completed scan! Largest = " + largest + ", Second Largest = " + secondLargest, createArrayState(arr, -1, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest))));
+        steps.add(createStep(stepNum++, 12, "Completed scan! Final Largest = " + largest + " (idx " + largestIdx + "), Second Largest = " + secondLargest + " (idx " + secondLargestIdx + ")", createSecondLargestArrayState(arr, -1, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx))));
         return steps;
     }
 
