@@ -57,13 +57,21 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
   const searchedProblems = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
     if (!q) return problems;
-    return problems.filter((p) => {
-      return (p.title && p.title.toLowerCase().includes(q)) ||
-        (p.id && p.id.toLowerCase().includes(q)) ||
-        (p.category && p.category.toLowerCase().includes(q)) ||
-        (p.subcategory && p.subcategory.toLowerCase().includes(q)) ||
-        (p.difficulty && p.difficulty.toLowerCase().includes(q));
-    });
+    
+    // 1. Primary: Match on title, ID, or subcategory for specific algorithm search
+    const titleMatches = problems.filter(p => 
+      (p.title && p.title.toLowerCase().includes(q)) ||
+      (p.id && p.id.toLowerCase().includes(q)) ||
+      (p.subcategory && p.subcategory.toLowerCase().includes(q))
+    );
+
+    if (titleMatches.length > 0) return titleMatches;
+
+    // 2. Secondary fallback: Match on category or difficulty if no title match
+    return problems.filter(p => 
+      (p.category && p.category.toLowerCase().includes(q)) ||
+      (p.difficulty && p.difficulty.toLowerCase().includes(q))
+    );
   }, [problems, searchQuery]);
 
   // Category problem count map updated dynamically with search results
@@ -76,11 +84,20 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
     return counts;
   }, [searchedProblems]);
 
-  // Final filtered problems list to display (category + search)
+  // Final filtered problems list to display (searches globally when searchQuery is present)
   const filteredProblems = useMemo(() => {
-    if (!activeCategory) return searchedProblems;
-    return searchedProblems.filter((p) => normalizeCategory(p.category) === activeCategory);
-  }, [searchedProblems, activeCategory]);
+    const q = searchQuery.toLowerCase().trim();
+    if (q) {
+      // When searching, if user clicked a specific category, respect category filter if it has matches
+      if (activeCategory) {
+        const catMatches = searchedProblems.filter((p) => normalizeCategory(p.category) === activeCategory);
+        if (catMatches.length > 0) return catMatches;
+      }
+      return searchedProblems; // Global search fallback
+    }
+    if (!activeCategory) return problems;
+    return problems.filter((p) => normalizeCategory(p.category) === activeCategory);
+  }, [problems, searchedProblems, activeCategory, searchQuery]);
 
   const getBadgeClass = (difficulty) => {
     switch (difficulty?.toLowerCase()) {
