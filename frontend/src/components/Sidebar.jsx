@@ -53,30 +53,34 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
     return cat;
   };
 
-  // Category problem count map
+  // Dynamic problem filtering based on search query
+  const searchedProblems = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return problems;
+    return problems.filter((p) => {
+      return (p.title && p.title.toLowerCase().includes(q)) ||
+        (p.id && p.id.toLowerCase().includes(q)) ||
+        (p.category && p.category.toLowerCase().includes(q)) ||
+        (p.subcategory && p.subcategory.toLowerCase().includes(q)) ||
+        (p.difficulty && p.difficulty.toLowerCase().includes(q));
+    });
+  }, [problems, searchQuery]);
+
+  // Category problem count map updated dynamically with search results
   const categoryCounts = useMemo(() => {
     const counts = {};
-    problems.forEach(p => {
+    searchedProblems.forEach(p => {
       const normCat = normalizeCategory(p.category);
       counts[normCat] = (counts[normCat] || 0) + 1;
     });
     return counts;
-  }, [problems]);
+  }, [searchedProblems]);
 
-  // Filter problems by active category and search query
+  // Final filtered problems list to display (category + search)
   const filteredProblems = useMemo(() => {
-    return problems.filter((p) => {
-      const normCat = normalizeCategory(p.category);
-      const matchesCategory = !activeCategory || normCat === activeCategory;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch = !q || 
-        (p.title && p.title.toLowerCase().includes(q)) ||
-        (p.category && p.category.toLowerCase().includes(q)) ||
-        (p.subcategory && p.subcategory.toLowerCase().includes(q)) ||
-        (p.difficulty && p.difficulty.toLowerCase().includes(q));
-      return matchesCategory && matchesSearch;
-    });
-  }, [problems, activeCategory, searchQuery]);
+    if (!activeCategory) return searchedProblems;
+    return searchedProblems.filter((p) => normalizeCategory(p.category) === activeCategory);
+  }, [searchedProblems, activeCategory]);
 
   const getBadgeClass = (difficulty) => {
     switch (difficulty?.toLowerCase()) {
@@ -307,8 +311,16 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
               );
             })
           ) : (
-            <div style={{ textAlign: 'center', padding: '20px 10px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-              No matching algorithms found for "{searchQuery}".
+            <div style={{ textAlign: 'center', padding: '20px 10px', color: 'var(--text-muted)', fontSize: '0.8rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+              <span>No matching algorithms in <strong>{activeCategory || 'catalog'}</strong> for "{searchQuery}".</span>
+              {activeCategory && searchedProblems.length > 0 && (
+                <button
+                  onClick={() => onSelectCategory(null)}
+                  style={{ fontSize: '0.75rem', padding: '4px 10px', background: 'var(--accent-indigo)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}
+                >
+                  Search across all {searchedProblems.length} matching algorithms
+                </button>
+              )}
             </div>
           )}
         </div>
