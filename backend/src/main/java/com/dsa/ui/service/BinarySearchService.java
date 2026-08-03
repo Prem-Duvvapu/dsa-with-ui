@@ -401,21 +401,24 @@ public class BinarySearchService {
         int target = 7, low = 0, high = nums.length - 1;
         int stepNum = 1;
 
-        steps.add(new ExecutionStep(stepNum++, 4, "Search X=7 in sorted array [1, 3, 5, 7, 9, 11, 13]. Initialize low = 0, high = 6.", List.of(), Map.of(0, "low", 6, "high"), List.of(), Map.of("target", "7"), "Array", null, createArrayState(nums, low, high, -1), null, null));
+        steps.add(new ExecutionStep(stepNum++, 4, "Binary Search: Search target X = 7 in sorted array [1, 3, 5, 7, 9, 11, 13]. Initialize low = 0 (val 1), high = 6 (val 13).", List.of(), Map.of(0, "low", 6, "high"), List.of(), Map.of("low", "0", "high", "6", "target", "7"), "Array", null, createBsArrayState(nums, low, high, -1, false), null, null));
 
         while (low <= high) {
             int mid = low + (high - low) / 2;
+            steps.add(new ExecutionStep(stepNum++, 6, String.format("Calculate mid = (%d + %d) / 2 = %d (nums[mid] = %d). Compare with target 7.", low, high, mid, nums[mid]), List.of(), Map.of(low, "low", high, "high", mid, "mid"), List.of(), Map.of("low", String.valueOf(low), "high", String.valueOf(high), "mid", String.valueOf(mid), "nums[mid]", String.valueOf(nums[mid]), "target", "7"), "Array", null, createBsArrayState(nums, low, high, mid, false), null, null));
+
             if (nums[mid] == target) {
-                steps.add(new ExecutionStep(stepNum++, 8, String.format("nums[mid=%d] == 7! Target 7 found at index %d!", mid, mid), List.of(), Map.of(mid, "mid"), List.of(), Map.of("Found Index", String.valueOf(mid)), "Array", null, createArrayState(nums, mid, mid, mid), null, null));
+                steps.add(new ExecutionStep(stepNum++, 8, String.format("nums[mid=%d] (%d) == target (7)! Target 7 MATCH FOUND at index %d!", mid, nums[mid], mid), List.of(), Map.of(mid, "mid"), List.of(), Map.of("Found Index", String.valueOf(mid), "target", "7"), "Array", null, createBsArrayState(nums, low, high, mid, true), null, null));
                 return steps;
             } else if (nums[mid] < target) {
-                steps.add(new ExecutionStep(stepNum++, 9, String.format("nums[mid=%d] (%d) < target (7). Move low = mid + 1 -> %d.", mid, nums[mid], mid + 1), List.of(), Map.of(mid, "mid"), List.of(), Map.of("target", "7"), "Array", null, createArrayState(nums, low, high, mid), null, null));
+                steps.add(new ExecutionStep(stepNum++, 9, String.format("nums[mid=%d] (%d) < target (7). Eliminate left search range [0..%d]. Move low = mid + 1 -> %d.", mid, nums[mid], mid, mid + 1), List.of(), Map.of(mid + 1, "low", high, "high"), List.of(), Map.of("low", String.valueOf(mid + 1), "high", String.valueOf(high), "target", "7"), "Array", null, createBsArrayState(nums, mid + 1, high, mid, false), null, null));
                 low = mid + 1;
             } else {
-                steps.add(new ExecutionStep(stepNum++, 10, String.format("nums[mid=%d] (%d) > target (7). Move high = mid - 1 -> %d.", mid, nums[mid], mid - 1), List.of(), Map.of(mid, "mid"), List.of(), Map.of("target", "7"), "Array", null, createArrayState(nums, low, high, mid), null, null));
+                steps.add(new ExecutionStep(stepNum++, 10, String.format("nums[mid=%d] (%d) > target (7). Eliminate right search range [%d..%d]. Move high = mid - 1 -> %d.", mid, nums[mid], mid, high, mid - 1), List.of(), Map.of(low, "low", mid - 1, "high"), List.of(), Map.of("low", String.valueOf(low), "high", String.valueOf(mid - 1), "target", "7"), "Array", null, createBsArrayState(nums, low, mid - 1, mid, false), null, null));
                 high = mid - 1;
             }
         }
+        steps.add(new ExecutionStep(stepNum++, 12, "Target 7 not found in sorted array. Return -1.", List.of(), Map.of(), List.of(), Map.of("result", "-1"), "Array", null, createBsArrayState(nums, -1, -1, -1, false), null, null));
         return steps;
     }
 
@@ -452,19 +455,26 @@ public class BinarySearchService {
     private List<ExecutionStep> generateMatrixMedianSteps() { return generateBs1dSteps(); }
 
     // Helpers
-    private List<ArrayElement> createSortedArray() { return createArrayState(new int[]{1, 3, 5, 7, 9, 11, 13}, -1, -1, -1); }
-    private List<ArrayElement> createDuplicateSortedArray() { return createArrayState(new int[]{1, 2, 2, 2, 3, 4, 5}, -1, -1, -1); }
-    private List<ArrayElement> createRotatedArray() { return createArrayState(new int[]{4, 5, 6, 7, 0, 1, 2}, -1, -1, -1); }
-    private List<ArrayElement> createRotatedDuplicateArray() { return createArrayState(new int[]{2, 5, 6, 0, 0, 1, 2}, -1, -1, -1); }
-    private List<ArrayElement> createSingleNonDuplicateArray() { return createArrayState(new int[]{1, 1, 2, 3, 3, 4, 4, 8, 8}, -1, -1, -1); }
-    private List<ArrayElement> createPeakArray() { return createArrayState(new int[]{1, 2, 1, 3, 5, 6, 4}, -1, -1, -1); }
+    private List<ArrayElement> createSortedArray() { return createBsArrayState(new int[]{1, 3, 5, 7, 9, 11, 13}, -1, -1, -1, false); }
+    private List<ArrayElement> createDuplicateSortedArray() { return createBsArrayState(new int[]{1, 2, 2, 2, 3, 4, 5}, -1, -1, -1, false); }
+    private List<ArrayElement> createRotatedArray() { return createBsArrayState(new int[]{4, 5, 6, 7, 0, 1, 2}, -1, -1, -1, false); }
+    private List<ArrayElement> createRotatedDuplicateArray() { return createBsArrayState(new int[]{2, 5, 6, 0, 0, 1, 2}, -1, -1, -1, false); }
+    private List<ArrayElement> createSingleNonDuplicateArray() { return createBsArrayState(new int[]{1, 1, 2, 3, 3, 4, 4, 8, 8}, -1, -1, -1, false); }
+    private List<ArrayElement> createPeakArray() { return createBsArrayState(new int[]{1, 2, 1, 3, 5, 6, 4}, -1, -1, -1, false); }
 
-    private List<ArrayElement> createArrayState(int[] vals, int low, int high, int mid) {
+    private List<ArrayElement> createBsArrayState(int[] vals, int low, int high, int mid, boolean isFound) {
         List<ArrayElement> list = new ArrayList<>();
         for (int i = 0; i < vals.length; i++) {
             String state = "default";
-            if (i == mid) state = "active";
-            else if (i == low || i == high) state = "comparing";
+            if (isFound && i == mid) {
+                state = "sorted"; // Emerald Green for Target Found!
+            } else if (i == mid) {
+                state = "pivot"; // Purple for Mid
+            } else if (i == low || i == high) {
+                state = "active"; // Sky Blue for Low & High pointers
+            } else if (low != -1 && high != -1 && (i < low || i > high)) {
+                state = "visited"; // Muted Slate for Eliminated Range
+            }
             list.add(new ArrayElement(i, vals[i], state));
         }
         return list;

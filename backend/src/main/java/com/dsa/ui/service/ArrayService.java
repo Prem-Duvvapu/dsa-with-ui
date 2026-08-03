@@ -2958,21 +2958,38 @@ public class ArrayService {
         return steps;
     }
 
+    private List<ArrayElement> createLinearSearchArrayState(int[] arr, int currentIdx, int foundIdx) {
+        List<ArrayElement> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            String state = "default";
+            if (i == foundIdx) {
+                state = "sorted"; // Emerald Green for Target Found!
+            } else if (i == currentIdx) {
+                state = "comparing"; // Amber Orange for Current (i)
+            } else if (currentIdx != -1 && i < currentIdx) {
+                state = "visited"; // Slate Muted for Visited
+            }
+            list.add(new ArrayElement(i, arr[i], state));
+        }
+        return list;
+    }
+
     private List<ExecutionStep> generateLinearSearchSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] arr = {1, 2, 3, 4, 5};
         int num = 4;
         int stepNum = 1;
-        steps.add(createStep(stepNum++, 2, "Start linear search for target = " + num, createArrayState(arr, -1, -1), Map.of("target", String.valueOf(num))));
+        steps.add(createStep(stepNum++, 2, "Start linear search for target X = " + num + " in array [1, 2, 3, 4, 5].", createLinearSearchArrayState(arr, -1, -1), Map.of("target", String.valueOf(num))));
 
         for (int i = 0; i < arr.length; i++) {
-            steps.add(createStep(stepNum++, 4, "Comparing arr[" + i + "] (" + arr[i] + ") == " + num, createArrayState(arr, i, -1), Map.of("i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]), "target", String.valueOf(num))));
             if (arr[i] == num) {
-                steps.add(createStep(stepNum++, 4, "Target element " + num + " found at index " + i + "!", createArrayState(arr, i, -1), Map.of("foundIndex", String.valueOf(i), "target", String.valueOf(num))));
+                steps.add(createStep(stepNum++, 4, "Comparing arr[" + i + "] (" + arr[i] + ") == target (" + num + ") -> Target element " + num + " MATCH FOUND at index " + i + "!", createLinearSearchArrayState(arr, i, i), Map.of("foundIndex", String.valueOf(i), "target", String.valueOf(num), "i", String.valueOf(i))));
                 return steps;
+            } else {
+                steps.add(createStep(stepNum++, 4, "Comparing arr[" + i + "] (" + arr[i] + ") != target (" + num + "). Continue search...", createLinearSearchArrayState(arr, i, -1), Map.of("i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]), "target", String.valueOf(num))));
             }
         }
-        steps.add(createStep(stepNum++, 6, "Target element " + num + " not found in array. Return -1.", createArrayState(arr, -1, -1), Map.of("foundIndex", "-1")));
+        steps.add(createStep(stepNum++, 6, "Target element " + num + " not found in array. Return -1.", createLinearSearchArrayState(arr, -1, -1), Map.of("foundIndex", "-1")));
         return steps;
     }
 
