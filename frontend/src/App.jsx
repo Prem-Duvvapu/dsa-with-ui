@@ -358,13 +358,13 @@ export default function App() {
         {/* Sidebar (Search & Explore Panel) */}
         {isSidebarOpen && (
           <div style={{
-            position: isMobileOrTablet ? 'absolute' : 'relative',
-            top: isMobileOrTablet ? 0 : 'auto',
-            left: isMobileOrTablet ? 0 : 'auto',
-            bottom: isMobileOrTablet ? 0 : 'auto',
-            zIndex: isMobileOrTablet ? 100 : 1,
-            height: isMobileOrTablet ? '100%' : 'auto',
-            boxShadow: isMobileOrTablet ? '0 0 40px rgba(0,0,0,0.8)' : 'none'
+            position: isMobile ? 'absolute' : 'relative',
+            top: isMobile ? 0 : 'auto',
+            left: isMobile ? 0 : 'auto',
+            bottom: isMobile ? 0 : 'auto',
+            zIndex: isMobile ? 100 : 1,
+            height: isMobile ? '100%' : 'auto',
+            boxShadow: isMobile ? '0 0 40px rgba(0,0,0,0.8)' : 'none'
           }}>
             <Sidebar
               problems={problems}
