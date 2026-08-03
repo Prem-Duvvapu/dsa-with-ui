@@ -23,7 +23,7 @@ public class ArrayServiceTest {
     public void testGetAllProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         assertNotNull(problems);
-        assertEquals(26, problems.size());
+        assertEquals(40, problems.size());
     }
 
     @Test

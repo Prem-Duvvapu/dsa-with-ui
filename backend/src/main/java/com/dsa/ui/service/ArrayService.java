@@ -24,6 +24,20 @@ public class ArrayService {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
+            case "largest-element": return generateLargestElementSteps();
+            case "second-largest-element": return generateSecondLargestElementSteps();
+            case "check-sorted-ii": return generateCheckSortedIISteps();
+            case "remove-duplicates-sorted": return generateRemoveDuplicatesSortedSteps();
+            case "left-rotate-one": return generateLeftRotateOneSteps();
+            case "left-rotate-k": return generateLeftRotateKSteps();
+            case "move-zeros-end": return generateMoveZerosEndSteps();
+            case "linear-search": return generateLinearSearchSteps();
+            case "union-sorted-arrays": return generateUnionSortedArraysSteps();
+            case "find-missing-number": return generateFindMissingNumberSteps();
+            case "max-consecutive-ones": return generateMaxConsecutiveOnesSteps();
+            case "single-number": return generateSingleNumberSteps();
+            case "longest-subarray-sum-k-positives": return generateLongestSubarraySumKPositivesSteps();
+            case "longest-subarray-sum-k": return generateLongestSubarraySumKSteps();
             case "two-sum": return generateTwoSumSteps();
             case "sort-0-1-2": return generateSort012Steps();
             case "majority-element": return generateMajorityElementSteps();
@@ -50,11 +64,396 @@ public class ArrayService {
             case "count-inversions": return generateCountInversionsSteps();
             case "reverse-pairs": return generateReversePairsSteps();
             case "max-product-subarray": return generateMaxProductSubarraySteps();
-            default: return generateTwoSumSteps();
+            default: return generateLargestElementSteps();
         }
     }
 
     private void initProblems() {
+        // 0.1 Largest Element
+        problems.put("largest-element", new ProblemDetail(
+            "largest-element", "Largest Element in an Array", "Arrays - Easy", "Arrays", "Easy",
+            "Find the largest element in an array using a single-pass linear scan.",
+            """
+            // Java Largest Element Solution
+            public int largest(int[] arr) {
+                int max = arr[0];
+                for (int i = 1; i < arr.length; i++) {
+                    if (arr[i] > max) {
+                        max = arr[i];
+                    }
+                }
+                return max;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{12, 35, 1, 10, 34, 1}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single pass traversal over array of length N.",
+                "Why O(N)? Inspects each array element exactly once.",
+                "O(1)", "Space Complexity: Auxiliary variables max and i require constant memory.",
+                "Why O(1)? In-place linear scan.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.2 Second Largest Element
+        problems.put("second-largest-element", new ProblemDetail(
+            "second-largest-element", "Second Largest Element in Array", "Arrays - Easy", "Arrays", "Easy",
+            "Find the second largest element in an array in single pass O(N) time without sorting.",
+            """
+            // Java Second Largest Element Solution
+            public int getSecondLargest(int[] arr) {
+                int largest = arr[0];
+                int secondLargest = -1;
+                for (int i = 1; i < arr.length; i++) {
+                    if (arr[i] > largest) {
+                        secondLargest = largest;
+                        largest = arr[i];
+                    } else if (arr[i] < largest && arr[i] > secondLargest) {
+                        secondLargest = arr[i];
+                    }
+                }
+                return secondLargest;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{12, 35, 1, 10, 34, 1}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single pass iteration updating largest and secondLargest.",
+                "Why O(N)? Eliminates sorting (O(N log N)) by tracking top two values dynamically.",
+                "O(1)", "Space Complexity: O(1) auxiliary space.",
+                "Why O(1)? Uses only two primitive scalar variables.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.3 Check if Array is Sorted II
+        problems.put("check-sorted-ii", new ProblemDetail(
+            "check-sorted-ii", "Check if Array is Sorted and Rotated", "Arrays - Easy", "Arrays", "Easy",
+            "Check if an array was originally sorted in non-decreasing order and then rotated.",
+            """
+            // Java Check Sorted & Rotated Solution (LeetCode 1752)
+            public boolean check(int[] nums) {
+                int count = 0;
+                int n = nums.length;
+                for (int i = 0; i < n; i++) {
+                    if (nums[i] > nums[(i + 1) % n]) {
+                        count++;
+                    }
+                }
+                return count <= 1;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{3, 4, 5, 1, 2}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single pass checking adjacent circular pairs (nums[i] > nums[(i+1)%n]).",
+                "Why O(N)? A sorted and rotated array has at most 1 drop point.",
+                "O(1)", "Space Complexity: O(1) auxiliary space.",
+                "Why O(1)? Only uses a counter variable.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.4 Remove Duplicates from Sorted Array
+        problems.put("remove-duplicates-sorted", new ProblemDetail(
+            "remove-duplicates-sorted", "Remove Duplicates from Sorted Array", "Arrays - Easy", "Arrays", "Easy",
+            "Remove duplicate elements in-place from a sorted array and return the number of unique elements.",
+            """
+            // Java Remove Duplicates 2-Pointer (LeetCode 26)
+            public int removeDuplicates(int[] nums) {
+                int i = 0;
+                for (int j = 1; j < nums.length; j++) {
+                    if (nums[j] != nums[i]) {
+                        i++;
+                        nums[i] = nums[j];
+                    }
+                }
+                return i + 1;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: 2-pointer scan where j moves from 1 to N-1.",
+                "Why O(N)? Each element is compared once.",
+                "O(1)", "Space Complexity: In-place array modification requiring O(1) extra memory.",
+                "Why O(1)? Rewrites unique elements at index i without extra arrays.", "Auxiliary Space: O(1)", "In-Place: O(1)"
+            ), "Array"
+        ));
+
+        // 0.5 Left Rotate Array by One
+        problems.put("left-rotate-one", new ProblemDetail(
+            "left-rotate-one", "Left Rotate Array by One Place", "Arrays - Easy", "Arrays", "Easy",
+            "Shift all elements of the array left by 1 position and place the first element at the end.",
+            """
+            // Java Left Rotate by 1 Place
+            public void rotateByOne(int[] arr) {
+                int temp = arr[0];
+                for (int i = 0; i < arr.length - 1; i++) {
+                    arr[i] = arr[i + 1];
+                }
+                arr[arr.length - 1] = temp;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{1, 2, 3, 4, 5}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single loop shifting N-1 elements to the left.",
+                "Why O(N)? Modifies elements sequentially in a single pass.",
+                "O(1)", "Space Complexity: In-place modification with temporary variable for first element.",
+                "Why O(1)? Uses 1 scalar temp variable.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.6 Left Rotate Array by K Places
+        problems.put("left-rotate-k", new ProblemDetail(
+            "left-rotate-k", "Left Rotate Array by K Places", "Arrays - Easy/Medium", "Arrays", "Easy",
+            "Rotate the array to the left by K steps using the optimal 3-step sub-array reversal technique.",
+            """
+            // Java Rotate by K Places Reversal Algorithm (LeetCode 189)
+            public void rotate(int[] nums, int k) {
+                int n = nums.length;
+                k = k % n;
+                reverse(nums, 0, k - 1);
+                reverse(nums, k, n - 1);
+                reverse(nums, 0, n - 1);
+            }
+            """,
+            null, null, null, createArrayState(new int[]{1, 2, 3, 4, 5, 6, 7}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Reversing 0..k-1, k..N-1, and 0..N-1 takes O(k) + O(N-k) + O(N) = O(2N) = O(N).",
+                "Why O(N)? 3 reversal steps process array elements twice in total.",
+                "O(1)", "Space Complexity: In-place reversal.",
+                "Why O(1)? No auxiliary temporary arrays created.", "Auxiliary Space: O(1)", "In-Place: O(1)"
+            ), "Array"
+        ));
+
+        // 0.7 Move Zeros to End
+        problems.put("move-zeros-end", new ProblemDetail(
+            "move-zeros-end", "Move Zeros to End", "Arrays - Easy", "Arrays", "Easy",
+            "Move all 0's to the end of the array while maintaining the relative order of non-zero elements.",
+            """
+            // Java Move Zeroes 2-Pointer (LeetCode 283)
+            public void moveZeroes(int[] nums) {
+                int j = -1;
+                for (int i = 0; i < nums.length; i++) {
+                    if (nums[i] == 0) { j = i; break; }
+                }
+                if (j == -1) return;
+                for (int i = j + 1; i < nums.length; i++) {
+                    if (nums[i] != 0) {
+                        int temp = nums[i]; nums[i] = nums[j]; nums[j] = temp;
+                        j++;
+                    }
+                }
+            }
+            """,
+            null, null, null, createArrayState(new int[]{0, 1, 0, 3, 12}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: 2-pointer single-pass traversal.",
+                "Why O(N)? Pointer j tracks first zero while pointer i scans non-zero elements.",
+                "O(1)", "Space Complexity: In-place swaps.",
+                "Why O(1)? Swaps elements within original array.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.8 Linear Search
+        problems.put("linear-search", new ProblemDetail(
+            "linear-search", "Linear Search", "Arrays - Easy", "Arrays", "Easy",
+            "Find index of target element in an unsorted or sorted array sequentially.",
+            """
+            // Java Linear Search
+            public int search(int[] arr, int num) {
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i] == num) return i;
+                }
+                return -1;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{1, 2, 3, 4, 5}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Scans elements from index 0 to N-1 until target is found.",
+                "Why O(N)? Worst case requires inspecting all N elements.",
+                "O(1)", "Space Complexity: O(1) auxiliary space.",
+                "Why O(1)? Constant memory.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.9 Union of Two Sorted Arrays
+        problems.put("union-sorted-arrays", new ProblemDetail(
+            "union-sorted-arrays", "Union of Two Sorted Arrays", "Arrays - Easy", "Arrays", "Easy",
+            "Find the union of two sorted arrays containing unique elements in sorted order.",
+            """
+            // Java Union of Sorted Arrays 2-Pointer Merge
+            public List<Integer> findUnion(int[] a, int[] b) {
+                List<Integer> union = new ArrayList<>();
+                int i = 0, j = 0;
+                while (i < a.length && j < b.length) {
+                    if (a[i] <= b[j]) {
+                        if (union.isEmpty() || union.get(union.size() - 1) != a[i]) union.add(a[i]);
+                        i++;
+                    } else {
+                        if (union.isEmpty() || union.get(union.size() - 1) != b[j]) union.add(b[j]);
+                        j++;
+                    }
+                }
+                while (i < a.length) {
+                    if (union.isEmpty() || union.get(union.size() - 1) != a[i]) union.add(a[i]);
+                    i++;
+                }
+                while (j < b.length) {
+                    if (union.isEmpty() || union.get(union.size() - 1) != b[j]) union.add(b[j]);
+                    j++;
+                }
+                return union;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{1, 1, 2, 3, 4, 5}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N1 + N2)", "Time Complexity: Dual pointer merge scanning both arrays simultaneously.",
+                "Why O(N1 + N2)? Advances index i or j at each step.",
+                "O(N1 + N2)", "Space Complexity: O(N1 + N2) auxiliary space for union result list.",
+                "Why O(N1 + N2)? Stores unique merged elements.", "Auxiliary Space: O(N1 + N2)", "Output List: O(N1 + N2)"
+            ), "Array"
+        ));
+
+        // 0.10 Find Missing Number
+        problems.put("find-missing-number", new ProblemDetail(
+            "find-missing-number", "Find Missing Number", "Arrays - Easy", "Arrays", "Easy",
+            "Find the single missing number in an array containing N distinct numbers in range [0, N].",
+            """
+            // Java Find Missing Number Sum Formula (LeetCode 268)
+            public int missingNumber(int[] nums) {
+                int n = nums.length;
+                int expectedSum = n * (n + 1) / 2;
+                int actualSum = 0;
+                for (int num : nums) {
+                    actualSum += num;
+                }
+                return expectedSum - actualSum;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{3, 0, 1}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single loop summing up array elements.",
+                "Why O(N)? Uses Gauss sum formula N*(N+1)/2.",
+                "O(1)", "Space Complexity: O(1) auxiliary space.",
+                "Why O(1)? Uses 2 integer variables (expectedSum, actualSum).", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.11 Max Consecutive Ones
+        problems.put("max-consecutive-ones", new ProblemDetail(
+            "max-consecutive-ones", "Maximum Consecutive Ones", "Arrays - Easy", "Arrays", "Easy",
+            "Find the maximum number of consecutive 1's in a binary array.",
+            """
+            // Java Max Consecutive Ones (LeetCode 485)
+            public int findMaxConsecutiveOnes(int[] nums) {
+                int maxCount = 0, count = 0;
+                for (int i = 0; i < nums.length; i++) {
+                    if (nums[i] == 1) {
+                        count++;
+                        maxCount = Math.max(maxCount, count);
+                    } else {
+                        count = 0;
+                    }
+                }
+                return maxCount;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{1, 1, 0, 1, 1, 1}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single pass inspecting each binary element.",
+                "Why O(N)? Increments count for 1 and resets for 0.",
+                "O(1)", "Space Complexity: O(1) auxiliary variables.",
+                "Why O(1)? Constant scalar memory.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.12 Single Number
+        problems.put("single-number", new ProblemDetail(
+            "single-number", "Find Number Appears Once, Others Twice", "Arrays - Easy", "Arrays", "Easy",
+            "Find the element that appears exactly once in an array where every other element appears twice.",
+            """
+            // Java Single Number Bitwise XOR (LeetCode 136)
+            public int singleNumber(int[] nums) {
+                int xorSum = 0;
+                for (int num : nums) {
+                    xorSum ^= num;
+                }
+                return xorSum;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{4, 1, 2, 1, 2}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single pass XORing all elements together.",
+                "Why O(N)? Bitwise XOR property a ^ a = 0 cancels out paired numbers.",
+                "O(1)", "Space Complexity: O(1) auxiliary space.",
+                "Why O(1)? Single accumulator variable xorSum.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.13 Longest Subarray with Sum K (Positives)
+        problems.put("longest-subarray-sum-k-positives", new ProblemDetail(
+            "longest-subarray-sum-k-positives", "Longest Subarray with Sum K (Positives)", "Arrays - Easy/Medium", "Arrays", "Easy",
+            "Find the length of the longest subarray having sum equal to K in an array of positive integers using 2-pointer sliding window.",
+            """
+            // Java Longest Subarray Sum K Sliding Window (Positive Numbers)
+            public int getLongestSubarray(int[] a, long k) {
+                int left = 0, right = 0;
+                long sum = a[0];
+                int maxLen = 0;
+                int n = a.length;
+                while (right < n) {
+                    while (left <= right && sum > k) {
+                        sum -= a[left];
+                        left++;
+                    }
+                    if (sum == k) {
+                        maxLen = Math.max(maxLen, right - left + 1);
+                    }
+                    right++;
+                    if (right < n) sum += a[right];
+                }
+                return maxLen;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{1, 2, 3, 1, 1, 1, 1, 4, 2, 3}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(2N) = O(N)", "Time Complexity: Two pointers left and right move forward at most N steps.",
+                "Why O(N)? Each element is added once by right and subtracted once by left.",
+                "O(1)", "Space Complexity: O(1) sliding window boundaries.",
+                "Why O(1)? No auxiliary data structures needed for positive numbers.", "Auxiliary Space: O(1)", "Output: O(1)"
+            ), "Array"
+        ));
+
+        // 0.14 Longest Subarray with Sum K (Positives & Negatives)
+        problems.put("longest-subarray-sum-k", new ProblemDetail(
+            "longest-subarray-sum-k", "Longest Subarray with Sum K (Positives & Negatives)", "Arrays - Medium", "Arrays", "Medium",
+            "Find length of longest subarray with sum K in array containing positive and negative numbers using Prefix Sum & HashMap.",
+            """
+            // Java Longest Subarray Sum K Prefix Sum + HashMap
+            public int getLongestSubarray(int[] a, long k) {
+                Map<Long, Integer> preSumMap = new HashMap<>();
+                long sum = 0;
+                int maxLen = 0;
+                for (int i = 0; i < a.length; i++) {
+                    sum += a[i];
+                    if (sum == k) maxLen = Math.max(maxLen, i + 1);
+                    long rem = sum - k;
+                    if (preSumMap.containsKey(rem)) {
+                        int len = i - preSumMap.get(rem);
+                        maxLen = Math.max(maxLen, len);
+                    }
+                    if (!preSumMap.containsKey(sum)) {
+                        preSumMap.put(sum, i);
+                    }
+                }
+                return maxLen;
+            }
+            """,
+            null, null, null, createArrayState(new int[]{-1, 2, 3, -2, 1}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)", "Time Complexity: Single pass updating prefix sums and HashMap lookup.",
+                "Why O(N)? HashMap lookup takes O(1) average time.",
+                "O(N)", "Space Complexity: O(N) space for prefix sum HashMap.",
+                "Why O(N)? In worst case, stores N distinct prefix sums.", "Auxiliary Space: O(N) HashMap", "Output: O(1)"
+            ), "Array"
+        ));
+
         // 1. Two Sum
         problems.put("two-sum", new ProblemDetail(
             "two-sum", "Two Sum", "Arrays - Easy/Medium", "Arrays", "Easy",
@@ -2345,5 +2744,364 @@ public class ArrayService {
             list.add(new ArrayElement(i, vals[i], state));
         }
         return list;
+    }
+
+    private ExecutionStep createStep(int stepNum, int line, String desc, List<ArrayElement> arrayState, Map<String, String> vars) {
+        return new ExecutionStep(
+            stepNum, line, desc,
+            List.of(), Map.of(), List.of(), vars,
+            "Array", null, arrayState, null, null
+        );
+    }
+
+    private List<ArrayElement> createSearchArrayState(int[] arr, int currentIdx, int maxIdx) {
+        List<ArrayElement> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            String state = "default";
+            if (i == currentIdx) {
+                state = "comparing";
+            } else if (i == maxIdx) {
+                state = "sorted";
+            } else if (currentIdx != -1 && i < currentIdx) {
+                state = "visited";
+            }
+            list.add(new ArrayElement(i, arr[i], state));
+        }
+        return list;
+    }
+
+    // ==================== 14 EASY ARRAY STEP GENERATORS ====================
+
+    private List<ExecutionStep> generateLargestElementSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] arr = {12, 35, 1, 10, 34, 1};
+        int stepNum = 1;
+        int maxIdx = 0;
+        int max = arr[0];
+
+        steps.add(createStep(stepNum++, 3, "Initialize max = arr[0] = " + arr[0] + " at index 0.", createSearchArrayState(arr, 0, maxIdx), Map.of("max", String.valueOf(arr[0]), "maxIndex", "0", "i", "0")));
+
+        for (int i = 1; i < arr.length; i++) {
+            steps.add(createStep(stepNum++, 4, "Comparing arr[" + i + "] (" + arr[i] + ") with current max (" + max + " at index " + maxIdx + ")", createSearchArrayState(arr, i, maxIdx), Map.of("max", String.valueOf(max), "maxIndex", String.valueOf(maxIdx), "i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]))));
+            if (arr[i] > max) {
+                max = arr[i];
+                maxIdx = i;
+                steps.add(createStep(stepNum++, 5, "Found larger element! Update max = " + max + " at index " + maxIdx, createSearchArrayState(arr, i, maxIdx), Map.of("max", String.valueOf(max), "maxIndex", String.valueOf(maxIdx), "i", String.valueOf(i))));
+            }
+        }
+        steps.add(createStep(stepNum++, 8, "Completed linear scan. Largest element in array is " + max + " at index " + maxIdx, createSearchArrayState(arr, -1, maxIdx), Map.of("max", String.valueOf(max), "maxIndex", String.valueOf(maxIdx))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateSecondLargestElementSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] arr = {12, 35, 1, 10, 34, 1};
+        int largest = arr[0];
+        int secondLargest = -1;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 3, "Initialize largest = " + largest + ", secondLargest = -1", createArrayState(arr, 0, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", "0")));
+
+        for (int i = 1; i < arr.length; i++) {
+            steps.add(createStep(stepNum++, 5, "Inspect arr[" + i + "] = " + arr[i], createArrayState(arr, i, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]))));
+            if (arr[i] > largest) {
+                secondLargest = largest;
+                largest = arr[i];
+                steps.add(createStep(stepNum++, 7, "arr[" + i + "] > largest! secondLargest = " + secondLargest + ", largest = " + largest, createArrayState(arr, i, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", String.valueOf(i))));
+            } else if (arr[i] < largest && arr[i] > secondLargest) {
+                secondLargest = arr[i];
+                steps.add(createStep(stepNum++, 9, "arr[" + i + "] between secondLargest and largest! secondLargest = " + secondLargest, createArrayState(arr, i, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest), "i", String.valueOf(i))));
+            }
+        }
+        steps.add(createStep(stepNum++, 12, "Completed scan! Largest = " + largest + ", Second Largest = " + secondLargest, createArrayState(arr, -1, -1), Map.of("largest", String.valueOf(largest), "secondLargest", String.valueOf(secondLargest))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateCheckSortedIISteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = {3, 4, 5, 1, 2};
+        int n = nums.length;
+        int count = 0;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 3, "Initialize drop count = 0 for array length N = " + n, createArrayState(nums, -1, -1), Map.of("count", "0", "n", String.valueOf(n))));
+
+        for (int i = 0; i < n; i++) {
+            int nextIdx = (i + 1) % n;
+            steps.add(createStep(stepNum++, 5, "Comparing circular pair nums[" + i + "] (" + nums[i] + ") > nums[" + nextIdx + "] (" + nums[nextIdx] + ")", createArrayState(nums, i, nextIdx), Map.of("i", String.valueOf(i), "nextIdx", String.valueOf(nextIdx), "nums[i]", String.valueOf(nums[i]), "nums[nextIdx]", String.valueOf(nums[nextIdx]), "count", String.valueOf(count))));
+            if (nums[i] > nums[nextIdx]) {
+                count++;
+                steps.add(createStep(stepNum++, 6, "Drop detected! Incremented count = " + count, createArrayState(nums, i, nextIdx), Map.of("count", String.valueOf(count), "i", String.valueOf(i))));
+            }
+        }
+        boolean isSortedRotated = count <= 1;
+        steps.add(createStep(stepNum++, 9, "Total drop count = " + count + " (<= 1). Result: " + isSortedRotated, createArrayState(nums, -1, -1), Map.of("count", String.valueOf(count), "isSortedRotated", String.valueOf(isSortedRotated))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateRemoveDuplicatesSortedSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+        int i = 0;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 3, "Initialize unique end pointer i = 0 at nums[0] = " + nums[0], createArrayState(nums, 0, -1), Map.of("i", "0", "j", "1")));
+
+        for (int j = 1; j < nums.length; j++) {
+            steps.add(createStep(stepNum++, 5, "Comparing explorer nums[j=" + j + "] (" + nums[j] + ") with unique nums[i=" + i + "] (" + nums[i] + ")", createArrayState(nums, i, j), Map.of("i", String.valueOf(i), "j", String.valueOf(j), "nums[i]", String.valueOf(nums[i]), "nums[j]", String.valueOf(nums[j]))));
+            if (nums[j] != nums[i]) {
+                i++;
+                nums[i] = nums[j];
+                steps.add(createStep(stepNum++, 7, "New unique element " + nums[j] + " found! Placed at nums[i=" + i + "]", createArrayState(nums, i, j), Map.of("i", String.valueOf(i), "j", String.valueOf(j), "placedValue", String.valueOf(nums[i]))));
+            }
+        }
+        int uniqueCount = i + 1;
+        steps.add(createStep(stepNum++, 10, "Deduplication complete. Number of unique elements = " + uniqueCount, createArrayState(nums, 0, i), Map.of("uniqueCount", String.valueOf(uniqueCount))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateLeftRotateOneSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] arr = {1, 2, 3, 4, 5};
+        int temp = arr[0];
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 3, "Store first element temp = arr[0] = " + temp, createArrayState(arr, 0, -1), Map.of("temp", String.valueOf(temp))));
+
+        for (int i = 0; i < arr.length - 1; i++) {
+            arr[i] = arr[i + 1];
+            steps.add(createStep(stepNum++, 5, "Shift element left: arr[" + i + "] = arr[" + (i + 1) + "] (" + arr[i] + ")", createArrayState(arr, i, i + 1), Map.of("i", String.valueOf(i), "temp", String.valueOf(temp))));
+        }
+        arr[arr.length - 1] = temp;
+        steps.add(createStep(stepNum++, 7, "Place saved temp (" + temp + ") at last index arr[" + (arr.length - 1) + "]", createArrayState(arr, arr.length - 1, -1), Map.of("temp", String.valueOf(temp))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateLeftRotateKSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = {1, 2, 3, 4, 5, 6, 7};
+        int n = nums.length;
+        int k = 3 % n;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 4, "Normalize k = 3 % " + n + " = " + k, createArrayState(nums, -1, -1), Map.of("k", String.valueOf(k), "n", String.valueOf(n))));
+
+        // Step 1: Reverse 0..k-1
+        reverseArrayRange(nums, 0, k - 1);
+        steps.add(createStep(stepNum++, 5, "Step 1: Reverse first K elements (indices 0.." + (k - 1) + ")", createRangeArrayState(nums, 0, k - 1), Map.of("k", String.valueOf(k))));
+
+        // Step 2: Reverse k..n-1
+        reverseArrayRange(nums, k, n - 1);
+        steps.add(createStep(stepNum++, 6, "Step 2: Reverse remaining elements (indices " + k + ".." + (n - 1) + ")", createRangeArrayState(nums, k, n - 1), Map.of("k", String.valueOf(k))));
+
+        // Step 3: Reverse 0..n-1
+        reverseArrayRange(nums, 0, n - 1);
+        steps.add(createStep(stepNum++, 7, "Step 3: Reverse entire array (indices 0.." + (n - 1) + ")", createRangeArrayState(nums, 0, n - 1), Map.of("k", String.valueOf(k))));
+        return steps;
+    }
+
+    private void reverseArrayRange(int[] arr, int start, int end) {
+        while (start < end) {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    private List<ExecutionStep> generateMoveZerosEndSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = {0, 1, 0, 3, 12};
+        int j = -1;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 3, "Find first zero index j", createArrayState(nums, -1, -1), Map.of("j", "-1")));
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                j = i;
+                break;
+            }
+        }
+        steps.add(createStep(stepNum++, 5, "First zero found at index j = " + j, createArrayState(nums, j, -1), Map.of("j", String.valueOf(j))));
+
+        for (int i = j + 1; i < nums.length; i++) {
+            steps.add(createStep(stepNum++, 7, "Inspecting nums[i=" + i + "] = " + nums[i], createArrayState(nums, j, i), Map.of("j", String.valueOf(j), "i", String.valueOf(i), "nums[i]", String.valueOf(nums[i]))));
+            if (nums[i] != 0) {
+                int temp = nums[i]; nums[i] = nums[j]; nums[j] = temp;
+                steps.add(createStep(stepNum++, 9, "Swapped non-zero nums[" + i + "] with zero at nums[" + j + "]", createArrayState(nums, j, i), Map.of("j", String.valueOf(j), "i", String.valueOf(i))));
+                j++;
+            }
+        }
+        steps.add(createStep(stepNum++, 12, "Moved all zeroes to the end of the array successfully!", createArrayState(nums, -1, -1), Map.of("j", String.valueOf(j))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateLinearSearchSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] arr = {1, 2, 3, 4, 5};
+        int num = 4;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 2, "Start linear search for target = " + num, createArrayState(arr, -1, -1), Map.of("target", String.valueOf(num))));
+
+        for (int i = 0; i < arr.length; i++) {
+            steps.add(createStep(stepNum++, 4, "Comparing arr[" + i + "] (" + arr[i] + ") == " + num, createArrayState(arr, i, -1), Map.of("i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]), "target", String.valueOf(num))));
+            if (arr[i] == num) {
+                steps.add(createStep(stepNum++, 4, "Target element " + num + " found at index " + i + "!", createArrayState(arr, i, -1), Map.of("foundIndex", String.valueOf(i), "target", String.valueOf(num))));
+                return steps;
+            }
+        }
+        steps.add(createStep(stepNum++, 6, "Target element " + num + " not found in array. Return -1.", createArrayState(arr, -1, -1), Map.of("foundIndex", "-1")));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateUnionSortedArraysSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] a = {1, 1, 2, 3, 4, 5};
+        int[] b = {2, 3, 4, 4, 5, 6};
+        List<Integer> union = new ArrayList<>();
+        int i = 0, j = 0;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 4, "Initialize pointers i = 0 (arr A) and j = 0 (arr B)", createArrayState(a, 0, -1), Map.of("i", "0", "j", "0", "union", union.toString())));
+
+        while (i < a.length && j < b.length) {
+            steps.add(createStep(stepNum++, 6, "Comparing a[i=" + i + "] (" + a[i] + ") and b[j=" + j + "] (" + b[j] + ")", createArrayState(a, i, -1), Map.of("i", String.valueOf(i), "j", String.valueOf(j), "a[i]", String.valueOf(a[i]), "b[j]", String.valueOf(b[j]), "union", union.toString())));
+            if (a[i] <= b[j]) {
+                if (union.isEmpty() || union.get(union.size() - 1) != a[i]) {
+                    union.add(a[i]);
+                    steps.add(createStep(stepNum++, 8, "Added unique element " + a[i] + " from arr A to union", createArrayState(a, i, -1), Map.of("union", union.toString(), "i", String.valueOf(i))));
+                }
+                i++;
+            } else {
+                if (union.isEmpty() || union.get(union.size() - 1) != b[j]) {
+                    union.add(b[j]);
+                    steps.add(createStep(stepNum++, 11, "Added unique element " + b[j] + " from arr B to union", createArrayState(b, j, -1), Map.of("union", union.toString(), "j", String.valueOf(j))));
+                }
+                j++;
+            }
+        }
+        while (i < a.length) {
+            if (union.isEmpty() || union.get(union.size() - 1) != a[i]) union.add(a[i]);
+            i++;
+        }
+        while (j < b.length) {
+            if (union.isEmpty() || union.get(union.size() - 1) != b[j]) union.add(b[j]);
+            j++;
+        }
+        steps.add(createStep(stepNum++, 20, "Union merge complete! Resulting Union = " + union, createArrayState(a, -1, -1), Map.of("finalUnion", union.toString())));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateFindMissingNumberSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = {3, 0, 1};
+        int n = nums.length;
+        int expectedSum = n * (n + 1) / 2;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 4, "N = " + n + ". Expected sum for [0.." + n + "] = " + n + "*(" + (n + 1) + ")/2 = " + expectedSum, createArrayState(nums, -1, -1), Map.of("N", String.valueOf(n), "expectedSum", String.valueOf(expectedSum))));
+
+        int actualSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            actualSum += nums[i];
+            steps.add(createStep(stepNum++, 7, "Add nums[" + i + "] (" + nums[i] + ") to actualSum -> " + actualSum, createArrayState(nums, i, -1), Map.of("actualSum", String.valueOf(actualSum), "i", String.valueOf(i))));
+        }
+        int missing = expectedSum - actualSum;
+        steps.add(createStep(stepNum++, 9, "Missing Number = expectedSum (" + expectedSum + ") - actualSum (" + actualSum + ") = " + missing, createArrayState(nums, -1, -1), Map.of("missing", String.valueOf(missing))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateMaxConsecutiveOnesSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = {1, 1, 0, 1, 1, 1};
+        int maxCount = 0, count = 0;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 3, "Initialize count = 0, maxCount = 0", createArrayState(nums, -1, -1), Map.of("count", "0", "maxCount", "0")));
+
+        for (int i = 0; i < nums.length; i++) {
+            steps.add(createStep(stepNum++, 5, "Inspecting nums[" + i + "] = " + nums[i], createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "val", String.valueOf(nums[i]), "count", String.valueOf(count), "maxCount", String.valueOf(maxCount))));
+            if (nums[i] == 1) {
+                count++;
+                maxCount = Math.max(maxCount, count);
+                steps.add(createStep(stepNum++, 7, "Element is 1! Incremented count = " + count + ", maxCount = " + maxCount, createArrayState(nums, i, -1), Map.of("count", String.valueOf(count), "maxCount", String.valueOf(maxCount))));
+            } else {
+                count = 0;
+                steps.add(createStep(stepNum++, 9, "Element is 0! Reset current streak count = 0", createArrayState(nums, i, -1), Map.of("count", "0", "maxCount", String.valueOf(maxCount))));
+            }
+        }
+        steps.add(createStep(stepNum++, 12, "Scan complete! Maximum consecutive ones = " + maxCount, createArrayState(nums, -1, -1), Map.of("maxConsecutiveOnes", String.valueOf(maxCount))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateSingleNumberSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = {4, 1, 2, 1, 2};
+        int xorSum = 0;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 3, "Initialize xorSum = 0", createArrayState(nums, -1, -1), Map.of("xorSum", "0")));
+
+        for (int i = 0; i < nums.length; i++) {
+            int prevXor = xorSum;
+            xorSum ^= nums[i];
+            steps.add(createStep(stepNum++, 5, "xorSum = " + prevXor + " ^ nums[" + i + "] (" + nums[i] + ") = " + xorSum, createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "num", String.valueOf(nums[i]), "xorSum", String.valueOf(xorSum))));
+        }
+        steps.add(createStep(stepNum++, 7, "Bitwise XOR cancellation complete. Single number that appears once = " + xorSum, createArrayState(nums, -1, -1), Map.of("singleNumber", String.valueOf(xorSum))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateLongestSubarraySumKPositivesSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] a = {1, 2, 3, 1, 1, 1, 1, 4, 2, 3};
+        long k = 3;
+        int left = 0, right = 0;
+        long sum = a[0];
+        int maxLen = 0;
+        int n = a.length;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 4, "Initialize sliding window left = 0, right = 0, sum = " + sum + ", K = " + k, createRangeArrayState(a, left, right), Map.of("left", "0", "right", "0", "sum", String.valueOf(sum), "maxLen", "0", "K", String.valueOf(k))));
+
+        while (right < n) {
+            while (left <= right && sum > k) {
+                sum -= a[left];
+                left++;
+                steps.add(createStep(stepNum++, 8, "Window sum (" + sum + ") > K (" + k + ")! Shrink window left -> " + left, createRangeArrayState(a, left, right), Map.of("left", String.valueOf(left), "right", String.valueOf(right), "sum", String.valueOf(sum), "maxLen", String.valueOf(maxLen))));
+            }
+            if (sum == k) {
+                maxLen = Math.max(maxLen, right - left + 1);
+                steps.add(createStep(stepNum++, 11, "Window sum == K (" + k + ")! Subarray [" + left + ".." + right + "] length = " + (right - left + 1) + ", maxLen = " + maxLen, createRangeArrayState(a, left, right), Map.of("left", String.valueOf(left), "right", String.valueOf(right), "sum", String.valueOf(sum), "maxLen", String.valueOf(maxLen))));
+            }
+            right++;
+            if (right < n) {
+                sum += a[right];
+                steps.add(createStep(stepNum++, 14, "Expand window right -> " + right + ", updated sum = " + sum, createRangeArrayState(a, left, right), Map.of("left", String.valueOf(left), "right", String.valueOf(right), "sum", String.valueOf(sum), "maxLen", String.valueOf(maxLen))));
+            }
+        }
+        steps.add(createStep(stepNum++, 17, "Sliding window scan complete! Longest subarray length with sum K=" + k + " is " + maxLen, createArrayState(a, -1, -1), Map.of("maxLen", String.valueOf(maxLen))));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateLongestSubarraySumKSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] a = {-1, 2, 3, -2, 1};
+        long k = 3;
+        Map<Long, Integer> preSumMap = new HashMap<>();
+        long sum = 0;
+        int maxLen = 0;
+        int stepNum = 1;
+        steps.add(createStep(stepNum++, 4, "Initialize prefix sum = 0, maxLen = 0, preSumMap", createArrayState(a, -1, -1), Map.of("sum", "0", "maxLen", "0", "K", String.valueOf(k))));
+
+        for (int i = 0; i < a.length; i++) {
+            sum += a[i];
+            steps.add(createStep(stepNum++, 7, "Add a[" + i + "] (" + a[i] + ") -> prefix sum = " + sum, createArrayState(a, i, -1), Map.of("i", String.valueOf(i), "val", String.valueOf(a[i]), "sum", String.valueOf(sum), "maxLen", String.valueOf(maxLen))));
+            if (sum == k) {
+                maxLen = Math.max(maxLen, i + 1);
+                steps.add(createStep(stepNum++, 8, "Prefix sum == K (" + k + ")! Subarray [0.." + i + "] length = " + (i + 1) + ", maxLen = " + maxLen, createRangeArrayState(a, 0, i), Map.of("maxLen", String.valueOf(maxLen))));
+            }
+            long rem = sum - k;
+            if (preSumMap.containsKey(rem)) {
+                int len = i - preSumMap.get(rem);
+                maxLen = Math.max(maxLen, len);
+                steps.add(createStep(stepNum++, 11, "Found remainder rem = " + rem + " in map at index " + preSumMap.get(rem) + "! Subarray length = " + len + ", maxLen = " + maxLen, createRangeArrayState(a, preSumMap.get(rem) + 1, i), Map.of("rem", String.valueOf(rem), "len", String.valueOf(len), "maxLen", String.valueOf(maxLen))));
+            }
+            if (!preSumMap.containsKey(sum)) {
+                preSumMap.put(sum, i);
+            }
+        }
+        steps.add(createStep(stepNum++, 17, "Prefix sum scan complete! Longest subarray length with sum K=" + k + " is " + maxLen, createArrayState(a, -1, -1), Map.of("maxLen", String.valueOf(maxLen))));
+        return steps;
     }
 }

@@ -21,17 +21,17 @@ export default function ArrayCanvas({ problem, currentStep }) {
   const getElementColor = (state) => {
     switch (state) {
       case 'pivot':
-        return { bg: 'linear-gradient(180deg, #6366f1, #4f46e5)', border: '#818cf8', glow: '0 0 14px rgba(99, 102, 241, 0.8)' };
+        return { bg: 'linear-gradient(180deg, var(--state-pivot), #7e22ce)', border: '#c084fc', glow: 'var(--glow-indigo)' };
       case 'comparing':
       case 'active':
-        return { bg: 'linear-gradient(180deg, #f59e0b, #d97706)', border: '#fbbf24', glow: '0 0 14px rgba(245, 158, 11, 0.7)' };
+        return { bg: 'linear-gradient(180deg, var(--state-comparing), #d97706)', border: '#fbbf24', glow: 'var(--glow-amber)' };
       case 'swapping':
-        return { bg: 'linear-gradient(180deg, #f97316, #ea580c)', border: '#fb923c', glow: 'var(--glow-orange)' };
+        return { bg: 'linear-gradient(180deg, var(--state-swapping), #dc2626)', border: '#f87171', glow: 'var(--glow-rose)' };
       case 'sorted':
       case 'visited':
-        return { bg: 'linear-gradient(180deg, #10b981, #059669)', border: '#34d399', glow: 'var(--glow-emerald)' };
+        return { bg: 'linear-gradient(180deg, var(--state-sorted), #059669)', border: '#34d399', glow: 'var(--glow-emerald)' };
       default:
-        return { bg: 'linear-gradient(180deg, #334155, #1e293b)', border: '#475569', glow: 'none' };
+        return { bg: 'linear-gradient(180deg, #334155, #1e293b)', border: 'var(--border-color)', glow: 'none' };
     }
   };
 
@@ -39,51 +39,51 @@ export default function ArrayCanvas({ problem, currentStep }) {
   const maxVal = Math.max(...values, 1);
 
   return (
-    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
+    <div style={{ flex: 1, padding: 'var(--space-md) var(--space-xl)', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
       {/* Visualizer Header Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-sm)', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
           <BarChart2 size={18} color="var(--accent-indigo)" />
-          <span style={{ fontSize: '0.88rem', fontWeight: '800', letterSpacing: '0.4px' }}>
+          <span style={{ fontSize: 'var(--text-base)', fontWeight: '800', letterSpacing: '0.4px', color: 'var(--text-primary)' }}>
             Array & Bar Visualizer
           </span>
-          <span style={{ fontSize: '0.7rem', padding: '2px 8px', background: 'rgba(99,102,241,0.15)', color: '#818cf8', borderRadius: '12px', border: '1px solid rgba(99,102,241,0.3)', fontWeight: '700' }}>
+          <span style={{ fontSize: 'var(--text-xs)', padding: '2px 8px', background: 'rgba(99,102,241,0.15)', color: 'var(--accent-sky)', borderRadius: 'var(--radius-full)', border: '1px solid rgba(99,102,241,0.3)', fontWeight: '700' }}>
             Size: {normalizedArray.length} Elements
           </span>
         </div>
 
         {/* Legend Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.73rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', fontSize: 'var(--text-xs)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-sorted)' }}></span>
             <span style={{ color: '#34d399' }}>Sorted</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#6366f1' }}></span>
-            <span style={{ color: '#818cf8' }}>Active / Target</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-indigo)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Active / Target</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#f59e0b' }}></span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-comparing)' }}></span>
             <span style={{ color: '#fbbf24' }}>Comparing</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#f97316' }}></span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--state-swapping)' }}></span>
             <span style={{ color: '#fb923c' }}>Swapping</span>
           </div>
         </div>
       </div>
 
       {/* Array Bars Ground Floor Baseline Stage */}
-      <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '20px', padding: '16px 20px 16px 20px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', borderBottom: '2px solid rgba(255, 255, 255, 0.12)', overflowX: 'auto', overflowY: 'hidden' }}>
+      <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 'var(--space-xl)', padding: 'var(--space-lg)', background: 'rgba(0, 0, 0, 0.25)', borderRadius: 'var(--radius-md)', borderBottom: '2px solid var(--border-color)', overflowX: 'auto', overflowY: 'hidden' }}>
         {normalizedArray.map((el, idx) => {
           const colorInfo = getElementColor(el.state);
           const ratio = Math.abs(el.value) / maxVal;
           const barPx = Math.max(18, Math.min(100, Math.round(ratio * 90)));
 
           return (
-            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
+            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-xs)' }}>
               {/* Value pill on top of bar */}
-              <span style={{ fontSize: '0.84rem', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
                 {el.value}
               </span>
 
@@ -92,17 +92,17 @@ export default function ArrayCanvas({ problem, currentStep }) {
                 style={{
                   width: '42px',
                   height: `${barPx}px`,
-                  borderRadius: '6px 6px 3px 3px',
+                  borderRadius: 'var(--radius-xs) var(--radius-xs) 2px 2px',
                   background: colorInfo.bg,
                   border: `2px solid ${colorInfo.border}`,
                   boxShadow: colorInfo.glow,
-                  transition: 'all 0.3s ease',
+                  transition: 'all var(--motion-normal) var(--ease-standard)',
                   flexShrink: 0
                 }}
               />
 
               {/* Index label below bar */}
-              <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: '600', lineHeight: '1' }}>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: '600', lineHeight: '1' }}>
                 [{el.index}]
               </span>
             </div>

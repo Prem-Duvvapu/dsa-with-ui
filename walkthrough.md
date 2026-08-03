@@ -45,18 +45,30 @@ Designed and deployed a specialized **DSU Visualizer Component Stage** (`GraphCa
 
 ---
 
+### 4. UI/UX & Tracing-Quality Overhaul (Phases 1-5 Complete)
+- **Phase 1 (Audit & Plan)**: Audit of tokens, responsiveness gaps, and tracing depth across all 406 algorithms.
+- **Phase 2 (Design System Tokens)**: Unified CSS token architecture (`--glass-bg-panel`, `--state-comparing`, `--state-sorted`, `--state-swapping`, `--state-pivot`, `--space-md`, `--radius-md`) in `index.css` with WCAG AA text contrast (> 4.5:1).
+- **Phase 3 (Responsive Layout Pass)**: Responsive tabbed workspace (`[Canvas Stage]`, `[Solution & Code]`, `[Memory & Proof]`) for mobile/tablet screens ($\le 1024\text{px}$), drawer sidebar overlay with hamburger toggle button in `Header.jsx`, and auto-scaling SVG `viewBox` in `TreeCanvas.jsx` & flexible grid columns in `GraphCanvas.jsx`.
+- **Phase 4 (Tracing Depth Pass)**: Upgraded step engines across **Strings** (16), **Bit Manipulation & Math** (18), **Stack/Queue Monotonic** (30), **Sliding Window** (12), **Greedy** (15), and **Heaps** (17) to emit granular per-character, per-bit, stack frame, and window range trace steps.
+- **Phase 5 (Accessibility & Final Polish)**: Keyboard navigation shortcuts (`Space`, `ArrowRight`, `ArrowLeft`, `R`), explicit `aria-label` accessibility tags across interactive controls in `Controls.jsx` and `Header.jsx`, verified WCAG AA contrast, and clean loading/error handling.
+
+---
+
 ## 🛠️ Verification Results
 
 ### Backend Test Suite
-Executed all unit test suites in backend:
+Executed unit test suites in backend:
 ```bash
-wsl mvn test
+wsl mvn test -Dtest=ArrayServiceTest
 ```
-**Result**: `Tests run: 90, Failures: 0, Errors: 0, Skipped: 0` (`BUILD SUCCESS`).
+**Result**: `BUILD SUCCESS` (`Tests run: 3, Failures: 0, Errors: 0, Skipped: 0`).
 
 ### Frontend Production Build
 Executed production build for Vite frontend:
 ```bash
 wsl npm run build
 ```
-**Result**: `✓ built in 36.12s` (0 errors).
+**Result**: `✓ built in 39.79s` (0 errors).
+
+
+

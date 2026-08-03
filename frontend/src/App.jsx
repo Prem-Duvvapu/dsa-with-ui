@@ -192,6 +192,21 @@ export default function App() {
     }
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 1024);
+  const [activeTab, setActiveTab] = useState('canvas'); // 'canvas' | 'code' | 'diagnostics'
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+      if (window.innerWidth > 1024) {
+        setIsSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleSelectCategory = (cat) => {
     setActiveCategory(cat);
   };
@@ -199,9 +214,13 @@ export default function App() {
   const handleSelectProblem = (id) => {
     setActiveProblemId(id);
     fetchProblemDetailsAndSteps(id);
+    if (viewportWidth <= 1024) {
+      setIsSidebarOpen(false);
+    }
   };
 
   const currentStep = steps[currentStepIndex] || null;
+  const isMobileOrTablet = viewportWidth <= 1024;
 
   const renderCanvas = () => {
     if (!activeProblem) return null;
@@ -222,64 +241,129 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', overflow: 'hidden', background: 'var(--bg-dark)' }}>
-      <Header problem={activeProblem} totalProblems={problems.length} />
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', overflow: 'hidden', background: 'var(--bg-primary)' }}>
+      <Header 
+        problem={activeProblem} 
+        totalProblems={problems.length} 
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
+      />
 
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: '10px 12px', gap: '12px' }}>
-        <Sidebar
-          problems={problems}
-          activeProblemId={activeProblemId}
-          activeCategory={activeCategory}
-          onSelectCategory={handleSelectCategory}
-          onSelectProblem={handleSelectProblem}
-        />
+      {/* Main Container */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: 'var(--space-sm) var(--space-md)', gap: 'var(--space-md)', position: 'relative' }}>
+        {/* Sidebar (Responsive Desktop / Mobile Drawer) */}
+        {isSidebarOpen && (
+          <div style={{
+            position: isMobileOrTablet ? 'absolute' : 'relative',
+            top: isMobileOrTablet ? 0 : 'auto',
+            left: isMobileOrTablet ? 0 : 'auto',
+            bottom: isMobileOrTablet ? 0 : 'auto',
+            zIndex: isMobileOrTablet ? 100 : 1,
+            height: isMobileOrTablet ? '100%' : 'auto',
+            boxShadow: isMobileOrTablet ? '0 0 40px rgba(0,0,0,0.8)' : 'none'
+          }}>
+            <Sidebar
+              problems={problems}
+              activeProblemId={activeProblemId}
+              activeCategory={activeCategory}
+              onSelectCategory={handleSelectCategory}
+              onSelectProblem={handleSelectProblem}
+            />
+          </div>
+        )}
 
-        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', overflow: 'hidden' }}>
-          {/* Top Main Visualizer Box with Canvas Stage & Pinned Controls */}
-          <div className="glass-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
-            {/* Visualizer Canvas Area */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
-              {loading ? (
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
-                  <RefreshCw size={24} className="spin" />
-                  <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
-                </div>
-              ) : (
-                renderCanvas()
-              )}
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)', overflow: 'hidden' }}>
+          {/* Mobile / Tablet Tab Selector Bar */}
+          {isMobileOrTablet && (
+            <div className="glass-panel" style={{ display: 'flex', padding: '4px', gap: '4px', flexShrink: 0 }}>
+              <button 
+                onClick={() => setActiveTab('canvas')}
+                className={`btn ${activeTab === 'canvas' ? 'btn-primary' : 'btn-secondary'}`} 
+                style={{ flex: 1, padding: '6px 10px', fontSize: '0.78rem', justifyContent: 'center' }}
+              >
+                🎨 Canvas Stage
+              </button>
+              <button 
+                onClick={() => setActiveTab('code')}
+                className={`btn ${activeTab === 'code' ? 'btn-primary' : 'btn-secondary'}`} 
+                style={{ flex: 1, padding: '6px 10px', fontSize: '0.78rem', justifyContent: 'center' }}
+              >
+                💻 Solution & Code
+              </button>
+              <button 
+                onClick={() => setActiveTab('diagnostics')}
+                className={`btn ${activeTab === 'diagnostics' ? 'btn-primary' : 'btn-secondary'}`} 
+                style={{ flex: 1, padding: '6px 10px', fontSize: '0.78rem', justifyContent: 'center' }}
+              >
+                📊 Memory & Proof
+              </button>
             </div>
+          )}
 
-            {/* Pinned Execution Controls Toolbar */}
-            <Controls
-              isPlaying={isPlaying}
-              currentStepIndex={currentStepIndex}
-              totalSteps={steps.length}
-              speed={speed}
-              onPlayPause={() => setIsPlaying(prev => !prev)}
-              onStepNext={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
-              onStepPrev={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
-              onStepSelect={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
-              onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
-              onSpeedChange={setSpeed}
-              stepDescription={currentStep?.description}
-            />
-          </div>
+          {/* Desktop Layout OR Active Tab View */}
+          {(!isMobileOrTablet || activeTab === 'canvas') && (
+            <div className="glass-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+              {/* Visualizer Canvas Area */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+                {loading ? (
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
+                    <RefreshCw size={24} className="spin" />
+                    <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
+                  </div>
+                ) : (
+                  renderCanvas()
+                )}
+              </div>
 
-          {/* Bottom Diagnostics Dashboard (3 Equal Columns) */}
-          <div style={{ height: '220px', minHeight: '220px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: '10px', overflow: 'hidden', flexShrink: 0 }}>
-            <DataStructurePanel 
-              currentStep={currentStep} 
-              dsType={activeProblem?.dsType || (activeProblem?.category?.includes('Graph') ? 'Queue' : 'Stack')} 
-            />
-            <CodeViewer 
-              problem={activeProblem} 
-              currentStep={currentStep} 
-            />
-            <ComplexityPanel 
-              complexity={activeProblem?.complexity} 
-              problem={activeProblem}
-            />
-          </div>
+              {/* Pinned Execution Controls Toolbar */}
+              <Controls
+                isPlaying={isPlaying}
+                currentStepIndex={currentStepIndex}
+                totalSteps={steps.length}
+                speed={speed}
+                onPlayPause={() => setIsPlaying(prev => !prev)}
+                onStepNext={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
+                onStepPrev={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
+                onStepSelect={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
+                onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
+                onSpeedChange={setSpeed}
+                stepDescription={currentStep?.description}
+              />
+            </div>
+          )}
+
+          {/* Code Viewer View for Mobile/Tablet */}
+          {isMobileOrTablet && activeTab === 'code' && (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+              <CodeViewer problem={activeProblem} currentStep={currentStep} />
+            </div>
+          )}
+
+          {/* Diagnostics View for Mobile/Tablet */}
+          {isMobileOrTablet && activeTab === 'diagnostics' && (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', overflowY: 'auto' }}>
+              <DataStructurePanel currentStep={currentStep} dsType={activeProblem?.dsType || 'Array'} />
+              <ComplexityPanel complexity={activeProblem?.complexity} problem={activeProblem} />
+            </div>
+          )}
+
+          {/* Desktop 3-Column Bottom Diagnostics Dashboard */}
+          {!isMobileOrTablet && (
+            <div style={{ height: '220px', minHeight: '220px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: 'var(--space-md)', overflow: 'hidden', flexShrink: 0 }}>
+              <DataStructurePanel 
+                currentStep={currentStep} 
+                dsType={activeProblem?.dsType || (activeProblem?.category?.includes('Graph') ? 'Queue' : 'Stack')} 
+              />
+              <CodeViewer 
+                problem={activeProblem} 
+                currentStep={currentStep} 
+              />
+              <ComplexityPanel 
+                complexity={activeProblem?.complexity} 
+                problem={activeProblem}
+              />
+            </div>
+          )}
         </main>
       </div>
     </div>

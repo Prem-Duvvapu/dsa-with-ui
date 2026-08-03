@@ -50,8 +50,8 @@ export default function TreeCanvas({ problem, currentStep }) {
         </div>
       </div>
 
-      <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflow: 'hidden' }}>
-        <svg width="100%" height="320" viewBox="0 0 360 300" style={{ overflow: 'visible' }}>
+      <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '260px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.25)', borderRadius: 'var(--radius-md)', overflow: 'hidden', padding: 'var(--space-md)' }}>
+        <svg width="100%" height="100%" viewBox="0 0 360 300" preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible', maxHeight: '100%' }}>
           {/* Render Parent-Child Connecting Lines */}
           {treeNodes.map((node) => {
             const leftChild = treeNodes.find((n) => n.id === node.leftId);

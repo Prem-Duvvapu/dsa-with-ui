@@ -158,12 +158,14 @@ export default function GraphCanvas({ problem, currentStep }) {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: `repeat(${gridState[0].length}, ${isSudoku ? '36px' : isChessboard ? '70px' : '55px'})`,
-              gap: isSudoku ? '2px' : '6px',
-              padding: '16px',
+              gridTemplateColumns: `repeat(${gridState[0].length}, minmax(${isSudoku ? '24px' : isChessboard ? '44px' : '36px'}, 1fr))`,
+              gap: isSudoku ? '2px' : 'var(--space-xs)',
+              padding: 'var(--space-md)',
               background: isSudoku ? '#0f172a' : 'transparent',
-              borderRadius: '12px',
-              border: isSudoku ? '2px solid #334155' : 'none'
+              borderRadius: 'var(--radius-md)',
+              border: isSudoku ? '2px solid #334155' : 'none',
+              maxWidth: '100%',
+              overflow: 'auto'
             }}
           >
             {gridState.map((row, rIdx) =>
@@ -175,48 +177,52 @@ export default function GraphCanvas({ problem, currentStep }) {
                     <div
                       key={`queen-${rIdx}-${cIdx}`}
                       style={{
-                        width: '70px',
-                        height: '70px',
-                        borderRadius: '8px',
+                        width: '100%',
+                        aspectRatio: '1',
+                        minWidth: '44px',
+                        minHeight: '44px',
+                        borderRadius: 'var(--radius-xs)',
                         background: val === 1 ? 'rgba(16, 185, 129, 0.35)' : isLightSquare ? '#334155' : '#1e293b',
-                        border: val === 1 ? '2px solid #34d399' : '1px solid rgba(255, 255, 255, 0.08)',
+                        border: val === 1 ? '2px solid #34d399' : '1px solid var(--border-color)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
                         position: 'relative',
-                        transition: 'all 0.3s ease',
-                        boxShadow: val === 1 ? '0 0 18px rgba(16, 185, 129, 0.5)' : 'none'
+                        transition: 'all var(--motion-normal) var(--ease-standard)',
+                        boxShadow: val === 1 ? 'var(--glow-emerald)' : 'none'
                       }}
                     >
                       {val === 1 ? (
-                        <Crown size={28} color="#fbbf24" style={{ filter: 'drop-shadow(0 0 8px #f59e0b)' }} />
+                        <Crown size={24} color="#fbbf24" style={{ filter: 'drop-shadow(0 0 8px #f59e0b)' }} />
                       ) : (
-                        <span style={{ fontSize: '0.75rem', color: '#64748b' }}>({rIdx},{cIdx})</span>
+                        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>({rIdx},{cIdx})</span>
                       )}
                     </div>
                   );
                 }
 
                 if (isSudoku) {
-                  const borderRight = (cIdx + 1) % 3 === 0 && cIdx !== 8 ? '2px solid #6366f1' : '1px solid #334155';
-                  const borderBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8 ? '2px solid #6366f1' : '1px solid #334155';
+                  const borderRight = (cIdx + 1) % 3 === 0 && cIdx !== 8 ? '2px solid var(--accent-indigo)' : '1px solid #334155';
+                  const borderBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8 ? '2px solid var(--accent-indigo)' : '1px solid #334155';
 
                   return (
                     <div
                       key={`sudoku-${rIdx}-${cIdx}`}
                       style={{
-                        width: '36px',
-                        height: '36px',
+                        width: '100%',
+                        aspectRatio: '1',
+                        minWidth: '24px',
+                        minHeight: '24px',
                         background: val !== 0 ? 'rgba(99, 102, 241, 0.25)' : '#1e293b',
                         borderRight,
                         borderBottom,
-                        color: val !== 0 ? '#ffffff' : '#475569',
+                        color: val !== 0 ? '#ffffff' : 'var(--text-muted)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         fontWeight: '800',
-                        fontSize: '0.95rem'
+                        fontSize: 'var(--text-sm)'
                       }}
                     >
                       {val !== 0 ? val : '.'}

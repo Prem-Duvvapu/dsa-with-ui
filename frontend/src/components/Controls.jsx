@@ -32,25 +32,26 @@ export default function Controls({
             onChange={(e) => onStepSelect && onStepSelect(Number(e.target.value))}
             className="step-scrubber-slider"
             title="Drag to jump to any step in the complete execution trace"
+            aria-label="Execution step timeline scrubber"
             style={{ flex: 1 }}
           />
         </div>
 
         {/* Control Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <button className="btn btn-secondary" onClick={onReset} title="Reset to Start (Shortcut: R)" style={{ padding: '5px 10px', fontSize: '0.8rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
+          <button className="btn btn-secondary" onClick={onReset} title="Reset to Start (Shortcut: R)" aria-label="Reset execution to start" style={{ padding: '5px 10px', fontSize: 'var(--text-xs)' }}>
             <RotateCcw size={14} /> Reset
           </button>
 
-          <button className="btn btn-secondary" onClick={onStepPrev} disabled={currentStepIndex <= 0} title="Previous Step (Shortcut: Left Arrow)" style={{ padding: '5px 10px', fontSize: '0.8rem', opacity: currentStepIndex <= 0 ? 0.4 : 1 }}>
+          <button className="btn btn-secondary" onClick={onStepPrev} disabled={currentStepIndex <= 0} title="Previous Step (Shortcut: Left Arrow)" aria-label="Step backward" style={{ padding: '5px 10px', fontSize: 'var(--text-xs)', opacity: currentStepIndex <= 0 ? 0.4 : 1 }}>
             <SkipBack size={15} /> Prev
           </button>
 
-          <button className={`btn ${isPlaying ? 'btn-danger' : 'btn-primary'}`} onClick={onPlayPause} title="Play / Pause (Shortcut: Spacebar)" style={{ padding: '5px 16px', minWidth: '90px', justifyContent: 'center', fontSize: '0.82rem' }}>
+          <button className={`btn ${isPlaying ? 'btn-danger' : 'btn-primary'}`} onClick={onPlayPause} title="Play / Pause (Shortcut: Spacebar)" aria-label={isPlaying ? "Pause execution playback" : "Start execution playback"} style={{ padding: '5px 16px', minWidth: '90px', justifyContent: 'center', fontSize: 'var(--text-sm)' }}>
             {isPlaying ? <><Pause size={16} /> Pause</> : <><Play size={16} /> Play</>}
           </button>
 
-          <button className="btn btn-secondary" onClick={onStepNext} disabled={currentStepIndex >= (totalSteps - 1)} title="Next Step (Shortcut: Right Arrow)" style={{ padding: '5px 10px', fontSize: '0.8rem', opacity: currentStepIndex >= (totalSteps - 1) ? 0.4 : 1 }}>
+          <button className="btn btn-secondary" onClick={onStepNext} disabled={currentStepIndex >= (totalSteps - 1)} title="Next Step (Shortcut: Right Arrow)" aria-label="Step forward" style={{ padding: '5px 10px', fontSize: 'var(--text-xs)', opacity: currentStepIndex >= (totalSteps - 1) ? 0.4 : 1 }}>
             Next <SkipForward size={15} />
           </button>
         </div>

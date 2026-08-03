@@ -126,20 +126,75 @@ public class StackQueueService {
     }
 
     // Step Generators
+    private ExecutionStep createStackStep(int stepNum, int line, String desc, List<String> stackState, List<ArrayElement> arrayState, Map<String, String> vars) {
+        return new ExecutionStep(
+            stepNum, line, desc,
+            stackState, Map.of(), List.of(), vars,
+            "Stack", null, arrayState, null, null
+        );
+    }
+
     private List<ExecutionStep> generateBalancedParenthesesSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] vals = new int[]{1, 2, 2, 1};
-        steps.add(new ExecutionStep(1, 4, "Balanced Parentheses: Input string s = \"()[]{}\". Initialize empty stack.", List.of(), Map.of(), List.of(), Map.of("stack", "[]"), "Stack", null, createArrayState(vals, -1, -1), null, null));
-        steps.add(new ExecutionStep(2, 6, "Process '(': Push '(' onto stack. Stack: ['('].", List.of("("), Map.of(), List.of(), Map.of("top", "("), "Stack", null, createArrayState(vals, 0, -1), null, null));
-        steps.add(new ExecutionStep(3, 8, "Process ')': Match top '('! Pop '('. Stack: [].", List.of(), Map.of(), List.of(), Map.of("popped", "("), "Stack", null, createArrayState(vals, 1, -1), null, null));
-        steps.add(new ExecutionStep(4, 12, "Balanced Parentheses Complete! Stack is empty -> Return TRUE.", List.of(), Map.of(), List.of(), Map.of("Result", "TRUE"), "Stack", null, createArrayState(vals, -1, -1), null, null));
+        int stepNum = 1;
+        steps.add(createStackStep(stepNum++, 4, "Balanced Parentheses: Input string s = \"()[]{}\". Initialize empty stack.", List.of(), createArrayState(vals, -1, -1), Map.of("stack", "[]")));
+        steps.add(createStackStep(stepNum++, 6, "Process '(': Push '(' onto stack. Stack: ['('].", List.of("("), createArrayState(vals, 0, -1), Map.of("top", "(")));
+        steps.add(createStackStep(stepNum++, 8, "Process ')': Match top '('! Pop '('. Stack: [].", List.of(), createArrayState(vals, 1, -1), Map.of("popped", "(")));
+        steps.add(createStackStep(stepNum++, 12, "Balanced Parentheses Complete! Stack is empty -> Return TRUE.", List.of(), createArrayState(vals, -1, -1), Map.of("Result", "TRUE")));
         return steps;
     }
 
-    private List<ExecutionStep> generateNextGreaterElementSteps() { return generateBalancedParenthesesSteps(); }
-    private List<ExecutionStep> generateTrappingRainwaterSteps() { return generateBalancedParenthesesSteps(); }
-    private List<ExecutionStep> generateHistogramSteps() { return generateBalancedParenthesesSteps(); }
-    private List<ExecutionStep> generateLruCacheSteps() { return generateBalancedParenthesesSteps(); }
+    private List<ExecutionStep> generateNextGreaterElementSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] nums = new int[]{4, 5, 2, 10, 8};
+        int n = nums.length;
+        List<String> stack = new ArrayList<>();
+        int stepNum = 1;
+        steps.add(createStackStep(stepNum++, 4, "Next Greater Element: Scan right to left on [4, 5, 2, 10, 8]. Initialize Monotonic Decreasing Stack.", stack, createArrayState(nums, -1, -1), Map.of("nums", Arrays.toString(nums))));
+
+        for (int i = n - 1; i >= 0; i--) {
+            steps.add(createStackStep(stepNum++, 6, "i=" + i + " (nums[i]=" + nums[i] + "): Compare with stack top " + (stack.isEmpty() ? "EMPTY" : stack.get(stack.size() - 1)), new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "num", String.valueOf(nums[i]))));
+            while (!stack.isEmpty() && Integer.parseInt(stack.get(stack.size() - 1)) <= nums[i]) {
+                String popped = stack.remove(stack.size() - 1);
+                steps.add(createStackStep(stepNum++, 7, "Pop " + popped + " <= " + nums[i] + " from stack.", new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("popped", popped)));
+            }
+            String ngeVal = stack.isEmpty() ? "-1" : stack.get(stack.size() - 1);
+            steps.add(createStackStep(stepNum++, 8, "Next Greater Element for " + nums[i] + " = " + ngeVal, new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("NGE", ngeVal)));
+            stack.add(String.valueOf(nums[i]));
+            steps.add(createStackStep(stepNum++, 9, "Push " + nums[i] + " onto stack. Stack state: " + stack, new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("pushed", String.valueOf(nums[i]))));
+        }
+        steps.add(createStackStep(stepNum++, 12, "Next Greater Element Complete! Resulting NGE array: [5, 10, 10, -1, -1]", new ArrayList<>(stack), createArrayState(nums, -1, -1), Map.of("result", "[5, 10, 10, -1, -1]")));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateTrappingRainwaterSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] height = new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+        int stepNum = 1;
+        steps.add(createStackStep(stepNum++, 3, "Trapping Rainwater: Heights [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]. Compute trapped water.", List.of(), createArrayState(height, -1, -1), Map.of("water", "0")));
+        steps.add(createStackStep(stepNum++, 7, "Trapped water calculation complete! Total trapped water = 6 units.", List.of(), createArrayState(height, -1, -1), Map.of("trappedWater", "6")));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateHistogramSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] heights = new int[]{2, 1, 5, 6, 2, 3};
+        int stepNum = 1;
+        steps.add(createStackStep(stepNum++, 3, "Largest Rectangle in Histogram: Heights [2, 1, 5, 6, 2, 3]. Use Monotonic Stack.", List.of(), createArrayState(heights, -1, -1), Map.of("maxArea", "0")));
+        steps.add(createStackStep(stepNum++, 7, "Found maximum area rectangle at indices [2..3] (Heights 5 & 6) -> Max Area = 10 units sq.", List.of(), createArrayState(heights, 2, 3), Map.of("maxArea", "10")));
+        return steps;
+    }
+
+    private List<ExecutionStep> generateLruCacheSteps() {
+        List<ExecutionStep> steps = new ArrayList<>();
+        int[] keys = new int[]{1, 2, 3, 4};
+        int stepNum = 1;
+        steps.add(createStackStep(stepNum++, 3, "LRU Cache (Capacity = 2): Put(1,1), Put(2,2). Cache: [2=2, 1=1].", List.of("2", "1"), createArrayState(keys, 0, 1), Map.of("cache", "{2=2, 1=1}")));
+        steps.add(createStackStep(stepNum++, 6, "Get(1): Cache Hit! Move key 1 to MRU head. Cache: [1=1, 2=2].", List.of("1", "2"), createArrayState(keys, 0, 1), Map.of("cache", "{1=1, 2=2}")));
+        steps.add(createStackStep(stepNum++, 9, "Put(3,3): Capacity full! Evict LRU key 2. Insert 3. Cache: [3=3, 1=1].", List.of("3", "1"), createArrayState(keys, 2, 0), Map.of("evicted", "2", "cache", "{3=3, 1=1}")));
+        return steps;
+    }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {
         List<ArrayElement> list = new ArrayList<>();
