@@ -7,9 +7,11 @@ import ArrayCanvas from './components/ArrayCanvas';
 import LinkedListCanvas from './components/LinkedListCanvas';
 import RecursionTreeCanvas from './components/RecursionTreeCanvas';
 import DataStructurePanel from './components/DataStructurePanel';
+import CallStackPanel from './components/CallStackPanel';
 import CodeViewer from './components/CodeViewer';
 import ComplexityPanel from './components/ComplexityPanel';
 import Controls from './components/Controls';
+import LiveTraceTicker from './components/LiveTraceTicker';
 import { RefreshCw } from 'lucide-react';
 
 export default function App() {
@@ -175,7 +177,6 @@ export default function App() {
       } else if (fetchedProblem && fetchedProblem.executionSteps && fetchedProblem.executionSteps.length > 0) {
         setSteps(fetchedProblem.executionSteps);
       } else {
-        // Safe fallback step
         setSteps([{
           stepIndex: 1,
           lineNumber: 1,
@@ -249,9 +250,9 @@ export default function App() {
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
       />
 
-      {/* Main Container */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: 'var(--space-sm) var(--space-md)', gap: 'var(--space-md)', position: 'relative' }}>
-        {/* Sidebar (Responsive Desktop / Mobile Drawer) */}
+      {/* Main Workspace Container */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: '6px 12px', gap: '12px', position: 'relative' }}>
+        {/* Sidebar (Search & Explore Panel) */}
         {isSidebarOpen && (
           <div style={{
             position: isMobileOrTablet ? 'absolute' : 'relative',
@@ -272,7 +273,7 @@ export default function App() {
           </div>
         )}
 
-        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)', overflow: 'hidden' }}>
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden' }}>
           {/* Mobile / Tablet Tab Selector Bar */}
           {isMobileOrTablet && (
             <div className="glass-panel" style={{ display: 'flex', padding: '4px', gap: '4px', flexShrink: 0 }}>
@@ -281,54 +282,61 @@ export default function App() {
                 className={`btn ${activeTab === 'canvas' ? 'btn-primary' : 'btn-secondary'}`} 
                 style={{ flex: 1, padding: '6px 10px', fontSize: '0.78rem', justifyContent: 'center' }}
               >
-                🎨 Canvas Stage
+                🎨 Visualizer & Stack
               </button>
               <button 
                 onClick={() => setActiveTab('code')}
                 className={`btn ${activeTab === 'code' ? 'btn-primary' : 'btn-secondary'}`} 
                 style={{ flex: 1, padding: '6px 10px', fontSize: '0.78rem', justifyContent: 'center' }}
               >
-                💻 Solution & Code
+                💻 Java Solution
               </button>
               <button 
                 onClick={() => setActiveTab('diagnostics')}
                 className={`btn ${activeTab === 'diagnostics' ? 'btn-primary' : 'btn-secondary'}`} 
                 style={{ flex: 1, padding: '6px 10px', fontSize: '0.78rem', justifyContent: 'center' }}
               >
-                📊 Memory & Proof
+                📊 Complexity
               </button>
             </div>
           )}
 
-          {/* Desktop Layout OR Active Tab View */}
+          {/* Desktop Top Row: Visualizer Panel (with Controls) + Top-Right Call Stack Panel */}
           {(!isMobileOrTablet || activeTab === 'canvas') && (
-            <div className="glass-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
-              {/* Visualizer Canvas Area */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
-                {loading ? (
-                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
-                    <RefreshCw size={24} className="spin" />
-                    <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
-                  </div>
-                ) : (
-                  renderCanvas()
-                )}
+            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: isMobileOrTablet ? '1fr' : '1fr 310px', gap: '10px', overflow: 'hidden', minHeight: 0 }}>
+              {/* Visualizer Panel */}
+              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+                  {loading ? (
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-indigo)', gap: '10px' }}>
+                      <RefreshCw size={24} className="spin" />
+                      <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
+                    </div>
+                  ) : (
+                    renderCanvas()
+                  )}
+                </div>
+
+                {/* Integrated Playback Controls */}
+                <Controls
+                  isPlaying={isPlaying}
+                  currentStepIndex={currentStepIndex}
+                  totalSteps={steps.length}
+                  speed={speed}
+                  onPlayPause={() => setIsPlaying(prev => !prev)}
+                  onStepNext={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
+                  onStepPrev={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
+                  onStepSelect={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
+                  onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
+                  onSpeedChange={setSpeed}
+                  stepDescription={currentStep?.description}
+                />
               </div>
 
-              {/* Pinned Execution Controls Toolbar */}
-              <Controls
-                isPlaying={isPlaying}
-                currentStepIndex={currentStepIndex}
-                totalSteps={steps.length}
-                speed={speed}
-                onPlayPause={() => setIsPlaying(prev => !prev)}
-                onStepNext={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
-                onStepPrev={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
-                onStepSelect={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
-                onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
-                onSpeedChange={setSpeed}
-                stepDescription={currentStep?.description}
-              />
+              {/* Top-Right Call Stack Panel */}
+              {!isMobileOrTablet && (
+                <CallStackPanel currentStep={currentStep} problem={activeProblem} />
+              )}
             </div>
           )}
 
@@ -342,30 +350,24 @@ export default function App() {
           {/* Diagnostics View for Mobile/Tablet */}
           {isMobileOrTablet && activeTab === 'diagnostics' && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', overflowY: 'auto' }}>
-              <DataStructurePanel currentStep={currentStep} dsType={activeProblem?.dsType || 'Array'} />
+              <CallStackPanel currentStep={currentStep} problem={activeProblem} />
               <ComplexityPanel complexity={activeProblem?.complexity} problem={activeProblem} />
             </div>
           )}
 
-          {/* Desktop 3-Column Bottom Diagnostics Dashboard */}
+          {/* Desktop Bottom Row: Call Stack Panel (bottom-left) + Java Solution (center) + Complexity (right) */}
           {!isMobileOrTablet && (
-            <div style={{ height: '220px', minHeight: '220px', display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: 'var(--space-md)', overflow: 'hidden', flexShrink: 0 }}>
-              <DataStructurePanel 
-                currentStep={currentStep} 
-                dsType={activeProblem?.dsType || (activeProblem?.category?.includes('Graph') ? 'Queue' : 'Stack')} 
-              />
-              <CodeViewer 
-                problem={activeProblem} 
-                currentStep={currentStep} 
-              />
-              <ComplexityPanel 
-                complexity={activeProblem?.complexity} 
-                problem={activeProblem}
-              />
+            <div style={{ height: '210px', minHeight: '210px', display: 'grid', gridTemplateColumns: '260px 1.4fr 1fr', gap: '10px', overflow: 'hidden', flexShrink: 0 }}>
+              <CallStackPanel currentStep={currentStep} problem={activeProblem} />
+              <CodeViewer problem={activeProblem} currentStep={currentStep} />
+              <ComplexityPanel complexity={activeProblem?.complexity} problem={activeProblem} />
             </div>
           )}
         </main>
       </div>
+
+      {/* Viewport Pinned Bottom Live Trace Ticker */}
+      <LiveTraceTicker stepDescription={currentStep?.description} />
     </div>
   );
 }

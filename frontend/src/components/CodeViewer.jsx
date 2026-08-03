@@ -6,13 +6,13 @@ export default function CodeViewer({ problem, currentStep }) {
   const lines = (problem?.javaCode || '').split('\n');
 
   return (
-    <div className="glass-panel" style={{ flex: 1, minHeight: '340px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '8px', borderBottom: '1px solid var(--border-color)' }}>
+    <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px solid var(--border-color)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Code2 size={18} color="var(--accent-indigo)" />
-          <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>Java Interview Solution</span>
+          <Code2 size={16} color="var(--accent-indigo)" />
+          <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#ffffff' }}>Java Interview Solution</span>
         </div>
-        <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-code)', color: 'var(--text-muted)' }}>
+        <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-code)', color: 'var(--text-muted)' }}>
           Active Line: <strong style={{ color: 'var(--accent-cyan)' }}>{activeLine || 'Idle'}</strong>
         </span>
       </div>
@@ -21,14 +21,13 @@ export default function CodeViewer({ problem, currentStep }) {
       <div style={{
         flex: 1,
         background: '#090d14',
-        borderRadius: '12px',
+        borderRadius: '8px',
         border: '1px solid rgba(255, 255, 255, 0.08)',
         overflowY: 'auto',
-        maxHeight: '320px',
         fontFamily: 'var(--font-code)',
-        fontSize: '0.83rem',
-        lineHeight: '1.6',
-        padding: '12px 0'
+        fontSize: '0.8rem',
+        lineHeight: '1.5',
+        padding: '8px 0'
       }}>
         {lines.map((lineText, idx) => {
           const lineNumber = idx + 1;

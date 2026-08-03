@@ -85,8 +85,8 @@ export default function Controls({
         </div>
 
         {/* Keyboard Hotkeys Badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.7rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 6px', borderRadius: '5px', border: '1px solid var(--border-color)' }}>
-          <span>⌨ [Space] [←] [→] [R]</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '5px', border: '1px solid var(--border-color)', fontWeight: '600' }}>
+          <span>[Space] [←] [→] [R]</span>
         </div>
       </div>
 

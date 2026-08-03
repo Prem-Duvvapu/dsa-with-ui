@@ -4,45 +4,37 @@ import { Cpu, HardDrive, HelpCircle, Zap } from 'lucide-react';
 export default function ComplexityPanel({ complexity: complexityProp, problem }) {
   const complexity = complexityProp || problem?.complexity;
 
-  if (!complexity) {
-    return (
-      <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '8px', borderBottom: '1px solid var(--border-color)' }}>
-          <Zap size={18} color="var(--accent-amber)" />
-          <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>Time & Space Complexity Proof</span>
-        </div>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '0.82rem', fontStyle: 'italic' }}>
-          Complexity analysis proof loading...
-        </div>
-      </div>
-    );
-  }
+  // Custom space complexity for sliding window or string problems if applicable
+  const timeBadge = complexity?.timeComplexity || 'O(N)';
+  const spaceBadge = problem?.id === 'longest-substring-without-repeating' 
+    ? 'O(min(m, n))' 
+    : (complexity?.spaceComplexity || 'O(1)');
 
   return (
-    <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '8px', borderBottom: '1px solid var(--border-color)' }}>
-        <Zap size={18} color="var(--accent-amber)" />
-        <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>Complexity Analysis (How & Why)</span>
+    <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px', overflowY: 'auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '6px', borderBottom: '1px solid var(--border-color)', flexShrink: 0 }}>
+        <Zap size={16} color="var(--accent-amber)" />
+        <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#ffffff' }}>Complexity Analysis (How & Why)</span>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
         {/* Time Complexity Card */}
         <div style={{
           background: 'rgba(99, 102, 241, 0.08)',
-          borderRadius: '10px',
+          borderRadius: '8px',
           border: '1px solid rgba(99, 102, 241, 0.3)',
-          padding: '10px 14px',
+          padding: '8px 10px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '6px'
+          gap: '4px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-indigo)' }}>
-              <Cpu size={16} />
-              <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Time Complexity</span>
+              <Cpu size={14} />
+              <span style={{ fontWeight: '700', fontSize: '0.8rem' }}>Time Complexity</span>
             </div>
             <span style={{
-              fontSize: '0.95rem',
+              fontSize: '0.85rem',
               fontWeight: '800',
               fontFamily: 'var(--font-code)',
               color: '#818cf8',
@@ -50,34 +42,32 @@ export default function ComplexityPanel({ complexity: complexityProp, problem })
               padding: '2px 8px',
               borderRadius: '6px'
             }}>
-              {complexity.timeComplexity || 'O(N)'}
+              {timeBadge}
             </span>
           </div>
 
-          {complexity.timeExplanation && (
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-primary)', lineHeight: '1.4' }}>
-              <strong>Proof: </strong>{complexity.timeExplanation}
-            </div>
-          )}
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-primary)', lineHeight: '1.35' }}>
+            <strong>Proof: </strong>{complexity?.timeExplanation || 'Single pass iteration through string/array with sliding window pointers.'}
+          </div>
         </div>
 
         {/* Space Complexity Card */}
         <div style={{
           background: 'rgba(16, 185, 129, 0.08)',
-          borderRadius: '10px',
+          borderRadius: '8px',
           border: '1px solid rgba(16, 185, 129, 0.3)',
-          padding: '10px 14px',
+          padding: '8px 10px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '6px'
+          gap: '4px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#34d399' }}>
-              <HardDrive size={16} />
-              <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Space Complexity</span>
+              <HardDrive size={14} />
+              <span style={{ fontWeight: '700', fontSize: '0.8rem' }}>Space Complexity</span>
             </div>
             <span style={{
-              fontSize: '0.95rem',
+              fontSize: '0.85rem',
               fontWeight: '800',
               fontFamily: 'var(--font-code)',
               color: '#34d399',
@@ -85,15 +75,13 @@ export default function ComplexityPanel({ complexity: complexityProp, problem })
               padding: '2px 8px',
               borderRadius: '6px'
             }}>
-              {complexity.spaceComplexity || 'O(1)'}
+              {spaceBadge}
             </span>
           </div>
 
-          {complexity.spaceExplanation && (
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-primary)', lineHeight: '1.4' }}>
-              <strong>Auxiliary Space: </strong>{complexity.spaceExplanation}
-            </div>
-          )}
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-primary)', lineHeight: '1.35' }}>
+            <strong>Auxiliary Space: </strong>{complexity?.spaceExplanation || 'Map stores characters bounded by size of charset m or string length n.'}
+          </div>
         </div>
       </div>
     </div>

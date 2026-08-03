@@ -112,48 +112,38 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
     <aside 
       className="glass-panel" 
       style={{ 
-        width: '340px', 
-        minWidth: '340px', 
-        height: 'calc(100vh - 100px)', 
+        width: '320px', 
+        minWidth: '320px', 
+        height: 'calc(100vh - 90px)', 
         overflowY: 'auto', 
-        padding: '18px', 
+        padding: '16px', 
         display: 'flex', 
         flexDirection: 'column', 
-        gap: '16px' 
+        gap: '14px' 
       }}
     >
       {/* Header & Title */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'linear-gradient(135deg, var(--accent-indigo), #38bdf8)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 12px rgba(99, 102, 241, 0.4)' }}>
-            <Layers size={16} color="#ffffff" />
-          </div>
-          <div>
-            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', letterSpacing: '0.3px', color: '#ffffff', margin: 0 }}>
-              DSA Visualizer
-            </h3>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-              {problems.length} Master Algorithms
-            </span>
-          </div>
-        </div>
+        <h3 style={{ fontSize: '0.96rem', fontWeight: '800', letterSpacing: '0.3px', color: '#ffffff', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Search size={16} color="var(--accent-indigo)" />
+          Search & Explore
+        </h3>
 
         {activeCategory && (
           <button
             onClick={() => onSelectCategory(null)}
             style={{
-              fontSize: '0.72rem',
+              fontSize: '0.7rem',
               fontWeight: '700',
               color: '#38bdf8',
               background: 'rgba(56, 189, 248, 0.12)',
               border: '1px solid rgba(56, 189, 248, 0.3)',
               borderRadius: '6px',
-              padding: '4px 8px',
+              padding: '3px 7px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px',
-              transition: 'all 0.2s ease'
+              gap: '4px'
             }}
           >
             All <X size={12} />
@@ -161,25 +151,25 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
         )}
       </div>
 
-      {/* Real-time Search Input */}
+      {/* Prominent Search Input */}
       <div style={{ position: 'relative', width: '100%' }}>
         <Search size={14} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search algorithms (e.g. two sum, merge, dfs)..."
+          placeholder="Search Algorithms, Problems, or Code..."
           style={{
             width: '100%',
-            padding: '8px 30px 8px 32px',
+            padding: '9px 30px 9px 34px',
             fontSize: '0.78rem',
             borderRadius: '8px',
             border: searchQuery ? '1px solid var(--accent-indigo)' : '1px solid var(--border-color)',
-            background: 'rgba(0, 0, 0, 0.25)',
+            background: 'rgba(0, 0, 0, 0.35)',
             color: '#ffffff',
             outline: 'none',
             transition: 'all 0.2s ease',
-            boxShadow: searchQuery ? '0 0 10px rgba(99, 102, 241, 0.25)' : 'none'
+            boxShadow: searchQuery ? '0 0 12px rgba(99, 102, 241, 0.25)' : 'none'
           }}
         />
         {searchQuery && (
@@ -192,12 +182,44 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
         )}
       </div>
 
-      {/* 2-Column Category Grid from Commit b3b70197b19859f7285a2edf3622403de5c660c2 */}
+      {/* Recent Searches Section */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        <span style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+          Recent Searches
+        </span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+          {['Two Sum', 'Binary Tree Traversal', 'HashMap Lookup', 'HashMap Traversal'].map((item) => (
+            <button
+              key={item}
+              onClick={() => setSearchQuery(item)}
+              style={{
+                fontSize: '0.72rem',
+                color: 'var(--text-secondary)',
+                background: 'rgba(255, 255, 255, 0.035)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '6px',
+                padding: '4px 9px',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 2-Column Categories Grid with Popular Tags */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
-            Algorithm Categories ({categories.length})
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+              Categories
+            </span>
+            <span style={{ fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(168, 85, 247, 0.2)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.3)', fontWeight: '700' }}>
+              Popular Tags
+            </span>
+          </div>
           <button
             onClick={() => setShowCategoryGrid(!showCategoryGrid)}
             style={{ fontSize: '0.7rem', color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px' }}
