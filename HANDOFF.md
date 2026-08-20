@@ -247,9 +247,51 @@ VERIFY
 
 ## PROMPT B — Frontend restructure onto the v2 API
 
+> **Owner's verdict on the current UI: rejected outright.** Not "needs polish" — the
+> whole look and feel is to be redesigned. Treat the section below as the primary goal of
+> this prompt, ranking above the structural cleanups. Structure serves the design here,
+> not the other way round.
+
 ```
-Task: restructure the React frontend onto the v2 API and add the input editor. Keep
-React + Vite; restructure, do not rewrite.
+Task: redesign the interface and restructure the React frontend onto the v2 API.
+Keep React + Vite. The visual design is a rewrite; the data layer is a restructure.
+
+DESIGN BRIEF — READ FIRST, THIS IS THE POINT OF THE TASK
+The owner does not like the current UI and wants it replaced, not adjusted. The current
+look is dark glassmorphism with violet accents, ~7 CSS classes and inline styles
+everywhere. Do not preserve it out of politeness. Do not simply restyle the existing
+component tree and call it a redesign.
+
+What this product actually is: a teaching instrument. Someone is trying to build a mental
+model of an algorithm. Every design decision should be judged by one question — does this
+make the state transition obvious to a human who does not yet understand it?
+
+Requirements:
+  - The visualization canvas is the hero. It should dominate the viewport. Code, complexity
+    and variables support it; today they compete with it for space and attention.
+  - Motion is pedagogy, not decoration. Elements must move between states so the change is
+    traceable by eye: a swap should visibly swap, a pointer should travel, a subtree should
+    collapse. Instant repaints teach nothing. Respect prefers-reduced-motion.
+  - Build a real design system before building screens: type scale, spacing scale, elevation,
+    a stated colour system, and one component library used consistently. index.css already
+    has a usable token layer — extend it rather than starting from nothing.
+  - Semantic state colour must be a deliberate, accessible, colour-blind-safe scale, and it
+    must not collide with difficulty pills. Right now --state-current and --diff-medium are
+    both #f59e0b meaning different things.
+  - State must never be encoded by colour alone. Pair it with shape, label, or position.
+  - Typography: pick and pair real typefaces. Code and prose have different jobs.
+  - Light and dark themes, both designed, neither an inversion of the other.
+  - Genuinely responsive, not a desktop layout with a mobile fallback bolted on.
+
+Avoid the generic AI-app look: purple-blue gradient hero, everything centered, uniform
+rounded cards with a coloured left rail, emoji as section markers, Inter-for-everything.
+Make deliberate choices specific to this subject.
+
+Deliverable expectation: propose the visual direction FIRST — palette, type pairing,
+layout concept, and one worked screen — and get the owner's agreement before building all
+of it. Do not spend the whole budget rendering a direction they may reject.
+
+Then, the structural work:
 
 CURRENT STATE
 frontend/src is ~2,700 lines. App.jsx holds all state, fans out to 18 hardcoded legacy
