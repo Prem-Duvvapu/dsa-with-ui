@@ -1,5 +1,7 @@
 # DSA Visualizer
 
+[![CI](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml)
+
 A full-stack visualizer for data structures and algorithms. Pick a problem, give it your
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
