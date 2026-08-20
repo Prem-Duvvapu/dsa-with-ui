@@ -25,7 +25,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
     <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Link2 size={18} color="var(--accent-indigo)" />
+          <Link2 size={18} color="var(--accent-violet)" />
           <span style={{ fontSize: '0.9rem', fontWeight: '700', letterSpacing: '0.4px' }}>
             Linked List Topology Visualizer
           </span>

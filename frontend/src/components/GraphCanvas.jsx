@@ -187,7 +187,7 @@ export default function GraphCanvas({ problem, currentStep, step }) {
                         minHeight: '44px',
                         borderRadius: 'var(--radius-xs)',
                         background: val === 1 ? 'rgba(16, 185, 129, 0.35)' : isLightSquare ? '#334155' : '#1e293b',
-                        border: val === 1 ? '2px solid #34d399' : '1px solid var(--border-color)',
+                        border: val === 1 ? '2px solid #34d399' : '1px solid var(--border-default)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -207,8 +207,8 @@ export default function GraphCanvas({ problem, currentStep, step }) {
                 }
 
                 if (isSudoku) {
-                  const borderRight = (cIdx + 1) % 3 === 0 && cIdx !== 8 ? '2px solid var(--accent-indigo)' : '1px solid #334155';
-                  const borderBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8 ? '2px solid var(--accent-indigo)' : '1px solid #334155';
+                  const borderRight = (cIdx + 1) % 3 === 0 && cIdx !== 8 ? '2px solid var(--accent-violet)' : '1px solid #334155';
+                  const borderBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8 ? '2px solid var(--accent-violet)' : '1px solid #334155';
 
                   return (
                     <div

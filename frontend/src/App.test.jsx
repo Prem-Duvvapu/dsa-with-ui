@@ -5,12 +5,13 @@ import '@testing-library/jest-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Controls from './components/Controls';
+import LiveTraceTicker from './components/LiveTraceTicker';
 
 describe('Frontend Component Tests', () => {
-  it('renders Header with title and Striver sheet link', () => {
-    render(<Header totalProblems={11} completedCount={11} />);
-    expect(screen.getByText('DSA with UI')).toBeInTheDocument();
-    expect(screen.getByText("Striver's A2Z Sheet")).toBeInTheDocument();
+  it('renders Header with the product name and catalog size', () => {
+    render(<Header totalProblems={11} />);
+    expect(screen.getByText('DSA Visualizer')).toBeInTheDocument();
+    expect(screen.getByText('11 algorithms')).toBeInTheDocument();
   });
 
   it('renders Sidebar with list of graph problems', () => {
@@ -41,13 +42,18 @@ describe('Frontend Component Tests', () => {
         onPlayPause={() => {}}
         onStepNext={() => {}}
         onStepPrev={() => {}}
+        onStepSelect={() => {}}
         onReset={() => {}}
         onSpeedChange={() => {}}
-        stepDescription="Test Step"
       />
     );
     expect(screen.getByText('Play')).toBeInTheDocument();
     expect(screen.getByText('Reset')).toBeInTheDocument();
+  });
+
+  it('renders the current step description in LiveTraceTicker', () => {
+    render(<LiveTraceTicker stepDescription="Test Step" />);
+    expect(screen.getByText('Live trace')).toBeInTheDocument();
     expect(screen.getByText('Test Step')).toBeInTheDocument();
   });
 });

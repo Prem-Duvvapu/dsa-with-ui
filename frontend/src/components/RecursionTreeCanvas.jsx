@@ -38,7 +38,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
       {/* Header Bar */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitBranch size={18} color="var(--accent-indigo)" />
+          <GitBranch size={18} color="var(--accent-violet)" />
           <span style={{ fontSize: '0.92rem', fontWeight: '800', letterSpacing: '0.4px' }}>
             Divide & Conquer Recursion Tree Visualizer
           </span>
@@ -150,7 +150,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
       </div>
 
       {/* Subarray State Bar Visualizer */}
-      <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+      <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
         <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: '700' }}>
           Live Array State:
         </span>

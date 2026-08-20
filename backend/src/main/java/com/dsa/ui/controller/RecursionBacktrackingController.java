@@ -3,7 +3,6 @@ package com.dsa.ui.controller;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.service.RecursionBacktrackingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/recursion-backtracking")
-@CrossOrigin(origins = "*")
 public class RecursionBacktrackingController {
 
     private final RecursionBacktrackingService service;
 
-    @Autowired
     public RecursionBacktrackingController(RecursionBacktrackingService service) {
         this.service = service;
     }
@@ -37,7 +34,9 @@ public class RecursionBacktrackingController {
 
     @GetMapping("/execute/{id}")
     public ResponseEntity<List<ExecutionStep>> executeProblem(@PathVariable String id) {
-        List<ExecutionStep> steps = service.generateSteps(id);
-        return ResponseEntity.ok(steps);
+        if (service.getProblemById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(service.generateSteps(id));
     }
 }
