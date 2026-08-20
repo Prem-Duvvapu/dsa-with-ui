@@ -200,3 +200,4 @@ The suite is built to catch fake work, not just crashes:
 | `PROJECT_CONTEXT.md` | Pedagogical principles behind the visualizations. |
 | `implementation_plan.md` | Historical. Superseded by `plan.md` and this README. |
 | `walkthrough.md` | Historical build log. Superseded. |
+| `HANDOFF.md` | **Temporary.** Implementation prompts for the remaining phases. Delete once the migration is complete. |
