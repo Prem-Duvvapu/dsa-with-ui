@@ -1,15 +1,20 @@
 name: CI
 
 on:
+  # Gates the merge.
   pull_request:
     branches: [main]
+  # Also runs on every branch, so a feature branch gets feedback before a PR exists
+  # rather than discovering breakage at merge time.
   push:
-    branches: [main]
+    branches: ['**']
+  workflow_dispatch:
 
 # A second push supersedes the first: the backend suite takes ~2 minutes, so leaving
-# stale runs going just delays the result that matters.
+# stale runs going just delays the result that matters. Keyed on the event too, so a
+# push run and its PR run do not cancel each other.
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
