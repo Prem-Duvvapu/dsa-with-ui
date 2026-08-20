@@ -2,6 +2,7 @@ package com.dsa.ui.service;
 
 import com.dsa.ui.algorithm.sorting.MergeSort;
 import com.dsa.ui.algorithm.sorting.QuickSort;
+import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
 import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class SortingService {
+public class SortingService implements ProblemProvider {
 
     private final Map<String, ProblemDetail> problems = new LinkedHashMap<>();
 

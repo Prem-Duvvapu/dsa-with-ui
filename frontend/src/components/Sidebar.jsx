@@ -125,7 +125,7 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
       {/* Header & Title */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <h3 style={{ fontSize: '0.96rem', fontWeight: '800', letterSpacing: '0.3px', color: '#ffffff', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <Search size={16} color="var(--accent-indigo)" />
+          <Search size={16} color="var(--accent-violet)" />
           Search & Explore
         </h3>
 
@@ -164,7 +164,7 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
             padding: '9px 30px 9px 34px',
             fontSize: '0.78rem',
             borderRadius: '8px',
-            border: searchQuery ? '1px solid var(--accent-indigo)' : '1px solid var(--border-color)',
+            border: searchQuery ? '1px solid var(--accent-violet)' : '1px solid var(--border-default)',
             background: 'rgba(0, 0, 0, 0.35)',
             color: '#ffffff',
             outline: 'none',
@@ -196,7 +196,7 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
                 fontSize: '0.72rem',
                 color: 'var(--text-secondary)',
                 background: 'rgba(255, 255, 255, 0.035)',
-                border: '1px solid var(--border-color)',
+                border: '1px solid var(--border-default)',
                 borderRadius: '6px',
                 padding: '4px 9px',
                 cursor: 'pointer',
@@ -350,7 +350,7 @@ export default function Sidebar({ problems, activeProblemId, activeCategory, onS
               {activeCategory && searchedProblems.length > 0 && (
                 <button
                   onClick={() => onSelectCategory(null)}
-                  style={{ fontSize: '0.75rem', padding: '4px 10px', background: 'var(--accent-indigo)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}
+                  style={{ fontSize: '0.75rem', padding: '4px 10px', background: 'var(--accent-violet)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}
                 >
                   Search across all {searchedProblems.length} matching algorithms
                 </button>

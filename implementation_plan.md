@@ -1,3 +1,11 @@
+> **Superseded.** This document describes the project as it was planned before the
+> tracing rewrite, and its numbers are wrong: it headlines 406 algorithms, its own
+> itemised list sums to 428, and the code registers 433 unique ids. It also predates the
+> finding that 303 catalogued problems returned another algorithm's animation.
+>
+> Kept as a historical record. For the current architecture see `plan.md` and the README;
+> for live coverage see `GET /api/problems/stats`.
+
 # Implementation Plan - Master DSA Sheet Interactive Visualizer
 
 Complete architectural plan and execution blueprint for the 406 algorithm interactive visualizer application (`dsa-with-ui`).

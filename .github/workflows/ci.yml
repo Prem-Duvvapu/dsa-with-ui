@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  # Gates the merge.
+  pull_request:
+    branches: [main]
+  # Also runs on every branch, so a feature branch gets feedback before a PR exists
+  # rather than discovering breakage at merge time.
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+# A second push supersedes the first: the backend suite takes ~2 minutes, so leaving
+# stale runs going just delays the result that matters. Keyed on the event too, so a
+# push run and its PR run do not cancel each other.
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (JUnit)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # Called directly rather than through the root package.json scripts: those wrap
+      # everything in `wsl --exec`, which is a Windows-host helper and does not exist here.
+      - name: Run tests
+        working-directory: backend
+        run: mvn -B test
+
+      - name: Upload surefire reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: backend/target/surefire-reports/
+          retention-days: 7
+
+  frontend:
+    name: Frontend (Vitest + build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run tests
+        working-directory: frontend
+        run: npx vitest run
+
+      # The build catches what the tests cannot: an unresolved import or a syntax error
+      # in a component no test happens to render.
+      - name: Production build
+        working-directory: frontend
+        run: npx vite build

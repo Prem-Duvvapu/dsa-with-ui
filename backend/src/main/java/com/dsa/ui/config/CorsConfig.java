@@ -13,7 +13,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173")
+                        // 5180 = Vite dev server (frontend/vite.config.js), 5174 = published Docker port
+                        .allowedOrigins(
+                                "http://localhost:5180", "http://127.0.0.1:5180",
+                                "http://localhost:5174", "http://127.0.0.1:5174")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }

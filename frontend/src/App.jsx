@@ -46,7 +46,7 @@ const DEFAULT_FALLBACK_PROBLEMS = [
     },
     executionSteps: [
       {
-        stepIndex: 1,
+        stepNumber: 1,
         activeLine: 3,
         description: 'Initialize empty HashMap. Iterate index i = 0, current value = 2.',
         arrayState: [
@@ -58,7 +58,7 @@ const DEFAULT_FALLBACK_PROBLEMS = [
         variables: { i: 0, val: 2, target: 9, complement: 7 }
       },
       {
-        stepIndex: 2,
+        stepNumber: 2,
         activeLine: 7,
         description: 'Iterate index i = 1, current value = 7. Complement 9 - 7 = 2 exists in map at index 0!',
         arrayState: [
@@ -106,7 +106,7 @@ const DEFAULT_FALLBACK_PROBLEMS = [
     },
     executionSteps: [
       {
-        stepIndex: 1,
+        stepNumber: 1,
         activeLine: 4,
         description: 'Input string s = "abcabcbb". Initialize sliding window pointers left = 0, right = 0, maxLen = 0.',
         variables: { left: 0, right: 0, maxLen: 0, s: '"abcabcbb"' }
@@ -127,6 +127,8 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   const timerRef = useRef(null);
+  // Monotonic request counter: a slower earlier response must never overwrite a newer one.
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     fetchAllProblems();
@@ -202,8 +204,8 @@ export default function App() {
         { url: '/api/heaps/problems', base: '/api/heaps' },
         { url: '/api/stackqueue/problems', base: '/api/stackqueue' },
         { url: '/api/slidingwindow/problems', base: '/api/slidingwindow' },
-        { url: '/api/math/basic/problems', base: '/api/math/basic' },
-        { url: '/api/recursion/basic/problems', base: '/api/recursion/basic' }
+        { url: '/api/maths/problems', base: '/api/maths' },
+        { url: '/api/basic-recursion/problems', base: '/api/basic-recursion' }
       ];
 
       const results = await Promise.allSettled(
@@ -225,8 +227,9 @@ export default function App() {
       if (combined.length > 0) {
         setProblems(combined);
         const initialId = combined.find(p => p.id === 'two-sum')?.id || combined[0].id;
+        // Setting these is enough: the [activeProblemId, problems.length] effect
+        // owns fetching details/steps. Calling it here too would double-request.
         setActiveProblemId(initialId);
-        fetchProblemDetailsAndSteps(initialId, combined);
       }
     } catch (err) {
       console.warn('Backend connection failed:', err);
@@ -236,6 +239,7 @@ export default function App() {
   };
 
   const fetchProblemDetailsAndSteps = async (id, probList = problems) => {
+    const requestId = ++requestIdRef.current;
     try {
       setIsPlaying(false);
       setCurrentStepIndex(0);
@@ -270,6 +274,9 @@ export default function App() {
         fetch(`${endpoint}/execute/${id}`).then(r => r.ok ? r.json() : [])
       ]);
 
+      // A newer selection landed while these were in flight — discard this response.
+      if (requestId !== requestIdRef.current) return;
+
       const fetchedProblem = (probRes.status === 'fulfilled' && probRes.value) ? probRes.value : prob;
       setActiveProblem(fetchedProblem);
 
@@ -279,8 +286,8 @@ export default function App() {
         setSteps(fetchedProblem.executionSteps);
       } else {
         setSteps([{
-          stepIndex: 1,
-          lineNumber: 1,
+          stepNumber: 1,
+          activeLine: 1,
           description: `Interactive execution visualizer for ${fetchedProblem?.title || id}.`,
           queueOrStackState: [],
           nodeStates: {},
@@ -315,7 +322,6 @@ export default function App() {
 
   const handleSelectProblem = (id) => {
     setActiveProblemId(id);
-    fetchProblemDetailsAndSteps(id);
     if (viewportWidth <= 768) {
       setIsSidebarOpen(false);
     }

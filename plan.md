@@ -1,5 +1,17 @@
 # DSA Visualizer v2: Complete Execution Tracing Architecture
 
+> **Status.** This document's diagnosis held up: the catalogue later grew to 433 problems
+> while distinct traces did not, leaving 303 ids replaying another algorithm's animation.
+> Its Phase 3 bulk migration is now underway.
+>
+> - **Shipped** — the `tracer` package (`AlgorithmTracer`, `InputSpec`, `TracerRegistry`
+>   with no fallback), code anchors replacing hand-written `activeLine` integers, the
+>   `/api/problems` catalogue with a `traced` flag, `POST .../execute` for caller-supplied
+>   input, and a contract test that fails any tracer whose output ignores its input.
+> - **In progress** — migrating the remaining catalogued problems onto the contract.
+>
+> Live coverage: `GET /api/problems/stats`.
+
 ## Problem Statement
 
 The current DSA Visualizer has **71 problems implemented**, but the vast majority trace only 2-4 "summary" steps instead of the algorithm's full execution. Concrete examples from the existing codebase:
