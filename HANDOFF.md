@@ -159,10 +159,7 @@ DO
 5. Set a sensible timeout-minutes on both jobs (15 is ample) so a hung run does not
    burn an hour.
 
-6. Also fix frontend/Dockerfile: it runs `npm install` despite a committed 116KB
-   package-lock.json, which makes container builds non-reproducible. Change to `npm ci`.
-
-7. Add a status badge to the top of README.md.
+6. Add a status badge to the top of README.md.
 
 CANNOT BE DONE FROM CODE — tell the user to do this by hand
    Branch protection is a repository setting, not a file. After the first run lands on
