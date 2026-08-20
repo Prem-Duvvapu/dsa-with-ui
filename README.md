@@ -1,127 +1,202 @@
-# 🌐 DSA Visualizer - Master Interactive Data Structures & Algorithms Engine (406 Algorithms)
+# DSA Visualizer
 
-Welcome to **DSA Visualizer**! A full-stack interactive web application built for mastering **406 Master Data Structures & Algorithms** (Striver's A2Z DSA Sheet) with visual elegance.
+A full-stack visualizer for data structures and algorithms. Pick a problem, give it your
+own input, and watch the algorithm execute step by step with the matching line of Java
+highlighted as it runs.
 
-The application pairs step-by-step animated execution with:
-- ☕ **Production-Ready Java Solutions**: Clean interview-grade Java implementations with commented lines.
-- 🎯 **Line-by-Line Code Execution Tracing**: Synchronized Java code line highlighting as nodes, edges, cells, or pointers process.
-- 📊 **Animated Data Structure Panels**: Live Queue FIFO, Call Stack LIFO, PriorityQueue Min-Heap, Array Bars, Linked List Nodes, Trie Trees, and **Disjoint Set Union (DSU) Component Forest Cards**.
-- ⚡ **Time & Space Complexity Deep-Dive**: Mathematical proofs for $O(V+E)$, $O(E \log V)$, $O(N \log N)$, $O(N)$, auxiliary space, and best/worst case bounds.
-- 🗂️ **A-Z Alphabetical Topic Accordions**: Sortable and collapsible topic cards (A-Z) with instant search and global expand/shrink controls.
+**Status: 433 problems catalogued, 8 with real execution traces.** Those two numbers are
+different on purpose, and the API reports both — see
+[Coverage](#coverage-catalogued-vs-traced) below.
 
 ---
 
-## 🏗️ Architecture & Technology Stack
+## Architecture
 
-| Tier | Technology | Description |
+| Tier | Technology | Notes |
 | :--- | :--- | :--- |
-| **Backend** | **Spring Boot (Java 17)** | 18 REST Controllers (`http://localhost:8923/api/*`), algorithm execution step engines |
-| **Frontend** | **React 18 + Vite** | Multi-mode canvas stages (Graph, Tree, Array, Linked List, Recursion Tree, DSU), glassmorphism dark mode UI |
-| **Testing** | **JUnit 5 & Vitest** | 90 backend unit tests (`wsl mvn test`) and frontend test coverage |
-| **DevOps** | **Docker & Docker Compose** | Single-command container deployment (`docker-compose up`) |
+| Backend | Spring Boot 3.2.3, Java 17 | `http://localhost:8923` |
+| Frontend | React 18 + Vite | Multi-mode canvases: graph, tree, array, linked list, recursion tree, grid |
+| Testing | JUnit 5 + Vitest | 308 backend, 16 frontend |
+| Deployment | Docker Compose | One command for both tiers |
+
+### How a trace is produced
+
+An `AlgorithmTracer` runs the real algorithm and emits a step at each meaningful state
+change. It declares its inputs machine-readably, so the frontend renders an editor for
+any problem without per-problem form code.
+
+```java
+public interface AlgorithmTracer {
+    String id();                              // "kadane-algo"
+    InputSpec inputSpec();                    // declared inputs, bounds, defaults
+    String annotatedCode();                   // Java source carrying // @a anchors
+    void run(Inputs in, StepEmitter emit);    // executes the algorithm for real
+}
+```
+
+Two details matter:
+
+**There is no fallback.** `TracerRegistry` indexes tracers by id and returns nothing for
+an unregistered one, so the API answers 404 or 501 rather than substituting a different
+algorithm's animation.
+
+**Lines are named, not numbered.** A tracer writes `emit.at("loop.compare")`, and the
+`// @a loop.compare` marker is stripped from the source before it reaches the code
+viewer. The highlight therefore provably refers to the code on screen, which a
+hand-written line number does not.
+
+```java
+// @a loop.compare
+if (running > best) best = running;
+```
 
 ---
 
-## 🚀 How to Run the Application
+## Running it
 
-### Option 1: Using Docker (One Command for FE & BE)
-
-Run both the Spring Boot backend (`port 8923`) and React frontend (`port 5174`) in one command:
+### Docker — both tiers, one command
 
 ```bash
 docker-compose up --build
 ```
-Open your browser at **`http://localhost:5174`**!
+
+Open **http://localhost:5174**.
+
+### Locally
+
+```bash
+cd backend && mvn spring-boot:run     # http://localhost:8923
+cd frontend && npm install && npm run dev   # http://localhost:5180, proxied to 8923
+```
 
 ---
 
-### Option 2: Running Locally
+## API
 
-#### 1. Start the Spring Boot Backend (Java)
-```bash
-# In WSL or terminal
-cd backend
-mvn spring-boot:run
-```
-*(Backend runs on `http://localhost:8923`)*
+The current API is a single catalogue with runnable problems.
 
-#### 2. Start the React Frontend
+| Endpoint | Purpose |
+| :--- | :--- |
+| `GET /api/problems` | The whole catalogue. Each entry carries `traced` and, when traced, its `inputSpec`. |
+| `GET /api/problems/stats` | `catalogued`, `traced`, `untraced`, plus known duplicate ids. |
+| `GET /api/problems/{id}` | Full detail, including the anchor-stripped source. |
+| `GET /api/problems/{id}/execute` | Runs the problem on its declared default input. |
+| `POST /api/problems/{id}/execute` | Runs it on **your** input. |
+| `GET /api/problems/{id}/input-spec` | The input contract alone, for building a form first. |
+
+Running a problem with your own input:
+
 ```bash
-cd frontend
-npm install
-npm run dev
+curl -X POST http://localhost:8923/api/problems/binary-search-1d/execute \
+  -H 'Content-Type: application/json' \
+  -d '{"nums":[2,4,6,8,10,12],"target":10}'
 ```
-*(Frontend runs on `http://localhost:5180` with proxy configured to Spring Boot on `8923`)*
+
+Status codes are meaningful:
+
+- **404** — no such problem
+- **501** — the problem is catalogued but has no tracer yet
+- **400** — your input was rejected, with a message per field:
+
+```json
+{
+  "error": "invalid_input",
+  "fieldErrors": { "nums": "This algorithm needs a sorted list; 3 comes after 9." }
+}
+```
+
+Input size is capped per problem, and every trace has a step budget (default 5000). A run
+that hits it comes back with `truncated: true` rather than exhausting the server — which
+matters once a caller can set `n` on a factorial-time algorithm.
+
+The eighteen legacy per-topic endpoints (`/api/arrays/...`, `/api/trees/...`, and so on)
+still work while the frontend migrates, and will be removed once it has.
 
 ---
 
-## 🧪 Running Tests
+## Coverage: catalogued vs traced
 
-### Run Backend Java Tests (JUnit 5 + MockMvc)
-```bash
-cd backend
-wsl mvn test
-```
-**Result**: `Tests run: 90, Failures: 0, Errors: 0` (`BUILD SUCCESS`).
+The catalogue lists every problem the project intends to cover. A problem is **traced**
+only when a real `AlgorithmTracer` executes it.
 
-### Run Frontend Build
-```bash
-cd frontend
-wsl npm run build
-```
-**Result**: `✓ built in ~35s` (0 errors).
+This distinction exists because it was previously absent. 303 of the catalogued problems
+returned another algorithm's animation — 122 one-line delegate methods plus a
+step-returning `default:` in each of the eighteen service switches — and the test suite
+could not tell, because its only per-problem assertion was that the step list was
+non-empty, which the fallback guaranteed.
+
+`GET /api/problems/stats` is the authoritative number. Nothing in this README is
+hand-maintained coverage data.
+
+| Category | Catalogued |
+| :--- | ---: |
+| Advanced Graphs & Graph Strings | 62 |
+| Dynamic Programming | 55 |
+| Binary Trees & BST | 54 |
+| Arrays & Matrices | 40 |
+| Binary Search | 32 |
+| Linked List & Doubly LL | 31 |
+| Stack & Queue | 30 |
+| Recursion & Backtracking | 25 |
+| Bit Manipulation & Advanced Math | 18 |
+| Heaps & PriorityQueue | 17 |
+| Strings | 16 |
+| Greedy | 15 |
+| Sliding Window & Two Pointer | 12 |
+| Graphs: BFS & DFS | 11 |
+| Basic Math | 7 |
+| Basic Recursion | 7 |
+| Sorting | 5 |
+| Tries | 3 |
+| **Total registrations** | **440** |
+| **Unique ids** | **433** |
+
+Seven ids are claimed by two services with different content: `dfs-traversal`,
+`flood-fill`, `longest-common-prefix`, `longest-substring-without-repeating`,
+`merge-intervals`, `number-of-islands` and `surrounded-regions`.
+The catalogue surfaces these in `stats.duplicateIds` rather than hiding them; resolving
+them means moving problems between services.
+
+### Traced so far
+
+`two-sum`, `kadane-algo`, `binary-search-1d`, `tree-preorder`, `tree-inorder`,
+`reverse-linked-list`, `bfs-traversal`, `number-of-islands`.
+
+Chosen to exercise every input kind and the worst-covered categories — Binary Search had
+32 problems sharing one animation, and Binary Trees had 54 sharing a single three-step
+stub.
 
 ---
 
-## 📋 Algorithm Catalog (406 Master Algorithms across 17 A-Z Categories)
+## Tests
 
-### 1. **Adv Graphs & Graph Strings (62 Algorithms)**
-- Shortest Path, Dijkstra, Bellman-Ford, Floyd-Warshall, Prim's, Kruskal's, Disjoint Set (DSU), Tarjan's Bridges, Articulation Points, Kosaraju's SCC, Rabin-Karp, Z-Function, KMP LPS.
+```bash
+cd backend  && mvn test        # 308 tests
+cd frontend && npx vitest run  #  16 tests
+```
 
-### 2. **Arrays & Matrices (26 Algorithms)**
-- Two Sum, Dutch National Flag (Sort 0s,1s,2s), Majority Element, Kadane's Algorithm, 3Sum, 4Sum, Pascal's Triangle, Next Permutation, Inversions.
+The suite is built to catch fake work, not just crashes:
 
-### 3. **Backtracking & Recursion (25 Algorithms)**
-- Subsets, Combination Sum I/II, N-Queens, Sudoku Solver, Rat in a Maze, Word Search, Palindrome Partitioning.
+- **`TracerContractTest.traceRespondsToItsInput`** runs every tracer on two materially
+  different inputs and fails if the traces match. A canned narration cannot survive it.
+- **`noTwoTracersProduceIdenticalTraces`** applies the same idea across the registry.
+- **`ApiContractTest`** is parameterized over all eighteen legacy controllers rather than
+  testing one by hand — hand-testing one is what let three copy-pasted variants diverge,
+  with eight of them silently dropping their 404 guard.
+- **`designTokens.test.js`** fails the build on any unresolvable CSS `var()`. Fifteen
+  custom properties were once deleted while five components still referenced them, and
+  nothing noticed.
+- **`InputValidatorTest`** covers every field kind and rejection path, since that
+  validator is the only trust boundary between a request body and a running algorithm.
 
-### 4. **Basic Math & Basic Recursion (14 Algorithms)**
-- Reverse Digits, Palindrome Check, GCD / HCF, Prime Numbers, Fibonacci, Factorial, Print 1 to N.
+---
 
-### 5. **Binary Search Suite (32 Algorithms)**
-- Binary Search 1D, Lower/Upper Bound, Search Insert, Rotated Sorted Array I/II, Min in Rotated Array, Single Element, Peak Element, Square Root, Bananas, Bouquets, Smallest Divisor, Gas Stations, Median of 2 Sorted Arrays.
+## Documentation
 
-### 6. **Binary Trees & BST (54 Algorithms)**
-- Preorder, Inorder, Postorder, Level Order, Max Depth, Balanced Tree, Diameter, Max Path Sum, LCA, Burn Tree, Morris Traversals, Search/Insert/Delete BST.
-
-### 7. **Bit Logic & Advanced Math (18 Algorithms)**
-- Bit Tricks, Count Set Bits, Power of 2, Single Number, Sieve of Eratosthenes, Prime Factors, Binary Exponentiation.
-
-### 8. **Dynamic Programming (55 Algorithms)**
-- Climbing Stairs, Frog Jump, House Robber, 0/1 Knapsack, Unbounded Knapsack, Subset Sum, Equal Partition, LCS, Longest Palindromic Subsequence, Edit Distance, LIS, MCM, Count Squares.
-
-### 9. **Graphs: BFS & DFS (11 Algorithms)**
-- BFS Traversal, DFS Traversal, Provinces, Islands, Rotting Oranges, Flood Fill, Cycle Detections, Bipartite Graph.
-
-### 10. **Greedy Algorithms (15 Algorithms)**
-- Assign Cookies, Fractional Knapsack, N Meetings in 1 Room, Job Sequencing, Railway Platforms, Candy, Jump Game I/II.
-
-### 11. **Heaps & PriorityQueue (17 Algorithms)**
-- Min/Max Heap Construction, Kth Largest/Smallest Element, Task Scheduler, Twitter Design, Median Stream.
-
-### 12. **Linked List & Doubly LL (31 Algorithms)**
-- Reversals, Middle Node, Loop Detection, Segregate Odd-Even, Merge Sort LL, Y Intersection, Flattening LL, Clone Random LL.
-
-### 13. **Sliding Window & Two Pointer (12 Algorithms)**
-- Longest Substring Without Repeating, Consecutive Ones III, Fruit Baskets, Min Window Substring.
-
-### 14. **Sorting Algorithms (5 Algorithms)**
-- Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort.
-
-### 15. **Stack & Queue (30 Algorithms)**
-- Infix to Postfix/Prefix, Min Stack, Next Greater Element, Trapping Rainwater, Largest Rectangle in Histogram, Sliding Window Max, LRU & LFU Cache.
-
-### 16. **Strings (16 Algorithms)**
-- Remove Outermost Parentheses, Reverse Words, Longest Common Prefix, Valid Anagram, Isomorphic Strings, String to Integer (atoi).
-
-### 17. **Tries & Prefixes (5 Algorithms)**
-- Implement Trie (Insert/Search/StartsWith), Word Count, Prefix Count, Complete String.
+| File | What it is |
+| :--- | :--- |
+| `plan.md` | The v2 tracing architecture. Accurate; the source of the current design. |
+| `references.md` | UI/UX research and the design-token system. |
+| `PROJECT_CONTEXT.md` | Pedagogical principles behind the visualizations. |
+| `implementation_plan.md` | Historical. Superseded by `plan.md` and this README. |
+| `walkthrough.md` | Historical build log. Superseded. |

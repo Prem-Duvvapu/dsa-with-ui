@@ -36,7 +36,9 @@ class ProblemsApiTest {
     @DisplayName("One request returns the whole catalogue, every entry flagged traced or not")
     void catalogueIsSingleAndFlagged() throws Exception {
         JsonNode all = getJson("/api/problems");
-        assertTrue(all.size() > 400, "expected the full catalogue, got " + all.size());
+        // 440 registrations across 18 services, 7 of which are ids claimed by two
+        // services with different content. Pinned so accidental catalogue loss is caught.
+        assertEquals(433, all.size(), "catalogue size changed");
         for (JsonNode entry : all) {
             assertTrue(entry.has("traced"), entry.path("id").asText() + " has no traced flag");
             assertFalse(entry.path("id").asText().isBlank());
@@ -54,6 +56,11 @@ class ProblemsApiTest {
         assertEquals(catalogued - traced, stats.get("untraced").asInt());
         assertTrue(stats.get("orphanedTracerIds").isEmpty(),
                 "a tracer with no catalogue entry is unreachable: " + stats.get("orphanedTracerIds"));
+
+        // Cross-service id collisions are surfaced rather than hidden; resolving them
+        // means moving problems between services, which is Phase 4 work.
+        assertEquals(7, stats.get("duplicateIds").size(),
+                "duplicate id count changed: " + stats.get("duplicateIds"));
     }
 
     @Test

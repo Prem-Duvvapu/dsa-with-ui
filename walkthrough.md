@@ -1,3 +1,10 @@
+> **Superseded.** A build log from before the tracing rewrite. Several claims here did
+> not hold up under audit — in particular the Phase 4 "granular tracing" pass is
+> inaccurate for four of the six categories it names (Stack/Queue, Sliding Window, Greedy
+> and Heaps each still shared a single trace across their whole category).
+>
+> Kept as a historical record. For live coverage see `GET /api/problems/stats`.
+
 # Walkthrough - Complete Master DSA Visualizer (406 Algorithms)
 
 Complete documentation of all implemented features, backend REST APIs, interactive visualizers, and UI/UX components in `dsa-with-ui`.

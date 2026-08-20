@@ -29,7 +29,13 @@ The platform pairs step-by-step animated execution with:
 
 ---
 
-## 🎯 Algorithm Categories (71 Implemented Problems)
+## 🎯 Algorithm Categories
+
+> **Coverage note.** The checklist below was written when the project had roughly 71
+> hand-built step generators. It is kept as a record of intent, not as a coverage claim:
+> a tick means the problem is catalogued, not that it has a real execution trace.
+> `GET /api/problems/stats` is the authoritative number — currently **433 catalogued,
+> 8 traced**. See the README for why those differ.
 
 ### 1. **Graphs - BFS & DFS Problems**
 - [x] BFS Traversal of Graph
