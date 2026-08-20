@@ -1,6 +1,7 @@
 package com.dsa.ui.service;
 
 import com.dsa.ui.algorithm.graph.*;
+import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
 import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class GraphBfsDfsService {
+public class GraphBfsDfsService implements ProblemProvider {
 
     private final Map<String, ProblemDetail> problems = new LinkedHashMap<>();
 
