@@ -155,7 +155,7 @@ describe('SearchBox component', () => {
     // Search 'two sum' which is in Arrays, not in Graph BFS/DFS
     fireEvent.change(input, { target: { value: 'two sum' } });
 
-    expect(screen.getByText('No algorithm matches "two sum".')).toBeInTheDocument();
+    expect(screen.getByText('No algorithm matches \u201ctwo sum\u201d.')).toBeInTheDocument();
 
     const searchAllBtn = screen.getByRole('button', { name: /Search all 2 matches/i });
     expect(searchAllBtn).toBeInTheDocument();
@@ -165,8 +165,10 @@ describe('SearchBox component', () => {
     expect(input.value).toBe('two sum');
   });
 
-  // Test 23: The ⚡ badge appears only on traced problems
-  it('renders the ⚡ badge only on traced problems', () => {
+  // Test 23: the runnable signal appears only on traced problems.
+  // It is the row's left rail (.sb-row-runnable), not a text badge — a badge
+  // ate horizontal space and pushed titles into ellipsis.
+  it('marks only traced problems as runnable', () => {
     render(
       <SearchBox
         problems={mockProblems}
@@ -178,12 +180,12 @@ describe('SearchBox component', () => {
     const optTwoSum = document.getElementById('problem-opt-two-sum');
     const optTwoSumII = document.getElementById('problem-opt-two-sum-ii');
 
-    expect(optTwoSum.querySelector('[title="Runnable — executes on your input"]')).toBeInTheDocument();
-    expect(optTwoSumII.querySelector('[title="Runnable — executes on your input"]')).toBeNull();
+    expect(optTwoSum.className).toContain('sb-row-runnable');
+    expect(optTwoSumII.className).not.toContain('sb-row-runnable');
   });
 
   // Test 24: The "Runnable only" toggle is absent when no problem carries a traced field
-  it('does not render "Runnable only" toggle when no problem has a traced field', () => {
+  it('does not render the runnable filter when no problem has a traced field', () => {
     const untracedProblems = [
       { id: 'p1', title: 'Problem 1', category: 'Arrays', difficulty: 'Easy' },
       { id: 'p2', title: 'Problem 2', category: 'Arrays', difficulty: 'Easy' }
@@ -196,7 +198,7 @@ describe('SearchBox component', () => {
       />
     );
 
-    expect(screen.queryByLabelText(/Runnable only/i)).toBeNull();
+    expect(screen.queryByRole('button', { name: /runnable/i })).toBeNull();
 
     // Rerender with traced problems -> toggle appears
     rerender(
@@ -206,7 +208,7 @@ describe('SearchBox component', () => {
       />
     );
 
-    expect(screen.getByLabelText(/Runnable only/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /runnable/i })).toBeInTheDocument();
   });
 
   // --- Review additions -------------------------------------------------
@@ -222,7 +224,7 @@ describe('SearchBox component', () => {
       <SearchBox problems={problems} activeCategory="Arrays" onSelectProblem={() => {}} />
     );
 
-    fireEvent.click(screen.getByRole('checkbox'));
+    fireEvent.click(screen.getByRole('button', { name: /runnable/i }));
 
     expect(screen.queryByText(/No algorithm matches ""/)).toBeNull();
     expect(screen.getByText('Nothing in Arrays is runnable yet.')).toBeInTheDocument();

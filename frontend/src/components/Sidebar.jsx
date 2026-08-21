@@ -102,7 +102,7 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+              <span className="sb-eyebrow">
                 Categories
               </span>
               <span style={{ fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(168, 85, 247, 0.2)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.3)', fontWeight: '700' }}>
@@ -112,40 +112,27 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
             <button
               type="button"
               onClick={() => setShowCategoryGrid(!showCategoryGrid)}
-              style={{ fontSize: '0.7rem', color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px' }}
+              className="sb-disclosure"
+              aria-expanded={showCategoryGrid}
+              aria-label={showCategoryGrid ? 'Hide categories' : 'Show categories'}
             >
               {showCategoryGrid ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
             </button>
           </div>
 
           {showCategoryGrid && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+            <div className="sb-cat-grid">
               {/* "All" Category Tile */}
               <button
                 type="button"
+                className={!activeCategory ? 'sb-cat sb-cat-on' : 'sb-cat'}
                 onClick={() => onSelectCategory(null)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '4px',
-                  padding: '7px 9px',
-                  borderRadius: 'var(--radius-sm)',
-                  border: '1px solid var(--border-default)',
-                  borderLeft: !activeCategory ? '3px solid var(--accent-violet)' : '1px solid var(--border-default)',
-                  background: !activeCategory ? 'var(--accent-violet-tint)' : 'rgba(255, 255, 255, 0.02)',
-                  color: !activeCategory ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  fontSize: '0.74rem',
-                  fontWeight: !activeCategory ? '700' : '500',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease'
-                }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', overflow: 'hidden' }}>
-                  <Sparkles size={13} color={!activeCategory ? 'var(--accent-violet)' : 'var(--text-muted)'} />
-                  <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>All Topics</span>
-                </div>
-                <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--text-muted)' }}>{problems.length}</span>
+                <span className="sb-cat-label">
+                  <Sparkles size={12} color={!activeCategory ? 'var(--accent-violet)' : 'var(--text-muted)'} />
+                  <span>All topics</span>
+                </span>
+                <span className="sb-cat-count">{problems.length}</span>
               </button>
 
               {categories.map((cat) => {
@@ -157,33 +144,15 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
                   <button
                     key={cat.id}
                     type="button"
+                    className={isCatActive ? 'sb-cat sb-cat-on' : 'sb-cat'}
+                    aria-pressed={isCatActive}
                     onClick={() => onSelectCategory(isCatActive ? null : cat.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: '4px',
-                      padding: '7px 9px',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--border-default)',
-                      borderLeft: isCatActive ? '3px solid var(--accent-violet)' : '1px solid var(--border-default)',
-                      background: isCatActive ? 'var(--accent-violet-tint)' : 'rgba(255, 255, 255, 0.02)',
-                      color: isCatActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                      fontSize: '0.74rem',
-                      fontWeight: isCatActive ? '700' : '500',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease'
-                    }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', overflow: 'hidden' }}>
-                      <Icon size={13} color={isCatActive ? 'var(--accent-violet)' : 'var(--text-muted)'} />
-                      <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{cat.label}</span>
-                    </div>
-                    {count > 0 && (
-                      <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--text-muted)' }}>
-                        {count}
-                      </span>
-                    )}
+                    <span className="sb-cat-label">
+                      <Icon size={12} color={isCatActive ? 'var(--accent-violet)' : 'var(--text-muted)'} />
+                      <span>{cat.label}</span>
+                    </span>
+                    {count > 0 && <span className="sb-cat-count">{count}</span>}
                   </button>
                 );
               })}

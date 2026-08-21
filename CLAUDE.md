@@ -50,6 +50,12 @@ git switch main && git pull && git switch -c fix/<topic>
 If you notice you have already modified files while on `main`, run `git switch -c <branch>`
 before committing — uncommitted changes carry across.
 
+**Publishing needs approval.** Ask before any `git`/`gh` command that writes or publishes:
+`commit`, `push`, `merge`, `rebase`, `reset`, `tag`, `gh pr create`, `gh pr merge`, or
+`gh api` with a non-GET method. Read-only commands (`status`, `log`, `diff`, `show`,
+`branch`, `pull`, `fetch`, `gh run list`, `gh pr view`) need no approval — just run them.
+Do the work and describe the change set, then let the user decide when it lands.
+
 ## Architecture
 
 ### Two layers coexist, deliberately
