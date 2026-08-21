@@ -13,7 +13,7 @@ import App from './App';
  * have been caught by simply rendering App once, so that is what these do.
  */
 
-/** The 18 catalogue endpoints App is expected to request on mount. */
+/** The catalogue endpoints App is expected to request on mount (18 legacy + 1 tracer enrichment). */
 const EXPECTED_CATALOG_URLS = [
   '/api/graphs/bfs-dfs/problems',
   '/api/graphs/advanced/problems',
@@ -32,7 +32,8 @@ const EXPECTED_CATALOG_URLS = [
   '/api/stackqueue/problems',
   '/api/slidingwindow/problems',
   '/api/maths/problems',
-  '/api/basic-recursion/problems'
+  '/api/basic-recursion/problems',
+  '/api/problems'
 ];
 
 /** Paths the backend has never served. Requesting them silently loses whole categories. */
@@ -145,6 +146,18 @@ describe('App catalogue loading', () => {
     await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
     expect(screen.getByText('Count Digits')).toBeInTheDocument();
     expect(screen.getByText('Print 1 To N')).toBeInTheDocument();
+  });
+
+  it('de-duplicates problems with repeated ids across endpoints', async () => {
+    const duplicateProb = problem('two-sum', 'Two Sum (Duplicate)', 'Sorting Algorithms');
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url === '/api/sorting/problems') return Promise.resolve(ok([duplicateProb]));
+      return Promise.resolve(respondTo(url));
+    }));
+
+    render(<App />);
+    // When sorting returns duplicate two-sum, 18 endpoints yield 17 unique algorithms
+    await waitFor(() => expect(screen.getByText('17 algorithms')).toBeInTheDocument());
   });
 });
 

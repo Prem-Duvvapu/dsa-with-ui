@@ -18,7 +18,6 @@ const DEFAULT_FALLBACK_PROBLEMS = [
     id: 'two-sum',
     title: 'Two Sum',
     category: 'Arrays & Hashing',
-    subcategory: 'Array',
     difficulty: 'Easy',
     dsType: 'Array',
     defaultArray: [
@@ -75,7 +74,6 @@ const DEFAULT_FALLBACK_PROBLEMS = [
     id: 'longest-substring-without-repeating',
     title: 'Longest Substring Without Repeating Characters',
     category: 'Sliding Window',
-    subcategory: 'Window',
     difficulty: 'Medium',
     dsType: 'Array',
     defaultArray: [
@@ -160,7 +158,9 @@ export default function App() {
   // Global Keyboard Shortcuts (Space: Play/Pause, Right: Next, Left: Prev, R: Reset)
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+      const tag = document.activeElement?.tagName;
+      if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(tag)
+          || document.activeElement?.isContentEditable) return;
 
       if (e.code === 'Space') {
         e.preventDefault();
@@ -208,18 +208,38 @@ export default function App() {
         { url: '/api/basic-recursion/problems', base: '/api/basic-recursion' }
       ];
 
-      const results = await Promise.allSettled(
-        endpoints.map(ep => fetch(ep.url).then(r => r.ok ? r.json() : []))
-      );
+      const allFetches = [
+        ...endpoints.map(ep => fetch(ep.url).then(r => r.ok ? r.json() : [])),
+        fetch('/api/problems').then(r => r.ok ? r.json() : [])
+      ];
 
+      const results = await Promise.allSettled(allFetches);
+
+      // Traced enrichment from /api/problems (last item)
+      const tracedRes = results[endpoints.length];
+      const tracedMap = new Map();
+      if (tracedRes.status === 'fulfilled' && Array.isArray(tracedRes.value)) {
+        tracedRes.value.forEach(p => {
+          if (p && p.id && typeof p.traced === 'boolean') {
+            tracedMap.set(p.id, p.traced);
+          }
+        });
+      }
+
+      const seenIds = new Set();
       const combined = [];
-      results.forEach((res, idx) => {
+      endpoints.forEach((ep, idx) => {
+        const res = results[idx];
         if (res.status === 'fulfilled' && Array.isArray(res.value)) {
           res.value.forEach(item => {
-            combined.push({
-              ...item,
-              _endpoint: endpoints[idx].base
-            });
+            if (item && item.id && !seenIds.has(item.id)) {
+              seenIds.add(item.id);
+              combined.push({
+                ...item,
+                _endpoint: ep.base,
+                ...(tracedMap.size > 0 ? { traced: tracedMap.get(item.id) ?? false } : {})
+              });
+            }
           });
         }
       });
@@ -378,6 +398,7 @@ export default function App() {
               activeCategory={activeCategory}
               onSelectCategory={handleSelectCategory}
               onSelectProblem={handleSelectProblem}
+              onRetry={fetchAllProblems}
             />
           </div>
         )}

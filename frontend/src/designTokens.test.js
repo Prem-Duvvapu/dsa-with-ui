@@ -18,13 +18,25 @@ import { fileURLToPath } from 'node:url';
 const SRC = dirname(fileURLToPath(import.meta.url));
 const CSS = readFileSync(join(SRC, 'index.css'), 'utf8');
 
+function getJsxFiles(dir) {
+  const entries = readdirSync(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...getJsxFiles(fullPath));
+    } else if (entry.isFile() && entry.name.endsWith('.jsx')) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
 function componentSources() {
-  const dir = join(SRC, 'components');
-  const files = readdirSync(dir).filter((f) => f.endsWith('.jsx'));
-  files.push('../App.jsx');
-  return files.map((f) => ({
-    name: f,
-    text: readFileSync(f.startsWith('..') ? join(SRC, 'App.jsx') : join(dir, f), 'utf8')
+  const files = getJsxFiles(SRC);
+  return files.map((fullPath) => ({
+    name: fullPath.slice(SRC.length + 1).replace(/\\/g, '/'),
+    text: readFileSync(fullPath, 'utf8')
   }));
 }
 
