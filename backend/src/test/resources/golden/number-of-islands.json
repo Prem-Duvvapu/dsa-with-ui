@@ -1,0 +1,228 @@
+{
+  "anchors" : {
+    "done" : 11,
+    "found" : 5,
+    "init" : 2,
+    "sink" : 7
+  },
+  "code" : "public int numIslands(int[][] grid) {\n    int islands = 0;\n    for (int r = 0; r < grid.length; r++) {\n        for (int c = 0; c < grid[0].length; c++) {\n            if (grid[r][c] == 1) {\n                islands++;\n                sink(grid, r, c);\n            }\n        }\n    }\n    return islands;\n}",
+  "problemId" : "number-of-islands",
+  "resolvedInput" : {
+    "grid" : [ [ 1, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Scan a 4x5 grid. Each unvisited land cell starts a new island.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "islands" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Land at (0,0) that is not part of a counted island. That makes island #1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "0",
+      "islands" : "1",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "Sink (0,0) into island #1. 1 cell(s) claimed, 2 still queued.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "claimed" : "1",
+      "frontier" : "2",
+      "islands" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Sink (0,1) into island #1. 2 cell(s) claimed, 2 still queued.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "claimed" : "2",
+      "frontier" : "2",
+      "islands" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Sink (1,1) into island #1. 3 cell(s) claimed, 1 still queued.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "claimed" : "3",
+      "frontier" : "1",
+      "islands" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Sink (1,0) into island #1. 4 cell(s) claimed, 0 still queued.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "claimed" : "4",
+      "frontier" : "0",
+      "islands" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "Land at (2,2) that is not part of a counted island. That makes island #2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "2",
+      "islands" : "2",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 7,
+    "description" : "Sink (2,2) into island #2. 1 cell(s) claimed, 0 still queued.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "claimed" : "1",
+      "frontier" : "0",
+      "islands" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 5,
+    "description" : "Land at (3,3) that is not part of a counted island. That makes island #3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "3",
+      "islands" : "3",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 7,
+    "description" : "Sink (3,3) into island #3. 1 cell(s) claimed, 1 still queued.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "claimed" : "1",
+      "frontier" : "1",
+      "islands" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 7,
+    "description" : "Sink (3,4) into island #3. 2 cell(s) claimed, 0 still queued.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "claimed" : "2",
+      "frontier" : "0",
+      "islands" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 11,
+    "description" : "Grid fully scanned. 3 island(s).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "islands" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

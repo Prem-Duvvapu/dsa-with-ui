@@ -1,0 +1,591 @@
+{
+  "anchors" : {
+    "advance" : 6,
+    "done" : 9,
+    "flip" : 5,
+    "init" : 2,
+    "save" : 4
+  },
+  "code" : "public ListNode reverse(ListNode head) {\n    ListNode prev = null, curr = head;\n    while (curr != null) {\n        ListNode next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}",
+  "problemId" : "reverse-linked-list",
+  "resolvedInput" : {
+    "values" : [ 1, 2, 3, 4 ]
+  },
+  "stepCount" : 14,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "prev = null, curr = head (1). Nothing is reversed yet.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1",
+      "prev" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Save curr.next (2) before overwriting it — otherwise the rest of the list is lost.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1",
+      "next" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "Point 1 backwards at null.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1",
+      "prev" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Move the window forward: prev = 1, curr = 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "2",
+      "prev" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "Save curr.next (3) before overwriting it — otherwise the rest of the list is lost.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "2",
+      "next" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "Point 2 backwards at 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "2",
+      "prev" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Move the window forward: prev = 2, curr = 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "3",
+      "prev" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "Save curr.next (4) before overwriting it — otherwise the rest of the list is lost.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "3",
+      "next" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 5,
+    "description" : "Point 3 backwards at 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "3",
+      "prev" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "Move the window forward: prev = 3, curr = 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "4",
+      "prev" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 4,
+    "description" : "Save curr.next (null) before overwriting it — otherwise the rest of the list is lost.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "4",
+      "next" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 5,
+    "description" : "Point 4 backwards at 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "4",
+      "prev" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "2",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 6,
+    "description" : "Move the window forward: prev = 4, curr = null.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "null",
+      "prev" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "2",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 9,
+    "description" : "4 links flipped. The new head is 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "newHead" : "4",
+      "result" : "[4, 3, 2, 1]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "2",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
