@@ -10,7 +10,7 @@ already inside WSL, call `mvn`/`npm` directly as below.
 
 ```bash
 # Backend (Java 17, Maven)
-cd backend && mvn test                                  # full suite (~315 tests)
+cd backend && mvn test                                  # full suite (~332 tests)
 cd backend && mvn test -Dtest=TracerContractTest         # one test class
 cd backend && mvn test -Dtest=ApiContractTest#executeRejectsUnknownIdInsteadOfFallingBack
 cd backend && mvn spring-boot:run                        # http://localhost:8923
@@ -174,5 +174,3 @@ tripwires — if a change moves them, update the assertions deliberately and upd
   migration completes.
 - `references.md` — UI/UX research and design tokens. `PROJECT_CONTEXT.md` — pedagogical
   principles.
-- `implementation_plan.md`, `walkthrough.md` — historical, superseded, and their counts are
-  wrong. Don't cite them.

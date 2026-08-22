@@ -4,7 +4,7 @@ description: >
   Project-invariant review for the dsa-with-ui repo — run it on a branch, a diff, or a PR
   before merging. Checks the things this codebase has actually broken before: a
   reintroduced `default:` fallback that makes one problem play another's animation, a
-  dead or dangling `// @a` anchor, a tracer added without its `ALTERNATE_INPUT` entry, a
+  dead or dangling `// @a` anchor, an `alternateInput()` copied from the spec defaults, a
   new npm dependency, a `var()` or className that `index.css` does not define, a legacy
   controller that lost its 404 guard, a moved pinned number (433 problems / 7 duplicates),
   or work committed on `main`. Use alongside — not instead of — the built-in /code-review.
@@ -131,19 +131,18 @@ debt — the standard is that a **changed** tracer does not add one.
 
 ---
 
-## 4. `ALTERNATE_INPUT` is in sync
+## 4. `alternateInput()` is real, not a copy of the defaults
 
-`TracerContractTest.registryMatchesThisTestsExpectations` fails by design when a tracer is
-added without an entry. Confirm the diff did not "fix" that by deleting the assertion.
+`alternateInput()` is abstract, so a missing one will not compile. The failure mode that
+DOES get through review is an alternate pasted from the spec's own defaults: then
+`traceRespondsToItsInput` compares a trace against itself, passes, and proves nothing.
+`alternateInputDiffersFromDefaults` catches it — confirm the diff did not weaken that.
 
 ```bash
-# Both lists must be identical.
-grep -A2 'public String id()' backend/src/main/java/com/dsa/ui/tracer/impl/*.java \
-  | grep -oP 'return "\K[^"]+' | sort
-# (the 12-space indent selects the map's top-level keys; a looser pattern also picks up
-#  nested keys such as "graph" inside bfs-traversal's input)
-grep -oP '^ {12}"\K[a-z0-9-]+(?=",)' \
-  backend/src/test/java/com/dsa/ui/tracer/TracerContractTest.java | sort
+# Eyeball each new tracer's two inputs side by side. They must differ in LENGTH or in
+# which branches run, not merely in order — a permutation changes the fingerprint while
+# proving nothing about whether the algorithm executed.
+grep -A6 'alternateInput()' backend/src/main/java/com/dsa/ui/tracer/impl/*.java
 ```
 
 The alternate input must be **materially different**, not a permutation. Reordering
@@ -169,7 +168,7 @@ the `README.md` coverage table. A number changed without a stated reason is a fi
 ## 6. Frontend guards
 
 ```bash
-# Expect no change to dependencies. This project adds none — SEARCH_PLAN.md rejects even
+# Expect no change to dependencies. This project adds none — the search work rejected even
 # fuse.js and lodash by name, in favour of a hand-rolled, unit-tested module.
 git diff main...HEAD -- frontend/package.json frontend/package-lock.json
 ```

@@ -6,8 +6,8 @@ description: >
   stairs actually animate"). Covers finding whether the id is already catalogued (425 of
   433 are catalogued but untraced — that is the usual case), registering a genuinely new
   ProblemDetail in the right service, writing the AlgorithmTracer with `// @a` anchored
-  code and an InputSpec, adding the TracerContractTest.ALTERNATE_INPUT entry that the
-  build requires, deleting the legacy delegate, and the verification runs.
+  code and an InputSpec, implementing the alternateInput() the interface requires, deleting
+  the legacy delegate, and the verification runs.
 ---
 
 # Adding a problem
@@ -243,17 +243,22 @@ Wire representations (`FieldType`): `INT` a number · `INT_ARRAY` `[2,7,11,15]` 
 
 ---
 
-## Step 4 — `ALTERNATE_INPUT` (the build fails without it)
+## Step 4 — `alternateInput()` (the build fails without it)
 
-`backend/src/test/java/com/dsa/ui/tracer/TracerContractTest.java`:
+In your own tracer, beside `inputSpec()`:
 
 ```java
-"kadane-algo", Map.of("nums", List.of(5, -1, 5, -20, 3)),
+/** A longer run with a reset, so the trace differs in length and in branch profile. */
+@Override
+public Map<String, Object> alternateInput() {
+    return Map.of("nums", List.of(5, -1, 5, -20, 3));
+}
 ```
 
-`registryMatchesThisTestsExpectations` asserts the map's keys equal the registry's ids
-exactly. **This failing is the design working** — an untested tracer must not be able to
-ship. Add the entry; never relax the assertion.
+It is **abstract** on `AlgorithmTracer`, so a tracer without one does not compile.
+**That is the design working** — an untested tracer must not be able to ship. There is no
+central map to edit any more: `TracerContractTest` is driven off the registry and names no
+tracer, so this file is the only one you touch.
 
 The second input must be **materially different**, not a permutation. A reordering still
 passes `traceRespondsToItsInput` while proving nothing. Aim for a different length, a
@@ -304,7 +309,7 @@ checklist.
 
 | Symptom | Cause |
 |---|---|
-| `registryMatchesThisTestsExpectations` fails | Step 4 skipped |
+| `alternateInputDiffersFromDefaults` fails | Step 4 pasted the spec defaults |
 | App fails to start: "Two tracers claim problem id" | Duplicate `id()` — you added one for an already-traced problem |
 | `noOrphanedTracers` fails | `id()` matches no catalogue entry; typo or Step 2 skipped |
 | `Unknown code anchor 'x'. Declared: […]` | `emit.at` name not in `annotatedCode()` |
