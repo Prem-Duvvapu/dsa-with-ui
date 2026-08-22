@@ -160,6 +160,7 @@ class TracerContractTest {
         AlgorithmTracer greedy = new AlgorithmTracer() {
             @Override public String id() { return "test-only-runaway"; }
             @Override public InputSpec inputSpec() { return InputSpec.of().withMaxSteps(25); }
+            @Override public Map<String, Object> alternateInput() { return Map.of(); }
             @Override public String annotatedCode() { return "// @a spin\nwhile (true) {}"; }
             @Override public void run(Inputs in, StepEmitter emit) {
                 for (int i = 0; i < 1_000_000; i++) {
