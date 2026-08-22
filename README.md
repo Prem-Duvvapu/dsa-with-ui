@@ -2,8 +2,6 @@
 
 [![CI](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml)
 
-[![CI](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml)
-
 A full-stack visualizer for data structures and algorithms. Pick a problem, give it your
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
@@ -20,7 +18,7 @@ different on purpose, and the API reports both — see
 | :--- | :--- | :--- |
 | Backend | Spring Boot 3.2.3, Java 17 | `http://localhost:8923` |
 | Frontend | React 18 + Vite | Multi-mode canvases: graph, tree, array, linked list, recursion tree, grid |
-| Testing | JUnit 5 + Vitest | 308 backend, 16 frontend |
+| Testing | JUnit 5 + Vitest | ~332 backend, 44 frontend |
 | Deployment | Docker Compose | One command for both tiers |
 
 ### How a trace is produced
@@ -109,9 +107,12 @@ Status codes are meaningful:
 }
 ```
 
-Input size is capped per problem, and every trace has a step budget (default 5000). A run
-that hits it comes back with `truncated: true` rather than exhausting the server — which
-matters once a caller can set `n` on a factorial-time algorithm.
+Input size is capped per problem, and every trace has two ceilings. The **step budget**
+(default 5000) bounds CPU — it matters once a caller can set `n` on a factorial-time
+algorithm. The **byte budget** (default 2 MB) bounds the response, because every step
+carries a snapshot of the data structure, so the payload grows as steps x n: a 5000-step
+trace of a 40-element array is roughly 11 MB of JSON. Hitting either returns
+`truncated: true` with a `truncationReason` naming which one stopped the run.
 
 The eighteen legacy per-topic endpoints (`/api/arrays/...`, `/api/trees/...`, and so on)
 still work while the frontend migrates, and will be removed once it has.
@@ -175,8 +176,8 @@ stub.
 ## Tests
 
 ```bash
-cd backend  && mvn test        # 308 tests
-cd frontend && npx vitest run  #  16 tests
+cd backend  && mvn test        # ~332 tests
+cd frontend && npx vitest run  #   44 tests
 ```
 
 The suite is built to catch fake work, not just crashes:
@@ -184,6 +185,12 @@ The suite is built to catch fake work, not just crashes:
 - **`TracerContractTest.traceRespondsToItsInput`** runs every tracer on two materially
   different inputs and fails if the traces match. A canned narration cannot survive it.
 - **`noTwoTracersProduceIdenticalTraces`** applies the same idea across the registry.
+- **`stepCountGrowsWithInput`** runs each tracer at two sizes and fails if the step count
+  does not rise — catching a narration that varies its wording but not its length, which
+  the distinctness tests above cannot see.
+- **`anchorsAreAllReachable`** fails on a `// @a` marker no step ever highlights. It used
+  to assert only that *something* was emitted, and six of the eight tracers failed the
+  moment it started checking what it claimed to.
 - **`ApiContractTest`** is parameterized over all eighteen legacy controllers rather than
   testing one by hand — hand-testing one is what let three copy-pasted variants diverge,
   with eight of them silently dropping their 404 guard.
@@ -202,6 +209,4 @@ The suite is built to catch fake work, not just crashes:
 | `plan.md` | The v2 tracing architecture. Accurate; the source of the current design. |
 | `references.md` | UI/UX research and the design-token system. |
 | `PROJECT_CONTEXT.md` | Pedagogical principles behind the visualizations. |
-| `implementation_plan.md` | Historical. Superseded by `plan.md` and this README. |
-| `walkthrough.md` | Historical build log. Superseded. |
 | `HANDOFF.md` | **Temporary.** Implementation prompts for the remaining phases. Delete once the migration is complete. |

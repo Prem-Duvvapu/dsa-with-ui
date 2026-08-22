@@ -146,8 +146,9 @@ Recognise these — each is a version of the mistake that hid the 303 stubs.
 ## Also non-negotiable
 
 - **Do not weaken or delete an existing assertion to make something pass.** If
-  `registryMatchesThisTestsExpectations` fails, add the `ALTERNATE_INPUT` entry — that
-  failure is the design working.
+  `anchorsAreAllReachable` names a dead anchor, emit it or delete the marker — do not
+  narrow the assertion. If `alternateInputDiffersFromDefaults` fires, write a genuinely
+  different input. Those failures are the design working.
 - **Do not move a pinned number to make a test pass.** `ProblemsApiTest`'s `433` and `7`
   are tripwires. Changing one is a deliberate act that belongs in the commit message,
   alongside the `README.md` update.

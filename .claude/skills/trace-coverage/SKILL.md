@@ -5,8 +5,8 @@ description: >
   Use for "how many problems actually work", "what's left to trace", "where are we on the
   migration", "which category should I do next", progress updates, or before editing any
   coverage claim in README.md / HANDOFF.md. Reads the numbers from the code and the running
-  API rather than from documentation — implementation_plan.md and walkthrough.md are
-  historical and their counts are wrong.
+  API rather than from any document, because every document here is a snapshot that goes
+  stale the moment a tracer lands.
 ---
 
 # Trace coverage
@@ -21,9 +21,9 @@ flag, not a feature flag: an untraced problem returns **501**, and the UI is mea
 "not yet traced" rather than animate something else.
 
 **Never quote a coverage number from a document.** `README.md` has historically carried
-four different catalogue sizes, none matching the source; `implementation_plan.md` and
-`walkthrough.md` are superseded; `HANDOFF.md` says of its own numbers "if those no longer
-match `GET /api/problems/stats`, treat this file with suspicion." Run the commands.
+four different catalogue sizes, none matching the source, and `HANDOFF.md` says of its own
+numbers "if those no longer match `GET /api/problems/stats`, treat this file with
+suspicion." Run the commands.
 
 ---
 

@@ -198,6 +198,19 @@ VERIFY
 > Three jobs, one prompt, because they all touch the tracer layer and C is written
 > against whatever this leaves behind. Landing them separately means migrating 425
 > problems twice.
+>
+> **Progress — mostly landed.** Shipped as a PR sequence rather than one branch:
+>
+> | | | PR |
+> |---|---|---|
+> | ✅ | 7, 8 — `anchorsAreAllReachable` made real; 6 tracers fixed; `binary-search-1d` default | #6 |
+> | ✅ | 1, 2, 3 — `alternateInput()` on the tracer, registry-driven `@MethodSource` | #7 |
+> | ✅ | 4, 6 — growth test and jacoco | #8 |
+> | ✅ | 9b — byte budget, `truncationReason`, estimator accuracy test | #9 |
+> | ⬜ | **9a — delta-encoded steps + keyframes.** The wire-format change. Prompt B waits on it. | — |
+> | ⬜ | **5 — golden files.** Must follow 9a, or they pin a format about to change. | — |
+>
+> Backend suite is at 332 tests. Do the two open items and Prompt A is done.
 
 ```
 Task: make the tracer test harness workable at 400+ tracers, fix three verified defects
