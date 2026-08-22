@@ -56,6 +56,11 @@ before committing — uncommitted changes carry across.
 `branch`, `pull`, `fetch`, `gh run list`, `gh pr view`) need no approval — just run them.
 Do the work and describe the change set, then let the user decide when it lands.
 
+**Keep pull requests small to medium, and land them one at a time.** A phase of work is
+planned as a numbered PR sequence, not shipped as one large branch — each PR reviewable
+on its own, merged, pulled, then the next one starts. This keeps `main` continuously
+green, since CI gates every merge.
+
 ## Architecture
 
 ### Two layers coexist, deliberately
