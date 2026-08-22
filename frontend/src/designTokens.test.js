@@ -171,6 +171,23 @@ describe('design tokens', () => {
     expect(collisions, 'a difficulty pill must never borrow a semantic state colour').toEqual([]);
   });
 
+  it('resolves every var() used inside index.css itself', () => {
+    // The className and component-var guards read the JSX. They do not read the CSS, so a
+    // rule inside this file could reference a token that does not exist and nothing would
+    // notice — CSS drops an unresolvable declaration silently, exactly as it did when a
+    // rewrite deleted 15 tokens. Caught while writing CaptureStrip: 18 var(--bench-*) calls
+    // were live against a branch where the token layer had not landed yet, and every guard
+    // stayed green.
+    const defined = definedTokens();
+    const missing = new Set();
+
+    for (const match of CSS.matchAll(/var\(\s*(--[a-zA-Z0-9-]+)/g)) {
+      if (!defined.has(match[1])) missing.add(match[1]);
+    }
+
+    expect([...missing], 'index.css references tokens it does not define').toEqual([]);
+  });
+
   it('defines every Bench token in the base :root, not only behind a media query', () => {
     // A colour whose only definition sits inside @media or [data-theme] never applies
     // in the unstamped "system" state, which renders one theme's text on the other's

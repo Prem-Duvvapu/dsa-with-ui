@@ -77,9 +77,18 @@ const CATALOG = {
 };
 
 function stepsFor(id) {
+  // arrayState is what CaptureStrip derives its rows from; a step list without one is a
+  // trace the strip legitimately has nothing to draw.
+  const row = (states) => states.map((state, index) => ({ index, value: index, state }));
   return [
-    { stepNumber: 1, activeLine: 1, description: `${id} step one`, variables: {}, dsType: 'Array' },
-    { stepNumber: 2, activeLine: 2, description: `${id} step two`, variables: {}, dsType: 'Array' }
+    {
+      stepNumber: 1, activeLine: 1, description: `${id} step one`, variables: {},
+      dsType: 'Array', arrayState: row(['default', 'default'])
+    },
+    {
+      stepNumber: 2, activeLine: 2, description: `${id} step two`, variables: {},
+      dsType: 'Array', arrayState: row(['comparing', 'default'])
+    }
   ];
 }
 
@@ -208,5 +217,57 @@ describe('App problem selection', () => {
 
     await waitFor(() => expect(screen.getByText('jump-game step one')).toBeInTheDocument());
     expect(screen.queryByText('kth-largest step one')).not.toBeInTheDocument();
+  });
+});
+
+describe('App execution capture', () => {
+  /** Select a problem and wait for its trace to arrive. */
+  async function openValidAnagram() {
+    render(<App />);
+    await waitFor(() => expect(screen.getByText('Valid Anagram')).toBeInTheDocument());
+    fireEvent.click(screen.getByText('Valid Anagram'));
+    await waitFor(() =>
+      expect(screen.getByLabelText('Execution capture')).toBeInTheDocument()
+    );
+  }
+
+  it('shows the whole run as a strip once a trace is loaded', async () => {
+    await openValidAnagram();
+    expect(screen.getAllByRole('button', { name: /^Step \d+ of 2$/ })).toHaveLength(2);
+  });
+
+  it('frames the canvas in the shared shell, with one legend', async () => {
+    await openValidAnagram();
+    // The four-badge legend used to be copy-pasted into three canvases. One shell, one legend.
+    expect(screen.getAllByText('happening now')).toHaveLength(1);
+    expect(screen.getByText('Step 1 of 2')).toBeInTheDocument();
+  });
+
+  it('seeking on the strip moves the visualization, not just the strip', async () => {
+    await openValidAnagram();
+    fireEvent.click(screen.getByRole('button', { name: 'Step 2 of 2' }));
+    // The step counter is rendered by the shell from App's own index, so if it moved,
+    // the canvas and the code highlight moved with it.
+    await waitFor(() => expect(screen.getByText('Step 2 of 2')).toBeInTheDocument());
+  });
+
+  it('draws no strip for a trace that carries nothing to draw', async () => {
+    // App always has a problem open (activeProblemId is seeded to two-sum), so the
+    // empty case that actually occurs is a trace with no per-slot state — a scalar
+    // recursion, say. Drawing an empty frame there is worse than drawing nothing.
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.includes('/execute/')) {
+        return Promise.resolve(
+          ok([{ stepNumber: 1, activeLine: 1, description: 'scalar only', variables: { n: 5 } }])
+        );
+      }
+      return Promise.resolve(respondTo(url));
+    }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText('Valid Anagram')).toBeInTheDocument());
+    fireEvent.click(screen.getByText('Valid Anagram'));
+    await waitFor(() => expect(screen.getByText('scalar only')).toBeInTheDocument());
+    expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
   });
 });

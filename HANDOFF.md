@@ -553,6 +553,32 @@ VERIFY
   - Confirm no component hardcodes a colour — every colour resolves through a token.
 ```
 
+### Prompt B progress
+
+| # | Job | State |
+|---|---|---|
+| 1 | Bench token layer, both themes, contrast guard | ✅ PR #13 |
+| 5 | `<CanvasShell>` — header / legend / stage slots | ✅ built and wired |
+| 5 | Split `GraphCanvas.jsx`; add the missing `TrieCanvas` | ❌ not started |
+| 5b | `<CaptureStrip>` — labelled / compressed / band, canvas + bucketing | ✅ built, tested, wired |
+| — | Delta decoder (`src/trace/decodeTrace.js`), the seam onto prompt A's wire format | ✅ built, not yet consuming `?encoding=delta` |
+| 2, 3, 4 | `useTrace`, one endpoint resolver, `dsType` canvas selection | ❌ not started |
+| 6 | The input panel — the headline feature | ❌ not started |
+| 7, 8, 9, 10 | Honest states, the eight fixes, a11y, CSS Modules | ❌ not started |
+
+**Where the wiring stands.** `App.jsx` renders `<CanvasShell>` around `renderCanvas()` and
+`<CaptureStrip>` beneath it. The `category.includes(...)` ladder at `App.jsx:353` is
+UNCHANGED — job 4 still owns replacing it with `dsType`. The five canvases still draw
+their own chrome inside the shell's stage; the shell owns the legend but the canvases have
+not yet had their duplicated legends and `getNodeColor` copies removed. Doing that is what
+job 5's GraphCanvas split should carry.
+
+**On the capture strip's rows.** `rowStates`/`rowLabels` in `CaptureStrip.jsx` read
+whichever payload the step happens to carry (`arrayState`, then `treeNodes`, `listState`,
+`gridState`, `nodeStates`). That is deliberate — it keeps ONE component — but it means a
+step carrying none of them draws no strip, which is the tested behaviour. When `dsType`
+lands (job 4), row meaning should come from it rather than from payload sniffing.
+
 ---
 
 ## PROMPT C — Migrate the catalogue onto the tracer contract
