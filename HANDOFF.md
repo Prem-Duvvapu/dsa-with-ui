@@ -10,20 +10,27 @@
 > **Delete it once PROMPT D is complete.** Prompt D's checklist includes doing so.
 > Anything here still worth keeping by then belongs in `README.md` or `plan.md` instead.
 >
-> Snapshot taken at: 433 catalogued / 8 traced, on branch
-> `fix/trace-contract-and-phase-0`. If those numbers no longer match
-> `GET /api/problems/stats`, treat this file with suspicion.
+> Snapshot taken at: 433 catalogued / 8 traced, on `main` at `a5970fb`. If those numbers
+> no longer match `GET /api/problems/stats`, treat this file with suspicion.
 
-Five prompts. **Z first** (it gates every later merge). **A must land before C.**
+Five prompts. **Z is done** — CI runs on every push and PR, and branch protection
+requires `Backend (JUnit)` and `Frontend (Vitest + build)`. **A must land before C.**
 B and C can run in parallel by different agents. D is last.
 
 | | Prompt | Depends on | Size |
 |---|---|---|---|
-| Z | CI workflow gating merges to main | — | small |
-| A | Scale the test harness | — | small |
-| B | Frontend restructure onto the v2 API | — | medium |
+| Z | CI workflow gating merges to main | — | ✅ done |
+| A | Scale the harness, fix the anchor defects, shrink the wire format | — | medium |
+| B | Frontend redesign + restructure onto the v2 API | A, for the step format only | large |
 | C | Migrate the catalogue onto the tracer contract | A | very large |
 | D | Retire the legacy layer | B, C | small |
+
+**Scope note (2026-08-22).** The owner has lifted the earlier "do not change the backend"
+restriction on prompt B. Backend and frontend changes are both in scope. Payload and
+harness work still belongs in A, because C is written against whatever A leaves behind.
+
+**The visual direction is settled.** It is called *Bench*, and it is specified inside
+prompt B. Do not redesign it; build it.
 
 ---
 
@@ -31,9 +38,11 @@ B and C can run in parallel by different agents. D is last.
 
 ```
 Repo: /mnt/c/Users/Hp/OneDrive/Desktop/dsa-with-ui
-Branch to start from: fix/trace-contract-and-phase-0
+Branch to start from: main (cut a working branch; never commit on main)
 Backend: Spring Boot 3.2.3 / Java 17, port 8923.  Frontend: React 18 + Vite, dev 5180, docker 5174.
-Build: `cd backend && mvn test` (308 tests, green)  ·  `cd frontend && npx vitest run` (16 tests, green)
+Build: `cd backend && mvn test` (308 tests, green)  ·  `cd frontend && npx vitest run` (44 tests, green)
+Publishing (commit / push / gh pr create / gh pr merge) requires the owner's approval.
+Read-only git and gh commands do not.
 
 BACKGROUND
 This project visualizes DSA algorithms step by step. An audit found 433 catalogued
@@ -120,7 +129,7 @@ NON-NEGOTIABLE WORKING RULES
 
 ---
 
-## PROMPT Z — CI workflow (do this first; it gates everything after)
+## PROMPT Z — CI workflow ✅ DONE (kept for the record)
 
 ```
 Task: add a GitHub Actions workflow that runs both test suites on every pull request, so
@@ -184,11 +193,15 @@ VERIFY
 
 ---
 
-## PROMPT A — Scale the test harness
+## PROMPT A — Scale the harness, fix the anchor defects, shrink the wire format
+
+> Three jobs, one prompt, because they all touch the tracer layer and C is written
+> against whatever this leaves behind. Landing them separately means migrating 425
+> problems twice.
 
 ```
-Task: make the tracer test harness workable at 400+ tracers, then add the coverage
-tooling the plan calls for.
+Task: make the tracer test harness workable at 400+ tracers, fix three verified defects
+in anchor coverage, and stop the trace payload growing as steps x n.
 
 PROBLEM
 backend/src/test/java/com/dsa/ui/tracer/TracerContractTest.java holds a hardcoded
@@ -235,61 +248,152 @@ DO
 6. Add jacoco to backend/pom.xml (there is no coverage tooling on either side). Report
    only — do not add a failing threshold yet.
 
+7. FIX A VACUOUS TEST. TracerContractTest.anchorsAreAllReachable ends at
+   `assertFalse(usedLines.isEmpty(), id + " emitted nothing")`. It never compares what
+   was emitted against code.getAnchors(), so a tracer can declare ten anchors, emit one,
+   and pass. Make it diff declared anchors against the lines actually highlighted across
+   the trace, and fail naming every anchor never reached.
+
+   Measured from the live API before you start — six of the eight tracers fail this the
+   moment it becomes real:
+       binary-search-1d   3 steps / 7 anchors   dead: left, loop, miss, right
+       two-sum            5 steps / 7 anchors   dead: check, loop, none
+       bfs-traversal     21 steps / 8 anchors   dead: loop, neighbours
+       kadane-algo       17 steps / 6 anchors   dead: loop
+       reverse-linked-list 14 steps / 6 anchors dead: loop
+       number-of-islands 12 steps / 5 anchors   dead: scan
+       tree-preorder, tree-inorder              clean
+   Expect that failure on the first run. It is the acceptance criterion, exactly as the
+   distinct-trace test was.
+
+8. THEN FIX THE CAUSES. They are two different bugs and need two different fixes.
+   a) A declared anchor with no matching emit.at() is dead for EVERY input — dead code in
+      the annotation. Either emit it or delete the marker. `loop` is the common offender.
+   b) An anchor unreachable only because of a poor default input is a demo problem, not a
+      code problem. binary-search-1d defaults to nums=[1,3,5,7,9,11,13], target=7, and 7
+      sits exactly on the first midpoint — so the trace ends in three steps having never
+      executed a comparison branch or the not-found path. Change the default so the
+      landing animation shows the algorithm actually working. Do NOT delete the anchors
+      to make the test pass; that is weakening an assertion.
+
+9. STOP THE PAYLOAD GROWING AS steps x n. Every ExecutionStep carries a full snapshot
+   (arrayState, gridState, listState, nodeStates, treeNodes). Measured on kadane-algo:
+
+       n = 9  (spec default)   17 steps    11,675 bytes     687 bytes/step
+       n = 40 (spec ceiling)   54 steps   122,515 bytes   2,268 bytes/step
+
+   That is roughly 450 + 45n bytes per step, so the existing 5000-step budget permits an
+   ~11 MB response for a single click. maxSteps bounds CPU; it does not bound bytes.
+   Kadane rewrites all 40 elements every step to record a change in one of them.
+
+   a) Emit deltas, not snapshots: what changed this step, plus a full keyframe every ~50
+      steps so the frontend can still scrub to an arbitrary position without replaying
+      from zero. Keep the existing shape available behind a query flag until prompt B has
+      migrated, then drop it.
+   b) Add a byte budget to TraceRunner beside the step budget. Stop at whichever trips
+      first and report BOTH through the existing `truncated` flag plus a reason string.
+      Do not invent a second flag; the frontend already has to handle one.
+   c) Golden files (item 5) must pin the NEW format, so write them after this lands.
+
 VERIFY
   - `cd backend && mvn test` green, and the total is >= 308.
   - Prove the harness still works: temporarily rewrite KadaneTracer.run to emit two fixed
     steps ignoring its input. traceRespondsToItsInput must fail and name kadane-algo.
     Restore it. Show me the failure output.
+  - Prove item 7 works the same way: it must go RED against today's tracers, naming the
+    six above. Show that output before you fix anything.
+  - Re-measure kadane-algo at n = 40 and report the new bytes/step against 2,268.
   - Confirm adding a tracer now requires touching only its own file plus its golden file.
 ```
 
 ---
 
-## PROMPT B — Frontend restructure onto the v2 API
+## PROMPT B — Frontend redesign onto the v2 API
 
-> **Owner's verdict on the current UI: rejected outright.** Not "needs polish" — the
-> whole look and feel is to be redesigned. Treat the section below as the primary goal of
-> this prompt, ranking above the structural cleanups. Structure serves the design here,
-> not the other way round.
+> **The visual direction is approved and specified below. It is called Bench.** The owner
+> rejected the previous UI outright and has since approved this replacement. Do not
+> propose alternatives, do not restyle the old component tree, and do not treat the spec
+> below as a starting point to improvise from. Build it.
+>
+> Worked screens, all four interactive — study these before writing any CSS:
+> - Directions pitch: https://claude.ai/code/artifact/8bd6a376-7694-4e70-a0f1-9c2fe357526e
+> - Bench, fully drawn: https://claude.ai/code/artifact/536b0e7f-15c4-4299-8f37-26315326b325
 
 ```
-Task: redesign the interface and restructure the React frontend onto the v2 API.
+Task: rebuild the interface as Bench and restructure the React frontend onto the v2 API.
 Keep React + Vite. The visual design is a rewrite; the data layer is a restructure.
 
-DESIGN BRIEF — READ FIRST, THIS IS THE POINT OF THE TASK
-The owner does not like the current UI and wants it replaced, not adjusted. The current
-look is dark glassmorphism with violet accents, ~7 CSS classes and inline styles
-everywhere. Do not preserve it out of politeness. Do not simply restyle the existing
-component tree and call it a redesign.
+WHAT BENCH IS
+A teaching instrument, styled as bench equipment. Every decision answers one question:
+does this make the state transition obvious to someone who does not yet understand it?
 
-What this product actually is: a teaching instrument. Someone is trying to build a mental
-model of an algorithm. Every design decision should be judged by one question — does this
-make the state transition obvious to a human who does not yet understand it?
+The signature is the CAPTURE STRIP. Under the canvas sits a grid: one column per step,
+one row per tracked slot, the whole execution visible at once. "Step 1 of 2" is a
+counter, not a shape — the strip is the shape. It is also why Bench was chosen over the
+alternatives: it generalises. An array's rows are indices, a graph's rows are vertices
+holding dist, a DP table's rows are entries. Same component, driven by dsType.
 
-Requirements:
-  - The visualization canvas is the hero. It should dominate the viewport. Code, complexity
-    and variables support it; today they compete with it for space and attention.
-  - Motion is pedagogy, not decoration. Elements must move between states so the change is
-    traceable by eye: a swap should visibly swap, a pointer should travel, a subtree should
-    collapse. Instant repaints teach nothing. Respect prefers-reduced-motion.
-  - Build a real design system before building screens: type scale, spacing scale, elevation,
-    a stated colour system, and one component library used consistently. index.css already
-    has a usable token layer — extend it rather than starting from nothing.
-  - Semantic state colour must be a deliberate, accessible, colour-blind-safe scale, and it
-    must not collide with difficulty pills. Right now --state-current and --diff-medium are
-    both #f59e0b meaning different things.
-  - State must never be encoded by colour alone. Pair it with shape, label, or position.
-  - Typography: pick and pair real typefaces. Code and prose have different jobs.
-  - Light and dark themes, both designed, neither an inversion of the other.
-  - Genuinely responsive, not a desktop layout with a mobile fallback bolted on.
+PALETTE — two semantic hues, everything else neutral
+    ground        #0a0e13     recessed      #0e141b     raised panel  #111820
+    hairline      #1e2a35     stronger      #2c3a47
+    ink dim       #4a5a68     ink secondary #8b9dab     ink primary   #cfdce7
+    PROBE         #ffb000     what is happening right now
+    RESOLVED      #3ddc97     what is finished and proven
+Nothing else in the chrome may be amber or green. Difficulty pills become a neutral
+outline plus a letter (E / M / H) — this is what finally kills the collision where
+--state-current and --diff-medium were both #f59e0b meaning different things.
 
-Avoid the generic AI-app look: purple-blue gradient hero, everything centered, uniform
-rounded cards with a coloured left rail, emoji as section markers, Inter-for-everything.
-Make deliberate choices specific to this subject.
+FIVE STATES, and state is never encoded by colour alone
+    probe     filled amber block   + a ▼ caret        being written / examined now
+    read      hollow amber ring                       being read from this step
+    known     neutral fill                            has a value
+    resolved  filled green         + a ✓              final
+    void      dashed outline                          untouched / unreachable / ∞
+`read` as a ring rather than a sixth colour is what lets a DP recurrence show its reach,
+and a graph relaxation show its source, without spending another hue.
 
-Deliverable expectation: propose the visual direction FIRST — palette, type pairing,
-layout concept, and one worked screen — and get the owner's agreement before building all
-of it. Do not spend the whole budget rendering a direction they may reject.
+TYPE
+    JetBrains Mono   data, code, labels, readouts — the primary voice
+    Archivo          problem titles and headings
+All-monospace was the original pitch and it is too tiring at full-page scale. This split
+is deliberate; keep it.
+
+LAYOUT
+    app bar     logo · breadcrumb · difficulty · traced badge · N/433 runnable
+    sidebar     15rem — search (/ to focus) · runnable|all filter · grouped list · legend
+    stage       canvas (the hero) then the capture strip, read in one downward glance
+    transport   prev / play / next · scrub track · step N of M · speed presets
+    lower       code pane with the resolved @a anchor named | tabs: input · variables · complexity
+
+MOTION IS PEDAGOGY, NOT DECORATION
+Elements move between states so the change is traceable by eye: a swap visibly swaps, a
+pointer travels, the scrub head moves along the strip. Instant repaints teach nothing.
+One borrowed flourish, and only one: on the resolving step the resolved pair scales up
+while everything else dims. Save the drama for the moment that earns it.
+Respect prefers-reduced-motion throughout.
+
+BEHAVIOUR AT SCALE — required, not an optimisation
+    canvas   array bars to ~60 elements, then a heat row with no per-element labels
+             graph node-link to ~80 vertices, then adjacency-matrix heat
+    strip    labelled cells to ~40 steps
+             then a DENSITY BAND: same rows, one thin column per step, no text, drawn on
+             <canvas> not DOM — 5000 columns x 40 rows is 200,000 nodes and will hang
+             then BUCKETED columns past a few thousand steps, each column a min/max
+             summary of a range. Do not plain-downsample; it aliases away the sweeps that
+             are the whole point of the band.
+    playback per-step animation stops past a few hundred steps; becomes scrub + jump
+See the "what the strip becomes at scale" figure in the second artifact — that band is a
+real run of coin change at amount 60, 176 steps, painted from the trace data.
+
+STILL OPEN — YOU MUST DESIGN THIS, IT IS NOT IN THE MOCKUPS
+The light theme. The mockups are committed dark because they are pictures of a product.
+The requirement from the original brief stands: both themes designed, neither a naive
+inversion of the other, accent working on both grounds, contrast legible in both. Do this
+at token level so no component ever hardcodes a colour.
+
+AVOID
+The generic AI-app look: purple-blue gradient hero, everything centered, uniform rounded
+cards with a coloured left rail, emoji as section markers, Inter-for-everything.
 
 Then, the structural work:
 
@@ -321,6 +425,12 @@ DO
    copy-pasted verbatim 3x, and the canvas chrome repeated 5x. Split GraphCanvas.jsx
    (349 lines holding five visualizers behind ad-hoc predicates: DSU / sudoku /
    chessboard / matrix / graph).
+
+5b. <CaptureStrip> — ONE component, not one per category. Props are rows, steps and the
+   per-cell state; dsType decides only what a row MEANS (index / vertex / table entry /
+   list node). It renders labelled cells, then the density band, then bucketed columns,
+   at the thresholds given in the design spec. Build the band on <canvas>. This is the
+   signature of the whole design — if it ends up per-category, Bench has been lost.
 
 6. THE HEADLINE FEATURE — the input panel. Render a form generically from the problem's
    inputSpec (GET /api/problems/{id}/input-spec, or the inputSpec on the catalogue entry),
@@ -362,7 +472,12 @@ DO
 
 DO NOT
   - Do not delete the legacy controllers or the 18 services. That is prompt D.
-  - Do not change the backend at all. If you need an API change, stop and say so.
+  - Do not redesign Bench. If something in the spec genuinely cannot be built, say so and
+    stop; do not substitute your own direction.
+  - Backend changes ARE now permitted (the earlier prohibition is lifted), with one
+    exception: the trace wire format belongs to prompt A. If A has landed, consume its
+    delta + keyframe format. If it has not, consume the current snapshot format and leave
+    a single decode seam so switching is one file, not a refactor.
 
 VERIFY
   - `npx vitest run` green; add tests for useTrace (abort + stale response), the input
@@ -373,6 +488,12 @@ VERIFY
   - Check at 320px width.
   - Run against a live backend (`cd backend && mvn spring-boot:run`) and confirm editing
     an input changes the animation, the highlighted code line, and the variables panel.
+  - Drive the capture strip past each threshold with a synthetic trace (60 steps, 400
+    steps, 6000 steps) and confirm it degrades to band then buckets without hanging.
+    Measure the 6000-step render; if it is not interactive, it is not done.
+  - Both themes: screenshot the same problem in light and dark. Neither may be an
+    inversion of the other, and designTokens.test.js must stay green.
+  - Confirm no component hardcodes a colour — every colour resolves through a token.
 ```
 
 ---
