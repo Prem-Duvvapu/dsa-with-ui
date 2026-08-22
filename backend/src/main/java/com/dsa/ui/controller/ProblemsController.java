@@ -5,6 +5,7 @@ import com.dsa.ui.catalog.ProblemCatalog;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.tracer.AlgorithmTracer;
 import com.dsa.ui.tracer.ExecutionTrace;
+import com.dsa.ui.tracer.wire.TraceResponse;
 import com.dsa.ui.tracer.InputSpec;
 import com.dsa.ui.tracer.TraceRunner;
 import com.dsa.ui.tracer.TracerRegistry;
@@ -89,17 +90,24 @@ public class ProblemsController {
         return out;
     }
 
-    /** Runs the problem against its declared default input. */
+    /**
+     * Runs the problem against its declared default input.
+     *
+     * <p>{@code ?encoding=full} returns the pre-delta shape, where every step is a complete
+     * snapshot. Kept for one migration so the frontend can move on its own schedule.
+     */
     @GetMapping("/{id}/execute")
-    public ExecutionTrace executeDefaults(@PathVariable String id) {
-        return runner.runDefaults(tracer(id));
+    public TraceResponse executeDefaults(@PathVariable String id,
+                                         @RequestParam(required = false) String encoding) {
+        return TraceResponse.of(runner.runDefaults(tracer(id)), encoding);
     }
 
     /** Runs the problem against caller-supplied input. */
     @PostMapping("/{id}/execute")
-    public ExecutionTrace execute(@PathVariable String id,
-                                  @RequestBody(required = false) Map<String, Object> input) {
-        return runner.run(tracer(id), input == null ? Map.of() : input);
+    public TraceResponse execute(@PathVariable String id,
+                                 @RequestBody(required = false) Map<String, Object> input,
+                                 @RequestParam(required = false) String encoding) {
+        return TraceResponse.of(runner.run(tracer(id), input == null ? Map.of() : input), encoding);
     }
 
     /** The input contract on its own, for a client that wants to build a form first. */

@@ -207,8 +207,21 @@ VERIFY
 > | ✅ | 1, 2, 3 — `alternateInput()` on the tracer, registry-driven `@MethodSource` | #7 |
 > | ✅ | 4, 6 — growth test and jacoco | #8 |
 > | ✅ | 9b — byte budget, `truncationReason`, estimator accuracy test | #9 |
-> | ⬜ | **9a — delta-encoded steps + keyframes.** The wire-format change. Prompt B waits on it. | — |
-> | ⬜ | **5 — golden files.** Must follow 9a, or they pin a format about to change. | — |
+> | ✅ | 9a — delta-encoded steps + keyframes, `?encoding=full` for one migration | #11 |
+> | ⬜ | **9c — per-element deltas.** See below; 9a got 30%, not the 10x it predicted. | — |
+> | ⬜ | **5 — golden files.** Must follow the format settling, or they pin one about to change. | — |
+>
+> **9c, the part 9a did not get.** Delta encoding removed the fields that do not change
+> between steps, which measured 30% across the eight tracers — useful, and far short of the
+> order of magnitude estimated from the raw numbers. The reason is that the one payload
+> field a tracer does vary changes on nearly every step, so it is resent whole every time.
+> Inside it, almost nothing moves: an `ArrayElement` resends `index` and `value` when only
+> `state` changed, and a `TreeNode` resends `id`, `val`, `x`, `y`, `leftId` and `rightId` to
+> communicate one changed `state` string — which is why the tree traversals only improved
+> 14%. Splitting each payload into structure (sent at keyframes) and a parallel array of
+> state strings (sent every step) is where the remaining order of magnitude is. It is a
+> second wire-format change, so it belongs in its own PR after B has a decoder working
+> against 9a.
 >
 > Backend suite is at 332 tests. Do the two open items and Prompt A is done.
 
