@@ -7,6 +7,8 @@ import TreeCanvas from './components/TreeCanvas';
 import ArrayCanvas from './components/ArrayCanvas';
 import LinkedListCanvas from './components/LinkedListCanvas';
 import RecursionTreeCanvas from './components/RecursionTreeCanvas';
+import CanvasShell from './components/CanvasShell';
+import CaptureStrip from './components/CaptureStrip';
 import CodeViewer from './components/CodeViewer';
 import MemoryComplexityCard from './components/MemoryComplexityCard';
 import Controls from './components/Controls';
@@ -412,10 +414,24 @@ export default function App() {
                   <RefreshCw size={24} className="spin" />
                   <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
                 </div>
+              ) : activeProblem ? (
+                <CanvasShell
+                  title={activeProblem.title}
+                  meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null}
+                >
+                  {renderCanvas()}
+                </CanvasShell>
               ) : (
                 renderCanvas()
               )}
             </div>
+
+            {/* The whole run at once, under the single frame it belongs to. */}
+            <CaptureStrip
+              steps={steps}
+              current={currentStepIndex}
+              onSeek={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
+            />
 
             {/* Integrated Playback Controls */}
             <Controls

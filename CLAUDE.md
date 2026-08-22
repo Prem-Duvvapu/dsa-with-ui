@@ -17,7 +17,7 @@ cd backend && mvn spring-boot:run                        # http://localhost:8923
 
 # Frontend (React 18 + Vite)
 cd frontend && npm ci
-cd frontend && npx vitest run                            # full suite (~44 tests)
+cd frontend && npx vitest run                            # full suite (~71 tests)
 cd frontend && npx vitest run src/designTokens.test.js   # one file
 cd frontend && npx vitest run -t 'renders Header'        # one test by name
 cd frontend && npm run dev                               # http://localhost:5180, proxies /api → 8923

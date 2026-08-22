@@ -856,3 +856,186 @@ mark {
 @media (prefers-reduced-motion: reduce) {
   .sb-row::before { transition: none; }
 }
+
+/* ==========================================================================
+   CanvasShell + CaptureStrip
+   ========================================================================== */
+
+.shell {
+  background: var(--bench-recessed);
+  border: 1px solid var(--bench-rule);
+  border-radius: var(--radius-sm);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 0;
+}
+
+.shell-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--bench-rule);
+}
+
+.shell-title {
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bench-ink-dim);
+}
+
+.shell-meta {
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--bench-ink-secondary);
+}
+
+.shell-legend {
+  margin-left: auto;
+  display: flex;
+  gap: var(--space-md);
+  list-style: none;
+}
+
+.shell-key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--bench-ink-dim);
+}
+
+.shell-key-probe i { color: var(--probe); }
+.shell-key-settled i { color: var(--settled); }
+.shell-key-known i { color: var(--bench-ink-secondary); }
+.shell-key-void i { color: var(--bench-ink-dim); }
+.shell-key i { font-style: normal; }
+
+.shell-stage {
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+  min-height: 0;
+  overflow: auto;
+}
+
+.shell-foot {
+  border-top: 1px solid var(--bench-rule);
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* --- the capture strip: the signature --- */
+.cs-wrap { display: grid; gap: var(--space-xs); min-width: 0; }
+
+.cs-head { display: flex; align-items: baseline; gap: var(--space-md); }
+
+.cs-label,
+.cs-mode {
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--bench-ink-dim);
+}
+
+.cs-mode { margin-left: auto; color: var(--probe); }
+
+.cs-grid {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: var(--space-xs);
+  align-items: start;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.cs-rows { display: grid; gap: 3px; }
+
+.cs-row-label {
+  height: 1.3rem;
+  display: grid;
+  align-items: center;
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--bench-ink-dim);
+}
+
+.cs-cols {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  min-width: 0;
+}
+
+.cs-col {
+  display: grid;
+  gap: 3px;
+  position: relative;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.cs-col-now::before {
+  content: "";
+  position: absolute;
+  inset: -4px -3px -4px -3px;
+  border: 1px solid var(--probe);
+  border-radius: var(--radius-xs);
+  pointer-events: none;
+}
+
+.cs-col:focus-visible { outline: 2px solid var(--probe); outline-offset: 3px; }
+
+.cs-cell {
+  height: 1.3rem;
+  border: 1px solid var(--bench-rule);
+  border-radius: 2px;
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  grid-auto-flow: column;
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--bench-ink-dim);
+  background: transparent;
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+
+.cs-glyph { font-style: normal; }
+
+.cs-void { border-style: dashed; opacity: 0.65; }
+.cs-known { background: var(--bench-fill); border-color: var(--bench-rule-strong); color: var(--bench-ink-secondary); }
+.cs-probe { background: var(--probe); border-color: var(--probe); color: var(--probe-on); font-weight: 700; }
+.cs-settled { background: var(--settled); border-color: var(--settled); color: var(--settled-on); font-weight: 700; }
+
+.cs-tick {
+  text-align: center;
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--bench-ink-dim);
+  border-top: 1px solid var(--bench-rule);
+  padding-top: 3px;
+  margin-top: 3px;
+}
+
+.cs-col-now .cs-tick { color: var(--probe); }
+
+.cs-band {
+  border: 1px solid var(--bench-rule);
+  border-radius: var(--radius-xs);
+  background: var(--bench-recessed);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.cs-band:focus-visible { outline: 2px solid var(--probe); outline-offset: 2px; }
+
+.cs-canvas { display: block; width: 100%; height: auto; }
