@@ -39,7 +39,6 @@ public class ReverseLinkedListTracer implements AlgorithmTracer {
                public ListNode reverse(ListNode head) {
                    // @a init
                    ListNode prev = null, curr = head;
-                   // @a loop
                    while (curr != null) {
                        // @a save
                        ListNode next = curr.next;

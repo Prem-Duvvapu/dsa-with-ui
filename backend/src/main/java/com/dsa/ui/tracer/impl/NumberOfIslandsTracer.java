@@ -47,7 +47,6 @@ public class NumberOfIslandsTracer implements AlgorithmTracer {
                public int numIslands(int[][] grid) {
                    // @a init
                    int islands = 0;
-                   // @a scan
                    for (int r = 0; r < grid.length; r++) {
                        for (int c = 0; c < grid[0].length; c++) {
                            // @a found

@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,9 +48,9 @@ class TracerContractTest {
      * computed rather than canned.
      */
     private static final Map<String, Map<String, Object>> ALTERNATE_INPUT = Map.of(
-            "two-sum", Map.of("nums", List.of(3, 2, 4, 8, 1), "target", 6),
+            "two-sum", Map.of("nums", List.of(3, 2, 4, 8, 1), "target", 20),
             "kadane-algo", Map.of("nums", List.of(5, -1, 5, -20, 3)),
-            "binary-search-1d", Map.of("nums", List.of(2, 4, 6, 8, 10, 12, 14, 16), "target", 14),
+            "binary-search-1d", Map.of("nums", List.of(2, 4, 6, 8, 10, 12, 14, 16), "target", 15),
             "tree-preorder", Map.of("tree", Arrays.asList(10, 20, 30, 40)),
             "tree-inorder", Map.of("tree", Arrays.asList(10, 20, 30, 40)),
             "reverse-linked-list", Map.of("values", List.of(7, 8, 9, 10, 11, 12)),
@@ -113,12 +115,24 @@ class TracerContractTest {
         AnnotatedCode code = AnnotatedCode.parse(tracer.annotatedCode());
         assertFalse(code.getAnchors().isEmpty(), id + " declares no anchors at all");
 
-        // Every anchor should be reachable from some input, not merely parse.
-        List<Integer> usedLines = new ArrayList<>();
+        // Every anchor must be reachable from some input, not merely parse. Collecting the
+        // lines and asserting the list was non-empty is what this test used to do, and it
+        // was vacuous in exactly the way !steps.isEmpty() was: a tracer could declare ten
+        // anchors, emit one, and pass.
+        Set<Integer> usedLines = new HashSet<>();
         for (Map<String, Object> input : List.of(Map.<String, Object>of(), alternate(id))) {
             runner.run(tracer, input).getSteps().forEach(s -> usedLines.add(s.getActiveLine()));
         }
         assertFalse(usedLines.isEmpty(), id + " emitted nothing");
+
+        List<String> dead = code.getAnchors().entrySet().stream()
+                .filter(e -> !usedLines.contains(e.getValue()))
+                .map(Map.Entry::getKey)
+                .sorted()
+                .toList();
+        assertTrue(dead.isEmpty(), id + " declares " + code.getAnchors().size()
+                + " anchors but never highlights " + dead + " across its default or its"
+                + " alternate input — either emit them, or delete the marker");
     }
 
     /**

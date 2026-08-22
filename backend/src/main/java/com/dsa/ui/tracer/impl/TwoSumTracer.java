@@ -37,11 +37,9 @@ public class TwoSumTracer implements AlgorithmTracer {
                public int[] twoSum(int[] nums, int target) {
                    // @a init
                    Map<Integer, Integer> seen = new HashMap<>();
-                   // @a loop
                    for (int i = 0; i < nums.length; i++) {
                        // @a complement
                        int need = target - nums[i];
-                       // @a check
                        if (seen.containsKey(need)) {
                            // @a found
                            return new int[] { seen.get(need), i };

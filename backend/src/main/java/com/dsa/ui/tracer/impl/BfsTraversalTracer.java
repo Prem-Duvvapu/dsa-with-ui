@@ -45,11 +45,9 @@ public class BfsTraversalTracer implements AlgorithmTracer {
                    // @a seed
                    queue.add(start);
                    seen[start] = true;
-                   // @a loop
                    while (!queue.isEmpty()) {
                        // @a poll
                        int node = queue.poll();
-                       // @a neighbours
                        for (int next : adj.get(node)) {
                            // @a check
                            if (!seen[next]) {

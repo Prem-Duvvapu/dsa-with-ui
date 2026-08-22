@@ -30,7 +30,6 @@ public class KadaneTracer implements AlgorithmTracer {
                public int maxSubArray(int[] nums) {
                    // @a init
                    int best = nums[0], running = 0;
-                   // @a loop
                    for (int i = 0; i < nums.length; i++) {
                        // @a extend
                        running += nums[i];
