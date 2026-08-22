@@ -29,13 +29,16 @@ public final class StepEmitter {
 
     private final AnnotatedCode code;
     private final int maxSteps;
+    private final long maxBytes;
     private final List<ExecutionStep> steps = new ArrayList<>();
     private final List<String> callStack = new ArrayList<>();
     private String dsType = "Array";
+    private long bytesSoFar;
 
-    StepEmitter(AnnotatedCode code, int maxSteps) {
+    StepEmitter(AnnotatedCode code, int maxSteps, long maxBytes) {
         this.code = code;
         this.maxSteps = maxSteps;
+        this.maxBytes = maxBytes;
     }
 
     /** Sets the visualization mode for every subsequent step. */
@@ -148,12 +151,12 @@ public final class StepEmitter {
             return this;
         }
 
-        /** Commits the step. Throws once the budget is spent. */
+        /** Commits the step. Throws once either budget is spent. */
         public void step() {
             if (steps.size() >= maxSteps) {
-                throw new StepBudgetExceededException(maxSteps);
+                throw TraceBudgetExceededException.steps(maxSteps);
             }
-            steps.add(new ExecutionStep(
+            ExecutionStep committed = new ExecutionStep(
                     steps.size() + 1,
                     line,
                     description,
@@ -167,7 +170,65 @@ public final class StepEmitter {
                     listState,
                     null,
                     treeNodes
-            ));
+            );
+
+            // Checked BEFORE adding, so a collected trace is always within budget.
+            long cost = estimateBytes(committed);
+            if (bytesSoFar + cost > maxBytes) {
+                throw TraceBudgetExceededException.bytes(maxBytes, steps.size());
+            }
+            bytesSoFar += cost;
+            steps.add(committed);
         }
+    }
+
+    /**
+     * Roughly what this step will weigh once serialised to JSON.
+     *
+     * <p>An estimate rather than a measurement on purpose: serialising every step to find
+     * its true size would cost more than generating it. The constants are per-element
+     * costs calibrated against real responses, and {@code byteEstimateTracksActualPayload}
+     * keeps them honest — it serialises each tracer's real trace and fails if the estimate
+     * drifts away from the measured size.
+     *
+     * <p>It leans high. Under-estimating would let a trace past the ceiling it exists to
+     * enforce, which is the failure that matters.
+     */
+    static long estimateBytes(ExecutionStep s) {
+        long bytes = 140;                                    // envelope: field names, numbers, dsType
+
+        if (s.getDescription() != null) {
+            bytes += s.getDescription().length();
+        }
+        if (s.getVariables() != null) {
+            for (Map.Entry<String, String> e : s.getVariables().entrySet()) {
+                bytes += e.getKey().length() + (e.getValue() == null ? 4 : e.getValue().length()) + 8;
+            }
+        }
+        if (s.getArrayState() != null) {
+            bytes += s.getArrayState().size() * 52L;         // {"value":..,"state":"..","index":..}
+        }
+        if (s.getGridState() != null) {
+            for (int[] row : s.getGridState()) {
+                bytes += row.length * 4L + 4;
+            }
+        }
+        if (s.getListState() != null) {
+            bytes += s.getListState().size() * 88L;
+        }
+        if (s.getTreeNodes() != null) {
+            bytes += s.getTreeNodes().size() * 104L;
+        }
+        if (s.getNodeStates() != null) {
+            bytes += s.getNodeStates().size() * 24L;
+        }
+        for (List<String> strings : List.of(
+                s.getActiveEdges() == null ? List.<String>of() : s.getActiveEdges(),
+                s.getQueueOrStackState() == null ? List.<String>of() : s.getQueueOrStackState())) {
+            for (String value : strings) {
+                bytes += value.length() + 4;
+            }
+        }
+        return bytes;
     }
 }

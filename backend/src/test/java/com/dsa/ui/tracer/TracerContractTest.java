@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer;
 
 import com.dsa.ui.catalog.ProblemCatalog;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dsa.ui.model.ExecutionStep;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -157,6 +158,65 @@ class TracerContractTest {
     }
 
     @Test
+    @DisplayName("The byte budget stops a trace whose steps are individually huge")
+    void byteBudgetTruncates() {
+        // 400 array elements per step. Well inside the step budget, nowhere near inside a
+        // response a browser can use — which is the case maxSteps alone cannot see.
+        int[] wide = new int[400];
+        AlgorithmTracer heavy = new AlgorithmTracer() {
+            @Override public String id() { return "test-only-heavy"; }
+            @Override public InputSpec inputSpec() {
+                return InputSpec.of().withMaxSteps(10_000).withMaxBytes(50_000);
+            }
+            @Override public Map<String, Object> alternateInput() { return Map.of(); }
+            @Override public String annotatedCode() { return "// @a fat\nwhile (true) {}"; }
+            @Override public void run(Inputs in, StepEmitter emit) {
+                for (int i = 0; i < 10_000; i++) {
+                    emit.at("fat").say("step %d", i).array(wide, i % wide.length).step();
+                }
+            }
+        };
+
+        ExecutionTrace trace = runner.runDefaults(heavy);
+
+        assertTrue(trace.isTruncated(), "an over-budget trace must report itself truncated");
+        assertTrue(trace.getStepCount() < 10_000,
+                "the byte ceiling must bite long before the 10,000-step ceiling");
+        assertNotNull(trace.getTruncationReason(), "a truncated trace must say why");
+        assertTrue(trace.getTruncationReason().contains("KB response limit"),
+                "the reason must name the byte ceiling, not the step ceiling: "
+                        + trace.getTruncationReason());
+
+        long collected = trace.getSteps().stream().mapToLong(StepEmitter::estimateBytes).sum();
+        assertTrue(collected <= 50_000,
+                "the collected trace must be within budget, not merely stop after exceeding it;"
+                        + " it weighs " + collected);
+    }
+
+    /**
+     * The byte ceiling is enforced against an estimate, because serialising every step to
+     * measure it would cost more than generating it. That makes the estimate load-bearing:
+     * if it drifts low, the ceiling silently stops enforcing anything.
+     */
+    @ParameterizedTest(name = "{0} byte estimate tracks its real payload")
+    @MethodSource("tracerIds")
+    @DisplayName("The byte estimate stays close to the serialised size")
+    void byteEstimateTracksActualPayload(String id) throws Exception {
+        AlgorithmTracer tracer = registry.find(id).orElseThrow();
+        ExecutionTrace trace = runner.runDefaults(tracer);
+
+        long estimated = trace.getSteps().stream().mapToLong(StepEmitter::estimateBytes).sum();
+        long actual = new ObjectMapper().writeValueAsBytes(trace.getSteps()).length;
+        double ratio = (double) estimated / actual;
+
+        assertTrue(ratio >= 0.9 && ratio <= 2.5, String.format(
+                "%s estimates %d bytes for a payload that serialises to %d (ratio %.2f)."
+                        + " The budget is only as good as this estimate — recalibrate the"
+                        + " per-element constants in StepEmitter.estimateBytes.",
+                id, estimated, actual, ratio));
+    }
+
+    @Test
     @DisplayName("The step budget stops a runaway trace instead of exhausting the server")
     void stepBudgetTruncates() {
         AlgorithmTracer greedy = new AlgorithmTracer() {
@@ -174,6 +234,8 @@ class TracerContractTest {
         ExecutionTrace trace = runner.runDefaults(greedy);
         assertTrue(trace.isTruncated(), "an over-budget trace must report itself truncated");
         assertEquals(25, trace.getSteps().size(), "the budget is a hard cap");
+        assertTrue(trace.getTruncationReason().contains("25-step limit"),
+                "the reason must name the step ceiling: " + trace.getTruncationReason());
     }
 
     @Test

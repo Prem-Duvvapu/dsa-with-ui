@@ -19,20 +19,26 @@ public class TraceRunner {
         Inputs inputs = InputValidator.validate(spec, suppliedInput);
 
         AnnotatedCode code = AnnotatedCode.parse(tracer.annotatedCode());
-        StepEmitter emitter = new StepEmitter(code, spec.getMaxSteps());
+        StepEmitter emitter = new StepEmitter(code, spec.getMaxSteps(), spec.getMaxBytes());
 
         boolean truncated = false;
+        String truncationReason = null;
         try {
             tracer.run(inputs, emitter);
-        } catch (StepBudgetExceededException e) {
+        } catch (TraceBudgetExceededException e) {
+            // Either ceiling reports through the same flag. A second boolean would mean
+            // every caller had to learn there are two ways for a trace to be incomplete.
             truncated = true;
+            truncationReason = e.getReason();
         }
 
         return new ExecutionTrace(
                 tracer.id(),
                 emitter.collected(),
                 truncated,
+                truncationReason,
                 spec.getMaxSteps(),
+                spec.getMaxBytes(),
                 code.getDisplayCode(),
                 code.getAnchors(),
                 inputs.asMap()
