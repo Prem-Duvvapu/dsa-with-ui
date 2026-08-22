@@ -31,6 +31,12 @@ public class TwoSumTracer implements AlgorithmTracer {
                         .build());
     }
 
+    /** No pair sums to 20, so this is the input that reaches the not-found branch. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of("nums", List.of(3, 2, 4, 8, 1), "target", 20);
+    }
+
     @Override
     public String annotatedCode() {
         return """

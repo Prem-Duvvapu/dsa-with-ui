@@ -3,6 +3,7 @@ package com.dsa.ui.tracer.impl;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.List;
 
 @Component
@@ -22,6 +23,12 @@ public class KadaneTracer implements AlgorithmTracer {
                         .length(1, 40).values(-999, 999)
                         .defaultValue(List.of(-2, 1, -3, 4, -1, 2, 1, -5, 4))
                         .build());
+    }
+
+    /** A different length and a different answer, with the running sum forced to reset. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of("nums", List.of(5, -1, 5, -20, 3));
     }
 
     @Override

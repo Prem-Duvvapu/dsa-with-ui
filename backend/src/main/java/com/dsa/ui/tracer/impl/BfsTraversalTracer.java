@@ -35,6 +35,16 @@ public class BfsTraversalTracer implements AlgorithmTracer {
                         .build());
     }
 
+    /** A path rather than a branching graph, so every level holds exactly one vertex. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of(
+                "graph", Map.of(
+                        "vertices", 4,
+                        "edges", List.of(List.of(0, 1), List.of(1, 2), List.of(2, 3))),
+                "start", 0);
+    }
+
     @Override
     public String annotatedCode() {
         return """

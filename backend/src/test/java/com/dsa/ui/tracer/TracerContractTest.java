@@ -4,11 +4,13 @@ import com.dsa.ui.catalog.ProblemCatalog;
 import com.dsa.ui.model.ExecutionStep;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.LinkedHashSet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Arrays;
@@ -32,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * {@link #noTwoTracersProduceIdenticalTraces}.
  */
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TracerContractTest {
 
     @Autowired
@@ -44,38 +47,20 @@ class TracerContractTest {
     private ProblemCatalog catalog;
 
     /**
-     * A second, materially different input per tracer. Used to prove the trace is
-     * computed rather than canned.
+     * Every tracer the application registers, in a stable order.
+     *
+     * <p>This used to mirror a hardcoded map, kept honest by a test asserting the two
+     * matched. That works for 8 tracers and collapses at 433: every new tracer would edit
+     * one central file. The registry is the source of truth now, and the second input each
+     * test needs comes from {@link AlgorithmTracer#alternateInput()} — so adding a tracer
+     * touches only its own file.
+     *
+     * <p>Non-static, which @MethodSource permits only under {@code Lifecycle.PER_CLASS}.
+     * That is why this class declares it: the alternative is a static context holder,
+     * which is more machinery for the same result.
      */
-    private static final Map<String, Map<String, Object>> ALTERNATE_INPUT = Map.of(
-            "two-sum", Map.of("nums", List.of(3, 2, 4, 8, 1), "target", 20),
-            "kadane-algo", Map.of("nums", List.of(5, -1, 5, -20, 3)),
-            "binary-search-1d", Map.of("nums", List.of(2, 4, 6, 8, 10, 12, 14, 16), "target", 15),
-            "tree-preorder", Map.of("tree", Arrays.asList(10, 20, 30, 40)),
-            "tree-inorder", Map.of("tree", Arrays.asList(10, 20, 30, 40)),
-            "reverse-linked-list", Map.of("values", List.of(7, 8, 9, 10, 11, 12)),
-            "bfs-traversal", Map.of(
-                    "graph", Map.of("vertices", 4, "edges", List.of(List.of(0, 1), List.of(1, 2), List.of(2, 3))),
-                    "start", 0),
-            "number-of-islands", Map.of("grid", List.of(
-                    List.of(1, 0, 1),
-                    List.of(0, 0, 0),
-                    List.of(1, 0, 1)))
-    );
-
-    static Stream<String> tracerIds() {
-        // Static context cannot see the injected registry, so mirror the ids the pilot
-        // registers. registryMatchesThisTestsExpectations() keeps the two in sync.
-        return ALTERNATE_INPUT.keySet().stream().sorted();
-    }
-
-    @Test
-    @DisplayName("Every registered tracer is covered by this test class")
-    void registryMatchesThisTestsExpectations() {
-        assertEquals(
-                registry.tracedIds().stream().sorted().toList(),
-                tracerIds().toList(),
-                "A tracer was added or removed without updating ALTERNATE_INPUT, so it is untested");
+    Stream<String> tracerIds() {
+        return registry.tracedIds().stream().sorted();
     }
 
     @ParameterizedTest(name = "{0} runs on its declared defaults")
@@ -175,6 +160,7 @@ class TracerContractTest {
         AlgorithmTracer greedy = new AlgorithmTracer() {
             @Override public String id() { return "test-only-runaway"; }
             @Override public InputSpec inputSpec() { return InputSpec.of().withMaxSteps(25); }
+            @Override public Map<String, Object> alternateInput() { return Map.of(); }
             @Override public String annotatedCode() { return "// @a spin\nwhile (true) {}"; }
             @Override public void run(Inputs in, StepEmitter emit) {
                 for (int i = 0; i < 1_000_000; i++) {
@@ -205,9 +191,43 @@ class TracerContractTest {
     }
 
     private Map<String, Object> alternate(String id) {
-        Map<String, Object> input = ALTERNATE_INPUT.get(id);
-        assertNotNull(input, "No alternate input registered for " + id);
+        Map<String, Object> input = registry.find(id).orElseThrow().alternateInput();
+        assertNotNull(input, id + " returned a null alternate input");
         return input;
+    }
+
+
+    /**
+     * {@link #traceRespondsToItsInput} compares a trace on the defaults against a trace on
+     * the alternate input. If the two inputs are the same, it compares a trace with itself
+     * and passes while proving nothing — so the alternate must actually differ.
+     */
+    @ParameterizedTest(name = "{0} alternate input differs from its defaults")
+    @MethodSource("tracerIds")
+    @DisplayName("The alternate input is not a copy of the defaults")
+    void alternateInputDiffersFromDefaults(String id) {
+        AlgorithmTracer tracer = registry.find(id).orElseThrow();
+
+        Map<String, Object> defaults = new LinkedHashMap<>();
+        Set<String> declared = new LinkedHashSet<>();
+        for (InputField field : tracer.inputSpec().getFields()) {
+            defaults.put(field.getName(), field.getDefaultValue());
+            declared.add(field.getName());
+        }
+
+        Map<String, Object> alternate = tracer.alternateInput();
+        assertFalse(alternate.isEmpty(), id + " declares an empty alternate input");
+        assertTrue(declared.containsAll(alternate.keySet()),
+                id + " alternate input sets fields its spec does not declare: "
+                        + alternate.keySet().stream().filter(k -> !declared.contains(k)).toList());
+
+        // Compare the EFFECTIVE input, so an alternate that names a subset of the fields
+        // and repeats their default values is still caught.
+        Map<String, Object> effective = new LinkedHashMap<>(defaults);
+        effective.putAll(alternate);
+        assertNotEquals(defaults, effective,
+                id + " alternate input resolves to the spec defaults, so traceRespondsToItsInput "
+                        + "compares a trace against itself and cannot detect a canned narration");
     }
 
     /** Everything a viewer would perceive: the narration and the highlighted lines. */

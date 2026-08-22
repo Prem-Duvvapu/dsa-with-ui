@@ -10,14 +10,14 @@ already inside WSL, call `mvn`/`npm` directly as below.
 
 ```bash
 # Backend (Java 17, Maven)
-cd backend && mvn test                                  # full suite (~308 tests)
+cd backend && mvn test                                  # full suite (~315 tests)
 cd backend && mvn test -Dtest=TracerContractTest         # one test class
 cd backend && mvn test -Dtest=ApiContractTest#executeRejectsUnknownIdInsteadOfFallingBack
 cd backend && mvn spring-boot:run                        # http://localhost:8923
 
 # Frontend (React 18 + Vite)
 cd frontend && npm ci
-cd frontend && npx vitest run                            # full suite (~16 tests)
+cd frontend && npx vitest run                            # full suite (~44 tests)
 cd frontend && npx vitest run src/designTokens.test.js   # one file
 cd frontend && npx vitest run -t 'renders Header'        # one test by name
 cd frontend && npm run dev                               # http://localhost:5180, proxies /api → 8923
@@ -150,10 +150,12 @@ tokens while 5 components still used them, and CSS silently drops unresolvable d
 
 1. New `@Component` in `tracer/impl/` implementing `AlgorithmTracer`; the `id()` must match
    an existing catalogue id (otherwise `ProblemCatalog.getOrphanedTracerIds()` flags it).
-2. Anchor the code you return from `annotatedCode()` and emit only those names.
-3. Add an entry to `TracerContractTest.ALTERNATE_INPUT` — a *materially different* input,
-   not a permutation. `registryMatchesThisTestsExpectations` fails if you don't, by design:
-   an untested tracer should not be able to ship.
+2. Anchor the code you return from `annotatedCode()`, emit only those names, and emit
+   *every* one of them — `anchorsAreAllReachable` fails on a marker nothing highlights.
+3. Implement `alternateInput()` — a *materially different* input, not a permutation. It is
+   abstract on the interface so a tracer cannot skip it, and `alternateInputDiffersFromDefaults`
+   rejects one pasted from the spec defaults. `TracerContractTest` is driven off the registry
+   and names no tracer, so this is the only file you touch.
 4. `mvn test`. The contract tests cover step numbering, anchor resolution, defaults
    validating against their own spec, and cross-registry trace distinctness.
 
