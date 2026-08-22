@@ -3,6 +3,7 @@ package com.dsa.ui.tracer.impl;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
@@ -39,6 +40,15 @@ public class NumberOfIslandsTracer implements AlgorithmTracer {
                                 List.of(0, 0, 1, 0, 0),
                                 List.of(0, 0, 0, 1, 1)))
                         .build());
+    }
+
+    /** Four single-cell islands instead of a few large ones. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of("grid", List.of(
+                List.of(1, 0, 1),
+                List.of(0, 0, 0),
+                List.of(1, 0, 1)));
     }
 
     @Override

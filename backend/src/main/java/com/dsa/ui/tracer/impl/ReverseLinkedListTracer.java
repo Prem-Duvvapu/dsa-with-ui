@@ -4,6 +4,7 @@ import com.dsa.ui.model.ListNode;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,12 @@ public class ReverseLinkedListTracer implements AlgorithmTracer {
                         .length(0, 24).values(-999, 999)
                         .defaultValue(List.of(1, 2, 3, 4))
                         .build());
+    }
+
+    /** A longer list, so more links are flipped. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of("values", List.of(7, 8, 9, 10, 11, 12));
     }
 
     @Override

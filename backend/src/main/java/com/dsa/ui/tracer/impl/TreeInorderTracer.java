@@ -3,6 +3,7 @@ package com.dsa.ui.tracer.impl;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,6 +27,12 @@ public class TreeInorderTracer implements AlgorithmTracer {
                         .length(1, 31).values(-99, 99)
                         .defaultValue(TreePreorderTracer.DEFAULT_TREE)
                         .build());
+    }
+
+    /** A different shape and a different visit order. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of("tree", Arrays.asList(10, 20, 30, 40));
     }
 
     @Override

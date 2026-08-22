@@ -1,5 +1,7 @@
 package com.dsa.ui.tracer;
 
+import java.util.Map;
+
 /**
  * One problem, traced by actually running it.
  *
@@ -20,6 +22,21 @@ public interface AlgorithmTracer {
 
     /** The inputs this algorithm accepts, their bounds, and their defaults. */
     InputSpec inputSpec();
+
+    /**
+     * A second input, materially different from the spec's defaults, used by the contract
+     * test to prove this tracer reads its input rather than replaying a fixed narration.
+     *
+     * <p>Deliberately abstract. It lived in a map inside the test class, which meant every
+     * new tracer had to edit one central file — unworkable at 433 and a permanent source of
+     * merge conflicts. More importantly, a tracer must not be able to opt out of the check
+     * by staying silent, so there is no default implementation.
+     *
+     * <p>"Materially different" means a different answer or a different branch profile, not
+     * a permutation. A reordered array produces a different fingerprint while proving
+     * nothing about whether the algorithm ran.
+     */
+    Map<String, Object> alternateInput();
 
     /**
      * The Java source shown beside the animation, carrying {@code // @a name} anchors.

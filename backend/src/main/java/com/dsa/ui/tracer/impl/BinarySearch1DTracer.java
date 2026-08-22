@@ -4,6 +4,7 @@ import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,12 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
                         .range(-999, 999)
                         .defaultValue(13)
                         .build());
+    }
+
+    /** 15 is absent, so the search narrows to nothing and reports a miss. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of("nums", List.of(2, 4, 6, 8, 10, 12, 14, 16), "target", 15);
     }
 
     @Override

@@ -37,6 +37,12 @@ public class TreePreorderTracer implements AlgorithmTracer {
                         .build());
     }
 
+    /** A different shape and a different visit order. */
+    @Override
+    public Map<String, Object> alternateInput() {
+        return Map.of("tree", Arrays.asList(10, 20, 30, 40));
+    }
+
     @Override
     public String annotatedCode() {
         return """
