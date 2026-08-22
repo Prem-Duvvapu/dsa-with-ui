@@ -318,6 +318,7 @@ VERIFY
 > Worked screens, all four interactive — study these before writing any CSS:
 > - Directions pitch: https://claude.ai/code/artifact/8bd6a376-7694-4e70-a0f1-9c2fe357526e
 > - Bench, fully drawn: https://claude.ai/code/artifact/536b0e7f-15c4-4299-8f37-26315326b325
+> - Bench on paper (light theme): https://claude.ai/code/artifact/dec34ef4-7873-4b2b-8222-a309c269c388
 
 ```
 Task: rebuild the interface as Bench and restructure the React frontend onto the v2 API.
@@ -333,15 +334,43 @@ counter, not a shape — the strip is the shape. It is also why Bench was chosen
 alternatives: it generalises. An array's rows are indices, a graph's rows are vertices
 holding dist, a DP table's rows are entries. Same component, driven by dsType.
 
-PALETTE — two semantic hues, everything else neutral
-    ground        #0a0e13     recessed      #0e141b     raised panel  #111820
-    hairline      #1e2a35     stronger      #2c3a47
-    ink dim       #4a5a68     ink secondary #8b9dab     ink primary   #cfdce7
-    PROBE         #ffb000     what is happening right now
-    RESOLVED      #3ddc97     what is finished and proven
+PALETTE — 14 tokens, two semantic hues, both themes designed
+Style every component through these tokens. No component may hardcode a colour, and no
+colour may be defined only inside a media query or a [data-theme] block.
+
+    token          role                     dark          light
+    --g            app ground               #0a0e13       #eef1f4
+    --g2           canvas surface           #0e141b       #ffffff
+    --panel        chrome panel             #111820       #f7f9fb
+    --rl           hairline                 #1e2a35       #d9e0e6
+    --rl2          hairline, stronger       #2c3a47       #b8c2cc
+    --fill         a cell holding a value   #16202a       #e6ebf0
+    --dim          labels, indices          #718293       #6b7683
+    --txt2         secondary ink            #8b9dab       #4a5663
+    --txt          primary ink              #cfdce7       #10161c
+    --probe        happening right now      #ffb000       #a35f00
+    --probe-on     text on a probe fill     #0a0e13       #ffffff
+    --probe-wash   active code line         #1a1508       #fdf4e6
+    --settled      finished and proven      #3ddc97       #0e7a51
+    --settled-on   text on a settled fill   #06120d       #ffffff
+
 Nothing else in the chrome may be amber or green. Difficulty pills become a neutral
 outline plus a letter (E / M / H) — this is what finally kills the collision where
 --state-current and --diff-medium were both #f59e0b meaning different things.
+
+THE LIGHT THEME IS NOT AN INVERSION, and must not be rebuilt as one. The rule is that
+the probe is always the HIGHEST-CONTRAST mark against its own ground: on black it glows,
+on paper it is dense ink. Same hue, opposite luminance. Three tokens genuinely flip role
+rather than just moving: --fill (lighter than ground -> darker than paper), --probe and
+--settled (glow -> ink). The density band's ramp reverses with them — on screen brighter
+means lower cost, on paper more ink means more certainty.
+
+CONTRAST, measured against each theme's own canvas surface. Every role clears 4.5:1:
+    primary ink    13.26 / 18.20      probe            10.10 / 5.01
+    secondary ink   6.62 /  7.49      resolved         10.47 / 5.36
+    dim             4.69 /  4.62      text on fills    10.56 / 5.01
+Note --dim: it was #4a5a68 at 2.60:1 in the first mockups, which failed while carrying
+every uppercase label and array index. Use #718293. Do not revert it.
 
 FIVE STATES, and state is never encoded by colour alone
     probe     filled amber block   + a ▼ caret        being written / examined now
@@ -385,11 +414,12 @@ BEHAVIOUR AT SCALE — required, not an optimisation
 See the "what the strip becomes at scale" figure in the second artifact — that band is a
 real run of coin change at amount 60, 176 steps, painted from the trace data.
 
-STILL OPEN — YOU MUST DESIGN THIS, IT IS NOT IN THE MOCKUPS
-The light theme. The mockups are committed dark because they are pictures of a product.
-The requirement from the original brief stands: both themes designed, neither a naive
-inversion of the other, accent working on both grounds, contrast legible in both. Do this
-at token level so no component ever hardcodes a colour.
+THEME PLUMBING
+The viewer has three states, not two: an explicit choice stamps data-theme, and the
+default "system" setting stamps nothing. Define the complete light palette on bare :root,
+redefine only the tokens under @media (prefers-color-scheme: dark) guarded as
+:root:not([data-theme="light"]), then again under :root[data-theme="dark"] so an explicit
+toggle wins in both directions.
 
 AVOID
 The generic AI-app look: purple-blue gradient hero, everything centered, uniform rounded
