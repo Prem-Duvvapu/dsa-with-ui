@@ -1,0 +1,185 @@
+{
+  "anchors" : {
+    "complement" : 4,
+    "found" : 6,
+    "init" : 2,
+    "none" : 10,
+    "remember" : 8
+  },
+  "code" : "public int[] twoSum(int[] nums, int target) {\n    Map<Integer, Integer> seen = new HashMap<>();\n    for (int i = 0; i < nums.length; i++) {\n        int need = target - nums[i];\n        if (seen.containsKey(need)) {\n            return new int[] { seen.get(need), i };\n        }\n        seen.put(nums[i], i);\n    }\n    return new int[0];\n}",
+  "problemId" : "two-sum",
+  "resolvedInput" : {
+    "nums" : [ 2, 7, 11, 15 ],
+    "target" : 9
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Start with an empty map. Looking for two numbers adding to 9.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "target" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 11,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 15,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "i = 0: nums[0] = 2, so we need 9 - 2 = 7.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "need" : "7",
+      "nums[i]" : "2",
+      "seen" : "{}"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 11,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 15,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "7 is not in the map yet. Record nums[0] = 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "seen" : "{}"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 11,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 15,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "i = 1: nums[1] = 7, so we need 9 - 7 = 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "need" : "2",
+      "nums[i]" : "7",
+      "seen" : "{2=0}"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 11,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 15,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Found it: 2 is already at index 0. 2 + 7 = 9.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[0, 1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 11,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 15,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

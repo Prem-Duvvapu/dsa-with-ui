@@ -10,7 +10,7 @@ already inside WSL, call `mvn`/`npm` directly as below.
 
 ```bash
 # Backend (Java 17, Maven)
-cd backend && mvn test                                  # full suite (~332 tests)
+cd backend && mvn test                                  # full suite (~373 tests)
 cd backend && mvn test -Dtest=TracerContractTest         # one test class
 cd backend && mvn test -Dtest=ApiContractTest#executeRejectsUnknownIdInsteadOfFallingBack
 cd backend && mvn spring-boot:run                        # http://localhost:8923
@@ -158,6 +158,10 @@ tokens while 5 components still used them, and CSS silently drops unresolvable d
    and names no tracer, so this is the only file you touch.
 4. `mvn test`. The contract tests cover step numbering, anchor resolution, defaults
    validating against their own spec, and cross-registry trace distinctness.
+5. Generate its golden file, then **read it**:
+   `mvn test -Dtest=GoldenTraceTest -Dgolden.regenerate=true`. Golden files pin trace
+   *content* — the descriptions, variables and highlighted lines — which every other test
+   is blind to. Regenerating one without reading the diff records a bug as expected.
 
 ## Pinned numbers
 

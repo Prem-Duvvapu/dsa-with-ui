@@ -209,7 +209,7 @@ VERIFY
 > | ✅ | 9b — byte budget, `truncationReason`, estimator accuracy test | #9 |
 > | ✅ | 9a — delta-encoded steps + keyframes, `?encoding=full` for one migration | #11 |
 > | ⬜ | **9c — per-element deltas.** See below; 9a got 30%, not the 10x it predicted. | — |
-> | ⬜ | **5 — golden files.** Must follow the format settling, or they pin one about to change. | — |
+> | ✅ | 5 — golden files for all 8 tracers, pinned against the full step shape | #12 |
 >
 > **9c, the part 9a did not get.** Delta encoding removed the fields that do not change
 > between steps, which measured 30% across the eight tracers — useful, and far short of the
@@ -223,7 +223,8 @@ VERIFY
 > second wire-format change, so it belongs in its own PR after B has a decoder working
 > against 9a.
 >
-> Backend suite is at 332 tests. Do the two open items and Prompt A is done.
+> Backend suite is at 373 tests. **Only 9c is left, and it is optional** — Prompt A's
+> original scope is complete. B and C are unblocked.
 
 ```
 Task: make the tracer test harness workable at 400+ tracers, fix three verified defects

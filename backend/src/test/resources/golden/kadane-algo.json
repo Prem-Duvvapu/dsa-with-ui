@@ -1,0 +1,932 @@
+{
+  "anchors" : {
+    "best" : 5,
+    "done" : 8,
+    "extend" : 4,
+    "init" : 2,
+    "reset" : 6
+  },
+  "code" : "public int maxSubArray(int[] nums) {\n    int best = nums[0], running = 0;\n    for (int i = 0; i < nums.length; i++) {\n        running += nums[i];\n        if (running > best) best = running;\n        if (running < 0) running = 0;\n    }\n    return best;\n}",
+  "problemId" : "kadane-algo",
+  "resolvedInput" : {
+    "nums" : [ -2, 1, -3, 4, -1, 2, 1, -5, 4 ]
+  },
+  "stepCount" : 17,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Track the best sum seen (-2) and a running sum starting at 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "-2",
+      "running" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "i = 0: add -2, running sum is now -2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "-2",
+      "i" : "0",
+      "running" : "-2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Running sum went negative (-2), so any subarray is better off starting fresh. Reset to 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "-2",
+      "i" : "0",
+      "running" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "i = 1: add 1, running sum is now 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "-2",
+      "i" : "1",
+      "running" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "That beats the best so far. best = 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "1",
+      "running" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "i = 2: add -3, running sum is now -2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "2",
+      "running" : "-2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Running sum went negative (-2), so any subarray is better off starting fresh. Reset to 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "2",
+      "running" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "i = 3: add 4, running sum is now 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "3",
+      "running" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 5,
+    "description" : "That beats the best so far. best = 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "4",
+      "i" : "3",
+      "running" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 4,
+    "description" : "i = 4: add -1, running sum is now 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "4",
+      "i" : "4",
+      "running" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 4,
+    "description" : "i = 5: add 2, running sum is now 5.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "4",
+      "i" : "5",
+      "running" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 5,
+    "description" : "That beats the best so far. best = 5.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "5",
+      "i" : "5",
+      "running" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 4,
+    "description" : "i = 6: add 1, running sum is now 6.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "5",
+      "i" : "6",
+      "running" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 5,
+    "description" : "That beats the best so far. best = 6.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "6",
+      "running" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 4,
+    "description" : "i = 7: add -5, running sum is now 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "7",
+      "running" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 4,
+    "description" : "i = 8: add 4, running sum is now 5.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "8",
+      "running" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 8,
+    "description" : "Largest contiguous subarray sum is 6.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
