@@ -1,5 +1,7 @@
 package com.dsa.ui.model;
 
+import java.util.Objects;
+
 import java.util.List;
 import java.util.Map;
 
@@ -44,4 +46,18 @@ public class TrieNodeModel {
 
     public String getState() { return state; }
     public void setState(String state) { this.state = state; }
+
+    // Value semantics. TraceEncoder omits a field from a delta step only when it is equal
+    // to the previous step's, so "equal" has to mean equal by content, not by identity.
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof TrieNodeModel o)) return false;
+        return id == o.id && endOfWord == o.endOfWord && Double.compare(x, o.x) == 0 && Double.compare(y, o.y) == 0 && Objects.equals(character, o.character) && Objects.equals(children, o.children) && Objects.equals(state, o.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, character, endOfWord, x, y, children, state);
+    }
 }
