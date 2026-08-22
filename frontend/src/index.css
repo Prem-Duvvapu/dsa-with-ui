@@ -16,8 +16,8 @@
   --accent-violet-glow: 0 0 16px rgba(124, 109, 242, 0.4);
 
   /* Exactly 4 Semantic Execution States */
-  --state-current: #f59e0b;       /* Amber */
-  --state-current-glow: 0 0 14px rgba(245, 158, 11, 0.5);
+  --state-current: var(--probe);
+  --state-current-glow: 0 0 14px rgba(255, 176, 0, 0.5);
 
   --state-target: #7c6df2;        /* Violet */
   --state-target-glow: 0 0 14px rgba(124, 109, 242, 0.5);
@@ -25,21 +25,31 @@
   --state-visited: #64748b;       /* Slate */
   --state-visited-bg: #334155;
 
-  --state-done: #14b8a6;          /* Teal */
-  --state-done-glow: 0 0 14px rgba(20, 184, 166, 0.5);
+  --state-done: var(--settled);
+  --state-done-glow: 0 0 14px rgba(61, 220, 151, 0.5);
 
-  /* Difficulty Pill Mappings (Distinct from Execution States) */
-  --diff-easy: #14b8a6;          /* Teal */
-  --diff-easy-bg: rgba(20, 184, 166, 0.15);
-  --diff-easy-border: rgba(20, 184, 166, 0.35);
+  /* Difficulty pills.
 
-  --diff-medium: #f59e0b;        /* Amber */
-  --diff-medium-bg: rgba(245, 158, 11, 0.15);
-  --diff-medium-border: rgba(245, 158, 11, 0.35);
+     These were teal / amber / coral, which put --diff-medium and --state-current
+     on the SAME #f59e0b meaning two different things: one said "medium" and the
+     other said "the algorithm is here right now". Difficulty is a property of the
+     problem and never changes while a trace runs, so it has no business borrowing
+     a state hue.
 
-  --diff-hard: #f43f5e;          /* Coral */
-  --diff-hard-bg: rgba(244, 63, 94, 0.15);
-  --diff-hard-border: rgba(244, 63, 94, 0.35);
+     It is now a neutral weight ramp — dim, secondary, primary — read alongside the
+     E / M / H letter. Differentiated by weight and label rather than by colour, so
+     it survives a colour-blind reader and cannot collide with anything. */
+  --diff-easy: var(--bench-ink-dim);
+  --diff-easy-bg: transparent;
+  --diff-easy-border: var(--bench-rule-strong);
+
+  --diff-medium: var(--bench-ink-secondary);
+  --diff-medium-bg: transparent;
+  --diff-medium-border: var(--bench-rule-strong);
+
+  --diff-hard: var(--bench-ink);
+  --diff-hard-bg: transparent;
+  --diff-hard-border: var(--bench-ink-dim);
 
   /* Typography Scale & Colors */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -82,6 +92,146 @@
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-full: 9999px;
+
+  /* ==========================================================================
+     BENCH — the approved design direction.
+
+     Two semantic hues and nothing else. --probe is whatever is happening right
+     now; --settled is whatever is finished and proven. No other chrome token in
+     this file may be amber or green, because the moment a second thing is amber,
+     amber stops meaning "here".
+
+     The light theme is NOT an inversion. The rule is that --probe is always the
+     highest-contrast mark against its own ground: on the instrument it glows, on
+     paper it is dense ink. Same hue, opposite luminance. Three tokens flip role
+     rather than merely moving — --bench-fill, --probe and --settled — and the
+     density band's ramp reverses with them.
+
+     Every value here is measured, not eyeballed. Against each theme's own canvas
+     surface, every role clears 4.5:1. See the contrast table in designTokens.test.js.
+     ========================================================================== */
+
+  --bench-ground: #0a0e13;
+  --bench-recessed: #0e141b;
+  --bench-panel: #111820;
+  --bench-rule: #1e2a35;
+  --bench-rule-strong: #2c3a47;
+  --bench-fill: #16202a;
+
+  --bench-ink-dim: #718293;
+  --bench-ink-secondary: #8b9dab;
+  --bench-ink: #cfdce7;
+
+  --probe: #ffb000;
+  --probe-on: #0a0e13;
+  --probe-wash: #1a1508;
+  --settled: #3ddc97;
+  --settled-on: #06120d;
+
+  /* Type scale. One ratio, no ad-hoc sizes. */
+  --text-2xs: 0.625rem;
+  --text-md: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --tracking-label: 0.14em;
+
+  /* Elevation. Bench is a flat instrument face; depth comes from hairlines and
+     ground, so these are restrained on purpose. */
+  --elevation-raised: 0 1px 0 rgba(255, 255, 255, 0.04);
+  --elevation-panel: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --elevation-overlay: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ==========================================================================
+   Bench on paper.
+
+   Dark-first, deliberately: this is an instrument and the dark face is the
+   primary one, so bare :root stays dark and light is the opt-in. The viewer has
+   three states, not two — an explicit choice stamps data-theme, and the default
+   "system" setting stamps nothing — so light is declared twice: once for a light
+   OS with no explicit choice, and once for an explicit choice.
+
+   Only tokens are redefined here. No component rule may live inside this block:
+   a colour whose only definition sits behind a media query never applies in the
+   unstamped state, which is how a page ends up rendering one theme's text on the
+   other theme's ground.
+   ========================================================================== */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bench-ground: #eef1f4;
+    --bench-recessed: #ffffff;
+    --bench-panel: #f7f9fb;
+    --bench-rule: #d9e0e6;
+    --bench-rule-strong: #b8c2cc;
+    --bench-fill: #e6ebf0;
+
+    --bench-ink-dim: #6b7683;
+    --bench-ink-secondary: #4a5663;
+    --bench-ink: #10161c;
+
+    --probe: #a35f00;
+    --probe-on: #ffffff;
+    --probe-wash: #fdf4e6;
+    --settled: #0e7a51;
+    --settled-on: #ffffff;
+
+    --bg-page: #eef1f4;
+    --bg-elevated: #ffffff;
+    --bg-panel: rgba(255, 255, 255, 0.75);
+    --bg-panel-2: rgba(238, 241, 244, 0.6);
+
+    --text-primary: #10161c;
+    --text-secondary: #4a5663;
+    --text-muted: #6b7683;
+
+    --border-default: rgba(16, 22, 28, 0.10);
+    --border-strong: rgba(16, 22, 28, 0.22);
+
+    --elevation-raised: 0 1px 0 rgba(16, 22, 28, 0.04);
+    --elevation-panel: 0 2px 12px rgba(16, 22, 28, 0.08);
+    --elevation-overlay: 0 8px 32px rgba(16, 22, 28, 0.14);
+  }
+}
+
+:root[data-theme="light"] {
+  --bench-ground: #eef1f4;
+  --bench-recessed: #ffffff;
+  --bench-panel: #f7f9fb;
+  --bench-rule: #d9e0e6;
+  --bench-rule-strong: #b8c2cc;
+  --bench-fill: #e6ebf0;
+
+  --bench-ink-dim: #6b7683;
+  --bench-ink-secondary: #4a5663;
+  --bench-ink: #10161c;
+
+  --probe: #a35f00;
+  --probe-on: #ffffff;
+  --probe-wash: #fdf4e6;
+  --settled: #0e7a51;
+  --settled-on: #ffffff;
+
+  --bg-page: #eef1f4;
+  --bg-elevated: #ffffff;
+  --bg-panel: rgba(255, 255, 255, 0.75);
+  --bg-panel-2: rgba(238, 241, 244, 0.6);
+
+  --text-primary: #10161c;
+  --text-secondary: #4a5663;
+  --text-muted: #6b7683;
+
+  --border-default: rgba(16, 22, 28, 0.10);
+  --border-strong: rgba(16, 22, 28, 0.22);
+
+  --elevation-raised: 0 1px 0 rgba(16, 22, 28, 0.04);
+  --elevation-panel: 0 2px 12px rgba(16, 22, 28, 0.08);
+  --elevation-overlay: 0 8px 32px rgba(16, 22, 28, 0.14);
 }
 
 /* Global Resets & Base Styles */

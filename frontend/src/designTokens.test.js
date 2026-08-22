@@ -50,6 +50,67 @@ function definedClasses() {
   return new Set([...CSS.matchAll(/^\s*\.([a-zA-Z0-9_-]+)/gm)].map((m) => m[1]));
 }
 
+
+/** The 14 tokens the Bench design defines in every theme. */
+const BENCH_TOKENS = [
+  '--bench-ground', '--bench-recessed', '--bench-panel', '--bench-rule',
+  '--bench-rule-strong', '--bench-fill', '--bench-ink-dim', '--bench-ink-secondary',
+  '--bench-ink', '--probe', '--probe-on', '--probe-wash', '--settled', '--settled-on'
+];
+
+/** Declarations inside one CSS block, as { token: rawValue }. */
+function rawTokens(block) {
+  const out = {};
+  for (const m of block.matchAll(/(--[a-zA-Z0-9-]+)\s*:\s*([^;]+);/g)) {
+    out[m[1]] = m[2].trim();
+  }
+  return out;
+}
+
+/** The first `:root {` block — the base every theme starts from. */
+function baseBlock() {
+  const start = CSS.indexOf(':root {');
+  return rawTokens(CSS.slice(start, CSS.indexOf('\n}', start)));
+}
+
+function lightMediaBlock() {
+  const start = CSS.indexOf('@media (prefers-color-scheme: light)');
+  return CSS.slice(start, CSS.indexOf('\n  }', start));
+}
+
+function lightStampedBlock() {
+  const start = CSS.indexOf(':root[data-theme="light"]');
+  return CSS.slice(start, CSS.indexOf('\n}', start));
+}
+
+/** Follows var() chains so a token defined as var(--other) resolves to a real colour. */
+function resolveTheme(tokens) {
+  const resolved = {};
+  const lookup = (name, depth = 0) => {
+    if (depth > 10) return tokens[name];
+    const value = tokens[name];
+    if (!value) return undefined;
+    const ref = value.match(/^var\((--[a-zA-Z0-9-]+)\)$/);
+    return ref ? lookup(ref[1], depth + 1) : value;
+  };
+  for (const name of Object.keys(tokens)) resolved[name] = lookup(name);
+  return resolved;
+}
+
+function luminance(hex) {
+  const h = hex.replace('#', '');
+  const [r, g, b] = [0, 2, 4].map((i) => {
+    const c = parseInt(h.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
 describe('design tokens', () => {
   it('defines every custom property the components reference', () => {
     const defined = definedTokens();
@@ -87,13 +148,75 @@ describe('design tokens', () => {
   });
 
   it('keeps the four semantic execution-state tokens distinct from difficulty tokens', () => {
-    const defined = definedTokens();
+    // This test used to assert only that the tokens EXISTED, while its name promised
+    // they were distinct. They were not: --state-current and --diff-medium were both
+    // #f59e0b, one meaning "the algorithm is here right now" and the other "medium".
+    const base = resolveTheme(baseBlock());
+
     for (const t of ['--state-current', '--state-target', '--state-visited', '--state-done']) {
-      expect(defined.has(t), `${t} must exist`).toBe(true);
+      expect(base[t], `${t} must exist`).toBeTruthy();
     }
     for (const t of ['--diff-easy', '--diff-medium', '--diff-hard']) {
-      expect(defined.has(t), `${t} must exist`).toBe(true);
+      expect(base[t], `${t} must exist`).toBeTruthy();
     }
+
+    const collisions = [];
+    for (const state of ['--state-current', '--state-done']) {
+      for (const diff of ['--diff-easy', '--diff-medium', '--diff-hard']) {
+        if (base[state] === base[diff]) {
+          collisions.push(`${state} and ${diff} are both ${base[state]}`);
+        }
+      }
+    }
+    expect(collisions, 'a difficulty pill must never borrow a semantic state colour').toEqual([]);
+  });
+
+  it('defines every Bench token in the base :root, not only behind a media query', () => {
+    // A colour whose only definition sits inside @media or [data-theme] never applies
+    // in the unstamped "system" state, which renders one theme's text on the other's
+    // ground. The base block has to be complete on its own.
+    const base = resolveTheme(baseBlock());
+    const missing = BENCH_TOKENS.filter((t) => !base[t]);
+    expect(missing, 'these resolve to nothing when the viewer has made no theme choice').toEqual([]);
+  });
+
+  it('redefines the same Bench tokens in both light declarations', () => {
+    // Light is declared twice on purpose — once for a light OS with no explicit
+    // choice, once for an explicit choice. If they drift, the toggle and the OS
+    // setting disagree.
+    const media = rawTokens(lightMediaBlock());
+    const stamped = rawTokens(lightStampedBlock());
+    expect(Object.keys(media).sort()).toEqual(Object.keys(stamped).sort());
+    for (const key of Object.keys(media)) {
+      expect(media[key], `${key} differs between the two light declarations`).toBe(stamped[key]);
+    }
+  });
+
+  it('clears 4.5:1 contrast for every ink and state role, in both themes', () => {
+    const themes = {
+      dark: resolveTheme(baseBlock()),
+      light: resolveTheme({ ...baseBlock(), ...rawTokens(lightStampedBlock()) })
+    };
+
+    const failures = [];
+    for (const [name, tokens] of Object.entries(themes)) {
+      const ground = tokens['--bench-recessed'];
+      for (const role of ['--bench-ink', '--bench-ink-secondary', '--bench-ink-dim',
+                          '--probe', '--settled']) {
+        const ratio = contrast(tokens[role], ground);
+        if (ratio < 4.5) {
+          failures.push(`${name}: ${role} ${tokens[role]} on ${ground} is ${ratio.toFixed(2)}:1`);
+        }
+      }
+      // Text sitting ON a filled probe or settled block.
+      for (const [ink, fill] of [['--probe-on', '--probe'], ['--settled-on', '--settled']]) {
+        const ratio = contrast(tokens[ink], tokens[fill]);
+        if (ratio < 4.5) {
+          failures.push(`${name}: ${ink} on ${fill} is ${ratio.toFixed(2)}:1`);
+        }
+      }
+    }
+    expect(failures, 'measured, not eyeballed — recalculate before changing a value').toEqual([]);
   });
 
   it('animates the loading spinner', () => {
