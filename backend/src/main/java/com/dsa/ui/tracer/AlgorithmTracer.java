@@ -46,7 +46,7 @@ public interface AlgorithmTracer {
 
     /**
      * Runs the algorithm against validated input, emitting a step at each meaningful
-     * state change. Implementations should let {@link StepBudgetExceededException}
+     * state change. Implementations should let {@link TraceBudgetExceededException}
      * propagate; {@link TraceRunner} turns it into a truncated trace.
      */
     void run(Inputs in, StepEmitter emit);
