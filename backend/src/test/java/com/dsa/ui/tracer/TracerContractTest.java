@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.EnumSet;
 import java.util.LinkedHashSet;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +22,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * The contract every tracer must satisfy, enforced across the whole registry.
@@ -228,6 +230,133 @@ class TracerContractTest {
         assertNotEquals(defaults, effective,
                 id + " alternate input resolves to the spec defaults, so traceRespondsToItsInput "
                         + "compares a trace against itself and cannot detect a canned narration");
+    }
+
+
+    /** Field kinds whose size can be scaled without inventing a new problem. */
+    private static final Set<FieldType> GROWABLE =
+            EnumSet.of(FieldType.INT_ARRAY, FieldType.INT_GRID, FieldType.LINKED_LIST, FieldType.BINARY_TREE);
+
+    /**
+     * A tracer that reads its input does more work when given more of it.
+     *
+     * <p>This catches a narration that varies its wording with the data but emits a fixed
+     * number of steps — something {@link #traceRespondsToItsInput} cannot see, because two
+     * different-but-equal-length narrations already have different fingerprints.
+     *
+     * <p>Tracers with nothing scalable are skipped rather than passed. Surefire reports the
+     * skip and its reason; a silently green case would read as coverage that does not exist.
+     */
+    @ParameterizedTest(name = "{0} does more work on a larger input")
+    @MethodSource("tracerIds")
+    @DisplayName("Step count grows with input size")
+    void stepCountGrowsWithInput(String id) {
+        AlgorithmTracer tracer = registry.find(id).orElseThrow();
+
+        InputField growable = tracer.inputSpec().getFields().stream()
+                .filter(f -> GROWABLE.contains(f.getType()))
+                .findFirst()
+                .orElse(null);
+        assumeTrue(growable != null, id + " declares no INT_ARRAY / INT_GRID / LINKED_LIST /"
+                + " BINARY_TREE field, so there is nothing to scale");
+
+        Map<String, Object> larger = new LinkedHashMap<>();
+        for (InputField field : tracer.inputSpec().getFields()) {
+            larger.put(field.getName(), field.getDefaultValue());
+        }
+        larger.put(growable.getName(), scaleUp(growable));
+
+        int onDefaults = runner.runDefaults(tracer).getSteps().size();
+        int onLarger = runner.run(tracer, larger).getSteps().size();
+
+        assertTrue(onLarger > onDefaults, id + " emitted " + onLarger + " steps for a larger "
+                + growable.getName() + " and " + onDefaults + " for its default — the step count"
+                + " does not depend on how much input there is");
+    }
+
+    /**
+     * A bigger version of this field's default, still satisfying its own constraints.
+     *
+     * <p>Extra values go at the FRONT for lists. Appending would leave an early-exiting
+     * algorithm finishing in the same number of steps — two-sum finds 2 + 7 at indices 0
+     * and 1 however much you bolt on the end.
+     */
+    private Object scaleUp(InputField field) {
+        Object base = field.getDefaultValue();
+        return switch (field.getType()) {
+            case INT_ARRAY, LINKED_LIST -> growList(field, asIntList(base));
+            case INT_GRID -> growGrid(field, (List<?>) base);
+            case BINARY_TREE -> growTree(field, ((List<?>) base).size());
+            default -> throw new IllegalStateException("not growable: " + field.getType());
+        };
+    }
+
+    private List<Integer> growList(InputField field, List<Integer> base) {
+        int cap = field.intConstraint("maxLength") != null ? field.intConstraint("maxLength") : base.size() * 2;
+        int target = Math.min(Math.max(base.size() * 2, base.size() + 1), cap);
+        int extra = target - base.size();
+        assertTrue(extra > 0, field.getName() + " cannot be grown within its own maxLength");
+
+        Integer minValue = field.intConstraint("minValue");
+        Integer maxValue = field.intConstraint("maxValue");
+        boolean ordered = field.flag("requireSorted") || field.flag("requireDistinct");
+
+        List<Integer> grown = new ArrayList<>();
+        if (ordered) {
+            // Keep it sorted and distinct by extending below the first element, or above
+            // the last if there is no room underneath.
+            int first = base.isEmpty() ? 0 : base.get(0);
+            if (minValue == null || first - extra >= minValue) {
+                for (int k = extra; k >= 1; k--) {
+                    grown.add(first - k);
+                }
+                grown.addAll(base);
+            } else {
+                grown.addAll(base);
+                int last = base.get(base.size() - 1);
+                for (int k = 1; k <= extra; k++) {
+                    grown.add(last + k);
+                }
+            }
+        } else {
+            int filler = maxValue != null ? maxValue : 999;
+            for (int k = 0; k < extra; k++) {
+                grown.add(filler);
+            }
+            grown.addAll(base);
+        }
+        return grown;
+    }
+
+    private List<?> growGrid(InputField field, List<?> base) {
+        Integer maxRows = field.intConstraint("maxRows");
+        int target = maxRows != null ? Math.min(base.size() * 2, maxRows) : base.size() * 2;
+        assertTrue(target > base.size(), field.getName() + " cannot be grown within its own maxRows");
+
+        List<Object> grown = new ArrayList<>(base);
+        for (int r = 0; grown.size() < target; r++) {
+            grown.add(base.get(r % base.size()));
+        }
+        return grown;
+    }
+
+    private List<Integer> growTree(InputField field, int baseSize) {
+        Integer cap = field.intConstraint("maxLength");
+        int target = Math.min(Math.max(baseSize * 2, baseSize + 1), cap != null ? cap : baseSize * 2);
+        assertTrue(target > baseSize, field.getName() + " cannot be grown within its own maxLength");
+
+        // A complete level-order tree, so no value lands under an absent parent.
+        Integer maxValue = field.intConstraint("maxValue");
+        List<Integer> grown = new ArrayList<>();
+        for (int i = 1; i <= target; i++) {
+            grown.add(maxValue != null ? Math.min(i, maxValue) : i);
+        }
+        return grown;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Integer> asIntList(Object value) {
+        return (List<Integer>) value;
     }
 
     /** Everything a viewer would perceive: the narration and the highlighted lines. */
