@@ -31,7 +31,7 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
                 InputField.of("target", FieldType.INT)
                         .label("Target")
                         .range(-999, 999)
-                        .defaultValue(7)
+                        .defaultValue(13)
                         .build());
     }
 
@@ -41,7 +41,6 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
                public int search(int[] nums, int target) {
                    // @a init
                    int low = 0, high = nums.length - 1;
-                   // @a loop
                    while (low <= high) {
                        // @a mid
                        int mid = low + (high - low) / 2;
@@ -89,8 +88,8 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
         while (low <= high) {
             int mid = low + (high - low) / 2;
 
-            emit.at("mid").say("Range is [%d, %d] — %d values left. Probe the middle: nums[%d] = %d.",
-                            low, high, high - low + 1, mid, nums[mid])
+            emit.at("mid").say("Range is [%d, %d] — %d value%s left. Probe the middle: nums[%d] = %d.",
+                            low, high, high - low + 1, high == low ? "" : "s", mid, nums[mid])
                     .var("low", low).var("high", high).var("mid", mid).var("nums[mid]", nums[mid])
                     .arrayState(window(nums, low, high, mid)).step();
 

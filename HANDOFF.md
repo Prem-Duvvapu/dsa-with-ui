@@ -256,7 +256,7 @@ DO
 
    Measured from the live API before you start — six of the eight tracers fail this the
    moment it becomes real:
-       binary-search-1d   3 steps / 7 anchors   dead: left, loop, miss, right
+       binary-search-1d   3 steps / 7 anchors   dead: left, loop, miss
        two-sum            5 steps / 7 anchors   dead: check, loop, none
        bfs-traversal     21 steps / 8 anchors   dead: loop, neighbours
        kadane-algo       17 steps / 6 anchors   dead: loop
