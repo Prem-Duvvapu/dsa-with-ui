@@ -559,25 +559,40 @@ VERIFY
 |---|---|---|
 | 1 | Bench token layer, both themes, contrast guard | ✅ PR #13 |
 | 5 | `<CanvasShell>` — header / legend / stage slots | ✅ built and wired |
-| 5 | Split `GraphCanvas.jsx`; add the missing `TrieCanvas` | ❌ not started |
+| 5 | Split `GraphCanvas.jsx`; add the missing `TrieCanvas` | ✅ split into `GraphCanvas`/`DsuCanvas`/`GridCanvas`; `TrieCanvas` added |
 | 5b | `<CaptureStrip>` — labelled / compressed / band, canvas + bucketing | ✅ built, tested, wired |
-| — | Delta decoder (`src/trace/decodeTrace.js`), the seam onto prompt A's wire format | ✅ built, not yet consuming `?encoding=delta` |
-| 2, 3, 4 | `useTrace`, one endpoint resolver, `dsType` canvas selection | ❌ not started |
+| — | Delta decoder (`src/trace/decodeTrace.js`), the seam onto prompt A's wire format | ✅ built, consumed by `useTrace` |
+| 2, 3, 4 | `useTrace`, one endpoint resolver, `dsType` canvas selection | ✅ built, tested (7 tests), wired |
 | 6 | The input panel — the headline feature | ❌ not started |
-| 7, 8, 9, 10 | Honest states, the eight fixes, a11y, CSS Modules | ❌ not started |
+| 7 | Honest states: loading, untraced | ✅ done — truncated still open |
+| 8, 9, 10 | The eight fixes, a11y, CSS Modules | ❌ not started |
 
-**Where the wiring stands.** `App.jsx` renders `<CanvasShell>` around `renderCanvas()` and
-`<CaptureStrip>` beneath it. The `category.includes(...)` ladder at `App.jsx:353` is
-UNCHANGED — job 4 still owns replacing it with `dsType`. The five canvases still draw
-their own chrome inside the shell's stage; the shell owns the legend but the canvases have
-not yet had their duplicated legends and `getNodeColor` copies removed. Doing that is what
-job 5's GraphCanvas split should carry.
+**Where the wiring stands.** `App.jsx` fetches the catalogue once from `GET /api/problems`
+(the 18-endpoint fan-out is gone) and all playback/fetch state lives in `useTrace`. Canvas
+selection in `renderCanvas()` now switches on `dsType` — not `category.includes(...)` — with
+a `hasGrid` check ahead of it for problems that carry `gridState` regardless of `dsType`, and
+a title/id sniff for DSU (the one case `dsType: 'Graph'` can't distinguish on its own). The
+sidebar itself, and the search box, are still on the pre-Bench tokens and layout — restyling
+them is not tracked as its own job above and should be.
 
-**On the capture strip's rows.** `rowStates`/`rowLabels` in `CaptureStrip.jsx` read
+**The catalogue-summary vs. detail split.** `GET /api/problems` (the list) returns summary
+fields only — id, title, category, dsType, traced, inputSpec. `javaCode`, `complexity`, and
+every `default*` field used by the canvases live only on `GET /api/problems/{id}`. The first
+version of this wiring fetched the detail response inside `useTrace` and then discarded it,
+so `CodeViewer` silently fell back to its hardcoded placeholder and every canvas needing
+`defaultGraphNodes`/`defaultGrid` had nothing — for every problem, not just untraced ones.
+Fixed by having `useTrace` expose `detail` and having `App.jsx` merge it into `activeProblem`
+(cleared on each new fetch so a stale problem's code/graph can't flash under a new title).
+Caught by a regression test (`App per-problem detail merge`) using a fixture where the two
+endpoints genuinely diverge, the way the last one — where both endpoints returned the same
+object — could not have.
+
+**On the capture strip's rows.** `rowStates`/`rowLabels` in `CaptureStrip.jsx` still read
 whichever payload the step happens to carry (`arrayState`, then `treeNodes`, `listState`,
-`gridState`, `nodeStates`). That is deliberate — it keeps ONE component — but it means a
-step carrying none of them draws no strip, which is the tested behaviour. When `dsType`
-lands (job 4), row meaning should come from it rather than from payload sniffing.
+`gridState`, `nodeStates`) rather than `dsType`. That is deliberate — it keeps ONE component
+— but it means a step carrying none of them draws no strip, which is the tested behaviour.
+`dsType`-driven canvas selection has landed; making the strip's row meaning follow `dsType`
+too is still open.
 
 ---
 
