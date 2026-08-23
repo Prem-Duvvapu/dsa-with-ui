@@ -30,7 +30,6 @@ public class AdvancedGraphService implements ProblemProvider {
             case "graph-rep-java": return generateGraphRepJavaSteps();
             case "connected-components-intro": return generateConnectedComponentsIntroSteps();
             case "bfs-dfs-intro": return generateBfsDfsIntroSteps();
-            case "dfs-traversal": return generateDfsTraversalSteps();
             case "num-provinces": return generateNumProvincesSteps();
             case "connected-matrix": return generateConnectedMatrixSteps();
             case "rotten-oranges": return generateRottenOrangesSteps();
@@ -400,7 +399,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateGraphRepJavaSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateConnectedComponentsIntroSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateBfsDfsIntroSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateDfsTraversalSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumProvincesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateConnectedMatrixSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateRottenOrangesSteps() { return generateGraphIntroSteps(); }
