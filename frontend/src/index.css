@@ -297,6 +297,13 @@ body {
   border-color: var(--border-strong);
 }
 
+/* .btn sets outline:none above; this is the replacement every other focusable class in
+   this file already gets (.sb-toggle, .sb-cat, .cs-col, ...) — .btn itself never had one. */
+.btn:focus-visible {
+  outline: 2px solid var(--accent-violet);
+  outline-offset: 2px;
+}
+
 /* Custom Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 5px;

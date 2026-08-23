@@ -403,3 +403,80 @@ describe('App input panel', () => {
     expect(screen.getByLabelText('Target sum').value).toBe('9');
   });
 });
+
+describe('App catalogue error surface', () => {
+  it('shows a visible error and a Retry when the catalogue fetch fails', async () => {
+    vi.stubGlobal('fetch', vi.fn(() => Promise.reject(new Error('network down'))));
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(screen.getByRole('alert')).toHaveTextContent(/could not reach the backend/i)
+    );
+    // The offline fallback is still usable underneath the banner.
+    expect(screen.getByText('DSA Visualizer')).toBeInTheDocument();
+  });
+
+  it('Retry clears the banner once the catalogue loads', async () => {
+    let shouldFail = true;
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (shouldFail) return Promise.reject(new Error('network down'));
+      return Promise.resolve(respondTo(url));
+    }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByRole('alert')).toBeInTheDocument());
+
+    shouldFail = false;
+    fireEvent.click(screen.getByRole('button', { name: /retry/i }));
+
+    await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+  });
+});
+
+describe('App mobile drawer', () => {
+  const ORIGINAL_WIDTH = window.innerWidth;
+
+  beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 480 });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: ORIGINAL_WIDTH });
+  });
+
+  it('starts closed on a narrow viewport', async () => {
+    render(<App />);
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    // The sidebar's search box is the drawer's own content; absent means closed.
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+  });
+
+  it('opens with a backdrop that closes it again on click', async () => {
+    render(<App />);
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.click(screen.getByLabelText(/menu|sidebar|navigation/i));
+    await waitFor(() => expect(screen.getByRole('combobox')).toBeInTheDocument());
+
+    // The backdrop is the only aria-hidden element covering the screen at this point.
+    const backdrop = document.querySelector('[aria-hidden="true"]');
+    expect(backdrop).toBeTruthy();
+    fireEvent.click(backdrop);
+
+    await waitFor(() => expect(screen.queryByRole('combobox')).not.toBeInTheDocument());
+  });
+
+  it('Escape closes the drawer even while the search box is focused', async () => {
+    render(<App />);
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.click(screen.getByLabelText(/menu|sidebar|navigation/i));
+    await waitFor(() => expect(screen.getByRole('combobox')).toBeInTheDocument());
+
+    screen.getByRole('combobox').focus();
+    fireEvent.keyDown(window, { code: 'Escape' });
+
+    await waitFor(() => expect(screen.queryByRole('combobox')).not.toBeInTheDocument());
+  });
+});

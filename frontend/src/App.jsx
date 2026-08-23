@@ -11,6 +11,7 @@ import LinkedListCanvas from './components/LinkedListCanvas';
 import RecursionTreeCanvas from './components/RecursionTreeCanvas';
 import TrieCanvas from './components/TrieCanvas';
 import CanvasShell from './components/CanvasShell';
+import ErrorBoundary from './components/ErrorBoundary';
 import CaptureStrip from './components/CaptureStrip';
 import CodeViewer from './components/CodeViewer';
 import MemoryComplexityCard from './components/MemoryComplexityCard';
@@ -125,6 +126,7 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeProblemId, setActiveProblemId] = useState('two-sum');
   const [catalogLoading, setCatalogLoading] = useState(false);
+  const [catalogError, setCatalogError] = useState(null);
 
   // The catalogue entry — summary fields only (id, title, category, dsType, traced).
   const catalogEntry = problems.find(p => p.id === activeProblemId) || problems[0] || null;
@@ -158,10 +160,13 @@ export default function App() {
         setProblems(data);
         const initialId = data.find(p => p.id === 'two-sum')?.id || data[0].id;
         setActiveProblemId(initialId);
+        setCatalogError(null);
       }
     } catch (err) {
       console.warn('Backend connection failed:', err);
-      // Fall through to DEFAULT_FALLBACK_PROBLEMS — the app is usable offline.
+      // Fall through to DEFAULT_FALLBACK_PROBLEMS — the app is usable offline, but the
+      // learner should be told why the library says "2 algorithms" instead of guessing.
+      setCatalogError('Could not reach the backend. Showing a small offline sample.');
     } finally {
       setCatalogLoading(false);
     }
@@ -171,9 +176,34 @@ export default function App() {
     fetchAllProblems();
   }, [fetchAllProblems]);
 
+  // ── Layout state ─────────────────────────────────────────────────────────
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
+  const [activeTab, setActiveTab] = useState('code');
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const isMobile = viewportWidth <= 768;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+      if (window.innerWidth > 768) {
+        setIsSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // ── Global keyboard shortcuts ────────────────────────────────────────────
   useEffect(() => {
     const handleKeyDown = (e) => {
+      // Escape closes the mobile drawer regardless of what's focused — a learner typing
+      // in the search field is exactly who needs Escape to work.
+      if (e.code === 'Escape' && isMobile && isSidebarOpen) {
+        e.preventDefault();
+        setIsSidebarOpen(false);
+        return;
+      }
+
       const tag = document.activeElement?.tagName;
       if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(tag)
           || document.activeElement?.isContentEditable) return;
@@ -195,23 +225,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [togglePlay, stepNext, stepPrev, reset]);
-
-  // ── Layout state ─────────────────────────────────────────────────────────
-  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
-  const [activeTab, setActiveTab] = useState('code');
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportWidth(window.innerWidth);
-      if (window.innerWidth > 768) {
-        setIsSidebarOpen(true);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [togglePlay, stepNext, stepPrev, reset, isMobile, isSidebarOpen]);
 
   const handleSelectCategory = (cat) => {
     setActiveCategory(cat);
@@ -224,7 +238,6 @@ export default function App() {
     }
   };
 
-  const isMobile = viewportWidth <= 768;
   const loading = catalogLoading;
   const hasInputSpec = Boolean(activeProblem?.inputSpec?.fields?.length);
 
@@ -283,9 +296,33 @@ export default function App() {
 
       <Breadcrumb problem={activeProblem} />
 
+      {catalogError && (
+        <div
+          role="alert"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
+            margin: '0 12px', padding: '6px 12px', fontSize: '0.74rem',
+            color: 'var(--probe)', background: 'rgba(255, 176, 0, 0.08)',
+            border: '1px solid rgba(255, 176, 0, 0.3)', borderRadius: 'var(--radius-sm)'
+          }}
+        >
+          <span>{catalogError}</span>
+          <button type="button" className="btn btn-outline" style={{ padding: '2px 8px', fontSize: '0.7rem' }} onClick={fetchAllProblems}>
+            Retry
+          </button>
+        </div>
+      )}
+
       {/* Main Workspace Container */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: '0 12px 8px 12px', gap: '12px', position: 'relative' }}>
         {/* Sidebar (Search & Explore Panel) */}
+        {isSidebarOpen && isMobile && (
+          <div
+            onClick={() => setIsSidebarOpen(false)}
+            aria-hidden="true"
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99 }}
+          />
+        )}
         {isSidebarOpen && (
           <div style={{
             position: isMobile ? 'absolute' : 'relative',
@@ -331,11 +368,15 @@ export default function App() {
                       This problem is catalogued but not yet traced.
                     </div>
                   ) : (
-                    renderCanvas()
+                    <ErrorBoundary resetKey={activeProblemId}>
+                      {renderCanvas()}
+                    </ErrorBoundary>
                   )}
                 </CanvasShell>
               ) : (
-                renderCanvas()
+                <ErrorBoundary resetKey={activeProblemId}>
+                  {renderCanvas()}
+                </ErrorBoundary>
               )}
             </div>
 

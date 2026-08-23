@@ -565,7 +565,9 @@ VERIFY
 | 2, 3, 4 | `useTrace`, one endpoint resolver, `dsType` canvas selection | ✅ built, tested (7 tests), wired |
 | 6 | The input panel — the headline feature | ✅ built, tested, wired |
 | 7 | Honest states: loading, untraced, truncated | ✅ done |
-| 8, 9, 10 | The eight fixes, a11y, CSS Modules | ❌ not started |
+| 8 | ErrorBoundary, catalog-fetch error surface, mobile tab sync, default speed | ✅ done — see note below |
+| 9 | a11y: `.btn:focus-visible`, `aria-live` ticker, Escape + backdrop on mobile drawer | ✅ done — see note below |
+| 10 | CSS Modules | ❌ not started |
 
 **Where the wiring stands.** `App.jsx` fetches the catalogue once from `GET /api/problems`
 (the 18-endpoint fan-out is gone) and all playback/fetch state lives in `useTrace`. Canvas
@@ -610,7 +612,36 @@ no-op handlers) — a test written against the no-op version caught the gap befo
 `GridField`'s row/col buttons follow the same pattern.
 
 **Not done in this pass, deliberately out of scope:** the sidebar/search restyle onto Bench
-tokens, `react-router-dom` (no deep links yet), and jobs 8–10.
+tokens, `react-router-dom` (no deep links yet), and job 10.
+
+**Jobs 8/9 — several items on the original list were already stale by the time this ran;
+re-verified each against the live code rather than trusting the doc.** Already fixed by
+earlier work, not touched here: the Space handler already exempted `BUTTON`/`SELECT`; the
+sidebar rows are a proper ARIA combobox/listbox with arrow-key nav (`SearchBox.jsx`, from
+the search-overhaul PR), not unreachable `<div>`s; `--state-current`/`--diff-medium` no
+longer collide (Bench token PR); the per-problem loading state already existed
+(`traceLoading`). Actually fixed here:
+- **`<ErrorBoundary>`** around `renderCanvas()`, both call sites — a throw in any canvas
+  used to blank the whole app; now it loses just that one visualization, with a "try
+  again" that clears on `resetKey={activeProblemId}` so switching problems retries fresh.
+- **Catalog-fetch error surface** — a visible `role="alert"` banner with Retry, instead of
+  only a `console.warn` while the app quietly showed the 2-problem offline fallback.
+- **`MemoryComplexityCard`'s mobile tab desync** — `useState(initialTab)` only read the
+  prop once; clicking Memory→Complexity on mobile left the card showing Memory. Now a
+  `useEffect` syncs on every `initialTab` change; desktop (no prop) is unaffected.
+- **Default speed** 800ms → 1000ms — the only prior value matching none of the four speed
+  presets (2000/1000/500/250ms).
+- **`.btn:focus-visible`** — `.btn` sets `outline:none` and had no replacement, unlike
+  every other focusable class in `index.css`.
+- **`aria-live="polite"`** on `LiveTraceTicker` — step descriptions were unannounced.
+- **Mobile drawer**: a click-to-close backdrop, and Escape closes it even while the
+  search input is focused (checked *before* the existing focused-element exemption, not
+  gated by it). A real focus trap (Tab cycling confined to the drawer) is still open.
+- `renderCanvas()` returning `null` for a null `activeProblem` is still there — traced but
+  not fixed; `problems` can currently only be empty if the catalogue fetch returns an
+  empty array, which doesn't happen in practice (`DEFAULT_FALLBACK_PROBLEMS` seeds it and
+  a successful fetch is only applied when `data.length > 0`), so it's a real but
+  unreachable-today edge case.
 
 ---
 
