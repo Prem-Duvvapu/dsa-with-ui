@@ -14,6 +14,13 @@ import { decodeTrace } from '../trace/decodeTrace';
  * load with different error handling; mixing it in would muddy the interface.
  */
 
+/** Decodes a v2 execute response body into a plain steps array, or [] if unusable. */
+function decodeExecValue(execValue) {
+  if (Array.isArray(execValue)) return execValue;
+  if (execValue?.steps) return decodeTrace(execValue);
+  return [];
+}
+
 /**
  * @param {string|null} problemId  the currently selected problem id
  * @param {object|null} problem    the catalogue entry (for fallback steps/dsType)
@@ -26,6 +33,10 @@ export default function useTrace(problemId, problem) {
   const [speed, setSpeed] = useState(800);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  /** true when the last successful run hit the server's step budget. */
+  const [truncated, setTruncated] = useState(false);
+  /** Per-field messages from the last rejected POST /execute. Cleared on any success. */
+  const [fieldErrors, setFieldErrors] = useState({});
   /** The full per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
    *  the catalogue list endpoint only carries summary fields, so canvases and the
    *  code/complexity panels need this merged in by the caller. */
@@ -50,6 +61,7 @@ export default function useTrace(problemId, problem) {
     setIsPlaying(false);
     setCurrentStepIndex(0);
     setError(null);
+    setFieldErrors({});
     setLoading(true);
     setDetail(null);
 
@@ -78,21 +90,13 @@ export default function useTrace(problemId, problem) {
 
         if (execValue?.untraced) {
           setSteps([]);
+          setTruncated(false);
           setError('untraced');
           setLoading(false);
           return;
         }
 
-        // The v2 endpoint wraps steps in { encoding, steps, truncated }.
-        // The legacy endpoints return a bare array.
-        let decoded;
-        if (Array.isArray(execValue)) {
-          decoded = execValue;
-        } else if (execValue?.steps) {
-          decoded = decodeTrace(execValue);
-        } else {
-          decoded = [];
-        }
+        const decoded = decodeExecValue(execValue);
 
         if (decoded.length > 0) {
           setSteps(decoded);
@@ -112,6 +116,8 @@ export default function useTrace(problemId, problem) {
           }]);
         }
 
+        setTruncated(!Array.isArray(execValue) && execValue?.truncated === true);
+        setCurrentStepIndex(0);
         setError(null);
       } catch (err) {
         if (err.name === 'AbortError') return;
@@ -129,6 +135,67 @@ export default function useTrace(problemId, problem) {
   }, [problemId]); // eslint-disable-line react-hooks/exhaustive-deps
   // `problem` is intentionally excluded: changing it without changing the id should
   // not refetch. The id alone drives the request lifecycle.
+
+  // ── Run against caller-supplied input ───────────────────────────────────────
+  /**
+   * POSTs to /api/problems/{id}/execute with the given input. A 400 attaches
+   * fieldErrors and leaves the current animation on screen — the point of inline
+   * field errors is that the learner sees what to fix without losing their place.
+   */
+  const runInput = useCallback(async (inputValues) => {
+    if (!problemId) return;
+
+    const requestId = ++requestIdRef.current;
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/problems/${problemId}/execute`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(inputValues || {}),
+        signal: controller.signal
+      });
+      if (requestId !== requestIdRef.current) return;
+
+      if (res.status === 400) {
+        const body = await res.json().catch(() => null);
+        setFieldErrors(body?.fieldErrors || {});
+        return;
+      }
+      if (res.status === 501) {
+        setFieldErrors({});
+        setSteps([]);
+        setTruncated(false);
+        setError('untraced');
+        return;
+      }
+      if (!res.ok) {
+        setFieldErrors({});
+        setError('fetch');
+        return;
+      }
+
+      const body = await res.json();
+      const decoded = decodeExecValue(body);
+      setFieldErrors({});
+      setSteps(decoded);
+      setTruncated(body?.truncated === true);
+      setCurrentStepIndex(0);
+      setIsPlaying(false);
+      setError(null);
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+      if (requestId !== requestIdRef.current) return;
+      setError('fetch');
+    } finally {
+      if (requestId === requestIdRef.current) {
+        setLoading(false);
+      }
+    }
+  }, [problemId]);
 
   // ── Playback clock ─────────────────────────────────────────────────────────
   useEffect(() => {
@@ -183,6 +250,8 @@ export default function useTrace(problemId, problem) {
     speed,
     loading,
     error,
+    truncated,
+    fieldErrors,
     detail,
     play,
     pause,
@@ -191,6 +260,7 @@ export default function useTrace(problemId, problem) {
     stepPrev,
     reset,
     seek,
-    setSpeed
+    setSpeed,
+    runInput
   };
 }

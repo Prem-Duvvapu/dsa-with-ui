@@ -301,3 +301,105 @@ describe('App per-problem detail merge', () => {
     expect(screen.queryByText(/Java sliding window \(LeetCode 3\)/)).not.toBeInTheDocument();
   });
 });
+
+describe('App input panel', () => {
+  const TWO_SUM_WITH_SPEC = {
+    id: 'two-sum', title: 'Two Sum', category: 'Arrays', difficulty: 'Easy', dsType: 'Array',
+    traced: true, javaCode: 'int solve() {\n    return 0;\n}',
+    complexity: { timeComplexity: 'O(N)', spaceComplexity: 'O(1)' },
+    inputSpec: {
+      fields: [
+        {
+          name: 'nums', label: 'Array', type: 'INT_ARRAY', defaultValue: [2, 7, 11, 15],
+          help: '', constraints: { minLength: 2, maxLength: 10, minValue: -100, maxValue: 100 }
+        },
+        {
+          name: 'target', label: 'Target sum', type: 'INT', defaultValue: 9,
+          help: '', constraints: { min: -100, max: 100 }
+        }
+      ],
+      maxSteps: 5000, maxBytes: 2000000
+    }
+  };
+
+  function stepsForInput(nums, target) {
+    return {
+      encoding: 'delta',
+      truncated: false,
+      steps: [{
+        stepNumber: 1, activeLine: 1, keyframe: true, dsType: 'Array', variables: {},
+        description: `custom run nums=${JSON.stringify(nums)} target=${target}`,
+        arrayState: nums.map((v, i) => ({ index: i, value: v, state: 'default' }))
+      }]
+    };
+  }
+
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn((url, opts) => {
+      calls.push(url);
+      if (url === '/api/problems') return Promise.resolve(ok([TWO_SUM_WITH_SPEC]));
+      if (url === '/api/problems/two-sum') return Promise.resolve(ok(TWO_SUM_WITH_SPEC));
+      if (url === '/api/problems/two-sum/execute' && opts?.method === 'POST') {
+        const body = JSON.parse(opts.body);
+        if (typeof body.target !== 'number' || body.target > 100) {
+          return Promise.resolve({
+            ok: false, status: 400,
+            json: () => Promise.resolve({
+              error: 'invalid_input',
+              fieldErrors: { target: 'Must be at most 100.' }
+            })
+          });
+        }
+        return Promise.resolve(ok(stepsForInput(body.nums, body.target)));
+      }
+      if (url === '/api/problems/two-sum/execute') {
+        return Promise.resolve(ok(stepsForInput([2, 7, 11, 15], 9)));
+      }
+      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
+    }));
+  });
+
+  /** two-sum is the app's default selection, so the panel is already open on mount. */
+  async function openTwoSum() {
+    render(<App />);
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+  }
+
+  it('renders an editor from inputSpec and runs a custom input through POST /execute', async () => {
+    await openTwoSum();
+
+    fireEvent.change(screen.getByLabelText('Target sum'), { target: { value: '13' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Run with this input' }));
+
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=13')).toBeInTheDocument()
+    );
+    const postCall = calls.filter((u) => u === '/api/problems/two-sum/execute');
+    expect(postCall.length).toBeGreaterThan(0);
+  });
+
+  it('shows a rejected field error inline without blanking the current animation', async () => {
+    await openTwoSum();
+
+    fireEvent.change(screen.getByLabelText('Target sum'), { target: { value: '999' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Run with this input' }));
+
+    await waitFor(() =>
+      expect(screen.getByText('Must be at most 100.')).toBeInTheDocument()
+    );
+    // The last good run is still on screen — a rejected edit doesn't blank the canvas.
+    expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument();
+  });
+
+  it('Reset repopulates the form with the spec defaults', async () => {
+    await openTwoSum();
+
+    fireEvent.change(screen.getByLabelText('Target sum'), { target: { value: '77' } });
+    expect(screen.getByLabelText('Target sum').value).toBe('77');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Reset input to default' }));
+    expect(screen.getByLabelText('Target sum').value).toBe('9');
+  });
+});
