@@ -483,6 +483,29 @@ mark {
   box-shadow: 0 0 0 3px var(--accent-violet-tint);
 }
 
+/* A plain field input for the generic input panel — same focus treatment as .sb-input,
+   without its search-icon padding. */
+.ip-input {
+  padding: 4px 6px;
+  font-family: var(--font-code);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xs);
+  outline: none;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+}
+
+.ip-input:hover { border-color: var(--border-strong); }
+
+.ip-input:focus-visible,
+.ip-input:focus {
+  border-color: var(--accent-violet);
+  box-shadow: 0 0 0 3px var(--accent-violet-tint);
+}
+
 .sb-adorn {
   position: absolute;
   top: 50%;

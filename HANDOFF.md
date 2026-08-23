@@ -563,8 +563,8 @@ VERIFY
 | 5b | `<CaptureStrip>` — labelled / compressed / band, canvas + bucketing | ✅ built, tested, wired |
 | — | Delta decoder (`src/trace/decodeTrace.js`), the seam onto prompt A's wire format | ✅ built, consumed by `useTrace` |
 | 2, 3, 4 | `useTrace`, one endpoint resolver, `dsType` canvas selection | ✅ built, tested (7 tests), wired |
-| 6 | The input panel — the headline feature | ❌ not started |
-| 7 | Honest states: loading, untraced | ✅ done — truncated still open |
+| 6 | The input panel — the headline feature | ✅ built, tested, wired |
+| 7 | Honest states: loading, untraced, truncated | ✅ done |
 | 8, 9, 10 | The eight fixes, a11y, CSS Modules | ❌ not started |
 
 **Where the wiring stands.** `App.jsx` fetches the catalogue once from `GET /api/problems`
@@ -593,6 +593,24 @@ whichever payload the step happens to carry (`arrayState`, then `treeNodes`, `li
 — but it means a step carrying none of them draws no strip, which is the tested behaviour.
 `dsType`-driven canvas selection has landed; making the strip's row meaning follow `dsType`
 too is still open.
+
+**The input panel.** `<InputPanel>` renders one editor per declared `FieldType`, all six of
+which now have a live tracer exercising them (`two-sum`/`kadane-algo`/`binary-search-1d`:
+`INT`+`INT_ARRAY`; `bfs-traversal`/`dfs-traversal`: `GRAPH`; `number-of-islands`: `INT_GRID`;
+`reverse-linked-list`: `LINKED_LIST`; `tree-preorder`/`tree-inorder`: `BINARY_TREE`). No
+tracer currently declares `STRING`, so that editor is untested against a real backend
+response — worth exercising the first time a string-input problem is traced.
+`Run`/`Randomize`/`Reset` populate the form only; none of the three auto-executes, so the
+learner always sees the input before it runs. `useTrace.runInput` POSTs and, on a 400, sets
+`fieldErrors` without touching `steps` — a rejected edit leaves the last good animation on
+screen rather than blanking it. `truncated` (job 7's last piece) is now surfaced from both
+the GET-defaults path and the POST path, shown as a small notice above the capture strip.
+`IntArrayField`'s Add/Remove buttons are genuinely `disabled` at the length caps (not just
+no-op handlers) — a test written against the no-op version caught the gap before it shipped;
+`GridField`'s row/col buttons follow the same pattern.
+
+**Not done in this pass, deliberately out of scope:** the sidebar/search restyle onto Bench
+tokens, `react-router-dom` (no deep links yet), and jobs 8–10.
 
 ---
 

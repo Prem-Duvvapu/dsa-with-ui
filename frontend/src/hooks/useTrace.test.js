@@ -35,7 +35,7 @@ beforeEach(() => {
   resolvers = new Map();
 
   vi.stubGlobal('fetch', vi.fn((url, opts) => {
-    fetchCalls.push({ url, signal: opts?.signal });
+    fetchCalls.push({ url, signal: opts?.signal, method: opts?.method, body: opts?.body });
 
     if (resolvers.has(url)) {
       return new Promise((resolve) => resolvers.set(url, { resolve, signal: opts?.signal }));
@@ -179,5 +179,91 @@ describe('useTrace', () => {
 
     act(() => result.current.reset());
     expect(result.current.currentStepIndex).toBe(0);
+  });
+
+  it('exposes truncated when the response hit the step budget', async () => {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.endsWith('/execute')) return Promise.resolve(ok({ encoding: 'delta', steps: STEPS, truncated: true }));
+      return Promise.resolve(ok({ id: 'two-sum', title: 'Two Sum' }));
+    }));
+
+    const { result } = renderHook(() => useTrace('two-sum', null));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.truncated).toBe(true);
+  });
+
+  it('runInput POSTs the given input to /execute', async () => {
+    const { result } = renderHook(() => useTrace('two-sum', null));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    fetchCalls.length = 0;
+    await act(async () => {
+      await result.current.runInput({ nums: [1, 2, 3], target: 5 });
+    });
+
+    const postCall = fetchCalls.find((c) => c.url === '/api/problems/two-sum/execute');
+    expect(postCall.method).toBe('POST');
+    expect(JSON.parse(postCall.body)).toEqual({ nums: [1, 2, 3], target: 5 });
+    expect(result.current.steps).toHaveLength(2);
+  });
+
+  it('runInput attaches fieldErrors on a 400 and leaves the current steps alone', async () => {
+    const { result } = renderHook(() => useTrace('two-sum', null));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.steps).toHaveLength(2);
+
+    vi.stubGlobal('fetch', vi.fn((url) => Promise.resolve({
+      ok: false,
+      status: 400,
+      json: () => Promise.resolve({
+        error: 'invalid_input',
+        fieldErrors: { nums: 'Needs at least 2 values.' }
+      })
+    })));
+
+    await act(async () => {
+      await result.current.runInput({ nums: [1] });
+    });
+
+    expect(result.current.fieldErrors).toEqual({ nums: 'Needs at least 2 values.' });
+    // The animation from the last good run is still there — a rejected edit doesn't
+    // blank the screen out from under the learner.
+    expect(result.current.steps).toHaveLength(2);
+  });
+
+  it('runInput clears a previous fieldErrors on the next successful run', async () => {
+    const { result } = renderHook(() => useTrace('two-sum', null));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({
+      ok: false, status: 400,
+      json: () => Promise.resolve({ fieldErrors: { nums: 'bad' } })
+    })));
+    await act(async () => { await result.current.runInput({ nums: [1] }); });
+    expect(result.current.fieldErrors).toEqual({ nums: 'bad' });
+
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.endsWith('/execute')) return Promise.resolve(ok(STEPS));
+      return Promise.resolve(ok(null));
+    }));
+    await act(async () => { await result.current.runInput({ nums: [1, 2] }); });
+
+    expect(result.current.fieldErrors).toEqual({});
+    expect(result.current.steps).toHaveLength(2);
+  });
+
+  it('runInput sets truncated from the POST response', async () => {
+    const { result } = renderHook(() => useTrace('two-sum', null));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.endsWith('/execute')) {
+        return Promise.resolve(ok({ encoding: 'delta', steps: STEPS, truncated: true }));
+      }
+      return Promise.resolve(ok(null));
+    }));
+
+    await act(async () => { await result.current.runInput({ nums: [1, 2] }); });
+    expect(result.current.truncated).toBe(true);
   });
 });

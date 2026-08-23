@@ -14,6 +14,7 @@ import CanvasShell from './components/CanvasShell';
 import CaptureStrip from './components/CaptureStrip';
 import CodeViewer from './components/CodeViewer';
 import MemoryComplexityCard from './components/MemoryComplexityCard';
+import InputPanel from './components/InputPanel';
 import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
 import useTrace from './hooks/useTrace';
@@ -134,8 +135,10 @@ export default function App() {
     isPlaying, speed,
     loading: traceLoading,
     error: traceError,
+    truncated: traceTruncated,
+    fieldErrors,
     detail,
-    togglePlay, stepNext, stepPrev, reset, seek, setSpeed
+    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput
   } = useTrace(activeProblemId, catalogEntry);
 
   // Merge in the per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
@@ -223,6 +226,7 @@ export default function App() {
 
   const isMobile = viewportWidth <= 768;
   const loading = catalogLoading;
+  const hasInputSpec = Boolean(activeProblem?.inputSpec?.fields?.length);
 
   // ── Canvas selection by dsType ───────────────────────────────────────────
   const renderCanvas = () => {
@@ -335,6 +339,12 @@ export default function App() {
               )}
             </div>
 
+            {traceTruncated && (
+              <div style={{ padding: '4px 12px', fontSize: '0.72rem', fontFamily: 'var(--font-code)', color: 'var(--probe)' }}>
+                This trace hit the step budget and was cut short — try a smaller input for the full run.
+              </div>
+            )}
+
             {/* The whole run at once, under the single frame it belongs to. */}
             <CaptureStrip
               steps={steps}
@@ -362,33 +372,57 @@ export default function App() {
             </div>
           </div>
 
-          {/* Desktop Bottom Section: Wide Java Code + Right Tabbed Memory/Complexity Card */}
+          {/* Desktop Bottom Section: Wide Java Code + Input Panel + Right Tabbed Memory/Complexity Card */}
           {!isMobile ? (
-            <div style={{ height: '210px', minHeight: '210px', display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: '12px', overflow: 'hidden', flexShrink: 0 }}>
+            <div style={{
+              height: '210px', minHeight: '210px', display: 'grid',
+              gridTemplateColumns: hasInputSpec ? '1.2fr 1fr 1fr' : '1.6fr 1fr',
+              gap: '12px', overflow: 'hidden', flexShrink: 0
+            }}>
               <CodeViewer problem={activeProblem} currentStep={currentStep} />
+              {hasInputSpec && (
+                <div className="glass-panel" style={{ padding: '10px 12px', overflow: 'hidden' }}>
+                  <InputPanel
+                    problemId={activeProblemId}
+                    inputSpec={activeProblem.inputSpec}
+                    fieldErrors={fieldErrors}
+                    running={traceLoading}
+                    onRun={runInput}
+                  />
+                </div>
+              )}
               <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} />
             </div>
           ) : (
-            /* Mobile 3-Tab Bottom Card Section (Code / Memory / Complexity) */
+            /* Mobile Tab Bottom Card Section (Code / Input / Memory / Complexity) */
             <div className="glass-panel" style={{ height: '180px', minHeight: '180px', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexShrink: 0 }}>
               <div style={{ display: 'flex', padding: '4px', gap: '4px', borderBottom: '1px solid var(--border-default)', background: 'rgba(0,0,0,0.2)' }}>
-                <button 
+                <button
                   onClick={() => setActiveTab('code')}
-                  className={`btn ${activeTab === 'code' ? 'btn-primary' : 'btn-outline'}`} 
+                  className={`btn ${activeTab === 'code' ? 'btn-primary' : 'btn-outline'}`}
                   style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
                 >
                   Code
                 </button>
-                <button 
+                {hasInputSpec && (
+                  <button
+                    onClick={() => setActiveTab('input')}
+                    className={`btn ${activeTab === 'input' ? 'btn-primary' : 'btn-outline'}`}
+                    style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
+                  >
+                    Input
+                  </button>
+                )}
+                <button
                   onClick={() => setActiveTab('memory')}
-                  className={`btn ${activeTab === 'memory' ? 'btn-primary' : 'btn-outline'}`} 
+                  className={`btn ${activeTab === 'memory' ? 'btn-primary' : 'btn-outline'}`}
                   style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
                 >
                   Memory
                 </button>
-                <button 
+                <button
                   onClick={() => setActiveTab('complexity')}
-                  className={`btn ${activeTab === 'complexity' ? 'btn-primary' : 'btn-outline'}`} 
+                  className={`btn ${activeTab === 'complexity' ? 'btn-primary' : 'btn-outline'}`}
                   style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
                 >
                   Complexity
@@ -398,6 +432,16 @@ export default function App() {
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 {activeTab === 'code' ? (
                   <CodeViewer problem={activeProblem} currentStep={currentStep} />
+                ) : activeTab === 'input' ? (
+                  <div style={{ padding: '10px 12px', height: '100%', overflow: 'hidden' }}>
+                    <InputPanel
+                      problemId={activeProblemId}
+                      inputSpec={activeProblem.inputSpec}
+                      fieldErrors={fieldErrors}
+                      running={traceLoading}
+                      onRun={runInput}
+                    />
+                  </div>
                 ) : (
                   <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} initialTab={activeTab} />
                 )}
