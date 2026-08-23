@@ -1,18 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
 import Sidebar from './components/Sidebar';
 import GraphCanvas from './components/GraphCanvas';
+import GridCanvas from './components/GridCanvas';
+import DsuCanvas from './components/DsuCanvas';
 import TreeCanvas from './components/TreeCanvas';
 import ArrayCanvas from './components/ArrayCanvas';
 import LinkedListCanvas from './components/LinkedListCanvas';
 import RecursionTreeCanvas from './components/RecursionTreeCanvas';
+import TrieCanvas from './components/TrieCanvas';
 import CanvasShell from './components/CanvasShell';
 import CaptureStrip from './components/CaptureStrip';
 import CodeViewer from './components/CodeViewer';
 import MemoryComplexityCard from './components/MemoryComplexityCard';
 import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
+import useTrace from './hooks/useTrace';
 import { RefreshCw } from 'lucide-react';
 
 const DEFAULT_FALLBACK_PROBLEMS = [
@@ -119,45 +123,52 @@ export default function App() {
   const [problems, setProblems] = useState(DEFAULT_FALLBACK_PROBLEMS);
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeProblemId, setActiveProblemId] = useState('two-sum');
-  const [activeProblem, setActiveProblem] = useState(DEFAULT_FALLBACK_PROBLEMS[0]);
-  const [steps, setSteps] = useState(DEFAULT_FALLBACK_PROBLEMS[0].executionSteps);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [speed, setSpeed] = useState(800);
-  const [loading, setLoading] = useState(false);
+  const [catalogLoading, setCatalogLoading] = useState(false);
 
-  const timerRef = useRef(null);
-  // Monotonic request counter: a slower earlier response must never overwrite a newer one.
-  const requestIdRef = useRef(0);
+  // The catalogue entry — summary fields only (id, title, category, dsType, traced).
+  const catalogEntry = problems.find(p => p.id === activeProblemId) || problems[0] || null;
 
-  useEffect(() => {
-    fetchAllProblems();
+  // All playback state lives in useTrace.
+  const {
+    steps, currentStep, currentStepIndex,
+    isPlaying, speed,
+    loading: traceLoading,
+    error: traceError,
+    detail,
+    togglePlay, stepNext, stepPrev, reset, seek, setSpeed
+  } = useTrace(activeProblemId, catalogEntry);
+
+  // Merge in the per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
+  // it isn't in the catalogue summary, so CodeViewer/MemoryComplexityCard/canvases
+  // would otherwise silently fall back to placeholder data for every problem.
+  const activeProblem = detail ? { ...catalogEntry, ...detail } : catalogEntry;
+
+  // ── Single-endpoint catalogue fetch ──────────────────────────────────────
+  const fetchAllProblems = useCallback(async () => {
+    try {
+      setCatalogLoading(true);
+      const response = await fetch('/api/problems');
+      if (!response.ok) throw new Error(`Catalogue fetch failed: ${response.status}`);
+      const data = await response.json();
+
+      if (Array.isArray(data) && data.length > 0) {
+        setProblems(data);
+        const initialId = data.find(p => p.id === 'two-sum')?.id || data[0].id;
+        setActiveProblemId(initialId);
+      }
+    } catch (err) {
+      console.warn('Backend connection failed:', err);
+      // Fall through to DEFAULT_FALLBACK_PROBLEMS — the app is usable offline.
+    } finally {
+      setCatalogLoading(false);
+    }
   }, []);
 
   useEffect(() => {
-    if (activeProblemId && problems.length > 0) {
-      fetchProblemDetailsAndSteps(activeProblemId);
-    }
-  }, [activeProblemId, problems.length]);
+    fetchAllProblems();
+  }, [fetchAllProblems]);
 
-  useEffect(() => {
-    if (isPlaying) {
-      timerRef.current = setInterval(() => {
-        setCurrentStepIndex((prevIdx) => {
-          if (prevIdx >= steps.length - 1) {
-            setIsPlaying(false);
-            return prevIdx;
-          }
-          return prevIdx + 1;
-        });
-      }, speed);
-    } else {
-      clearInterval(timerRef.current);
-    }
-    return () => clearInterval(timerRef.current);
-  }, [isPlaying, speed, steps.length]);
-
-  // Global Keyboard Shortcuts (Space: Play/Pause, Right: Next, Left: Prev, R: Reset)
+  // ── Global keyboard shortcuts ────────────────────────────────────────────
   useEffect(() => {
     const handleKeyDown = (e) => {
       const tag = document.activeElement?.tagName;
@@ -166,165 +177,26 @@ export default function App() {
 
       if (e.code === 'Space') {
         e.preventDefault();
-        setIsPlaying(prev => !prev);
+        togglePlay();
       } else if (e.code === 'ArrowRight') {
         e.preventDefault();
-        setIsPlaying(false);
-        setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1));
+        stepNext();
       } else if (e.code === 'ArrowLeft') {
         e.preventDefault();
-        setIsPlaying(false);
-        setCurrentStepIndex(p => Math.max(p - 1, 0));
+        stepPrev();
       } else if (e.code === 'KeyR') {
         e.preventDefault();
-        setIsPlaying(false);
-        setCurrentStepIndex(0);
+        reset();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [steps.length]);
+  }, [togglePlay, stepNext, stepPrev, reset]);
 
-  const fetchAllProblems = async () => {
-    try {
-      setLoading(true);
-      const endpoints = [
-        { url: '/api/graphs/bfs-dfs/problems', base: '/api/graphs/bfs-dfs' },
-        { url: '/api/graphs/advanced/problems', base: '/api/graphs/advanced' },
-        { url: '/api/trees/problems', base: '/api/trees' },
-        { url: '/api/recursion-backtracking/problems', base: '/api/recursion-backtracking' },
-        { url: '/api/sorting/problems', base: '/api/sorting' },
-        { url: '/api/arrays/problems', base: '/api/arrays' },
-        { url: '/api/linkedlist/problems', base: '/api/linkedlist' },
-        { url: '/api/binarysearch/problems', base: '/api/binarysearch' },
-        { url: '/api/dp/problems', base: '/api/dp' },
-        { url: '/api/tries/problems', base: '/api/tries' },
-        { url: '/api/greedy/problems', base: '/api/greedy' },
-        { url: '/api/strings/problems', base: '/api/strings' },
-        { url: '/api/bitmanipulation/problems', base: '/api/bitmanipulation' },
-        { url: '/api/heaps/problems', base: '/api/heaps' },
-        { url: '/api/stackqueue/problems', base: '/api/stackqueue' },
-        { url: '/api/slidingwindow/problems', base: '/api/slidingwindow' },
-        { url: '/api/maths/problems', base: '/api/maths' },
-        { url: '/api/basic-recursion/problems', base: '/api/basic-recursion' }
-      ];
-
-      const allFetches = [
-        ...endpoints.map(ep => fetch(ep.url).then(r => r.ok ? r.json() : [])),
-        fetch('/api/problems').then(r => r.ok ? r.json() : [])
-      ];
-
-      const results = await Promise.allSettled(allFetches);
-
-      // Traced enrichment from /api/problems (last item)
-      const tracedRes = results[endpoints.length];
-      const tracedMap = new Map();
-      if (tracedRes.status === 'fulfilled' && Array.isArray(tracedRes.value)) {
-        tracedRes.value.forEach(p => {
-          if (p && p.id && typeof p.traced === 'boolean') {
-            tracedMap.set(p.id, p.traced);
-          }
-        });
-      }
-
-      const seenIds = new Set();
-      const combined = [];
-      endpoints.forEach((ep, idx) => {
-        const res = results[idx];
-        if (res.status === 'fulfilled' && Array.isArray(res.value)) {
-          res.value.forEach(item => {
-            if (item && item.id && !seenIds.has(item.id)) {
-              seenIds.add(item.id);
-              combined.push({
-                ...item,
-                _endpoint: ep.base,
-                ...(tracedMap.size > 0 ? { traced: tracedMap.get(item.id) ?? false } : {})
-              });
-            }
-          });
-        }
-      });
-
-      if (combined.length > 0) {
-        setProblems(combined);
-        const initialId = combined.find(p => p.id === 'two-sum')?.id || combined[0].id;
-        // Setting these is enough: the [activeProblemId, problems.length] effect
-        // owns fetching details/steps. Calling it here too would double-request.
-        setActiveProblemId(initialId);
-      }
-    } catch (err) {
-      console.warn('Backend connection failed:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchProblemDetailsAndSteps = async (id, probList = problems) => {
-    const requestId = ++requestIdRef.current;
-    try {
-      setIsPlaying(false);
-      setCurrentStepIndex(0);
-
-      const prob = probList.find(p => p.id === id);
-      let endpoint = prob?._endpoint;
-
-      if (!endpoint && prob) {
-        const cat = prob.category || '';
-        if (cat.includes('Advanced Graphs')) endpoint = `/api/graphs/advanced`;
-        else if (cat.includes('Binary Trees') || cat.includes('BST') || cat.includes('Tree')) endpoint = `/api/trees`;
-        else if (cat.includes('Recursion') || cat.includes('Backtracking')) endpoint = `/api/recursion-backtracking`;
-        else if (cat.includes('Sort')) endpoint = `/api/sorting`;
-        else if (cat.includes('Array')) endpoint = `/api/arrays`;
-        else if (cat.includes('List') || cat.includes('Linked')) endpoint = `/api/linkedlist`;
-        else if (cat.includes('Binary Search')) endpoint = `/api/binarysearch`;
-        else if (cat.includes('DP') || cat.includes('Dynamic')) endpoint = `/api/dp`;
-        else if (cat.includes('Trie')) endpoint = `/api/tries`;
-        else if (cat.includes('Greedy')) endpoint = `/api/greedy`;
-        else if (cat.includes('String')) endpoint = `/api/strings`;
-        else if (cat.includes('Bit') || cat.includes('Math')) endpoint = `/api/bitmanipulation`;
-        else if (cat.includes('Heap') || cat.includes('Priority')) endpoint = `/api/heaps`;
-        else if (cat.includes('Stack') || cat.includes('Queue')) endpoint = `/api/stackqueue`;
-        else if (cat.includes('Sliding Window') || cat.includes('Window')) endpoint = `/api/slidingwindow`;
-        else endpoint = `/api/graphs/bfs-dfs`;
-      }
-
-      if (!endpoint) endpoint = `/api/graphs/bfs-dfs`;
-
-      const [probRes, stepsRes] = await Promise.allSettled([
-        fetch(`${endpoint}/problems/${id}`).then(r => r.ok ? r.json() : null),
-        fetch(`${endpoint}/execute/${id}`).then(r => r.ok ? r.json() : [])
-      ]);
-
-      // A newer selection landed while these were in flight — discard this response.
-      if (requestId !== requestIdRef.current) return;
-
-      const fetchedProblem = (probRes.status === 'fulfilled' && probRes.value) ? probRes.value : prob;
-      setActiveProblem(fetchedProblem);
-
-      if (stepsRes.status === 'fulfilled' && stepsRes.value && stepsRes.value.length > 0) {
-        setSteps(stepsRes.value);
-      } else if (fetchedProblem && fetchedProblem.executionSteps && fetchedProblem.executionSteps.length > 0) {
-        setSteps(fetchedProblem.executionSteps);
-      } else {
-        setSteps([{
-          stepNumber: 1,
-          activeLine: 1,
-          description: `Interactive execution visualizer for ${fetchedProblem?.title || id}.`,
-          queueOrStackState: [],
-          nodeStates: {},
-          activeEdges: [],
-          variables: { Status: "Loaded", Algorithm: fetchedProblem?.title || id },
-          dsType: fetchedProblem?.dsType || 'Array'
-        }]);
-      }
-    } catch (err) {
-      console.error('Error fetching details/steps:', err);
-    }
-  };
-
+  // ── Layout state ─────────────────────────────────────────────────────────
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
-  const [activeTab, setActiveTab] = useState('canvas'); // 'canvas' | 'code' | 'memory' | 'complexity'
+  const [activeTab, setActiveTab] = useState('code');
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -349,24 +221,50 @@ export default function App() {
     }
   };
 
-  const currentStep = steps[currentStepIndex] || null;
   const isMobile = viewportWidth <= 768;
+  const loading = catalogLoading;
 
+  // ── Canvas selection by dsType ───────────────────────────────────────────
   const renderCanvas = () => {
     if (!activeProblem) return null;
-    const cat = activeProblem.category || '';
-    const dsType = activeProblem.dsType || '';
 
-    if (cat.includes('Trees') || cat.includes('BST') || dsType === 'Tree') {
-      return <TreeCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
-    } else if (cat.includes('Recursion') || cat.includes('Backtracking') || dsType === 'RecursionTree') {
-      return <RecursionTreeCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
-    } else if (cat.includes('List') || cat.includes('Linked') || dsType === 'LinkedList') {
-      return <LinkedListCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
-    } else if (cat.includes('Array') || cat.includes('Sort') || cat.includes('Binary Search') || cat.includes('DP') || cat.includes('Heap') || cat.includes('Greedy') || cat.includes('Bit') || cat.includes('Stack') || cat.includes('Queue') || cat.includes('Window') || dsType === 'Array' || dsType === 'Matrix') {
-      return <ArrayCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
-    } else {
-      return <GraphCanvas currentStep={currentStep} step={currentStep} problem={activeProblem} />;
+    const dsType = currentStep?.dsType || activeProblem.dsType || '';
+    const props = { currentStep, step: currentStep, problem: activeProblem };
+
+    // DSU is a special case within Graph problems — check the problem id/title.
+    const isDsu = activeProblem.id === 'disjoint-set-dsu'
+      || activeProblem.title?.toLowerCase().includes('disjoint set')
+      || activeProblem.title?.toLowerCase().includes('dsu');
+    if (isDsu) return <DsuCanvas {...props} />;
+
+    // Grid/Matrix: if current step carries gridState, prefer the grid renderer.
+    const hasGrid = currentStep?.gridState || activeProblem.defaultGrid;
+    if (hasGrid && (dsType === 'Matrix' || dsType === 'Grid')) {
+      return <GridCanvas {...props} />;
+    }
+
+    switch (dsType) {
+      case 'Tree':
+        return <TreeCanvas {...props} />;
+      case 'LinkedList':
+        return <LinkedListCanvas {...props} />;
+      case 'RecursionTree':
+        return <RecursionTreeCanvas {...props} />;
+      case 'Trie':
+        return <TrieCanvas {...props} />;
+      case 'Graph':
+      case 'Queue':
+        // Graph-type problems with nodeStates or graph nodes
+        if (hasGrid) return <GridCanvas {...props} />;
+        return <GraphCanvas {...props} />;
+      case 'Stack':
+      case 'PriorityQueue':
+      case 'Array':
+      case 'Matrix':
+      default:
+        // For anything else that carries gridState, use GridCanvas
+        if (hasGrid) return <GridCanvas {...props} />;
+        return <ArrayCanvas {...props} />;
     }
   };
 
@@ -419,7 +317,18 @@ export default function App() {
                   title={activeProblem.title}
                   meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null}
                 >
-                  {renderCanvas()}
+                  {traceLoading ? (
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', gap: '8px' }}>
+                      <RefreshCw size={18} className="spin" />
+                      <span style={{ fontFamily: 'var(--font-code)', fontSize: '0.85rem' }}>Loading trace…</span>
+                    </div>
+                  ) : traceError === 'untraced' ? (
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)', fontSize: '0.9rem', padding: '24px', textAlign: 'center' }}>
+                      This problem is catalogued but not yet traced.
+                    </div>
+                  ) : (
+                    renderCanvas()
+                  )}
                 </CanvasShell>
               ) : (
                 renderCanvas()
@@ -430,7 +339,7 @@ export default function App() {
             <CaptureStrip
               steps={steps}
               current={currentStepIndex}
-              onSeek={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
+              onSeek={seek}
             />
 
             {/* Integrated Playback Controls */}
@@ -439,11 +348,11 @@ export default function App() {
               currentStepIndex={currentStepIndex}
               totalSteps={steps.length}
               speed={speed}
-              onPlayPause={() => setIsPlaying(prev => !prev)}
-              onStepNext={() => setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1))}
-              onStepPrev={() => setCurrentStepIndex(p => Math.max(p - 1, 0))}
-              onStepSelect={(idx) => { setIsPlaying(false); setCurrentStepIndex(idx); }}
-              onReset={() => { setIsPlaying(false); setCurrentStepIndex(0); }}
+              onPlayPause={togglePlay}
+              onStepNext={stepNext}
+              onStepPrev={stepPrev}
+              onStepSelect={seek}
+              onReset={reset}
               onSpeedChange={setSpeed}
             />
 
