@@ -2,18 +2,20 @@ import React from 'react';
 
 export default function LiveTraceTicker({ stepDescription }) {
   return (
-    <div 
-      style={{ 
-        width: '100%', 
-        padding: '7px 14px', 
+    <div
+      role="status"
+      aria-live="polite"
+      style={{
+        width: '100%',
+        padding: '7px 14px',
         borderRadius: 'var(--radius-sm)',
-        background: 'rgba(15, 23, 42, 0.6)', 
-        border: '1px solid var(--border-default)', 
+        background: 'rgba(15, 23, 42, 0.6)',
+        border: '1px solid var(--border-default)',
         borderLeft: '3px solid var(--accent-violet)',
-        display: 'flex', 
-        alignItems: 'center', 
-        gap: '8px', 
-        fontSize: '0.74rem', 
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        fontSize: '0.74rem',
         fontFamily: 'var(--font-code)',
         flexShrink: 0
       }}

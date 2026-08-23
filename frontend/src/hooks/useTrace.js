@@ -30,7 +30,10 @@ export default function useTrace(problemId, problem) {
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [speed, setSpeed] = useState(800);
+  // 1000ms is the "1.0x" preset in Controls — the only default that lands on a real
+  // button. 800ms matched none of the 2000/1000/500/250 presets, so nothing was ever
+  // highlighted at startup.
+  const [speed, setSpeed] = useState(1000);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   /** true when the last successful run hit the server's step budget. */

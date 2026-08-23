@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Database, Zap, Cpu, HardDrive } from 'lucide-react';
 
 export default function MemoryComplexityCard({ currentStep, problem, initialTab }) {
   const [activeTab, setActiveTab] = useState(initialTab || 'memory'); // 'memory' | 'complexity'
+
+  // On mobile, App's own tab bar drives `initialTab`; the card must follow it on every
+  // change, not just its first mount. Desktop never passes this prop, so the card keeps
+  // its own internal toggle there — this effect simply never fires.
+  useEffect(() => {
+    if (initialTab === 'memory' || initialTab === 'complexity') {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   const variables = currentStep?.variables || {};
   const dsElements = currentStep?.queueOrStackState || [];
