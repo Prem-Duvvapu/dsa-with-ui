@@ -112,6 +112,7 @@ describe('CaptureStrip', () => {
   it('switches to a painted band rather than 200,000 DOM nodes', () => {
     // 5000 columns x 40 rows of <span> will hang the browser. Past the threshold the
     // strip is a canvas, and it becomes a slider so it stays keyboard-reachable.
+    fakeCanvas();
     const many = Array.from({ length: 600 }, (_, i) => arrayStep(i + 1, ['default']));
     const { container } = render(<CaptureStrip steps={many} current={0} />);
     expect(container.querySelector('canvas')).toBeTruthy();
@@ -121,10 +122,25 @@ describe('CaptureStrip', () => {
 
   it('seeks with the keyboard in band mode', () => {
     const onSeek = vi.fn();
+    fakeCanvas();
     const many = Array.from({ length: 600 }, (_, i) => arrayStep(i + 1, ['default']));
     render(<CaptureStrip steps={many} current={10} onSeek={onSeek} />);
     fireEvent.keyDown(screen.getByRole('slider'), { key: 'ArrowRight' });
     expect(onSeek).toHaveBeenCalledWith(11);
+  });
+
+  it('stays interactive where a 2d context cannot be created', () => {
+    // getContext can throw outright (jsdom without the canvas package, hardened
+    // webviews) — not merely return null. The band must still render and seek; it
+    // just paints nothing.
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(() => {
+      throw new Error('Not implemented: HTMLCanvasElement.prototype.getContext');
+    });
+    const onSeek = vi.fn();
+    const many = Array.from({ length: 600 }, (_, i) => arrayStep(i + 1, ['default']));
+    render(<CaptureStrip steps={many} current={0} onSeek={onSeek} />);
+    fireEvent.keyDown(screen.getByRole('slider'), { key: 'ArrowRight' });
+    expect(onSeek).toHaveBeenCalledWith(1);
   });
 
   it('clamps a seek to the trace rather than running off the end', () => {

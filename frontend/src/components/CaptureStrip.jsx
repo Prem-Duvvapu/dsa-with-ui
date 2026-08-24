@@ -186,7 +186,14 @@ function BandStrip({ grid, rows, current, onSeek }) {
     canvas.width = width * dpr;
     canvas.height = height * dpr;
 
-    const ctx = canvas.getContext('2d');
+    let ctx = null;
+    try {
+      ctx = canvas.getContext('2d');
+    } catch {
+      // Some environments (jsdom without the canvas package, hardened webviews)
+      // throw rather than return null. The strip stays an interactive scrubber;
+      // it simply paints nothing.
+    }
     if (!ctx) return;
     ctx.scale(dpr, dpr);
 
