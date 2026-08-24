@@ -41,11 +41,22 @@
 				Coverage reporting only — no threshold. There was no coverage tooling on
 				either side, so the first job is to see the number before arguing about it.
 				`mvn test` writes target/site/jacoco/index.html.
+
+				The exec file lives outside target/ on purpose. At JVM exit the agent
+				re-opens the exec file under a FileChannel lock, and on WSL that call
+				intermittently hangs for 30+ seconds when the project sits on /mnt/c —
+				surefire's watchdog then kills the fork ("Surefire is going to kill self
+				fork JVM"). On the native filesystem the lock is instant. Both the agent
+				and the report goal read this path, and CI is unaffected.
 			-->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.12</version>
+				<configuration>
+					<destFile>${java.io.tmpdir}/dsa-backend-jacoco.exec</destFile>
+					<dataFile>${java.io.tmpdir}/dsa-backend-jacoco.exec</dataFile>
+				</configuration>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>

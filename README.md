@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 8 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 10 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -18,7 +18,7 @@ different on purpose, and the API reports both — see
 | :--- | :--- | :--- |
 | Backend | Spring Boot 3.2.3, Java 17 | `http://localhost:8923` |
 | Frontend | React 18 + Vite | Multi-mode canvases: graph, tree, array, linked list, recursion tree, grid |
-| Testing | JUnit 5 + Vitest | ~332 backend, 44 frontend |
+| Testing | JUnit 5 + Vitest | ~401 backend, 130 frontend |
 | Deployment | Docker Compose | One command for both tiers |
 
 ### How a trace is produced
@@ -165,19 +165,22 @@ them means moving problems between services.
 ### Traced so far
 
 `two-sum`, `kadane-algo`, `binary-search-1d`, `tree-preorder`, `tree-inorder`,
-`reverse-linked-list`, `bfs-traversal`, `number-of-islands`.
+`reverse-linked-list`, `bfs-traversal`, `dfs-traversal`, `number-of-islands`,
+`dijkstra-min-heap`.
 
-Chosen to exercise every input kind and the worst-covered categories — Binary Search had
-32 problems sharing one animation, and Binary Trees had 54 sharing a single three-step
-stub.
+The first eight were chosen to exercise every input kind and the worst-covered
+categories — Binary Search had 32 problems sharing one animation, and Binary Trees had 54
+sharing a single three-step stub. `dfs-traversal` replaced the last intro-placeholder
+still standing in Graphs BFS/DFS; `dijkstra-min-heap` is the first weighted-graph tracer
+and the first to leave Advanced Graphs' shared two-step placeholder.
 
 ---
 
 ## Tests
 
 ```bash
-cd backend  && mvn test        # ~332 tests
-cd frontend && npx vitest run  #   44 tests
+cd backend  && mvn test        # ~401 tests
+cd frontend && npx vitest run  #  130 tests
 ```
 
 The suite is built to catch fake work, not just crashes:
