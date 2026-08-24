@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,8 +40,17 @@ class TreeServiceTest {
     @Test
     @DisplayName("Should generate valid execution steps for all 54 Tree and BST problems")
     void testGenerateSteps() {
+        // Ids with real tracers refuse the legacy path rather than serve a substitute.
+        Set<String> retired = Set.of("tree-preorder", "tree-inorder", "tree-postorder",
+                "tree-level-order");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
+            if (retired.contains(p.getId())) {
+                assertThrows(LegacyTraceRetiredException.class,
+                        () -> service.generateSteps(p.getId()),
+                        p.getId() + " is traced by the v2 layer and must not fall back");
+                continue;
+            }
             List<ExecutionStep> steps = service.generateSteps(p.getId());
             assertNotNull(steps, "Steps list should not be null for " + p.getId());
             assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());

@@ -1,0 +1,678 @@
+{
+  "anchors" : {
+    "check" : 11,
+    "done" : 18,
+    "init" : 9,
+    "pair" : 2,
+    "reject" : 15,
+    "select" : 12,
+    "sort" : 8
+  },
+  "code" : "public int maxMeetings(int[] start, int[] end) {\n    int n = start.length;\n    int[][] meetings = new int[n][2];\n    for (int i = 0; i < n; i++) {\n        meetings[i][0] = start[i];\n        meetings[i][1] = end[i];\n    }\n    Arrays.sort(meetings, (a, b) -> a[1] - b[1]);\n    int count = 0, lastEnd = -1;\n    for (int[] m : meetings) {\n        if (m[0] > lastEnd) {\n            count++;\n            lastEnd = m[1];\n        } else {\n            continue;\n        }\n    }\n    return count;\n}",
+  "problemId" : "n-meetings-in-one-room",
+  "resolvedInput" : {
+    "end" : [ 2, 4, 6, 7, 9, 9 ],
+    "start" : [ 1, 3, 0, 5, 8, 5 ]
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "6 meetings. Keep each end tied to its own start — sorting must not tear them apart.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "meetings" : "[#1(1-2), #2(3-4), #3(0-6), #4(5-7), #5(8-9), #6(5-9)]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "Sort by END time: the meeting that frees the room earliest always goes first. That ordering is the whole algorithm.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[#1(1-2), #2(3-4), #3(0-6), #4(5-7), #5(8-9), #6(5-9)]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "Start greedy: nothing selected, the room is free from time 0. One pass over the sorted list decides everything.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "0",
+      "lastEnd" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "Meeting #1 runs 1→2. The room is free from 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "freeFrom" : "0",
+      "meeting" : "#1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "1 > 0, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "lastEnd" : "2",
+      "selected" : "[1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "Meeting #2 runs 3→4. The room is free from 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "freeFrom" : "2",
+      "meeting" : "#2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "3 > 2, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "lastEnd" : "4",
+      "selected" : "[1, 2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 11,
+    "description" : "Meeting #3 runs 0→6. The room is free from 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "freeFrom" : "4",
+      "meeting" : "#3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 15,
+    "description" : "0 ≤ 4: it would still be running when the room is promised. Skip it — a later-ending meeting never beats an earlier one.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "rejected" : "#3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "Meeting #4 runs 5→7. The room is free from 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "freeFrom" : "4",
+      "meeting" : "#4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "5 > 4, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "lastEnd" : "7",
+      "selected" : "[1, 2, 4]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 11,
+    "description" : "Meeting #5 runs 8→9. The room is free from 7.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "freeFrom" : "7",
+      "meeting" : "#5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 12,
+    "description" : "8 > 7, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "lastEnd" : "9",
+      "selected" : "[1, 2, 4, 5]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 11,
+    "description" : "Meeting #6 runs 5→9. The room is free from 9.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "freeFrom" : "9",
+      "meeting" : "#6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "5 ≤ 9: it would still be running when the room is promised. Skip it — a later-ending meeting never beats an earlier one.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "rejected" : "#6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 18,
+    "description" : "Room used by 4 of 6 meetings: #1, 2, 4, 5.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "selected" : "[1, 2, 4, 5]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

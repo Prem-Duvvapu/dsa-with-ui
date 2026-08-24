@@ -3,6 +3,7 @@ package com.dsa.ui.algorithm;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.service.GreedyService;
 import com.dsa.ui.service.HeapService;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.TrieService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,8 +41,9 @@ public class HeapTrieGreedyTracingTest {
 
     @Test
     void testNMeetingsTracing() {
-        List<ExecutionStep> steps = greedyService.generateSteps("n-meetings-in-one-room");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 5, "N Meetings in One Room should have >=5 steps, actual: " + steps.size());
+        // n-meetings-in-one-room has a real tracer now — the legacy path retires it
+        // rather than serving substitute steps. Content is pinned by its golden file.
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> greedyService.generateSteps("n-meetings-in-one-room"));
     }
 }

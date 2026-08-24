@@ -32,7 +32,10 @@ public class BinarySearchService implements ProblemProvider {
             case "floor-ceil-sorted-array": return generateFloorCeilSteps();
             case "first-last-occurrence": return generateFirstLastOccurrenceSteps();
             case "count-occurrences": return generateCountOccurrencesSteps();
-            case "search-rotated-sorted": return generateSearchRotatedSteps();
+            // search-rotated-sorted has a real tracer (tracer/impl). Refuse rather than
+            // let default: serve binary-search-1d's steps under this id.
+            case "search-rotated-sorted":
+                throw new LegacyTraceRetiredException(problemId);
             case "search-rotated-sorted-2": return generateSearchRotated2Steps();
             case "find-min-rotated-sorted": return generateFindMinRotatedSteps();
             case "count-rotations": return generateCountRotationsSteps();
@@ -429,7 +432,6 @@ public class BinarySearchService implements ProblemProvider {
     private List<ExecutionStep> generateFloorCeilSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateFirstLastOccurrenceSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateCountOccurrencesSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSearchRotatedSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSearchRotated2Steps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateFindMinRotatedSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateCountRotationsSteps() { return generateBs1dSteps(); }

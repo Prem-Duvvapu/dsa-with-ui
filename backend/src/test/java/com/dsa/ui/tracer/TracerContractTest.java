@@ -315,24 +315,29 @@ class TracerContractTest {
     void stepCountGrowsWithInput(String id) {
         AlgorithmTracer tracer = registry.find(id).orElseThrow();
 
-        InputField growable = tracer.inputSpec().getFields().stream()
+        List<InputField> growables = tracer.inputSpec().getFields().stream()
                 .filter(f -> GROWABLE.contains(f.getType()))
-                .findFirst()
-                .orElse(null);
-        assumeTrue(growable != null, id + " declares no INT_ARRAY / INT_GRID / LINKED_LIST /"
+                .toList();
+        assumeTrue(!growables.isEmpty(), id + " declares no INT_ARRAY / INT_GRID / LINKED_LIST /"
                 + " BINARY_TREE field, so there is nothing to scale");
 
+        // Scale EVERY growable field, not just the first: a tracer whose inputs travel in
+        // pairs (meeting starts and ends, matrix and vector) rejects one-sided growth,
+        // and rejecting valid-looking input here reads as a broken tracer.
         Map<String, Object> larger = new LinkedHashMap<>();
         for (InputField field : tracer.inputSpec().getFields()) {
             larger.put(field.getName(), field.getDefaultValue());
         }
-        larger.put(growable.getName(), scaleUp(growable));
+        for (InputField field : growables) {
+            larger.put(field.getName(), scaleUp(field));
+        }
 
         int onDefaults = runner.runDefaults(tracer).getSteps().size();
         int onLarger = runner.run(tracer, larger).getSteps().size();
 
-        assertTrue(onLarger > onDefaults, id + " emitted " + onLarger + " steps for a larger "
-                + growable.getName() + " and " + onDefaults + " for its default — the step count"
+        assertTrue(onLarger > onDefaults, id + " emitted " + onLarger + " steps for larger "
+                + growables.stream().map(InputField::getName).toList()
+                + " and " + onDefaults + " for its defaults — the step count"
                 + " does not depend on how much input there is");
     }
 
@@ -361,10 +366,11 @@ class TracerContractTest {
 
         Integer minValue = field.intConstraint("minValue");
         Integer maxValue = field.intConstraint("maxValue");
-        boolean ordered = field.flag("requireSorted") || field.flag("requireDistinct");
+        boolean sorted = field.flag("requireSorted");
+        boolean distinct = field.flag("requireDistinct");
 
         List<Integer> grown = new ArrayList<>();
-        if (ordered) {
+        if (sorted) {
             // Keep it sorted and distinct by extending below the first element, or above
             // the last if there is no room underneath.
             int first = base.isEmpty() ? 0 : base.get(0);
@@ -380,6 +386,22 @@ class TracerContractTest {
                     grown.add(last + k);
                 }
             }
+        } else if (distinct) {
+            // Distinct but unordered (a rotated array, say): extending below the first
+            // element would collide with values that already sit later in it. Walk the
+            // declared range from the bottom and take only values not already present.
+            int lo = minValue != null ? minValue : -999;
+            int hi = maxValue != null ? maxValue : 999;
+            java.util.Set<Integer> used = new java.util.HashSet<>(base);
+            for (int v = lo; v <= hi && grown.size() < extra; v++) {
+                if (!used.contains(v)) {
+                    grown.add(v);
+                    used.add(v);
+                }
+            }
+            assertTrue(grown.size() == extra,
+                    field.getName() + " cannot grow within its declared value range");
+            grown.addAll(base);
         } else {
             int filler = maxValue != null ? maxValue : 999;
             for (int k = 0; k < extra; k++) {

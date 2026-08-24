@@ -27,7 +27,11 @@ public class GreedyService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "n-meetings-in-one-room": return generateMeetingsSteps();
+            // n-meetings-in-one-room has a real tracer (tracer/impl). Refuse rather than
+            // let default: serve another meeting set's steps under this id. The default:
+            // stays until PROMPT D; other ids in this service still rely on it.
+            case "n-meetings-in-one-room":
+                throw new LegacyTraceRetiredException(problemId);
             case "jump-game-i":
             case "jump-game-1": return generateJumpGameSteps();
             case "job-sequencing": return generateJobSequencingSteps();

@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 10 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 14 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -165,14 +165,19 @@ them means moving problems between services.
 ### Traced so far
 
 `two-sum`, `kadane-algo`, `binary-search-1d`, `tree-preorder`, `tree-inorder`,
-`reverse-linked-list`, `bfs-traversal`, `dfs-traversal`, `number-of-islands`,
+`tree-postorder`, `tree-level-order`, `reverse-linked-list`, `bfs-traversal`,
+`dfs-traversal`, `number-of-islands`, `search-rotated-sorted`, `n-meetings-in-one-room`,
 `dijkstra-min-heap`.
 
 The first eight were chosen to exercise every input kind and the worst-covered
 categories — Binary Search had 32 problems sharing one animation, and Binary Trees had 54
 sharing a single three-step stub. `dfs-traversal` replaced the last intro-placeholder
 still standing in Graphs BFS/DFS; `dijkstra-min-heap` is the first weighted-graph tracer
-and the first to leave Advanced Graphs' shared two-step placeholder.
+and the first to leave Advanced Graphs' shared two-step placeholder. `tree-postorder`,
+`tree-level-order`, `search-rotated-sorted` and `n-meetings-in-one-room` were ported from
+implemented-but-unwired algorithm classes; migrating them also retired their legacy
+generators — a migrated id now answers **410 Gone** on its old endpoint rather than
+risking another problem's steps.
 
 ---
 

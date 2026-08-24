@@ -35,7 +35,7 @@ The platform pairs step-by-step animated execution with:
 > hand-built step generators. It is kept as a record of intent, not as a coverage claim:
 > a tick means the problem is catalogued, not that it has a real execution trace.
 > `GET /api/problems/stats` is the authoritative number — currently **433 catalogued,
-> 10 traced**. See the README for why those differ.
+> 14 traced**. See the README for why those differ.
 
 ### 1. **Graphs - BFS & DFS Problems**
 - [x] BFS Traversal of Graph

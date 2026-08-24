@@ -108,9 +108,15 @@ API (v2)
 
 CURRENT NUMBERS (433/440/7 are pinned by ProblemsApiTest — update the test if you change them)
     440 id registrations across 18 services, 433 unique, 7 claimed by two services.
-    10 traced: two-sum, kadane-algo, binary-search-1d, tree-preorder, tree-inorder,
-               reverse-linked-list, bfs-traversal, dfs-traversal, number-of-islands,
-               dijkstra-min-heap.
+    14 traced: two-sum, kadane-algo, binary-search-1d, tree-preorder, tree-inorder,
+               tree-postorder, tree-level-order, reverse-linked-list, bfs-traversal,
+               dfs-traversal, number-of-islands, search-rotated-sorted,
+               n-meetings-in-one-room, dijkstra-min-heap.
+
+    Migrated ids answer 410 Gone on their legacy /api/<topic>/execute/<id> path
+    (LegacyTraceRetiredException + ApiExceptionHandler), never a substitute trace.
+    When a tracer retires an id, add it to ApiContractTest.retiredTraces() and to the
+    per-service test's retired set — the suite enforces this.
 
 STILL PRESENT ON PURPOSE
   - The 18 legacy per-topic controllers (/api/arrays/..., /api/trees/...) still serve the

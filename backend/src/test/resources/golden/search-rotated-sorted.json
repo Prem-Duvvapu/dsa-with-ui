@@ -1,0 +1,339 @@
+{
+  "anchors" : {
+    "hit" : 5,
+    "init" : 2,
+    "leftSorted" : 6,
+    "mid" : 4,
+    "miss" : 14,
+    "rightSorted" : 10
+  },
+  "code" : "public int search(int[] nums, int target) {\n    int low = 0, high = nums.length - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        if (nums[mid] == target) return mid;\n        if (nums[low] <= nums[mid]) {\n            if (nums[low] <= target && target < nums[mid]) high = mid - 1;\n            else low = mid + 1;\n        } else {\n            if (nums[mid] < target && target <= nums[high]) low = mid + 1;\n            else high = mid - 1;\n        }\n    }\n    return -1;\n}",
+  "problemId" : "search-rotated-sorted",
+  "resolvedInput" : {
+    "nums" : [ 4, 5, 6, 7, 0, 1, 2 ],
+    "target" : 0
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "A sorted array was cut at a pivot and rotated. Find 0 in [0..6].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "6",
+      "low" : "0",
+      "target" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Probe the middle of [0..6]: nums[3] = 7.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "6",
+      "low" : "0",
+      "mid" : "3",
+      "nums[mid]" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "4 ≤ nums[3]=7, so the LEFT half [0..3] is the sorted one (4…7). 0 is not inside it, so it can only be to the right of 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSorted" : "true"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Probe the middle of [4..6]: nums[5] = 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "6",
+      "low" : "4",
+      "mid" : "5",
+      "nums[mid]" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "0 ≤ nums[5]=1, so the LEFT half [4..5] is the sorted one (0…1). 0 lies inside it — search there.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSorted" : "true"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Probe the middle of [4..4]: nums[4] = 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "4",
+      "mid" : "4",
+      "nums[mid]" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "nums[4] = 0 is the target. Found at index 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "mid" : "4",
+      "result" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

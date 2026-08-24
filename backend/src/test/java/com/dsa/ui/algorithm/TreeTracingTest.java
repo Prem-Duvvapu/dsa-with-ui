@@ -1,14 +1,17 @@
 package com.dsa.ui.algorithm;
 
-import com.dsa.ui.model.ExecutionStep;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.TreeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All four traversal ids have real tracers in tracer/impl now, so the legacy path
+ * retires them instead of serving substitute steps. Their trace content is pinned by
+ * golden files (src/test/resources/golden) and TracerContractTest.
+ */
 public class TreeTracingTest {
 
     private TreeService treeService;
@@ -20,29 +23,25 @@ public class TreeTracingTest {
 
     @Test
     void testInorderTraversalTracing() {
-        List<ExecutionStep> steps = treeService.generateSteps("tree-inorder");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 3, "Tree Inorder should have >=3 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> treeService.generateSteps("tree-inorder"));
     }
 
     @Test
     void testPreorderTraversalTracing() {
-        List<ExecutionStep> steps = treeService.generateSteps("tree-preorder");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 3, "Tree Preorder should have >=3 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> treeService.generateSteps("tree-preorder"));
     }
 
     @Test
     void testPostorderTraversalTracing() {
-        List<ExecutionStep> steps = treeService.generateSteps("tree-postorder");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 3, "Tree Postorder should have >=3 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> treeService.generateSteps("tree-postorder"));
     }
 
     @Test
     void testLevelOrderTraversalTracing() {
-        List<ExecutionStep> steps = treeService.generateSteps("tree-level-order");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 3, "Tree Level Order should have >=3 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> treeService.generateSteps("tree-level-order"));
     }
 }
