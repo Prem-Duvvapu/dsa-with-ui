@@ -25,10 +25,15 @@ public class TreeService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "tree-preorder": return generatePreorderSteps();
-            case "tree-inorder": return generatePreorderSteps();
-            case "tree-postorder": return generatePreorderSteps();
-            case "tree-level-order": return generatePreorderSteps();
+            // tree-preorder, tree-inorder, tree-postorder and tree-level-order have real
+            // tracers now (tracer/impl). Their generators are gone; refusing loudly beats
+            // falling into default: and serving another tree's animation. The rest of
+            // this switch dies with PROMPT D.
+            case "tree-preorder":
+            case "tree-inorder":
+            case "tree-postorder":
+            case "tree-level-order":
+                throw new LegacyTraceRetiredException(problemId);
             case "tree-height": return generatePreorderSteps();
             case "tree-balanced": return generatePreorderSteps();
             case "tree-diameter": return generatePreorderSteps();

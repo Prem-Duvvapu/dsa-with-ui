@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -66,8 +68,20 @@ class ApiContractTest {
         return MAPPER.readTree(result.getResponse().getContentAsByteArray());
     }
 
+    /** Ids whose legacy trace is retired because a real tracer serves them on /api/problems. */
+    private static final List<String> RETIRED_IDS = List.of(
+            "tree-preorder", "tree-inorder", "tree-postorder", "tree-level-order",
+            "search-rotated-sorted", "n-meetings-in-one-room");
+
     private String firstProblemId(String base) throws Exception {
-        return getJson(base + "/problems").get(0).get("id").asText();
+        JsonNode catalog = getJson(base + "/problems");
+        for (JsonNode problem : catalog) {
+            String id = problem.get("id").asText();
+            if (!RETIRED_IDS.contains(id)) {
+                return id;   // a retired id answers 410, so it cannot prove the execute path
+            }
+        }
+        throw new IllegalStateException(base + " has no non-retired problem to exercise");
     }
 
     @ParameterizedTest(name = "{0}/problems returns a non-empty catalog")
@@ -137,6 +151,31 @@ class ApiContractTest {
     void executeRejectsUnknownIdInsteadOfFallingBack(String base) throws Exception {
         mockMvc.perform(get(base + "/execute/definitely-not-a-real-problem-id"))
                 .andExpect(status().isNotFound());
+    }
+
+    /** Ids whose delegate case was deleted after a real tracer landed in tracer/impl. */
+    static Stream<Arguments> retiredTraces() {
+        return Stream.of(
+                arguments("/api/trees", "tree-preorder"),
+                arguments("/api/trees", "tree-inorder"),
+                arguments("/api/trees", "tree-postorder"),
+                arguments("/api/trees", "tree-level-order"),
+                arguments("/api/binarysearch", "search-rotated-sorted"),
+                arguments("/api/greedy", "n-meetings-in-one-room"));
+    }
+
+    /**
+     * The second regression guard. Deleting a migrated id's delegate case makes its
+     * switch fall into {@code default:}, which serves whatever generator that service
+     * still has — another algorithm's animation under this id's name. A retired trace
+     * must be GONE, not substituted.
+     */
+    @ParameterizedTest(name = "{0}/execute/{1} retired → 410, never a substitute trace")
+    @MethodSource("retiredTraces")
+    @DisplayName("A migrated id refuses the legacy execute path instead of falling back")
+    void retiredIdRefusesTheLegacyExecutePath(String base, String id) throws Exception {
+        mockMvc.perform(get(base + "/execute/" + id))
+                .andExpect(status().isGone());
     }
 
     @ParameterizedTest(name = "{0} ids are unique")
