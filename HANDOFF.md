@@ -40,7 +40,7 @@ prompt B. Do not redesign it; build it.
 Repo: /mnt/c/Users/Hp/OneDrive/Desktop/dsa-with-ui
 Branch to start from: main (cut a working branch; never commit on main)
 Backend: Spring Boot 3.2.3 / Java 17, port 8923.  Frontend: React 18 + Vite, dev 5180, docker 5174.
-Build: `cd backend && mvn test` (308 tests, green)  ·  `cd frontend && npx vitest run` (44 tests, green)
+Build: `cd backend && mvn test` (401 tests, green)  ·  `cd frontend && npx vitest run` (130 tests, green)
 Publishing (commit / push / gh pr create / gh pr merge) requires the owner's approval.
 Read-only git and gh commands do not.
 
@@ -106,10 +106,11 @@ API (v2)
     404 = no such problem.  501 = catalogued but not yet traced.  400 = invalid input,
     with a message per field.
 
-CURRENT NUMBERS (pinned by ProblemsApiTest — update the test if you change them)
+CURRENT NUMBERS (433/440/7 are pinned by ProblemsApiTest — update the test if you change them)
     440 id registrations across 18 services, 433 unique, 7 claimed by two services.
-    8 traced: two-sum, kadane-algo, binary-search-1d, tree-preorder, tree-inorder,
-              reverse-linked-list, bfs-traversal, number-of-islands.
+    10 traced: two-sum, kadane-algo, binary-search-1d, tree-preorder, tree-inorder,
+               reverse-linked-list, bfs-traversal, dfs-traversal, number-of-islands,
+               dijkstra-min-heap.
 
 STILL PRESENT ON PURPOSE
   - The 18 legacy per-topic controllers (/api/arrays/..., /api/trees/...) still serve the
@@ -223,7 +224,7 @@ VERIFY
 > second wire-format change, so it belongs in its own PR after B has a decoder working
 > against 9a.
 >
-> Backend suite is at 373 tests. **Only 9c is left, and it is optional** — Prompt A's
+> Backend suite is at 401 tests. **Only 9c is left, and it is optional** — Prompt A's
 > original scope is complete. B and C are unblocked.
 
 ```
