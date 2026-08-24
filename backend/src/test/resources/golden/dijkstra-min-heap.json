@@ -1,0 +1,564 @@
+{
+  "anchors" : {
+    "done" : 24,
+    "extract" : 9,
+    "init" : 2,
+    "relax" : 17,
+    "skip" : 20,
+    "stale" : 12
+  },
+  "code" : "public int[] dijkstra(int v, List<List<int[]>> adj, int src) {\n    int[] dist = new int[v];\n    Arrays.fill(dist, Integer.MAX_VALUE);\n    dist[src] = 0;\n    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);\n    pq.add(new int[]{src, 0});\n\n    while (!pq.isEmpty()) {\n        int[] top = pq.poll();\n        int node = top[0], d = top[1];\n        if (d > dist[node]) {\n            continue;\n        }\n        for (int[] edge : adj.get(node)) {\n            int next = edge[0], weight = edge[1];\n            if (dist[node] + weight < dist[next]) {\n                dist[next] = dist[node] + weight;\n                pq.add(new int[]{next, dist[next]});\n            } else {\n                continue;\n            }\n        }\n    }\n    return dist;\n}",
+  "problemId" : "dijkstra-min-heap",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 1, 4 ], [ 0, 2, 1 ], [ 2, 1, 2 ], [ 1, 3, 1 ], [ 2, 3, 5 ], [ 3, 4, 3 ] ],
+      "vertices" : 5
+    },
+    "start" : 0
+  },
+  "stepCount" : 23,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "5 vertices. dist[0] = 0, everything else infinite. Enqueue the source.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, ∞, ∞, ∞, ∞]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "Pop the smallest entry in the queue: 0 at distance 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, ∞, ∞, ∞, ∞]",
+      "node" : "0",
+      "poppedDist" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 17,
+    "description" : "Edge 0-1 (weight 4): 0 + 4 = 4 beats infinity. Update dist[1] and enqueue.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, 4, ∞, ∞, ∞]",
+      "edge" : "0-1",
+      "newDist" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 17,
+    "description" : "Edge 0-2 (weight 1): 0 + 1 = 1 beats infinity. Update dist[2] and enqueue.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "dist" : "[0, 4, 1, ∞, ∞]",
+      "edge" : "0-2",
+      "newDist" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Pop the smallest entry in the queue: 2 at distance 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 4, 1, ∞, ∞]",
+      "node" : "2",
+      "poppedDist" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "Edge 2-0 (weight 1): 1 + 1 = 2 does not beat dist[0]=0. No update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "queued",
+      "2" : "visiting",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-0" ],
+    "variables" : {
+      "dist" : "[0, 4, 1, ∞, ∞]",
+      "edge" : "2-0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 17,
+    "description" : "Edge 2-1 (weight 2): 1 + 2 = 3 beats 4. Update dist[1] and enqueue.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "queued",
+      "2" : "visiting",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-1" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, ∞, ∞]",
+      "edge" : "2-1",
+      "newDist" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 17,
+    "description" : "Edge 2-3 (weight 5): 1 + 5 = 6 beats infinity. Update dist[3] and enqueue.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "queued",
+      "2" : "visiting",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 6, ∞]",
+      "edge" : "2-3",
+      "newDist" : "6"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 9,
+    "description" : "Pop the smallest entry in the queue: 1 at distance 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "queued",
+      "2" : "done",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 6, ∞]",
+      "node" : "1",
+      "poppedDist" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 20,
+    "description" : "Edge 1-0 (weight 4): 3 + 4 = 7 does not beat dist[0]=0. No update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visiting",
+      "2" : "done",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-0" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 6, ∞]",
+      "edge" : "1-0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 20,
+    "description" : "Edge 1-2 (weight 2): 3 + 2 = 5 does not beat dist[2]=1. No update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visiting",
+      "2" : "done",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 6, ∞]",
+      "edge" : "1-2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 17,
+    "description" : "Edge 1-3 (weight 1): 3 + 1 = 4 beats 6. Update dist[3] and enqueue.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visiting",
+      "2" : "done",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, ∞]",
+      "edge" : "1-3",
+      "newDist" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 9,
+    "description" : "Pop the smallest entry in the queue: 1 at distance 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, ∞]",
+      "node" : "1",
+      "poppedDist" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 12,
+    "description" : "1 was already finalized at 3, better than this entry's 4 — it was enqueued before that update. Discard it.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, ∞]",
+      "node" : "1",
+      "poppedDist" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 9,
+    "description" : "Pop the smallest entry in the queue: 3 at distance 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "queued",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, ∞]",
+      "node" : "3",
+      "poppedDist" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 20,
+    "description" : "Edge 3-1 (weight 1): 4 + 1 = 5 does not beat dist[1]=3. No update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "visiting",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "3-1" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, ∞]",
+      "edge" : "3-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 20,
+    "description" : "Edge 3-2 (weight 5): 4 + 5 = 9 does not beat dist[2]=1. No update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "visiting",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "3-2" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, ∞]",
+      "edge" : "3-2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 17,
+    "description" : "Edge 3-4 (weight 3): 4 + 3 = 7 beats infinity. Update dist[4] and enqueue.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "visiting",
+      "4" : "queued"
+    },
+    "activeEdges" : [ "3-4" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, 7]",
+      "edge" : "3-4",
+      "newDist" : "7"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 9,
+    "description" : "Pop the smallest entry in the queue: 3 at distance 6.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "queued"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, 7]",
+      "node" : "3",
+      "poppedDist" : "6"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 12,
+    "description" : "3 was already finalized at 4, better than this entry's 6 — it was enqueued before that update. Discard it.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "queued"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, 7]",
+      "node" : "3",
+      "poppedDist" : "6"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 9,
+    "description" : "Pop the smallest entry in the queue: 4 at distance 7.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "queued"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, 7]",
+      "node" : "4",
+      "poppedDist" : "7"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 20,
+    "description" : "Edge 4-3 (weight 3): 7 + 3 = 10 does not beat dist[3]=4. No update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "visiting"
+    },
+    "activeEdges" : [ "4-3" ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, 7]",
+      "edge" : "4-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 24,
+    "description" : "Priority queue empty. Final shortest distances from 0: [0, 3, 1, 4, 7].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 3, 1, 4, 7]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -53,7 +53,6 @@ public class AdvancedGraphService implements ProblemProvider {
             case "alien-dictionary": return generateAlienDictionarySteps();
             case "shortest-path-undirected": return generateShortestPathUndirectedSteps();
             case "shortest-path-dag": return generateShortestPathDagSteps();
-            case "dijkstra-min-heap": return generateDijkstraSteps();
             case "dijkstra-pq-theory": return generateDijkstraPqTheorySteps();
             case "shortest-path-binary-maze": return generateShortestPathBinaryMazeSteps();
             case "path-min-effort": return generatePathMinEffortSteps();
@@ -422,7 +421,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateAlienDictionarySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPathUndirectedSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPathDagSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateDijkstraSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPathBinaryMazeSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generatePathMinEffortSteps() { return generateGraphIntroSteps(); }

@@ -121,5 +121,37 @@ public final class Inputs {
             }
             return adj;
         }
+
+        /** One weighted edge in a weighted adjacency list. */
+        public record Neighbor(int to, int weight) {}
+
+        /**
+         * Weighted adjacency list. Requires the spec to declare {@code .weighted()} — every
+         * edge then carries a third element, {@code [from, to, weight]}; this throws on a
+         * two-element edge rather than silently defaulting to weight 1, since that would
+         * make a shortest-path tracer quietly run an unweighted graph.
+         */
+        public List<List<Neighbor>> weightedAdjacency() {
+            return weightedAdjacency(false);
+        }
+
+        public List<List<Neighbor>> weightedAdjacency(boolean directed) {
+            List<List<Neighbor>> adj = new java.util.ArrayList<>();
+            for (int i = 0; i < vertices; i++) {
+                adj.add(new java.util.ArrayList<>());
+            }
+            for (int[] e : edges) {
+                if (e.length != 3) {
+                    throw new IllegalStateException(
+                            "weightedAdjacency() needs edges of [from, to, weight]; got length " + e.length
+                                    + ". Did the InputField forget .weighted()?");
+                }
+                adj.get(e[0]).add(new Neighbor(e[1], e[2]));
+                if (!directed) {
+                    adj.get(e[1]).add(new Neighbor(e[0], e[2]));
+                }
+            }
+            return adj;
+        }
     }
 }
