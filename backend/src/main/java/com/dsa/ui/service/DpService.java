@@ -27,6 +27,15 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
+            // These five have real tracers (tracer/impl). Refuse rather than let
+            // default: serve climbing-stairs' steps under these ids. The default:
+            // stays until PROMPT D; other ids in this service still rely on it.
+            case "longest-increasing-subsequence":
+            case "print-lis":
+            case "lis-binary-search":
+            case "max-rectangle-area-all-ones":
+            case "count-square-submatrices":
+                throw new LegacyTraceRetiredException(problemId);
             case "climbing-stairs": return generateClimbingStairsSteps();
             case "frog-jump": return generateFrogJumpSteps();
             case "knapsack-01": return generateKnapsackSteps();

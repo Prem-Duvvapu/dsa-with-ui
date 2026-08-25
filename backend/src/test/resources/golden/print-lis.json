@@ -1,0 +1,2336 @@
+{
+  "anchors" : {
+    "backlink" : 16,
+    "best" : 14,
+    "compare" : 9,
+    "done" : 20,
+    "init" : 2,
+    "take" : 10
+  },
+  "code" : "public int[] lisWithParents(int[] nums) {\n    int n = nums.length;\n    int[] dp = new int[n], parent = new int[n];\n    Arrays.fill(dp, 1);\n    Arrays.fill(parent, -1);\n    int bestEnd = 0;\n    for (int i = 1; i < n; i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[j] < nums[i] && dp[j] + 1 > dp[i]) {\n                dp[i] = dp[j] + 1;\n                parent[i] = j;\n            }\n        }\n        if (dp[i] > dp[bestEnd]) bestEnd = i;\n    }\n    while (bestEnd != -1) {\n        collect(nums[bestEnd]);\n        bestEnd = parent[bestEnd];\n    }\n    return answer();\n}",
+  "problemId" : "print-lis",
+  "resolvedInput" : {
+    "nums" : [ 10, 9, 2, 5, 3, 7, 101, 18 ]
+  },
+  "stepCount" : 47,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "dp starts all 1s (each element alone) and every parent is -1 (no predecessor yet). The displayed values are dp[].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestEnd" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "i=1, j=0: nums[0]=10 is not below nums[1]=9, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "i=2, j=0: nums[0]=10 is not below nums[2]=2, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "i=2, j=1: nums[1]=9 is not below nums[2]=2, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "i=3, j=0: nums[0]=10 is not below nums[3]=5, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "i=3, j=1: nums[1]=9 is not below nums[3]=5, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "i=3, j=2: nums[2]=2 < nums[3]=5 and dp[2]+1=2 beats dp[3]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Record it: dp[3]=2 with parent[3]=2 - when printing we will step back to 2 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "2",
+      "i" : "3",
+      "j" : "2",
+      "parent[i]" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 14,
+    "description" : "A length-2 subsequence ends at i=3 - that becomes the print start.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestEnd" : "3",
+      "i" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "i=4, j=0: nums[0]=10 is not below nums[4]=3, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 9,
+    "description" : "i=4, j=1: nums[1]=9 is not below nums[4]=3, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "i=4, j=2: nums[2]=2 < nums[4]=3 and dp[2]+1=2 beats dp[4]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 10,
+    "description" : "Record it: dp[4]=2 with parent[4]=2 - when printing we will step back to 2 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "2",
+      "i" : "4",
+      "j" : "2",
+      "parent[i]" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 9,
+    "description" : "i=4, j=3: nums[3]=5 is not below nums[4]=3, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 9,
+    "description" : "i=5, j=0: nums[0]=10 is not below nums[5]=7, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 9,
+    "description" : "i=5, j=1: nums[1]=9 is not below nums[5]=7, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 9,
+    "description" : "i=5, j=2: nums[2]=2 < nums[5]=7 and dp[2]+1=2 beats dp[5]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 10,
+    "description" : "Record it: dp[5]=2 with parent[5]=2 - when printing we will step back to 2 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "2",
+      "i" : "5",
+      "j" : "2",
+      "parent[i]" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 9,
+    "description" : "i=5, j=3: nums[3]=5 < nums[5]=7 and dp[3]+1=3 beats dp[5]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 10,
+    "description" : "Record it: dp[5]=3 with parent[5]=3 - when printing we will step back to 3 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "3",
+      "i" : "5",
+      "j" : "3",
+      "parent[i]" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 9,
+    "description" : "i=5, j=4: extending through j would give length 3, not better than the 3 already recorded.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 14,
+    "description" : "A length-3 subsequence ends at i=5 - that becomes the print start.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestEnd" : "5",
+      "i" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 9,
+    "description" : "i=6, j=0: nums[0]=10 < nums[6]=101 and dp[0]+1=2 beats dp[6]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 10,
+    "description" : "Record it: dp[6]=2 with parent[6]=0 - when printing we will step back to 0 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "2",
+      "i" : "6",
+      "j" : "0",
+      "parent[i]" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 9,
+    "description" : "i=6, j=1: extending through j would give length 2, not better than the 2 already recorded.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 9,
+    "description" : "i=6, j=2: extending through j would give length 2, not better than the 2 already recorded.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 9,
+    "description" : "i=6, j=3: nums[3]=5 < nums[6]=101 and dp[3]+1=3 beats dp[6]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 10,
+    "description" : "Record it: dp[6]=3 with parent[6]=3 - when printing we will step back to 3 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "3",
+      "i" : "6",
+      "j" : "3",
+      "parent[i]" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 9,
+    "description" : "i=6, j=4: extending through j would give length 3, not better than the 3 already recorded.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 9,
+    "description" : "i=6, j=5: nums[5]=7 < nums[6]=101 and dp[5]+1=4 beats dp[6]=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 10,
+    "description" : "Record it: dp[6]=4 with parent[6]=5 - when printing we will step back to 5 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "4",
+      "i" : "6",
+      "j" : "5",
+      "parent[i]" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 14,
+    "description" : "A length-4 subsequence ends at i=6 - that becomes the print start.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestEnd" : "6",
+      "i" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 9,
+    "description" : "i=7, j=0: nums[0]=10 < nums[7]=18 and dp[0]+1=2 beats dp[7]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 10,
+    "description" : "Record it: dp[7]=2 with parent[7]=0 - when printing we will step back to 0 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "2",
+      "i" : "7",
+      "j" : "0",
+      "parent[i]" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 9,
+    "description" : "i=7, j=1: extending through j would give length 2, not better than the 2 already recorded.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 9,
+    "description" : "i=7, j=2: extending through j would give length 2, not better than the 2 already recorded.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 9,
+    "description" : "i=7, j=3: nums[3]=5 < nums[7]=18 and dp[3]+1=3 beats dp[7]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 10,
+    "description" : "Record it: dp[7]=3 with parent[7]=3 - when printing we will step back to 3 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "3",
+      "i" : "7",
+      "j" : "3",
+      "parent[i]" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 9,
+    "description" : "i=7, j=4: extending through j would give length 3, not better than the 3 already recorded.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 9,
+    "description" : "i=7, j=5: nums[5]=7 < nums[7]=18 and dp[5]+1=4 beats dp[7]=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 10,
+    "description" : "Record it: dp[7]=4 with parent[7]=5 - when printing we will step back to 5 next.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i]" : "4",
+      "i" : "7",
+      "j" : "5",
+      "parent[i]" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 9,
+    "description" : "i=7, j=6: nums[6]=101 is not below nums[7]=18, so nothing ending at j can extend to i.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 16,
+    "description" : "Take nums[6]=101, then follow parent to index 5. Collected so far: [101].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cursor" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 16,
+    "description" : "Take nums[5]=7, then follow parent to index 3. Collected so far: [101, 7].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cursor" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 45,
+    "activeLine" : 16,
+    "description" : "Take nums[3]=5, then follow parent to index 2. Collected so far: [101, 7, 5].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cursor" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 46,
+    "activeLine" : 16,
+    "description" : "Take nums[2]=2, then follow parent to index stop. Collected so far: [101, 7, 5, 2].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cursor" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 47,
+    "activeLine" : 20,
+    "description" : "Reversed the collected values into the LIS: [2, 5, 7, 101] (length 4).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "4",
+      "lis" : "[2, 5, 7, 101]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

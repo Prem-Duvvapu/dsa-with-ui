@@ -195,7 +195,7 @@ public final class StepEmitter {
      * enforce, which is the failure that matters.
      */
     static long estimateBytes(ExecutionStep s) {
-        long bytes = 140;                                    // envelope: field names, numbers, dsType
+        long bytes = 190;                                    // envelope: field names, numbers, dsType, nulls
 
         if (s.getDescription() != null) {
             bytes += s.getDescription().length();
