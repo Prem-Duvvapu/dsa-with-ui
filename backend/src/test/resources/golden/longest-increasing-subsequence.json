@@ -1,0 +1,768 @@
+{
+  "anchors" : {
+    "done" : 11,
+    "fill" : 6,
+    "init" : 3
+  },
+  "code" : "public int lengthOfLIS(int[] nums) {\n    int n = nums.length;\n    int[][] dp = new int[n + 1][n + 1];   // dp[i][p]: best from index i, last taken = p-1\n    for (int i = n - 1; i >= 0; i--) {\n        for (int p = i; p >= 0; p--) {\n            boolean canTake = p == 0 || nums[i] > nums[p - 1];\n            int take = canTake ? 1 + dp[i + 1][i + 1] : Integer.MIN_VALUE;\n            dp[i][p] = Math.max(dp[i + 1][p], take);\n        }\n    }\n    return dp[0][0];\n}",
+  "problemId" : "longest-increasing-subsequence",
+  "resolvedInput" : {
+    "nums" : [ 10, 9, 2, 5, 3, 7, 101, 18 ]
+  },
+  "stepCount" : 38,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Table is (8+1)x(8+1). Row i asks \"what is the best LIS starting at nums[7]?\"; column p encodes the last element already taken (index p-1). Filling starts at the bottom-right.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cols" : "9",
+      "rows" : "9"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "(7,7): skip keeps 0; nums[7]=18 does not beat the last taken nums[6]=101, so it cannot be appended. dp[7][7]=0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "7",
+      "skip" : "0",
+      "take" : "x",
+      "value" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "(7,6): skip keeps 0; nums[7]=18 beats the last taken nums[5]=7, so taking it yields 1. dp[7][6]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "6",
+      "skip" : "0",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "(7,5): skip keeps 0; nums[7]=18 beats the last taken nums[4]=3, so taking it yields 1. dp[7][5]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "5",
+      "skip" : "0",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "(7,4): skip keeps 0; nums[7]=18 beats the last taken nums[3]=5, so taking it yields 1. dp[7][4]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "4",
+      "skip" : "0",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 6,
+    "description" : "(7,3): skip keeps 0; nums[7]=18 beats the last taken nums[2]=2, so taking it yields 1. dp[7][3]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "3",
+      "skip" : "0",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "(7,2): skip keeps 0; nums[7]=18 beats the last taken nums[1]=9, so taking it yields 1. dp[7][2]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "2",
+      "skip" : "0",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "(7,1): skip keeps 0; nums[7]=18 beats the last taken nums[0]=10, so taking it yields 1. dp[7][1]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "1",
+      "skip" : "0",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "(7,0): skip keeps 0; column 0 means nothing taken yet, so nums[7]=18 can always start a subsequence. dp[7][0]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "p" : "0",
+      "skip" : "0",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "(6,6): skip keeps 1; nums[6]=101 beats the last taken nums[5]=7, so taking it yields 1. dp[6][6]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "p" : "6",
+      "skip" : "1",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 6,
+    "description" : "(6,5): skip keeps 1; nums[6]=101 beats the last taken nums[4]=3, so taking it yields 1. dp[6][5]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "p" : "5",
+      "skip" : "1",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "(6,4): skip keeps 1; nums[6]=101 beats the last taken nums[3]=5, so taking it yields 1. dp[6][4]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "p" : "4",
+      "skip" : "1",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 6,
+    "description" : "(6,3): skip keeps 1; nums[6]=101 beats the last taken nums[2]=2, so taking it yields 1. dp[6][3]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "p" : "3",
+      "skip" : "1",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 6,
+    "description" : "(6,2): skip keeps 1; nums[6]=101 beats the last taken nums[1]=9, so taking it yields 1. dp[6][2]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "p" : "2",
+      "skip" : "1",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 6,
+    "description" : "(6,1): skip keeps 1; nums[6]=101 beats the last taken nums[0]=10, so taking it yields 1. dp[6][1]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "p" : "1",
+      "skip" : "1",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 6,
+    "description" : "(6,0): skip keeps 1; column 0 means nothing taken yet, so nums[6]=101 can always start a subsequence. dp[6][0]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "p" : "0",
+      "skip" : "1",
+      "take" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 6,
+    "description" : "(5,5): skip keeps 1; nums[5]=7 beats the last taken nums[4]=3, so taking it yields 2. dp[5][5]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "p" : "5",
+      "skip" : "1",
+      "take" : "2",
+      "value" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 6,
+    "description" : "(5,4): skip keeps 1; nums[5]=7 beats the last taken nums[3]=5, so taking it yields 2. dp[5][4]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "p" : "4",
+      "skip" : "1",
+      "take" : "2",
+      "value" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 6,
+    "description" : "(5,3): skip keeps 1; nums[5]=7 beats the last taken nums[2]=2, so taking it yields 2. dp[5][3]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "p" : "3",
+      "skip" : "1",
+      "take" : "2",
+      "value" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 6,
+    "description" : "(5,2): skip keeps 1; nums[5]=7 does not beat the last taken nums[1]=9, so it cannot be appended. dp[5][2]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "p" : "2",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 6,
+    "description" : "(5,1): skip keeps 1; nums[5]=7 does not beat the last taken nums[0]=10, so it cannot be appended. dp[5][1]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "p" : "1",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 6,
+    "description" : "(5,0): skip keeps 1; column 0 means nothing taken yet, so nums[5]=7 can always start a subsequence. dp[5][0]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "p" : "0",
+      "skip" : "1",
+      "take" : "2",
+      "value" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 6,
+    "description" : "(4,4): skip keeps 2; nums[4]=3 does not beat the last taken nums[3]=5, so it cannot be appended. dp[4][4]=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "p" : "4",
+      "skip" : "2",
+      "take" : "x",
+      "value" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 6,
+    "description" : "(4,3): skip keeps 2; nums[4]=3 beats the last taken nums[2]=2, so taking it yields 3. dp[4][3]=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "p" : "3",
+      "skip" : "2",
+      "take" : "3",
+      "value" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 6,
+    "description" : "(4,2): skip keeps 1; nums[4]=3 does not beat the last taken nums[1]=9, so it cannot be appended. dp[4][2]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "p" : "2",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 6,
+    "description" : "(4,1): skip keeps 1; nums[4]=3 does not beat the last taken nums[0]=10, so it cannot be appended. dp[4][1]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "p" : "1",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 6,
+    "description" : "(4,0): skip keeps 2; column 0 means nothing taken yet, so nums[4]=3 can always start a subsequence. dp[4][0]=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "p" : "0",
+      "skip" : "2",
+      "take" : "3",
+      "value" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 6,
+    "description" : "(3,3): skip keeps 3; nums[3]=5 beats the last taken nums[2]=2, so taking it yields 3. dp[3][3]=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "p" : "3",
+      "skip" : "3",
+      "take" : "3",
+      "value" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 6,
+    "description" : "(3,2): skip keeps 1; nums[3]=5 does not beat the last taken nums[1]=9, so it cannot be appended. dp[3][2]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "p" : "2",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 6,
+    "description" : "(3,1): skip keeps 1; nums[3]=5 does not beat the last taken nums[0]=10, so it cannot be appended. dp[3][1]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "p" : "1",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 6,
+    "description" : "(3,0): skip keeps 3; column 0 means nothing taken yet, so nums[3]=5 can always start a subsequence. dp[3][0]=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "p" : "0",
+      "skip" : "3",
+      "take" : "3",
+      "value" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 6,
+    "description" : "(2,2): skip keeps 1; nums[2]=2 does not beat the last taken nums[1]=9, so it cannot be appended. dp[2][2]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "p" : "2",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 6,
+    "description" : "(2,1): skip keeps 1; nums[2]=2 does not beat the last taken nums[0]=10, so it cannot be appended. dp[2][1]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "p" : "1",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 1, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 6,
+    "description" : "(2,0): skip keeps 3; column 0 means nothing taken yet, so nums[2]=2 can always start a subsequence. dp[2][0]=4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "p" : "0",
+      "skip" : "3",
+      "take" : "4",
+      "value" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 1, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 6,
+    "description" : "(1,1): skip keeps 1; nums[1]=9 does not beat the last taken nums[0]=10, so it cannot be appended. dp[1][1]=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "p" : "1",
+      "skip" : "1",
+      "take" : "x",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 1, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 6,
+    "description" : "(1,0): skip keeps 4; column 0 means nothing taken yet, so nums[1]=9 can always start a subsequence. dp[1][0]=4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "p" : "0",
+      "skip" : "4",
+      "take" : "2",
+      "value" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 1, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 6,
+    "description" : "(0,0): skip keeps 4; column 0 means nothing taken yet, so nums[0]=10 can always start a subsequence. dp[0][0]=4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "p" : "0",
+      "skip" : "4",
+      "take" : "2",
+      "value" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 4, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 1, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 11,
+    "description" : "dp[0][0] is the best LIS from index 0 with nothing pre-taken: length 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 4, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 4, 1, 1, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 3, 2, 0, 0, 0, 0 ], [ 2, 1, 1, 2, 2, 2, 0, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,2429 @@
+{
+  "anchors" : {
+    "done" : 20,
+    "heights" : 7,
+    "init" : 2,
+    "pop" : 13,
+    "push" : 17
+  },
+  "code" : "public int maximalRectangle(int[][] matrix) {\n    int cols = matrix[0].length;\n    int[] heights = new int[cols];\n    int best = 0;\n    for (int r = 0; r < matrix.length; r++) {\n        for (int c = 0; c < cols; c++) {\n            heights[c] = matrix[r][c] == 0 ? 0 : heights[c] + 1;\n        }\n        Deque<Integer> stack = new ArrayDeque<>();\n        for (int i = 0; i <= cols; i++) {\n            int bar = (i == cols) ? 0 : heights[i];\n            while (!stack.isEmpty() && heights[stack.peek()] >= bar) {\n                int top = stack.pop();\n                int left = stack.isEmpty() ? -1 : stack.peek();\n                best = Math.max(best, heights[top] * (i - left - 1));\n            }\n            if (i < cols) stack.push(i);\n        }\n    }\n    return best;\n}",
+  "problemId" : "max-rectangle-area-all-ones",
+  "resolvedInput" : {
+    "grid" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ]
+  },
+  "stepCount" : 62,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "4x5 grid. heights[c] will count consecutive 1s ending at the current row - each row is then a histogram problem.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "row 0, col 0: grid=1 so heights[0]=1 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "c" : "0",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "row 0, col 1: grid=0 so heights[1]=0 (zeroed - any rectangle using this column breaks here).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "c" : "1",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "row 0, col 2: grid=1 so heights[2]=1 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "c" : "2",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "row 0, col 3: grid=0 so heights[3]=0 (zeroed - any rectangle using this column breaks here).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "c" : "3",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "row 0, col 4: grid=0 so heights[4]=0 (zeroed - any rectangle using this column breaks here).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "c" : "4",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 17,
+    "description" : "row 0: push col 0 (h=1); stack stays increasing bottom→top: [0].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "i" : "0",
+      "r" : "0",
+      "stack" : "[0]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "row 0: bar 0 at col 1 ends taller-or-equal bars. Pop col 0 (h=1), width 1−(-1)−1=1, area=1 - new best.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "1",
+      "best" : "1",
+      "h" : "1",
+      "poppedCol" : "0",
+      "r" : "0",
+      "stack" : "[]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 17,
+    "description" : "row 0: push col 1 (h=0); stack stays increasing bottom→top: [1].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "1",
+      "r" : "0",
+      "stack" : "[1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "row 0: push col 2 (h=1); stack stays increasing bottom→top: [1, 2].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "2",
+      "r" : "0",
+      "stack" : "[1, 2]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "row 0: bar 0 at col 3 ends taller-or-equal bars. Pop col 2 (h=1), width 3−(1)−1=1, area=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "1",
+      "best" : "1",
+      "h" : "1",
+      "poppedCol" : "2",
+      "r" : "0",
+      "stack" : "[1]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "row 0: bar 0 at col 3 ends taller-or-equal bars. Pop col 1 (h=0), width 3−(-1)−1=3, area=0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "0",
+      "best" : "1",
+      "h" : "0",
+      "poppedCol" : "1",
+      "r" : "0",
+      "stack" : "[]",
+      "width" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 17,
+    "description" : "row 0: push col 3 (h=0); stack stays increasing bottom→top: [3].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "3",
+      "r" : "0",
+      "stack" : "[3]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 13,
+    "description" : "row 0: bar 0 at col 4 ends taller-or-equal bars. Pop col 3 (h=0), width 4−(-1)−1=4, area=0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "0",
+      "best" : "1",
+      "h" : "0",
+      "poppedCol" : "3",
+      "r" : "0",
+      "stack" : "[]",
+      "width" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 17,
+    "description" : "row 0: push col 4 (h=0); stack stays increasing bottom→top: [4].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "4",
+      "r" : "0",
+      "stack" : "[4]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 13,
+    "description" : "row 0: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=0), width 5−(-1)−1=5, area=0 - sentinel flushes what remains.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "0",
+      "best" : "1",
+      "h" : "0",
+      "poppedCol" : "4",
+      "r" : "0",
+      "stack" : "[]",
+      "width" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 7,
+    "description" : "row 1, col 0: grid=1 so heights[0]=2 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "c" : "0",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 7,
+    "description" : "row 1, col 1: grid=0 so heights[1]=0 (zeroed - any rectangle using this column breaks here).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "c" : "1",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 7,
+    "description" : "row 1, col 2: grid=1 so heights[2]=2 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "c" : "2",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 7,
+    "description" : "row 1, col 3: grid=1 so heights[3]=1 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "c" : "3",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 7,
+    "description" : "row 1, col 4: grid=1 so heights[4]=1 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "c" : "4",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 17,
+    "description" : "row 1: push col 0 (h=2); stack stays increasing bottom→top: [0].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "0",
+      "r" : "1",
+      "stack" : "[0]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 13,
+    "description" : "row 1: bar 0 at col 1 ends taller-or-equal bars. Pop col 0 (h=2), width 1−(-1)−1=1, area=2 - new best.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "2",
+      "best" : "2",
+      "h" : "2",
+      "poppedCol" : "0",
+      "r" : "1",
+      "stack" : "[]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 17,
+    "description" : "row 1: push col 1 (h=0); stack stays increasing bottom→top: [1].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "1",
+      "r" : "1",
+      "stack" : "[1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 17,
+    "description" : "row 1: push col 2 (h=2); stack stays increasing bottom→top: [1, 2].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "2",
+      "r" : "1",
+      "stack" : "[1, 2]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 13,
+    "description" : "row 1: bar 1 at col 3 ends taller-or-equal bars. Pop col 2 (h=2), width 3−(1)−1=1, area=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "2",
+      "best" : "2",
+      "h" : "2",
+      "poppedCol" : "2",
+      "r" : "1",
+      "stack" : "[1]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 17,
+    "description" : "row 1: push col 3 (h=1); stack stays increasing bottom→top: [1, 3].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "3",
+      "r" : "1",
+      "stack" : "[1, 3]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 13,
+    "description" : "row 1: bar 1 at col 4 ends taller-or-equal bars. Pop col 3 (h=1), width 4−(1)−1=2, area=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "2",
+      "best" : "2",
+      "h" : "1",
+      "poppedCol" : "3",
+      "r" : "1",
+      "stack" : "[1]",
+      "width" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 17,
+    "description" : "row 1: push col 4 (h=1); stack stays increasing bottom→top: [1, 4].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "4",
+      "r" : "1",
+      "stack" : "[1, 4]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 13,
+    "description" : "row 1: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=1), width 5−(1)−1=3, area=3 - new best - sentinel flushes what remains.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "best" : "3",
+      "h" : "1",
+      "poppedCol" : "4",
+      "r" : "1",
+      "stack" : "[1]",
+      "width" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 13,
+    "description" : "row 1: bar 0 at col 5 ends taller-or-equal bars. Pop col 1 (h=0), width 5−(-1)−1=5, area=0 - sentinel flushes what remains.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "0",
+      "best" : "3",
+      "h" : "0",
+      "poppedCol" : "1",
+      "r" : "1",
+      "stack" : "[]",
+      "width" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 7,
+    "description" : "row 2, col 0: grid=1 so heights[0]=3 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "c" : "0",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 7,
+    "description" : "row 2, col 1: grid=1 so heights[1]=1 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "c" : "1",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 7,
+    "description" : "row 2, col 2: grid=1 so heights[2]=3 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "c" : "2",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 7,
+    "description" : "row 2, col 3: grid=1 so heights[3]=2 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "c" : "3",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 7,
+    "description" : "row 2, col 4: grid=1 so heights[4]=2 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "c" : "4",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 17,
+    "description" : "row 2: push col 0 (h=3); stack stays increasing bottom→top: [0].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "i" : "0",
+      "r" : "2",
+      "stack" : "[0]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 13,
+    "description" : "row 2: bar 1 at col 1 ends taller-or-equal bars. Pop col 0 (h=3), width 1−(-1)−1=1, area=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "best" : "3",
+      "h" : "3",
+      "poppedCol" : "0",
+      "r" : "2",
+      "stack" : "[]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 17,
+    "description" : "row 2: push col 1 (h=1); stack stays increasing bottom→top: [1].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "i" : "1",
+      "r" : "2",
+      "stack" : "[1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 17,
+    "description" : "row 2: push col 2 (h=3); stack stays increasing bottom→top: [1, 2].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "i" : "2",
+      "r" : "2",
+      "stack" : "[1, 2]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 13,
+    "description" : "row 2: bar 2 at col 3 ends taller-or-equal bars. Pop col 2 (h=3), width 3−(1)−1=1, area=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "best" : "3",
+      "h" : "3",
+      "poppedCol" : "2",
+      "r" : "2",
+      "stack" : "[1]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 17,
+    "description" : "row 2: push col 3 (h=2); stack stays increasing bottom→top: [1, 3].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "i" : "3",
+      "r" : "2",
+      "stack" : "[1, 3]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 13,
+    "description" : "row 2: bar 2 at col 4 ends taller-or-equal bars. Pop col 3 (h=2), width 4−(1)−1=2, area=4 - new best.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "4",
+      "best" : "4",
+      "h" : "2",
+      "poppedCol" : "3",
+      "r" : "2",
+      "stack" : "[1]",
+      "width" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 17,
+    "description" : "row 2: push col 4 (h=2); stack stays increasing bottom→top: [1, 4].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "4",
+      "i" : "4",
+      "r" : "2",
+      "stack" : "[1, 4]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 45,
+    "activeLine" : 13,
+    "description" : "row 2: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=2), width 5−(1)−1=3, area=6 - new best - sentinel flushes what remains.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "6",
+      "best" : "6",
+      "h" : "2",
+      "poppedCol" : "4",
+      "r" : "2",
+      "stack" : "[1]",
+      "width" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 46,
+    "activeLine" : 13,
+    "description" : "row 2: bar 0 at col 5 ends taller-or-equal bars. Pop col 1 (h=1), width 5−(-1)−1=5, area=5 - sentinel flushes what remains.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "5",
+      "best" : "6",
+      "h" : "1",
+      "poppedCol" : "1",
+      "r" : "2",
+      "stack" : "[]",
+      "width" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 47,
+    "activeLine" : 7,
+    "description" : "row 3, col 0: grid=1 so heights[0]=4 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "c" : "0",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 48,
+    "activeLine" : 7,
+    "description" : "row 3, col 1: grid=0 so heights[1]=0 (zeroed - any rectangle using this column breaks here).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "c" : "1",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 49,
+    "activeLine" : 7,
+    "description" : "row 3, col 2: grid=0 so heights[2]=0 (zeroed - any rectangle using this column breaks here).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "c" : "2",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 50,
+    "activeLine" : 7,
+    "description" : "row 3, col 3: grid=1 so heights[3]=3 (grew).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "c" : "3",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 51,
+    "activeLine" : 7,
+    "description" : "row 3, col 4: grid=0 so heights[4]=0 (zeroed - any rectangle using this column breaks here).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "c" : "4",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 52,
+    "activeLine" : 17,
+    "description" : "row 3: push col 0 (h=4); stack stays increasing bottom→top: [0].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "0",
+      "r" : "3",
+      "stack" : "[0]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 53,
+    "activeLine" : 13,
+    "description" : "row 3: bar 0 at col 1 ends taller-or-equal bars. Pop col 0 (h=4), width 1−(-1)−1=1, area=4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "4",
+      "best" : "6",
+      "h" : "4",
+      "poppedCol" : "0",
+      "r" : "3",
+      "stack" : "[]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 54,
+    "activeLine" : 17,
+    "description" : "row 3: push col 1 (h=0); stack stays increasing bottom→top: [1].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "1",
+      "r" : "3",
+      "stack" : "[1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 55,
+    "activeLine" : 13,
+    "description" : "row 3: bar 0 at col 2 ends taller-or-equal bars. Pop col 1 (h=0), width 2−(-1)−1=2, area=0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "0",
+      "best" : "6",
+      "h" : "0",
+      "poppedCol" : "1",
+      "r" : "3",
+      "stack" : "[]",
+      "width" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 56,
+    "activeLine" : 17,
+    "description" : "row 3: push col 2 (h=0); stack stays increasing bottom→top: [2].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "2",
+      "r" : "3",
+      "stack" : "[2]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 57,
+    "activeLine" : 17,
+    "description" : "row 3: push col 3 (h=3); stack stays increasing bottom→top: [2, 3].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "3",
+      "r" : "3",
+      "stack" : "[2, 3]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 58,
+    "activeLine" : 13,
+    "description" : "row 3: bar 0 at col 4 ends taller-or-equal bars. Pop col 3 (h=3), width 4−(2)−1=1, area=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "best" : "6",
+      "h" : "3",
+      "poppedCol" : "3",
+      "r" : "3",
+      "stack" : "[2]",
+      "width" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 59,
+    "activeLine" : 13,
+    "description" : "row 3: bar 0 at col 4 ends taller-or-equal bars. Pop col 2 (h=0), width 4−(-1)−1=4, area=0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "0",
+      "best" : "6",
+      "h" : "0",
+      "poppedCol" : "2",
+      "r" : "3",
+      "stack" : "[]",
+      "width" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 60,
+    "activeLine" : 17,
+    "description" : "row 3: push col 4 (h=0); stack stays increasing bottom→top: [4].",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6",
+      "i" : "4",
+      "r" : "3",
+      "stack" : "[4]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 61,
+    "activeLine" : 13,
+    "description" : "row 3: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=0), width 5−(-1)−1=5, area=0 - sentinel flushes what remains.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "0",
+      "best" : "6",
+      "h" : "0",
+      "poppedCol" : "4",
+      "r" : "3",
+      "stack" : "[]",
+      "width" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 62,
+    "activeLine" : 20,
+    "description" : "Largest all-1s rectangle in the grid has area 6.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "6"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
