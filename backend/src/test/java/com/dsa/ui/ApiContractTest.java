@@ -71,7 +71,15 @@ class ApiContractTest {
     /** Ids whose legacy trace is retired because a real tracer serves them on /api/problems. */
     private static final List<String> RETIRED_IDS = List.of(
             "tree-preorder", "tree-inorder", "tree-postorder", "tree-level-order",
-            "search-rotated-sorted", "n-meetings-in-one-room");
+            "search-rotated-sorted", "n-meetings-in-one-room",
+            "longest-increasing-subsequence", "print-lis", "lis-binary-search",
+            "max-rectangle-area-all-ones", "count-square-submatrices",
+            "largest-element", "max-consecutive-ones", "move-zeros-end",
+            "find-missing-number", "stock-buy-sell",
+            "second-largest-element", "check-sorted-ii", "remove-duplicates-sorted",
+            "left-rotate-one", "linear-search",
+            "left-rotate-k", "single-number", "majority-element",
+            "leaders-in-array", "longest-subarray-sum-k-positives");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -161,7 +169,27 @@ class ApiContractTest {
                 arguments("/api/trees", "tree-postorder"),
                 arguments("/api/trees", "tree-level-order"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
-                arguments("/api/greedy", "n-meetings-in-one-room"));
+                arguments("/api/greedy", "n-meetings-in-one-room"),
+                arguments("/api/dp", "longest-increasing-subsequence"),
+                arguments("/api/dp", "print-lis"),
+                arguments("/api/dp", "lis-binary-search"),
+                arguments("/api/dp", "max-rectangle-area-all-ones"),
+                arguments("/api/dp", "count-square-submatrices"),
+                arguments("/api/arrays", "largest-element"),
+                arguments("/api/arrays", "max-consecutive-ones"),
+                arguments("/api/arrays", "move-zeros-end"),
+                arguments("/api/arrays", "find-missing-number"),
+                arguments("/api/arrays", "stock-buy-sell"),
+                arguments("/api/arrays", "second-largest-element"),
+                arguments("/api/arrays", "check-sorted-ii"),
+                arguments("/api/arrays", "remove-duplicates-sorted"),
+                arguments("/api/arrays", "left-rotate-one"),
+                arguments("/api/arrays", "linear-search"),
+                arguments("/api/arrays", "left-rotate-k"),
+                arguments("/api/arrays", "single-number"),
+                arguments("/api/arrays", "majority-element"),
+                arguments("/api/arrays", "leaders-in-array"),
+                arguments("/api/arrays", "longest-subarray-sum-k-positives"));
     }
 
     /**

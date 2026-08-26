@@ -1,0 +1,869 @@
+{
+  "anchors" : {
+    "compare" : 4,
+    "done" : 9,
+    "init" : 2,
+    "write" : 5
+  },
+  "code" : "public int removeDuplicates(int[] nums) {\n    int i = 0;\n    for (int j = 1; j < nums.length; j++) {\n        if (nums[j] != nums[i]) {\n            i++;\n            nums[i] = nums[j];\n        }\n    }\n    return i + 1;\n}",
+  "problemId" : "remove-duplicates-sorted",
+  "resolvedInput" : {
+    "nums" : [ 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "i=0 tracks the last unique element (nums[0]=0). j will scan from index 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "j=1: nums[1]=0 == nums[i=0]=0 (duplicate, skip).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "j=2: nums[2]=1 != nums[i=0]=0 (new unique element).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Advance i to 1 and write nums[1] = 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "j=3: nums[3]=1 == nums[i=1]=1 (duplicate, skip).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "j=4: nums[4]=1 == nums[i=1]=1 (duplicate, skip).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 4,
+    "description" : "j=5: nums[5]=2 != nums[i=1]=1 (new unique element).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 5,
+    "description" : "Advance i to 2 and write nums[2] = 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 4,
+    "description" : "j=6: nums[6]=2 == nums[i=2]=2 (duplicate, skip).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 4,
+    "description" : "j=7: nums[7]=3 != nums[i=2]=2 (new unique element).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 5,
+    "description" : "Advance i to 3 and write nums[3] = 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 4,
+    "description" : "j=8: nums[8]=3 == nums[i=3]=3 (duplicate, skip).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 4,
+    "description" : "j=9: nums[9]=4 != nums[i=3]=3 (new unique element).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 5,
+    "description" : "Advance i to 4 and write nums[4] = 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 9,
+    "description" : "Deduplication complete: 5 unique elements (packed at indices 0..4).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "uniqueCount" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
