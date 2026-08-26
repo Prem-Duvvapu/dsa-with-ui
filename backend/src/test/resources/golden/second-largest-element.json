@@ -1,0 +1,393 @@
+{
+  "anchors" : {
+    "compare" : 5,
+    "done" : 12,
+    "init" : 2,
+    "new-largest" : 6,
+    "new-second" : 9
+  },
+  "code" : "public int getSecondLargest(int[] arr) {\n    int largest = arr[0];\n    int secondLargest = -1;\n    for (int i = 1; i < arr.length; i++) {\n        if (arr[i] > largest) {\n            secondLargest = largest;\n            largest = arr[i];\n        } else if (arr[i] < largest && arr[i] > secondLargest) {\n            secondLargest = arr[i];\n        }\n    }\n    return secondLargest;\n}",
+  "problemId" : "second-largest-element",
+  "resolvedInput" : {
+    "nums" : [ 12, 35, 1, 10, 34, 1 ]
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Start with first element: largest = 12, secondLargest = -1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "largest" : "12",
+      "secondLargest" : "-1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "i=1: arr[1]=35 > largest=12.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "largest" : "12",
+      "secondLargest" : "-1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "New largest is 35; previous largest 12 becomes secondLargest.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "largest" : "35",
+      "secondLargest" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "i=2: arr[2]=1 <= secondLargest=12 (or equals largest), no update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "largest" : "35",
+      "secondLargest" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "i=3: arr[3]=10 <= secondLargest=12 (or equals largest), no update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "largest" : "35",
+      "secondLargest" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "i=4: arr[4]=34 < largest=35, but beats secondLargest=12.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "largest" : "35",
+      "secondLargest" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "New secondLargest becomes 34 (largest stays 35).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "largest" : "35",
+      "secondLargest" : "34"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 5,
+    "description" : "i=5: arr[5]=1 <= secondLargest=34 (or equals largest), no update.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "largest" : "35",
+      "secondLargest" : "34"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 12,
+    "description" : "Scan complete: largest is 35, second largest is 34.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "largest" : "35",
+      "secondLargest" : "34"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

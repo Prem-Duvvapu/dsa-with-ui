@@ -1,0 +1,349 @@
+{
+  "anchors" : {
+    "cheaper" : 4,
+    "done" : 12,
+    "init" : 2,
+    "sell" : 7
+  },
+  "code" : "public int maxProfit(int[] prices) {\n    int minPrice = prices[0], best = 0;\n    for (int i = 1; i < prices.length; i++) {\n        if (prices[i] < minPrice) {\n            minPrice = prices[i];\n        }\n        int profit = prices[i] - minPrice;\n        if (profit > best) {\n            best = profit;\n        }\n    }\n    return best;\n}",
+  "problemId" : "stock-buy-sell",
+  "resolvedInput" : {
+    "prices" : [ 7, 1, 5, 3, 6, 4 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Day 0 costs 7, so it is both the cheapest buy so far and the only candidate. Selling later must beat profit 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "minPrice" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Day 1: price 1 undercuts everything before it - new best buying day.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "i" : "1",
+      "minPrice" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "Day 1: selling at 1 over 1 earns only 0, not better than 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "i" : "1",
+      "profit" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Day 2: selling at 5 over a buy at 1 earns 4 - best trade so far.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "4",
+      "i" : "2",
+      "profit" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Day 3: selling at 3 over 1 earns only 2, not better than 4.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "4",
+      "i" : "3",
+      "profit" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Day 4: selling at 6 over a buy at 1 earns 5 - best trade so far.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "5",
+      "i" : "4",
+      "profit" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "Day 5: selling at 4 over 1 earns only 3, not better than 5.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "5",
+      "i" : "5",
+      "profit" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "Best trade: buy at 1, sell later for a profit of 5.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

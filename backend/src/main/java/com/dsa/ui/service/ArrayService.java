@@ -25,29 +25,33 @@ public class ArrayService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "largest-element": return generateLargestElementSteps();
-            case "second-largest-element": return generateSecondLargestElementSteps();
-            case "check-sorted-ii": return generateCheckSortedIISteps();
-            case "remove-duplicates-sorted": return generateRemoveDuplicatesSortedSteps();
-            case "left-rotate-one": return generateLeftRotateOneSteps();
-            case "left-rotate-k": return generateLeftRotateKSteps();
-            case "move-zeros-end": return generateMoveZerosEndSteps();
-            case "linear-search": return generateLinearSearchSteps();
+            // These fifteen have real tracers (tracer/impl). Refuse rather than let
+            // default: serve another array problem's steps under these ids. The
+            // default: stays until PROMPT D; other ids here still rely on it.
+            case "largest-element":
+            case "max-consecutive-ones":
+            case "move-zeros-end":
+            case "find-missing-number":
+            case "stock-buy-sell":
+            case "second-largest-element":
+            case "check-sorted-ii":
+            case "remove-duplicates-sorted":
+            case "left-rotate-one":
+            case "linear-search":
+            case "left-rotate-k":
+            case "single-number":
+            case "majority-element":
+            case "leaders-in-array":
+            case "longest-subarray-sum-k-positives":
+                throw new LegacyTraceRetiredException(problemId);
             case "union-sorted-arrays": return generateUnionSortedArraysSteps();
-            case "find-missing-number": return generateFindMissingNumberSteps();
-            case "max-consecutive-ones": return generateMaxConsecutiveOnesSteps();
-            case "single-number": return generateSingleNumberSteps();
-            case "longest-subarray-sum-k-positives": return generateLongestSubarraySumKPositivesSteps();
             case "longest-subarray-sum-k": return generateLongestSubarraySumKSteps();
             case "two-sum": return generateTwoSumSteps();
             case "sort-0-1-2": return generateSort012Steps();
-            case "majority-element": return generateMajorityElementSteps();
             case "kadane-algo": return generateKadaneSteps();
             case "print-max-subarray": return generatePrintMaxSubarraySteps();
-            case "stock-buy-sell": return generateStockSteps();
             case "rearrange-by-sign": return generateRearrangeBySignSteps();
             case "next-permutation": return generateNextPermutationSteps();
-            case "leaders-in-array": return generateLeadersSteps();
             case "longest-consecutive-sequence": return generateLongestConsecutiveSteps();
             case "set-matrix-zeroes": return generateSetMatrixZeroesSteps();
             case "rotate-matrix-90": return generateRotateMatrixSteps();
@@ -1517,56 +1521,6 @@ public class ArrayService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateMajorityElementSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{2, 2, 1, 1, 1, 2, 2};
-        int count = 0, el = 0;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Moore's Voting Algorithm: Find candidate element > N/2 times. Initialize count = 0, candidate el = 0.",
-            List.of(), Map.of(), List.of(), Map.of("count", "0", "el", "0"),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        for (int i = 0; i < nums.length; i++) {
-            if (count == 0) {
-                count = 1; el = nums[i];
-                steps.add(new ExecutionStep(
-                    stepNum++, 6,
-                    String.format("Loop i = %d (val %d): count is 0. Set new candidate el = %d, count = 1.", i, nums[i], el),
-                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "candidate", String.valueOf(el), "count", "1"),
-                    "Array", null, createArrayState(nums, i, -1), null, null
-                ));
-            } else if (nums[i] == el) {
-                count++;
-                steps.add(new ExecutionStep(
-                    stepNum++, 8,
-                    String.format("Loop i = %d (val %d): nums[%d] matches candidate %d. Increment count = %d.", i, nums[i], i, el, count),
-                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "candidate", String.valueOf(el), "count", String.valueOf(count)),
-                    "Array", null, createArrayState(nums, i, -1), null, null
-                ));
-            } else {
-                count--;
-                steps.add(new ExecutionStep(
-                    stepNum++, 10,
-                    String.format("Loop i = %d (val %d): nums[%d] != candidate %d. Decrement count = %d.", i, nums[i], i, el, count),
-                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "candidate", String.valueOf(el), "count", String.valueOf(count)),
-                    "Array", null, createArrayState(nums, i, -1), null, null
-                ));
-            }
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 13,
-            String.format("Moore's Voting Complete! Majority Element (> N/2 times) = %d.", el),
-            List.of(), Map.of(), List.of(), Map.of("Majority Element", String.valueOf(el)),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        return steps;
-    }
 
     private List<ExecutionStep> generateKadaneSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
@@ -1817,52 +1771,6 @@ public class ArrayService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateLeadersSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{16, 17, 4, 3, 5, 2};
-        int n = nums.length;
-        List<Integer> leaders = new ArrayList<>();
-        int maxi = Integer.MIN_VALUE;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Leaders in an Array: Scan right-to-left tracking maxi seen so far. An element is a leader if arr[i] > maxi. Input: [16, 17, 4, 3, 5, 2].",
-            List.of(), Map.of(), List.of(), Map.of("maxi", "-INF"),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        for (int i = n - 1; i >= 0; i--) {
-            if (nums[i] > maxi) {
-                maxi = nums[i];
-                leaders.add(maxi);
-                steps.add(new ExecutionStep(
-                    stepNum++, 8,
-                    String.format("Scan i = %d (val %d): %d > maxi! New Leader found! Update maxi = %d. Leaders list: %s.", i, nums[i], nums[i], maxi, leaders.toString()),
-                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "newLeader", String.valueOf(maxi), "maxi", String.valueOf(maxi)),
-                    "Array", null, createArrayState(nums, i, -1), null, null
-                ));
-            } else {
-                steps.add(new ExecutionStep(
-                    stepNum++, 7,
-                    String.format("Scan i = %d (val %d): %d <= maxi (%d). Not a leader.", i, nums[i], nums[i], maxi),
-                    List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "maxi", String.valueOf(maxi)),
-                    "Array", null, createArrayState(nums, i, -1), null, null
-                ));
-            }
-        }
-
-        Collections.reverse(leaders);
-
-        steps.add(new ExecutionStep(
-            stepNum++, 11,
-            String.format("Leaders Complete! Output Leaders in left-to-right order: %s.", leaders.toString()),
-            List.of(), Map.of(), List.of(), Map.of("Leaders", leaders.toString()),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        return steps;
-    }
 
     private List<ExecutionStep> generateLongestConsecutiveSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
@@ -2772,25 +2680,6 @@ public class ArrayService implements ProblemProvider {
         return list;
     }
 
-    private List<ArrayElement> createSecondLargestArrayState(int[] arr, int currentIdx, int largestIdx, int secondLargestIdx) {
-        List<ArrayElement> list = new ArrayList<>();
-        for (int i = 0; i < arr.length; i++) {
-            String state = "default";
-            if (i == largestIdx) {
-                state = "pivot"; // Purple for Largest
-            } else if (i == secondLargestIdx) {
-                state = "sorted"; // Green for Second Largest
-            }
-            if (i == currentIdx && currentIdx != largestIdx && currentIdx != secondLargestIdx) {
-                state = "comparing"; // Orange for Current (i)
-            } else if (currentIdx != -1 && i < currentIdx && i != largestIdx && i != secondLargestIdx) {
-                state = "visited"; // Slate for Visited
-            }
-            list.add(new ArrayElement(i, arr[i], state));
-        }
-        return list;
-    }
-
     // ==================== 14 EASY ARRAY STEP GENERATORS ====================
 
     private List<ExecutionStep> generateLargestElementSteps() {
@@ -2814,123 +2703,6 @@ public class ArrayService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateSecondLargestElementSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] arr = {12, 35, 1, 10, 34, 1};
-        int largestIdx = 0;
-        int secondLargestIdx = -1;
-        int largest = arr[0];
-        int secondLargest = -1;
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 3, "Initialize largest = arr[0] = " + largest + " (idx 0), secondLargest = -1", createSecondLargestArrayState(arr, 0, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", "0", "secondLargest", "-1", "secondLargestIdx", "-1", "i", "0")));
-
-        for (int i = 1; i < arr.length; i++) {
-            steps.add(createStep(stepNum++, 5, "Inspect arr[" + i + "] = " + arr[i] + ". Compare with largest (" + largest + ") & secondLargest (" + (secondLargest == -1 ? "NONE" : secondLargest) + ").", createSecondLargestArrayState(arr, i, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx), "i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]))));
-            if (arr[i] > largest) {
-                secondLargest = largest;
-                secondLargestIdx = largestIdx;
-                largest = arr[i];
-                largestIdx = i;
-                steps.add(createStep(stepNum++, 7, "arr[" + i + "] (" + arr[i] + ") > largest! Shift largest to secondLargest (" + secondLargest + " at idx " + secondLargestIdx + "), new largest = " + largest + " at idx " + largestIdx, createSecondLargestArrayState(arr, i, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx), "i", String.valueOf(i))));
-            } else if (arr[i] < largest && arr[i] > secondLargest) {
-                secondLargest = arr[i];
-                secondLargestIdx = i;
-                steps.add(createStep(stepNum++, 9, "arr[" + i + "] (" + arr[i] + ") is between secondLargest & largest! New secondLargest = " + secondLargest + " at idx " + secondLargestIdx, createSecondLargestArrayState(arr, i, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx), "i", String.valueOf(i))));
-            }
-        }
-        steps.add(createStep(stepNum++, 12, "Completed scan! Final Largest = " + largest + " (idx " + largestIdx + "), Second Largest = " + secondLargest + " (idx " + secondLargestIdx + ")", createSecondLargestArrayState(arr, -1, largestIdx, secondLargestIdx), Map.of("largest", String.valueOf(largest), "largestIdx", String.valueOf(largestIdx), "secondLargest", String.valueOf(secondLargest), "secondLargestIdx", String.valueOf(secondLargestIdx))));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateCheckSortedIISteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = {3, 4, 5, 1, 2};
-        int n = nums.length;
-        int count = 0;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Initialize drop count = 0 for array length N = " + n, createArrayState(nums, -1, -1), Map.of("count", "0", "n", String.valueOf(n))));
-
-        for (int i = 0; i < n; i++) {
-            int nextIdx = (i + 1) % n;
-            steps.add(createStep(stepNum++, 5, "Comparing circular pair nums[" + i + "] (" + nums[i] + ") > nums[" + nextIdx + "] (" + nums[nextIdx] + ")", createArrayState(nums, i, nextIdx), Map.of("i", String.valueOf(i), "nextIdx", String.valueOf(nextIdx), "nums[i]", String.valueOf(nums[i]), "nums[nextIdx]", String.valueOf(nums[nextIdx]), "count", String.valueOf(count))));
-            if (nums[i] > nums[nextIdx]) {
-                count++;
-                steps.add(createStep(stepNum++, 6, "Drop detected! Incremented count = " + count, createArrayState(nums, i, nextIdx), Map.of("count", String.valueOf(count), "i", String.valueOf(i))));
-            }
-        }
-        boolean isSortedRotated = count <= 1;
-        steps.add(createStep(stepNum++, 9, "Total drop count = " + count + " (<= 1). Result: " + isSortedRotated, createArrayState(nums, -1, -1), Map.of("count", String.valueOf(count), "isSortedRotated", String.valueOf(isSortedRotated))));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateRemoveDuplicatesSortedSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-        int i = 0;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Initialize unique end pointer i = 0 at nums[0] = " + nums[0], createArrayState(nums, 0, -1), Map.of("i", "0", "j", "1")));
-
-        for (int j = 1; j < nums.length; j++) {
-            steps.add(createStep(stepNum++, 5, "Comparing explorer nums[j=" + j + "] (" + nums[j] + ") with unique nums[i=" + i + "] (" + nums[i] + ")", createArrayState(nums, i, j), Map.of("i", String.valueOf(i), "j", String.valueOf(j), "nums[i]", String.valueOf(nums[i]), "nums[j]", String.valueOf(nums[j]))));
-            if (nums[j] != nums[i]) {
-                i++;
-                nums[i] = nums[j];
-                steps.add(createStep(stepNum++, 7, "New unique element " + nums[j] + " found! Placed at nums[i=" + i + "]", createArrayState(nums, i, j), Map.of("i", String.valueOf(i), "j", String.valueOf(j), "placedValue", String.valueOf(nums[i]))));
-            }
-        }
-        int uniqueCount = i + 1;
-        steps.add(createStep(stepNum++, 10, "Deduplication complete. Number of unique elements = " + uniqueCount, createArrayState(nums, 0, i), Map.of("uniqueCount", String.valueOf(uniqueCount))));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateLeftRotateOneSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] arr = {1, 2, 3, 4, 5};
-        int temp = arr[0];
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Store first element temp = arr[0] = " + temp, createArrayState(arr, 0, -1), Map.of("temp", String.valueOf(temp))));
-
-        for (int i = 0; i < arr.length - 1; i++) {
-            arr[i] = arr[i + 1];
-            steps.add(createStep(stepNum++, 5, "Shift element left: arr[" + i + "] = arr[" + (i + 1) + "] (" + arr[i] + ")", createArrayState(arr, i, i + 1), Map.of("i", String.valueOf(i), "temp", String.valueOf(temp))));
-        }
-        arr[arr.length - 1] = temp;
-        steps.add(createStep(stepNum++, 7, "Place saved temp (" + temp + ") at last index arr[" + (arr.length - 1) + "]", createArrayState(arr, arr.length - 1, -1), Map.of("temp", String.valueOf(temp))));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateLeftRotateKSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = {1, 2, 3, 4, 5, 6, 7};
-        int n = nums.length;
-        int k = 3 % n;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 4, "Normalize k = 3 % " + n + " = " + k, createArrayState(nums, -1, -1), Map.of("k", String.valueOf(k), "n", String.valueOf(n))));
-
-        // Step 1: Reverse 0..k-1
-        reverseArrayRange(nums, 0, k - 1);
-        steps.add(createStep(stepNum++, 5, "Step 1: Reverse first K elements (indices 0.." + (k - 1) + ")", createRangeArrayState(nums, 0, k - 1), Map.of("k", String.valueOf(k))));
-
-        // Step 2: Reverse k..n-1
-        reverseArrayRange(nums, k, n - 1);
-        steps.add(createStep(stepNum++, 6, "Step 2: Reverse remaining elements (indices " + k + ".." + (n - 1) + ")", createRangeArrayState(nums, k, n - 1), Map.of("k", String.valueOf(k))));
-
-        // Step 3: Reverse 0..n-1
-        reverseArrayRange(nums, 0, n - 1);
-        steps.add(createStep(stepNum++, 7, "Step 3: Reverse entire array (indices 0.." + (n - 1) + ")", createRangeArrayState(nums, 0, n - 1), Map.of("k", String.valueOf(k))));
-        return steps;
-    }
-
-    private void reverseArrayRange(int[] arr, int start, int end) {
-        while (start < end) {
-            int temp = arr[start];
-            arr[start] = arr[end];
-            arr[end] = temp;
-            start++;
-            end--;
-        }
-    }
 
     private List<ExecutionStep> generateMoveZerosEndSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
@@ -2956,41 +2728,6 @@ public class ArrayService implements ProblemProvider {
             }
         }
         steps.add(createStep(stepNum++, 12, "Moved all zeroes to the end of the array successfully!", createArrayState(nums, -1, -1), Map.of("j", String.valueOf(j))));
-        return steps;
-    }
-
-    private List<ArrayElement> createLinearSearchArrayState(int[] arr, int currentIdx, int foundIdx) {
-        List<ArrayElement> list = new ArrayList<>();
-        for (int i = 0; i < arr.length; i++) {
-            String state = "default";
-            if (i == foundIdx) {
-                state = "sorted"; // Emerald Green for Target Found!
-            } else if (i == currentIdx) {
-                state = "comparing"; // Amber Orange for Current (i)
-            } else if (currentIdx != -1 && i < currentIdx) {
-                state = "visited"; // Slate Muted for Visited
-            }
-            list.add(new ArrayElement(i, arr[i], state));
-        }
-        return list;
-    }
-
-    private List<ExecutionStep> generateLinearSearchSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] arr = {1, 2, 3, 4, 5};
-        int num = 4;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 2, "Start linear search for target X = " + num + " in array [1, 2, 3, 4, 5].", createLinearSearchArrayState(arr, -1, -1), Map.of("target", String.valueOf(num))));
-
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == num) {
-                steps.add(createStep(stepNum++, 4, "Comparing arr[" + i + "] (" + arr[i] + ") == target (" + num + ") -> Target element " + num + " MATCH FOUND at index " + i + "!", createLinearSearchArrayState(arr, i, i), Map.of("foundIndex", String.valueOf(i), "target", String.valueOf(num), "i", String.valueOf(i))));
-                return steps;
-            } else {
-                steps.add(createStep(stepNum++, 4, "Comparing arr[" + i + "] (" + arr[i] + ") != target (" + num + "). Continue search...", createLinearSearchArrayState(arr, i, -1), Map.of("i", String.valueOf(i), "arr[i]", String.valueOf(arr[i]), "target", String.valueOf(num))));
-            }
-        }
-        steps.add(createStep(stepNum++, 6, "Target element " + num + " not found in array. Return -1.", createLinearSearchArrayState(arr, -1, -1), Map.of("foundIndex", "-1")));
         return steps;
     }
 
@@ -3071,52 +2808,6 @@ public class ArrayService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateSingleNumberSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = {4, 1, 2, 1, 2};
-        int xorSum = 0;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Initialize xorSum = 0", createArrayState(nums, -1, -1), Map.of("xorSum", "0")));
-
-        for (int i = 0; i < nums.length; i++) {
-            int prevXor = xorSum;
-            xorSum ^= nums[i];
-            steps.add(createStep(stepNum++, 5, "xorSum = " + prevXor + " ^ nums[" + i + "] (" + nums[i] + ") = " + xorSum, createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "num", String.valueOf(nums[i]), "xorSum", String.valueOf(xorSum))));
-        }
-        steps.add(createStep(stepNum++, 7, "Bitwise XOR cancellation complete. Single number that appears once = " + xorSum, createArrayState(nums, -1, -1), Map.of("singleNumber", String.valueOf(xorSum))));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateLongestSubarraySumKPositivesSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] a = {1, 2, 3, 1, 1, 1, 1, 4, 2, 3};
-        long k = 3;
-        int left = 0, right = 0;
-        long sum = a[0];
-        int maxLen = 0;
-        int n = a.length;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 4, "Initialize sliding window left = 0, right = 0, sum = " + sum + ", K = " + k, createRangeArrayState(a, left, right), Map.of("left", "0", "right", "0", "sum", String.valueOf(sum), "maxLen", "0", "K", String.valueOf(k))));
-
-        while (right < n) {
-            while (left <= right && sum > k) {
-                sum -= a[left];
-                left++;
-                steps.add(createStep(stepNum++, 8, "Window sum (" + sum + ") > K (" + k + ")! Shrink window left -> " + left, createRangeArrayState(a, left, right), Map.of("left", String.valueOf(left), "right", String.valueOf(right), "sum", String.valueOf(sum), "maxLen", String.valueOf(maxLen))));
-            }
-            if (sum == k) {
-                maxLen = Math.max(maxLen, right - left + 1);
-                steps.add(createStep(stepNum++, 11, "Window sum == K (" + k + ")! Subarray [" + left + ".." + right + "] length = " + (right - left + 1) + ", maxLen = " + maxLen, createRangeArrayState(a, left, right), Map.of("left", String.valueOf(left), "right", String.valueOf(right), "sum", String.valueOf(sum), "maxLen", String.valueOf(maxLen))));
-            }
-            right++;
-            if (right < n) {
-                sum += a[right];
-                steps.add(createStep(stepNum++, 14, "Expand window right -> " + right + ", updated sum = " + sum, createRangeArrayState(a, left, right), Map.of("left", String.valueOf(left), "right", String.valueOf(right), "sum", String.valueOf(sum), "maxLen", String.valueOf(maxLen))));
-            }
-        }
-        steps.add(createStep(stepNum++, 17, "Sliding window scan complete! Longest subarray length with sum K=" + k + " is " + maxLen, createArrayState(a, -1, -1), Map.of("maxLen", String.valueOf(maxLen))));
-        return steps;
-    }
 
     private List<ExecutionStep> generateLongestSubarraySumKSteps() {
         List<ExecutionStep> steps = new ArrayList<>();

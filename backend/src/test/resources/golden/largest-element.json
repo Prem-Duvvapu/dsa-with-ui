@@ -1,0 +1,273 @@
+{
+  "anchors" : {
+    "beat" : 5,
+    "compare" : 4,
+    "done" : 8,
+    "init" : 2
+  },
+  "code" : "public int largestElement(int[] nums) {\n    int best = nums[0];\n    for (int i = 1; i < nums.length; i++) {\n        if (nums[i] > best) {\n            best = nums[i];\n        }\n    }\n    return best;\n}",
+  "problemId" : "largest-element",
+  "resolvedInput" : {
+    "nums" : [ 7, 2, 35, 4, 18 ]
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Start by trusting the first element: best = 7.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "i=1: nums[1]=2 cannot beat best=7, so best stays.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "7",
+      "i" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "i=2: nums[2]=35 challenges best=7.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "7",
+      "i" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 35,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "35 wins - it becomes the new best.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "35",
+      "i" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 35,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "i=3: nums[3]=4 cannot beat best=35, so best stays.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "35",
+      "i" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "i=4: nums[4]=18 cannot beat best=35, so best stays.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "35",
+      "i" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 18,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "One pass, one variable - the largest element is 35.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "35"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 35,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

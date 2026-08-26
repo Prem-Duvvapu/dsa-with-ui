@@ -1,0 +1,384 @@
+{
+  "anchors" : {
+    "done" : 11,
+    "init" : 2,
+    "scan" : 4,
+    "swap" : 5
+  },
+  "code" : "public void moveZeroes(int[] nums) {\n    int pos = 0;\n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] != 0) {\n            int tmp = nums[pos];\n            nums[pos] = nums[i];\n            nums[i] = tmp;\n            pos++;\n        }\n    }\n}",
+  "problemId" : "move-zeros-end",
+  "resolvedInput" : {
+    "nums" : [ 0, 1, 0, 3, 12 ]
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "pos is the landing spot for the next non-zero. Everything left of pos is already a packed, ordered prefix of non-zeros.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pos" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "i=0: nums[0]=0 stays for now; pos=0 does not move, so the next value will land before this zero.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pos" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "i=1: nums[1]=1 is non-zero - it belongs at position 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pos" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Swap it with the 0 sitting at 0. Non-zeros keep their order; the zero slides right.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pos" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "i=2: nums[2]=0 stays for now; pos=1 does not move, so the next value will land before this zero.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pos" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "i=3: nums[3]=3 is non-zero - it belongs at position 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "pos" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "Swap it with the 0 sitting at 1. Non-zeros keep their order; the zero slides right.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "pos" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "i=4: nums[4]=12 is non-zero - it belongs at position 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "pos" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 12,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 5,
+    "description" : "Swap it with the 0 sitting at 2. Non-zeros keep their order; the zero slides right.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "pos" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "All non-zeros packed to the front in order; every zero was pushed past position 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pos" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

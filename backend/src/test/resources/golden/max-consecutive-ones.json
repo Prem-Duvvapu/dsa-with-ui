@@ -1,0 +1,664 @@
+{
+  "anchors" : {
+    "best" : 6,
+    "count" : 4,
+    "done" : 11,
+    "init" : 2,
+    "reset" : 8
+  },
+  "code" : "public int findMaxConsecutiveOnes(int[] nums) {\n    int best = 0, run = 0;\n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] == 1) {\n            run++;\n            if (run > best) best = run;\n        } else {\n            run = 0;\n        }\n    }\n    return best;\n}",
+  "problemId" : "max-consecutive-ones",
+  "resolvedInput" : {
+    "nums" : [ 1, 1, 0, 1, 1, 1, 0, 1 ]
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "run counts the current streak of 1s; best remembers the longest streak seen.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "run" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "i=0: nums[0]=1 extends the streak to 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "0",
+      "i" : "0",
+      "run" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Streak 1 beats the old best - best=1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "0",
+      "run" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "i=1: nums[1]=1 extends the streak to 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "1",
+      "i" : "1",
+      "run" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Streak 2 beats the old best - best=2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "1",
+      "run" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "i=2: nums[2]=0 breaks the streak. Consecutive means consecutive - back to 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "2",
+      "run" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 4,
+    "description" : "i=3: nums[3]=1 extends the streak to 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "3",
+      "run" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "i=4: nums[4]=1 extends the streak to 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "4",
+      "run" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 4,
+    "description" : "i=5: nums[5]=1 extends the streak to 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "2",
+      "i" : "5",
+      "run" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "Streak 3 beats the old best - best=3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "i" : "5",
+      "run" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "i=6: nums[6]=0 breaks the streak. Consecutive means consecutive - back to 0.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "i" : "6",
+      "run" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 4,
+    "description" : "i=7: nums[7]=1 extends the streak to 1.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3",
+      "i" : "7",
+      "run" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "Longest consecutive run of 1s is 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

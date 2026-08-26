@@ -1,0 +1,1395 @@
+{
+  "anchors" : {
+    "done" : 17,
+    "expand" : 14,
+    "init" : 2,
+    "match" : 11,
+    "shrink" : 7
+  },
+  "code" : "public int getLongestSubarray(int[] a, long k) {\n    int left = 0, right = 0;\n    long sum = a[0];\n    int maxLen = 0;\n    int n = a.length;\n    while (right < n) {\n        while (left <= right && sum > k) {\n            sum -= a[left];\n            left++;\n        }\n        if (sum == k) {\n            maxLen = Math.max(maxLen, right - left + 1);\n        }\n        right++;\n        if (right < n) sum += a[right];\n    }\n    return maxLen;\n}",
+  "problemId" : "longest-subarray-sum-k-positives",
+  "resolvedInput" : {
+    "k" : 5,
+    "nums" : [ 1, 2, 3, 1, 1, 1, 1, 4, 2, 3 ]
+  },
+  "stepCount" : 23,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Initialize 2-pointer window: left=0, right=0, sum=1, target K=5.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "0",
+      "maxLen" : "0",
+      "right" : "0",
+      "sum" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 1 (add a[1]=2, sum=3).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "0",
+      "maxLen" : "0",
+      "right" : "1",
+      "sum" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 2 (add a[2]=3, sum=6).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "0",
+      "maxLen" : "0",
+      "right" : "2",
+      "sum" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Window sum (5 + 1 = 6) > K (5): shrink window from left (drop a[0]=1, left=1, sum=5).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "1",
+      "maxLen" : "0",
+      "right" : "2",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 11,
+    "description" : "Window sum == K (5)! Subarray a[1..2] has length 2; maxLen = 2.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "1",
+      "maxLen" : "2",
+      "right" : "2",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 3 (add a[3]=1, sum=6).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "1",
+      "maxLen" : "2",
+      "right" : "3",
+      "sum" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "Window sum (4 + 2 = 6) > K (5): shrink window from left (drop a[1]=2, left=2, sum=4).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "2",
+      "maxLen" : "2",
+      "right" : "3",
+      "sum" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 4 (add a[4]=1, sum=5).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "2",
+      "maxLen" : "2",
+      "right" : "4",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 11,
+    "description" : "Window sum == K (5)! Subarray a[2..4] has length 3; maxLen = 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "2",
+      "maxLen" : "3",
+      "right" : "4",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 5 (add a[5]=1, sum=6).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "2",
+      "maxLen" : "3",
+      "right" : "5",
+      "sum" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 7,
+    "description" : "Window sum (3 + 3 = 6) > K (5): shrink window from left (drop a[2]=3, left=3, sum=3).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "3",
+      "maxLen" : "3",
+      "right" : "5",
+      "sum" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 6 (add a[6]=1, sum=4).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "3",
+      "maxLen" : "3",
+      "right" : "6",
+      "sum" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 7 (add a[7]=4, sum=8).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "3",
+      "maxLen" : "3",
+      "right" : "7",
+      "sum" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "Window sum (7 + 1 = 8) > K (5): shrink window from left (drop a[3]=1, left=4, sum=7).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "4",
+      "maxLen" : "3",
+      "right" : "7",
+      "sum" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 7,
+    "description" : "Window sum (6 + 1 = 7) > K (5): shrink window from left (drop a[4]=1, left=5, sum=6).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "5",
+      "maxLen" : "3",
+      "right" : "7",
+      "sum" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 7,
+    "description" : "Window sum (5 + 1 = 6) > K (5): shrink window from left (drop a[5]=1, left=6, sum=5).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "6",
+      "maxLen" : "3",
+      "right" : "7",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 11,
+    "description" : "Window sum == K (5)! Subarray a[6..7] has length 2; maxLen = 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "6",
+      "maxLen" : "3",
+      "right" : "7",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 8 (add a[8]=2, sum=7).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "6",
+      "maxLen" : "3",
+      "right" : "8",
+      "sum" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 7,
+    "description" : "Window sum (6 + 1 = 7) > K (5): shrink window from left (drop a[6]=1, left=7, sum=6).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "7",
+      "maxLen" : "3",
+      "right" : "8",
+      "sum" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 7,
+    "description" : "Window sum (2 + 4 = 6) > K (5): shrink window from left (drop a[7]=4, left=8, sum=2).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "8",
+      "maxLen" : "3",
+      "right" : "8",
+      "sum" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 14,
+    "description" : "Expand window right to index 9 (add a[9]=3, sum=5).",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "8",
+      "maxLen" : "3",
+      "right" : "9",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 11,
+    "description" : "Window sum == K (5)! Subarray a[8..9] has length 2; maxLen = 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "5",
+      "left" : "8",
+      "maxLen" : "3",
+      "right" : "9",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 17,
+    "description" : "Sliding window search complete. Longest subarray length with sum 5 is 3.",
+    "queueOrStackState" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "3",
+      "result" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
