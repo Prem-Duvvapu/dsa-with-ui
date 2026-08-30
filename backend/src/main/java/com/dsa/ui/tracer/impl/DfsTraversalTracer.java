@@ -96,41 +96,43 @@ public class DfsTraversalTracer implements AlgorithmTracer {
             states.put(i, "unvisited");
         }
 
-        walk(start, true, adj, seen, states, order, emit, graph.vertices(), graph.edges().length);
+        walk(start, true, graph, adj, seen, states, order, emit);
     }
 
-    private void walk(int node, boolean isRoot, List<List<Integer>> adj, boolean[] seen,
-                      Map<Integer, String> states, List<Integer> order, StepEmitter emit,
-                      int totalVertices, int totalEdges) {
+    private void walk(int node, boolean isRoot, Inputs.GraphInput graph,
+                      List<List<Integer>> adj, boolean[] seen,
+                      Map<Integer, String> states, List<Integer> order, StepEmitter emit) {
         emit.push("dfs(" + node + ")");
         seen[node] = true;
         states.put(node, "visiting");
         order.add(node);
 
         String intro = isRoot
-                ? String.format("%d vertices, %d edges. Enter %d and mark it visited.", totalVertices, totalEdges, node)
+                ? String.format("%d vertices, %d edges. Enter %d and mark it visited.",
+                        graph.vertices(), graph.edges().length, node)
                 : String.format("Enter %d and mark it visited — position %d in the order.", node, order.size());
         emit.at("visit").say(intro)
-                .var("node", node).var("order", order).nodes(states).step();
+                .var("node", node).var("order", order).graph(graph).nodes(states).step();
 
         for (int next : adj.get(node)) {
             if (seen[next]) {
                 emit.at("check").say("%d is already visited — skip it, or this would recurse forever.", next)
                         .var("node", node).var("neighbour", next).var("order", order)
-                        .nodes(states).edges(List.of(node + "-" + next)).step();
+                        .graph(graph).nodes(states).edges(List.of(node + "-" + next)).step();
                 continue;
             }
             emit.at("recurse").say("%d is unvisited. Descend into it before checking %d's other neighbours.", next, node)
                     .var("node", node).var("neighbour", next).var("order", order)
-                    .nodes(states).edges(List.of(node + "-" + next)).step();
-            walk(next, false, adj, seen, states, order, emit, totalVertices, totalEdges);
+                    .graph(graph).nodes(states).edges(List.of(node + "-" + next)).step();
+            walk(next, false, graph, adj, seen, states, order, emit);
         }
 
         states.put(node, "visited");
         String outro = isRoot
                 ? String.format("%d has no unvisited neighbours left. Recursion fully unwound. DFS order: %s.", node, order)
                 : String.format("%d has no unvisited neighbours left — backtrack.", node);
-        emit.at("backtrack").say(outro).var("node", node).var("order", order).nodes(states).step();
+        emit.at("backtrack").say(outro).var("node", node).var("order", order)
+                .graph(graph).nodes(states).step();
         emit.pop();
     }
 }

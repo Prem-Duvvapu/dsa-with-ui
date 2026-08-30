@@ -39,11 +39,22 @@ function nodeStyle(state) {
 
 export default function GraphCanvas({ problem, currentStep, step }) {
   const activeStep = currentStep || step;
-  const nodeStates = activeStep?.nodeStates || {};
-  const activeEdges = activeStep?.activeEdges || [];
+  const nodeStates = activeStep?.nodeStates && typeof activeStep.nodeStates === 'object'
+    ? activeStep.nodeStates
+    : {};
+  const activeEdges = Array.isArray(activeStep?.activeEdges) ? activeStep.activeEdges : [];
 
-  const nodes = problem?.defaultGraphNodes || [];
-  const edges = problem?.defaultGraphEdges || [];
+  // A step's nodes make its whole topology authoritative. In particular, an explicitly
+  // edgeless trace graph must not be joined with stale catalogue edges whose endpoints
+  // happen to share ids. Defaults exist only for traces that carry no topology yet.
+  const hasStepTopology = Array.isArray(activeStep?.graphNodes)
+    && activeStep.graphNodes.length > 0;
+  const nodes = hasStepTopology
+    ? activeStep.graphNodes
+    : Array.isArray(problem?.defaultGraphNodes) ? problem.defaultGraphNodes : [];
+  const edges = hasStepTopology
+    ? Array.isArray(activeStep?.graphEdges) ? activeStep.graphEdges : []
+    : Array.isArray(problem?.defaultGraphEdges) ? problem.defaultGraphEdges : [];
 
   if (!nodes.length) {
     return (

@@ -1,5 +1,7 @@
 package com.dsa.ui.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,10 @@ public class ExecutionStep {
     private List<ListNode> listState; // Optional linked list state
     private List<TrieNodeModel> trieState; // Optional trie state
     private List<TreeNode> treeNodes; // Optional dynamic recursion tree nodes state
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<GraphNode> graphNodes; // Optional graph topology derived from caller input
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<GraphEdge> graphEdges; // Optional graph topology derived from caller input
 
     public ExecutionStep() {}
 
@@ -52,6 +58,18 @@ public class ExecutionStep {
                          DsType dsType, int[][] gridState, List<ArrayElement> arrayState,
                          List<ListNode> listState, List<TrieNodeModel> trieState,
                          List<TreeNode> treeNodes) {
+        this(stepNumber, activeLine, description, queueOrStackState, nodeStates, activeEdges,
+                variables, dsType, gridState, arrayState, listState, trieState, treeNodes,
+                null, null);
+    }
+
+    public ExecutionStep(int stepNumber, int activeLine, String description,
+                         List<String> queueOrStackState, Map<Integer, String> nodeStates,
+                         List<String> activeEdges, Map<String, String> variables,
+                         DsType dsType, int[][] gridState, List<ArrayElement> arrayState,
+                         List<ListNode> listState, List<TrieNodeModel> trieState,
+                         List<TreeNode> treeNodes, List<GraphNode> graphNodes,
+                         List<GraphEdge> graphEdges) {
         this.stepNumber = stepNumber;
         this.activeLine = activeLine;
         this.description = description;
@@ -65,6 +83,8 @@ public class ExecutionStep {
         this.listState = listState;
         this.trieState = trieState;
         this.treeNodes = treeNodes;
+        this.graphNodes = graphNodes;
+        this.graphEdges = graphEdges;
     }
 
     public int getStepNumber() { return stepNumber; }
@@ -105,4 +125,10 @@ public class ExecutionStep {
 
     public List<TreeNode> getTreeNodes() { return treeNodes; }
     public void setTreeNodes(List<TreeNode> treeNodes) { this.treeNodes = treeNodes; }
+
+    public List<GraphNode> getGraphNodes() { return graphNodes; }
+    public void setGraphNodes(List<GraphNode> graphNodes) { this.graphNodes = graphNodes; }
+
+    public List<GraphEdge> getGraphEdges() { return graphEdges; }
+    public void setGraphEdges(List<GraphEdge> graphEdges) { this.graphEdges = graphEdges; }
 }

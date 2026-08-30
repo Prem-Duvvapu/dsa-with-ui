@@ -3,6 +3,8 @@ package com.dsa.ui.tracer;
 import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.model.DsType;
 import com.dsa.ui.model.ExecutionStep;
+import com.dsa.ui.model.GraphEdge;
+import com.dsa.ui.model.GraphNode;
 import com.dsa.ui.model.ListNode;
 import com.dsa.ui.model.TreeNode;
 
@@ -34,6 +36,9 @@ public final class StepEmitter {
     private final List<ExecutionStep> steps = new ArrayList<>();
     private final List<String> callStack = new ArrayList<>();
     private final DsType dsType;
+    private Inputs.GraphInput laidOutGraph;
+    private List<GraphNode> laidOutGraphNodes;
+    private List<GraphEdge> laidOutGraphEdges;
     private long bytesSoFar;
 
     StepEmitter(AnnotatedCode code, int maxSteps, long maxBytes, DsType dsType) {
@@ -75,6 +80,8 @@ public final class StepEmitter {
         private int[][] gridState;
         private List<ListNode> listState;
         private List<TreeNode> treeNodes;
+        private List<GraphNode> graphNodes;
+        private List<GraphEdge> graphEdges;
         private Map<Integer, String> nodeStates;
         private List<String> activeEdges;
 
@@ -137,6 +144,51 @@ public final class StepEmitter {
             return this;
         }
 
+        /**
+         * Carries the caller-supplied graph topology with this step.
+         *
+         * <p>The layout is deterministic and depends only on the validated input. Node
+         * colour remains in {@link #nodes(Map)} so topology and algorithm state can delta
+         * independently on the wire.
+         */
+        public Step graph(Inputs.GraphInput graph) {
+            if (laidOutGraph == graph) {
+                this.graphNodes = laidOutGraphNodes;
+                this.graphEdges = laidOutGraphEdges;
+                return this;
+            }
+
+            List<GraphNode> nodes = new ArrayList<>(graph.vertices());
+            double centerX = 180;
+            double centerY = 160;
+            double radius = graph.vertices() <= 2 ? 80 : 120;
+            for (int id = 0; id < graph.vertices(); id++) {
+                double angle = -Math.PI / 2 + (2 * Math.PI * id / graph.vertices());
+                double x = graph.vertices() == 1 ? centerX : centerX + radius * Math.cos(angle);
+                double y = graph.vertices() == 1 ? centerY : centerY + radius * Math.sin(angle);
+                nodes.add(new GraphNode(id, String.valueOf(id), x, y, "unvisited"));
+            }
+
+            List<GraphEdge> edges = new ArrayList<>(graph.edges().length);
+            for (int[] edge : graph.edges()) {
+                Integer weight = edge.length == 3 ? edge[2] : null;
+                edges.add(new GraphEdge(edge[0], edge[1], weight, false, false));
+            }
+            laidOutGraph = graph;
+            laidOutGraphNodes = List.copyOf(nodes);
+            laidOutGraphEdges = List.copyOf(edges);
+            this.graphNodes = laidOutGraphNodes;
+            this.graphEdges = laidOutGraphEdges;
+            return this;
+        }
+
+        /** Carries an already-laid-out graph topology with this step. */
+        public Step graph(List<GraphNode> nodes, List<GraphEdge> edges) {
+            this.graphNodes = List.copyOf(nodes);
+            this.graphEdges = List.copyOf(edges);
+            return this;
+        }
+
         public Step nodes(Map<Integer, String> states) {
             this.nodeStates = new LinkedHashMap<>(states);
             return this;
@@ -165,7 +217,9 @@ public final class StepEmitter {
                     arrayState,
                     listState,
                     null,
-                    treeNodes
+                    treeNodes,
+                    graphNodes,
+                    graphEdges
             );
 
             // Checked BEFORE adding, so a collected trace is always within budget.
@@ -214,6 +268,12 @@ public final class StepEmitter {
         }
         if (s.getTreeNodes() != null) {
             bytes += s.getTreeNodes().size() * 104L;
+        }
+        if (s.getGraphNodes() != null) {
+            bytes += s.getGraphNodes().size() * 96L;
+        }
+        if (s.getGraphEdges() != null) {
+            bytes += s.getGraphEdges().size() * 72L;
         }
         if (s.getNodeStates() != null) {
             bytes += s.getNodeStates().size() * 24L;

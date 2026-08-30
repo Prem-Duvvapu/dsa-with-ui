@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -52,6 +53,32 @@ class TraceEncoderTest {
             assertEquals(json.writeValueAsString(original.get(i)),
                     json.writeValueAsString(decoded.get(i)),
                     id + " step " + (i + 1) + " did not survive the round trip");
+        }
+    }
+
+    @ParameterizedTest(name = "{0} graph topology survives delta encoding")
+    @ValueSource(strings = {"bfs-traversal", "dfs-traversal", "dijkstra-min-heap"})
+    @DisplayName("Graph topology is carried once and reconstructed on every step")
+    void graphTopologySurvivesDeltaEncoding(String id) throws Exception {
+        List<ExecutionStep> original = trace(id).getSteps();
+        List<DeltaStep> encoded = TraceEncoder.encode(original);
+        List<ExecutionStep> decoded = decode(encoded);
+
+        assertNotNull(encoded.get(0).getGraphNodes());
+        assertNotNull(encoded.get(0).getGraphEdges());
+        for (int i = 1; i < encoded.size(); i++) {
+            if (!Boolean.TRUE.equals(encoded.get(i).getKeyframe())) {
+                assertNull(encoded.get(i).getGraphNodes(),
+                        id + " redundantly sent unchanged graph nodes on step " + (i + 1));
+                assertNull(encoded.get(i).getGraphEdges(),
+                        id + " redundantly sent unchanged graph edges on step " + (i + 1));
+            }
+        }
+        for (int i = 0; i < decoded.size(); i++) {
+            assertEquals(json.writeValueAsString(original.get(i).getGraphNodes()),
+                    json.writeValueAsString(decoded.get(i).getGraphNodes()));
+            assertEquals(json.writeValueAsString(original.get(i).getGraphEdges()),
+                    json.writeValueAsString(decoded.get(i).getGraphEdges()));
         }
     }
 
@@ -153,6 +180,10 @@ class TraceEncoderTest {
                     previous == null ? null : previous.getListState()));
             step.setTreeNodes(pick(delta.getTreeNodes(),
                     previous == null ? null : previous.getTreeNodes()));
+            step.setGraphNodes(pick(delta.getGraphNodes(),
+                    previous == null ? null : previous.getGraphNodes()));
+            step.setGraphEdges(pick(delta.getGraphEdges(),
+                    previous == null ? null : previous.getGraphEdges()));
 
             out.add(step);
             carried = step;

@@ -59,7 +59,9 @@ public final class TraceEncoder {
                     changedGrid(baseline, step),
                     changed(baseline, step, ExecutionStep::getArrayState),
                     changed(baseline, step, ExecutionStep::getListState),
-                    changed(baseline, step, ExecutionStep::getTreeNodes)));
+                    changed(baseline, step, ExecutionStep::getTreeNodes),
+                    changed(baseline, step, ExecutionStep::getGraphNodes),
+                    changed(baseline, step, ExecutionStep::getGraphEdges)));
 
             previous = step;
         }
@@ -94,7 +96,9 @@ public final class TraceEncoder {
                 || nulled(previous.getGridState(), step.getGridState())
                 || nulled(previous.getArrayState(), step.getArrayState())
                 || nulled(previous.getListState(), step.getListState())
-                || nulled(previous.getTreeNodes(), step.getTreeNodes());
+                || nulled(previous.getTreeNodes(), step.getTreeNodes())
+                || nulled(previous.getGraphNodes(), step.getGraphNodes())
+                || nulled(previous.getGraphEdges(), step.getGraphEdges());
     }
 
     private static boolean nulled(Object before, Object after) {

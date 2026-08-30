@@ -128,7 +128,7 @@ public class DijkstraTracer implements AlgorithmTracer {
 
         emit.at("init").say("%d vertices. dist[%d] = 0, everything else infinite. Enqueue the source.",
                         graph.vertices(), start)
-                .var("dist", distString(dist)).nodes(states).step();
+                .var("dist", distString(dist)).graph(graph).nodes(states).step();
 
         while (!pq.isEmpty()) {
             int[] top = pq.poll();
@@ -137,14 +137,14 @@ public class DijkstraTracer implements AlgorithmTracer {
 
             emit.at("extract").say("Pop the smallest entry in the queue: %d at distance %d.", node, d)
                     .var("node", node).var("poppedDist", d).var("dist", distString(dist))
-                    .nodes(states).step();
+                    .graph(graph).nodes(states).step();
 
             if (d > dist[node]) {
                 emit.at("stale").say(
                                 "%d was already finalized at %d, better than this entry's %d — it was enqueued before that update. Discard it.",
                                 node, dist[node], d)
                         .var("node", node).var("poppedDist", d).var("dist", distString(dist))
-                        .nodes(states).step();
+                        .graph(graph).nodes(states).step();
                 continue;
             }
 
@@ -167,12 +167,12 @@ public class DijkstraTracer implements AlgorithmTracer {
                                     node, next, weight, dist[node], weight, dist[next],
                                     old == Integer.MAX_VALUE ? "infinity" : String.valueOf(old), next)
                             .var("edge", edgeKey).var("newDist", dist[next]).var("dist", distString(dist))
-                            .nodes(states).edges(List.of(edgeKey)).step();
+                            .graph(graph).nodes(states).edges(List.of(edgeKey)).step();
                 } else {
                     emit.at("skip").say("Edge %d-%d (weight %d): %d + %d = %d does not beat dist[%d]=%d. No update.",
                                     node, next, weight, dist[node], weight, dist[node] + weight, next, dist[next])
                             .var("edge", edgeKey).var("dist", distString(dist))
-                            .nodes(states).edges(List.of(edgeKey)).step();
+                            .graph(graph).nodes(states).edges(List.of(edgeKey)).step();
                 }
             }
 
@@ -180,7 +180,7 @@ public class DijkstraTracer implements AlgorithmTracer {
         }
 
         emit.at("done").say("Priority queue empty. Final shortest distances from %d: %s.", start, distString(dist))
-                .var("dist", distString(dist)).nodes(states).step();
+                .var("dist", distString(dist)).graph(graph).nodes(states).step();
     }
 
     private static String distString(int[] dist) {
