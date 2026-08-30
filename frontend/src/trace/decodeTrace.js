@@ -34,7 +34,8 @@ const CARRIED = [
   'listState',
   'treeNodes',
   'graphNodes',
-  'graphEdges'
+  'graphEdges',
+  'dpTable'
 ];
 
 /**

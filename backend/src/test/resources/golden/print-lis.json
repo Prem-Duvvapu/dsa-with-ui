@@ -23,7 +23,7 @@
     "variables" : {
       "bestEnd" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -60,7 +60,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 2,
     "activeLine" : 9,
@@ -72,7 +149,7 @@
       "i" : "1",
       "j" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -109,7 +186,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 3,
     "activeLine" : 9,
@@ -121,7 +275,7 @@
       "i" : "2",
       "j" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -158,7 +312,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 4,
     "activeLine" : 9,
@@ -170,7 +401,7 @@
       "i" : "2",
       "j" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -207,7 +438,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 5,
     "activeLine" : 9,
@@ -219,7 +527,7 @@
       "i" : "3",
       "j" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -256,7 +564,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 6,
     "activeLine" : 9,
@@ -268,7 +653,7 @@
       "i" : "3",
       "j" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -305,7 +690,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 7,
     "activeLine" : 9,
@@ -317,7 +779,7 @@
       "i" : "3",
       "j" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -354,7 +816,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 8,
     "activeLine" : 10,
@@ -368,7 +907,7 @@
       "j" : "2",
       "parent[i]" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -405,7 +944,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 9,
     "activeLine" : 14,
@@ -417,7 +1033,7 @@
       "bestEnd" : "3",
       "i" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -454,7 +1070,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 10,
     "activeLine" : 9,
@@ -466,7 +1159,7 @@
       "i" : "4",
       "j" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -503,7 +1196,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 11,
     "activeLine" : 9,
@@ -515,7 +1285,7 @@
       "i" : "4",
       "j" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -552,7 +1322,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 12,
     "activeLine" : 9,
@@ -564,7 +1411,7 @@
       "i" : "4",
       "j" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -601,7 +1448,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 13,
     "activeLine" : 10,
@@ -615,7 +1539,7 @@
       "j" : "2",
       "parent[i]" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -652,7 +1576,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 14,
     "activeLine" : 9,
@@ -664,7 +1665,7 @@
       "i" : "4",
       "j" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -701,7 +1702,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 15,
     "activeLine" : 9,
@@ -713,7 +1791,7 @@
       "i" : "5",
       "j" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -750,7 +1828,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 16,
     "activeLine" : 9,
@@ -762,7 +1917,7 @@
       "i" : "5",
       "j" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -799,7 +1954,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 17,
     "activeLine" : 9,
@@ -811,7 +2043,7 @@
       "i" : "5",
       "j" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -848,7 +2080,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 18,
     "activeLine" : 10,
@@ -862,7 +2171,7 @@
       "j" : "2",
       "parent[i]" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -899,7 +2208,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 19,
     "activeLine" : 9,
@@ -911,7 +2297,7 @@
       "i" : "5",
       "j" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -948,7 +2334,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 20,
     "activeLine" : 10,
@@ -962,7 +2425,7 @@
       "j" : "3",
       "parent[i]" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -999,7 +2462,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 21,
     "activeLine" : 9,
@@ -1011,7 +2551,7 @@
       "i" : "5",
       "j" : "4"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1048,7 +2588,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 22,
     "activeLine" : 14,
@@ -1060,7 +2677,7 @@
       "bestEnd" : "5",
       "i" : "5"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1097,7 +2714,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 23,
     "activeLine" : 9,
@@ -1109,7 +2803,7 @@
       "i" : "6",
       "j" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1146,7 +2840,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 24,
     "activeLine" : 10,
@@ -1160,7 +2931,7 @@
       "j" : "0",
       "parent[i]" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1197,7 +2968,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 25,
     "activeLine" : 9,
@@ -1209,7 +3057,7 @@
       "i" : "6",
       "j" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1246,7 +3094,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 26,
     "activeLine" : 9,
@@ -1258,7 +3183,7 @@
       "i" : "6",
       "j" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1295,7 +3220,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 27,
     "activeLine" : 9,
@@ -1307,7 +3309,7 @@
       "i" : "6",
       "j" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1344,7 +3346,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 28,
     "activeLine" : 10,
@@ -1358,7 +3437,7 @@
       "j" : "3",
       "parent[i]" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1395,7 +3474,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 29,
     "activeLine" : 9,
@@ -1407,7 +3563,7 @@
       "i" : "6",
       "j" : "4"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1444,7 +3600,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 30,
     "activeLine" : 9,
@@ -1456,7 +3689,7 @@
       "i" : "6",
       "j" : "5"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1493,7 +3726,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 31,
     "activeLine" : 10,
@@ -1507,7 +3817,7 @@
       "j" : "5",
       "parent[i]" : "5"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1544,7 +3854,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 32,
     "activeLine" : 14,
@@ -1556,7 +3943,7 @@
       "bestEnd" : "6",
       "i" : "6"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1593,7 +3980,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 33,
     "activeLine" : 9,
@@ -1605,7 +4069,7 @@
       "i" : "7",
       "j" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1642,7 +4106,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 34,
     "activeLine" : 10,
@@ -1656,7 +4197,7 @@
       "j" : "0",
       "parent[i]" : "0"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1693,7 +4234,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      } ] ]
+    }
   }, {
     "stepNumber" : 35,
     "activeLine" : 9,
@@ -1705,7 +4323,7 @@
       "i" : "7",
       "j" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1742,7 +4360,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 36,
     "activeLine" : 9,
@@ -1754,7 +4449,7 @@
       "i" : "7",
       "j" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1791,7 +4486,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 37,
     "activeLine" : 9,
@@ -1803,7 +4575,7 @@
       "i" : "7",
       "j" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1840,7 +4612,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 38,
     "activeLine" : 10,
@@ -1854,7 +4703,7 @@
       "j" : "3",
       "parent[i]" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1891,7 +4740,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ] ]
+    }
   }, {
     "stepNumber" : 39,
     "activeLine" : 9,
@@ -1903,7 +4829,7 @@
       "i" : "7",
       "j" : "4"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1940,7 +4866,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 40,
     "activeLine" : 9,
@@ -1952,7 +4955,7 @@
       "i" : "7",
       "j" : "5"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -1989,7 +4992,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 41,
     "activeLine" : 10,
@@ -2003,7 +5083,7 @@
       "j" : "5",
       "parent[i]" : "5"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -2040,7 +5120,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      } ] ]
+    }
   }, {
     "stepNumber" : 42,
     "activeLine" : 9,
@@ -2052,7 +5209,7 @@
       "i" : "7",
       "j" : "6"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -2089,7 +5246,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "read"
+      }, {
+        "value" : "18",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 43,
     "activeLine" : 16,
@@ -2100,7 +5334,7 @@
     "variables" : {
       "cursor" : "6"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -2137,7 +5371,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "101",
+        "state" : "probe"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 44,
     "activeLine" : 16,
@@ -2148,7 +5459,7 @@
     "variables" : {
       "cursor" : "5"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -2185,7 +5496,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "probe"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 45,
     "activeLine" : 16,
@@ -2196,7 +5584,7 @@
     "variables" : {
       "cursor" : "3"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -2233,7 +5621,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 46,
     "activeLine" : 16,
@@ -2244,7 +5709,7 @@
     "variables" : {
       "cursor" : "2"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -2281,7 +5746,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ] ]
+    }
   }, {
     "stepNumber" : 47,
     "activeLine" : 20,
@@ -2293,7 +5835,7 @@
       "length" : "4",
       "lis" : "[2, 5, 7, 101]"
     },
-    "dsType" : "Array",
+    "dsType" : "DpTable",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -2330,7 +5872,84 @@
     } ],
     "listState" : null,
     "trieState" : null,
-    "treeNodes" : null
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "nums", "dp", "parent" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6", "7" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "101",
+        "state" : "resolved"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ] ]
+    }
   } ],
   "truncated" : false
 }

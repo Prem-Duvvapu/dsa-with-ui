@@ -184,6 +184,8 @@ class TraceEncoderTest {
                     previous == null ? null : previous.getGraphNodes()));
             step.setGraphEdges(pick(delta.getGraphEdges(),
                     previous == null ? null : previous.getGraphEdges()));
+            step.setDpTable(pick(delta.getDpTable(),
+                    previous == null ? null : previous.getDpTable()));
 
             out.add(step);
             carried = step;

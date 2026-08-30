@@ -1,9 +1,12 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.DsType;
+import com.dsa.ui.model.DpCell;
+import com.dsa.ui.model.DpTable;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
@@ -23,7 +26,7 @@ public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.MATRIX;
+        return DsType.DP_TABLE;
     }
 
     @Override
@@ -68,11 +71,14 @@ public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
         int[] nums = in.getIntArray("nums");
         int n = nums.length;
         int[][] dp = new int[n + 1][n + 1];
+        boolean[][] computed = new boolean[n + 1][n + 1];
+        java.util.Arrays.fill(computed[n], true);
 
         emit.at("init")
                 .say("Table is (%d+1)x(%d+1). Row i asks \"what is the best LIS starting at nums[%d]?\"; column p encodes the last element already taken (index p-1). Filling starts at the bottom-right.", n, n, n - 1)
                 .var("rows", n + 1).var("cols", n + 1)
-                .grid(zeroCopy(dp)).step();
+                .grid(zeroCopy(dp))
+                .dpTable(table(nums, dp, computed, -1, -1, -1, false, false)).step();
 
         for (int i = n - 1; i >= 0; i--) {
             for (int p = i; p >= 0; p--) {
@@ -90,20 +96,68 @@ public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
                     verdict = "nums[%d]=%d does not beat the last taken nums[%d]=%d, so it cannot be appended".formatted(i, nums[i], p - 1, nums[p - 1]);
                 }
                 dp[i][p] = Math.max(skip, take);
+                computed[i][p] = true;
                 emit.at("fill")
                         .say("(%d,%d): skip keeps %d; %s. dp[%d][%d]=%d.",
                                 i, p, skip, verdict, i, p, dp[i][p])
                         .var("i", i).var("p", p).var("skip", skip)
                         .var("take", take == Integer.MIN_VALUE ? "x" : take)
                         .var("value", dp[i][p])
-                        .grid(zeroCopy(dp)).step();
+                        .grid(zeroCopy(dp))
+                        .dpTable(table(nums, dp, computed, i, p, p,
+                                take != Integer.MIN_VALUE, false)).step();
             }
         }
 
         emit.at("done")
                 .say("dp[0][0] is the best LIS from index 0 with nothing pre-taken: length %d.", dp[0][0])
                 .var("answer", dp[0][0])
-                .grid(zeroCopy(dp)).step();
+                .grid(zeroCopy(dp))
+                .dpTable(table(nums, dp, computed, -1, -1, -1, false, true)).step();
+    }
+
+    private static DpTable table(int[] nums, int[][] dp, boolean[][] computed,
+                                 int probeRow, int probeCol, int skipCol,
+                                 boolean readsTake, boolean done) {
+        int n = nums.length;
+        List<String> rowLabels = new ArrayList<>(n + 1);
+        List<String> colLabels = new ArrayList<>(n + 1);
+        for (int i = 0; i < n; i++) {
+            rowLabels.add("i=" + i + " · " + nums[i]);
+        }
+        rowLabels.add("base");
+        colLabels.add("none");
+        for (int p = 1; p <= n; p++) {
+            colLabels.add("last " + (p - 1) + " · " + nums[p - 1]);
+        }
+
+        List<List<DpCell>> cells = new ArrayList<>(n + 1);
+        for (int row = 0; row <= n; row++) {
+            List<DpCell> cellRow = new ArrayList<>(n + 1);
+            for (int col = 0; col <= n; col++) {
+                boolean invalid = row < n && col > row;
+                String value = invalid ? "—" : computed[row][col]
+                        ? String.valueOf(dp[row][col]) : "·";
+                String state;
+                if (invalid || !computed[row][col]) {
+                    state = "void";
+                } else if (done) {
+                    state = "resolved";
+                } else if (row == probeRow && col == probeCol) {
+                    state = "probe";
+                } else if (row == probeRow + 1
+                        && (col == skipCol || (readsTake && col == probeRow + 1))) {
+                    state = "read";
+                } else if (row == n) {
+                    state = "resolved";
+                } else {
+                    state = "known";
+                }
+                cellRow.add(new DpCell(value, state));
+            }
+            cells.add(cellRow);
+        }
+        return new DpTable(rowLabels, colLabels, cells);
     }
 
     private static int[][] zeroCopy(int[][] dp) {
