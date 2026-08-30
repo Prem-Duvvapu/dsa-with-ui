@@ -2,6 +2,8 @@ package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.model.DsType;
+import com.dsa.ui.model.DpCell;
+import com.dsa.ui.model.DpTable;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +27,7 @@ public class PrintLisTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.DP_TABLE;
     }
 
     @Override
@@ -88,7 +90,9 @@ public class PrintLisTracer implements AlgorithmTracer {
 
         emit.at("init").say("dp starts all 1s (each element alone) and every parent is -1 (no predecessor yet). The displayed values are dp[].")
                 .var("bestEnd", 0)
-                .arrayState(states(nums, dp, parent, -1, -1)).step();
+                .arrayState(states(nums, dp, parent, -1, -1))
+                .dpTable(table(nums, dp, parent, -1, -1, Set.of(),
+                        false, false, false, false)).step();
 
         int bestEnd = 0;
         for (int i = 1; i < n; i++) {
@@ -98,26 +102,34 @@ public class PrintLisTracer implements AlgorithmTracer {
                             .say("i=%d, j=%d: nums[%d]=%d < nums[%d]=%d and dp[%d]+1=%d beats dp[%d]=%d.",
                                     i, j, j, nums[j], i, nums[i], j, dp[j] + 1, i, dp[i])
                             .var("i", i).var("j", j)
-                            .arrayState(states(nums, dp, parent, i, j)).step();
+                            .arrayState(states(nums, dp, parent, i, j))
+                            .dpTable(table(nums, dp, parent, i, j, Set.of(),
+                                    true, false, false, false)).step();
                     dp[i] = dp[j] + 1;
                     parent[i] = j;
                     emit.at("take")
                             .say("Record it: dp[%d]=%d with parent[%d]=%d - when printing we will step back to %d next.",
                                     i, dp[i], i, j, j)
                             .var("i", i).var("j", j).var("dp[i]", dp[i]).var("parent[i]", j)
-                            .arrayState(states(nums, dp, parent, i, j)).step();
+                            .arrayState(states(nums, dp, parent, i, j))
+                            .dpTable(table(nums, dp, parent, i, j, Set.of(),
+                                    true, true, false, false)).step();
                 } else if (nums[j] >= nums[i]) {
                     emit.at("compare")
                             .say("i=%d, j=%d: nums[%d]=%d is not below nums[%d]=%d, so nothing ending at j can extend to i.",
                                     i, j, j, nums[j], i, nums[i])
                             .var("i", i).var("j", j)
-                            .arrayState(states(nums, dp, parent, i, j)).step();
+                            .arrayState(states(nums, dp, parent, i, j))
+                            .dpTable(table(nums, dp, parent, i, j, Set.of(),
+                                    false, false, false, false)).step();
                 } else {
                     emit.at("compare")
                             .say("i=%d, j=%d: extending through j would give length %d, not better than the %d already recorded.",
                                     i, j, dp[j] + 1, dp[i])
                             .var("i", i).var("j", j)
-                            .arrayState(states(nums, dp, parent, i, j)).step();
+                            .arrayState(states(nums, dp, parent, i, j))
+                            .dpTable(table(nums, dp, parent, i, j, Set.of(),
+                                    true, false, false, false)).step();
                 }
             }
             if (dp[i] > dp[bestEnd]) {
@@ -126,7 +138,9 @@ public class PrintLisTracer implements AlgorithmTracer {
                         .say("A length-%d subsequence ends at i=%d - that becomes the print start.",
                                 dp[i], i)
                         .var("i", i).var("bestEnd", bestEnd)
-                        .arrayState(states(nums, dp, parent, i, -1)).step();
+                        .arrayState(states(nums, dp, parent, i, -1))
+                        .dpTable(table(nums, dp, parent, i, -1, Set.of(),
+                                false, false, false, false)).step();
             }
         }
 
@@ -142,7 +156,9 @@ public class PrintLisTracer implements AlgorithmTracer {
                             parent[cursor] == -1 ? "stop" : String.valueOf(parent[cursor]),
                             reversed)
                     .var("cursor", cursor)
-                    .arrayState(chainStates(nums, dp, chain, cursor)).step();
+                    .arrayState(chainStates(nums, dp, chain, cursor))
+                    .dpTable(table(nums, dp, parent, cursor, -1, chain,
+                            false, false, true, false)).step();
             cursor = parent[cursor];
         }
 
@@ -156,7 +172,51 @@ public class PrintLisTracer implements AlgorithmTracer {
 
         emit.at("done").say("Reversed the collected values into the LIS: %s (length %d).", sequence, reversed.size())
                 .var("lis", sequence).var("length", reversed.size())
-                .arrayState(chainStates(nums, dp, chain, -1)).step();
+                .arrayState(chainStates(nums, dp, chain, -1))
+                .dpTable(table(nums, dp, parent, -1, -1, chain,
+                        false, false, false, true)).step();
+    }
+
+    private static DpTable table(int[] nums, int[] dp, int[] parent,
+                                 int current, int dependency, Set<Integer> chain,
+                                 boolean compareReadsDp, boolean parentProbe,
+                                 boolean backlink, boolean done) {
+        List<String> columns = new ArrayList<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            columns.add(String.valueOf(i));
+        }
+
+        List<List<DpCell>> rows = new ArrayList<>(3);
+        int[][] values = {nums, dp, parent};
+        for (int row = 0; row < values.length; row++) {
+            List<DpCell> cells = new ArrayList<>(nums.length);
+            for (int index = 0; index < nums.length; index++) {
+                String state;
+                if (done) {
+                    state = chain.contains(index) ? "resolved" : "known";
+                } else if (backlink && index == current) {
+                    state = row == 0 ? "probe" : row == 2 ? "read" : "known";
+                } else if (!backlink && row == 0
+                        && (index == current || index == dependency)) {
+                    state = "read";
+                } else if (!backlink && row == 1 && index == current) {
+                    state = "probe";
+                } else if (!backlink && row == 1 && index == dependency && compareReadsDp) {
+                    state = "read";
+                } else if (!backlink && row == 2 && index == current && parentProbe) {
+                    state = "probe";
+                } else if (backlink && chain.contains(index)) {
+                    state = "resolved";
+                } else if (!backlink && current >= 0 && index < current) {
+                    state = "resolved";
+                } else {
+                    state = "known";
+                }
+                cells.add(new DpCell(String.valueOf(values[row][index]), state));
+            }
+            rows.add(cells);
+        }
+        return new DpTable(List.of("nums", "dp", "parent"), columns, rows);
     }
 
     private static List<ArrayElement> states(int[] nums, int[] dp, int[] parent, int current, int target) {

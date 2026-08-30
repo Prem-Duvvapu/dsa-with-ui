@@ -2,6 +2,7 @@ package com.dsa.ui.tracer.wire;
 
 import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.model.DsType;
+import com.dsa.ui.model.DpTable;
 import com.dsa.ui.model.GraphEdge;
 import com.dsa.ui.model.GraphNode;
 import com.dsa.ui.model.ListNode;
@@ -55,13 +56,14 @@ public final class DeltaStep {
     private final List<TreeNode> treeNodes;
     private final List<GraphNode> graphNodes;
     private final List<GraphEdge> graphEdges;
+    private final DpTable dpTable;
 
     DeltaStep(int stepNumber, int activeLine, String description, Boolean keyframe,
               List<String> queueOrStackState, Map<Integer, String> nodeStates,
               List<String> activeEdges, Map<String, String> variables, DsType dsType,
               int[][] gridState, List<ArrayElement> arrayState, List<ListNode> listState,
               List<TreeNode> treeNodes, List<GraphNode> graphNodes,
-              List<GraphEdge> graphEdges) {
+              List<GraphEdge> graphEdges, DpTable dpTable) {
         this.stepNumber = stepNumber;
         this.activeLine = activeLine;
         this.description = description;
@@ -77,6 +79,7 @@ public final class DeltaStep {
         this.treeNodes = treeNodes;
         this.graphNodes = graphNodes;
         this.graphEdges = graphEdges;
+        this.dpTable = dpTable;
     }
 
     public int getStepNumber() { return stepNumber; }
@@ -97,4 +100,5 @@ public final class DeltaStep {
     public List<TreeNode> getTreeNodes() { return treeNodes; }
     public List<GraphNode> getGraphNodes() { return graphNodes; }
     public List<GraphEdge> getGraphEdges() { return graphEdges; }
+    public DpTable getDpTable() { return dpTable; }
 }

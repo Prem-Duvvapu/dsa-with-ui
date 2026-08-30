@@ -14,8 +14,9 @@
 // is invisible to it — the guard is worth more than the brevity.
 const LEGEND = [
   { kind: 'probe', className: 'shell-key-probe', glyph: '▼', label: 'happening now' },
-  { kind: 'settled', className: 'shell-key-settled', glyph: '✓', label: 'finished' },
+  { kind: 'read', className: 'shell-key-read', glyph: '○', label: 'read this step' },
   { kind: 'known', className: 'shell-key-known', glyph: '□', label: 'has a value' },
+  { kind: 'resolved', className: 'shell-key-settled', glyph: '✓', label: 'resolved / final' },
   { kind: 'void', className: 'shell-key-void', glyph: '▫', label: 'untouched' }
 ];
 

@@ -23,6 +23,8 @@ public class ExecutionStep {
     private List<GraphNode> graphNodes; // Optional graph topology derived from caller input
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<GraphEdge> graphEdges; // Optional graph topology derived from caller input
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private DpTable dpTable; // Optional labelled table with per-cell Bench states
 
     public ExecutionStep() {}
 
@@ -70,6 +72,18 @@ public class ExecutionStep {
                          List<ListNode> listState, List<TrieNodeModel> trieState,
                          List<TreeNode> treeNodes, List<GraphNode> graphNodes,
                          List<GraphEdge> graphEdges) {
+        this(stepNumber, activeLine, description, queueOrStackState, nodeStates, activeEdges,
+                variables, dsType, gridState, arrayState, listState, trieState, treeNodes,
+                graphNodes, graphEdges, null);
+    }
+
+    public ExecutionStep(int stepNumber, int activeLine, String description,
+                         List<String> queueOrStackState, Map<Integer, String> nodeStates,
+                         List<String> activeEdges, Map<String, String> variables,
+                         DsType dsType, int[][] gridState, List<ArrayElement> arrayState,
+                         List<ListNode> listState, List<TrieNodeModel> trieState,
+                         List<TreeNode> treeNodes, List<GraphNode> graphNodes,
+                         List<GraphEdge> graphEdges, DpTable dpTable) {
         this.stepNumber = stepNumber;
         this.activeLine = activeLine;
         this.description = description;
@@ -85,6 +99,7 @@ public class ExecutionStep {
         this.treeNodes = treeNodes;
         this.graphNodes = graphNodes;
         this.graphEdges = graphEdges;
+        this.dpTable = dpTable;
     }
 
     public int getStepNumber() { return stepNumber; }
@@ -131,4 +146,7 @@ public class ExecutionStep {
 
     public List<GraphEdge> getGraphEdges() { return graphEdges; }
     public void setGraphEdges(List<GraphEdge> graphEdges) { this.graphEdges = graphEdges; }
+
+    public DpTable getDpTable() { return dpTable; }
+    public void setDpTable(DpTable dpTable) { this.dpTable = dpTable; }
 }

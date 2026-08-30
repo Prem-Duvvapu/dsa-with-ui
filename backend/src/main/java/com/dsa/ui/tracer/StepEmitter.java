@@ -2,6 +2,8 @@ package com.dsa.ui.tracer;
 
 import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.model.DsType;
+import com.dsa.ui.model.DpCell;
+import com.dsa.ui.model.DpTable;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.GraphEdge;
 import com.dsa.ui.model.GraphNode;
@@ -82,6 +84,7 @@ public final class StepEmitter {
         private List<TreeNode> treeNodes;
         private List<GraphNode> graphNodes;
         private List<GraphEdge> graphEdges;
+        private DpTable dpTable;
         private Map<Integer, String> nodeStates;
         private List<String> activeEdges;
 
@@ -189,6 +192,12 @@ public final class StepEmitter {
             return this;
         }
 
+        /** Carries a labelled DP table with per-cell Bench state. */
+        public Step dpTable(DpTable table) {
+            this.dpTable = table;
+            return this;
+        }
+
         public Step nodes(Map<Integer, String> states) {
             this.nodeStates = new LinkedHashMap<>(states);
             return this;
@@ -219,7 +228,8 @@ public final class StepEmitter {
                     null,
                     treeNodes,
                     graphNodes,
-                    graphEdges
+                    graphEdges,
+                    dpTable
             );
 
             // Checked BEFORE adding, so a collected trace is always within budget.
@@ -274,6 +284,22 @@ public final class StepEmitter {
         }
         if (s.getGraphEdges() != null) {
             bytes += s.getGraphEdges().size() * 72L;
+        }
+        if (s.getDpTable() != null) {
+            DpTable table = s.getDpTable();
+            bytes += 36;                                   // field and table envelopes
+            for (String label : table.rowLabels()) {
+                bytes += label.length() + 4L;
+            }
+            for (String label : table.colLabels()) {
+                bytes += label.length() + 4L;
+            }
+            for (List<DpCell> row : table.cells()) {
+                bytes += 2;
+                for (DpCell cell : row) {
+                    bytes += 24L + cell.value().length() + cell.state().length();
+                }
+            }
         }
         if (s.getNodeStates() != null) {
             bytes += s.getNodeStates().size() * 24L;

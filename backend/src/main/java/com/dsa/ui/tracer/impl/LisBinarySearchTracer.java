@@ -1,10 +1,12 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.DsType;
+import com.dsa.ui.model.DpCell;
+import com.dsa.ui.model.DpTable;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class LisBinarySearchTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.DP_TABLE;
     }
 
     @Override
@@ -74,24 +76,28 @@ public class LisBinarySearchTracer implements AlgorithmTracer {
         int size = 0;
 
         emit.at("init").say("tails[] is empty. tails[k] will always hold the smallest value that can end a rising run of length k+1 - that is what keeps it sorted.")
-                .var("size", 0).array(new int[0]).step();
+                .var("size", 0).array(new int[0])
+                .dpTable(table(nums, tails, size, -1, -1, -1, false)).step();
 
-        for (int x : nums) {
+        for (int inputIndex = 0; inputIndex < nums.length; inputIndex++) {
+            int x = nums[inputIndex];
             int lo = 0, hi = size;
             while (lo < hi) {
                 int mid = (lo + hi) >>> 1;
                 if (tails[mid] < x) {
                     lo = mid + 1;
                     emit.at("probe").say("x=%d: tails[%d]=%d < x, so x belongs to the right of %d. Search [%d,%d).",
-                                    x, mid, tails[mid], mid, lo, hi)
+                            x, mid, tails[mid], mid, lo, hi)
                             .var("x", x).var("lo", lo).var("hi", hi).var("size", size)
-                            .array(java.util.Arrays.copyOf(tails, size), Math.min(mid, Math.max(size - 1, 0))).step();
+                            .array(java.util.Arrays.copyOf(tails, size), Math.min(mid, Math.max(size - 1, 0)))
+                            .dpTable(table(nums, tails, size, inputIndex, mid, -1, false)).step();
                 } else {
                     hi = mid;
                     emit.at("probe").say("x=%d: tails[%d]=%d >= x, so x could take %d's slot or an earlier one. Search [%d,%d).",
-                                    x, mid, tails[mid], mid, lo, hi)
+                            x, mid, tails[mid], mid, lo, hi)
                             .var("x", x).var("lo", lo).var("hi", hi).var("size", size)
-                            .array(java.util.Arrays.copyOf(tails, size), Math.min(mid, Math.max(size - 1, 0))).step();
+                            .array(java.util.Arrays.copyOf(tails, size), Math.min(mid, Math.max(size - 1, 0)))
+                            .dpTable(table(nums, tails, size, inputIndex, mid, -1, false)).step();
                 }
             }
             boolean appended = lo == size;
@@ -101,16 +107,49 @@ public class LisBinarySearchTracer implements AlgorithmTracer {
                 emit.at("place").say("x=%d is above every tail, so it extends the longest run: append at index %d. Length grows to %d.",
                                 x, lo, size)
                         .var("x", x).var("pos", lo).var("size", size)
-                        .array(java.util.Arrays.copyOf(tails, size), lo).step();
+                        .array(java.util.Arrays.copyOf(tails, size), lo)
+                        .dpTable(table(nums, tails, size, inputIndex, -1, lo, false)).step();
             } else {
                 emit.at("place").say("x=%d lands at index %d: a smaller tail can now end a run of length %d. Length stays %d.",
                                 x, lo, lo + 1, size)
                         .var("x", x).var("pos", lo).var("size", size)
-                        .array(java.util.Arrays.copyOf(tails, size), lo).step();
+                        .array(java.util.Arrays.copyOf(tails, size), lo)
+                        .dpTable(table(nums, tails, size, inputIndex, -1, lo, false)).step();
             }
         }
 
         emit.at("done").say("size never shrank and tails stayed sorted the whole way - LIS length is %d.", size)
-                .var("size", size).array(java.util.Arrays.copyOf(tails, size)).step();
+                .var("size", size).array(java.util.Arrays.copyOf(tails, size))
+                .dpTable(table(nums, tails, size, -1, -1, -1, true)).step();
+    }
+
+    private static DpTable table(int[] nums, int[] tails, int size, int inputIndex,
+                                 int tailRead, int tailProbe, boolean done) {
+        List<String> columns = new ArrayList<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            columns.add(String.valueOf(i));
+        }
+
+        List<DpCell> inputRow = new ArrayList<>(nums.length);
+        List<DpCell> tailsRow = new ArrayList<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            String inputState = done ? "resolved" : i == inputIndex ? "probe"
+                    : i < inputIndex ? "resolved" : "known";
+            inputRow.add(new DpCell(String.valueOf(nums[i]), inputState));
+
+            String tailState;
+            if (i == tailProbe) {
+                tailState = "probe";
+            } else if (i == tailRead) {
+                tailState = "read";
+            } else if (i < size) {
+                tailState = done ? "resolved" : "known";
+            } else {
+                tailState = "void";
+            }
+            tailsRow.add(new DpCell(i < size ? String.valueOf(tails[i]) : "·", tailState));
+        }
+        return new DpTable(List.of("input", "tails"), columns,
+                List.of(inputRow, tailsRow));
     }
 }
