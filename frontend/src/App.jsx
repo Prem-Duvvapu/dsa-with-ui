@@ -233,15 +233,15 @@ export default function App() {
 
   const loading = catalogLoading;
   const hasInputSpec = Boolean(activeProblem?.inputSpec?.fields?.length);
+  const activeDsType = currentStep?.dsType || activeProblem?.dsType || '';
 
   // ── Canvas selection by dsType ───────────────────────────────────────────
   const renderCanvas = () => {
     if (!activeProblem) return null;
 
-    const dsType = currentStep?.dsType || activeProblem.dsType || '';
     const props = { currentStep, step: currentStep, problem: activeProblem };
 
-    const Canvas = CANVAS_BY_DSTYPE[dsType];
+    const Canvas = CANVAS_BY_DSTYPE[activeDsType];
     if (!Canvas) {
       return (
         <div
@@ -252,7 +252,7 @@ export default function App() {
             fontSize: '0.9rem', padding: '24px', textAlign: 'center'
           }}
         >
-          No visualization for {dsType || 'unknown'}
+          No visualization for {activeDsType || 'unknown'}
         </div>
       );
     }
@@ -361,12 +361,14 @@ export default function App() {
               </div>
             )}
 
-            {/* The whole run at once, under the single frame it belongs to. */}
-            <CaptureStrip
-              steps={steps}
-              current={currentStepIndex}
-              onSeek={seek}
-            />
+            {/* DP tables need the full stage; their cell states already show the recurrence. */}
+            {activeDsType !== 'DpTable' && (
+              <CaptureStrip
+                steps={steps}
+                current={currentStepIndex}
+                onSeek={seek}
+              />
+            )}
 
             {/* Integrated Playback Controls */}
             <Controls

@@ -251,6 +251,51 @@ describe('App execution capture', () => {
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
   });
 
+  it('gives DP-table traces the full stage instead of rendering an execution capture', async () => {
+    const lis = problem(
+      'longest-increasing-subsequence',
+      'Longest Increasing Subsequence',
+      'Dynamic Programming',
+      'DpTable'
+    );
+    const dpTable = {
+      rowLabels: ['dp'],
+      colLabels: ['0', '1'],
+      cells: [[
+        { value: '1', state: 'read' },
+        { value: '2', state: 'probe' }
+      ]]
+    };
+
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url === '/api/problems') return Promise.resolve(ok([lis]));
+      if (url === '/api/problems/longest-increasing-subsequence') {
+        return Promise.resolve(ok(lis));
+      }
+      if (url === '/api/problems/longest-increasing-subsequence/execute') {
+        return Promise.resolve(ok([{
+          stepNumber: 1,
+          activeLine: 1,
+          description: 'fill LIS table',
+          variables: {},
+          dsType: 'DpTable',
+          dpTable,
+          // This legacy payload keeps the test honest: CaptureStrip could render it.
+          arrayState: [{ index: 0, value: 1, state: 'current' }]
+        }]));
+      }
+      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
+    }));
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(screen.getByRole('table', { name: 'Dynamic programming table' })).toBeInTheDocument()
+    );
+    expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+  });
+
   it('shows an explicit empty state for an unknown dsType instead of an array', async () => {
     vi.stubGlobal('fetch', vi.fn((url) => {
       if (url === '/api/problems') {
