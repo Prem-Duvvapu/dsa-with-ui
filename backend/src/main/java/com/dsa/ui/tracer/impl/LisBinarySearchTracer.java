@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,11 @@ public class LisBinarySearchTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "lis-binary-search";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -67,7 +73,6 @@ public class LisBinarySearchTracer implements AlgorithmTracer {
         int[] tails = new int[nums.length];
         int size = 0;
 
-        emit.using("Array");
         emit.at("init").say("tails[] is empty. tails[k] will always hold the smallest value that can end a rising run of length k+1 - that is what keeps it sorted.")
                 .var("size", 0).array(new int[0]).step();
 

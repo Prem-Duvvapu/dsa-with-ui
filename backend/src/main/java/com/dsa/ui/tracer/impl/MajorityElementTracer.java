@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,11 @@ public class MajorityElementTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "majority-element";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -63,7 +69,6 @@ public class MajorityElementTracer implements AlgorithmTracer {
         int count = 0;
         int el = 0;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Moore's Voting: Initialize count = 0, candidate el = 0.")
                 .var("count", 0).var("el", 0).array(nums).step();

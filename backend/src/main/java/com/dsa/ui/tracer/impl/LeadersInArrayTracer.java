@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,11 @@ public class LeadersInArrayTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "leaders-in-array";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -65,7 +71,6 @@ public class LeadersInArrayTracer implements AlgorithmTracer {
         List<Integer> ans = new ArrayList<>();
         int maxi = Integer.MIN_VALUE;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Start right-to-left scan. maxi = -INF, leaders = [].")
                 .var("maxi", "-INF").var("leaders", ans.toString()).array(arr).step();

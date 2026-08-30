@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class CheckSortedIITracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "check-sorted-ii";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -60,7 +66,6 @@ public class CheckSortedIITracer implements AlgorithmTracer {
         int count = 0;
         int n = nums.length;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Initialize drop count = 0 for array length n = %d.", n)
                 .var("count", 0).var("n", n).array(nums).step();

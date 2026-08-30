@@ -1,5 +1,6 @@
 package com.dsa.ui;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.service.GraphBfsDfsService;
@@ -64,7 +65,7 @@ class GraphBfsDfsServiceTest {
         List<ExecutionStep> steps = service.generateSteps("dfs-traversal");
         assertNotNull(steps);
         assertTrue(steps.size() >= 5);
-        assertEquals("Stack", steps.get(0).getDsType());
+        assertEquals(DsType.STACK, steps.get(0).getDsType());
     }
 
     @Test

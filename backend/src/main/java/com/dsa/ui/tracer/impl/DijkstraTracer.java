@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,11 @@ public class DijkstraTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "dijkstra-min-heap";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.GRAPH;
     }
 
     @Override
@@ -99,7 +105,7 @@ public class DijkstraTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
         int start = in.getInt("start");
-        emit.using("Graph");
+
 
         if (start >= graph.vertices()) {
             throw new InputValidationException(Map.of("start",

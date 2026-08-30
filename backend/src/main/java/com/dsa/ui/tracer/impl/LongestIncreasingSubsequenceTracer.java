@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,11 @@ public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "longest-increasing-subsequence";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.MATRIX;
     }
 
     @Override
@@ -63,7 +69,6 @@ public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
         int n = nums.length;
         int[][] dp = new int[n + 1][n + 1];
 
-        emit.using("Matrix");
         emit.at("init")
                 .say("Table is (%d+1)x(%d+1). Row i asks \"what is the best LIS starting at nums[%d]?\"; column p encodes the last element already taken (index p-1). Filling starts at the bottom-right.", n, n, n - 1)
                 .var("rows", n + 1).var("cols", n + 1)

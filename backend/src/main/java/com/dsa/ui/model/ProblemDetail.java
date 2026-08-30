@@ -18,7 +18,7 @@ public class ProblemDetail {
     private List<TrieNodeModel> defaultTrie;
     private int[][] defaultGrid;
     private ComplexityDetail complexity;
-    private String dsType; // "Queue" or "Stack" or "PriorityQueue" or "Matrix" or "Array" or "LinkedList" or "Trie"
+    private DsType dsType;
 
     public ProblemDetail() {}
 
@@ -49,7 +49,7 @@ public class ProblemDetail {
         this.defaultTrie = defaultTrie;
         this.defaultGrid = defaultGrid;
         this.complexity = complexity;
-        this.dsType = dsType;
+        this.dsType = DsType.fromWireValue(dsType);
     }
 
     public String getId() { return id; }
@@ -97,6 +97,6 @@ public class ProblemDetail {
     public ComplexityDetail getComplexity() { return complexity; }
     public void setComplexity(ComplexityDetail complexity) { this.complexity = complexity; }
 
-    public String getDsType() { return dsType; }
-    public void setDsType(String dsType) { this.dsType = dsType; }
+    public DsType getDsType() { return dsType; }
+    public void setDsType(DsType dsType) { this.dsType = dsType; }
 }

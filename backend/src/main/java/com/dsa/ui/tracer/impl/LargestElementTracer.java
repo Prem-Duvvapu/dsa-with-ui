@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class LargestElementTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "largest-element";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -58,7 +64,6 @@ public class LargestElementTracer implements AlgorithmTracer {
         int[] nums = in.getIntArray("nums");
         int best = nums[0];
 
-        emit.using("Array");
         emit.at("init").say("Start by trusting the first element: best = %d.", best)
                 .var("best", best).array(nums, 0).step();
 

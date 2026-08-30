@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class LongestSubarraySumKPositivesTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "longest-subarray-sum-k-positives";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -80,7 +86,6 @@ public class LongestSubarraySumKPositivesTracer implements AlgorithmTracer {
         long sum = a[0];
         int maxLen = 0;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Initialize 2-pointer window: left=0, right=0, sum=%d, target K=%d.", sum, k)
                 .var("left", left).var("right", right).var("sum", sum).var("maxLen", maxLen).var("k", k)

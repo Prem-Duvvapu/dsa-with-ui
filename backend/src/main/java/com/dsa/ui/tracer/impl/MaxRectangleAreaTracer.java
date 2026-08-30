@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,11 @@ public class MaxRectangleAreaTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "max-rectangle-area-all-ones";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.MATRIX;
     }
 
     @Override
@@ -87,7 +93,6 @@ public class MaxRectangleAreaTracer implements AlgorithmTracer {
         int[] heights = new int[cols];
         int best = 0;
 
-        emit.using("Matrix");
         emit.at("init").say("%dx%d grid. heights[c] will count consecutive 1s ending at the current row - each row is then a histogram problem.",
                         rows, cols)
                 .var("best", 0).grid(grid).step();

@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer.wire;
 
 import com.dsa.ui.model.ArrayElement;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.model.ListNode;
 import com.dsa.ui.model.TreeNode;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -45,7 +46,7 @@ public final class DeltaStep {
     private final Map<Integer, String> nodeStates;
     private final List<String> activeEdges;
     private final Map<String, String> variables;
-    private final String dsType;
+    private final DsType dsType;
     private final int[][] gridState;
     private final List<ArrayElement> arrayState;
     private final List<ListNode> listState;
@@ -53,7 +54,7 @@ public final class DeltaStep {
 
     DeltaStep(int stepNumber, int activeLine, String description, Boolean keyframe,
               List<String> queueOrStackState, Map<Integer, String> nodeStates,
-              List<String> activeEdges, Map<String, String> variables, String dsType,
+              List<String> activeEdges, Map<String, String> variables, DsType dsType,
               int[][] gridState, List<ArrayElement> arrayState, List<ListNode> listState,
               List<TreeNode> treeNodes) {
         this.stepNumber = stepNumber;
@@ -82,7 +83,7 @@ public final class DeltaStep {
     public Map<Integer, String> getNodeStates() { return nodeStates; }
     public List<String> getActiveEdges() { return activeEdges; }
     public Map<String, String> getVariables() { return variables; }
-    public String getDsType() { return dsType; }
+    public DsType getDsType() { return dsType; }
     public int[][] getGridState() { return gridState; }
     public List<ArrayElement> getArrayState() { return arrayState; }
     public List<ListNode> getListState() { return listState; }

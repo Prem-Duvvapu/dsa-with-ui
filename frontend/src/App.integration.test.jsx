@@ -250,6 +250,32 @@ describe('App execution capture', () => {
     await waitFor(() => expect(screen.getByText('scalar only')).toBeInTheDocument());
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
   });
+
+  it('shows an explicit empty state for an unknown dsType instead of an array', async () => {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url === '/api/problems') {
+        return Promise.resolve(ok([problem('unknown-shape', 'Unknown Shape', 'Test', 'Mystery')]));
+      }
+      if (url === '/api/problems/unknown-shape') {
+        return Promise.resolve(ok(problem('unknown-shape', 'Unknown Shape', 'Test', 'Mystery')));
+      }
+      if (url === '/api/problems/unknown-shape/execute') {
+        return Promise.resolve(ok([{
+          stepNumber: 1, activeLine: 1, description: 'unknown shape step',
+          variables: {}, dsType: 'Mystery',
+          arrayState: [{ index: 0, value: 99, state: 'current' }]
+        }]));
+      }
+      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
+    }));
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(screen.getByText('No visualization for Mystery')).toBeInTheDocument()
+    );
+    expect(screen.queryByText('Array & bar visualizer')).not.toBeInTheDocument();
+  });
 });
 
 describe('App per-problem detail merge', () => {

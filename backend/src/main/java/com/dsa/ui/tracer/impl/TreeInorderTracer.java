@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class TreeInorderTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "tree-inorder";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.TREE;
     }
 
     @Override
@@ -53,7 +59,7 @@ public class TreeInorderTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         BinaryTreeLayout tree = new BinaryTreeLayout(in.getBinaryTree("tree"));
-        emit.using("Tree");
+
 
         if (tree.isEmpty()) {
             emit.at("base").say("The tree is empty, so the traversal is empty.")

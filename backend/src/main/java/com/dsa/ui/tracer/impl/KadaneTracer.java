@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,11 @@ public class KadaneTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "kadane-algo";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -56,7 +62,6 @@ public class KadaneTracer implements AlgorithmTracer {
         int best = nums[0];
         int running = 0;
 
-        emit.using("Array");
         emit.at("init").say("Track the best sum seen (%d) and a running sum starting at 0.", best)
                 .var("best", best).var("running", running).array(nums).step();
 

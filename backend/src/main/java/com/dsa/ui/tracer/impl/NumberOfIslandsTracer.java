@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,11 @@ public class NumberOfIslandsTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "number-of-islands";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.MATRIX;
     }
 
     @Override
@@ -79,7 +85,6 @@ public class NumberOfIslandsTracer implements AlgorithmTracer {
         int cols = grid[0].length;
         int islands = 0;
 
-        emit.using("Matrix");
         emit.at("init").say("Scan a %dx%d grid. Each unvisited land cell starts a new island.", rows, cols)
                 .var("islands", 0).grid(grid).step();
 

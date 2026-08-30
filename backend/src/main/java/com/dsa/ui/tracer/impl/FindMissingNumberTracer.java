@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,11 @@ public class FindMissingNumberTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "find-missing-number";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -59,7 +65,6 @@ public class FindMissingNumberTracer implements AlgorithmTracer {
         int n = nums.length;
         long expected = (long) n * (n + 1) / 2;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Length %d means the full set is 0..%d, which sums to %d*%d/2 = %d.",
                         n, n, n, n + 1, expected)

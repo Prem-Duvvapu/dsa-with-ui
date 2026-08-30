@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,11 @@ public class TwoSumTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "two-sum";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -64,7 +70,6 @@ public class TwoSumTracer implements AlgorithmTracer {
         int target = in.getInt("target");
         Map<Integer, Integer> seen = new HashMap<>();
 
-        emit.using("Array");
         emit.at("init").say("Start with an empty map. Looking for two numbers adding to %d.", target)
                 .var("target", target).array(nums).step();
 

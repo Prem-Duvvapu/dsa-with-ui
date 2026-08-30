@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer;
 
 import com.dsa.ui.model.ArrayElement;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ListNode;
 import com.dsa.ui.model.TreeNode;
@@ -32,19 +33,14 @@ public final class StepEmitter {
     private final long maxBytes;
     private final List<ExecutionStep> steps = new ArrayList<>();
     private final List<String> callStack = new ArrayList<>();
-    private String dsType = "Array";
+    private final DsType dsType;
     private long bytesSoFar;
 
-    StepEmitter(AnnotatedCode code, int maxSteps, long maxBytes) {
+    StepEmitter(AnnotatedCode code, int maxSteps, long maxBytes, DsType dsType) {
         this.code = code;
         this.maxSteps = maxSteps;
         this.maxBytes = maxBytes;
-    }
-
-    /** Sets the visualization mode for every subsequent step. */
-    public StepEmitter using(String dsType) {
         this.dsType = dsType;
-        return this;
     }
 
     public Step at(String anchor) {
