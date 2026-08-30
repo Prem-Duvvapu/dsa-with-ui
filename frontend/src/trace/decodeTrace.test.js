@@ -17,16 +17,27 @@ describe('decodeTrace', () => {
   });
 
   it('carries an omitted field forward', () => {
+    const graphNodes = [{ id: 0, label: '0', x: 180, y: 40, state: 'unvisited' }];
+    const graphEdges = [{ from: 0, to: 1, weight: null, directed: false, highlighted: false }];
     const decoded = decodeTrace({
       encoding: 'delta',
       steps: [
-        { stepNumber: 1, keyframe: true, dsType: 'Array', arrayState: arrayState('default') },
+        {
+          stepNumber: 1,
+          keyframe: true,
+          dsType: 'Array',
+          arrayState: arrayState('default'),
+          graphNodes,
+          graphEdges
+        },
         { stepNumber: 2, description: 'moved' }
       ]
     });
 
     expect(decoded[1].arrayState).toEqual(arrayState('default'));
     expect(decoded[1].dsType).toBe('Array');
+    expect(decoded[1].graphNodes).toBe(graphNodes);
+    expect(decoded[1].graphEdges).toBe(graphEdges);
   });
 
   it('replaces a field that is present', () => {

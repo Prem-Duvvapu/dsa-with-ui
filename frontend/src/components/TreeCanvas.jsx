@@ -3,11 +3,19 @@ import { GitCommit, Sparkles } from 'lucide-react';
 
 export default function TreeCanvas({ problem, currentStep, step }) {
   const activeStep = currentStep || step;
-  const treeNodes = problem?.defaultTreeNodes || [];
+  const treeNodes = activeStep?.treeNodes?.length
+    ? activeStep.treeNodes
+    : (problem?.defaultTreeNodes || []);
   const nodeStates = activeStep?.nodeStates || {};
+  const nodeXs = treeNodes.map((node) => node.x);
+  const nodeYs = treeNodes.map((node) => node.y);
+  const viewBoxX = Math.min(0, ...nodeXs.map((x) => x - 24));
+  const viewBoxY = Math.min(0, ...nodeYs.map((y) => y - 24));
+  const viewBoxWidth = Math.max(360, Math.max(0, ...nodeXs) + 24 - viewBoxX);
+  const viewBoxHeight = Math.max(300, Math.max(0, ...nodeYs) + 24 - viewBoxY);
 
-  const getNodeColor = (nodeId) => {
-    const state = nodeStates[nodeId] || 'unvisited';
+  const getNodeColor = (nodeId, explicitState) => {
+    const state = explicitState || nodeStates[nodeId] || 'unvisited';
     switch (state) {
       case 'active':
       case 'visiting':
@@ -62,7 +70,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
       </div>
 
       <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '260px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.25)', borderRadius: 'var(--radius-md)', overflow: 'hidden', padding: 'var(--space-md)' }}>
-        <svg width="100%" height="100%" viewBox="0 0 360 300" preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible', maxHeight: '100%' }}>
+        <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible', maxHeight: '100%' }}>
           {/* Render Parent-Child Connecting Lines */}
           {treeNodes.map((node) => {
             const leftChild = treeNodes.find((n) => n.id === node.leftId);
@@ -98,8 +106,9 @@ export default function TreeCanvas({ problem, currentStep, step }) {
 
           {/* Render Tree Nodes */}
           {treeNodes.map((node) => {
-            const colorInfo = getNodeColor(node.id);
-            const isVisiting = nodeStates[node.id] === 'visiting';
+            const nodeState = node.state || nodeStates[node.id] || 'unvisited';
+            const colorInfo = getNodeColor(node.id, nodeState);
+            const isVisiting = nodeState === 'visiting';
 
             return (
               <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} style={{ cursor: 'pointer' }}>

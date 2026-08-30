@@ -32,7 +32,9 @@ const CARRIED = [
   'gridState',
   'arrayState',
   'listState',
-  'treeNodes'
+  'treeNodes',
+  'graphNodes',
+  'graphEdges'
 ];
 
 /**

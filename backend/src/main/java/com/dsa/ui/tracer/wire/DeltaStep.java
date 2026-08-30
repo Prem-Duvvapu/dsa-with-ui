@@ -2,6 +2,8 @@ package com.dsa.ui.tracer.wire;
 
 import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.model.DsType;
+import com.dsa.ui.model.GraphEdge;
+import com.dsa.ui.model.GraphNode;
 import com.dsa.ui.model.ListNode;
 import com.dsa.ui.model.TreeNode;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -51,12 +53,15 @@ public final class DeltaStep {
     private final List<ArrayElement> arrayState;
     private final List<ListNode> listState;
     private final List<TreeNode> treeNodes;
+    private final List<GraphNode> graphNodes;
+    private final List<GraphEdge> graphEdges;
 
     DeltaStep(int stepNumber, int activeLine, String description, Boolean keyframe,
               List<String> queueOrStackState, Map<Integer, String> nodeStates,
               List<String> activeEdges, Map<String, String> variables, DsType dsType,
               int[][] gridState, List<ArrayElement> arrayState, List<ListNode> listState,
-              List<TreeNode> treeNodes) {
+              List<TreeNode> treeNodes, List<GraphNode> graphNodes,
+              List<GraphEdge> graphEdges) {
         this.stepNumber = stepNumber;
         this.activeLine = activeLine;
         this.description = description;
@@ -70,6 +75,8 @@ public final class DeltaStep {
         this.arrayState = arrayState;
         this.listState = listState;
         this.treeNodes = treeNodes;
+        this.graphNodes = graphNodes;
+        this.graphEdges = graphEdges;
     }
 
     public int getStepNumber() { return stepNumber; }
@@ -88,4 +95,6 @@ public final class DeltaStep {
     public List<ArrayElement> getArrayState() { return arrayState; }
     public List<ListNode> getListState() { return listState; }
     public List<TreeNode> getTreeNodes() { return treeNodes; }
+    public List<GraphNode> getGraphNodes() { return graphNodes; }
+    public List<GraphEdge> getGraphEdges() { return graphEdges; }
 }
