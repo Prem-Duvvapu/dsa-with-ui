@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,11 @@ public class BfsTraversalTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "bfs-traversal";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.QUEUE;
     }
 
     @Override
@@ -76,7 +82,7 @@ public class BfsTraversalTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
         int start = in.getInt("start");
-        emit.using("Queue");
+
 
         if (start >= graph.vertices()) {
             throw new InputValidationException(Map.of("start",

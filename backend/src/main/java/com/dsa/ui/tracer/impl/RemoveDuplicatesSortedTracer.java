@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class RemoveDuplicatesSortedTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "remove-duplicates-sorted";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -60,7 +66,6 @@ public class RemoveDuplicatesSortedTracer implements AlgorithmTracer {
         int[] nums = in.getIntArray("nums");
         int i = 0;
 
-        emit.using("Array");
         emit.at("init")
                 .say("i=0 tracks the last unique element (nums[0]=%d). j will scan from index 1.", nums[0])
                 .var("i", 0).array(nums, 0).step();

@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,11 @@ public class LeftRotateOneTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "left-rotate-one";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -56,7 +62,6 @@ public class LeftRotateOneTracer implements AlgorithmTracer {
         int[] arr = in.getIntArray("nums");
         int temp = arr[0];
 
-        emit.using("Array");
         emit.at("init")
                 .say("Save first element temp = arr[0] = %d before shifting.", temp)
                 .var("temp", temp).array(arr, 0).step();

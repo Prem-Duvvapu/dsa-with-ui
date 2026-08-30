@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,11 @@ public class CountSquareSubmatricesTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "count-square-submatrices";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.MATRIX;
     }
 
     @Override
@@ -73,7 +79,6 @@ public class CountSquareSubmatricesTracer implements AlgorithmTracer {
         int cols = grid[0].length;
         int total = 0;
 
-        emit.using("Matrix");
         emit.at("init").say("Scan row by row. A 1 in the top row or left column can only end a 1x1 square; deeper cells grow from their three neighbours.")
                 .var("total", 0).grid(grid).step();
 

@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,11 @@ public class StockBuySellTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "stock-buy-sell";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -65,7 +71,6 @@ public class StockBuySellTracer implements AlgorithmTracer {
         int minPrice = prices[0];
         int best = 0;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Day 0 costs %d, so it is both the cheapest buy so far and the only candidate. Selling later must beat profit 0.",
                         minPrice)

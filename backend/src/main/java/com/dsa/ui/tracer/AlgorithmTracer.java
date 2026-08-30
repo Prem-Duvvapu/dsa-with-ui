@@ -1,5 +1,7 @@
 package com.dsa.ui.tracer;
 
+import com.dsa.ui.model.DsType;
+
 import java.util.Map;
 
 /**
@@ -19,6 +21,9 @@ public interface AlgorithmTracer {
 
     /** Must match a catalogue {@code ProblemDetail} id. */
     String id();
+
+    /** The only visualization type this tracer may emit. */
+    DsType dsType();
 
     /** The inputs this algorithm accepts, their bounds, and their defaults. */
     InputSpec inputSpec();

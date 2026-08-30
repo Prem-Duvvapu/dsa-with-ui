@@ -11,7 +11,7 @@ public class ExecutionStep {
     private Map<Integer, String> nodeStates; // Node ID -> state ("unvisited", "queued", "visiting", "visited", "cycle")
     private List<String> activeEdges; // Edge identifiers e.g. "0-1"
     private Map<String, String> variables; // Debug variable values e.g. {"curr": "0", "vis[0]": "true"}
-    private String dsType; // "Queue" or "Stack" or "Matrix" or "Array" or "LinkedList" or "Trie"
+    private DsType dsType;
     private int[][] gridState; // Optional 2D grid matrix state for matrix algorithms
     private List<ArrayElement> arrayState; // Optional array state for sorting & array algorithms
     private List<ListNode> listState; // Optional linked list state
@@ -39,6 +39,17 @@ public class ExecutionStep {
                          List<String> queueOrStackState, Map<Integer, String> nodeStates,
                          List<String> activeEdges, Map<String, String> variables,
                          String dsType, int[][] gridState, List<ArrayElement> arrayState,
+                         List<ListNode> listState, List<TrieNodeModel> trieState,
+                         List<TreeNode> treeNodes) {
+        this(stepNumber, activeLine, description, queueOrStackState, nodeStates, activeEdges,
+                variables, DsType.fromWireValue(dsType), gridState, arrayState, listState,
+                trieState, treeNodes);
+    }
+
+    public ExecutionStep(int stepNumber, int activeLine, String description,
+                         List<String> queueOrStackState, Map<Integer, String> nodeStates,
+                         List<String> activeEdges, Map<String, String> variables,
+                         DsType dsType, int[][] gridState, List<ArrayElement> arrayState,
                          List<ListNode> listState, List<TrieNodeModel> trieState,
                          List<TreeNode> treeNodes) {
         this.stepNumber = stepNumber;
@@ -77,8 +88,8 @@ public class ExecutionStep {
     public Map<String, String> getVariables() { return variables; }
     public void setVariables(Map<String, String> variables) { this.variables = variables; }
 
-    public String getDsType() { return dsType; }
-    public void setDsType(String dsType) { this.dsType = dsType; }
+    public DsType getDsType() { return dsType; }
+    public void setDsType(DsType dsType) { this.dsType = dsType; }
 
     public int[][] getGridState() { return gridState; }
     public void setGridState(int[][] gridState) { this.gridState = gridState; }

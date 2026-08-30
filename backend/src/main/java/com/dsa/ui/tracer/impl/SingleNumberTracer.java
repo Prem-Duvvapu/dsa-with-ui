@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class SingleNumberTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "single-number";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -55,7 +61,6 @@ public class SingleNumberTracer implements AlgorithmTracer {
         int[] nums = in.getIntArray("nums");
         int xorSum = 0;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Initialize xorSum = 0. Paired identical numbers will cancel out (a ^ a = 0).")
                 .var("xorSum", 0).array(nums).step();

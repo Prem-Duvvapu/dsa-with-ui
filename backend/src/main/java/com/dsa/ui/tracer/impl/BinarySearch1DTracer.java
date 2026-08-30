@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.ArrayElement;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,11 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "binary-search-1d";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -87,7 +93,6 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
         int low = 0;
         int high = nums.length - 1;
 
-        emit.using("Array");
         emit.at("init").say("Search the whole array for %d. low = 0, high = %d.", target, high)
                 .var("target", target).var("low", low).var("high", high)
                 .arrayState(window(nums, low, high, -1)).step();

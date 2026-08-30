@@ -33,6 +33,10 @@ public class TracerRegistry {
                 throw new IllegalStateException(
                         tracer.getClass().getName() + " declares a blank problem id");
             }
+            if (tracer.dsType() == null) {
+                throw new IllegalStateException(
+                        tracer.getClass().getName() + " declares an unknown dsType");
+            }
             String existing = owners.get(id);
             if (existing != null) {
                 throw new IllegalStateException("Two tracers claim problem id '" + id + "': "

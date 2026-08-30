@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,11 @@ public class SecondLargestElementTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "second-largest-element";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -65,7 +71,6 @@ public class SecondLargestElementTracer implements AlgorithmTracer {
         int largest = arr[0];
         int secondLargest = -1;
 
-        emit.using("Array");
         emit.at("init")
                 .say("Start with first element: largest = %d, secondLargest = -1.", largest)
                 .var("largest", largest).var("secondLargest", secondLargest).array(arr, 0).step();

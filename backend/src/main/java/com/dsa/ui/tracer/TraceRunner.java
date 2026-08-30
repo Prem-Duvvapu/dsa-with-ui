@@ -19,7 +19,8 @@ public class TraceRunner {
         Inputs inputs = InputValidator.validate(spec, suppliedInput);
 
         AnnotatedCode code = AnnotatedCode.parse(tracer.annotatedCode());
-        StepEmitter emitter = new StepEmitter(code, spec.getMaxSteps(), spec.getMaxBytes());
+        StepEmitter emitter = new StepEmitter(
+                code, spec.getMaxSteps(), spec.getMaxBytes(), tracer.dsType());
 
         boolean truncated = false;
         String truncationReason = null;

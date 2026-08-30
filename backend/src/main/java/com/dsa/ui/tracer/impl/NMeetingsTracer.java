@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.ArrayElement;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,11 @@ public class NMeetingsTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "n-meetings-in-one-room";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -118,7 +124,6 @@ public class NMeetingsTracer implements AlgorithmTracer {
             }
         }
 
-        emit.using("Array");
         int n = start.length;
 
         int[][] meetings = new int[n][3];   // start, end, original id (1-based)

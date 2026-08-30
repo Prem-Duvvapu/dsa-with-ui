@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.ArrayElement;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,11 @@ public class RotatedArraySearchTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "search-rotated-sorted";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -97,7 +103,6 @@ public class RotatedArraySearchTracer implements AlgorithmTracer {
         int low = 0;
         int high = nums.length - 1;
 
-        emit.using("Array");
         emit.at("init").say("A sorted array was cut at a pivot and rotated. Find %d in [%d..%d].",
                         target, low, high)
                 .var("target", target).var("low", low).var("high", high)

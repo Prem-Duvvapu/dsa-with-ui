@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class LeftRotateKTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "left-rotate-k";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -74,7 +80,6 @@ public class LeftRotateKTracer implements AlgorithmTracer {
         int k = in.getInt("k");
         int n = nums.length;
 
-        emit.using("Array");
         k = k % n;
         emit.at("init")
                 .say("Array length n=%d; normalized k = %d %% %d = %d.", n, in.getInt("k"), n, k)

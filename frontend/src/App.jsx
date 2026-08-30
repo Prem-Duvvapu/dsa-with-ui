@@ -2,14 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
 import Sidebar from './components/Sidebar';
-import GraphCanvas from './components/GraphCanvas';
-import GridCanvas from './components/GridCanvas';
-import DsuCanvas from './components/DsuCanvas';
-import TreeCanvas from './components/TreeCanvas';
-import ArrayCanvas from './components/ArrayCanvas';
-import LinkedListCanvas from './components/LinkedListCanvas';
-import RecursionTreeCanvas from './components/RecursionTreeCanvas';
-import TrieCanvas from './components/TrieCanvas';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
 import CaptureStrip from './components/CaptureStrip';
@@ -19,6 +11,7 @@ import InputPanel from './components/InputPanel';
 import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
 import useTrace from './hooks/useTrace';
+import { CANVAS_BY_DSTYPE } from './canvas/registry';
 import { RefreshCw } from 'lucide-react';
 
 const DEFAULT_FALLBACK_PROBLEMS = [
@@ -248,41 +241,23 @@ export default function App() {
     const dsType = currentStep?.dsType || activeProblem.dsType || '';
     const props = { currentStep, step: currentStep, problem: activeProblem };
 
-    // DSU is a special case within Graph problems — check the problem id/title.
-    const isDsu = activeProblem.id === 'disjoint-set-dsu'
-      || activeProblem.title?.toLowerCase().includes('disjoint set')
-      || activeProblem.title?.toLowerCase().includes('dsu');
-    if (isDsu) return <DsuCanvas {...props} />;
-
-    // Grid/Matrix: if current step carries gridState, prefer the grid renderer.
-    const hasGrid = currentStep?.gridState || activeProblem.defaultGrid;
-    if (hasGrid && (dsType === 'Matrix' || dsType === 'Grid')) {
-      return <GridCanvas {...props} />;
+    const Canvas = CANVAS_BY_DSTYPE[dsType];
+    if (!Canvas) {
+      return (
+        <div
+          role="status"
+          style={{
+            flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)',
+            fontSize: '0.9rem', padding: '24px', textAlign: 'center'
+          }}
+        >
+          No visualization for {dsType || 'unknown'}
+        </div>
+      );
     }
 
-    switch (dsType) {
-      case 'Tree':
-        return <TreeCanvas {...props} />;
-      case 'LinkedList':
-        return <LinkedListCanvas {...props} />;
-      case 'RecursionTree':
-        return <RecursionTreeCanvas {...props} />;
-      case 'Trie':
-        return <TrieCanvas {...props} />;
-      case 'Graph':
-      case 'Queue':
-        // Graph-type problems with nodeStates or graph nodes
-        if (hasGrid) return <GridCanvas {...props} />;
-        return <GraphCanvas {...props} />;
-      case 'Stack':
-      case 'PriorityQueue':
-      case 'Array':
-      case 'Matrix':
-      default:
-        // For anything else that carries gridState, use GridCanvas
-        if (hasGrid) return <GridCanvas {...props} />;
-        return <ArrayCanvas {...props} />;
-    }
+    return <Canvas {...props} />;
   };
 
   return (

@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.ArrayElement;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,11 @@ public class PrintLisTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "print-lis";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -80,7 +86,6 @@ public class PrintLisTracer implements AlgorithmTracer {
         java.util.Arrays.fill(dp, 1);
         java.util.Arrays.fill(parent, -1);
 
-        emit.using("Array");
         emit.at("init").say("dp starts all 1s (each element alone) and every parent is -1 (no predecessor yet). The displayed values are dp[].")
                 .var("bestEnd", 0)
                 .arrayState(states(nums, dp, parent, -1, -1)).step();

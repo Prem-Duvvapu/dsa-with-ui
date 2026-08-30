@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,11 @@ public class TreeLevelOrderTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "tree-level-order";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.TREE;
     }
 
     @Override
@@ -72,7 +78,7 @@ public class TreeLevelOrderTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         BinaryTreeLayout tree = new BinaryTreeLayout(in.getBinaryTree("tree"));
-        emit.using("Tree");
+
 
         if (tree.isEmpty()) {
             emit.at("done").say("The tree is empty, so there are no levels.")

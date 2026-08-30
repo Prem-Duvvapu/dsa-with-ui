@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.ListNode;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,11 @@ public class ReverseLinkedListTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "reverse-linked-list";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.LINKED_LIST;
     }
 
     @Override
@@ -77,7 +83,7 @@ public class ReverseLinkedListTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[] values = in.getLinkedList("values");
-        emit.using("LinkedList");
+
 
         if (values.length == 0) {
             emit.at("done").say("The list is empty, so the reversal is empty.")

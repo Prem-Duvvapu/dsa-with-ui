@@ -1,6 +1,7 @@
 package com.dsa.ui.tracer;
 
 import com.dsa.ui.catalog.ProblemCatalog;
+import com.dsa.ui.model.DsType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dsa.ui.model.ExecutionStep;
 import org.junit.jupiter.api.DisplayName;
@@ -165,6 +166,7 @@ class TracerContractTest {
         int[] wide = new int[400];
         AlgorithmTracer heavy = new AlgorithmTracer() {
             @Override public String id() { return "test-only-heavy"; }
+            @Override public DsType dsType() { return DsType.ARRAY; }
             @Override public InputSpec inputSpec() {
                 return InputSpec.of().withMaxSteps(10_000).withMaxBytes(50_000);
             }
@@ -221,6 +223,7 @@ class TracerContractTest {
     void stepBudgetTruncates() {
         AlgorithmTracer greedy = new AlgorithmTracer() {
             @Override public String id() { return "test-only-runaway"; }
+            @Override public DsType dsType() { return DsType.ARRAY; }
             @Override public InputSpec inputSpec() { return InputSpec.of().withMaxSteps(25); }
             @Override public Map<String, Object> alternateInput() { return Map.of(); }
             @Override public String annotatedCode() { return "// @a spin\nwhile (true) {}"; }

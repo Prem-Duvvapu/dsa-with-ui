@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class MaxConsecutiveOnesTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "max-consecutive-ones";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -63,7 +69,6 @@ public class MaxConsecutiveOnesTracer implements AlgorithmTracer {
         int best = 0;
         int run = 0;
 
-        emit.using("Array");
         emit.at("init").say("run counts the current streak of 1s; best remembers the longest streak seen.")
                 .var("best", 0).var("run", 0).array(nums).step();
 

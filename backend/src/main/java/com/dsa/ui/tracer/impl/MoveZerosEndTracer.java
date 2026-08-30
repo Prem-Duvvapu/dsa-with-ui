@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,11 @@ public class MoveZerosEndTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "move-zeros-end";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -61,7 +67,6 @@ public class MoveZerosEndTracer implements AlgorithmTracer {
         int[] nums = in.getIntArray("nums");
         int pos = 0;
 
-        emit.using("Array");
         emit.at("init")
                 .say("pos is the landing spot for the next non-zero. Everything left of pos is already a packed, ordered prefix of non-zeros.")
                 .var("pos", 0).array(nums, -1, 0).step();

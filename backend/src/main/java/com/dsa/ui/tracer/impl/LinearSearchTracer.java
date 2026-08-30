@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class LinearSearchTracer implements AlgorithmTracer {
     @Override
     public String id() {
         return "linear-search";
+    }
+
+    @Override
+    public DsType dsType() {
+        return DsType.ARRAY;
     }
 
     @Override
@@ -62,7 +68,6 @@ public class LinearSearchTracer implements AlgorithmTracer {
         int[] arr = in.getIntArray("nums");
         int target = in.getInt("target");
 
-        emit.using("Array");
         emit.at("init")
                 .say("Start linear search for target %d in array of length %d.", target, arr.length)
                 .var("target", target).array(arr).step();
