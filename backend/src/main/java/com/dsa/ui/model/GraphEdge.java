@@ -1,5 +1,7 @@
 package com.dsa.ui.model;
 
+import java.util.Objects;
+
 public class GraphEdge {
     private int from;
     private int to;
@@ -35,4 +37,21 @@ public class GraphEdge {
 
     public boolean isHighlighted() { return highlighted; }
     public void setHighlighted(boolean highlighted) { this.highlighted = highlighted; }
+
+    /** Content equality lets the delta encoder carry reconstructed, unchanged edges. */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof GraphEdge edge)) return false;
+        return from == edge.from
+                && to == edge.to
+                && directed == edge.directed
+                && highlighted == edge.highlighted
+                && Objects.equals(weight, edge.weight);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to, weight, directed, highlighted);
+    }
 }

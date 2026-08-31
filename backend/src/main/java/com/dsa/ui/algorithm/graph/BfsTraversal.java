@@ -21,7 +21,7 @@ public class BfsTraversal {
 
         for (int i = 0; i < v; i++) nodeStates.put(i, "unvisited");
 
-        recorder.record(new TraceEvent(
+        recorder.record(TraceEvent.withDataStructureState(
             "start", 12,
             String.format("BFS Traversal: Initialize Queue and Visited array for V=%d graph. Enqueue start node 0.", v),
             Map.of("Queue", "[0]", "Start", "0"),
@@ -32,7 +32,7 @@ public class BfsTraversal {
         visited[0] = true;
         nodeStates.put(0, "queued");
 
-        recorder.record(new TraceEvent(
+        recorder.record(TraceEvent.withDataStructureState(
             "enqueue_start", 16,
             "Enqueue start vertex 0. Mark visited[0] = true.",
             Map.of("queued", "0"),
@@ -44,7 +44,7 @@ public class BfsTraversal {
             bfs.add(node);
             nodeStates.put(node, "visiting");
 
-            recorder.record(new TraceEvent(
+            recorder.record(TraceEvent.withDataStructureState(
                 "dequeue", 22,
                 String.format("Dequeue front vertex %d. Add to BFS result sequence: %s.", node, bfs.toString()),
                 Map.of("dequeued", String.valueOf(node), "bfsOrder", bfs.toString()),
@@ -62,14 +62,14 @@ public class BfsTraversal {
                     queue.add(neighbor);
                     nodeStates.put(neighbor, "queued");
 
-                    recorder.record(new TraceEvent(
+                    recorder.record(TraceEvent.withDataStructureState(
                         "enqueue_neighbor", 28,
                         String.format("Vertex %d -> Unvisited neighbor %d found. Mark visited[%d] = true and Enqueue %d.", node, neighbor, neighbor, neighbor),
                         Map.of("from", String.valueOf(node), "to", String.valueOf(neighbor)),
                         "Queue", null, getQueueState(queue), new HashMap<>(nodeStates), new ArrayList<>(activeEdges)
                     ));
                 } else {
-                    recorder.record(new TraceEvent(
+                    recorder.record(TraceEvent.withDataStructureState(
                         "already_visited", 32,
                         String.format("Vertex %d -> Neighbor %d is already visited. Skip.", node, neighbor),
                         Map.of("from", String.valueOf(node), "alreadyVisited", String.valueOf(neighbor)),
@@ -82,7 +82,7 @@ public class BfsTraversal {
         }
 
         activeEdges.clear();
-        recorder.record(new TraceEvent(
+        recorder.record(TraceEvent.withDataStructureState(
             "complete", 40,
             String.format("BFS Traversal Complete! Complete traversal order: %s", bfs.toString()),
             Map.of("BFS Result", bfs.toString()),

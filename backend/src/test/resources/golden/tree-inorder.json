@@ -15,7 +15,8 @@
     "stepNumber" : 1,
     "activeLine" : 3,
     "description" : "Before recording 1, its entire left subtree must be visited. Descend to 2.",
-    "queueOrStackState" : [ "inorder(1)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -79,7 +80,8 @@
     "stepNumber" : 2,
     "activeLine" : 3,
     "description" : "Before recording 2, its entire left subtree must be visited. Descend to 4.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(2)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -143,7 +145,8 @@
     "stepNumber" : 3,
     "activeLine" : 4,
     "description" : "Left subtree of 4 is exhausted, so now record 4.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(2)", "inorder(4)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(2)", "inorder(4)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -208,7 +211,8 @@
     "stepNumber" : 4,
     "activeLine" : 4,
     "description" : "Left subtree of 2 is exhausted, so now record 2.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(2)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -273,7 +277,8 @@
     "stepNumber" : 5,
     "activeLine" : 5,
     "description" : "Now descend into 2's right child, 5.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(2)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -337,7 +342,8 @@
     "stepNumber" : 6,
     "activeLine" : 4,
     "description" : "Left subtree of 5 is exhausted, so now record 5.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(2)", "inorder(5)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(2)", "inorder(5)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -402,7 +408,8 @@
     "stepNumber" : 7,
     "activeLine" : 4,
     "description" : "Left subtree of 1 is exhausted, so now record 1.",
-    "queueOrStackState" : [ "inorder(1)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -467,7 +474,8 @@
     "stepNumber" : 8,
     "activeLine" : 5,
     "description" : "Now descend into 1's right child, 3.",
-    "queueOrStackState" : [ "inorder(1)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -531,7 +539,8 @@
     "stepNumber" : 9,
     "activeLine" : 4,
     "description" : "Left subtree of 3 is exhausted, so now record 3.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(3)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -596,7 +605,8 @@
     "stepNumber" : 10,
     "activeLine" : 5,
     "description" : "Now descend into 3's right child, 6.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(3)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -660,7 +670,8 @@
     "stepNumber" : 11,
     "activeLine" : 4,
     "description" : "Left subtree of 6 is exhausted, so now record 6.",
-    "queueOrStackState" : [ "inorder(1)", "inorder(3)", "inorder(6)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "inorder(1)", "inorder(3)", "inorder(6)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -725,7 +736,8 @@
     "stepNumber" : 12,
     "activeLine" : 2,
     "description" : "Traversal complete. Inorder visits left, then root, then right: [4, 2, 5, 1, 3, 6].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

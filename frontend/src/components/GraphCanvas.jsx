@@ -96,7 +96,7 @@ export default function GraphCanvas({ problem, currentStep, step }) {
                 markerEnd={edge.directed ? (isActive ? 'url(#arrowhead-active)' : 'url(#arrowhead)') : ''}
                 style={{ transition: 'all 0.3s ease' }}
               />
-              {edge.weight && (
+              {edge.weight !== null && edge.weight !== undefined && (
                 <text
                   x={(u.x + v.x) / 2}
                   y={(u.y + v.y) / 2 - 6}

@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 14 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 34 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -17,8 +17,8 @@ different on purpose, and the API reports both — see
 | Tier | Technology | Notes |
 | :--- | :--- | :--- |
 | Backend | Spring Boot 3.2.3, Java 17 | `http://localhost:8923` |
-| Frontend | React 18 + Vite | Multi-mode canvases: graph, tree, array, linked list, recursion tree, grid |
-| Testing | JUnit 5 + Vitest | ~401 backend, 130 frontend |
+| Frontend | React 18 + Vite | `dsType` registry with nine current canvases, including DP tables |
+| Testing | JUnit 5 + Vitest | Contract, golden-trace, accessibility, and design-token guards |
 | Deployment | Docker Compose | One command for both tiers |
 
 ### How a trace is produced
@@ -30,7 +30,9 @@ any problem without per-problem form code.
 ```java
 public interface AlgorithmTracer {
     String id();                              // "kadane-algo"
+    DsType dsType();                          // closed visualization vocabulary
     InputSpec inputSpec();                    // declared inputs, bounds, defaults
+    Map<String, Object> alternateInput();     // materially different test input
     String annotatedCode();                   // Java source carrying // @a anchors
     void run(Inputs in, StepEmitter emit);    // executes the algorithm for real
 }
@@ -40,7 +42,8 @@ Two details matter:
 
 **There is no fallback.** `TracerRegistry` indexes tracers by id and returns nothing for
 an unregistered one, so the API answers 404 or 501 rather than substituting a different
-algorithm's animation.
+algorithm's animation. Canvas routing is a checked 16-value `dsType` registry; an unknown
+type renders “no visualization” rather than silently becoming an array.
 
 **Lines are named, not numbered.** A tracer writes `emit.at("loop.compare")`, and the
 `// @a loop.compare` marker is stripped from the source before it reaches the code
@@ -67,8 +70,11 @@ Open **http://localhost:5174**.
 ### Locally
 
 ```bash
+./start.sh                            # installs frontend deps if needed; Ctrl+C stops both
+
+# Or run the tiers separately:
 cd backend && mvn spring-boot:run     # http://localhost:8923
-cd frontend && npm install && npm run dev   # http://localhost:5180, proxied to 8923
+cd frontend && npm ci && npm run dev  # http://localhost:5180, proxied to 8923
 ```
 
 ---
@@ -109,13 +115,14 @@ Status codes are meaningful:
 
 Input size is capped per problem, and every trace has two ceilings. The **step budget**
 (default 5000) bounds CPU — it matters once a caller can set `n` on a factorial-time
-algorithm. The **byte budget** (default 2 MB) bounds the response, because every step
-carries a snapshot of the data structure, so the payload grows as steps x n: a 5000-step
-trace of a 40-element array is roughly 11 MB of JSON. Hitting either returns
-`truncated: true` with a `truncationReason` naming which one stopped the run.
+algorithm. The **byte budget** (default 2 MB) bounds collected structure data. On the wire,
+periodic keyframes plus field-level deltas avoid retransmitting an unchanged full snapshot at
+every step. Hitting either ceiling returns `truncated: true` with a `truncationReason` naming
+which one stopped the run.
 
 The eighteen legacy per-topic endpoints (`/api/arrays/...`, `/api/trees/...`, and so on)
-still work while the frontend migrates, and will be removed once it has.
+remain compatibility-tested while migration continues. The frontend itself uses the unified
+v2 `/api/problems` endpoints.
 
 ---
 
@@ -164,28 +171,27 @@ them means moving problems between services.
 
 ### Traced so far
 
-`two-sum`, `kadane-algo`, `binary-search-1d`, `tree-preorder`, `tree-inorder`,
-`tree-postorder`, `tree-level-order`, `reverse-linked-list`, `bfs-traversal`,
-`dfs-traversal`, `number-of-islands`, `search-rotated-sorted`, `n-meetings-in-one-room`,
-`dijkstra-min-heap`.
+`bfs-traversal`, `binary-search-1d`, `check-sorted-ii`, `count-square-submatrices`,
+`dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`, `kadane-algo`,
+`largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
+`lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
+`majority-element`, `max-consecutive-ones`, `max-rectangle-area-all-ones`, `move-zeros-end`,
+`n-meetings-in-one-room`, `number-of-islands`, `print-lis`, `remove-duplicates-sorted`,
+`reverse-linked-list`, `search-rotated-sorted`, `second-largest-element`, `single-number`,
+`stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`, and
+`two-sum`.
 
-The first eight were chosen to exercise every input kind and the worst-covered
-categories — Binary Search had 32 problems sharing one animation, and Binary Trees had 54
-sharing a single three-step stub. `dfs-traversal` replaced the last intro-placeholder
-still standing in Graphs BFS/DFS; `dijkstra-min-heap` is the first weighted-graph tracer
-and the first to leave Advanced Graphs' shared two-step placeholder. `tree-postorder`,
-`tree-level-order`, `search-rotated-sorted` and `n-meetings-in-one-room` were ported from
-implemented-but-unwired algorithm classes; migrating them also retired their legacy
-generators — a migrated id now answers **410 Gone** on its old endpoint rather than
-risking another problem's steps.
+The three LIS variants emit labelled, recurrence-aware `DpTable` traces. Migrated ids answer
+**410 Gone** on their old execute endpoint rather than risking a substitute trace.
 
 ---
 
 ## Tests
 
 ```bash
-cd backend  && mvn test        # ~401 tests
-cd frontend && npx vitest run  #  130 tests
+cd backend  && mvn test
+cd frontend && npm ci && npx vitest run
+cd frontend && npx vite build
 ```
 
 The suite is built to catch fake work, not just crashes:
@@ -218,3 +224,4 @@ The suite is built to catch fake work, not just crashes:
 | `references.md` | UI/UX research and the design-token system. |
 | `PROJECT_CONTEXT.md` | Pedagogical principles behind the visualizations. |
 | `HANDOFF.md` | **Temporary.** Implementation prompts for the remaining phases. Delete once the migration is complete. |
+| `RCA.md` | Root causes, resolutions, open debt, and the regression guard for each recurring incident. |

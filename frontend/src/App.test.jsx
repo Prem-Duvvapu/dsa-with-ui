@@ -51,9 +51,39 @@ describe('Frontend Component Tests', () => {
     expect(screen.getByText('Reset')).toBeInTheDocument();
   });
 
+  it('disables playback and reports 0 of 0 when a trace has no steps', () => {
+    render(
+      <Controls
+        isPlaying={false}
+        currentStepIndex={0}
+        totalSteps={0}
+        speed={1000}
+        onPlayPause={() => {}}
+        onStepNext={() => {}}
+        onStepPrev={() => {}}
+        onStepSelect={() => {}}
+        onReset={() => {}}
+        onSpeedChange={() => {}}
+      />
+    );
+
+    expect(screen.getByLabelText('Playback position')).toHaveTextContent('Step 0 of 0');
+    expect(screen.getByRole('slider')).toBeDisabled();
+    for (const name of ['Reset', 'Prev', 'Play', 'Next', '0.5x', '1x', '2x', '4x']) {
+      expect(screen.getByRole('button', { name })).toBeDisabled();
+    }
+  });
+
   it('renders the current step description in LiveTraceTicker', () => {
     render(<LiveTraceTicker stepDescription="Test Step" />);
     expect(screen.getByText('Live trace')).toBeInTheDocument();
     expect(screen.getByText('Test Step')).toBeInTheDocument();
+  });
+
+  it('uses neutral copy when there is no trace step', () => {
+    render(<LiveTraceTicker />);
+    expect(screen.getByText('Trace status')).toBeInTheDocument();
+    expect(screen.getByText('No trace steps available.')).toBeInTheDocument();
+    expect(screen.queryByText(/abcabcbb/)).not.toBeInTheDocument();
   });
 });

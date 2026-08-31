@@ -68,6 +68,23 @@ describe('GraphCanvas', () => {
     expect(container.querySelectorAll('svg line')).toHaveLength(0);
   });
 
+  it('renders a zero edge weight instead of treating it as absent', () => {
+    render(
+      <GraphCanvas
+        problem={{}}
+        currentStep={{
+          graphNodes: [
+            { id: 1, label: 'source', x: 40, y: 50 },
+            { id: 2, label: 'target', x: 140, y: 50 }
+          ],
+          graphEdges: [{ from: 1, to: 2, directed: false, weight: 0 }]
+        }}
+      />
+    );
+
+    expect(screen.getByText('0', { selector: 'text' })).toBeTruthy();
+  });
+
   it('falls back for absent or empty step topology and handles no topology safely', () => {
     const { rerender } = render(
       <GraphCanvas problem={problem} currentStep={{ graphNodes: [], graphEdges: [] }} />

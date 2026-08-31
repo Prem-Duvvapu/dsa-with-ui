@@ -9,8 +9,10 @@ import com.dsa.ui.model.GraphEdge;
 import com.dsa.ui.model.GraphNode;
 import com.dsa.ui.model.ListNode;
 import com.dsa.ui.model.TreeNode;
+import com.dsa.ui.model.TrieNodeModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +83,8 @@ public final class StepEmitter {
         private List<ArrayElement> arrayState;
         private int[][] gridState;
         private List<ListNode> listState;
+        private List<String> queueOrStackState;
+        private List<TrieNodeModel> trieState;
         private List<TreeNode> treeNodes;
         private List<GraphNode> graphNodes;
         private List<GraphEdge> graphEdges;
@@ -122,6 +126,57 @@ public final class StepEmitter {
             return array(values, -1, -1);
         }
 
+        /** A character track whose labels preserve the actual Unicode characters. */
+        public Step chars(String value, int primary, int secondary) {
+            int[] codePoints = value.codePoints().toArray();
+            List<ArrayElement> state = new ArrayList<>(codePoints.length);
+            for (int i = 0; i < codePoints.length; i++) {
+                String elementState = i == primary
+                        ? "current"
+                        : i == secondary ? "target" : "default";
+                state.add(new ArrayElement(
+                        i,
+                        codePoints[i],
+                        elementState,
+                        new String(Character.toChars(codePoints[i]))));
+            }
+            this.arrayState = state;
+            return this;
+        }
+
+        public Step chars(String value, int primary) {
+            return chars(value, primary, -1);
+        }
+
+        public Step chars(String value) {
+            return chars(value, -1, -1);
+        }
+
+        /** A 32-bit track ordered from the most-significant bit to the least-significant. */
+        public Step bits(int value, int primaryBit, int secondaryBit) {
+            List<ArrayElement> state = new ArrayList<>(Integer.SIZE);
+            for (int bit = Integer.SIZE - 1; bit >= 0; bit--) {
+                String elementState = bit == primaryBit
+                        ? "current"
+                        : bit == secondaryBit ? "target" : "default";
+                state.add(new ArrayElement(
+                        bit,
+                        (value >>> bit) & 1,
+                        elementState,
+                        String.valueOf(bit)));
+            }
+            this.arrayState = state;
+            return this;
+        }
+
+        public Step bits(int value, int primaryBit) {
+            return bits(value, primaryBit, -1);
+        }
+
+        public Step bits(int value) {
+            return bits(value, -1, -1);
+        }
+
         /** Full control over per-index states when the four defaults are not enough. */
         public Step arrayState(List<ArrayElement> state) {
             this.arrayState = state;
@@ -139,6 +194,25 @@ public final class StepEmitter {
 
         public Step list(List<ListNode> nodes) {
             this.listState = nodes;
+            return this;
+        }
+
+        /** Carries the algorithm's own stack, independently of recursive call frames. */
+        public Step stack(Iterable<?> values) {
+            this.queueOrStackState = stringSnapshot(values);
+            return this;
+        }
+
+        /** Carries the algorithm's queue in the iteration order supplied by the tracer. */
+        public Step queue(Iterable<?> values) {
+            this.queueOrStackState = stringSnapshot(values);
+            return this;
+        }
+
+        public Step trie(List<TrieNodeModel> nodes) {
+            this.trieState = nodes.stream()
+                    .map(StepEmitter::snapshotTrieNode)
+                    .toList();
             return this;
         }
 
@@ -187,8 +261,12 @@ public final class StepEmitter {
 
         /** Carries an already-laid-out graph topology with this step. */
         public Step graph(List<GraphNode> nodes, List<GraphEdge> edges) {
-            this.graphNodes = List.copyOf(nodes);
-            this.graphEdges = List.copyOf(edges);
+            this.graphNodes = nodes.stream()
+                    .map(StepEmitter::snapshotGraphNode)
+                    .toList();
+            this.graphEdges = edges.stream()
+                    .map(StepEmitter::snapshotGraphEdge)
+                    .toList();
             return this;
         }
 
@@ -217,7 +295,7 @@ public final class StepEmitter {
                     steps.size() + 1,
                     line,
                     description,
-                    List.copyOf(callStack),
+                    queueOrStackState,
                     nodeStates == null ? Map.of() : nodeStates,
                     activeEdges == null ? List.of() : activeEdges,
                     new LinkedHashMap<>(variables),
@@ -225,11 +303,12 @@ public final class StepEmitter {
                     gridState,
                     arrayState,
                     listState,
-                    null,
+                    trieState,
                     treeNodes,
                     graphNodes,
                     graphEdges,
-                    dpTable
+                    dpTable,
+                    List.copyOf(callStack)
             );
 
             // Checked BEFORE adding, so a collected trace is always within budget.
@@ -258,15 +337,20 @@ public final class StepEmitter {
         long bytes = 190;                                    // envelope: field names, numbers, dsType, nulls
 
         if (s.getDescription() != null) {
-            bytes += s.getDescription().length();
+            bytes += jsonStringBytes(s.getDescription());
         }
         if (s.getVariables() != null) {
             for (Map.Entry<String, String> e : s.getVariables().entrySet()) {
-                bytes += e.getKey().length() + (e.getValue() == null ? 4 : e.getValue().length()) + 8;
+                bytes += jsonStringBytes(e.getKey()) + jsonStringBytes(e.getValue()) + 8;
             }
         }
         if (s.getArrayState() != null) {
             bytes += s.getArrayState().size() * 52L;         // {"value":..,"state":"..","index":..}
+            for (ArrayElement element : s.getArrayState()) {
+                if (element.getLabel() != null) {
+                    bytes += jsonStringBytes(element.getLabel()) + 11L; // ,"label":"..."
+                }
+            }
         }
         if (s.getGridState() != null) {
             for (int[] row : s.getGridState()) {
@@ -275,6 +359,22 @@ public final class StepEmitter {
         }
         if (s.getListState() != null) {
             bytes += s.getListState().size() * 88L;
+        }
+        if (s.getTrieState() != null) {
+            for (TrieNodeModel node : s.getTrieState()) {
+                bytes += 104L;
+                if (node.getCharacter() != null) {
+                    bytes += jsonStringBytes(node.getCharacter());
+                }
+                if (node.getState() != null) {
+                    bytes += jsonStringBytes(node.getState());
+                }
+                if (node.getChildren() != null) {
+                    for (Map.Entry<String, Integer> child : node.getChildren().entrySet()) {
+                        bytes += jsonStringBytes(child.getKey()) + 16L;
+                    }
+                }
+            }
         }
         if (s.getTreeNodes() != null) {
             bytes += s.getTreeNodes().size() * 104L;
@@ -289,15 +389,17 @@ public final class StepEmitter {
             DpTable table = s.getDpTable();
             bytes += 36;                                   // field and table envelopes
             for (String label : table.rowLabels()) {
-                bytes += label.length() + 4L;
+                bytes += jsonStringBytes(label) + 4L;
             }
             for (String label : table.colLabels()) {
-                bytes += label.length() + 4L;
+                bytes += jsonStringBytes(label) + 4L;
             }
             for (List<DpCell> row : table.cells()) {
                 bytes += 2;
                 for (DpCell cell : row) {
-                    bytes += 24L + cell.value().length() + cell.state().length();
+                    bytes += 24L
+                            + jsonStringBytes(cell.value())
+                            + jsonStringBytes(cell.state());
                 }
             }
         }
@@ -306,9 +408,81 @@ public final class StepEmitter {
         }
         for (List<String> strings : List.of(
                 s.getActiveEdges() == null ? List.<String>of() : s.getActiveEdges(),
-                s.getQueueOrStackState() == null ? List.<String>of() : s.getQueueOrStackState())) {
+                s.getQueueOrStackState() == null ? List.<String>of() : s.getQueueOrStackState(),
+                s.getCallStack() == null ? List.<String>of() : s.getCallStack())) {
             for (String value : strings) {
-                bytes += value.length() + 4;
+                bytes += jsonStringBytes(value) + 4;
+            }
+        }
+        return bytes;
+    }
+
+    private static List<String> stringSnapshot(Iterable<?> values) {
+        List<String> snapshot = new ArrayList<>();
+        for (Object value : values) {
+            snapshot.add(String.valueOf(value));
+        }
+        return List.copyOf(snapshot);
+    }
+
+    private static TrieNodeModel snapshotTrieNode(TrieNodeModel node) {
+        Map<String, Integer> children = node.getChildren() == null
+                ? null
+                : Collections.unmodifiableMap(new LinkedHashMap<>(node.getChildren()));
+        return new TrieNodeModel(
+                node.getId(),
+                node.getCharacter(),
+                node.isEndOfWord(),
+                node.getX(),
+                node.getY(),
+                children,
+                node.getState());
+    }
+
+    private static GraphNode snapshotGraphNode(GraphNode node) {
+        return new GraphNode(
+                node.getId(),
+                node.getLabel(),
+                node.getX(),
+                node.getY(),
+                node.getState());
+    }
+
+    private static GraphEdge snapshotGraphEdge(GraphEdge edge) {
+        return new GraphEdge(
+                edge.getFrom(),
+                edge.getTo(),
+                edge.getWeight(),
+                edge.isDirected(),
+                edge.isHighlighted());
+    }
+
+    /**
+     * Conservative byte cost for a String's contents in JSON, excluding its two quotes.
+     * Quotes, backslashes and control characters grow when escaped. Non-ASCII characters
+     * are charged as {@code \\uXXXX} escapes (one per UTF-16 unit): some JSON writers emit
+     * shorter raw UTF-8, but the response budget must remain safe under either policy.
+     */
+    private static long jsonStringBytes(String value) {
+        if (value == null) {
+            return 4; // JSON null
+        }
+
+        long bytes = 0;
+        for (int offset = 0; offset < value.length();) {
+            int codePoint = value.codePointAt(offset);
+            offset += Character.charCount(codePoint);
+
+            if (codePoint == '"' || codePoint == '\\'
+                    || codePoint == '\b' || codePoint == '\f'
+                    || codePoint == '\n' || codePoint == '\r' || codePoint == '\t') {
+                bytes += 2;
+            } else if (codePoint < 0x20) {
+                bytes += 6; // \\u00xx
+            } else if (codePoint <= 0x7f) {
+                bytes += 1;
+            } else {
+                bytes += Character.charCount(codePoint) * 6L;
             }
         }
         return bytes;

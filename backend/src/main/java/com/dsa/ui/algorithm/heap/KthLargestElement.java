@@ -15,7 +15,7 @@ public class KthLargestElement {
     public int solve(int[] nums, int k, TraceRecorder recorder) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
-        recorder.record(new TraceEvent(
+        recorder.record(TraceEvent.withDataStructureState(
             "start", 12,
             String.format("Kth Largest Element: Find %d-th largest in %s using Min-Heap of max size %d.", k, Arrays.toString(nums), k),
             Map.of("nums", Arrays.toString(nums), "k", String.valueOf(k)),
@@ -25,7 +25,7 @@ public class KthLargestElement {
         for (int i = 0; i < nums.length; i++) {
             minHeap.add(nums[i]);
 
-            recorder.record(new TraceEvent(
+            recorder.record(TraceEvent.withDataStructureState(
                 "push_heap", 18,
                 String.format("Element nums[%d] = %d: Push to Min-Heap. Current Heap: %s", i, nums[i], minHeap.toString()),
                 Map.of("pushed", String.valueOf(nums[i]), "heapSize", String.valueOf(minHeap.size())),
@@ -34,7 +34,7 @@ public class KthLargestElement {
 
             if (minHeap.size() > k) {
                 int popped = minHeap.poll();
-                recorder.record(new TraceEvent(
+                recorder.record(TraceEvent.withDataStructureState(
                     "pop_min", 22,
                     String.format("Heap size (%d) > k (%d): Extract Min element %d. Remaining Heap: %s", minHeap.size() + 1, k, popped, minHeap.toString()),
                     Map.of("extractedMin", String.valueOf(popped), "heapSize", String.valueOf(minHeap.size())),
@@ -45,7 +45,7 @@ public class KthLargestElement {
 
         int kthLargest = minHeap.peek();
 
-        recorder.record(new TraceEvent(
+        recorder.record(TraceEvent.withDataStructureState(
             "complete", 30,
             String.format("Kth Largest Element Complete! Top of Min-Heap (peek) = %d is the %d-th largest element.", kthLargest, k),
             Map.of("KthLargest", String.valueOf(kthLargest)),

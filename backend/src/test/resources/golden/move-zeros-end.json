@@ -15,7 +15,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "pos is the landing spot for the next non-zero. Everything left of pos is already a packed, ordered prefix of non-zeros.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -51,7 +52,8 @@
     "stepNumber" : 2,
     "activeLine" : 4,
     "description" : "i=0: nums[0]=0 stays for now; pos=0 does not move, so the next value will land before this zero.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -88,7 +90,8 @@
     "stepNumber" : 3,
     "activeLine" : 4,
     "description" : "i=1: nums[1]=1 is non-zero - it belongs at position 0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -125,7 +128,8 @@
     "stepNumber" : 4,
     "activeLine" : 5,
     "description" : "Swap it with the 0 sitting at 0. Non-zeros keep their order; the zero slides right.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -162,7 +166,8 @@
     "stepNumber" : 5,
     "activeLine" : 4,
     "description" : "i=2: nums[2]=0 stays for now; pos=1 does not move, so the next value will land before this zero.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -199,7 +204,8 @@
     "stepNumber" : 6,
     "activeLine" : 4,
     "description" : "i=3: nums[3]=3 is non-zero - it belongs at position 1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -236,7 +242,8 @@
     "stepNumber" : 7,
     "activeLine" : 5,
     "description" : "Swap it with the 0 sitting at 1. Non-zeros keep their order; the zero slides right.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -273,7 +280,8 @@
     "stepNumber" : 8,
     "activeLine" : 4,
     "description" : "i=4: nums[4]=12 is non-zero - it belongs at position 2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -310,7 +318,8 @@
     "stepNumber" : 9,
     "activeLine" : 5,
     "description" : "Swap it with the 0 sitting at 2. Non-zeros keep their order; the zero slides right.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -347,7 +356,8 @@
     "stepNumber" : 10,
     "activeLine" : 11,
     "description" : "All non-zeros packed to the front in order; every zero was pushed past position 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

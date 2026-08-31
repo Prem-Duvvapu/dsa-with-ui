@@ -25,6 +25,7 @@
 /** Fields that carry forward. Scalars (stepNumber, activeLine, description) always ship. */
 const CARRIED = [
   'queueOrStackState',
+  'callStack',
   'nodeStates',
   'activeEdges',
   'variables',
@@ -32,6 +33,7 @@ const CARRIED = [
   'gridState',
   'arrayState',
   'listState',
+  'trieState',
   'treeNodes',
   'graphNodes',
   'graphEdges',

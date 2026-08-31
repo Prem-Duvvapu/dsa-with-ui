@@ -93,6 +93,11 @@ public final class InputField {
         public Builder directed() { return constraint("directed", true); }
         public Builder weighted() { return constraint("weighted", true); }
 
+        /** Inclusive bounds on the third value of every weighted graph edge. */
+        public Builder weights(int min, int max) {
+            return constraint("minWeight", min).constraint("maxWeight", max);
+        }
+
         public InputField build() { return new InputField(this); }
     }
 }

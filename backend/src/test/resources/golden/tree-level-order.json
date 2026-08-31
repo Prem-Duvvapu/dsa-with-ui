@@ -17,7 +17,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "Seed the queue with the root 1. Everything else enters through a parent.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -81,7 +82,8 @@
     "stepNumber" : 2,
     "activeLine" : 6,
     "description" : "Freeze the frontier: 1 node entered the queue last round, so level 0 has exactly that many.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -146,7 +148,8 @@
     "stepNumber" : 3,
     "activeLine" : 9,
     "description" : "Take 1 off the front — first in, first out — and write it into level 0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -212,7 +215,8 @@
     "stepNumber" : 4,
     "activeLine" : 11,
     "description" : "1's children 2 and 3 go to the BACK of the queue — they wait for every node on this level.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -276,7 +280,8 @@
     "stepNumber" : 5,
     "activeLine" : 14,
     "description" : "Level 0 is complete: [1]. Whatever is queued now belongs to the next one.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -340,7 +345,8 @@
     "stepNumber" : 6,
     "activeLine" : 6,
     "description" : "Freeze the frontier: 2 nodes entered the queue last round, so level 1 has exactly that many.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -405,7 +411,8 @@
     "stepNumber" : 7,
     "activeLine" : 9,
     "description" : "Take 2 off the front — first in, first out — and write it into level 1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -471,7 +478,8 @@
     "stepNumber" : 8,
     "activeLine" : 11,
     "description" : "2's children 4 and 5 go to the BACK of the queue — they wait for every node on this level.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -535,7 +543,8 @@
     "stepNumber" : 9,
     "activeLine" : 9,
     "description" : "Take 3 off the front — first in, first out — and write it into level 1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -601,7 +610,8 @@
     "stepNumber" : 10,
     "activeLine" : 11,
     "description" : "3's child 6 go to the BACK of the queue — they wait for every node on this level.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -665,7 +675,8 @@
     "stepNumber" : 11,
     "activeLine" : 14,
     "description" : "Level 1 is complete: [2, 3]. Whatever is queued now belongs to the next one.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -729,7 +740,8 @@
     "stepNumber" : 12,
     "activeLine" : 6,
     "description" : "Freeze the frontier: 3 nodes entered the queue last round, so level 2 has exactly that many.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -794,7 +806,8 @@
     "stepNumber" : 13,
     "activeLine" : 9,
     "description" : "Take 4 off the front — first in, first out — and write it into level 2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -860,7 +873,8 @@
     "stepNumber" : 14,
     "activeLine" : 9,
     "description" : "Take 5 off the front — first in, first out — and write it into level 2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -926,7 +940,8 @@
     "stepNumber" : 15,
     "activeLine" : 9,
     "description" : "Take 6 off the front — first in, first out — and write it into level 2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -992,7 +1007,8 @@
     "stepNumber" : 16,
     "activeLine" : 14,
     "description" : "Level 2 is complete: [4, 5, 6]. Whatever is queued now belongs to the next one.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1056,7 +1072,8 @@
     "stepNumber" : 17,
     "activeLine" : 16,
     "description" : "Queue drained — every level is built: [[1], [2, 3], [4, 5, 6]].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

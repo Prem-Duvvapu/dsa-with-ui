@@ -16,7 +16,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "4x5 grid. heights[c] will count consecutive 1s ending at the current row - each row is then a histogram problem.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -32,7 +33,8 @@
     "stepNumber" : 2,
     "activeLine" : 7,
     "description" : "row 0, col 0: grid=1 so heights[0]=1 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -70,7 +72,8 @@
     "stepNumber" : 3,
     "activeLine" : 7,
     "description" : "row 0, col 1: grid=0 so heights[1]=0 (zeroed - any rectangle using this column breaks here).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -108,7 +111,8 @@
     "stepNumber" : 4,
     "activeLine" : 7,
     "description" : "row 0, col 2: grid=1 so heights[2]=1 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -146,7 +150,8 @@
     "stepNumber" : 5,
     "activeLine" : 7,
     "description" : "row 0, col 3: grid=0 so heights[3]=0 (zeroed - any rectangle using this column breaks here).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -184,7 +189,8 @@
     "stepNumber" : 6,
     "activeLine" : 7,
     "description" : "row 0, col 4: grid=0 so heights[4]=0 (zeroed - any rectangle using this column breaks here).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -222,7 +228,8 @@
     "stepNumber" : 7,
     "activeLine" : 17,
     "description" : "row 0: push col 0 (h=1); stack stays increasing bottom→top: [0].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -261,7 +268,8 @@
     "stepNumber" : 8,
     "activeLine" : 13,
     "description" : "row 0: bar 0 at col 1 ends taller-or-equal bars. Pop col 0 (h=1), width 1−(-1)−1=1, area=1 - new best.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -303,7 +311,8 @@
     "stepNumber" : 9,
     "activeLine" : 17,
     "description" : "row 0: push col 1 (h=0); stack stays increasing bottom→top: [1].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -342,7 +351,8 @@
     "stepNumber" : 10,
     "activeLine" : 17,
     "description" : "row 0: push col 2 (h=1); stack stays increasing bottom→top: [1, 2].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -381,7 +391,8 @@
     "stepNumber" : 11,
     "activeLine" : 13,
     "description" : "row 0: bar 0 at col 3 ends taller-or-equal bars. Pop col 2 (h=1), width 3−(1)−1=1, area=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -423,7 +434,8 @@
     "stepNumber" : 12,
     "activeLine" : 13,
     "description" : "row 0: bar 0 at col 3 ends taller-or-equal bars. Pop col 1 (h=0), width 3−(-1)−1=3, area=0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -465,7 +477,8 @@
     "stepNumber" : 13,
     "activeLine" : 17,
     "description" : "row 0: push col 3 (h=0); stack stays increasing bottom→top: [3].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -504,7 +517,8 @@
     "stepNumber" : 14,
     "activeLine" : 13,
     "description" : "row 0: bar 0 at col 4 ends taller-or-equal bars. Pop col 3 (h=0), width 4−(-1)−1=4, area=0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -546,7 +560,8 @@
     "stepNumber" : 15,
     "activeLine" : 17,
     "description" : "row 0: push col 4 (h=0); stack stays increasing bottom→top: [4].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -585,7 +600,8 @@
     "stepNumber" : 16,
     "activeLine" : 13,
     "description" : "row 0: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=0), width 5−(-1)−1=5, area=0 - sentinel flushes what remains.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -627,7 +643,8 @@
     "stepNumber" : 17,
     "activeLine" : 7,
     "description" : "row 1, col 0: grid=1 so heights[0]=2 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -665,7 +682,8 @@
     "stepNumber" : 18,
     "activeLine" : 7,
     "description" : "row 1, col 1: grid=0 so heights[1]=0 (zeroed - any rectangle using this column breaks here).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -703,7 +721,8 @@
     "stepNumber" : 19,
     "activeLine" : 7,
     "description" : "row 1, col 2: grid=1 so heights[2]=2 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -741,7 +760,8 @@
     "stepNumber" : 20,
     "activeLine" : 7,
     "description" : "row 1, col 3: grid=1 so heights[3]=1 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -779,7 +799,8 @@
     "stepNumber" : 21,
     "activeLine" : 7,
     "description" : "row 1, col 4: grid=1 so heights[4]=1 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -817,7 +838,8 @@
     "stepNumber" : 22,
     "activeLine" : 17,
     "description" : "row 1: push col 0 (h=2); stack stays increasing bottom→top: [0].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -856,7 +878,8 @@
     "stepNumber" : 23,
     "activeLine" : 13,
     "description" : "row 1: bar 0 at col 1 ends taller-or-equal bars. Pop col 0 (h=2), width 1−(-1)−1=1, area=2 - new best.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -898,7 +921,8 @@
     "stepNumber" : 24,
     "activeLine" : 17,
     "description" : "row 1: push col 1 (h=0); stack stays increasing bottom→top: [1].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -937,7 +961,8 @@
     "stepNumber" : 25,
     "activeLine" : 17,
     "description" : "row 1: push col 2 (h=2); stack stays increasing bottom→top: [1, 2].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -976,7 +1001,8 @@
     "stepNumber" : 26,
     "activeLine" : 13,
     "description" : "row 1: bar 1 at col 3 ends taller-or-equal bars. Pop col 2 (h=2), width 3−(1)−1=1, area=2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1018,7 +1044,8 @@
     "stepNumber" : 27,
     "activeLine" : 17,
     "description" : "row 1: push col 3 (h=1); stack stays increasing bottom→top: [1, 3].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1057,7 +1084,8 @@
     "stepNumber" : 28,
     "activeLine" : 13,
     "description" : "row 1: bar 1 at col 4 ends taller-or-equal bars. Pop col 3 (h=1), width 4−(1)−1=2, area=2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1099,7 +1127,8 @@
     "stepNumber" : 29,
     "activeLine" : 17,
     "description" : "row 1: push col 4 (h=1); stack stays increasing bottom→top: [1, 4].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1138,7 +1167,8 @@
     "stepNumber" : 30,
     "activeLine" : 13,
     "description" : "row 1: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=1), width 5−(1)−1=3, area=3 - new best - sentinel flushes what remains.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1180,7 +1210,8 @@
     "stepNumber" : 31,
     "activeLine" : 13,
     "description" : "row 1: bar 0 at col 5 ends taller-or-equal bars. Pop col 1 (h=0), width 5−(-1)−1=5, area=0 - sentinel flushes what remains.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1222,7 +1253,8 @@
     "stepNumber" : 32,
     "activeLine" : 7,
     "description" : "row 2, col 0: grid=1 so heights[0]=3 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1260,7 +1292,8 @@
     "stepNumber" : 33,
     "activeLine" : 7,
     "description" : "row 2, col 1: grid=1 so heights[1]=1 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1298,7 +1331,8 @@
     "stepNumber" : 34,
     "activeLine" : 7,
     "description" : "row 2, col 2: grid=1 so heights[2]=3 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1336,7 +1370,8 @@
     "stepNumber" : 35,
     "activeLine" : 7,
     "description" : "row 2, col 3: grid=1 so heights[3]=2 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1374,7 +1409,8 @@
     "stepNumber" : 36,
     "activeLine" : 7,
     "description" : "row 2, col 4: grid=1 so heights[4]=2 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1412,7 +1448,8 @@
     "stepNumber" : 37,
     "activeLine" : 17,
     "description" : "row 2: push col 0 (h=3); stack stays increasing bottom→top: [0].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1451,7 +1488,8 @@
     "stepNumber" : 38,
     "activeLine" : 13,
     "description" : "row 2: bar 1 at col 1 ends taller-or-equal bars. Pop col 0 (h=3), width 1−(-1)−1=1, area=3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1493,7 +1531,8 @@
     "stepNumber" : 39,
     "activeLine" : 17,
     "description" : "row 2: push col 1 (h=1); stack stays increasing bottom→top: [1].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1532,7 +1571,8 @@
     "stepNumber" : 40,
     "activeLine" : 17,
     "description" : "row 2: push col 2 (h=3); stack stays increasing bottom→top: [1, 2].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1571,7 +1611,8 @@
     "stepNumber" : 41,
     "activeLine" : 13,
     "description" : "row 2: bar 2 at col 3 ends taller-or-equal bars. Pop col 2 (h=3), width 3−(1)−1=1, area=3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1613,7 +1654,8 @@
     "stepNumber" : 42,
     "activeLine" : 17,
     "description" : "row 2: push col 3 (h=2); stack stays increasing bottom→top: [1, 3].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1652,7 +1694,8 @@
     "stepNumber" : 43,
     "activeLine" : 13,
     "description" : "row 2: bar 2 at col 4 ends taller-or-equal bars. Pop col 3 (h=2), width 4−(1)−1=2, area=4 - new best.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1694,7 +1737,8 @@
     "stepNumber" : 44,
     "activeLine" : 17,
     "description" : "row 2: push col 4 (h=2); stack stays increasing bottom→top: [1, 4].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1733,7 +1777,8 @@
     "stepNumber" : 45,
     "activeLine" : 13,
     "description" : "row 2: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=2), width 5−(1)−1=3, area=6 - new best - sentinel flushes what remains.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1775,7 +1820,8 @@
     "stepNumber" : 46,
     "activeLine" : 13,
     "description" : "row 2: bar 0 at col 5 ends taller-or-equal bars. Pop col 1 (h=1), width 5−(-1)−1=5, area=5 - sentinel flushes what remains.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1817,7 +1863,8 @@
     "stepNumber" : 47,
     "activeLine" : 7,
     "description" : "row 3, col 0: grid=1 so heights[0]=4 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1855,7 +1902,8 @@
     "stepNumber" : 48,
     "activeLine" : 7,
     "description" : "row 3, col 1: grid=0 so heights[1]=0 (zeroed - any rectangle using this column breaks here).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1893,7 +1941,8 @@
     "stepNumber" : 49,
     "activeLine" : 7,
     "description" : "row 3, col 2: grid=0 so heights[2]=0 (zeroed - any rectangle using this column breaks here).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1931,7 +1980,8 @@
     "stepNumber" : 50,
     "activeLine" : 7,
     "description" : "row 3, col 3: grid=1 so heights[3]=3 (grew).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1969,7 +2019,8 @@
     "stepNumber" : 51,
     "activeLine" : 7,
     "description" : "row 3, col 4: grid=0 so heights[4]=0 (zeroed - any rectangle using this column breaks here).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2007,7 +2058,8 @@
     "stepNumber" : 52,
     "activeLine" : 17,
     "description" : "row 3: push col 0 (h=4); stack stays increasing bottom→top: [0].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2046,7 +2098,8 @@
     "stepNumber" : 53,
     "activeLine" : 13,
     "description" : "row 3: bar 0 at col 1 ends taller-or-equal bars. Pop col 0 (h=4), width 1−(-1)−1=1, area=4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2088,7 +2141,8 @@
     "stepNumber" : 54,
     "activeLine" : 17,
     "description" : "row 3: push col 1 (h=0); stack stays increasing bottom→top: [1].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2127,7 +2181,8 @@
     "stepNumber" : 55,
     "activeLine" : 13,
     "description" : "row 3: bar 0 at col 2 ends taller-or-equal bars. Pop col 1 (h=0), width 2−(-1)−1=2, area=0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2169,7 +2224,8 @@
     "stepNumber" : 56,
     "activeLine" : 17,
     "description" : "row 3: push col 2 (h=0); stack stays increasing bottom→top: [2].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2208,7 +2264,8 @@
     "stepNumber" : 57,
     "activeLine" : 17,
     "description" : "row 3: push col 3 (h=3); stack stays increasing bottom→top: [2, 3].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2247,7 +2304,8 @@
     "stepNumber" : 58,
     "activeLine" : 13,
     "description" : "row 3: bar 0 at col 4 ends taller-or-equal bars. Pop col 3 (h=3), width 4−(2)−1=1, area=3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2289,7 +2347,8 @@
     "stepNumber" : 59,
     "activeLine" : 13,
     "description" : "row 3: bar 0 at col 4 ends taller-or-equal bars. Pop col 2 (h=0), width 4−(-1)−1=4, area=0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2331,7 +2390,8 @@
     "stepNumber" : 60,
     "activeLine" : 17,
     "description" : "row 3: push col 4 (h=0); stack stays increasing bottom→top: [4].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2370,7 +2430,8 @@
     "stepNumber" : 61,
     "activeLine" : 13,
     "description" : "row 3: bar 0 at col 5 ends taller-or-equal bars. Pop col 4 (h=0), width 5−(-1)−1=5, area=0 - sentinel flushes what remains.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2412,7 +2473,8 @@
     "stepNumber" : 62,
     "activeLine" : 20,
     "description" : "Largest all-1s rectangle in the grid has area 6.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

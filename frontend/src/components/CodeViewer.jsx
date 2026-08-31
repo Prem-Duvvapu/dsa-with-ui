@@ -2,24 +2,13 @@ import React from 'react';
 import { Code2 } from 'lucide-react';
 
 export default function CodeViewer({ problem, currentStep }) {
-  const activeLine = currentStep?.activeLine || 4;
-  const javaCode = problem?.javaCode || `// Java sliding window (LeetCode 3)
-public int lengthOfLongestSubstring(String s) {
-    HashMap<Character, Integer> map = new HashMap<>();
-    int left = 0, right = 0, maxLen = 0;
-    while (right < s.length()) {
-        char ch = s.charAt(right);
-        if (map.containsKey(ch)) {
-            left = Math.max(map.get(ch) + 1, left);
-        }
-        map.put(ch, right);
-        maxLen = Math.max(maxLen, right - left + 1);
-        right++;
-    }
-    return maxLen;
-}`;
-
-  const lines = javaCode.split('\n');
+  const javaCode = typeof problem?.javaCode === 'string' && problem.javaCode.trim()
+    ? problem.javaCode
+    : null;
+  const activeLine = Number.isInteger(currentStep?.activeLine) && currentStep.activeLine > 0
+    ? currentStep.activeLine
+    : null;
+  const lines = javaCode?.split('\n') || [];
 
   return (
     <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden' }}>
@@ -28,15 +17,17 @@ public int lengthOfLongestSubstring(String s) {
           <Code2 size={15} color="var(--accent-violet)" />
           <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-primary)' }}>Java interview solution</span>
         </div>
-        <span style={{ fontSize: '0.66rem', padding: '1px 6px', borderRadius: 'var(--radius-sm)', background: 'var(--accent-violet-tint)', color: 'var(--accent-violet)', border: '1px solid var(--border-accent)', fontWeight: '700', fontFamily: 'var(--font-code)' }}>
-          Active line: {activeLine}
-        </span>
+        {activeLine !== null && javaCode && (
+          <span style={{ fontSize: '0.66rem', padding: '1px 6px', borderRadius: 'var(--radius-sm)', background: 'var(--accent-violet-tint)', color: 'var(--accent-violet)', border: '1px solid var(--border-accent)', fontWeight: '700', fontFamily: 'var(--font-code)' }}>
+            Active line: {activeLine}
+          </span>
+        )}
       </div>
 
       {/* Code Editor Body */}
       <div style={{
         flex: 1,
-        background: '#090d16',
+        background: 'var(--bg-page)',
         borderRadius: 'var(--radius-sm)',
         border: '1px solid var(--border-default)',
         overflowY: 'auto',
@@ -45,7 +36,14 @@ public int lengthOfLongestSubstring(String s) {
         lineHeight: '1.5',
         padding: '6px 0'
       }}>
-        {lines.map((lineText, idx) => {
+        {!javaCode ? (
+          <div
+            role="status"
+            style={{ height: '100%', minHeight: '96px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', color: 'var(--text-muted)', textAlign: 'center', fontStyle: 'italic' }}
+          >
+            Code unavailable for this problem.
+          </div>
+        ) : lines.map((lineText, idx) => {
           const lineNumber = idx + 1;
           const isHighlighted = lineNumber === activeLine;
 
@@ -58,7 +56,7 @@ public int lengthOfLongestSubstring(String s) {
                 padding: '1px 12px',
                 background: isHighlighted ? 'var(--accent-violet-tint)' : 'transparent',
                 borderLeft: isHighlighted ? '3px solid var(--accent-violet)' : '3px solid transparent',
-                color: isHighlighted ? 'var(--text-primary)' : lineText.trim().startsWith('//') ? 'var(--text-muted)' : '#cbd5e1',
+                color: isHighlighted ? 'var(--text-primary)' : lineText.trim().startsWith('//') ? 'var(--text-muted)' : 'var(--text-secondary)',
                 fontWeight: isHighlighted ? '600' : '400',
                 transition: 'all 0.15s ease'
               }}

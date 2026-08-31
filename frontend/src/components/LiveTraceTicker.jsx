@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default function LiveTraceTicker({ stepDescription }) {
+  const hasStep = typeof stepDescription === 'string' && stepDescription.trim().length > 0;
+
   return (
     <div
       role="status"
@@ -20,14 +22,14 @@ export default function LiveTraceTicker({ stepDescription }) {
         flexShrink: 0
       }}
     >
-      <div className="pulse-dot" style={{ flexShrink: 0 }} />
+      {hasStep && <div className="pulse-dot" style={{ flexShrink: 0 }} />}
 
       <span style={{ color: 'var(--text-primary)', fontWeight: '700', flexShrink: 0 }}>
-        Live trace
+        {hasStep ? 'Live trace' : 'Trace status'}
       </span>
 
       <span style={{ color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-        {stepDescription || 'Input string s = "abcabcbb". Initialize sliding window pointers left = 0, right = 0, maxLen = 0.'}
+        {hasStep ? stepDescription : 'No trace steps available.'}
       </span>
     </div>
   );

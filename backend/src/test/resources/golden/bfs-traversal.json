@@ -21,7 +21,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "6 vertices, 6 edges. Nothing visited yet.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "unvisited",
       "1" : "unvisited",
@@ -118,7 +119,8 @@
     "stepNumber" : 2,
     "activeLine" : 4,
     "description" : "Seed the queue with vertex 0 and mark it seen.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "queued",
       "1" : "unvisited",
@@ -215,7 +217,8 @@
     "stepNumber" : 3,
     "activeLine" : 7,
     "description" : "Dequeue 0. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "unvisited",
@@ -314,7 +317,8 @@
     "stepNumber" : 4,
     "activeLine" : 10,
     "description" : "1 is new. Mark it seen and enqueue it behind nothing.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "queued",
@@ -413,7 +417,8 @@
     "stepNumber" : 5,
     "activeLine" : 10,
     "description" : "2 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "queued",
@@ -512,7 +517,8 @@
     "stepNumber" : 6,
     "activeLine" : 7,
     "description" : "Dequeue 1. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visiting",
@@ -611,7 +617,8 @@
     "stepNumber" : 7,
     "activeLine" : 9,
     "description" : "0 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visiting",
@@ -710,7 +717,8 @@
     "stepNumber" : 8,
     "activeLine" : 10,
     "description" : "3 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visiting",
@@ -809,7 +817,8 @@
     "stepNumber" : 9,
     "activeLine" : 7,
     "description" : "Dequeue 2. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -908,7 +917,8 @@
     "stepNumber" : 10,
     "activeLine" : 9,
     "description" : "0 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1007,7 +1017,8 @@
     "stepNumber" : 11,
     "activeLine" : 10,
     "description" : "4 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1106,7 +1117,8 @@
     "stepNumber" : 12,
     "activeLine" : 7,
     "description" : "Dequeue 3. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1205,7 +1217,8 @@
     "stepNumber" : 13,
     "activeLine" : 9,
     "description" : "1 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1304,7 +1317,8 @@
     "stepNumber" : 14,
     "activeLine" : 10,
     "description" : "5 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1403,7 +1417,8 @@
     "stepNumber" : 15,
     "activeLine" : 7,
     "description" : "Dequeue 4. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1502,7 +1517,8 @@
     "stepNumber" : 16,
     "activeLine" : 9,
     "description" : "2 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1601,7 +1617,8 @@
     "stepNumber" : 17,
     "activeLine" : 9,
     "description" : "5 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1700,7 +1717,8 @@
     "stepNumber" : 18,
     "activeLine" : 7,
     "description" : "Dequeue 5. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1799,7 +1817,8 @@
     "stepNumber" : 19,
     "activeLine" : 9,
     "description" : "3 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1898,7 +1917,8 @@
     "stepNumber" : 20,
     "activeLine" : 9,
     "description" : "4 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1997,7 +2017,8 @@
     "stepNumber" : 21,
     "activeLine" : 15,
     "description" : "Queue empty. BFS order: [0, 1, 2, 3, 4, 5].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",

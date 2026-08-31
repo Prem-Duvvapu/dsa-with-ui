@@ -114,6 +114,22 @@ const DEFAULT_FALLBACK_PROBLEMS = [
   }
 ];
 
+const TRACE_ERROR_COPY = Object.freeze({
+  fetch: 'Could not load this trace from the backend.',
+  empty: 'The backend returned an empty trace.',
+  malformed: 'The backend returned a malformed trace.'
+});
+
+function uniqueProblemsById(problems) {
+  const seen = new Set();
+  return problems.filter((problem) => {
+    const id = typeof problem?.id === 'string' ? problem.id : '';
+    if (!id || seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+}
+
 export default function App() {
   const [problems, setProblems] = useState(DEFAULT_FALLBACK_PROBLEMS);
   const [activeCategory, setActiveCategory] = useState(null);
@@ -150,10 +166,14 @@ export default function App() {
       const data = await response.json();
 
       if (Array.isArray(data) && data.length > 0) {
-        setProblems(data);
-        const initialId = data.find(p => p.id === 'two-sum')?.id || data[0].id;
-        setActiveProblemId(initialId);
-        setCatalogError(null);
+        const uniqueProblems = uniqueProblemsById(data);
+        if (uniqueProblems.length > 0) {
+          setProblems(uniqueProblems);
+          const initialId = uniqueProblems.find(p => p.id === 'two-sum')?.id
+            || uniqueProblems[0].id;
+          setActiveProblemId(initialId);
+          setCatalogError(null);
+        }
       }
     } catch (err) {
       console.warn('Backend connection failed:', err);
@@ -234,6 +254,8 @@ export default function App() {
   const loading = catalogLoading;
   const hasInputSpec = Boolean(activeProblem?.inputSpec?.fields?.length);
   const activeDsType = currentStep?.dsType || activeProblem?.dsType || '';
+  const traceErrorCopy = TRACE_ERROR_COPY[traceError];
+  const showingOfflineTrace = traceError === 'fetch' && steps.length > 0;
 
   // ── Canvas selection by dsType ───────────────────────────────────────────
   const renderCanvas = () => {
@@ -342,6 +364,10 @@ export default function App() {
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)', fontSize: '0.9rem', padding: '24px', textAlign: 'center' }}>
                       This problem is catalogued but not yet traced.
                     </div>
+                  ) : traceErrorCopy && !showingOfflineTrace ? (
+                    <div role="alert" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--probe)', fontFamily: 'var(--font-code)', fontSize: '0.9rem', padding: '24px', textAlign: 'center' }}>
+                      {traceErrorCopy}
+                    </div>
                   ) : (
                     <ErrorBoundary resetKey={activeProblemId}>
                       {renderCanvas()}
@@ -354,6 +380,12 @@ export default function App() {
                 </ErrorBoundary>
               )}
             </div>
+
+            {showingOfflineTrace && (
+              <div role="status" style={{ padding: '4px 12px', fontSize: '0.72rem', fontFamily: 'var(--font-code)', color: 'var(--probe)' }}>
+                Live trace unavailable. Showing the checked-in offline sample.
+              </div>
+            )}
 
             {traceTruncated && (
               <div style={{ padding: '4px 12px', fontSize: '0.72rem', fontFamily: 'var(--font-code)', color: 'var(--probe)' }}>

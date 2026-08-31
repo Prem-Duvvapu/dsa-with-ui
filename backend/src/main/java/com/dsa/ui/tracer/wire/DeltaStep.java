@@ -7,6 +7,7 @@ import com.dsa.ui.model.GraphEdge;
 import com.dsa.ui.model.GraphNode;
 import com.dsa.ui.model.ListNode;
 import com.dsa.ui.model.TreeNode;
+import com.dsa.ui.model.TrieNodeModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public final class DeltaStep {
     private final Boolean keyframe;
 
     private final List<String> queueOrStackState;
+    private final List<String> callStack;
     private final Map<Integer, String> nodeStates;
     private final List<String> activeEdges;
     private final Map<String, String> variables;
@@ -53,22 +55,26 @@ public final class DeltaStep {
     private final int[][] gridState;
     private final List<ArrayElement> arrayState;
     private final List<ListNode> listState;
+    private final List<TrieNodeModel> trieState;
     private final List<TreeNode> treeNodes;
     private final List<GraphNode> graphNodes;
     private final List<GraphEdge> graphEdges;
     private final DpTable dpTable;
 
     DeltaStep(int stepNumber, int activeLine, String description, Boolean keyframe,
-              List<String> queueOrStackState, Map<Integer, String> nodeStates,
+              List<String> queueOrStackState, List<String> callStack,
+              Map<Integer, String> nodeStates,
               List<String> activeEdges, Map<String, String> variables, DsType dsType,
               int[][] gridState, List<ArrayElement> arrayState, List<ListNode> listState,
-              List<TreeNode> treeNodes, List<GraphNode> graphNodes,
+              List<TrieNodeModel> trieState, List<TreeNode> treeNodes,
+              List<GraphNode> graphNodes,
               List<GraphEdge> graphEdges, DpTable dpTable) {
         this.stepNumber = stepNumber;
         this.activeLine = activeLine;
         this.description = description;
         this.keyframe = keyframe;
         this.queueOrStackState = queueOrStackState;
+        this.callStack = callStack;
         this.nodeStates = nodeStates;
         this.activeEdges = activeEdges;
         this.variables = variables;
@@ -76,6 +82,7 @@ public final class DeltaStep {
         this.gridState = gridState;
         this.arrayState = arrayState;
         this.listState = listState;
+        this.trieState = trieState;
         this.treeNodes = treeNodes;
         this.graphNodes = graphNodes;
         this.graphEdges = graphEdges;
@@ -90,6 +97,7 @@ public final class DeltaStep {
     public Boolean getKeyframe() { return keyframe; }
 
     public List<String> getQueueOrStackState() { return queueOrStackState; }
+    public List<String> getCallStack() { return callStack; }
     public Map<Integer, String> getNodeStates() { return nodeStates; }
     public List<String> getActiveEdges() { return activeEdges; }
     public Map<String, String> getVariables() { return variables; }
@@ -97,6 +105,7 @@ public final class DeltaStep {
     public int[][] getGridState() { return gridState; }
     public List<ArrayElement> getArrayState() { return arrayState; }
     public List<ListNode> getListState() { return listState; }
+    public List<TrieNodeModel> getTrieState() { return trieState; }
     public List<TreeNode> getTreeNodes() { return treeNodes; }
     public List<GraphNode> getGraphNodes() { return graphNodes; }
     public List<GraphEdge> getGraphEdges() { return graphEdges; }

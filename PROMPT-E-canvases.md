@@ -1,5 +1,16 @@
 # PROMPT E — Per-topic visualizations: make each data structure draw as itself
 
+> **Implementation status — 2026-08-31.** This file preserves the original verified
+> diagnosis and six-phase specification; line references and baseline test counts below are
+> historical. Phase 0 landed in PR #25, Phase 1 in PR #26, and Phase 2 is complete with one
+> audited regeneration of all 34 golden traces. PR #27 delivered `DpTableCanvas` plus real,
+> labelled tables for the three LIS tracers, so those are an intentional partial delivery of
+> Phases 3/4. The remaining dedicated canvases and tracer retags have **not** started;
+> `CaptureStrip` Phase 5 is also open except that DP tables intentionally omit the redundant
+> strip. Trie transport is now carried end to end, but actual Trie activation remains blocked
+> on the node-shape mismatch recorded in `RCA.md`. Documentation was refreshed early; that
+> does not mean the sequential visualization roadmap is complete.
+
 > Paste everything below the line into the implementing agent. It is written to be
 > self-contained: it assumes no prior conversation and no access to this file's history.
 

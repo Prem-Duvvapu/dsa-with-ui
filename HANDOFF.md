@@ -1,5 +1,15 @@
 # DSA Visualizer — handoff prompts for remaining work
 
+> **Current status — 2026-08-31.** The snapshots embedded in the original prompts below are
+> historical. The live system has 433 unique catalogue ids and 34 tracers; the frontend uses
+> the v2 `/api/problems` API. Prompt E Phase 0 (closed `DsType` registry) and Phase 1
+> (trace-owned tree/graph topology) are complete, and its Phase 2 wire contract is complete.
+> The three LIS tracers and `DpTableCanvas` are an intentional partial delivery of Phases 3/4.
+> Dedicated canvases/retagging for the other types, `CaptureStrip` Phase 5, and the remaining
+> tracer migration are still open. Trie transport exists, but activation is blocked on the
+> backend/canvas shape mismatch recorded in `RCA.md`. Read live counts from
+> `GET /api/problems/stats`; do not treat old counts below as current claims.
+
 > ## ⚠️ TEMPORARY — delete this file when the work is done
 >
 > This is a working document, not project documentation. It exists to hand the remaining
@@ -57,7 +67,9 @@ A new contract now exists to make that impossible. Work with it, not around it.
 THE CONTRACT — com.dsa.ui.tracer
     public interface AlgorithmTracer {
         String id();                            // must match a catalogue ProblemDetail id
+        DsType dsType();                        // closed canvas vocabulary
         InputSpec inputSpec();                  // declared inputs, bounds, defaults
+        Map<String, Object> alternateInput();   // materially different contract input
         String annotatedCode();                 // Java source carrying `// @a name` anchors
         void run(Inputs in, StepEmitter emit);  // RUNS THE REAL ALGORITHM
     }
@@ -65,14 +77,13 @@ THE CONTRACT — com.dsa.ui.tracer
   - Tracers are Spring @Components, discovered by TracerRegistry, indexed by id().
     They MUST be stateless — one instance serves all concurrent requests.
   - TracerRegistry has NO FALLBACK. Unknown id => 404. Never substitute another trace.
-  - Duplicate ids fail application startup.
+  - Blank/duplicate ids and missing dsType fail application startup.
 
   StepEmitter is fluent and names code lines by ANCHOR, never by line number:
-        emit.using("Array");                    // dsType for the canvas
         emit.at("loop.compare")
             .say("i = %d: sum %d beats best %d", i, sum, best)
             .var("i", i).var("best", best)
-            .array(nums, i)                     // or .grid / .list / .tree / .nodes / .edges
+            .array(nums, i)                     // or .grid/.list/.tree/.graph/.dpTable/etc.
             .step();
         emit.push("frame"); emit.pop();         // call stack for recursive traces
 
@@ -108,10 +119,8 @@ API (v2)
 
 CURRENT NUMBERS (433/440/7 are pinned by ProblemsApiTest — update the test if you change them)
     440 id registrations across 18 services, 433 unique, 7 claimed by two services.
-    14 traced: two-sum, kadane-algo, binary-search-1d, tree-preorder, tree-inorder,
-               tree-postorder, tree-level-order, reverse-linked-list, bfs-traversal,
-               dfs-traversal, number-of-islands, search-rotated-sorted,
-               n-meetings-in-one-room, dijkstra-min-heap.
+    34 traced. README.md carries the current checked list; GET /api/problems/stats is
+    authoritative for the count.
 
     Migrated ids answer 410 Gone on their legacy /api/<topic>/execute/<id> path
     (LegacyTraceRetiredException + ApiExceptionHandler), never a substitute trace.
@@ -120,7 +129,7 @@ CURRENT NUMBERS (433/440/7 are pinned by ProblemsApiTest — update the test if 
 
 STILL PRESENT ON PURPOSE
   - The 18 legacy per-topic controllers (/api/arrays/..., /api/trees/...) still serve the
-    old paths. The frontend still uses them. Do not delete until prompt D.
+    old paths for compatibility. The frontend uses v2. Do not delete until prompt D.
   - The 18 services still hold catalogue metadata and their old switch-based generators.
   - 7 duplicate ids are surfaced in stats.duplicateIds, not resolved.
 
@@ -578,11 +587,10 @@ VERIFY
 
 **Where the wiring stands.** `App.jsx` fetches the catalogue once from `GET /api/problems`
 (the 18-endpoint fan-out is gone) and all playback/fetch state lives in `useTrace`. Canvas
-selection in `renderCanvas()` now switches on `dsType` — not `category.includes(...)` — with
-a `hasGrid` check ahead of it for problems that carry `gridState` regardless of `dsType`, and
-a title/id sniff for DSU (the one case `dsType: 'Graph'` can't distinguish on its own). The
-sidebar itself, and the search box, are still on the pre-Bench tokens and layout — restyling
-them is not tracked as its own job above and should be.
+selection is a lookup in `frontend/src/canvas/registry.js`, keyed only by the backend's
+closed `dsType`; the `hasGrid` and title/id sniffs are gone. Unknown values render an explicit
+unsupported state. The sidebar itself, and the search box, are still on the pre-Bench tokens
+and layout — restyling them is not tracked as its own job above and should be.
 
 **The catalogue-summary vs. detail split.** `GET /api/problems` (the list) returns summary
 fields only — id, title, category, dsType, traced, inputSpec. `javaCode`, `complexity`, and

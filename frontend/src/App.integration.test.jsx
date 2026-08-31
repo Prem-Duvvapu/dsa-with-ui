@@ -145,9 +145,10 @@ describe('App catalogue loading', () => {
     }));
 
     render(<App />);
-    // 19 entries but two-sum appears twice, so the backend reports 19 and we show 19.
-    // Dedup now happens server-side in the v2 API; the frontend trusts the response.
-    await waitFor(() => expect(screen.getByText('19 algorithms')).toBeInTheDocument());
+    // The backend contract already de-duplicates, but a defensive client guard keeps a
+    // malformed response from creating duplicate React keys or ambiguous selection.
+    await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
+    expect(screen.queryByText('Two Sum (Duplicate)')).not.toBeInTheDocument();
   });
 });
 
@@ -287,13 +288,15 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    render(<App />);
+    const { container } = render(<App />);
 
     await waitFor(() =>
       expect(screen.getByRole('table', { name: 'Dynamic programming table' })).toBeInTheDocument()
     );
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    expect(screen.getAllByText('happening now')).toHaveLength(1);
+    expect(container.querySelectorAll('.shell-head')).toHaveLength(1);
   });
 
   it('shows an explicit empty state for an unknown dsType instead of an array', async () => {
@@ -320,6 +323,30 @@ describe('App execution capture', () => {
       expect(screen.getByText('No visualization for Mystery')).toBeInTheDocument()
     );
     expect(screen.queryByText('Array & bar visualizer')).not.toBeInTheDocument();
+  });
+});
+
+describe('App trace error surface', () => {
+  const broken = problem('broken-trace', 'Broken Trace', 'Test', 'Array');
+
+  it.each([
+    ['fetch', () => Promise.reject(new Error('network down')), /could not load this trace/i],
+    ['empty', () => Promise.resolve(ok([])), /returned an empty trace/i],
+    ['malformed', () => Promise.resolve(ok({ unexpected: true })), /returned a malformed trace/i]
+  ])('shows an explicit %s state with inert playback', async (_kind, executeResponse, message) => {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url === '/api/problems') return Promise.resolve(ok([broken]));
+      if (url === '/api/problems/broken-trace') return Promise.resolve(ok(broken));
+      if (url === '/api/problems/broken-trace/execute') return executeResponse();
+      return Promise.resolve(respondTo(url));
+    }));
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent(message));
+    expect(screen.getByLabelText('Playback position')).toHaveTextContent('Step 0 of 0');
+    expect(screen.getByRole('button', { name: 'Play' })).toBeDisabled();
+    expect(screen.getByText('No trace steps available.')).toBeInTheDocument();
   });
 });
 

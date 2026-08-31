@@ -219,7 +219,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(N x M) (Queue & Visited Grid)",
                 "Grid Space: O(N x M)"
             ),
-            "Queue"
+            DsType.MATRIX.wireValue()
         ));
 
         // 5. Rotting Oranges

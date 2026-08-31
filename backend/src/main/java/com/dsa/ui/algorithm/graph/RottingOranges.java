@@ -31,7 +31,7 @@ public class RottingOranges {
             }
         }
 
-        recorder.record(new TraceEvent(
+        recorder.record(TraceEvent.withDataStructureState(
             "start", 15,
             String.format("Rotting Oranges: Enqueue %d initial rotten oranges (val=2). Fresh oranges count = %d.", queue.size(), freshCount),
             Map.of("RottenInitial", String.valueOf(queue.size()), "FreshInitial", String.valueOf(freshCount)),
@@ -63,7 +63,7 @@ public class RottingOranges {
                         freshCount--;
                         queue.add(new int[]{nr, nc});
 
-                        recorder.record(new TraceEvent(
+                        recorder.record(TraceEvent.withDataStructureState(
                             "orange_rotted", 35,
                             String.format("Minute %d: Orange at (%d, %d) rots adjacent fresh orange at (%d, %d)! Remaining fresh = %d.",
                                 minutes, r, c, nr, nc, freshCount),
@@ -78,7 +78,7 @@ public class RottingOranges {
 
         int result = freshCount == 0 ? minutes : -1;
 
-        recorder.record(new TraceEvent(
+        recorder.record(TraceEvent.withDataStructureState(
             "complete", 50,
             String.format("Rotting Oranges Complete! Minimum minutes elapsed = %d. All fresh oranges rotted: %s",
                 result, freshCount == 0 ? "YES" : "NO (IMPOSSIBLE)"),

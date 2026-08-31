@@ -17,7 +17,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "Initialize 2-pointer window: left=0, right=0, sum=1, target K=5.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -77,7 +78,8 @@
     "stepNumber" : 2,
     "activeLine" : 14,
     "description" : "Expand window right to index 1 (add a[1]=2, sum=3).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -137,7 +139,8 @@
     "stepNumber" : 3,
     "activeLine" : 14,
     "description" : "Expand window right to index 2 (add a[2]=3, sum=6).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -197,7 +200,8 @@
     "stepNumber" : 4,
     "activeLine" : 7,
     "description" : "Window sum (5 + 1 = 6) > K (5): shrink window from left (drop a[0]=1, left=1, sum=5).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -257,7 +261,8 @@
     "stepNumber" : 5,
     "activeLine" : 11,
     "description" : "Window sum == K (5)! Subarray a[1..2] has length 2; maxLen = 2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -317,7 +322,8 @@
     "stepNumber" : 6,
     "activeLine" : 14,
     "description" : "Expand window right to index 3 (add a[3]=1, sum=6).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -377,7 +383,8 @@
     "stepNumber" : 7,
     "activeLine" : 7,
     "description" : "Window sum (4 + 2 = 6) > K (5): shrink window from left (drop a[1]=2, left=2, sum=4).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -437,7 +444,8 @@
     "stepNumber" : 8,
     "activeLine" : 14,
     "description" : "Expand window right to index 4 (add a[4]=1, sum=5).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -497,7 +505,8 @@
     "stepNumber" : 9,
     "activeLine" : 11,
     "description" : "Window sum == K (5)! Subarray a[2..4] has length 3; maxLen = 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -557,7 +566,8 @@
     "stepNumber" : 10,
     "activeLine" : 14,
     "description" : "Expand window right to index 5 (add a[5]=1, sum=6).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -617,7 +627,8 @@
     "stepNumber" : 11,
     "activeLine" : 7,
     "description" : "Window sum (3 + 3 = 6) > K (5): shrink window from left (drop a[2]=3, left=3, sum=3).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -677,7 +688,8 @@
     "stepNumber" : 12,
     "activeLine" : 14,
     "description" : "Expand window right to index 6 (add a[6]=1, sum=4).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -737,7 +749,8 @@
     "stepNumber" : 13,
     "activeLine" : 14,
     "description" : "Expand window right to index 7 (add a[7]=4, sum=8).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -797,7 +810,8 @@
     "stepNumber" : 14,
     "activeLine" : 7,
     "description" : "Window sum (7 + 1 = 8) > K (5): shrink window from left (drop a[3]=1, left=4, sum=7).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -857,7 +871,8 @@
     "stepNumber" : 15,
     "activeLine" : 7,
     "description" : "Window sum (6 + 1 = 7) > K (5): shrink window from left (drop a[4]=1, left=5, sum=6).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -917,7 +932,8 @@
     "stepNumber" : 16,
     "activeLine" : 7,
     "description" : "Window sum (5 + 1 = 6) > K (5): shrink window from left (drop a[5]=1, left=6, sum=5).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -977,7 +993,8 @@
     "stepNumber" : 17,
     "activeLine" : 11,
     "description" : "Window sum == K (5)! Subarray a[6..7] has length 2; maxLen = 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1037,7 +1054,8 @@
     "stepNumber" : 18,
     "activeLine" : 14,
     "description" : "Expand window right to index 8 (add a[8]=2, sum=7).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1097,7 +1115,8 @@
     "stepNumber" : 19,
     "activeLine" : 7,
     "description" : "Window sum (6 + 1 = 7) > K (5): shrink window from left (drop a[6]=1, left=7, sum=6).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1157,7 +1176,8 @@
     "stepNumber" : 20,
     "activeLine" : 7,
     "description" : "Window sum (2 + 4 = 6) > K (5): shrink window from left (drop a[7]=4, left=8, sum=2).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1217,7 +1237,8 @@
     "stepNumber" : 21,
     "activeLine" : 14,
     "description" : "Expand window right to index 9 (add a[9]=3, sum=5).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1277,7 +1298,8 @@
     "stepNumber" : 22,
     "activeLine" : 11,
     "description" : "Window sum == K (5)! Subarray a[8..9] has length 2; maxLen = 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1337,7 +1359,8 @@
     "stepNumber" : 23,
     "activeLine" : 17,
     "description" : "Sliding window search complete. Longest subarray length with sum 5 is 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

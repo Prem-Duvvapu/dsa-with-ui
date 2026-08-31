@@ -18,7 +18,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "A sorted array was cut at a pivot and rotated. Find 0 in [0..6].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -64,7 +65,8 @@
     "stepNumber" : 2,
     "activeLine" : 4,
     "description" : "Probe the middle of [0..6]: nums[3] = 7.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -111,7 +113,8 @@
     "stepNumber" : 3,
     "activeLine" : 6,
     "description" : "4 ≤ nums[3]=7, so the LEFT half [0..3] is the sorted one (4…7). 0 is not inside it, so it can only be to the right of 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -155,7 +158,8 @@
     "stepNumber" : 4,
     "activeLine" : 4,
     "description" : "Probe the middle of [4..6]: nums[5] = 1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -202,7 +206,8 @@
     "stepNumber" : 5,
     "activeLine" : 6,
     "description" : "0 ≤ nums[5]=1, so the LEFT half [4..5] is the sorted one (0…1). 0 lies inside it — search there.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -246,7 +251,8 @@
     "stepNumber" : 6,
     "activeLine" : 4,
     "description" : "Probe the middle of [4..4]: nums[4] = 0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -293,7 +299,8 @@
     "stepNumber" : 7,
     "activeLine" : 5,
     "description" : "nums[4] = 0 is the target. Found at index 4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

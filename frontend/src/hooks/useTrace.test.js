@@ -100,6 +100,55 @@ describe('useTrace', () => {
     expect(result.current.steps).toHaveLength(0);
   });
 
+  it('surfaces an execute fetch failure without inventing a trace', async () => {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.endsWith('/execute')) return Promise.reject(new Error('network down'));
+      return Promise.resolve(ok({ id: 'two-sum', title: 'Two Sum', dsType: 'Array' }));
+    }));
+
+    const { result } = renderHook(() => useTrace(
+      'two-sum',
+      { id: 'two-sum', title: 'Two Sum', dsType: 'Array' }
+    ));
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.error).toBe('fetch');
+    expect(result.current.steps).toEqual([]);
+  });
+
+  it.each([
+    ['empty', []],
+    ['malformed', { unexpected: true }]
+  ])('surfaces an %s successful response without inventing a trace', async (expectedError, body) => {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.endsWith('/execute')) return Promise.resolve(ok(body));
+      return Promise.resolve(ok({ id: 'two-sum', title: 'Two Sum', dsType: 'Array' }));
+    }));
+
+    const { result } = renderHook(() => useTrace('two-sum', null));
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.error).toBe(expectedError);
+    expect(result.current.steps).toEqual([]);
+  });
+
+  it('uses only an explicit checked-in offline trace when execute cannot be fetched', async () => {
+    const offlineSteps = [{ stepNumber: 1, description: 'checked-in sample', dsType: 'Array' }];
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.endsWith('/execute')) return Promise.reject(new Error('offline'));
+      return Promise.resolve(ok({ id: 'two-sum', title: 'Two Sum', dsType: 'Array' }));
+    }));
+
+    const { result } = renderHook(() => useTrace(
+      'two-sum',
+      { id: 'two-sum', title: 'Two Sum', dsType: 'Array', executionSteps: offlineSteps }
+    ));
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.error).toBe('fetch');
+    expect(result.current.steps).toBe(offlineSteps);
+  });
+
   it('discards a stale response when the problemId changes', async () => {
     // Hold the first problem's execute response open
     resolvers.set('/api/problems/slow/execute', null);
@@ -265,5 +314,16 @@ describe('useTrace', () => {
 
     await act(async () => { await result.current.runInput({ nums: [1, 2] }); });
     expect(result.current.truncated).toBe(true);
+  });
+
+  it('runInput rejects a malformed success instead of clearing the error with no steps', async () => {
+    const { result } = renderHook(() => useTrace('two-sum', null));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    vi.stubGlobal('fetch', vi.fn(() => Promise.resolve(ok({ unexpected: true }))));
+    await act(async () => { await result.current.runInput({ nums: [1, 2] }); });
+
+    expect(result.current.error).toBe('malformed');
+    expect(result.current.steps).toEqual([]);
   });
 });

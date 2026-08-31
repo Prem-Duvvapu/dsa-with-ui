@@ -1,6 +1,7 @@
 package com.dsa.ui.trace;
 
 import com.dsa.ui.model.ArrayElement;
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ListNode;
 import com.dsa.ui.model.TrieNodeModel;
@@ -50,16 +51,20 @@ public class ListTraceRecorder implements TraceRecorder {
                 stepNum++,
                 ev.getCodeLine(),
                 ev.getDescription(),
-                ev.getCallStack(),
+                ev.getQueueOrStackState(),
                 ev.getNodeStates(),
                 ev.getActiveEdges(),
                 ev.getVariables(),
-                ev.getDsType(),
+                DsType.fromWireValue(ev.getDsType()),
                 gridState,
                 arrayState,
                 listState,
                 trieState,
-                ev.getTreeNodes()
+                ev.getTreeNodes(),
+                null,
+                null,
+                null,
+                ev.getCallStack()
             ));
         }
         return steps;

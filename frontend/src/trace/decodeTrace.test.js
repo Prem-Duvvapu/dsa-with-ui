@@ -74,6 +74,56 @@ describe('decodeTrace', () => {
     expect(decoded[1].activeEdges).toEqual([]);
   });
 
+  it('carries queue and call stack independently and clears each only when explicitly empty', () => {
+    const queueOrStackState = ['front', 'back'];
+    const callStack = ['solve(0)', 'solve(1)'];
+    const trieState = [
+      { id: 0, character: 'root', endOfWord: false, children: { a: 1 }, state: 'known' },
+      { id: 1, character: 'a', endOfWord: true, children: {}, state: 'probe' }
+    ];
+    const decoded = decodeTrace({
+      encoding: 'delta',
+      steps: [
+        { stepNumber: 1, keyframe: true, queueOrStackState, callStack, trieState },
+        { stepNumber: 2, description: 'no memory change' },
+        { stepNumber: 3, queueOrStackState: [] },
+        { stepNumber: 4, callStack: [], trieState: [] },
+        { stepNumber: 5, description: 'empty state carries too' }
+      ]
+    });
+
+    expect(decoded[1].queueOrStackState).toBe(queueOrStackState);
+    expect(decoded[1].callStack).toBe(callStack);
+    expect(decoded[1].trieState).toBe(trieState);
+    expect(decoded[2].queueOrStackState).toEqual([]);
+    expect(decoded[2].callStack).toBe(callStack);
+    expect(decoded[2].trieState).toBe(trieState);
+    expect(decoded[3].queueOrStackState).toEqual([]);
+    expect(decoded[3].callStack).toEqual([]);
+    expect(decoded[3].trieState).toEqual([]);
+    expect(decoded[4].queueOrStackState).toEqual([]);
+    expect(decoded[4].callStack).toEqual([]);
+    expect(decoded[4].trieState).toEqual([]);
+  });
+
+  it('does not leak call-stack or trie state across a keyframe', () => {
+    const decoded = decodeTrace({
+      encoding: 'delta',
+      steps: [
+        {
+          stepNumber: 1,
+          keyframe: true,
+          callStack: ['search(root)'],
+          trieState: [{ id: 'root', children: [], state: 'read' }]
+        },
+        { stepNumber: 2, keyframe: true }
+      ]
+    });
+
+    expect(decoded[1].callStack).toBeNull();
+    expect(decoded[1].trieState).toBeNull();
+  });
+
   it('discards carried state at a keyframe', () => {
     // A keyframe stands alone: a field absent from it is genuinely empty, which is what
     // makes seeking to one render a correct frame.

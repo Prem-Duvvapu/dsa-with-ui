@@ -236,6 +236,21 @@ describe('design tokens', () => {
     expect(failures, 'measured, not eyeballed — recalculate before changing a value').toEqual([]);
   });
 
+  it('keeps compact text readable on the brand accent in both themes', () => {
+    const themes = {
+      dark: resolveTheme(baseBlock()),
+      light: resolveTheme({ ...baseBlock(), ...rawTokens(lightStampedBlock()) })
+    };
+
+    for (const [name, tokens] of Object.entries(themes)) {
+      expect(tokens['--text-on-accent'], `${name} must define --text-on-accent`).toBeTruthy();
+      expect(
+        contrast(tokens['--text-on-accent'], tokens['--accent-violet']),
+        `${name} compact text on --accent-violet must meet WCAG AA`
+      ).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
   it('animates the loading spinner', () => {
     // App renders <RefreshCw className="spin" /> as the catalogue loading indicator.
     expect(CSS).toMatch(/@keyframes\s+spin\b/);

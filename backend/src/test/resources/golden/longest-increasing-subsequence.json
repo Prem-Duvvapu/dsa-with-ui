@@ -14,7 +14,8 @@
     "stepNumber" : 1,
     "activeLine" : 3,
     "description" : "Table is (8+1)x(8+1). Row i asks \"what is the best LIS starting at nums[7]?\"; column p encodes the last element already taken (index p-1). Filling starts at the bottom-right.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -279,7 +280,8 @@
     "stepNumber" : 2,
     "activeLine" : 6,
     "description" : "(7,7): skip keeps 0; nums[7]=18 does not beat the last taken nums[6]=101, so it cannot be appended. dp[7][7]=0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -547,7 +549,8 @@
     "stepNumber" : 3,
     "activeLine" : 6,
     "description" : "(7,6): skip keeps 0; nums[7]=18 beats the last taken nums[5]=7, so taking it yields 1. dp[7][6]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -815,7 +818,8 @@
     "stepNumber" : 4,
     "activeLine" : 6,
     "description" : "(7,5): skip keeps 0; nums[7]=18 beats the last taken nums[4]=3, so taking it yields 1. dp[7][5]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1083,7 +1087,8 @@
     "stepNumber" : 5,
     "activeLine" : 6,
     "description" : "(7,4): skip keeps 0; nums[7]=18 beats the last taken nums[3]=5, so taking it yields 1. dp[7][4]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1351,7 +1356,8 @@
     "stepNumber" : 6,
     "activeLine" : 6,
     "description" : "(7,3): skip keeps 0; nums[7]=18 beats the last taken nums[2]=2, so taking it yields 1. dp[7][3]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1619,7 +1625,8 @@
     "stepNumber" : 7,
     "activeLine" : 6,
     "description" : "(7,2): skip keeps 0; nums[7]=18 beats the last taken nums[1]=9, so taking it yields 1. dp[7][2]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1887,7 +1894,8 @@
     "stepNumber" : 8,
     "activeLine" : 6,
     "description" : "(7,1): skip keeps 0; nums[7]=18 beats the last taken nums[0]=10, so taking it yields 1. dp[7][1]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2155,7 +2163,8 @@
     "stepNumber" : 9,
     "activeLine" : 6,
     "description" : "(7,0): skip keeps 0; column 0 means nothing taken yet, so nums[7]=18 can always start a subsequence. dp[7][0]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2423,7 +2432,8 @@
     "stepNumber" : 10,
     "activeLine" : 6,
     "description" : "(6,6): skip keeps 1; nums[6]=101 beats the last taken nums[5]=7, so taking it yields 1. dp[6][6]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2691,7 +2701,8 @@
     "stepNumber" : 11,
     "activeLine" : 6,
     "description" : "(6,5): skip keeps 1; nums[6]=101 beats the last taken nums[4]=3, so taking it yields 1. dp[6][5]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -2959,7 +2970,8 @@
     "stepNumber" : 12,
     "activeLine" : 6,
     "description" : "(6,4): skip keeps 1; nums[6]=101 beats the last taken nums[3]=5, so taking it yields 1. dp[6][4]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -3227,7 +3239,8 @@
     "stepNumber" : 13,
     "activeLine" : 6,
     "description" : "(6,3): skip keeps 1; nums[6]=101 beats the last taken nums[2]=2, so taking it yields 1. dp[6][3]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -3495,7 +3508,8 @@
     "stepNumber" : 14,
     "activeLine" : 6,
     "description" : "(6,2): skip keeps 1; nums[6]=101 beats the last taken nums[1]=9, so taking it yields 1. dp[6][2]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -3763,7 +3777,8 @@
     "stepNumber" : 15,
     "activeLine" : 6,
     "description" : "(6,1): skip keeps 1; nums[6]=101 beats the last taken nums[0]=10, so taking it yields 1. dp[6][1]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -4031,7 +4046,8 @@
     "stepNumber" : 16,
     "activeLine" : 6,
     "description" : "(6,0): skip keeps 1; column 0 means nothing taken yet, so nums[6]=101 can always start a subsequence. dp[6][0]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -4299,7 +4315,8 @@
     "stepNumber" : 17,
     "activeLine" : 6,
     "description" : "(5,5): skip keeps 1; nums[5]=7 beats the last taken nums[4]=3, so taking it yields 2. dp[5][5]=2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -4567,7 +4584,8 @@
     "stepNumber" : 18,
     "activeLine" : 6,
     "description" : "(5,4): skip keeps 1; nums[5]=7 beats the last taken nums[3]=5, so taking it yields 2. dp[5][4]=2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -4835,7 +4853,8 @@
     "stepNumber" : 19,
     "activeLine" : 6,
     "description" : "(5,3): skip keeps 1; nums[5]=7 beats the last taken nums[2]=2, so taking it yields 2. dp[5][3]=2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -5103,7 +5122,8 @@
     "stepNumber" : 20,
     "activeLine" : 6,
     "description" : "(5,2): skip keeps 1; nums[5]=7 does not beat the last taken nums[1]=9, so it cannot be appended. dp[5][2]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -5371,7 +5391,8 @@
     "stepNumber" : 21,
     "activeLine" : 6,
     "description" : "(5,1): skip keeps 1; nums[5]=7 does not beat the last taken nums[0]=10, so it cannot be appended. dp[5][1]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -5639,7 +5660,8 @@
     "stepNumber" : 22,
     "activeLine" : 6,
     "description" : "(5,0): skip keeps 1; column 0 means nothing taken yet, so nums[5]=7 can always start a subsequence. dp[5][0]=2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -5907,7 +5929,8 @@
     "stepNumber" : 23,
     "activeLine" : 6,
     "description" : "(4,4): skip keeps 2; nums[4]=3 does not beat the last taken nums[3]=5, so it cannot be appended. dp[4][4]=2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -6175,7 +6198,8 @@
     "stepNumber" : 24,
     "activeLine" : 6,
     "description" : "(4,3): skip keeps 2; nums[4]=3 beats the last taken nums[2]=2, so taking it yields 3. dp[4][3]=3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -6443,7 +6467,8 @@
     "stepNumber" : 25,
     "activeLine" : 6,
     "description" : "(4,2): skip keeps 1; nums[4]=3 does not beat the last taken nums[1]=9, so it cannot be appended. dp[4][2]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -6711,7 +6736,8 @@
     "stepNumber" : 26,
     "activeLine" : 6,
     "description" : "(4,1): skip keeps 1; nums[4]=3 does not beat the last taken nums[0]=10, so it cannot be appended. dp[4][1]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -6979,7 +7005,8 @@
     "stepNumber" : 27,
     "activeLine" : 6,
     "description" : "(4,0): skip keeps 2; column 0 means nothing taken yet, so nums[4]=3 can always start a subsequence. dp[4][0]=3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -7247,7 +7274,8 @@
     "stepNumber" : 28,
     "activeLine" : 6,
     "description" : "(3,3): skip keeps 3; nums[3]=5 beats the last taken nums[2]=2, so taking it yields 3. dp[3][3]=3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -7515,7 +7543,8 @@
     "stepNumber" : 29,
     "activeLine" : 6,
     "description" : "(3,2): skip keeps 1; nums[3]=5 does not beat the last taken nums[1]=9, so it cannot be appended. dp[3][2]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -7783,7 +7812,8 @@
     "stepNumber" : 30,
     "activeLine" : 6,
     "description" : "(3,1): skip keeps 1; nums[3]=5 does not beat the last taken nums[0]=10, so it cannot be appended. dp[3][1]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -8051,7 +8081,8 @@
     "stepNumber" : 31,
     "activeLine" : 6,
     "description" : "(3,0): skip keeps 3; column 0 means nothing taken yet, so nums[3]=5 can always start a subsequence. dp[3][0]=3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -8319,7 +8350,8 @@
     "stepNumber" : 32,
     "activeLine" : 6,
     "description" : "(2,2): skip keeps 1; nums[2]=2 does not beat the last taken nums[1]=9, so it cannot be appended. dp[2][2]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -8587,7 +8619,8 @@
     "stepNumber" : 33,
     "activeLine" : 6,
     "description" : "(2,1): skip keeps 1; nums[2]=2 does not beat the last taken nums[0]=10, so it cannot be appended. dp[2][1]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -8855,7 +8888,8 @@
     "stepNumber" : 34,
     "activeLine" : 6,
     "description" : "(2,0): skip keeps 3; column 0 means nothing taken yet, so nums[2]=2 can always start a subsequence. dp[2][0]=4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -9123,7 +9157,8 @@
     "stepNumber" : 35,
     "activeLine" : 6,
     "description" : "(1,1): skip keeps 1; nums[1]=9 does not beat the last taken nums[0]=10, so it cannot be appended. dp[1][1]=1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -9391,7 +9426,8 @@
     "stepNumber" : 36,
     "activeLine" : 6,
     "description" : "(1,0): skip keeps 4; column 0 means nothing taken yet, so nums[1]=9 can always start a subsequence. dp[1][0]=4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -9659,7 +9695,8 @@
     "stepNumber" : 37,
     "activeLine" : 6,
     "description" : "(0,0): skip keeps 4; column 0 means nothing taken yet, so nums[0]=10 can always start a subsequence. dp[0][0]=4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -9927,7 +9964,8 @@
     "stepNumber" : 38,
     "activeLine" : 11,
     "description" : "dp[0][0] is the best LIS from index 0 with nothing pre-taken: length 4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

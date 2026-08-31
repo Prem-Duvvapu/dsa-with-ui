@@ -15,7 +15,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "i=0 tracks the last unique element (nums[0]=0). j will scan from index 1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -71,7 +72,8 @@
     "stepNumber" : 2,
     "activeLine" : 4,
     "description" : "j=1: nums[1]=0 == nums[i=0]=0 (duplicate, skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -128,7 +130,8 @@
     "stepNumber" : 3,
     "activeLine" : 4,
     "description" : "j=2: nums[2]=1 != nums[i=0]=0 (new unique element).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -185,7 +188,8 @@
     "stepNumber" : 4,
     "activeLine" : 5,
     "description" : "Advance i to 1 and write nums[1] = 1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -242,7 +246,8 @@
     "stepNumber" : 5,
     "activeLine" : 4,
     "description" : "j=3: nums[3]=1 == nums[i=1]=1 (duplicate, skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -299,7 +304,8 @@
     "stepNumber" : 6,
     "activeLine" : 4,
     "description" : "j=4: nums[4]=1 == nums[i=1]=1 (duplicate, skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -356,7 +362,8 @@
     "stepNumber" : 7,
     "activeLine" : 4,
     "description" : "j=5: nums[5]=2 != nums[i=1]=1 (new unique element).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -413,7 +420,8 @@
     "stepNumber" : 8,
     "activeLine" : 5,
     "description" : "Advance i to 2 and write nums[2] = 2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -470,7 +478,8 @@
     "stepNumber" : 9,
     "activeLine" : 4,
     "description" : "j=6: nums[6]=2 == nums[i=2]=2 (duplicate, skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -527,7 +536,8 @@
     "stepNumber" : 10,
     "activeLine" : 4,
     "description" : "j=7: nums[7]=3 != nums[i=2]=2 (new unique element).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -584,7 +594,8 @@
     "stepNumber" : 11,
     "activeLine" : 5,
     "description" : "Advance i to 3 and write nums[3] = 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -641,7 +652,8 @@
     "stepNumber" : 12,
     "activeLine" : 4,
     "description" : "j=8: nums[8]=3 == nums[i=3]=3 (duplicate, skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -698,7 +710,8 @@
     "stepNumber" : 13,
     "activeLine" : 4,
     "description" : "j=9: nums[9]=4 != nums[i=3]=3 (new unique element).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -755,7 +768,8 @@
     "stepNumber" : 14,
     "activeLine" : 5,
     "description" : "Advance i to 4 and write nums[4] = 4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -812,7 +826,8 @@
     "stepNumber" : 15,
     "activeLine" : 9,
     "description" : "Deduplication complete: 5 unique elements (packed at indices 0..4).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
