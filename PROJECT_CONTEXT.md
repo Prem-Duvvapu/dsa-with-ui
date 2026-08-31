@@ -3,13 +3,16 @@
 ## 📌 Project Overview
 **DSA Visualizer** is a full-stack interactive web application built to assist software engineers and students in mastering core Data Structures and Algorithms.
 
-The platform pairs step-by-step animated execution with:
-- **Production-ready Java Solutions** (commented & structured for technical interviews).
-- **Synchronized Code Execution Tracing** (highlighting Java lines as nodes/edges/pointers are processed).
-- **Granular Execution Traces** (tracing every single loop iteration, recursive call, constraint check, state mutation, and backtrack step thoroughly like Selection Sort).
-- **Human-Centric Pedagogical Visualizations** ($4 \times 4$ Alternating Tile Chessboard with Crown icons for N-Queens, $9 \times 9$ Board with $3 \times 3$ sub-box borders for Sudoku, SVG Call Trees for Divide & Conquer).
-- **Animated Data Structure State** (Call Stack for DFS & Recursion, Queue for BFS, Recursion Call Tree SVG for Divide & Conquer, 2D Matrices, Array Bars, Linked List Nodes).
-- **Comprehensive Time & Space Complexity Analysis** explaining the **How** and **Why** behind theoretical bounds ($O(V+E)$, $O(E \log V)$, $O(N \log N)$, $O(N!)$, etc.).
+The platform is designed to pair step-by-step execution with:
+- **Interview-oriented Java solutions** whose displayed code is tied to named trace anchors.
+- **Synchronized execution tracing** for the 34 problems that currently have real tracers;
+  the remaining catalogue entries say “not yet traced” instead of replaying other work.
+- **Pedagogical structure views** where implemented, including arrays, trees, graphs,
+  matrices, linked lists, recursion trees, DSU, tries, and labelled LIS DP tables.
+- **Separate algorithm memory state**, including recursion frames and algorithm-owned
+  queues/stacks when a tracer emits them.
+- **Time and space analysis from catalogue metadata**; missing analysis is shown as
+  unavailable rather than filled with a generic complexity.
 
 ---
 
@@ -20,12 +23,14 @@ The platform pairs step-by-step animated execution with:
    - Ask: *"Does this visual representation make the underlying state transition, decision branch, or constraint violation immediately obvious to a human?"*
 
 2. **Domain-Specific Realistic Canvas Views**:
-   - **N-Queens Problem**: Render a real $4 \times 4$ chessboard with alternating light/dark tiles, glowing Queen Crown icons (`👑`), and live diagonal/column conflict warnings.
-   - **Sudoku Solver**: Render a full $9 \times 9$ Sudoku grid with bold $3 \times 3$ sub-box borders (`#6366f1`), cell-by-cell digit placements ('1'-'9'), and invalid placement highlights.
+   - **N-Queens Problem**: Render a real $4 \times 4$ chessboard with alternating light/dark tiles, Queen Crown icons (`👑`), and live diagonal/column conflict warnings.
+   - **Sudoku Solver**: Render a full $9 \times 9$ Sudoku grid with bold $3 \times 3$ sub-box borders using the design-system accent-border token, cell-by-cell digit placements ('1'-'9'), and invalid placement highlights.
    - **Divide & Conquer / Recursion**: Render a dynamic SVG Recursion Call Tree showing active call stack nodes (`ms(0,5)`, `ms(0,2)`), 2-way array merging, and base-case completion states.
 
-3. **Granular Code-Line Synchronization**:
-   - Every single forward choice, constraint evaluation (`isSafe` / `isValid`), state mutation, array swap, and backtrack removal step MUST be explicitly traced with line numbers and human-readable narrative explanations.
+3. **Meaningful code synchronization**:
+   - Each meaningful choice, constraint evaluation (`isSafe` / `isValid`), mutation, swap,
+     and backtrack should emit a named code anchor and learner-facing explanation. Raw line
+     numbers are forbidden because they drift when displayed code changes.
 
 ---
 
@@ -35,7 +40,7 @@ The platform pairs step-by-step animated execution with:
 > hand-built step generators. It is kept as a record of intent, not as a coverage claim:
 > a tick means the problem is catalogued, not that it has a real execution trace.
 > `GET /api/problems/stats` is the authoritative number — currently **433 catalogued,
-> 14 traced**. See the README for why those differ.
+> 34 traced**. See the README for why those differ.
 
 ### 1. **Graphs - BFS & DFS Problems**
 - [x] BFS Traversal of Graph
@@ -111,6 +116,7 @@ The platform pairs step-by-step animated execution with:
 - [x] Frog Jump / Min Energy (1D DP)
 - [x] 0/1 Knapsack Problem (2D Subsets DP Matrix)
 - [x] Longest Common Subsequence (2D String DP Matrix)
+- [x] Longest Increasing Subsequence (quadratic, binary-search tails, and reconstruction variants)
 
 ### 10. **Tries & Prefixes**
 - [x] Implement Trie (Prefix Tree)

@@ -10,20 +10,21 @@ already inside WSL, call `mvn`/`npm` directly as below.
 
 ```bash
 # Backend (Java 17, Maven)
-cd backend && mvn test                                  # full suite (~373 tests)
+cd backend && mvn test                                  # full backend suite
 cd backend && mvn test -Dtest=TracerContractTest         # one test class
 cd backend && mvn test -Dtest=ApiContractTest#executeRejectsUnknownIdInsteadOfFallingBack
 cd backend && mvn spring-boot:run                        # http://localhost:8923
 
 # Frontend (React 18 + Vite)
 cd frontend && npm ci
-cd frontend && npx vitest run                            # full suite (~71 tests)
+cd frontend && npx vitest run                            # full frontend suite
 cd frontend && npx vitest run src/designTokens.test.js   # one file
 cd frontend && npx vitest run -t 'renders Header'        # one test by name
 cd frontend && npm run dev                               # http://localhost:5180, proxies /api → 8923
 cd frontend && npx vite build                            # what CI builds
 
 # Both tiers
+./start.sh                                               # backend 8923 + frontend 5180; Ctrl+C stops both
 docker-compose up --build                                # frontend on http://localhost:5174
 ```
 
@@ -34,8 +35,8 @@ Chain steps with `&&`, never `|`.
 Ports are load-bearing and appear in four places that must agree: `vite.config.js` (5180),
 `docker-compose.yml` (5174→80), `CorsConfig.java` (allows both), and `CorsPolicyTest`.
 
-CI (`.github/workflows/ci.yml`) runs `mvn -B test`, `npx vitest run`, and `npx vite build`
-on every branch push and on PRs to `main`.
+CI (`.github/workflows/ci.yml`) runs `mvn -B test`, the launcher process-tree smoke test,
+`npx vitest run`, and `npx vite build` on every branch push and on PRs to `main`.
 
 ## Branch discipline
 
@@ -70,8 +71,8 @@ without reading `HANDOFF.md`.
 
 **Legacy layer (18 controllers + 18 services).** `controller/ArrayController` →
 `service/ArrayService` → a giant `switch (problemId)` returning `List<ExecutionStep>`.
-Paths are `/api/{topic}/problems` and `/api/{topic}/execute/{id}`. The frontend still uses
-this layer exclusively.
+Paths are `/api/{topic}/problems` and `/api/{topic}/execute/{id}`. They remain compatibility
+endpoints and are still contract-tested, but the frontend uses the v2 API.
 
 **Tracer layer (`tracer/`, `catalog/`, `ProblemsController`).** The replacement, served at
 `/api/problems`. This is where new work goes.
@@ -88,12 +89,13 @@ Three rules follow from that, and they are the point of the design:
 
 1. **No fallback, anywhere.** `TracerRegistry` returns `Optional.empty()` for an unknown id.
    `ProblemsController` answers **404** (no such problem) or **501** (catalogued but not yet
-   traced). Never substitute a different problem's steps. The legacy controllers were
+   traced). Never substitute a different problem's steps. An unknown `dsType` likewise
+   renders an explicit unsupported state, never `ArrayCanvas`. The legacy controllers were
    patched to restore the same 404 guard; `ApiContractTest` is parameterized over all 18 to
    keep it that way.
 2. **`traced` is an honesty flag, not a feature flag.** `GET /api/problems/stats` reports
    `catalogued` vs `traced` vs `untraced`. The UI is meant to say "not yet traced" rather
-   than animate the wrong thing. Currently **8 of 433** are traced.
+   than animate the wrong thing. Currently **34 of 433** are traced.
 3. **Tests must detect fake work, not just crashes.** `TracerContractTest.traceRespondsToItsInput`
    runs each tracer on two materially different inputs and fails if the traces are identical
    — a canned narration cannot survive it. When you fix something, prove the new test fails
@@ -104,14 +106,18 @@ Three rules follow from that, and they are the point of the design:
 ```java
 public interface AlgorithmTracer {
     String id();                              // "kadane-algo"
+    DsType dsType();                          // closed canvas vocabulary
     InputSpec inputSpec();                    // declared inputs, bounds, defaults
+    Map<String, Object> alternateInput();     // materially different contract input
     String annotatedCode();                   // Java source carrying // @a anchors
     void run(Inputs in, StepEmitter emit);    // executes the algorithm for real
 }
 ```
 
 Implementations are Spring `@Component`s in `tracer/impl/`; `TracerRegistry` collects
-`List<AlgorithmTracer>` and **fails application startup** on a blank or duplicate `id()`.
+`List<AlgorithmTracer>` and **fails application startup** on a blank/duplicate `id()` or a
+missing `dsType`. `CatalogTracerMetadataTest` also joins every live tracer to the winning
+catalogue entry so their canvas types cannot drift independently.
 
 **Line anchors, not line numbers.** `activeLine` used to be an unchecked integer, and
 `LinkedListService` emitted line 51 into a 9-line code block. Now a tracer writes
@@ -133,13 +139,16 @@ one id-keyed view. First provider to claim an id wins; collisions are surfaced i
 
 ### Frontend
 
-`App.jsx` still fans out to all 18 legacy endpoints on load, then picks an execute endpoint
-by `category.includes('...')` string-sniffing (`App.jsx:252-270`) and picks a canvas the same
-way (`App.jsx:333-347`). Both ladders are fragile and are slated to move to the backend's
-`dsType` — check `App.jsx` before assuming a category routes where its name suggests.
+`App.jsx` loads the catalogue and executions from `/api/problems`; `useTrace` owns request
+cancellation, stale-response protection, delta decoding, and playback. Canvas selection has
+one source of truth: `frontend/src/canvas/registry.js`. It is keyed by the backend's 16-value
+`DsType` contract, and its cross-tier test fails if the enum/fixture/registry drift.
 
-Five canvases exist (`Array`, `Tree`, `Graph`, `LinkedList`, `RecursionTree`). There is **no
-TrieCanvas**, so Trie problems fall through to `GraphCanvas` and render blank.
+Nine canvases currently exist (`Array`, `Tree`, `Graph`, `LinkedList`, `RecursionTree`,
+`Grid`, `Dsu`, `Trie`, `DpTable`). Some registry values intentionally still reuse a generic
+renderer until visualization Phase 3 builds their dedicated canvas; this is explicit mapping,
+not an unknown-type fallback. Trie transport is wired, but its backend/canvas node-shape
+activation remains Phase 3 work; see `RCA.md`.
 
 Styling is CSS custom properties in `index.css` plus inline styles; only a handful of CSS
 classes exist. `designTokens.test.js` is a static guard that fails the build on any `var()`
@@ -149,16 +158,19 @@ tokens while 5 components still used them, and CSS silently drops unresolvable d
 ## Adding a tracer
 
 1. New `@Component` in `tracer/impl/` implementing `AlgorithmTracer`; the `id()` must match
-   an existing catalogue id (otherwise `ProblemCatalog.getOrphanedTracerIds()` flags it).
+   an existing catalogue id (otherwise `ProblemCatalog.getOrphanedTracerIds()` flags it),
+   and `dsType()` must match that catalogue entry.
 2. Anchor the code you return from `annotatedCode()`, emit only those names, and emit
    *every* one of them — `anchorsAreAllReachable` fails on a marker nothing highlights.
 3. Implement `alternateInput()` — a *materially different* input, not a permutation. It is
    abstract on the interface so a tracer cannot skip it, and `alternateInputDiffersFromDefaults`
    rejects one pasted from the spec defaults. `TracerContractTest` is driven off the registry
    and names no tracer, so this is the only file you touch.
-4. `mvn test`. The contract tests cover step numbering, anchor resolution, defaults
+4. Emit the structure that `dsType()` promises; never retag metadata without supplying the
+   corresponding trace payload and canvas behavior.
+5. `mvn test`. The contract tests cover step numbering, anchor resolution, defaults
    validating against their own spec, and cross-registry trace distinctness.
-5. Generate its golden file, then **read it**:
+6. Generate its golden file, then **read it**:
    `mvn test -Dtest=GoldenTraceTest -Dgolden.regenerate=true`. Golden files pin trace
    *content* — the descriptions, variables and highlighted lines — which every other test
    is blind to. Regenerating one without reading the diff records a bug as expected.
@@ -178,3 +190,5 @@ tripwires — if a change moves them, update the assertions deliberately and upd
   migration completes.
 - `references.md` — UI/UX research and design tokens. `PROJECT_CONTEXT.md` — pedagogical
   principles.
+- `RCA.md` — recurring-incident ledger. Consult it before changing an affected subsystem;
+  update it when a defect is introduced or discovered, including the RED-first guard.
