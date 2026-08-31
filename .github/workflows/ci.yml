@@ -32,6 +32,9 @@ jobs:
           java-version: '17'
           cache: maven
 
+      - name: Check local startup cleanup
+        run: bash start-smoke-test.sh
+
       # Called directly rather than through the root package.json scripts: those wrap
       # everything in `wsl --exec`, which is a Windows-host helper and does not exist here.
       - name: Run tests
