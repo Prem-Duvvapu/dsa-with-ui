@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer;
 
+import com.dsa.ui.tracer.impl.DijkstraTracer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -274,6 +275,89 @@ class InputValidatorTest {
         void rejectsWrongEdgeArity() {
             assertTrue(reject(spec, Map.of("g", Map.of(
                     "vertices", 3, "edges", List.of(List.of(0, 1, 5))))).getFieldErrors().containsKey("g"));
+        }
+
+        @Test
+        void enforcesInclusiveWeightBoundsOnWeightedGraphs() {
+            InputSpec weighted = InputSpec.of(InputField.of("g", FieldType.GRAPH)
+                    .weighted()
+                    .constraint("minWeight", 0)
+                    .constraint("maxWeight", 10)
+                    .defaultValue(Map.of(
+                            "vertices", 2,
+                            "edges", List.of(List.of(0, 1, 0))))
+                    .build());
+
+            Inputs.GraphInput accepted = InputValidator.validate(weighted, Map.of("g", Map.of(
+                    "vertices", 2,
+                    "edges", List.of(List.of(0, 1, 0), List.of(1, 0, 10)))))
+                    .getGraph("g");
+            assertArrayEquals(new int[]{0, 1, 0}, accepted.edges()[0]);
+
+            String below = reject(weighted, Map.of("g", Map.of(
+                    "vertices", 2, "edges", List.of(List.of(0, 1, -1)))))
+                    .getFieldErrors().get("g");
+            assertTrue(below.contains("at least 0"), below);
+
+            String above = reject(weighted, Map.of("g", Map.of(
+                    "vertices", 2, "edges", List.of(List.of(0, 1, 11)))))
+                    .getFieldErrors().get("g");
+            assertTrue(above.contains("at most 10"), above);
+        }
+
+        @Test
+        void rejectsFractionalAndOverflowingVertexCounts() {
+            for (Object invalid : List.of(2.5, 4_294_967_297L)) {
+                assertTrue(reject(spec, Map.of("g", Map.of(
+                        "vertices", invalid,
+                        "edges", List.of())))
+                        .getFieldErrors().containsKey("g"), String.valueOf(invalid));
+            }
+        }
+
+        @Test
+        void rejectsFractionalAndOverflowingEndpoints() {
+            for (Object invalid : List.of(0.5, 4_294_967_296L)) {
+                assertTrue(reject(spec, Map.of("g", Map.of(
+                        "vertices", 2,
+                        "edges", List.of(List.of(invalid, 1)))))
+                        .getFieldErrors().containsKey("g"), String.valueOf(invalid));
+            }
+        }
+
+        @Test
+        void rejectsFractionalAndOverflowingWeights() {
+            InputSpec weighted = InputSpec.of(InputField.of("g", FieldType.GRAPH)
+                    .weighted()
+                    .weights(0, 10)
+                    .defaultValue(Map.of(
+                            "vertices", 2,
+                            "edges", List.of(List.of(0, 1, 0))))
+                    .build());
+
+            for (Object invalid : List.of(0.5, 4_294_967_296L)) {
+                assertTrue(reject(weighted, Map.of("g", Map.of(
+                        "vertices", 2,
+                        "edges", List.of(List.of(0, 1, invalid)))))
+                        .getFieldErrors().containsKey("g"), String.valueOf(invalid));
+            }
+        }
+
+        @Test
+        void dijkstraDeclaresAndRejectsNegativeEdgeWeights() {
+            InputSpec dijkstra = new DijkstraTracer().inputSpec();
+            InputField graph = dijkstra.getFields().stream()
+                    .filter(field -> field.getName().equals("graph"))
+                    .findFirst()
+                    .orElseThrow();
+
+            assertEquals(0, graph.getConstraints().get("minWeight"));
+            InputValidationException error = reject(dijkstra, Map.of(
+                    "graph", Map.of(
+                            "vertices", 2,
+                            "edges", List.of(List.of(0, 1, -5))),
+                    "start", 0));
+            assertTrue(error.getFieldErrors().get("graph").contains("at least 0"));
         }
     }
 

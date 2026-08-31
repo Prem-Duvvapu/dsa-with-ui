@@ -39,6 +39,7 @@ public class DijkstraTracer implements AlgorithmTracer {
                         .label("Weighted graph")
                         .help("Vertex count plus undirected, weighted edges [from, to, weight].")
                         .weighted()
+                        .weights(0, 1_000_000)
                         .constraint("maxVertices", 16)
                         .constraint("maxEdges", 40)
                         .defaultValue(Map.of(

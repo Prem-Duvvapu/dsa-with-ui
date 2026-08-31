@@ -1,5 +1,7 @@
 package com.dsa.ui.tracer;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -234,10 +236,11 @@ public final class InputValidator {
                     "Expected a graph as {\"vertices\": n, \"edges\": [[from, to]]}.");
         }
         Object rawVertices = map.get("vertices");
-        if (!(rawVertices instanceof Number vn)) {
+        if (rawVertices == null) {
             throw new IllegalArgumentException("Missing the vertex count.");
         }
-        int vertices = vn.intValue();
+        int vertices = graphInteger(rawVertices,
+                "The vertex count must be a whole number in the supported range.");
         if (vertices < 1) {
             throw new IllegalArgumentException("A graph needs at least one vertex.");
         }
@@ -256,6 +259,8 @@ public final class InputValidator {
         }
 
         boolean weighted = f.flag("weighted");
+        Integer minWeight = f.intConstraint("minWeight");
+        Integer maxWeight = f.intConstraint("maxWeight");
         List<List<Number>> parsedEdges = new ArrayList<>();
         for (int i = 0; i < edges.size(); i++) {
             if (!(edges.get(i) instanceof List<?> e)) {
@@ -268,16 +273,25 @@ public final class InputValidator {
             }
             List<Number> parsed = new ArrayList<>(e.size());
             for (int j = 0; j < e.size(); j++) {
-                if (!(e.get(j) instanceof Number n) || e.get(j) instanceof Double) {
-                    throw new IllegalArgumentException("Edge " + i + " has a non-numeric value.");
-                }
-                parsed.add(n.intValue());
+                parsed.add(graphInteger(e.get(j),
+                        "Edge " + i + " must contain whole numbers in the supported range."));
             }
             for (int endpoint = 0; endpoint < 2; endpoint++) {
                 int v = parsed.get(endpoint).intValue();
                 if (v < 0 || v >= vertices) {
                     throw new IllegalArgumentException("Edge " + i + " refers to vertex " + v
                             + ", outside 0.." + (vertices - 1) + ".");
+                }
+            }
+            if (weighted) {
+                int weight = parsed.get(2).intValue();
+                if (minWeight != null && weight < minWeight) {
+                    throw new IllegalArgumentException(
+                            "Edge " + i + " weight must be at least " + minWeight + ".");
+                }
+                if (maxWeight != null && weight > maxWeight) {
+                    throw new IllegalArgumentException(
+                            "Edge " + i + " weight must be at most " + maxWeight + ".");
                 }
             }
             parsedEdges.add(parsed);
@@ -287,5 +301,28 @@ public final class InputValidator {
         out.put("vertices", vertices);
         out.put("edges", parsedEdges);
         return out;
+    }
+
+    private static int graphInteger(Object value, String errorMessage) {
+        if (!(value instanceof Number number)
+                || value instanceof Double
+                || value instanceof Float
+                || value instanceof BigDecimal) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+
+        if (number instanceof BigInteger bigInteger) {
+            try {
+                return bigInteger.intValueExact();
+            } catch (ArithmeticException outOfRange) {
+                throw new IllegalArgumentException(errorMessage);
+            }
+        }
+
+        long candidate = number.longValue();
+        if (candidate < Integer.MIN_VALUE || candidate > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return (int) candidate;
     }
 }
