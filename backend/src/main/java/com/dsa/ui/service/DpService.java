@@ -169,7 +169,7 @@ public class DpService implements ProblemProvider {
             {"best-time-stock-4", "Best Time to Buy & Sell Stock IV", "DP - Stocks", "Hard", "Max profit with at most K buy & sell transactions."},
             {"stock-cooldown", "Buy & Sell Stock with Cooldown", "DP - Stocks", "Medium", "Max profit with 1 day cooldown after selling."},
             {"stock-transaction-fee", "Buy & Sell Stock with Transaction Fee", "DP - Stocks", "Medium", "Max profit with transaction fee per completed trade."},
-            {"longest-increasing-subsequence", "Longest Increasing Subsequence", "DP - LIS", "Medium", "Find length of longest strictly increasing subsequence in O(N log N)."},
+            {"longest-increasing-subsequence", "Longest Increasing Subsequence", "DP - LIS", "Medium", "Find the LIS length with bottom-up DP over the current and previously chosen indices."},
             {"print-lis", "Print Longest Increasing Subsequence", "DP - LIS", "Medium", "Reconstruct and print the actual LIS sequence using hash parent array."},
             {"lis-binary-search", "LIS Using Binary Search", "DP - LIS", "Medium", "Find LIS length in O(N log N) time using Patience Sorting / lower_bound."},
             {"longest-string-chain", "Longest String Chain", "DP - LIS", "Medium", "Find longest chain of words where wordA is predecessor of wordB."},
@@ -193,9 +193,60 @@ public class DpService implements ProblemProvider {
                 id, title, cat, "Dynamic Programming", diff, desc,
                 String.format("// Java Implementation for %s\npublic int solve() {\n    // DP Striver A2Z Implementation\n    return 0;\n}", title),
                 null, null, null, createArrayState(new int[]{1, 2, 3, 4}, -1, -1), null, null, null,
-                new ComplexityDetail("O(N * K)", "Time Complexity: Optimal DP table state transitions.", "Dynamic Programming", "O(N)", "Space Complexity: 1D / 2D DP array space.", "Memory", "Auxiliary Space: O(N)", "Memory"), "Array"
+                bulkComplexity(id), bulkDsType(id).wireValue()
             ));
         }
+    }
+
+    private static DsType bulkDsType(String id) {
+        return switch (id) {
+            case "longest-increasing-subsequence", "lis-binary-search", "print-lis" ->
+                    DsType.DP_TABLE;
+            case "max-rectangle-area-all-ones", "count-square-submatrices" ->
+                    DsType.MATRIX;
+            default -> DsType.ARRAY;
+        };
+    }
+
+    private static ComplexityDetail bulkComplexity(String id) {
+        return switch (id) {
+            case "longest-increasing-subsequence" -> new ComplexityDetail(
+                    "O(N^2)",
+                    "Fills one reachable state for each (index, previous-index) pair.",
+                    "Two-dimensional LIS recurrence",
+                    "O(N^2)",
+                    "Stores (N+1) x (N+1) value and computed-state tables.",
+                    "DP table",
+                    "Auxiliary Space: O(N^2)",
+                    "DP table");
+            case "lis-binary-search" -> new ComplexityDetail(
+                    "O(N log N)",
+                    "Binary-searches the sorted tails prefix once for each input value.",
+                    "Patience sorting / lower_bound",
+                    "O(N)",
+                    "Stores at most N candidate tails.",
+                    "Tails array",
+                    "Auxiliary Space: O(N)",
+                    "Tails array");
+            case "print-lis" -> new ComplexityDetail(
+                    "O(N^2)",
+                    "Compares each index with every earlier index before following parent links.",
+                    "Quadratic predecessor DP",
+                    "O(N)",
+                    "Stores N DP lengths, N parent links, and the reconstructed sequence.",
+                    "DP and parent arrays",
+                    "Auxiliary Space: O(N)",
+                    "DP and parent arrays");
+            default -> new ComplexityDetail(
+                    "O(N * K)",
+                    "Time Complexity: Optimal DP table state transitions.",
+                    "Dynamic Programming",
+                    "O(N)",
+                    "Space Complexity: 1D / 2D DP array space.",
+                    "Memory",
+                    "Auxiliary Space: O(N)",
+                    "Memory");
+        };
     }
 
     // Step Generators

@@ -378,10 +378,20 @@ public class AdvancedGraphService implements ProblemProvider {
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Striver A2Z Sheet Implementation\n}", title),
                 createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
                 new ComplexityDetail("O(V + E)", "Time Complexity: Standard optimal graph traversal.", "Graph Algorithm", "O(V + E)", "Space Complexity: Visited arrays and recursion call stack.", "Memory", "Auxiliary Space: O(V)", "Memory"),
-                cat.startsWith("Strings") ? "String"
-                    : id.equals("disjoint-set-dsu") ? "Dsu" : "Graph"
+                bulkDsType(id, cat).wireValue()
             ));
         }
+    }
+
+    private static DsType bulkDsType(String id, String category) {
+        if (category.startsWith("Strings")) {
+            return DsType.STRING;
+        }
+        return switch (id) {
+            case "disjoint-set-dsu" -> DsType.DSU;
+            case "number-of-islands" -> DsType.MATRIX;
+            default -> DsType.GRAPH;
+        };
     }
 
     // Step Generators

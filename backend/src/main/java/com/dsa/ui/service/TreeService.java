@@ -68,7 +68,7 @@ public class TreeService implements ProblemProvider {
             }
             """,
             null, null, createDefaultTreeNodes(), null,
-            new ComplexityDetail("O(N)", "Time Complexity: Every node in binary tree visited once.", "Preorder Traversal", "O(H)", "Space Complexity: Recursion stack height H.", "Call Stack", "Auxiliary Space: O(H)", "Memory"), "Stack"
+            new ComplexityDetail("O(N)", "Time Complexity: Every node in binary tree visited once.", "Preorder Traversal", "O(H)", "Space Complexity: Recursion stack height H.", "Call Stack", "Auxiliary Space: O(H)", "Memory"), DsType.TREE.wireValue()
         ));
 
         // 2. Binary Tree Inorder Traversal
@@ -91,7 +91,7 @@ public class TreeService implements ProblemProvider {
             }
             """,
             null, null, createDefaultTreeNodes(), null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass iteration over N tree nodes.", "Inorder Traversal", "O(H)", "Space Complexity: Recursion call stack height H.", "Call Stack", "Auxiliary Space: O(H)", "Memory"), "Stack"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass iteration over N tree nodes.", "Inorder Traversal", "O(H)", "Space Complexity: Recursion call stack height H.", "Call Stack", "Auxiliary Space: O(H)", "Memory"), DsType.TREE.wireValue()
         ));
 
         // Bulk register remaining 52 Tree & BST problems
@@ -160,9 +160,16 @@ public class TreeService implements ProblemProvider {
                 id, title, cat, cat.startsWith("BST") ? "BST" : "Binary Trees", diff, desc,
                 String.format("// Java Implementation for %s\npublic TreeNode solve(TreeNode root) {\n    return root;\n}", title),
                 null, null, createDefaultTreeNodes(), null,
-                new ComplexityDetail("O(N) / O(H)", "Time Complexity: Traversal over tree nodes.", "Tree Traversal", "O(H)", "Space Complexity: Recursion call stack height H.", "Call Stack", "Auxiliary Space: O(H)", "Memory"), "Stack"
+                new ComplexityDetail("O(N) / O(H)", "Time Complexity: Traversal over tree nodes.", "Tree Traversal", "O(H)", "Space Complexity: Recursion call stack height H.", "Call Stack", "Auxiliary Space: O(H)", "Memory"), bulkDsType(id).wireValue()
             ));
         }
+    }
+
+    private static DsType bulkDsType(String id) {
+        return switch (id) {
+            case "tree-postorder", "tree-level-order" -> DsType.TREE;
+            default -> DsType.STACK;
+        };
     }
 
     // Step Generators
