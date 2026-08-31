@@ -21,7 +21,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "5 vertices. dist[0] = 0, everything else infinite. Enqueue the source.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "queued",
       "1" : "unvisited",
@@ -111,7 +112,8 @@
     "stepNumber" : 2,
     "activeLine" : 9,
     "description" : "Pop the smallest entry in the queue: 0 at distance 0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "queued",
       "1" : "unvisited",
@@ -203,7 +205,8 @@
     "stepNumber" : 3,
     "activeLine" : 17,
     "description" : "Edge 0-1 (weight 4): 0 + 4 = 4 beats infinity. Update dist[1] and enqueue.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "queued",
@@ -295,7 +298,8 @@
     "stepNumber" : 4,
     "activeLine" : 17,
     "description" : "Edge 0-2 (weight 1): 0 + 1 = 1 beats infinity. Update dist[2] and enqueue.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "queued",
@@ -387,7 +391,8 @@
     "stepNumber" : 5,
     "activeLine" : 9,
     "description" : "Pop the smallest entry in the queue: 2 at distance 1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "queued",
@@ -479,7 +484,8 @@
     "stepNumber" : 6,
     "activeLine" : 20,
     "description" : "Edge 2-0 (weight 1): 1 + 1 = 2 does not beat dist[0]=0. No update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "queued",
@@ -570,7 +576,8 @@
     "stepNumber" : 7,
     "activeLine" : 17,
     "description" : "Edge 2-1 (weight 2): 1 + 2 = 3 beats 4. Update dist[1] and enqueue.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "queued",
@@ -662,7 +669,8 @@
     "stepNumber" : 8,
     "activeLine" : 17,
     "description" : "Edge 2-3 (weight 5): 1 + 5 = 6 beats infinity. Update dist[3] and enqueue.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "queued",
@@ -754,7 +762,8 @@
     "stepNumber" : 9,
     "activeLine" : 9,
     "description" : "Pop the smallest entry in the queue: 1 at distance 3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "queued",
@@ -846,7 +855,8 @@
     "stepNumber" : 10,
     "activeLine" : 20,
     "description" : "Edge 1-0 (weight 4): 3 + 4 = 7 does not beat dist[0]=0. No update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "visiting",
@@ -937,7 +947,8 @@
     "stepNumber" : 11,
     "activeLine" : 20,
     "description" : "Edge 1-2 (weight 2): 3 + 2 = 5 does not beat dist[2]=1. No update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "visiting",
@@ -1028,7 +1039,8 @@
     "stepNumber" : 12,
     "activeLine" : 17,
     "description" : "Edge 1-3 (weight 1): 3 + 1 = 4 beats 6. Update dist[3] and enqueue.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "visiting",
@@ -1120,7 +1132,8 @@
     "stepNumber" : 13,
     "activeLine" : 9,
     "description" : "Pop the smallest entry in the queue: 1 at distance 4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1212,7 +1225,8 @@
     "stepNumber" : 14,
     "activeLine" : 12,
     "description" : "1 was already finalized at 3, better than this entry's 4 — it was enqueued before that update. Discard it.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1304,7 +1318,8 @@
     "stepNumber" : 15,
     "activeLine" : 9,
     "description" : "Pop the smallest entry in the queue: 3 at distance 4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1396,7 +1411,8 @@
     "stepNumber" : 16,
     "activeLine" : 20,
     "description" : "Edge 3-1 (weight 1): 4 + 1 = 5 does not beat dist[1]=3. No update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1487,7 +1503,8 @@
     "stepNumber" : 17,
     "activeLine" : 20,
     "description" : "Edge 3-2 (weight 5): 4 + 5 = 9 does not beat dist[2]=1. No update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1578,7 +1595,8 @@
     "stepNumber" : 18,
     "activeLine" : 17,
     "description" : "Edge 3-4 (weight 3): 4 + 3 = 7 beats infinity. Update dist[4] and enqueue.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1670,7 +1688,8 @@
     "stepNumber" : 19,
     "activeLine" : 9,
     "description" : "Pop the smallest entry in the queue: 3 at distance 6.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1762,7 +1781,8 @@
     "stepNumber" : 20,
     "activeLine" : 12,
     "description" : "3 was already finalized at 4, better than this entry's 6 — it was enqueued before that update. Discard it.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1854,7 +1874,8 @@
     "stepNumber" : 21,
     "activeLine" : 9,
     "description" : "Pop the smallest entry in the queue: 4 at distance 7.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -1946,7 +1967,8 @@
     "stepNumber" : 22,
     "activeLine" : 20,
     "description" : "Edge 4-3 (weight 3): 7 + 3 = 10 does not beat dist[3]=4. No update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",
@@ -2037,7 +2059,8 @@
     "stepNumber" : 23,
     "activeLine" : 24,
     "description" : "Priority queue empty. Final shortest distances from 0: [0, 3, 1, 4, 7].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "done",
       "1" : "done",

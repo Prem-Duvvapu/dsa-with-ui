@@ -164,6 +164,8 @@ class TraceEncoderTest {
             step.setDescription(delta.getDescription());
             step.setQueueOrStackState(pick(delta.getQueueOrStackState(),
                     previous == null ? null : previous.getQueueOrStackState()));
+            step.setCallStack(pick(delta.getCallStack(),
+                    previous == null ? null : previous.getCallStack()));
             step.setNodeStates(pick(delta.getNodeStates(),
                     previous == null ? null : previous.getNodeStates()));
             step.setActiveEdges(pick(delta.getActiveEdges(),
@@ -178,6 +180,8 @@ class TraceEncoderTest {
                     previous == null ? null : previous.getArrayState()));
             step.setListState(pick(delta.getListState(),
                     previous == null ? null : previous.getListState()));
+            step.setTrieState(pick(delta.getTrieState(),
+                    previous == null ? null : previous.getTrieState()));
             step.setTreeNodes(pick(delta.getTreeNodes(),
                     previous == null ? null : previous.getTreeNodes()));
             step.setGraphNodes(pick(delta.getGraphNodes(),

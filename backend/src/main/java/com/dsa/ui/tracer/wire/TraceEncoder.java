@@ -52,6 +52,7 @@ public final class TraceEncoder {
                     step.getDescription(),
                     keyframe ? Boolean.TRUE : null,
                     changed(baseline, step, ExecutionStep::getQueueOrStackState),
+                    changed(baseline, step, ExecutionStep::getCallStack),
                     changed(baseline, step, ExecutionStep::getNodeStates),
                     changed(baseline, step, ExecutionStep::getActiveEdges),
                     changed(baseline, step, ExecutionStep::getVariables),
@@ -59,6 +60,7 @@ public final class TraceEncoder {
                     changedGrid(baseline, step),
                     changed(baseline, step, ExecutionStep::getArrayState),
                     changed(baseline, step, ExecutionStep::getListState),
+                    changed(baseline, step, ExecutionStep::getTrieState),
                     changed(baseline, step, ExecutionStep::getTreeNodes),
                     changed(baseline, step, ExecutionStep::getGraphNodes),
                     changed(baseline, step, ExecutionStep::getGraphEdges),
@@ -90,6 +92,7 @@ public final class TraceEncoder {
 
     private static boolean wentNull(ExecutionStep previous, ExecutionStep step) {
         return nulled(previous.getQueueOrStackState(), step.getQueueOrStackState())
+                || nulled(previous.getCallStack(), step.getCallStack())
                 || nulled(previous.getNodeStates(), step.getNodeStates())
                 || nulled(previous.getActiveEdges(), step.getActiveEdges())
                 || nulled(previous.getVariables(), step.getVariables())
@@ -97,6 +100,7 @@ public final class TraceEncoder {
                 || nulled(previous.getGridState(), step.getGridState())
                 || nulled(previous.getArrayState(), step.getArrayState())
                 || nulled(previous.getListState(), step.getListState())
+                || nulled(previous.getTrieState(), step.getTrieState())
                 || nulled(previous.getTreeNodes(), step.getTreeNodes())
                 || nulled(previous.getGraphNodes(), step.getGraphNodes())
                 || nulled(previous.getGraphEdges(), step.getGraphEdges())

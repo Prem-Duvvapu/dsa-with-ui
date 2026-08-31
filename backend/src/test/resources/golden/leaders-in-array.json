@@ -15,7 +15,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "Start right-to-left scan. maxi = -INF, leaders = [].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -56,7 +57,8 @@
     "stepNumber" : 2,
     "activeLine" : 6,
     "description" : "i=5: arr[5]=2 > maxi (-INF), new leader found.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -98,7 +100,8 @@
     "stepNumber" : 3,
     "activeLine" : 7,
     "description" : "Add 2 to leaders list; update maxi = 2. Current leaders: [2].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -140,7 +143,8 @@
     "stepNumber" : 4,
     "activeLine" : 6,
     "description" : "i=4: arr[4]=5 > maxi (2), new leader found.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -182,7 +186,8 @@
     "stepNumber" : 5,
     "activeLine" : 7,
     "description" : "Add 5 to leaders list; update maxi = 5. Current leaders: [2, 5].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -224,7 +229,8 @@
     "stepNumber" : 6,
     "activeLine" : 6,
     "description" : "i=3: arr[3]=3 <= maxi (5), not a leader (skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -266,7 +272,8 @@
     "stepNumber" : 7,
     "activeLine" : 6,
     "description" : "i=2: arr[2]=4 <= maxi (5), not a leader (skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -308,7 +315,8 @@
     "stepNumber" : 8,
     "activeLine" : 6,
     "description" : "i=1: arr[1]=17 > maxi (5), new leader found.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -350,7 +358,8 @@
     "stepNumber" : 9,
     "activeLine" : 7,
     "description" : "Add 17 to leaders list; update maxi = 17. Current leaders: [2, 5, 17].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -392,7 +401,8 @@
     "stepNumber" : 10,
     "activeLine" : 6,
     "description" : "i=0: arr[0]=16 <= maxi (17), not a leader (skip).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -434,7 +444,8 @@
     "stepNumber" : 11,
     "activeLine" : 10,
     "description" : "Reverse leaders list to restore left-to-right order: [17, 5, 2].",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

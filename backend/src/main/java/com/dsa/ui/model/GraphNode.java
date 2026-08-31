@@ -1,5 +1,7 @@
 package com.dsa.ui.model;
 
+import java.util.Objects;
+
 public class GraphNode {
     private int id;
     private String label;
@@ -31,4 +33,24 @@ public class GraphNode {
 
     public String getState() { return state; }
     public void setState(String state) { this.state = state; }
+
+    /**
+     * Graph topology is delta-encoded by value. Tracers are free to reconstruct the same
+     * layout for a later step, so object identity must not make an unchanged node look new.
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof GraphNode node)) return false;
+        return id == node.id
+                && Double.compare(x, node.x) == 0
+                && Double.compare(y, node.y) == 0
+                && Objects.equals(label, node.label)
+                && Objects.equals(state, node.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, label, x, y, state);
+    }
 }

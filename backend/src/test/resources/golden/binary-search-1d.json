@@ -18,7 +18,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "Search the whole array for 13. low = 0, high = 6.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -64,7 +65,8 @@
     "stepNumber" : 2,
     "activeLine" : 4,
     "description" : "Range is [0, 6] — 7 values left. Probe the middle: nums[3] = 7.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -111,7 +113,8 @@
     "stepNumber" : 3,
     "activeLine" : 6,
     "description" : "7 < 13, so the target is to the right. Discard indices 0..3.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -156,7 +159,8 @@
     "stepNumber" : 4,
     "activeLine" : 4,
     "description" : "Range is [4, 6] — 3 values left. Probe the middle: nums[5] = 11.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -203,7 +207,8 @@
     "stepNumber" : 5,
     "activeLine" : 6,
     "description" : "11 < 13, so the target is to the right. Discard indices 4..5.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -248,7 +253,8 @@
     "stepNumber" : 6,
     "activeLine" : 4,
     "description" : "Range is [6, 6] — 1 value left. Probe the middle: nums[6] = 13.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -295,7 +301,8 @@
     "stepNumber" : 7,
     "activeLine" : 5,
     "description" : "nums[6] = 13 is the target. Found at index 6.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

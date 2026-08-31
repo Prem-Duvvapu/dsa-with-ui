@@ -10,6 +10,8 @@ public class ExecutionStep {
     private int activeLine;
     private String description;
     private List<String> queueOrStackState; // Elements currently in queue or stack
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> callStack; // Recursive call frames, independent of the algorithm's data structure
     private Map<Integer, String> nodeStates; // Node ID -> state ("unvisited", "queued", "visiting", "visited", "cycle")
     private List<String> activeEdges; // Edge identifiers e.g. "0-1"
     private Map<String, String> variables; // Debug variable values e.g. {"curr": "0", "vis[0]": "true"}
@@ -84,10 +86,24 @@ public class ExecutionStep {
                          List<ListNode> listState, List<TrieNodeModel> trieState,
                          List<TreeNode> treeNodes, List<GraphNode> graphNodes,
                          List<GraphEdge> graphEdges, DpTable dpTable) {
+        this(stepNumber, activeLine, description, queueOrStackState, nodeStates, activeEdges,
+                variables, dsType, gridState, arrayState, listState, trieState, treeNodes,
+                graphNodes, graphEdges, dpTable, null);
+    }
+
+    public ExecutionStep(int stepNumber, int activeLine, String description,
+                         List<String> queueOrStackState, Map<Integer, String> nodeStates,
+                         List<String> activeEdges, Map<String, String> variables,
+                         DsType dsType, int[][] gridState, List<ArrayElement> arrayState,
+                         List<ListNode> listState, List<TrieNodeModel> trieState,
+                         List<TreeNode> treeNodes, List<GraphNode> graphNodes,
+                         List<GraphEdge> graphEdges, DpTable dpTable,
+                         List<String> callStack) {
         this.stepNumber = stepNumber;
         this.activeLine = activeLine;
         this.description = description;
         this.queueOrStackState = queueOrStackState;
+        this.callStack = callStack;
         this.nodeStates = nodeStates;
         this.activeEdges = activeEdges;
         this.variables = variables;
@@ -113,6 +129,9 @@ public class ExecutionStep {
 
     public List<String> getQueueOrStackState() { return queueOrStackState; }
     public void setQueueOrStackState(List<String> queueOrStackState) { this.queueOrStackState = queueOrStackState; }
+
+    public List<String> getCallStack() { return callStack; }
+    public void setCallStack(List<String> callStack) { this.callStack = callStack; }
 
     public Map<Integer, String> getNodeStates() { return nodeStates; }
     public void setNodeStates(Map<Integer, String> nodeStates) { this.nodeStates = nodeStates; }

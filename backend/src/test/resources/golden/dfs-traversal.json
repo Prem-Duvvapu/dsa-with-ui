@@ -19,7 +19,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "6 vertices, 6 edges. Enter 0 and mark it visited.",
-    "queueOrStackState" : [ "dfs(0)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "unvisited",
@@ -117,7 +118,8 @@
     "stepNumber" : 2,
     "activeLine" : 8,
     "description" : "1 is unvisited. Descend into it before checking 0's other neighbours.",
-    "queueOrStackState" : [ "dfs(0)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "unvisited",
@@ -216,7 +218,8 @@
     "stepNumber" : 3,
     "activeLine" : 2,
     "description" : "Enter 1 and mark it visited — position 2 in the order.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -314,7 +317,8 @@
     "stepNumber" : 4,
     "activeLine" : 6,
     "description" : "0 is already visited — skip it, or this would recurse forever.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -413,7 +417,8 @@
     "stepNumber" : 5,
     "activeLine" : 8,
     "description" : "3 is unvisited. Descend into it before checking 1's other neighbours.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -512,7 +517,8 @@
     "stepNumber" : 6,
     "activeLine" : 2,
     "description" : "Enter 3 and mark it visited — position 3 in the order.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -610,7 +616,8 @@
     "stepNumber" : 7,
     "activeLine" : 6,
     "description" : "1 is already visited — skip it, or this would recurse forever.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -709,7 +716,8 @@
     "stepNumber" : 8,
     "activeLine" : 8,
     "description" : "2 is unvisited. Descend into it before checking 3's other neighbours.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -808,7 +816,8 @@
     "stepNumber" : 9,
     "activeLine" : 2,
     "description" : "Enter 2 and mark it visited — position 4 in the order.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -906,7 +915,8 @@
     "stepNumber" : 10,
     "activeLine" : 6,
     "description" : "0 is already visited — skip it, or this would recurse forever.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1005,7 +1015,8 @@
     "stepNumber" : 11,
     "activeLine" : 6,
     "description" : "3 is already visited — skip it, or this would recurse forever.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1104,7 +1115,8 @@
     "stepNumber" : 12,
     "activeLine" : 10,
     "description" : "2 has no unvisited neighbours left — backtrack.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(2)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1202,7 +1214,8 @@
     "stepNumber" : 13,
     "activeLine" : 8,
     "description" : "4 is unvisited. Descend into it before checking 3's other neighbours.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1301,7 +1314,8 @@
     "stepNumber" : 14,
     "activeLine" : 2,
     "description" : "Enter 4 and mark it visited — position 5 in the order.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1399,7 +1413,8 @@
     "stepNumber" : 15,
     "activeLine" : 6,
     "description" : "3 is already visited — skip it, or this would recurse forever.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1498,7 +1513,8 @@
     "stepNumber" : 16,
     "activeLine" : 8,
     "description" : "5 is unvisited. Descend into it before checking 4's other neighbours.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1597,7 +1613,8 @@
     "stepNumber" : 17,
     "activeLine" : 2,
     "description" : "Enter 5 and mark it visited — position 6 in the order.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)", "dfs(5)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)", "dfs(5)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1695,7 +1712,8 @@
     "stepNumber" : 18,
     "activeLine" : 6,
     "description" : "4 is already visited — skip it, or this would recurse forever.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)", "dfs(5)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)", "dfs(5)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1794,7 +1812,8 @@
     "stepNumber" : 19,
     "activeLine" : 10,
     "description" : "5 has no unvisited neighbours left — backtrack.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)", "dfs(5)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)", "dfs(5)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1892,7 +1911,8 @@
     "stepNumber" : 20,
     "activeLine" : 10,
     "description" : "4 has no unvisited neighbours left — backtrack.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)", "dfs(4)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -1990,7 +2010,8 @@
     "stepNumber" : 21,
     "activeLine" : 10,
     "description" : "3 has no unvisited neighbours left — backtrack.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)", "dfs(3)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -2088,7 +2109,8 @@
     "stepNumber" : 22,
     "activeLine" : 10,
     "description" : "1 has no unvisited neighbours left — backtrack.",
-    "queueOrStackState" : [ "dfs(0)", "dfs(1)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)", "dfs(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visited",
@@ -2186,7 +2208,8 @@
     "stepNumber" : 23,
     "activeLine" : 6,
     "description" : "2 is already visited — skip it, or this would recurse forever.",
-    "queueOrStackState" : [ "dfs(0)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visited",
@@ -2285,7 +2308,8 @@
     "stepNumber" : 24,
     "activeLine" : 10,
     "description" : "0 has no unvisited neighbours left. Recursion fully unwound. DFS order: [0, 1, 3, 2, 4, 5].",
-    "queueOrStackState" : [ "dfs(0)" ],
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",

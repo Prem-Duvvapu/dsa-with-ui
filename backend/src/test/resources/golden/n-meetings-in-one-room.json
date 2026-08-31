@@ -19,7 +19,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "6 meetings. Keep each end tied to its own start — sorting must not tear them apart.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -59,7 +60,8 @@
     "stepNumber" : 2,
     "activeLine" : 8,
     "description" : "Sort by END time: the meeting that frees the room earliest always goes first. That ordering is the whole algorithm.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -99,7 +101,8 @@
     "stepNumber" : 3,
     "activeLine" : 9,
     "description" : "Start greedy: nothing selected, the room is free from time 0. One pass over the sorted list decides everything.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -140,7 +143,8 @@
     "stepNumber" : 4,
     "activeLine" : 11,
     "description" : "Meeting #1 runs 1→2. The room is free from 0.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -181,7 +185,8 @@
     "stepNumber" : 5,
     "activeLine" : 12,
     "description" : "1 > 0, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -223,7 +228,8 @@
     "stepNumber" : 6,
     "activeLine" : 11,
     "description" : "Meeting #2 runs 3→4. The room is free from 2.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -264,7 +270,8 @@
     "stepNumber" : 7,
     "activeLine" : 12,
     "description" : "3 > 2, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -306,7 +313,8 @@
     "stepNumber" : 8,
     "activeLine" : 11,
     "description" : "Meeting #3 runs 0→6. The room is free from 4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -347,7 +355,8 @@
     "stepNumber" : 9,
     "activeLine" : 15,
     "description" : "0 ≤ 4: it would still be running when the room is promised. Skip it — a later-ending meeting never beats an earlier one.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -388,7 +397,8 @@
     "stepNumber" : 10,
     "activeLine" : 11,
     "description" : "Meeting #4 runs 5→7. The room is free from 4.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -429,7 +439,8 @@
     "stepNumber" : 11,
     "activeLine" : 12,
     "description" : "5 > 4, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -471,7 +482,8 @@
     "stepNumber" : 12,
     "activeLine" : 11,
     "description" : "Meeting #5 runs 8→9. The room is free from 7.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -512,7 +524,8 @@
     "stepNumber" : 13,
     "activeLine" : 12,
     "description" : "8 > 7, so it fits. Take it — the meeting that ends earliest can never crowd out a better choice later.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -554,7 +567,8 @@
     "stepNumber" : 14,
     "activeLine" : 11,
     "description" : "Meeting #6 runs 5→9. The room is free from 9.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -595,7 +609,8 @@
     "stepNumber" : 15,
     "activeLine" : 15,
     "description" : "5 ≤ 9: it would still be running when the room is promised. Skip it — a later-ending meeting never beats an earlier one.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -636,7 +651,8 @@
     "stepNumber" : 16,
     "activeLine" : 18,
     "description" : "Room used by 4 of 6 meetings: #1, 2, 4, 5.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

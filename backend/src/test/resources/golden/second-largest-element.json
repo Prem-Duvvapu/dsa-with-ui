@@ -16,7 +16,8 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "Start with first element: largest = 12, secondLargest = -1.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -57,7 +58,8 @@
     "stepNumber" : 2,
     "activeLine" : 5,
     "description" : "i=1: arr[1]=35 > largest=12.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -99,7 +101,8 @@
     "stepNumber" : 3,
     "activeLine" : 6,
     "description" : "New largest is 35; previous largest 12 becomes secondLargest.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -141,7 +144,8 @@
     "stepNumber" : 4,
     "activeLine" : 5,
     "description" : "i=2: arr[2]=1 <= secondLargest=12 (or equals largest), no update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -183,7 +187,8 @@
     "stepNumber" : 5,
     "activeLine" : 5,
     "description" : "i=3: arr[3]=10 <= secondLargest=12 (or equals largest), no update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -225,7 +230,8 @@
     "stepNumber" : 6,
     "activeLine" : 5,
     "description" : "i=4: arr[4]=34 < largest=35, but beats secondLargest=12.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -267,7 +273,8 @@
     "stepNumber" : 7,
     "activeLine" : 9,
     "description" : "New secondLargest becomes 34 (largest stays 35).",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -309,7 +316,8 @@
     "stepNumber" : 8,
     "activeLine" : 5,
     "description" : "i=5: arr[5]=1 <= secondLargest=34 (or equals largest), no update.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -351,7 +359,8 @@
     "stepNumber" : 9,
     "activeLine" : 12,
     "description" : "Scan complete: largest is 35, second largest is 34.",
-    "queueOrStackState" : [ ],
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
