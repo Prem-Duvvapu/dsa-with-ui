@@ -1,5 +1,3 @@
-import CanvasShell from './CanvasShell';
-
 function DpCell({ className, glyph, state, value, rowLabel, columnLabel }) {
   return (
     <td
@@ -41,56 +39,51 @@ export default function DpTableCanvas({ currentStep, step }) {
   const rowLabels = Array.isArray(table?.rowLabels) ? table.rowLabels : [];
   const colLabels = Array.isArray(table?.colLabels) ? table.colLabels : [];
   const cells = Array.isArray(table?.cells) ? table.cells : [];
-  const rowCount = Math.max(rowLabels.length, cells.length);
-  const columnCount = Math.max(
-    colLabels.length,
-    0,
-    ...cells.map((row) => (Array.isArray(row) ? row.length : 0))
-  );
-  const hasTable = rowCount > 0 && columnCount > 0;
+  const rowCount = cells.length;
+  const columnCount = rowCount > 0 && Array.isArray(cells[0]) ? cells[0].length : 0;
+  const hasTable = rowCount > 0
+    && columnCount > 0
+    && cells.every((row) => Array.isArray(row)
+      && row.length === columnCount
+      && row.every((cell) => cell !== null && typeof cell === 'object' && !Array.isArray(cell)));
+
+  // App owns the one shared CanvasShell. Returning stage content here avoids a nested
+  // header/legend taking space away from the recurrence table.
+  if (!hasTable) return <p className="dp-empty">No DP table data</p>;
 
   return (
-    <CanvasShell
-      title="Dynamic programming table"
-      meta={hasTable ? `${rowCount} rows × ${columnCount} columns` : 'No table'}
-    >
-      {hasTable ? (
-        <div className="dp-table-wrap">
-          <table className="dp-table" aria-label="Dynamic programming table">
-            <thead>
-              <tr>
-                <th className="dp-corner" aria-label="Row labels" />
-                {Array.from({ length: columnCount }, (_, columnIndex) => (
-                  <th className="dp-col-label" scope="col" key={columnIndex}>
-                    {labelAt(colLabels, columnIndex, 'c')}
-                  </th>
-                ))}
+    <div className="dp-table-wrap">
+      <table className="dp-table" aria-label="Dynamic programming table">
+        <thead>
+          <tr>
+            <th className="dp-corner" aria-label="Row labels" />
+            {Array.from({ length: columnCount }, (_, columnIndex) => (
+              <th className="dp-col-label" scope="col" key={columnIndex}>
+                {labelAt(colLabels, columnIndex, 'c')}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: rowCount }, (_, rowIndex) => {
+            const rowLabel = labelAt(rowLabels, rowIndex, 'r');
+            const row = Array.isArray(cells[rowIndex]) ? cells[rowIndex] : [];
+
+            return (
+              <tr key={rowIndex}>
+                <th className="dp-row-label" scope="row">{rowLabel}</th>
+                {Array.from({ length: columnCount }, (_, columnIndex) => {
+                  const rawCell = row[columnIndex];
+                  const cell = rawCell && typeof rawCell === 'object' ? rawCell : {};
+                  const columnLabel = labelAt(colLabels, columnIndex, 'c');
+
+                  return renderCell(cell, rowLabel, columnLabel, columnIndex);
+                })}
               </tr>
-            </thead>
-            <tbody>
-              {Array.from({ length: rowCount }, (_, rowIndex) => {
-                const rowLabel = labelAt(rowLabels, rowIndex, 'r');
-                const row = Array.isArray(cells[rowIndex]) ? cells[rowIndex] : [];
-
-                return (
-                  <tr key={rowIndex}>
-                    <th className="dp-row-label" scope="row">{rowLabel}</th>
-                    {Array.from({ length: columnCount }, (_, columnIndex) => {
-                      const rawCell = row[columnIndex];
-                      const cell = rawCell && typeof rawCell === 'object' ? rawCell : {};
-                      const columnLabel = labelAt(colLabels, columnIndex, 'c');
-
-                      return renderCell(cell, rowLabel, columnLabel, columnIndex);
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p className="dp-empty">No DP table data</p>
-      )}
-    </CanvasShell>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }

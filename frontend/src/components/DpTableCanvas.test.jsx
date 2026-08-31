@@ -57,6 +57,32 @@ describe('DpTableCanvas', () => {
     expect(screen.getByText('No DP table data')).toBeInTheDocument();
   });
 
+  it('does not fabricate blank cells from labels-only or ragged payloads', () => {
+    const { rerender } = render(
+      <DpTableCanvas
+        currentStep={{ dpTable: { rowLabels: ['dp'], colLabels: ['0', '1'], cells: [] } }}
+      />
+    );
+
+    expect(screen.getByText('No DP table data')).toBeInTheDocument();
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+
+    rerender(
+      <DpTableCanvas
+        currentStep={{
+          dpTable: {
+            rowLabels: ['a', 'b'],
+            colLabels: ['0', '1'],
+            cells: [[{ value: '1', state: 'known' }], []]
+          }
+        }}
+      />
+    );
+
+    expect(screen.getByText('No DP table data')).toBeInTheDocument();
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  });
+
   it('is the registered renderer for DpTable traces', () => {
     expect(CANVAS_BY_DSTYPE.DpTable).toBe(DpTableCanvas);
   });

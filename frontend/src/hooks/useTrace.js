@@ -14,16 +14,33 @@ import { decodeTrace } from '../trace/decodeTrace';
  * load with different error handling; mixing it in would muddy the interface.
  */
 
-/** Decodes a v2 execute response body into a plain steps array, or [] if unusable. */
-function decodeExecValue(execValue) {
-  if (Array.isArray(execValue)) return execValue;
-  if (execValue?.steps) return decodeTrace(execValue);
-  return [];
+/** Classifies a successful execute body without turning broken data into a fake trace. */
+function classifyExecValue(execValue) {
+  let decoded;
+
+  try {
+    if (Array.isArray(execValue)) {
+      decoded = execValue;
+    } else if (execValue && Array.isArray(execValue.steps)) {
+      decoded = decodeTrace(execValue);
+    } else {
+      return { kind: 'malformed', steps: [] };
+    }
+  } catch {
+    return { kind: 'malformed', steps: [] };
+  }
+
+  if (!decoded.every(step => step && typeof step === 'object' && !Array.isArray(step)
+      && Number.isInteger(step.stepNumber) && typeof step.description === 'string')) {
+    return { kind: 'malformed', steps: [] };
+  }
+  if (decoded.length === 0) return { kind: 'empty', steps: [] };
+  return { kind: 'ok', steps: decoded };
 }
 
 /**
  * @param {string|null} problemId  the currently selected problem id
- * @param {object|null} problem    the catalogue entry (for fallback steps/dsType)
+ * @param {object|null} problem    the catalogue entry (for checked-in offline steps)
  * @returns playback state + controls
  */
 export default function useTrace(problemId, problem) {
@@ -67,6 +84,8 @@ export default function useTrace(problemId, problem) {
     setFieldErrors({});
     setLoading(true);
     setDetail(null);
+    setSteps([]);
+    setTruncated(false);
 
     (async () => {
       try {
@@ -75,9 +94,14 @@ export default function useTrace(problemId, problem) {
           fetch(`/api/problems/${problemId}`, { signal: controller.signal })
             .then(r => r.ok ? r.json() : null),
           fetch(`/api/problems/${problemId}/execute`, { signal: controller.signal })
-            .then(r => {
-              if (r.status === 501) return { untraced: true };
-              return r.ok ? r.json() : null;
+            .then(async r => {
+              if (r.status === 501) return { kind: 'untraced' };
+              if (!r.ok) return { kind: 'fetch' };
+              try {
+                return { kind: 'body', value: await r.json() };
+              } catch {
+                return { kind: 'malformed' };
+              }
             })
         ]);
 
@@ -87,11 +111,11 @@ export default function useTrace(problemId, problem) {
         const detailValue = detailRes.status === 'fulfilled' ? detailRes.value : null;
         setDetail(detailValue);
 
-        // Execution response: could be a trace response (with steps array or top-level
-        // array), or an untraced marker, or null on error.
-        const execValue = execRes.status === 'fulfilled' ? execRes.value : null;
+        const execOutcome = execRes.status === 'fulfilled'
+          ? execRes.value
+          : { kind: 'fetch' };
 
-        if (execValue?.untraced) {
+        if (execOutcome?.kind === 'untraced') {
           setSteps([]);
           setTruncated(false);
           setError('untraced');
@@ -99,27 +123,37 @@ export default function useTrace(problemId, problem) {
           return;
         }
 
-        const decoded = decodeExecValue(execValue);
-
-        if (decoded.length > 0) {
-          setSteps(decoded);
-        } else if (detailValue?.executionSteps?.length > 0) {
-          // Fallback to steps embedded in the detailValue response (legacy shape).
-          setSteps(detailValue.executionSteps);
-        } else if (problem?.executionSteps?.length > 0) {
-          // Fallback to catalogue-embedded steps (cold-start data).
-          setSteps(problem.executionSteps);
-        } else {
-          setSteps([{
-            stepNumber: 1,
-            activeLine: 1,
-            description: `Interactive execution visualizer for ${detailValue?.title || problem?.title || problemId}.`,
-            variables: { Status: 'Loaded', Algorithm: detailValue?.title || problem?.title || problemId },
-            dsType: detailValue?.dsType || problem?.dsType || 'Array'
-          }]);
+        if (execOutcome?.kind === 'fetch') {
+          const offlineSteps = Array.isArray(problem?.executionSteps)
+            ? problem.executionSteps
+            : [];
+          setSteps(offlineSteps);
+          setTruncated(false);
+          setCurrentStepIndex(0);
+          setError('fetch');
+          return;
         }
 
-        setTruncated(!Array.isArray(execValue) && execValue?.truncated === true);
+        if (execOutcome?.kind === 'malformed') {
+          setSteps([]);
+          setTruncated(false);
+          setCurrentStepIndex(0);
+          setError('malformed');
+          return;
+        }
+
+        const classified = classifyExecValue(execOutcome?.value);
+        if (classified.kind !== 'ok') {
+          setSteps([]);
+          setTruncated(false);
+          setCurrentStepIndex(0);
+          setError(classified.kind);
+          return;
+        }
+
+        setSteps(classified.steps);
+        setTruncated(!Array.isArray(execOutcome.value)
+          && execOutcome.value?.truncated === true);
         setCurrentStepIndex(0);
         setError(null);
       } catch (err) {
@@ -166,25 +200,54 @@ export default function useTrace(problemId, problem) {
       if (res.status === 400) {
         const body = await res.json().catch(() => null);
         setFieldErrors(body?.fieldErrors || {});
+        setError(null);
         return;
       }
       if (res.status === 501) {
         setFieldErrors({});
         setSteps([]);
         setTruncated(false);
+        setCurrentStepIndex(0);
+        setIsPlaying(false);
         setError('untraced');
         return;
       }
       if (!res.ok) {
         setFieldErrors({});
+        setSteps([]);
+        setTruncated(false);
+        setCurrentStepIndex(0);
+        setIsPlaying(false);
         setError('fetch');
         return;
       }
 
-      const body = await res.json();
-      const decoded = decodeExecValue(body);
+      let body;
+      try {
+        body = await res.json();
+      } catch {
+        setFieldErrors({});
+        setSteps([]);
+        setTruncated(false);
+        setCurrentStepIndex(0);
+        setIsPlaying(false);
+        setError('malformed');
+        return;
+      }
+
+      const classified = classifyExecValue(body);
+      if (classified.kind !== 'ok') {
+        setFieldErrors({});
+        setSteps([]);
+        setTruncated(false);
+        setCurrentStepIndex(0);
+        setIsPlaying(false);
+        setError(classified.kind);
+        return;
+      }
+
       setFieldErrors({});
-      setSteps(decoded);
+      setSteps(classified.steps);
       setTruncated(body?.truncated === true);
       setCurrentStepIndex(0);
       setIsPlaying(false);
@@ -192,6 +255,11 @@ export default function useTrace(problemId, problem) {
     } catch (err) {
       if (err.name === 'AbortError') return;
       if (requestId !== requestIdRef.current) return;
+      setFieldErrors({});
+      setSteps([]);
+      setTruncated(false);
+      setCurrentStepIndex(0);
+      setIsPlaying(false);
       setError('fetch');
     } finally {
       if (requestId === requestIdRef.current) {
@@ -221,13 +289,17 @@ export default function useTrace(problemId, problem) {
   // ── Controls ───────────────────────────────────────────────────────────────
   const currentStep = steps[currentStepIndex] || null;
 
-  const play = useCallback(() => setIsPlaying(true), []);
+  const play = useCallback(() => {
+    if (steps.length > 0) setIsPlaying(true);
+  }, [steps.length]);
   const pause = useCallback(() => setIsPlaying(false), []);
-  const togglePlay = useCallback(() => setIsPlaying(p => !p), []);
+  const togglePlay = useCallback(() => {
+    if (steps.length > 0) setIsPlaying(p => !p);
+  }, [steps.length]);
 
   const stepNext = useCallback(() => {
     setIsPlaying(false);
-    setCurrentStepIndex(p => Math.min(p + 1, steps.length - 1));
+    setCurrentStepIndex(p => steps.length > 0 ? Math.min(p + 1, steps.length - 1) : 0);
   }, [steps.length]);
 
   const stepPrev = useCallback(() => {
@@ -242,8 +314,10 @@ export default function useTrace(problemId, problem) {
 
   const seek = useCallback((idx) => {
     setIsPlaying(false);
-    setCurrentStepIndex(idx);
-  }, []);
+    setCurrentStepIndex(steps.length > 0
+      ? Math.min(Math.max(idx, 0), steps.length - 1)
+      : 0);
+  }, [steps.length]);
 
   return {
     steps,
