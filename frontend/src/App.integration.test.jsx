@@ -299,6 +299,62 @@ describe('App execution capture', () => {
     expect(container.querySelectorAll('.shell-head')).toHaveLength(1);
   });
 
+  it('gives Graph traces the full stage instead of rendering an execution capture', async () => {
+    // A graph traversal is already fully legible from watching nodes change state in
+    // motion; a row-per-vertex strip beneath it conveys the same traversal order less
+    // directly than the diagram itself. See RCA-016 / PROMPT-F-visual-fidelity.md.
+    const bfs = problem('bfs-traversal', 'BFS Traversal', 'Graph BFS/DFS', 'Graph');
+
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url === '/api/problems') return Promise.resolve(ok([bfs]));
+      if (url === '/api/problems/bfs-traversal') return Promise.resolve(ok(bfs));
+      if (url === '/api/problems/bfs-traversal/execute') {
+        return Promise.resolve(ok([{
+          stepNumber: 1,
+          activeLine: 1,
+          description: 'seed the queue',
+          variables: {},
+          dsType: 'Graph',
+          nodeStates: { 0: 'queued' },
+          graphNodes: [{ id: 0, label: '0', x: 10, y: 10, state: 'queued' }],
+          graphEdges: [],
+          // This legacy-shaped payload keeps the test honest: CaptureStrip could render
+          // rows from nodeStates alone if App did not suppress it by dsType.
+          queueOrStackState: ['0']
+        }]));
+      }
+      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
+    }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText('seed the queue')).toBeInTheDocument());
+    expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
+  });
+
+  it('gives Tree traces the full stage instead of rendering an execution capture', async () => {
+    const preorder = problem('tree-preorder', 'Preorder Traversal', 'Binary Trees', 'Tree');
+
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url === '/api/problems') return Promise.resolve(ok([preorder]));
+      if (url === '/api/problems/tree-preorder') return Promise.resolve(ok(preorder));
+      if (url === '/api/problems/tree-preorder/execute') {
+        return Promise.resolve(ok([{
+          stepNumber: 1,
+          activeLine: 1,
+          description: 'visit the root',
+          variables: {},
+          dsType: 'Tree',
+          treeNodes: [{ id: 0, val: 1, x: 0, y: 0, state: 'visiting' }]
+        }]));
+      }
+      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
+    }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText('visit the root')).toBeInTheDocument());
+    expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
+  });
+
   it('shows an explicit empty state for an unknown dsType instead of an array', async () => {
     vi.stubGlobal('fetch', vi.fn((url) => {
       if (url === '/api/problems') {
