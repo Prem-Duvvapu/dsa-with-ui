@@ -41,6 +41,8 @@ public class DpServiceTest {
                 "climbing-stairs",
                 "frog-jump",
                 "frog-jump-k-distance",
+                "max-sum-non-adjacent",
+                "house-robber-2",
                 "longest-increasing-subsequence",
                 "print-lis",
                 "lis-binary-search",

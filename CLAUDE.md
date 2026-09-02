@@ -95,7 +95,7 @@ Three rules follow from that, and they are the point of the design:
    keep it that way.
 2. **`traced` is an honesty flag, not a feature flag.** `GET /api/problems/stats` reports
    `catalogued` vs `traced` vs `untraced`. The UI is meant to say "not yet traced" rather
-   than animate the wrong thing. Currently **37 of 433** are traced.
+   than animate the wrong thing. Currently **39 of 433** are traced.
 3. **Tests must detect fake work, not just crashes.** `TracerContractTest.traceRespondsToItsInput`
    runs each tracer on two materially different inputs and fails if the traces are identical
    — a canned narration cannot survive it. When you fix something, prove the new test fails

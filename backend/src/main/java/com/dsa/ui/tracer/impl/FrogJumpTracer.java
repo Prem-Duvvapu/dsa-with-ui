@@ -80,14 +80,14 @@ public class FrogJumpTracer implements AlgorithmTracer {
                 .say("The frog starts on stair 0 and must reach stair %d. energy[i] will hold "
                         + "the cheapest total cost of standing on stair i.", n - 1)
                 .var("n", n)
-                .dpTable(FrogEnergyTable.of(heights, energy, settled, -1, "?", Set.of(), false))
+                .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, "?", Set.of(), false))
                 .step();
 
         settled[0] = true;
         emit.at("base")
                 .say("Stair 0 costs nothing — the frog is already there, having jumped nowhere.")
                 .var("energy[0]", 0)
-                .dpTable(FrogEnergyTable.of(heights, energy, settled, -1, "?", Set.of(), false))
+                .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, "?", Set.of(), false))
                 .step();
 
         for (int i = 1; i < n; i++) {
@@ -127,7 +127,7 @@ public class FrogJumpTracer implements AlgorithmTracer {
                     .var("jumpOne", jumpOne)
                     .var("jumpTwo", farReachable ? jumpTwo : "—")
                     .var("energy[i]", chosen)
-                    .dpTable(FrogEnergyTable.of(heights, energy, settled, i,
+                    .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, i,
                             String.valueOf(chosen),
                             farReachable ? Set.of(i - 1, i - 2) : Set.of(i - 1), false))
                     .step();
@@ -141,7 +141,7 @@ public class FrogJumpTracer implements AlgorithmTracer {
                         + "know which route it took — only the cost of the best one.",
                         n - 1, energy[n - 1])
                 .var("answer", energy[n - 1])
-                .dpTable(FrogEnergyTable.of(heights, energy, settled, -1, "?", Set.of(), true))
+                .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, "?", Set.of(), true))
                 .step();
     }
 }

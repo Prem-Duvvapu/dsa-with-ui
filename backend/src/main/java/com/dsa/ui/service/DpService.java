@@ -27,12 +27,14 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These eight have real tracers (tracer/impl). Refuse rather than let
+            // These ten have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
             case "climbing-stairs":
             case "frog-jump":
             case "frog-jump-k-distance":
+            case "max-sum-non-adjacent":
+            case "house-robber-2":
             case "longest-increasing-subsequence":
             case "print-lis":
             case "lis-binary-search":
@@ -218,8 +220,8 @@ public class DpService implements ProblemProvider {
 
     private static DsType bulkDsType(String id) {
         return switch (id) {
-            case "frog-jump-k-distance", "longest-increasing-subsequence",
-                    "lis-binary-search", "print-lis" ->
+            case "frog-jump-k-distance", "max-sum-non-adjacent", "house-robber-2",
+                    "longest-increasing-subsequence", "lis-binary-search", "print-lis" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;
@@ -247,6 +249,24 @@ public class DpService implements ProblemProvider {
                     "Tails array",
                     "Auxiliary Space: O(N)",
                     "Tails array");
+            case "max-sum-non-adjacent" -> new ComplexityDetail(
+                    "O(N)",
+                    "Decides each index once between taking it and skipping it.",
+                    "1D tabulation",
+                    "O(N)",
+                    "Keeps one best-sum cell per index.",
+                    "DP table",
+                    "Auxiliary Space: O(N)",
+                    "DP table");
+            case "house-robber-2" -> new ComplexityDetail(
+                    "O(N)",
+                    "Runs the linear non-adjacent recurrence twice, each over N-1 houses.",
+                    "Circle broken into two linear passes",
+                    "O(N)",
+                    "Keeps one row per pass.",
+                    "DP table",
+                    "Auxiliary Space: O(N)",
+                    "DP table");
             case "frog-jump-k-distance" -> new ComplexityDetail(
                     "O(N * K)",
                     "Weighs up to K reachable predecessors for each of the N stairs.",
