@@ -212,3 +212,34 @@ phase; do not describe unfinished work as resolved.
 - **Regression guard:** `StepEmitterStructurePayloadTest` calibrates the estimate against a
   serialized payload containing emoji, control characters, labels, trie state, queue state,
   and call frames.
+
+## RCA-016 — Narrated queue/heap had nowhere to render
+
+- **Discovered:** 2026-09-02, PROMPT-F-visual-fidelity.md review against a running backend
+- **Status:** Resolved (bfs-traversal, dijkstra-min-heap only — see below)
+- **Symptom and impact:** bfs-traversal's steps said "Seed the queue", "Dequeue 0", "enqueue
+  it behind nothing"; dijkstra-min-heap's said "Pop the smallest entry in the queue" — but
+  neither step carried a queue payload, and both routed to `GraphCanvas`, which has no
+  queue to draw. The min-heap in Dijkstra's own name was invisible; its animation was
+  pixel-identical to plain BFS.
+- **Root cause:** `AlgorithmTracer.dsType()` picks exactly one hero canvas per problem, but
+  `ExecutionStep` can carry several populated structure fields on the same step (a graph
+  AND a queue, here). The one-canvas-per-dsType frontend model had no way to render the
+  second structure even once a tracer emitted it — and neither tracer was emitting it.
+- **Resolution:** a companion-pane layer (`frontend/src/canvas/companions.js`,
+  `.stage-with-companions`/`.canvas-hero`/`.companion-pane` in index.css) renders any OTHER
+  populated structure beside the hero, derived from the payload alone — never from problem
+  id or title. `BfsTraversalTracer` and `DijkstraTracer` now call `.queue(...)` every step;
+  `bfs-traversal`'s dsType moved `Queue` → `Graph` since the graph topology is the point and
+  the queue is auxiliary (catalogue metadata updated to match, see `CatalogTracerMetadataTest`).
+  Companion **presence** is decided from the whole run (`allSteps.some(...)`), not the
+  current step alone — bfs-traversal's queue is empty on its init and done steps and
+  non-empty on nearly everything between, so a per-step presence check made the pane pop in
+  and out on almost every click.
+- **Regression guard:** `QueueCompanionTraceTest` (backend, proved RED against the tracers
+  with `.queue(...)` reverted before the fix landed), `companions.test.js` and
+  `QueueCanvas.test.jsx` (frontend). Golden files for both tracers regenerated and diffed —
+  only `dsType` and `queueOrStackState` changed, nothing else.
+- **Not yet resolved:** no other tracer emits `.stack()`, `.bits()`, `.chars()` or `.trie()`
+  — those wire methods still sit unused, same as before this fix, just narrower now. See
+  `PROMPT-F-visual-fidelity.md` slices F4–F7.

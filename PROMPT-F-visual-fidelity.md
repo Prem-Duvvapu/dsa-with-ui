@@ -10,6 +10,13 @@
 > (`.claude/skills/review-trace-simulation/check_trace.py`) reports **35 of 39 tracers
 > clean** — this codebase's tracer discipline is good. The gap this prompt addresses is
 > *coverage and visual fidelity*, not craft.
+>
+> **Slice F1 — landed same day.** Companion panes (D1) built and wired: `bfs-traversal`
+> and `dijkstra-min-heap` now emit `.queue(...)` every step and render a Queue companion
+> pane beside the Graph hero, verified against a live backend and screenshotted mid-run
+> (see `RCA-016`). `bfs-traversal`'s dsType moved `Queue` → `Graph`. No `StackCanvas` was
+> built — no tracer feeds one yet, and building it unfed would repeat the exact mistake
+> this prompt names in PROMPT E's phase 2. F2–F10 have not started.
 
 ---
 

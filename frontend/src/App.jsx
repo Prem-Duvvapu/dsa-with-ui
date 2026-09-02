@@ -12,6 +12,7 @@ import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
 import useTrace from './hooks/useTrace';
 import { CANVAS_BY_DSTYPE } from './canvas/registry';
+import { getCompanions } from './canvas/companions';
 import { RefreshCw } from 'lucide-react';
 
 const DEFAULT_FALLBACK_PROBLEMS = [
@@ -279,7 +280,21 @@ export default function App() {
       );
     }
 
-    return <Canvas {...props} />;
+    const companions = getCompanions(activeDsType, currentStep, steps);
+    if (companions.length === 0) {
+      return <Canvas {...props} />;
+    }
+
+    return (
+      <div className="stage-with-companions">
+        <div className="canvas-hero">
+          <Canvas {...props} />
+        </div>
+        {companions.map(({ key, Component, props: companionProps }) => (
+          <Component key={key} {...companionProps} />
+        ))}
+      </div>
+    );
   };
 
   return (

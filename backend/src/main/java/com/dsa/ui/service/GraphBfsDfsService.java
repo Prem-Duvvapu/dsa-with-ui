@@ -82,7 +82,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(V) (Queue & Visited Array)",
                 "Adjacency List Space: O(V + 2E)"
             ),
-            "Queue"
+            "Graph"
         ));
 
         // 2. DFS Traversal

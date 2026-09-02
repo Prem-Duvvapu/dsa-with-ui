@@ -31,7 +31,7 @@ function problem(id, title, category, dsType = 'Array') {
 
 /** The full catalogue served by GET /api/problems. */
 const CATALOG = [
-  problem('bfs-traversal', 'BFS Traversal', 'Graph BFS/DFS', 'Queue'),
+  problem('bfs-traversal', 'BFS Traversal', 'Graph BFS/DFS', 'Graph'),
   problem('dijkstra', 'Dijkstra', 'Advanced Graphs', 'Graph'),
   problem('tree-preorder', 'Preorder Traversal', 'Binary Trees', 'Tree'),
   problem('n-queens', 'N Queens', 'Recursion & Backtracking', 'RecursionTree'),
