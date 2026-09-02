@@ -17,7 +17,7 @@ public class BfsTraversalTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.QUEUE;
+        return DsType.GRAPH;
     }
 
     @Override
@@ -101,14 +101,14 @@ public class BfsTraversalTracer implements AlgorithmTracer {
 
         emit.at("init").say("%d vertices, %d edges. Nothing visited yet.",
                         graph.vertices(), graph.edges().length)
-                .var("start", start).graph(graph).nodes(states).step();
+                .var("start", start).graph(graph).nodes(states).queue(queue).step();
 
         queue.add(start);
         seen[start] = true;
         states.put(start, "queued");
 
         emit.at("seed").say("Seed the queue with vertex %d and mark it seen.", start)
-                .var("queue", queue).graph(graph).nodes(states).step();
+                .var("queue", queue).graph(graph).nodes(states).queue(queue).step();
 
         while (!queue.isEmpty()) {
             int node = queue.poll();
@@ -117,13 +117,13 @@ public class BfsTraversalTracer implements AlgorithmTracer {
 
             emit.at("poll").say("Dequeue %d. Everything at this distance is handled before going deeper.", node)
                     .var("node", node).var("queue", queue).var("order", order)
-                    .graph(graph).nodes(states).step();
+                    .graph(graph).nodes(states).queue(queue).step();
 
             for (int next : adj.get(node)) {
                 if (seen[next]) {
                     emit.at("check").say("%d is already seen — skip it, or BFS would loop forever.", next)
                             .var("node", node).var("neighbour", next).var("queue", queue)
-                            .graph(graph).nodes(states).edges(List.of(node + "-" + next)).step();
+                            .graph(graph).nodes(states).edges(List.of(node + "-" + next)).queue(queue).step();
                     continue;
                 }
                 seen[next] = true;
@@ -133,13 +133,13 @@ public class BfsTraversalTracer implements AlgorithmTracer {
                 emit.at("enqueue").say("%d is new. Mark it seen and enqueue it behind %s.",
                                 next, queue.size() == 1 ? "nothing" : "the existing entries")
                         .var("node", node).var("neighbour", next).var("queue", queue)
-                        .graph(graph).nodes(states).edges(List.of(node + "-" + next)).step();
+                        .graph(graph).nodes(states).edges(List.of(node + "-" + next)).queue(queue).step();
             }
 
             states.put(node, "visited");
         }
 
         emit.at("done").say("Queue empty. BFS order: %s.", order)
-                .var("order", order).graph(graph).nodes(states).step();
+                .var("order", order).graph(graph).nodes(states).queue(queue).step();
     }
 }

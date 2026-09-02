@@ -21,7 +21,7 @@
     "stepNumber" : 1,
     "activeLine" : 2,
     "description" : "6 vertices, 6 edges. Nothing visited yet.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "unvisited",
@@ -35,7 +35,7 @@
     "variables" : {
       "start" : "0"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -119,7 +119,7 @@
     "stepNumber" : 2,
     "activeLine" : 4,
     "description" : "Seed the queue with vertex 0 and mark it seen.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "0" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "queued",
@@ -133,7 +133,7 @@
     "variables" : {
       "queue" : "[0]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -217,7 +217,7 @@
     "stepNumber" : 3,
     "activeLine" : 7,
     "description" : "Dequeue 0. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
@@ -233,7 +233,7 @@
       "order" : "[0]",
       "queue" : "[]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -317,7 +317,7 @@
     "stepNumber" : 4,
     "activeLine" : 10,
     "description" : "1 is new. Mark it seen and enqueue it behind nothing.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "1" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
@@ -333,7 +333,7 @@
       "node" : "0",
       "queue" : "[1]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -417,7 +417,7 @@
     "stepNumber" : 5,
     "activeLine" : 10,
     "description" : "2 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "1", "2" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
@@ -433,7 +433,7 @@
       "node" : "0",
       "queue" : "[1, 2]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -517,7 +517,7 @@
     "stepNumber" : 6,
     "activeLine" : 7,
     "description" : "Dequeue 1. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "2" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -533,7 +533,7 @@
       "order" : "[0, 1]",
       "queue" : "[2]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -617,7 +617,7 @@
     "stepNumber" : 7,
     "activeLine" : 9,
     "description" : "0 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "2" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -633,7 +633,7 @@
       "node" : "1",
       "queue" : "[2]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -717,7 +717,7 @@
     "stepNumber" : 8,
     "activeLine" : 10,
     "description" : "3 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "2", "3" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -733,7 +733,7 @@
       "node" : "1",
       "queue" : "[2, 3]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -817,7 +817,7 @@
     "stepNumber" : 9,
     "activeLine" : 7,
     "description" : "Dequeue 2. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "3" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -833,7 +833,7 @@
       "order" : "[0, 1, 2]",
       "queue" : "[3]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -917,7 +917,7 @@
     "stepNumber" : 10,
     "activeLine" : 9,
     "description" : "0 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "3" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -933,7 +933,7 @@
       "node" : "2",
       "queue" : "[3]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1017,7 +1017,7 @@
     "stepNumber" : 11,
     "activeLine" : 10,
     "description" : "4 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "3", "4" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1033,7 +1033,7 @@
       "node" : "2",
       "queue" : "[3, 4]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1117,7 +1117,7 @@
     "stepNumber" : 12,
     "activeLine" : 7,
     "description" : "Dequeue 3. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "4" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1133,7 +1133,7 @@
       "order" : "[0, 1, 2, 3]",
       "queue" : "[4]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1217,7 +1217,7 @@
     "stepNumber" : 13,
     "activeLine" : 9,
     "description" : "1 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "4" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1233,7 +1233,7 @@
       "node" : "3",
       "queue" : "[4]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1317,7 +1317,7 @@
     "stepNumber" : 14,
     "activeLine" : 10,
     "description" : "5 is new. Mark it seen and enqueue it behind the existing entries.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "4", "5" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1333,7 +1333,7 @@
       "node" : "3",
       "queue" : "[4, 5]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1417,7 +1417,7 @@
     "stepNumber" : 15,
     "activeLine" : 7,
     "description" : "Dequeue 4. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "5" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1433,7 +1433,7 @@
       "order" : "[0, 1, 2, 3, 4]",
       "queue" : "[5]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1517,7 +1517,7 @@
     "stepNumber" : 16,
     "activeLine" : 9,
     "description" : "2 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "5" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1533,7 +1533,7 @@
       "node" : "4",
       "queue" : "[5]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1617,7 +1617,7 @@
     "stepNumber" : 17,
     "activeLine" : 9,
     "description" : "5 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ "5" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1633,7 +1633,7 @@
       "node" : "4",
       "queue" : "[5]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1717,7 +1717,7 @@
     "stepNumber" : 18,
     "activeLine" : 7,
     "description" : "Dequeue 5. Everything at this distance is handled before going deeper.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1733,7 +1733,7 @@
       "order" : "[0, 1, 2, 3, 4, 5]",
       "queue" : "[]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1817,7 +1817,7 @@
     "stepNumber" : 19,
     "activeLine" : 9,
     "description" : "3 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1833,7 +1833,7 @@
       "node" : "5",
       "queue" : "[]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -1917,7 +1917,7 @@
     "stepNumber" : 20,
     "activeLine" : 9,
     "description" : "4 is already seen — skip it, or BFS would loop forever.",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1933,7 +1933,7 @@
       "node" : "5",
       "queue" : "[]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -2017,7 +2017,7 @@
     "stepNumber" : 21,
     "activeLine" : 15,
     "description" : "Queue empty. BFS order: [0, 1, 2, 3, 4, 5].",
-    "queueOrStackState" : null,
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -2031,7 +2031,7 @@
     "variables" : {
       "order" : "[0, 1, 2, 3, 4, 5]"
     },
-    "dsType" : "Queue",
+    "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,

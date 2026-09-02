@@ -12,6 +12,7 @@ import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
 import useTrace from './hooks/useTrace';
 import { CANVAS_BY_DSTYPE } from './canvas/registry';
+import { getCompanions } from './canvas/companions';
 import { RefreshCw } from 'lucide-react';
 
 const DEFAULT_FALLBACK_PROBLEMS = [
@@ -119,6 +120,12 @@ const TRACE_ERROR_COPY = Object.freeze({
   empty: 'The backend returned an empty trace.',
   malformed: 'The backend returned a malformed trace.'
 });
+
+// dsTypes whose hero canvas already IS the full-run view, so the capture strip beneath
+// it would either duplicate what's on screen (DpTable) or convey the run's shape less
+// directly than watching the diagram animate (Graph, Tree) — see RCA-002 for the
+// original DpTable case and PROMPT-F-visual-fidelity.md for Graph/Tree.
+const CAPTURE_STRIP_REDUNDANT_FOR = new Set(['DpTable', 'Graph', 'Tree']);
 
 function uniqueProblemsById(problems) {
   const seen = new Set();
@@ -279,7 +286,21 @@ export default function App() {
       );
     }
 
-    return <Canvas {...props} />;
+    const companions = getCompanions(activeDsType, currentStep, steps);
+    if (companions.length === 0) {
+      return <Canvas {...props} />;
+    }
+
+    return (
+      <div className="stage-with-companions">
+        <div className="canvas-hero">
+          <Canvas {...props} />
+        </div>
+        {companions.map(({ key, Component, props: companionProps }) => (
+          <Component key={key} {...companionProps} />
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -393,8 +414,12 @@ export default function App() {
               </div>
             )}
 
-            {/* DP tables need the full stage; their cell states already show the recurrence. */}
-            {activeDsType !== 'DpTable' && (
+            {/* Redundant with the hero for these types, and it costs real vertical space:
+                DP's cell states already show the recurrence across the whole table; a
+                graph or tree traversal is already fully legible from watching the nodes
+                change state in motion, and the strip's row-per-vertex grid conveys that
+                traversal order less directly than the diagram already does. */}
+            {!CAPTURE_STRIP_REDUNDANT_FOR.has(activeDsType) && (
               <CaptureStrip
                 steps={steps}
                 current={currentStepIndex}
