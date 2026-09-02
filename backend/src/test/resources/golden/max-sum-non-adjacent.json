@@ -1,0 +1,610 @@
+{
+  "anchors" : {
+    "base" : 4,
+    "decide" : 8,
+    "done" : 10,
+    "init" : 3
+  },
+  "code" : "public int maxNonAdjacentSum(int[] nums) {\n    int n = nums.length;\n    int[] best = new int[n];\n    best[0] = nums[0];\n    for (int i = 1; i < n; i++) {\n        int take = nums[i] + (i > 1 ? best[i - 2] : 0);\n        int skip = best[i - 1];\n        best[i] = Math.max(take, skip);\n    }\n    return best[n - 1];\n}",
+  "problemId" : "max-sum-non-adjacent",
+  "resolvedInput" : {
+    "nums" : [ 2, 1, 4, 9, 4, 1, 8 ]
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "best[i] will hold the largest non-adjacent sum obtainable from the first 7 values. It is a running answer, not a running total — best[i] need not use nums[i] at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "7"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "With only the first value available the best you can do is take it: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[0]" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Value 1 at index 1: take it, with no earlier cell to add, for 1, or skip it and inherit best[0] = 2. best[1] = 2, so skipping wins: nums[1]=1 is not worth losing what best[0] already earned.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "2",
+      "i" : "1",
+      "skip" : "2",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "Value 4 at index 2: take it and add best[0]: 4 + 2 = 6, or skip it and inherit best[1] = 2. best[2] = 6, so taking wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "6",
+      "i" : "2",
+      "skip" : "2",
+      "take" : "6"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "6",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "Value 9 at index 3: take it and add best[1]: 9 + 2 = 11, or skip it and inherit best[2] = 6. best[3] = 11, so taking wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "11",
+      "i" : "3",
+      "skip" : "6",
+      "take" : "11"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "6",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Value 4 at index 4: take it and add best[2]: 4 + 6 = 10, or skip it and inherit best[3] = 11. best[4] = 11, so skipping wins: nums[4]=4 is not worth losing what best[3] already earned.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "11",
+      "i" : "4",
+      "skip" : "11",
+      "take" : "10"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Value 1 at index 5: take it and add best[3]: 1 + 11 = 12, or skip it and inherit best[4] = 11. best[5] = 12, so taking wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "12",
+      "i" : "5",
+      "skip" : "11",
+      "take" : "12"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "read"
+      }, {
+        "value" : "12",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 8,
+    "description" : "Value 8 at index 6: take it and add best[4]: 8 + 11 = 19, or skip it and inherit best[5] = 12. best[6] = 19, so taking wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "19",
+      "i" : "6",
+      "skip" : "12",
+      "take" : "19"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "read"
+      }, {
+        "value" : "12",
+        "state" : "read"
+      }, {
+        "value" : "19",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "best[6] = 19 is the answer. Note it is monotonic: a later cell can never be worse than an earlier one, because skipping is always available.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "19"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "best sum" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5", "6" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "6",
+        "state" : "resolved"
+      }, {
+        "value" : "11",
+        "state" : "resolved"
+      }, {
+        "value" : "11",
+        "state" : "resolved"
+      }, {
+        "value" : "12",
+        "state" : "resolved"
+      }, {
+        "value" : "19",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

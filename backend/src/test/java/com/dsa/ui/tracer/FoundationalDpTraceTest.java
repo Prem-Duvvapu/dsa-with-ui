@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class FoundationalDpTraceTest {
@@ -34,7 +35,9 @@ class FoundationalDpTraceTest {
     @ValueSource(strings = {
             "climbing-stairs",
             "frog-jump",
-            "frog-jump-k-distance"
+            "frog-jump-k-distance",
+            "max-sum-non-adjacent",
+            "house-robber-2"
     })
     void emitsRectangularPedagogicalTablesThatFollowInput(String id) {
         AlgorithmTracer tracer = registry.find(id).orElseThrow();
@@ -96,6 +99,58 @@ class FoundationalDpTraceTest {
         assertEquals("probe", energy.get(i).state());
         assertEquals("read", energy.get(from).state());
         assertEquals(3, i - from);
+    }
+
+    @Test
+    void maxSumNonAdjacentWeighsTakeAgainstSkip() {
+        ExecutionTrace trace = runDefaults("max-sum-non-adjacent");
+        assertEquals("19", last(trace).getVariables().get("answer"));
+
+        // i=3 is where taking wins: nums[3]=9 plus best[1]=2 beats best[2]=6.
+        ExecutionStep decision = trace.getSteps().stream()
+                .filter(step -> "3".equals(step.getVariables().get("i")))
+                .findFirst().orElseThrow();
+        List<DpCell> best = decision.getDpTable().cells().get(1);
+
+        assertEquals("probe", best.get(3).state());
+        assertEquals("read", best.get(2).state(), "skipping reads best[i-1]");
+        assertEquals("read", best.get(1).state(), "taking reads best[i-2]");
+        assertEquals("11", decision.getVariables().get("take"));
+        assertEquals("6", decision.getVariables().get("skip"));
+    }
+
+    @Test
+    void houseRobber2RunsBothPassesAndExcludesTheWrapHouse() {
+        ExecutionTrace trace = runDefaults("house-robber-2");
+
+        // The circle is broken two ways, and the answer is the better of the two.
+        ExecutionStep end = last(trace);
+        assertEquals("11", end.getVariables().get("skipLast"));
+        assertEquals("10", end.getVariables().get("skipFirst"));
+        assertEquals("11", end.getVariables().get("answer"));
+
+        for (ExecutionStep step : trace.getSteps()) {
+            assertEquals(3, step.getDpTable().rowLabels().size(),
+                    "house-robber-2 must show the values and both passes");
+        }
+
+        // A house excluded from a pass must never hold a value in that pass's row.
+        int lastHouse = trace.getSteps().get(0).getDpTable().colLabels().size() - 1;
+        for (ExecutionStep step : trace.getSteps()) {
+            List<List<DpCell>> cells = step.getDpTable().cells();
+            assertEquals("void", cells.get(1).get(lastHouse).state(),
+                    "pass 1 excludes the final house");
+            assertEquals("void", cells.get(2).get(0).state(),
+                    "pass 2 excludes the first house");
+        }
+
+        // Both passes must actually be exercised, not just reported at the end.
+        assertTrue(trace.getSteps().stream()
+                        .anyMatch(step -> "skip-last".equals(step.getVariables().get("pass"))),
+                "no step ran the pass that excludes the final house");
+        assertTrue(trace.getSteps().stream()
+                        .anyMatch(step -> "skip-first".equals(step.getVariables().get("pass"))),
+                "no step ran the pass that excludes the first house");
     }
 
     private ExecutionTrace runDefaults(String id) {

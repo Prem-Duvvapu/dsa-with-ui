@@ -1,0 +1,854 @@
+{
+  "anchors" : {
+    "decide" : 15,
+    "done" : 7,
+    "init" : 3,
+    "passOne" : 5,
+    "passTwo" : 6,
+    "seed" : 11
+  },
+  "code" : "public int rob(int[] nums) {\n    int n = nums.length;\n    int[] skipLast = new int[n];    // rob houses 0 .. n-2\n    int[] skipFirst = new int[n];   // rob houses 1 .. n-1\n    fill(skipLast, nums, 0, n - 2);\n    fill(skipFirst, nums, 1, n - 1);\n    return Math.max(skipLast[n - 2], skipFirst[n - 1]);\n}\n\nprivate void fill(int[] best, int[] nums, int lo, int hi) {\n    best[lo] = nums[lo];\n    for (int i = lo + 1; i <= hi; i++) {\n        int take = nums[i] + (i - 2 >= lo ? best[i - 2] : 0);\n        int skip = best[i - 1];\n        best[i] = Math.max(take, skip);\n    }\n}",
+  "problemId" : "house-robber-2",
+  "resolvedInput" : {
+    "nums" : [ 2, 7, 9, 3, 1 ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "House 0 and house 4 are neighbours, so the linear recurrence cannot be applied once — it would happily rob both ends. Instead the circle is broken two ways, and each break gets its own row.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "First break: forbid house 4 outright. Every selection this pass finds is legal on the circle, because the one conflict the linear recurrence cannot see — house 0 sitting next to house 4 — is now impossible.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "forbidden" : "4",
+      "pass" : "skip-last"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 11,
+    "description" : "House 0 is the earliest one this pass may rob, so with nothing before it the best is its own value, 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "2",
+      "i" : "0",
+      "pass" : "skip-last"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 15,
+    "description" : "House 1 holds 7: rob it, with no earlier house to add, for 7, or leave it and inherit best[0] = 2. best[1] = 7, so robbing house 1 wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "7",
+      "i" : "1",
+      "pass" : "skip-last",
+      "skip" : "2",
+      "take" : "7"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 15,
+    "description" : "House 2 holds 9: rob it and add best[0]: 9 + 2 = 11, or leave it and inherit best[1] = 7. best[2] = 11, so robbing house 2 wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "11",
+      "i" : "2",
+      "pass" : "skip-last",
+      "skip" : "7",
+      "take" : "11"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 15,
+    "description" : "House 3 holds 3: rob it and add best[1]: 3 + 7 = 10, or leave it and inherit best[2] = 11. best[3] = 11, so leaving house 3 alone wins: its 3 does not cover what house 2 already secured.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "11",
+      "i" : "3",
+      "pass" : "skip-last",
+      "skip" : "11",
+      "take" : "10"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "probe"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Second break: forbid house 0 instead, freeing house 4. No legal selection can contain both ends, so every one of them survives at least one of these two passes — which is what makes taking the better result correct.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "forbidden" : "0",
+      "pass" : "skip-first"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 11,
+    "description" : "House 1 is the earliest one this pass may rob, so with nothing before it the best is its own value, 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "7",
+      "i" : "1",
+      "pass" : "skip-first"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 15,
+    "description" : "House 2 holds 9: rob it, with no earlier house to add, for 9, or leave it and inherit best[1] = 7. best[2] = 9, so robbing house 2 wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "9",
+      "i" : "2",
+      "pass" : "skip-first",
+      "skip" : "7",
+      "take" : "9"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 15,
+    "description" : "House 3 holds 3: rob it and add best[1]: 3 + 7 = 10, or leave it and inherit best[2] = 9. best[3] = 10, so robbing house 3 wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "10",
+      "i" : "3",
+      "pass" : "skip-first",
+      "skip" : "9",
+      "take" : "10"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 15,
+    "description" : "House 4 holds 1: rob it and add best[2]: 1 + 9 = 10, or leave it and inherit best[3] = 10. best[4] = 10, so the two tie and house 4 is optional.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best[i]" : "10",
+      "i" : "4",
+      "pass" : "skip-first",
+      "skip" : "10",
+      "take" : "10"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "Forbidding the last house yields 11; forbidding the first yields 10. The answer is the better break, 11. They disagree, which is exactly why one pass is not enough.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "11",
+      "skipFirst" : "10",
+      "skipLast" : "11"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "value", "skip last", "skip first" ],
+      "colLabels" : [ "0", "1", "2", "3", "4" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "11",
+        "state" : "resolved"
+      }, {
+        "value" : "11",
+        "state" : "resolved"
+      }, {
+        "value" : "—",
+        "state" : "void"
+      } ], [ {
+        "value" : "—",
+        "state" : "void"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "10",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

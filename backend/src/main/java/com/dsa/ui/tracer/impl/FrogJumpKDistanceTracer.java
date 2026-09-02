@@ -95,7 +95,7 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
                         + "energy cell will be decided by looking back at as many as %d "
                         + "already-settled cells instead of exactly two.", k, k)
                 .var("phase", "init").var("n", n).var("k", k)
-                .dpTable(FrogEnergyTable.of(heights, energy, settled, -1, UNDECIDED,
+                .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, UNDECIDED,
                         Set.of(), false))
                 .step();
 
@@ -104,7 +104,7 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
                 .say("Stair 0 still costs nothing, and it is still the only cell that needs no "
                         + "predecessor.")
                 .var("phase", "base").var("energy[0]", 0)
-                .dpTable(FrogEnergyTable.of(heights, energy, settled, -1, UNDECIDED,
+                .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, UNDECIDED,
                         Set.of(), false))
                 .step();
 
@@ -142,7 +142,7 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
                         .var("distance", i - j)
                         .var("cost", cost)
                         .var("best", best)
-                        .dpTable(FrogEnergyTable.of(heights, energy, settled, i,
+                        .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, i,
                                 String.valueOf(best), Set.of(j), false))
                         .step();
             }
@@ -164,7 +164,7 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
                     .var("i", i)
                     .var("from", bestFrom)
                     .var("energy[i]", best)
-                    .dpTable(FrogEnergyTable.of(heights, energy, settled, -1, UNDECIDED,
+                    .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, UNDECIDED,
                             Set.of(bestFrom), false))
                     .step();
         }
@@ -175,7 +175,7 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
                         + "version cost O(N).", n - 1, energy[n - 1])
                 .var("phase", "done")
                 .var("answer", energy[n - 1])
-                .dpTable(FrogEnergyTable.of(heights, energy, settled, -1, UNDECIDED,
+                .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, UNDECIDED,
                         Set.of(), true))
                 .step();
     }
