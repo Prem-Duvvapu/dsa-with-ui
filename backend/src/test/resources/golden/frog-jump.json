@@ -1,0 +1,301 @@
+{
+  "anchors" : {
+    "base" : 3,
+    "done" : 11,
+    "evaluate" : 9,
+    "init" : 2
+  },
+  "code" : "public int frogJump(int n, int[] heights) {\n    int[] energy = new int[n];\n    energy[0] = 0;\n    for (int i = 1; i < n; i++) {\n        int jumpOne = energy[i - 1] + Math.abs(heights[i] - heights[i - 1]);\n        int jumpTwo = i > 1\n                ? energy[i - 2] + Math.abs(heights[i] - heights[i - 2])\n                : Integer.MAX_VALUE;\n        energy[i] = Math.min(jumpOne, jumpTwo);\n    }\n    return energy[n - 1];\n}",
+  "problemId" : "frog-jump",
+  "resolvedInput" : {
+    "heights" : [ 10, 50, 40, 30 ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "The frog starts on stair 0 and must reach stair 3. energy[i] will hold the cheapest total cost of standing on stair i.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "height", "min energy" ],
+      "colLabels" : [ "0", "1", "2", "3" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "50",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 3,
+    "description" : "Stair 0 costs nothing — the frog is already there, having jumped nowhere.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "energy[0]" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "height", "min energy" ],
+      "colLabels" : [ "0", "1", "2", "3" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "50",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "Stair 1 has only one predecessor, so there is nothing to compare against: energy[0] + |50 - 10| = 40.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "energy[i]" : "40",
+      "i" : "1",
+      "jumpOne" : "40",
+      "jumpTwo" : "—"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "height", "min energy" ],
+      "colLabels" : [ "0", "1", "2", "3" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "50",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "40",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Stair 2: a 1-step from 1 costs 40 + |40 - 50| = 50; a 2-step from 0 costs 0 + |40 - 10| = 30. energy[2] = 30 — the 2-step wins. What decides it is the running total, not the height gap, so skipping a stair can beat hopping to the nearest.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "energy[i]" : "30",
+      "i" : "2",
+      "jumpOne" : "50",
+      "jumpTwo" : "30"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "height", "min energy" ],
+      "colLabels" : [ "0", "1", "2", "3" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "50",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "30",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Stair 3: a 1-step from 2 costs 30 + |30 - 40| = 40; a 2-step from 1 costs 40 + |30 - 50| = 60. energy[3] = 40 — the 1-step wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "energy[i]" : "40",
+      "i" : "3",
+      "jumpOne" : "40",
+      "jumpTwo" : "60"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "height", "min energy" ],
+      "colLabels" : [ "0", "1", "2", "3" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "50",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "30",
+        "state" : "read"
+      }, {
+        "value" : "40",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "Cheapest way onto stair 3 is 40 energy. Note the frog never needed to know which route it took — only the cost of the best one.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "40"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "height", "min energy" ],
+      "colLabels" : [ "0", "1", "2", "3" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "50",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "40",
+        "state" : "resolved"
+      }, {
+        "value" : "30",
+        "state" : "resolved"
+      }, {
+        "value" : "40",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

@@ -1,7 +1,7 @@
 # DSA Visualizer — handoff prompts for remaining work
 
 > **Current status — 2026-08-31.** The snapshots embedded in the original prompts below are
-> historical. The live system has 433 unique catalogue ids and 34 tracers; the frontend uses
+> historical. The live system has 433 unique catalogue ids and 37 tracers; the frontend uses
 > the v2 `/api/problems` API. Prompt E Phase 0 (closed `DsType` registry) and Phase 1
 > (trace-owned tree/graph topology) are complete, and its Phase 2 wire contract is complete.
 > The three LIS tracers and `DpTableCanvas` are an intentional partial delivery of Phases 3/4.
@@ -119,7 +119,7 @@ API (v2)
 
 CURRENT NUMBERS (433/440/7 are pinned by ProblemsApiTest — update the test if you change them)
     440 id registrations across 18 services, 433 unique, 7 claimed by two services.
-    34 traced. README.md carries the current checked list; GET /api/problems/stats is
+    37 traced. README.md carries the current checked list; GET /api/problems/stats is
     authoritative for the count.
 
     Migrated ids answer 410 Gone on their legacy /api/<topic>/execute/<id> path

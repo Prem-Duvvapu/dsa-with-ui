@@ -38,6 +38,9 @@ public class DpServiceTest {
     @Test
     public void testGenerateStepsForAllDpProblems() {
         Set<String> retired = Set.of(
+                "climbing-stairs",
+                "frog-jump",
+                "frog-jump-k-distance",
                 "longest-increasing-subsequence",
                 "print-lis",
                 "lis-binary-search",

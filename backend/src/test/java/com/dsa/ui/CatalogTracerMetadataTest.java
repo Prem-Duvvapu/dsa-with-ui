@@ -54,10 +54,10 @@ class CatalogTracerMetadataTest {
     }
 
     @ParameterizedTest(name = "{0} catalogue complexity matches its tracer implementation")
-    @MethodSource("tracedLisComplexities")
-    void tracedLisComplexityMatchesImplementation(String id,
-                                                   String expectedTime,
-                                                   String expectedSpace) {
+    @MethodSource("tracedDpComplexities")
+    void tracedDpComplexityMatchesImplementation(String id,
+                                                  String expectedTime,
+                                                  String expectedSpace) {
         ProblemDetail problem = dpCatalogue.getProblemById(id);
 
         assertNotNull(problem);
@@ -65,8 +65,11 @@ class CatalogTracerMetadataTest {
         assertEquals(expectedSpace, problem.getComplexity().getSpaceComplexity());
     }
 
-    static Stream<Arguments> tracedLisComplexities() {
+    static Stream<Arguments> tracedDpComplexities() {
         return Stream.of(
+                Arguments.of("climbing-stairs", "O(N)", "O(N)"),
+                Arguments.of("frog-jump", "O(N)", "O(N)"),
+                Arguments.of("frog-jump-k-distance", "O(N * K)", "O(N)"),
                 Arguments.of("longest-increasing-subsequence", "O(N^2)", "O(N^2)"),
                 Arguments.of("lis-binary-search", "O(N log N)", "O(N)"),
                 Arguments.of("print-lis", "O(N^2)", "O(N)"));
