@@ -1,0 +1,309 @@
+{
+  "anchors" : {
+    "base" : 3,
+    "combine" : 5,
+    "done" : 7,
+    "init" : 2
+  },
+  "code" : "public int climbStairs(int n) {\n    int[] ways = new int[n + 1];\n    ways[0] = 1; ways[1] = 1;\n    for (int i = 2; i <= n; i++) {\n        ways[i] = ways[i - 1] + ways[i - 2];\n    }\n    return ways[n];\n}",
+  "problemId" : "climbing-stairs",
+  "resolvedInput" : {
+    "n" : 5
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "One cell per stair, 0 through 5. Each cell will hold the number of distinct ways to be standing on that stair.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "ways to reach" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 3,
+    "description" : "Two base cases, and they are not arbitrary: there is exactly one way to be at the bottom (take no steps), and exactly one way to reach stair 1 (a single 1-step). Everything else is derived from these.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ways[0]" : "1",
+      "ways[1]" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "ways to reach" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "To stand on stair 2 you arrived either with a 1-step from stair 1 (which holds 1) or a 2-step from stair 0 (which holds 1). No path is counted twice, so the two add: 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromOneStep" : "1",
+      "fromTwoSteps" : "1",
+      "i" : "2",
+      "ways[i]" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "ways to reach" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "To stand on stair 3 you arrived either with a 1-step from stair 2 (which holds 2) or a 2-step from stair 1 (which holds 1). No path is counted twice, so the two add: 2 + 1 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromOneStep" : "2",
+      "fromTwoSteps" : "1",
+      "i" : "3",
+      "ways[i]" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "ways to reach" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "To stand on stair 4 you arrived either with a 1-step from stair 3 (which holds 3) or a 2-step from stair 2 (which holds 2). No path is counted twice, so the two add: 3 + 2 = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromOneStep" : "3",
+      "fromTwoSteps" : "2",
+      "i" : "4",
+      "ways[i]" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "ways to reach" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "To stand on stair 5 you arrived either with a 1-step from stair 4 (which holds 5) or a 2-step from stair 3 (which holds 3). No path is counted twice, so the two add: 5 + 3 = 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromOneStep" : "5",
+      "fromTwoSteps" : "3",
+      "i" : "5",
+      "ways[i]" : "8"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "ways to reach" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "8",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "ways[5] = 8. No cell was ever computed twice, which is why 5 stairs cost 4 additions instead of the exponential recursion tree the naive definition unfolds into.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "8"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "ways to reach" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "8",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

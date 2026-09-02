@@ -27,17 +27,18 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These five have real tracers (tracer/impl). Refuse rather than let
+            // These eight have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
+            case "climbing-stairs":
+            case "frog-jump":
+            case "frog-jump-k-distance":
             case "longest-increasing-subsequence":
             case "print-lis":
             case "lis-binary-search":
             case "max-rectangle-area-all-ones":
             case "count-square-submatrices":
                 throw new LegacyTraceRetiredException(problemId);
-            case "climbing-stairs": return generateClimbingStairsSteps();
-            case "frog-jump": return generateFrogJumpSteps();
             case "knapsack-01": return generateKnapsackSteps();
             case "longest-common-subsequence": return generateLcsSteps();
             default: return generateClimbingStairsSteps();
@@ -50,19 +51,26 @@ public class DpService implements ProblemProvider {
             "climbing-stairs", "Climbing Stairs (1D DP)", "DP - Basic DP", "Dynamic Programming", "Easy",
             "Find total distinct ways to climb N stairs taking 1 or 2 steps.",
             """
-            // Java Climbing Stairs (LeetCode 70)
+            // Java Climbing Stairs (LeetCode 70) - tabulated
             public int climbStairs(int n) {
-                if (n <= 1) return 1;
-                int prev2 = 1, prev = 1;
+                int[] ways = new int[n + 1];
+                ways[0] = 1; ways[1] = 1;
                 for (int i = 2; i <= n; i++) {
-                    int curi = prev + prev2;
-                    prev2 = prev; prev = curi;
+                    ways[i] = ways[i - 1] + ways[i - 2];
                 }
-                return prev;
+                return ways[n];
             }
             """,
             null, null, null, createArrayState(new int[]{1, 1, 2, 3, 5, 8}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: 1D DP loop runs N times.", "1D DP", "O(1)", "Space Complexity: Space-optimized space.", "O(1) Memory", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail(
+                "O(N)",
+                "Fills one cell per stair, each from two already-known cells.",
+                "1D tabulation",
+                "O(N)",
+                "Keeps the whole ways table so every dependency stays visible.",
+                "DP table",
+                "Auxiliary Space: O(N)",
+                "DP table"), "DpTable"
         ));
 
         // 2. Frog Jump
@@ -70,20 +78,30 @@ public class DpService implements ProblemProvider {
             "frog-jump", "Frog Jump (Min Energy 1D DP)", "DP - Basic DP", "Dynamic Programming", "Easy",
             "Find min energy for frog to reach stair N-1 jumping 1 or 2 stairs.",
             """
-            // Java Frog Jump (Striver A2Z Sheet)
-            public int frogJump(int n, int heights[]) {
-                int prev = 0, prev2 = 0;
+            // Java Frog Jump (Striver A2Z Sheet) - tabulated
+            public int frogJump(int n, int[] heights) {
+                int[] energy = new int[n];
+                energy[0] = 0;
                 for (int i = 1; i < n; i++) {
-                    int jumpOne = prev + Math.abs(heights[i] - heights[i - 1]);
-                    int jumpTwo = (i > 1) ? prev2 + Math.abs(heights[i] - heights[i - 2]) : Integer.MAX_VALUE;
-                    int curi = Math.min(jumpOne, jumpTwo);
-                    prev2 = prev; prev = curi;
+                    int jumpOne = energy[i - 1] + Math.abs(heights[i] - heights[i - 1]);
+                    int jumpTwo = (i > 1)
+                            ? energy[i - 2] + Math.abs(heights[i] - heights[i - 2])
+                            : Integer.MAX_VALUE;
+                    energy[i] = Math.min(jumpOne, jumpTwo);
                 }
-                return prev;
+                return energy[n - 1];
             }
             """,
-            null, null, null, createArrayState(new int[]{10, 20, 30, 10}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass DP loop.", "1D DP", "O(1)", "Space Complexity: Constant memory.", "Memory", "Auxiliary Space: O(1)", "Memory"), "Array"
+            null, null, null, createArrayState(new int[]{10, 50, 40, 30}, -1, -1), null, null, null,
+            new ComplexityDetail(
+                "O(N)",
+                "Decides each stair once by comparing its two reachable predecessors.",
+                "1D tabulation",
+                "O(N)",
+                "Keeps the whole energy table so both candidate transitions stay visible.",
+                "DP table",
+                "Auxiliary Space: O(N)",
+                "DP table"), "DpTable"
         ));
 
         // 3. 0/1 Knapsack
@@ -200,7 +218,8 @@ public class DpService implements ProblemProvider {
 
     private static DsType bulkDsType(String id) {
         return switch (id) {
-            case "longest-increasing-subsequence", "lis-binary-search", "print-lis" ->
+            case "frog-jump-k-distance", "longest-increasing-subsequence",
+                    "lis-binary-search", "print-lis" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;
@@ -228,6 +247,15 @@ public class DpService implements ProblemProvider {
                     "Tails array",
                     "Auxiliary Space: O(N)",
                     "Tails array");
+            case "frog-jump-k-distance" -> new ComplexityDetail(
+                    "O(N * K)",
+                    "Weighs up to K reachable predecessors for each of the N stairs.",
+                    "1D tabulation over a K-wide window",
+                    "O(N)",
+                    "Keeps one energy cell per stair.",
+                    "DP table",
+                    "Auxiliary Space: O(N)",
+                    "DP table");
             case "print-lis" -> new ComplexityDetail(
                     "O(N^2)",
                     "Compares each index with every earlier index before following parent links.",
@@ -259,7 +287,6 @@ public class DpService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateFrogJumpSteps() { return generateClimbingStairsSteps(); }
     private List<ExecutionStep> generateKnapsackSteps() {
         int[] weights = {1, 2, 3}; int[] values = {10, 15, 40};
         ListTraceRecorder recorder = new ListTraceRecorder();

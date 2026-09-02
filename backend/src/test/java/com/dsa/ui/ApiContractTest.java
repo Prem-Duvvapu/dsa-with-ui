@@ -72,6 +72,7 @@ class ApiContractTest {
     private static final List<String> RETIRED_IDS = List.of(
             "tree-preorder", "tree-inorder", "tree-postorder", "tree-level-order",
             "search-rotated-sorted", "n-meetings-in-one-room",
+            "climbing-stairs", "frog-jump", "frog-jump-k-distance",
             "longest-increasing-subsequence", "print-lis", "lis-binary-search",
             "max-rectangle-area-all-ones", "count-square-submatrices",
             "largest-element", "max-consecutive-ones", "move-zeros-end",
@@ -170,6 +171,9 @@ class ApiContractTest {
                 arguments("/api/trees", "tree-level-order"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/greedy", "n-meetings-in-one-room"),
+                arguments("/api/dp", "climbing-stairs"),
+                arguments("/api/dp", "frog-jump"),
+                arguments("/api/dp", "frog-jump-k-distance"),
                 arguments("/api/dp", "longest-increasing-subsequence"),
                 arguments("/api/dp", "print-lis"),
                 arguments("/api/dp", "lis-binary-search"),
