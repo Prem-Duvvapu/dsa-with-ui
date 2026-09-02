@@ -11,6 +11,13 @@
 > on the node-shape mismatch recorded in `RCA.md`. Documentation was refreshed early; that
 > does not mean the sequential visualization roadmap is complete.
 
+> **Superseded in part by `PROMPT-F-visual-fidelity.md` (2026-09-02).** F continues this
+> file and corrects two of its decisions: phases must be sliced **vertically** (one dsType
+> per PR — canvas, tracer retag and emitted payload together) rather than as one canvas
+> phase followed by one retag phase; and a single `ExecutionStep` can carry several
+> structures at once, so a canvas has a *hero* structure plus *companion panes*. F also
+> adds the `INTERVAL` type this taxonomy missed. **Where E and F disagree, F wins.**
+
 > Paste everything below the line into the implementing agent. It is written to be
 > self-contained: it assumes no prior conversation and no access to this file's history.
 
