@@ -79,6 +79,8 @@ class CatalogTracerMetadataTest {
                 Arguments.of("ninjas-training", "O(N)", "O(N)"),
                 Arguments.of("longest-increasing-subsequence", "O(N^2)", "O(N^2)"),
                 Arguments.of("lis-binary-search", "O(N log N)", "O(N)"),
-                Arguments.of("print-lis", "O(N^2)", "O(N)"));
+                Arguments.of("print-lis", "O(N^2)", "O(N)"),
+                Arguments.of("minimum-coins-dp", "O(N * Amount)", "O(N * Amount)"),
+                Arguments.of("coin-change-2", "O(N * Amount)", "O(N * Amount)"));
     }
 }
