@@ -79,6 +79,8 @@ class CatalogTracerMetadataTest {
                 Arguments.of("ninjas-training", "O(N)", "O(N)"),
                 Arguments.of("longest-increasing-subsequence", "O(N^2)", "O(N^2)"),
                 Arguments.of("lis-binary-search", "O(N log N)", "O(N)"),
-                Arguments.of("print-lis", "O(N^2)", "O(N)"));
+                Arguments.of("print-lis", "O(N^2)", "O(N)"),
+                Arguments.of("subset-sum-equal-target", "O(N * Target)", "O(N * Target)"),
+                Arguments.of("partition-equal-subset-sum", "O(N * Target)", "O(N * Target)"));
     }
 }

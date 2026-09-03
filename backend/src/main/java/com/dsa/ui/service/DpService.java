@@ -27,7 +27,7 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These fourteen have real tracers (tracer/impl). Refuse rather than let
+            // These sixteen have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
             case "climbing-stairs":
@@ -45,6 +45,8 @@ public class DpService implements ProblemProvider {
             case "lis-binary-search":
             case "max-rectangle-area-all-ones":
             case "count-square-submatrices":
+            case "subset-sum-equal-target":
+            case "partition-equal-subset-sum":
                 throw new LegacyTraceRetiredException(problemId);
             case "knapsack-01": return generateKnapsackSteps();
             case "longest-common-subsequence": return generateLcsSteps();
@@ -228,7 +230,8 @@ public class DpService implements ProblemProvider {
             case "frog-jump-k-distance", "max-sum-non-adjacent", "house-robber-2",
                     "grid-unique-paths", "unique-paths-2",
                     "minimum-falling-path-sum", "triangle-min-path-sum", "ninjas-training",
-                    "longest-increasing-subsequence", "lis-binary-search", "print-lis" ->
+                    "longest-increasing-subsequence", "lis-binary-search", "print-lis",
+                    "subset-sum-equal-target", "partition-equal-subset-sum" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;
@@ -341,6 +344,28 @@ public class DpService implements ProblemProvider {
                     "DP and parent arrays",
                     "Auxiliary Space: O(N)",
                     "DP and parent arrays");
+            case "subset-sum-equal-target" -> new ComplexityDetail(
+                    "O(N * Target)",
+                    "Fills one cell per (items considered, sum) pair, each from two "
+                            + "predecessors.",
+                    "2D boolean reachability tabulation",
+                    "O(N * Target)",
+                    "Keeps the whole N by Target table so both the skip and take "
+                            + "predecessors stay visible.",
+                    "DP table",
+                    "Auxiliary Space: O(N * Target)",
+                    "DP table");
+            case "partition-equal-subset-sum" -> new ComplexityDetail(
+                    "O(N * Target)",
+                    "An odd total sum short-circuits in O(N); otherwise reduces to "
+                            + "subset-sum with Target = totalSum / 2.",
+                    "Odd-sum short-circuit, else 2D boolean reachability tabulation",
+                    "O(N * Target)",
+                    "Keeps the whole N by Target table so both the skip and take "
+                            + "predecessors stay visible.",
+                    "DP table",
+                    "Auxiliary Space: O(N * Target)",
+                    "DP table");
             default -> new ComplexityDetail(
                     "O(N * K)",
                     "Time Complexity: Optimal DP table state transitions.",
