@@ -52,7 +52,9 @@ public class DpServiceTest {
                 "print-lis",
                 "lis-binary-search",
                 "max-rectangle-area-all-ones",
-                "count-square-submatrices");
+                "count-square-submatrices",
+                "count-subsets-with-sum-k",
+                "count-partitions-given-diff");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
