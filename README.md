@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 43 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 44 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -175,6 +175,7 @@ them means moving problems between services.
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
 `kadane-algo`, `minimum-falling-path-sum`,
+`ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
 `majority-element`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
@@ -184,10 +185,11 @@ them means moving problems between services.
 `stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
 `triangle-min-path-sum`, `two-sum`, and `unique-paths-2`.
 
-Twelve problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
+Thirteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
 variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,
 `max-sum-non-adjacent`, `house-robber-2`, `grid-unique-paths`, `unique-paths-2`,
-`minimum-falling-path-sum` and `triangle-min-path-sum`. The five basic-DP ones trace
+`minimum-falling-path-sum`, `triangle-min-path-sum` and `ninjas-training`. The five
+basic-DP ones trace
 against the full O(N) table rather than the rolling variables a space-optimised
 version keeps — the dependency between cells is the lesson, and it is invisible once
 the table collapses. `house-robber-2` carries both circle-breaking passes as their own
@@ -199,7 +201,9 @@ obstacle as permanently excluded rather than merely zero.
 and an answer that reduces over an entire row rather than one fixed corner.
 `triangle-min-path-sum` fills bottom-up, reading two children below instead of two
 predecessors above, with its ragged rows carried as permanently excluded cells in a
-square grid. Migrated ids answer
+square grid. `ninjas-training` is the first three-way choice rather than a fixed
+neighbour shape: each cell excludes exactly one same-column predecessor (yesterday's
+activity) and reads the other two. Migrated ids answer
 **410 Gone** on their old execute endpoint rather than risking a substitute trace.
 
 ---

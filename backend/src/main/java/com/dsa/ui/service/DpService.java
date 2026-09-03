@@ -39,6 +39,7 @@ public class DpService implements ProblemProvider {
             case "unique-paths-2":
             case "minimum-falling-path-sum":
             case "triangle-min-path-sum":
+            case "ninjas-training":
             case "longest-increasing-subsequence":
             case "print-lis":
             case "lis-binary-search":
@@ -226,7 +227,7 @@ public class DpService implements ProblemProvider {
         return switch (id) {
             case "frog-jump-k-distance", "max-sum-non-adjacent", "house-robber-2",
                     "grid-unique-paths", "unique-paths-2",
-                    "minimum-falling-path-sum", "triangle-min-path-sum",
+                    "minimum-falling-path-sum", "triangle-min-path-sum", "ninjas-training",
                     "longest-increasing-subsequence", "lis-binary-search", "print-lis" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
@@ -291,6 +292,15 @@ public class DpService implements ProblemProvider {
                     "Keeps the whole M by N table plus which cells are excluded.",
                     "DP table",
                     "Auxiliary Space: O(M * N)",
+                    "DP table");
+            case "ninjas-training" -> new ComplexityDetail(
+                    "O(N)",
+                    "Fills three cells per day, each comparing exactly two predecessors.",
+                    "2D tabulation, three columns wide",
+                    "O(N)",
+                    "Keeps the whole N by 3 table so the excluded predecessor stays visible.",
+                    "DP table",
+                    "Auxiliary Space: O(N)",
                     "DP table");
             case "minimum-falling-path-sum" -> new ComplexityDetail(
                     "O(N^2)",

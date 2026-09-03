@@ -47,6 +47,7 @@ public class DpServiceTest {
                 "unique-paths-2",
                 "minimum-falling-path-sum",
                 "triangle-min-path-sum",
+                "ninjas-training",
                 "longest-increasing-subsequence",
                 "print-lis",
                 "lis-binary-search",
