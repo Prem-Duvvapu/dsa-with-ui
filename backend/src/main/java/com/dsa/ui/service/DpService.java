@@ -27,7 +27,7 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These ten have real tracers (tracer/impl). Refuse rather than let
+            // These twelve have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
             case "climbing-stairs":
@@ -35,6 +35,8 @@ public class DpService implements ProblemProvider {
             case "frog-jump-k-distance":
             case "max-sum-non-adjacent":
             case "house-robber-2":
+            case "grid-unique-paths":
+            case "unique-paths-2":
             case "longest-increasing-subsequence":
             case "print-lis":
             case "lis-binary-search":
@@ -221,6 +223,7 @@ public class DpService implements ProblemProvider {
     private static DsType bulkDsType(String id) {
         return switch (id) {
             case "frog-jump-k-distance", "max-sum-non-adjacent", "house-robber-2",
+                    "grid-unique-paths", "unique-paths-2",
                     "longest-increasing-subsequence", "lis-binary-search", "print-lis" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
@@ -266,6 +269,25 @@ public class DpService implements ProblemProvider {
                     "Keeps one row per pass.",
                     "DP table",
                     "Auxiliary Space: O(N)",
+                    "DP table");
+            case "grid-unique-paths" -> new ComplexityDetail(
+                    "O(M * N)",
+                    "Fills one cell per grid position, each from two neighbours.",
+                    "2D tabulation",
+                    "O(M * N)",
+                    "Keeps the whole M by N table so both directions of dependency stay "
+                            + "visible.",
+                    "DP table",
+                    "Auxiliary Space: O(M * N)",
+                    "DP table");
+            case "unique-paths-2" -> new ComplexityDetail(
+                    "O(M * N)",
+                    "Fills one cell per grid position; an obstacle short-circuits to 0.",
+                    "2D tabulation with missing neighbours defaulting to 0",
+                    "O(M * N)",
+                    "Keeps the whole M by N table plus which cells are excluded.",
+                    "DP table",
+                    "Auxiliary Space: O(M * N)",
                     "DP table");
             case "frog-jump-k-distance" -> new ComplexityDetail(
                     "O(N * K)",

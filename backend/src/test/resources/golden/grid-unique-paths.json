@@ -1,0 +1,578 @@
+{
+  "anchors" : {
+    "base" : 6,
+    "combine" : 8,
+    "done" : 12,
+    "init" : 2
+  },
+  "code" : "public int uniquePaths(int m, int n) {\n    int[][] dp = new int[m][n];\n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            if (i == 0 || j == 0) {\n                dp[i][j] = 1;\n            } else {\n                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];\n            }\n        }\n    }\n    return dp[m - 1][n - 1];\n}",
+  "problemId" : "grid-unique-paths",
+  "resolvedInput" : {
+    "cols" : 3,
+    "rows" : 3
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "A 3 by 3 grid. dp[i][j] will hold the number of distinct paths from the top-left corner to cell (i,j), moving only right or down.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cols" : "3",
+      "rows" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Cell (0,0): the starting cell needs no moves at all, so there is exactly one way to be here. dp[0][0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Cell (0,1): the top row is reachable only by moving right the whole way, so there is exactly one path. dp[0][1] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Cell (0,2): the top row is reachable only by moving right the whole way, so there is exactly one path. dp[0][2] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Cell (1,0): the left column is reachable only by moving down the whole way, so there is exactly one path. dp[1][0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Cell (1,1): every path arrives either from above, (0,1) with 1 path, or from the left, (1,0) with 1 path — no path can do both, so they add. dp[1][1] = 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "above" : "1",
+      "col" : "1",
+      "dp[i][j]" : "2",
+      "left" : "1",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Cell (1,2): every path arrives either from above, (0,2) with 1 path, or from the left, (1,1) with 2 paths — no path can do both, so they add. dp[1][2] = 1 + 2 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "above" : "1",
+      "col" : "2",
+      "dp[i][j]" : "3",
+      "left" : "2",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "Cell (2,0): the left column is reachable only by moving down the whole way, so there is exactly one path. dp[2][0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "Cell (2,1): every path arrives either from above, (1,1) with 2 paths, or from the left, (2,0) with 1 path — no path can do both, so they add. dp[2][1] = 2 + 1 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "above" : "2",
+      "col" : "1",
+      "dp[i][j]" : "3",
+      "left" : "1",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "Cell (2,2): every path arrives either from above, (1,2) with 3 paths, or from the left, (2,1) with 3 paths — no path can do both, so they add. dp[2][2] = 3 + 3 = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "above" : "3",
+      "col" : "2",
+      "dp[i][j]" : "6",
+      "left" : "3",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "6",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "dp[2][2] = 6 is the answer: every path to the far corner, and no path counted more than once because each one arrives from exactly one direction.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "6"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "6",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

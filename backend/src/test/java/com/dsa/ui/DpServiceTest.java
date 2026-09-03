@@ -43,6 +43,8 @@ public class DpServiceTest {
                 "frog-jump-k-distance",
                 "max-sum-non-adjacent",
                 "house-robber-2",
+                "grid-unique-paths",
+                "unique-paths-2",
                 "longest-increasing-subsequence",
                 "print-lis",
                 "lis-binary-search",

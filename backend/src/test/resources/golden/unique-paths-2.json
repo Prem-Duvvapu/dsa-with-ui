@@ -1,0 +1,587 @@
+{
+  "anchors" : {
+    "base" : 9,
+    "blocked" : 7,
+    "combine" : 13,
+    "done" : 17,
+    "init" : 3
+  },
+  "code" : "public int uniquePathsWithObstacles(int[][] grid) {\n    int m = grid.length, n = grid[0].length;\n    int[][] dp = new int[m][n];\n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            if (grid[i][j] == 1) {\n                dp[i][j] = 0;\n            } else if (i == 0 && j == 0) {\n                dp[i][j] = 1;\n            } else {\n                int fromAbove = i > 0 ? dp[i - 1][j] : 0;\n                int fromLeft = j > 0 ? dp[i][j - 1] : 0;\n                dp[i][j] = fromAbove + fromLeft;\n            }\n        }\n    }\n    return dp[m - 1][n - 1];\n}",
+  "problemId" : "unique-paths-2",
+  "resolvedInput" : {
+    "grid" : [ [ 0, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 0 ] ]
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "A 3 by 3 grid, obstacles marked in black. dp[i][j] will hold the number of distinct paths from the top-left corner to (i,j) — 0 wherever an obstacle makes the cell unreachable.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cols" : "3",
+      "rows" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "(0,0) is open and it is the start: no moves have been made, so there is exactly one way to be here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "Cell (0,1): no cell above and 1 from the left, each contributing 0 when it does not exist or is blocked. dp[0][1] = 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][j]" : "1",
+      "fromAbove" : "0",
+      "fromLeft" : "1",
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 13,
+    "description" : "Cell (0,2): no cell above and 1 from the left, each contributing 0 when it does not exist or is blocked. dp[0][2] = 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][j]" : "1",
+      "fromAbove" : "0",
+      "fromLeft" : "1",
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 13,
+    "description" : "Cell (1,0): 1 from above and no cell to the left, each contributing 0 when it does not exist or is blocked. dp[1][0] = 1 + 0 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "dp[i][j]" : "1",
+      "fromAbove" : "1",
+      "fromLeft" : "0",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Cell (1,1) is an obstacle. No path may pass through it, so it is excluded entirely rather than merely holding 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 13,
+    "description" : "Cell (1,2): 1 from above and an obstacle to the left, each contributing 0 when it does not exist or is blocked. dp[1][2] = 1 + 0 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][j]" : "1",
+      "fromAbove" : "1",
+      "fromLeft" : "0",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "Cell (2,0): 1 from above and no cell to the left, each contributing 0 when it does not exist or is blocked. dp[2][0] = 1 + 0 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "dp[i][j]" : "1",
+      "fromAbove" : "1",
+      "fromLeft" : "0",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "Cell (2,1): an obstacle above and 1 from the left, each contributing 0 when it does not exist or is blocked. dp[2][1] = 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][j]" : "1",
+      "fromAbove" : "0",
+      "fromLeft" : "1",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "Cell (2,2): 1 from above and 1 from the left, each contributing 0 when it does not exist or is blocked. dp[2][2] = 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][j]" : "2",
+      "fromAbove" : "1",
+      "fromLeft" : "1",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 17,
+    "description" : "dp[2][2] = 2. That count already has every obstacle's effect folded in — no separate check is needed at the end.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2" ],
+      "colLabels" : [ "c0", "c1", "c2" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}
