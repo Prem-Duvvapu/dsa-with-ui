@@ -1,0 +1,6318 @@
+{
+  "anchors" : {
+    "base" : 6,
+    "compare" : 19,
+    "done" : 24,
+    "init" : 4,
+    "tooBig" : 15,
+    "unreachableBase" : 9
+  },
+  "code" : "public int coinChange(int[] coins, int amount) {\n    int n = coins.length;\n    final int INFINITY = 1_000_000;\n    int[][] dp = new int[n + 1][amount + 1];\n    for (int i = 0; i <= n; i++) {\n        dp[i][0] = 0;\n    }\n    for (int x = 1; x <= amount; x++) {\n        dp[0][x] = INFINITY;\n    }\n    for (int i = 1; i <= n; i++) {\n        for (int x = 1; x <= amount; x++) {\n            int skip = dp[i - 1][x];\n            if (x < coins[i - 1]) {\n                dp[i][x] = skip;\n            } else {\n                int reused = dp[i][x - coins[i - 1]];\n                int take = reused >= INFINITY ? INFINITY : reused + 1;\n                dp[i][x] = Math.min(skip, take);\n            }\n        }\n    }\n    int answer = dp[n][amount];\n    return answer >= INFINITY ? -1 : answer;\n}",
+  "problemId" : "minimum-coins-dp",
+  "resolvedInput" : {
+    "amount" : 11,
+    "coins" : [ 1, 2, 5 ]
+  },
+  "stepCount" : 37,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "dp[i][x] will hold the fewest coins that make amount x using only the first i denominations of [1, 2, 5]. Because a coin may be reused, taking denomination i again will look back along ROW i itself, not up to row i-1 the way a 0/1-item table would.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "amount" : "11",
+      "coins" : "[1, 2, 5]"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Zero coins are needed to make amount 0, no matter which denominations are available yet — column x=0 is 0 all the way down.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "phase" : "base"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "With no denominations available yet, no positive amount is reachable: row \"0 coins\" is infinity everywhere except x=0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "phase" : "unreachableBase"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 19,
+    "description" : "Cell (1,1): skip coin 1 and carry down dp[0][1] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][0] = 0 from THIS SAME ROW (a coin may be reused) and adding 1 = 1. Using one more coin 1 wins: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][x]" : "1",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 19,
+    "description" : "Cell (1,2): skip coin 1 and carry down dp[0][2] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][1] = 1 from THIS SAME ROW (a coin may be reused) and adding 1 = 2. Using one more coin 1 wins: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][x]" : "2",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "Cell (1,3): skip coin 1 and carry down dp[0][3] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][2] = 2 from THIS SAME ROW (a coin may be reused) and adding 1 = 3. Using one more coin 1 wins: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "dp[i][x]" : "3",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 19,
+    "description" : "Cell (1,4): skip coin 1 and carry down dp[0][4] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][3] = 3 from THIS SAME ROW (a coin may be reused) and adding 1 = 4. Using one more coin 1 wins: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "4",
+      "dp[i][x]" : "4",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "Cell (1,5): skip coin 1 and carry down dp[0][5] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][4] = 4 from THIS SAME ROW (a coin may be reused) and adding 1 = 5. Using one more coin 1 wins: 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "5",
+      "dp[i][x]" : "5",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 19,
+    "description" : "Cell (1,6): skip coin 1 and carry down dp[0][6] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][5] = 5 from THIS SAME ROW (a coin may be reused) and adding 1 = 6. Using one more coin 1 wins: 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "6",
+      "dp[i][x]" : "6",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "6"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "6",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "Cell (1,7): skip coin 1 and carry down dp[0][7] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][6] = 6 from THIS SAME ROW (a coin may be reused) and adding 1 = 7. Using one more coin 1 wins: 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "7",
+      "dp[i][x]" : "7",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "7"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 19,
+    "description" : "Cell (1,8): skip coin 1 and carry down dp[0][8] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][7] = 7 from THIS SAME ROW (a coin may be reused) and adding 1 = 8. Using one more coin 1 wins: 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "8",
+      "dp[i][x]" : "8",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "8"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "8",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 19,
+    "description" : "Cell (1,9): skip coin 1 and carry down dp[0][9] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][8] = 8 from THIS SAME ROW (a coin may be reused) and adding 1 = 9. Using one more coin 1 wins: 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "9",
+      "dp[i][x]" : "9",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "9"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 19,
+    "description" : "Cell (1,10): skip coin 1 and carry down dp[0][10] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][9] = 9 from THIS SAME ROW (a coin may be reused) and adding 1 = 10. Using one more coin 1 wins: 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "10",
+      "dp[i][x]" : "10",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "10"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 19,
+    "description" : "Cell (1,11): skip coin 1 and carry down dp[0][11] = ∞ from the row above, or take ONE MORE coin 1 by reading dp[1][10] = 10 from THIS SAME ROW (a coin may be reused) and adding 1 = 11. Using one more coin 1 wins: 11.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "11",
+      "dp[i][x]" : "11",
+      "phase" : "compare",
+      "row" : "1",
+      "skip" : "∞",
+      "take" : "11"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "Amount 1 is smaller than coin 2, so this denomination cannot be used here at all. dp[2][1] simply carries down the value from the row above: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][x]" : "1",
+      "phase" : "tooBig",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 19,
+    "description" : "Cell (2,2): skip coin 2 and carry down dp[1][2] = 2 from the row above, or take ONE MORE coin 2 by reading dp[2][0] = 0 from THIS SAME ROW (a coin may be reused) and adding 1 = 1. Using one more coin 2 wins: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][x]" : "1",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "2",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 19,
+    "description" : "Cell (2,3): skip coin 2 and carry down dp[1][3] = 3 from the row above, or take ONE MORE coin 2 by reading dp[2][1] = 1 from THIS SAME ROW (a coin may be reused) and adding 1 = 2. Using one more coin 2 wins: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "dp[i][x]" : "2",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "3",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 19,
+    "description" : "Cell (2,4): skip coin 2 and carry down dp[1][4] = 4 from the row above, or take ONE MORE coin 2 by reading dp[2][2] = 1 from THIS SAME ROW (a coin may be reused) and adding 1 = 2. Using one more coin 2 wins: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "4",
+      "dp[i][x]" : "2",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "4",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 19,
+    "description" : "Cell (2,5): skip coin 2 and carry down dp[1][5] = 5 from the row above, or take ONE MORE coin 2 by reading dp[2][3] = 2 from THIS SAME ROW (a coin may be reused) and adding 1 = 3. Using one more coin 2 wins: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "5",
+      "dp[i][x]" : "3",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "5",
+      "take" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 19,
+    "description" : "Cell (2,6): skip coin 2 and carry down dp[1][6] = 6 from the row above, or take ONE MORE coin 2 by reading dp[2][4] = 2 from THIS SAME ROW (a coin may be reused) and adding 1 = 3. Using one more coin 2 wins: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "6",
+      "dp[i][x]" : "3",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "6",
+      "take" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "read"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 19,
+    "description" : "Cell (2,7): skip coin 2 and carry down dp[1][7] = 7 from the row above, or take ONE MORE coin 2 by reading dp[2][5] = 3 from THIS SAME ROW (a coin may be reused) and adding 1 = 4. Using one more coin 2 wins: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "7",
+      "dp[i][x]" : "4",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "7",
+      "take" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 19,
+    "description" : "Cell (2,8): skip coin 2 and carry down dp[1][8] = 8 from the row above, or take ONE MORE coin 2 by reading dp[2][6] = 3 from THIS SAME ROW (a coin may be reused) and adding 1 = 4. Using one more coin 2 wins: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "8",
+      "dp[i][x]" : "4",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "8",
+      "take" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 19,
+    "description" : "Cell (2,9): skip coin 2 and carry down dp[1][9] = 9 from the row above, or take ONE MORE coin 2 by reading dp[2][7] = 4 from THIS SAME ROW (a coin may be reused) and adding 1 = 5. Using one more coin 2 wins: 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "9",
+      "dp[i][x]" : "5",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "9",
+      "take" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 19,
+    "description" : "Cell (2,10): skip coin 2 and carry down dp[1][10] = 10 from the row above, or take ONE MORE coin 2 by reading dp[2][8] = 4 from THIS SAME ROW (a coin may be reused) and adding 1 = 5. Using one more coin 2 wins: 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "10",
+      "dp[i][x]" : "5",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "10",
+      "take" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 19,
+    "description" : "Cell (2,11): skip coin 2 and carry down dp[1][11] = 11 from the row above, or take ONE MORE coin 2 by reading dp[2][9] = 5 from THIS SAME ROW (a coin may be reused) and adding 1 = 6. Using one more coin 2 wins: 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "11",
+      "dp[i][x]" : "6",
+      "phase" : "compare",
+      "row" : "2",
+      "skip" : "11",
+      "take" : "6"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 15,
+    "description" : "Amount 1 is smaller than coin 5, so this denomination cannot be used here at all. dp[3][1] simply carries down the value from the row above: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][x]" : "1",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 15,
+    "description" : "Amount 2 is smaller than coin 5, so this denomination cannot be used here at all. dp[3][2] simply carries down the value from the row above: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][x]" : "1",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 15,
+    "description" : "Amount 3 is smaller than coin 5, so this denomination cannot be used here at all. dp[3][3] simply carries down the value from the row above: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "dp[i][x]" : "2",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 15,
+    "description" : "Amount 4 is smaller than coin 5, so this denomination cannot be used here at all. dp[3][4] simply carries down the value from the row above: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "4",
+      "dp[i][x]" : "2",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 19,
+    "description" : "Cell (3,5): skip coin 5 and carry down dp[2][5] = 3 from the row above, or take ONE MORE coin 5 by reading dp[3][0] = 0 from THIS SAME ROW (a coin may be reused) and adding 1 = 1. Using one more coin 5 wins: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "5",
+      "dp[i][x]" : "1",
+      "phase" : "compare",
+      "row" : "3",
+      "skip" : "3",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 19,
+    "description" : "Cell (3,6): skip coin 5 and carry down dp[2][6] = 3 from the row above, or take ONE MORE coin 5 by reading dp[3][1] = 1 from THIS SAME ROW (a coin may be reused) and adding 1 = 2. Using one more coin 5 wins: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "6",
+      "dp[i][x]" : "2",
+      "phase" : "compare",
+      "row" : "3",
+      "skip" : "3",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 19,
+    "description" : "Cell (3,7): skip coin 5 and carry down dp[2][7] = 4 from the row above, or take ONE MORE coin 5 by reading dp[3][2] = 1 from THIS SAME ROW (a coin may be reused) and adding 1 = 2. Using one more coin 5 wins: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "7",
+      "dp[i][x]" : "2",
+      "phase" : "compare",
+      "row" : "3",
+      "skip" : "4",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 19,
+    "description" : "Cell (3,8): skip coin 5 and carry down dp[2][8] = 4 from the row above, or take ONE MORE coin 5 by reading dp[3][3] = 2 from THIS SAME ROW (a coin may be reused) and adding 1 = 3. Using one more coin 5 wins: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "8",
+      "dp[i][x]" : "3",
+      "phase" : "compare",
+      "row" : "3",
+      "skip" : "4",
+      "take" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 19,
+    "description" : "Cell (3,9): skip coin 5 and carry down dp[2][9] = 5 from the row above, or take ONE MORE coin 5 by reading dp[3][4] = 2 from THIS SAME ROW (a coin may be reused) and adding 1 = 3. Using one more coin 5 wins: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "9",
+      "dp[i][x]" : "3",
+      "phase" : "compare",
+      "row" : "3",
+      "skip" : "5",
+      "take" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 19,
+    "description" : "Cell (3,10): skip coin 5 and carry down dp[2][10] = 5 from the row above, or take ONE MORE coin 5 by reading dp[3][5] = 1 from THIS SAME ROW (a coin may be reused) and adding 1 = 2. Using one more coin 5 wins: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "10",
+      "dp[i][x]" : "2",
+      "phase" : "compare",
+      "row" : "3",
+      "skip" : "5",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 19,
+    "description" : "Cell (3,11): skip coin 5 and carry down dp[2][11] = 6 from the row above, or take ONE MORE coin 5 by reading dp[3][6] = 2 from THIS SAME ROW (a coin may be reused) and adding 1 = 3. Using one more coin 5 wins: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "11",
+      "dp[i][x]" : "3",
+      "phase" : "compare",
+      "row" : "3",
+      "skip" : "6",
+      "take" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      }, {
+        "value" : "∞",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "11",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 24,
+    "description" : "dp[3][11] = 3 coins make exactly 11.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "3",
+      "phase" : "done"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5", "x=6", "x=7", "x=8", "x=9", "x=10", "x=11" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      }, {
+        "value" : "∞",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "6",
+        "state" : "resolved"
+      }, {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "8",
+        "state" : "resolved"
+      }, {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "11",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "5",
+        "state" : "resolved"
+      }, {
+        "value" : "6",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,1872 @@
+{
+  "anchors" : {
+    "base" : 5,
+    "combine" : 17,
+    "done" : 21,
+    "init" : 3,
+    "tooBig" : 14,
+    "unreachableBase" : 8
+  },
+  "code" : "public int change(int[] coins, int amount) {\n    int n = coins.length;\n    int[][] dp = new int[n + 1][amount + 1];\n    for (int i = 0; i <= n; i++) {\n        dp[i][0] = 1;\n    }\n    for (int x = 1; x <= amount; x++) {\n        dp[0][x] = 0;\n    }\n    for (int i = 1; i <= n; i++) {\n        for (int x = 1; x <= amount; x++) {\n            int without = dp[i - 1][x];\n            if (x < coins[i - 1]) {\n                dp[i][x] = without;\n            } else {\n                int withAtLeastOne = dp[i][x - coins[i - 1]];\n                dp[i][x] = without + withAtLeastOne;\n            }\n        }\n    }\n    return dp[n][amount];\n}",
+  "problemId" : "coin-change-2",
+  "resolvedInput" : {
+    "amount" : 5,
+    "coins" : [ 1, 2, 5 ]
+  },
+  "stepCount" : 19,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "dp[i][x] will hold the number of distinct COMBINATIONS of the first i denominations of [1, 2, 5] that sum to x — order does not matter, so {1,2} and {2,1} count once. Denominations are the OUTER loop and amount the INNER loop; that ordering is what keeps every combination counted exactly once.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "amount" : "5",
+      "coins" : "[1, 2, 5]"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "There is exactly one way to make amount 0 with any set of denominations: use none of them. Column x=0 is 1 all the way down.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "phase" : "base"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "With no denominations available yet, there is no way to make any positive amount: row \"0 coins\" is 0 everywhere except x=0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "phase" : "unreachableBase"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 17,
+    "description" : "Cell (1,1): 0 combination(s) never use coin 1 at all (dp[0][1], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 1 — read from dp[1][0] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][x]" : "1",
+      "phase" : "combine",
+      "row" : "1",
+      "withAtLeastOne" : "1",
+      "without" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 17,
+    "description" : "Cell (1,2): 0 combination(s) never use coin 1 at all (dp[0][2], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 1 — read from dp[1][1] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][x]" : "1",
+      "phase" : "combine",
+      "row" : "1",
+      "withAtLeastOne" : "1",
+      "without" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 17,
+    "description" : "Cell (1,3): 0 combination(s) never use coin 1 at all (dp[0][3], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 1 — read from dp[1][2] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "dp[i][x]" : "1",
+      "phase" : "combine",
+      "row" : "1",
+      "withAtLeastOne" : "1",
+      "without" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 17,
+    "description" : "Cell (1,4): 0 combination(s) never use coin 1 at all (dp[0][4], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 1 — read from dp[1][3] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "4",
+      "dp[i][x]" : "1",
+      "phase" : "combine",
+      "row" : "1",
+      "withAtLeastOne" : "1",
+      "without" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 17,
+    "description" : "Cell (1,5): 0 combination(s) never use coin 1 at all (dp[0][5], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 1 — read from dp[1][4] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "5",
+      "dp[i][x]" : "1",
+      "phase" : "combine",
+      "row" : "1",
+      "withAtLeastOne" : "1",
+      "without" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 14,
+    "description" : "Amount 1 is smaller than coin 2, so no combination here can use it. dp[2][1] simply carries down the count of combinations that never touch this denomination: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][x]" : "1",
+      "phase" : "tooBig",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "Cell (2,2): 1 combination(s) never use coin 2 at all (dp[1][2], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 2 — read from dp[2][0] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][x]" : "2",
+      "phase" : "combine",
+      "row" : "2",
+      "withAtLeastOne" : "1",
+      "without" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 17,
+    "description" : "Cell (2,3): 1 combination(s) never use coin 2 at all (dp[1][3], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 2 — read from dp[2][1] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "dp[i][x]" : "2",
+      "phase" : "combine",
+      "row" : "2",
+      "withAtLeastOne" : "1",
+      "without" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 17,
+    "description" : "Cell (2,4): 1 combination(s) never use coin 2 at all (dp[1][4], the row above), plus 2 combination(s) that use AT LEAST ONE more coin 2 — read from dp[2][2] = 2 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 1 + 2 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "4",
+      "dp[i][x]" : "3",
+      "phase" : "combine",
+      "row" : "2",
+      "withAtLeastOne" : "2",
+      "without" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 17,
+    "description" : "Cell (2,5): 1 combination(s) never use coin 2 at all (dp[1][5], the row above), plus 2 combination(s) that use AT LEAST ONE more coin 2 — read from dp[2][3] = 2 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 1 + 2 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "5",
+      "dp[i][x]" : "3",
+      "phase" : "combine",
+      "row" : "2",
+      "withAtLeastOne" : "2",
+      "without" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Amount 1 is smaller than coin 5, so no combination here can use it. dp[3][1] simply carries down the count of combinations that never touch this denomination: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][x]" : "1",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 14,
+    "description" : "Amount 2 is smaller than coin 5, so no combination here can use it. dp[3][2] simply carries down the count of combinations that never touch this denomination: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][x]" : "2",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 14,
+    "description" : "Amount 3 is smaller than coin 5, so no combination here can use it. dp[3][3] simply carries down the count of combinations that never touch this denomination: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "dp[i][x]" : "2",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 14,
+    "description" : "Amount 4 is smaller than coin 5, so no combination here can use it. dp[3][4] simply carries down the count of combinations that never touch this denomination: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "4",
+      "dp[i][x]" : "3",
+      "phase" : "tooBig",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 17,
+    "description" : "Cell (3,5): 3 combination(s) never use coin 5 at all (dp[2][5], the row above), plus 1 combination(s) that use AT LEAST ONE more coin 5 — read from dp[3][0] = 1 on THIS SAME ROW, since the coin may be reused. Every combination is counted in exactly one of those two groups: 3 + 1 = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "5",
+      "dp[i][x]" : "4",
+      "phase" : "combine",
+      "row" : "3",
+      "withAtLeastOne" : "1",
+      "without" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 21,
+    "description" : "dp[3][5] = 4. That count already treats every coin order as the same combination, because denominations were the outer loop.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4",
+      "phase" : "done"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0 coins", "+coin=1", "+coin=2", "+coin=5" ],
+      "colLabels" : [ "x=0", "x=1", "x=2", "x=3", "x=4", "x=5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}
