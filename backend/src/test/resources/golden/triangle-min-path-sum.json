@@ -1,0 +1,884 @@
+{
+  "anchors" : {
+    "base" : 7,
+    "combine" : 11,
+    "done" : 14,
+    "init" : 5
+  },
+  "code" : "public int minimumTotal(int[][] triangle) {\n    // A triangle's row i needs i+1 real entries, so its true depth cannot\n    // exceed the width of the rectangular grid it is submitted as.\n    int n = Math.min(triangle.length, triangle[0].length);\n    int[][] dp = new int[n][n];\n    for (int j = 0; j < n; j++) {\n        dp[n - 1][j] = triangle[n - 1][j];\n    }\n    for (int i = n - 2; i >= 0; i--) {\n        for (int j = 0; j <= i; j++) {\n            dp[i][j] = triangle[i][j] + Math.min(dp[i + 1][j], dp[i + 1][j + 1]);\n        }\n    }\n    return dp[0][0];\n}",
+  "problemId" : "triangle-min-path-sum",
+  "resolvedInput" : {
+    "triangle" : [ [ 2, 0, 0, 0 ], [ 3, 4, 0, 0 ], [ 6, 5, 7, 0 ], [ 4, 1, 8, 3 ] ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 5,
+    "description" : "A triangle with 4 rows, row i holding i+1 real entries. dp[i][j] will hold the cheapest path from (i,j) down to the base — filled from the bottom row upward, since that is the direction every read points.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Cell (3,0) is on the base row: there is nowhere further down to go, so the cheapest path from here is just its own value, 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "Cell (3,1) is on the base row: there is nowhere further down to go, so the cheapest path from here is just its own value, 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Cell (3,2) is on the base row: there is nowhere further down to go, so the cheapest path from here is just its own value, 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Cell (3,3) is on the base row: there is nowhere further down to go, so the cheapest path from here is just its own value, 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "Cell (2,0): the path continues to whichever child is cheaper — (3,0) at 4, or (3,1) at 1. the right child wins, so dp[2][0] = 6 + 1 = 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "dp[i][j]" : "7",
+      "left" : "4",
+      "right" : "1",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "7",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 11,
+    "description" : "Cell (2,1): the path continues to whichever child is cheaper — (3,1) at 1, or (3,2) at 8. the left child wins, so dp[2][1] = 5 + 1 = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][j]" : "6",
+      "left" : "1",
+      "right" : "8",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "8",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 11,
+    "description" : "Cell (2,2): the path continues to whichever child is cheaper — (3,2) at 8, or (3,3) at 3. the right child wins, so dp[2][2] = 7 + 3 = 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "dp[i][j]" : "10",
+      "left" : "8",
+      "right" : "3",
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "probe"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 11,
+    "description" : "Cell (1,0): the path continues to whichever child is cheaper — (2,0) at 7, or (2,1) at 6. the right child wins, so dp[1][0] = 3 + 6 = 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "dp[i][j]" : "9",
+      "left" : "7",
+      "right" : "6",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "7",
+        "state" : "read"
+      }, {
+        "value" : "6",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "Cell (1,1): the path continues to whichever child is cheaper — (2,1) at 6, or (2,2) at 10. the left child wins, so dp[1][1] = 4 + 6 = 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "dp[i][j]" : "10",
+      "left" : "6",
+      "right" : "10",
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "probe"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 11,
+    "description" : "Cell (0,0): the path continues to whichever child is cheaper — (1,0) at 9, or (1,1) at 10. the left child wins, so dp[0][0] = 2 + 9 = 11.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "dp[i][j]" : "11",
+      "left" : "9",
+      "right" : "10",
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "probe"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "7",
+        "state" : "known"
+      }, {
+        "value" : "6",
+        "state" : "known"
+      }, {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "dp[0][0] = 11 is the cheapest path from the apex to the base. Every cell below it was settled first, so the apex's own decision only ever compared two already-final numbers.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "11"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "r0", "r1", "r2", "r3" ],
+      "colLabels" : [ "c0", "c1", "c2", "c3" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "resolved"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "9",
+        "state" : "resolved"
+      }, {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "7",
+        "state" : "resolved"
+      }, {
+        "value" : "6",
+        "state" : "resolved"
+      }, {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "#",
+        "state" : "void"
+      } ], [ {
+        "value" : "4",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "8",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

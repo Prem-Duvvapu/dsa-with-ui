@@ -415,14 +415,31 @@ class TracerContractTest {
         return grown;
     }
 
+    /**
+     * Grows both dimensions, not just row count. A grid-shaped problem's real "size" can
+     * depend on width as much as height — {@code triangle-min-path-sum}'s effective depth is
+     * capped by its column count, so a row-only grower would never make it do more work.
+     * New cells duplicate already-validated values from the base grid, so growth can never
+     * violate the field's own value bounds.
+     */
     private List<?> growGrid(InputField field, List<?> base) {
         Integer maxRows = field.intConstraint("maxRows");
-        int target = maxRows != null ? Math.min(base.size() * 2, maxRows) : base.size() * 2;
-        assertTrue(target > base.size(), field.getName() + " cannot be grown within its own maxRows");
+        Integer maxCols = field.intConstraint("maxCols");
+        int baseWidth = base.isEmpty() ? 0 : ((List<?>) base.get(0)).size();
 
-        List<Object> grown = new ArrayList<>(base);
-        for (int r = 0; grown.size() < target; r++) {
-            grown.add(base.get(r % base.size()));
+        int targetRows = maxRows != null ? Math.min(base.size() * 2, maxRows) : base.size() * 2;
+        int targetCols = maxCols != null ? Math.min(baseWidth * 2, maxCols) : baseWidth * 2;
+        assertTrue(targetRows > base.size() || targetCols > baseWidth,
+                field.getName() + " cannot be grown within its own maxRows/maxCols");
+
+        List<Object> grown = new ArrayList<>(targetRows);
+        for (int r = 0; r < targetRows; r++) {
+            List<?> sourceRow = (List<?>) base.get(r % base.size());
+            List<Object> row = new ArrayList<>(targetCols);
+            for (int c = 0; c < targetCols; c++) {
+                row.add(sourceRow.get(c % sourceRow.size()));
+            }
+            grown.add(row);
         }
         return grown;
     }

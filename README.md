@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 41 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 43 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -174,7 +174,7 @@ them means moving problems between services.
 `bfs-traversal`, `binary-search-1d`, `check-sorted-ii`, `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
-`kadane-algo`,
+`kadane-algo`, `minimum-falling-path-sum`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
 `majority-element`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
@@ -182,18 +182,24 @@ them means moving problems between services.
 `n-meetings-in-one-room`, `number-of-islands`, `print-lis`, `remove-duplicates-sorted`,
 `reverse-linked-list`, `search-rotated-sorted`, `second-largest-element`, `single-number`,
 `stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
-`two-sum`, and `unique-paths-2`.
+`triangle-min-path-sum`, `two-sum`, and `unique-paths-2`.
 
-Ten problems emit labelled, recurrence-aware `DpTable` traces: the three LIS variants,
-plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`, `max-sum-non-adjacent`,
-`house-robber-2`, `grid-unique-paths` and `unique-paths-2`. The five basic-DP ones
-trace against the full O(N) table rather than the rolling variables a space-optimised
+Twelve problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
+variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,
+`max-sum-non-adjacent`, `house-robber-2`, `grid-unique-paths`, `unique-paths-2`,
+`minimum-falling-path-sum` and `triangle-min-path-sum`. The five basic-DP ones trace
+against the full O(N) table rather than the rolling variables a space-optimised
 version keeps — the dependency between cells is the lesson, and it is invisible once
 the table collapses. `house-robber-2` carries both circle-breaking passes as their own
 rows, with the forbidden house voided out, on a default input where the two passes
-disagree. `grid-unique-paths` and `unique-paths-2` are the first genuinely
-two-dimensional tables here — rows and columns are the problem's own grid — and
-`unique-paths-2` traces an obstacle as permanently excluded rather than merely zero. Migrated ids answer
+disagree. `grid-unique-paths` and `unique-paths-2` are genuinely two-dimensional
+tables — rows and columns are the problem's own grid — and `unique-paths-2` traces an
+obstacle as permanently excluded rather than merely zero.
+`minimum-falling-path-sum` is the first with up to three live predecessors per cell
+and an answer that reduces over an entire row rather than one fixed corner.
+`triangle-min-path-sum` fills bottom-up, reading two children below instead of two
+predecessors above, with its ragged rows carried as permanently excluded cells in a
+square grid. Migrated ids answer
 **410 Gone** on their old execute endpoint rather than risking a substitute trace.
 
 ---

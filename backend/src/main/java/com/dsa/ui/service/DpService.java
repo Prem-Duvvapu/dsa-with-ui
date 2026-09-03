@@ -27,7 +27,7 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These twelve have real tracers (tracer/impl). Refuse rather than let
+            // These fourteen have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
             case "climbing-stairs":
@@ -37,6 +37,8 @@ public class DpService implements ProblemProvider {
             case "house-robber-2":
             case "grid-unique-paths":
             case "unique-paths-2":
+            case "minimum-falling-path-sum":
+            case "triangle-min-path-sum":
             case "longest-increasing-subsequence":
             case "print-lis":
             case "lis-binary-search":
@@ -224,6 +226,7 @@ public class DpService implements ProblemProvider {
         return switch (id) {
             case "frog-jump-k-distance", "max-sum-non-adjacent", "house-robber-2",
                     "grid-unique-paths", "unique-paths-2",
+                    "minimum-falling-path-sum", "triangle-min-path-sum",
                     "longest-increasing-subsequence", "lis-binary-search", "print-lis" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
@@ -288,6 +291,27 @@ public class DpService implements ProblemProvider {
                     "Keeps the whole M by N table plus which cells are excluded.",
                     "DP table",
                     "Auxiliary Space: O(M * N)",
+                    "DP table");
+            case "minimum-falling-path-sum" -> new ComplexityDetail(
+                    "O(N^2)",
+                    "Fills one cell per matrix position, each from up to three "
+                            + "predecessors, then reduces across the last row.",
+                    "2D tabulation with a final row-wide minimum",
+                    "O(N^2)",
+                    "Keeps the whole N by N table so every candidate predecessor stays "
+                            + "visible.",
+                    "DP table",
+                    "Auxiliary Space: O(N^2)",
+                    "DP table");
+            case "triangle-min-path-sum" -> new ComplexityDetail(
+                    "O(N^2)",
+                    "Fills one cell per triangle position, each from two children below it.",
+                    "2D tabulation, bottom-up",
+                    "O(N^2)",
+                    "Keeps the whole N by N table plus which cells fall outside the "
+                            + "triangle's shape.",
+                    "DP table",
+                    "Auxiliary Space: O(N^2)",
                     "DP table");
             case "frog-jump-k-distance" -> new ComplexityDetail(
                     "O(N * K)",

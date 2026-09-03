@@ -74,6 +74,8 @@ class CatalogTracerMetadataTest {
                 Arguments.of("house-robber-2", "O(N)", "O(N)"),
                 Arguments.of("grid-unique-paths", "O(M * N)", "O(M * N)"),
                 Arguments.of("unique-paths-2", "O(M * N)", "O(M * N)"),
+                Arguments.of("minimum-falling-path-sum", "O(N^2)", "O(N^2)"),
+                Arguments.of("triangle-min-path-sum", "O(N^2)", "O(N^2)"),
                 Arguments.of("longest-increasing-subsequence", "O(N^2)", "O(N^2)"),
                 Arguments.of("lis-binary-search", "O(N log N)", "O(N)"),
                 Arguments.of("print-lis", "O(N^2)", "O(N)"));
