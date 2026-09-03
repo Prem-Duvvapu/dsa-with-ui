@@ -45,6 +45,8 @@ public class DpServiceTest {
                 "house-robber-2",
                 "grid-unique-paths",
                 "unique-paths-2",
+                "minimum-falling-path-sum",
+                "triangle-min-path-sum",
                 "longest-increasing-subsequence",
                 "print-lis",
                 "lis-binary-search",
