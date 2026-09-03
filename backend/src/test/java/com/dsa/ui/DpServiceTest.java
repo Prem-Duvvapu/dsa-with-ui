@@ -53,6 +53,8 @@ public class DpServiceTest {
                 "lis-binary-search",
                 "max-rectangle-area-all-ones",
                 "count-square-submatrices",
+                "subset-sum-equal-target",
+                "partition-equal-subset-sum",
                 "count-subsets-with-sum-k",
                 "count-partitions-given-diff",
                 "minimum-coins-dp",

@@ -80,6 +80,8 @@ class CatalogTracerMetadataTest {
                 Arguments.of("longest-increasing-subsequence", "O(N^2)", "O(N^2)"),
                 Arguments.of("lis-binary-search", "O(N log N)", "O(N)"),
                 Arguments.of("print-lis", "O(N^2)", "O(N)"),
+                Arguments.of("subset-sum-equal-target", "O(N * Target)", "O(N * Target)"),
+                Arguments.of("partition-equal-subset-sum", "O(N * Target)", "O(N * Target)"),
                 Arguments.of("count-subsets-with-sum-k", "O(N * Target)", "O(N * Target)"),
                 Arguments.of("count-partitions-given-diff", "O(N * Target)", "O(N * Target)"),
                 Arguments.of("minimum-coins-dp", "O(N * Amount)", "O(N * Amount)"),
