@@ -93,7 +93,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 2,
@@ -175,7 +177,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 3,
@@ -261,7 +265,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 4,
@@ -347,7 +353,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][1] = dp[0][1] + dp[0][0] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 5,
@@ -433,7 +441,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][2] = dp[0][2] + dp[0][1] = 0 + 0 = 0"
     }
   }, {
     "stepNumber" : 6,
@@ -519,7 +529,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][3] = dp[0][3] + dp[0][2] = 0 + 0 = 0"
     }
   }, {
     "stepNumber" : 7,
@@ -605,7 +617,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 8,
@@ -691,7 +705,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 9,
@@ -777,7 +793,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[2][2] = dp[1][2] + dp[1][0] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 10,
@@ -863,7 +881,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[2][3] = dp[1][3] + dp[1][1] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 11,
@@ -949,7 +969,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 12,
@@ -1035,7 +1057,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 13,
@@ -1121,7 +1145,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[3][2] = dp[2][2] + dp[2][0] = 1 + 1 = 2"
     }
   }, {
     "stepNumber" : 14,
@@ -1207,7 +1233,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[3][3] = dp[2][3] + dp[2][1] = 1 + 1 = 2"
     }
   }, {
     "stepNumber" : 15,
@@ -1293,7 +1321,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 16,
@@ -1379,7 +1409,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 17,
@@ -1465,7 +1497,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 18,
@@ -1551,7 +1585,9 @@
       }, {
         "value" : "3",
         "state" : "probe"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[4][3] = dp[3][3] + dp[3][0] = 2 + 1 = 3"
     }
   }, {
     "stepNumber" : 19,
@@ -1633,7 +1669,9 @@
       }, {
         "value" : "3",
         "state" : "resolved"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   } ],
   "truncated" : false

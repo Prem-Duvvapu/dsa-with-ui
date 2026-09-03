@@ -55,7 +55,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 2,
@@ -101,7 +103,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 3,
@@ -150,7 +154,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 4,
@@ -199,7 +205,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "energy[i] = min(energy[i-1] + |h[i]-h[i-1]|, energy[i-2] + |h[i]-h[i-2]|)",
+      "substitution" : "energy[2] = min(40 + |40-50|, 0 + |40-10|) = min(50, 30) = 30"
     }
   }, {
     "stepNumber" : 5,
@@ -248,7 +256,9 @@
       }, {
         "value" : "40",
         "state" : "probe"
-      } ] ]
+      } ] ],
+      "formula" : "energy[i] = min(energy[i-1] + |h[i]-h[i-1]|, energy[i-2] + |h[i]-h[i-2]|)",
+      "substitution" : "energy[3] = min(30 + |30-40|, 40 + |30-50|) = min(40, 60) = 40"
     }
   }, {
     "stepNumber" : 6,
@@ -294,7 +304,9 @@
       }, {
         "value" : "40",
         "state" : "resolved"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   } ],
   "truncated" : false

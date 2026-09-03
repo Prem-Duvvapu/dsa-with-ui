@@ -186,4 +186,36 @@ describe('DpTableCanvas', () => {
       expect(container.querySelector('.dp-arrows')).not.toBeInTheDocument();
     });
   });
+
+  describe('recurrence line (design D3)', () => {
+    it('renders the formula and its live substitution when the tracer supplies both', () => {
+      const tableWithRecurrence = {
+        ...dpTable,
+        formula: 'ways[i] = ways[i-1] + ways[i-2]',
+        substitution: 'ways[4] = ways[3] + ways[2] = 3 + 2 = 5'
+      };
+      render(<DpTableCanvas currentStep={{ dpTable: tableWithRecurrence }} />);
+
+      expect(screen.getByText('ways[i] = ways[i-1] + ways[i-2]')).toBeInTheDocument();
+      expect(screen.getByText('ways[4] = ways[3] + ways[2] = 3 + 2 = 5')).toBeInTheDocument();
+    });
+
+    it('renders no recurrence block for a tracer that has not adopted D3 yet', () => {
+      // The shared fixture `dpTable` carries no formula/substitution — the common case
+      // today (most DP_TABLE tracers). Nothing should render, and nothing should throw.
+      const { container } = render(<DpTableCanvas currentStep={{ dpTable }} />);
+
+      expect(container.querySelector('.dp-recurrence')).not.toBeInTheDocument();
+    });
+
+    it('never renders one line without the other', () => {
+      const formulaOnly = { ...dpTable, formula: 'ways[i] = ways[i-1] + ways[i-2]', substitution: null };
+      const { container: c1 } = render(<DpTableCanvas currentStep={{ dpTable: formulaOnly }} />);
+      expect(c1.querySelector('.dp-recurrence')).not.toBeInTheDocument();
+
+      const substitutionOnly = { ...dpTable, formula: null, substitution: 'ways[4] = 5' };
+      const { container: c2 } = render(<DpTableCanvas currentStep={{ dpTable: substitutionOnly }} />);
+      expect(c2.querySelector('.dp-recurrence')).not.toBeInTheDocument();
+    });
+  });
 });

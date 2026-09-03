@@ -138,7 +138,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 2,
@@ -265,7 +267,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 3,
@@ -396,7 +400,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 4,
@@ -527,7 +533,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][1] = dp[0][1] OR dp[0][0] = F OR T = T"
     }
   }, {
     "stepNumber" : 5,
@@ -658,7 +666,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][2] = dp[0][2] OR dp[0][1] = F OR F = F"
     }
   }, {
     "stepNumber" : 6,
@@ -789,7 +799,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][3] = dp[0][3] OR dp[0][2] = F OR F = F"
     }
   }, {
     "stepNumber" : 7,
@@ -920,7 +932,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][4] = dp[0][4] OR dp[0][3] = F OR F = F"
     }
   }, {
     "stepNumber" : 8,
@@ -1051,7 +1065,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][5] = dp[0][5] OR dp[0][4] = F OR F = F"
     }
   }, {
     "stepNumber" : 9,
@@ -1182,7 +1198,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[1][6] = dp[0][6] OR dp[0][5] = F OR F = F"
     }
   }, {
     "stepNumber" : 10,
@@ -1313,7 +1331,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 11,
@@ -1444,7 +1464,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 12,
@@ -1575,7 +1597,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[2][2] = dp[1][2] OR dp[1][0] = F OR T = T"
     }
   }, {
     "stepNumber" : 13,
@@ -1706,7 +1730,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[2][3] = dp[1][3] OR dp[1][1] = F OR T = T"
     }
   }, {
     "stepNumber" : 14,
@@ -1837,7 +1863,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[2][4] = dp[1][4] OR dp[1][2] = F OR F = F"
     }
   }, {
     "stepNumber" : 15,
@@ -1968,7 +1996,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[2][5] = dp[1][5] OR dp[1][3] = F OR F = F"
     }
   }, {
     "stepNumber" : 16,
@@ -2099,7 +2129,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[2][6] = dp[1][6] OR dp[1][4] = F OR F = F"
     }
   }, {
     "stepNumber" : 17,
@@ -2230,7 +2262,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 18,
@@ -2361,7 +2395,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 19,
@@ -2492,7 +2528,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 20,
@@ -2623,7 +2661,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[3][3] = dp[2][3] OR dp[2][0] = T OR T = T"
     }
   }, {
     "stepNumber" : 21,
@@ -2754,7 +2794,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[3][4] = dp[2][4] OR dp[2][1] = F OR T = T"
     }
   }, {
     "stepNumber" : 22,
@@ -2885,7 +2927,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[3][5] = dp[2][5] OR dp[2][2] = F OR T = T"
     }
   }, {
     "stepNumber" : 23,
@@ -3016,7 +3060,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]",
+      "substitution" : "dp[3][6] = dp[2][6] OR dp[2][3] = F OR T = T"
     }
   }, {
     "stepNumber" : 24,
@@ -3147,7 +3193,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 25,
@@ -3278,7 +3326,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 26,
@@ -3409,7 +3459,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 27,
@@ -3540,7 +3592,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 28,
@@ -3671,7 +3725,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 29,
@@ -3802,7 +3858,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 30,
@@ -3933,7 +3991,9 @@
       }, {
         "value" : "T",
         "state" : "probe"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 31,
@@ -4060,7 +4120,9 @@
       }, {
         "value" : "T",
         "state" : "resolved"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   } ],
   "truncated" : false

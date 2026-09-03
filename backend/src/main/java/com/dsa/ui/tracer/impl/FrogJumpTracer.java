@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DpTable;
 import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,9 @@ import java.util.Set;
  */
 @Component
 public class FrogJumpTracer implements AlgorithmTracer {
+
+    private static final String FORMULA =
+            "energy[i] = min(energy[i-1] + |h[i]-h[i-1]|, energy[i-2] + |h[i]-h[i-2]|)";
 
     @Override
     public String id() {
@@ -121,15 +125,25 @@ public class FrogJumpTracer implements AlgorithmTracer {
                                 i, chosen, verdict);
             }
 
+            DpTable evaluateTable = SeriesDpTable.of("height", heights, "min energy", energy, settled, i,
+                    String.valueOf(chosen),
+                    farReachable ? Set.of(i - 1, i - 2) : Set.of(i - 1), false);
+            if (farReachable) {
+                String substitution = String.format(
+                        "energy[%d] = min(%d + |%d-%d|, %d + |%d-%d|) = min(%d, %d) = %d",
+                        i, energy[i - 1], heights[i], heights[i - 1],
+                        energy[i - 2], heights[i], heights[i - 2],
+                        jumpOne, jumpTwo, chosen);
+                evaluateTable = evaluateTable.withFormula(FORMULA, substitution);
+            }
+
             emit.at("evaluate")
                     .say(narration)
                     .var("i", i)
                     .var("jumpOne", jumpOne)
                     .var("jumpTwo", farReachable ? jumpTwo : "—")
                     .var("energy[i]", chosen)
-                    .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, i,
-                            String.valueOf(chosen),
-                            farReachable ? Set.of(i - 1, i - 2) : Set.of(i - 1), false))
+                    .dpTable(evaluateTable)
                     .step();
 
             energy[i] = chosen;

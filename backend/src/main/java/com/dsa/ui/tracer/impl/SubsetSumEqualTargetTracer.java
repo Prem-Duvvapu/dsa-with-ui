@@ -25,6 +25,12 @@ import java.util.Set;
 @Component
 public class SubsetSumEqualTargetTracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "dp[i][s] = dp[i-1][s] OR dp[i-1][s-nums[i-1]]";
+
+    private static String tf(boolean value) {
+        return value ? "T" : "F";
+    }
+
     @Override
     public String id() {
         return "subset-sum-equal-target";
@@ -142,14 +148,23 @@ public class SubsetSumEqualTargetTracer implements AlgorithmTracer {
                                     .formatted(i, value, s, i - 1, s);
                 }
 
+                com.dsa.ui.model.DpTable decideTable = table(dp, settled, nums,
+                        new SubsetSumDpTable.Coord(i, s), chosen ? "T" : "F", reads, false);
+                if (canTake) {
+                    String substitution = String.format(
+                            "dp[%d][%d] = dp[%d][%d] OR dp[%d][%d] = %s OR %s = %s",
+                            i, s, i - 1, s, i - 1, s - value,
+                            tf(skip), tf(take), tf(chosen));
+                    decideTable = decideTable.withFormula(FORMULA, substitution);
+                }
+
                 emit.at("decide")
                         .say("dp[%d][%d]: %s. dp[%d][%d] = %s.", i, s, reasoning, i, s,
                                 chosen ? "true" : "false")
                         .var("i", i).var("s", s)
                         .var("skip", skip).var("take", take)
                         .var("dp[i][s]", chosen)
-                        .dpTable(table(dp, settled, nums, new SubsetSumDpTable.Coord(i, s),
-                                chosen ? "T" : "F", reads, false)).step();
+                        .dpTable(decideTable).step();
 
                 dp[i][s] = chosen;
                 settled[i][s] = true;

@@ -22,6 +22,8 @@ import java.util.Set;
 @Component
 public class GridUniquePathsTracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "dp[i][j] = dp[i-1][j] + dp[i][j-1]";
+
     @Override
     public String id() {
         return "grid-unique-paths";
@@ -111,6 +113,9 @@ public class GridUniquePathsTracer implements AlgorithmTracer {
                     int above = dp[i - 1][j];
                     int left = dp[i][j - 1];
                     int total = above + left;
+                    String substitution = String.format(
+                            "dp[%d][%d] = dp[%d][%d] + dp[%d][%d] = %d + %d = %d",
+                            i, j, i - 1, j, i, j - 1, above, left, total);
                     emit.at("combine")
                             .say("Cell (%d,%d): every path arrives either from above, (%d,%d) "
                                     + "with %s, or from the left, (%d,%d) with %s — no path can "
@@ -121,7 +126,8 @@ public class GridUniquePathsTracer implements AlgorithmTracer {
                             .var("above", above).var("left", left).var("dp[i][j]", total)
                             .dpTable(table(dp, settled, here, String.valueOf(total),
                                     Set.of(new GridDpTable.Coord(i - 1, j),
-                                            new GridDpTable.Coord(i, j - 1)), false)).step();
+                                            new GridDpTable.Coord(i, j - 1)), false)
+                                    .withFormula(FORMULA, substitution)).step();
                     dp[i][j] = total;
                 }
                 settled[i][j] = true;

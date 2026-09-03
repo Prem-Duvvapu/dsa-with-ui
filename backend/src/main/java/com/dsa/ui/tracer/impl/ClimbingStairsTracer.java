@@ -78,7 +78,7 @@ public class ClimbingStairsTracer implements AlgorithmTracer {
                 .say("One cell per stair, 0 through %d. Each cell will hold the number of "
                         + "distinct ways to be standing on that stair.", n)
                 .var("n", n)
-                .dpTable(table(ways, settled, -1, "?", Set.of(), false)).step();
+                .dpTable(table(ways, settled, -1, "?", Set.of(), false, null, null)).step();
 
         ways[0] = 1;
         ways[1] = 1;
@@ -89,25 +89,28 @@ public class ClimbingStairsTracer implements AlgorithmTracer {
                         + "to be at the bottom (take no steps), and exactly one way to reach "
                         + "stair 1 (a single 1-step). Everything else is derived from these.")
                 .var("ways[0]", ways[0]).var("ways[1]", ways[1])
-                .dpTable(table(ways, settled, -1, "?", Set.of(), false)).step();
+                .dpTable(table(ways, settled, -1, "?", Set.of(), false, null, null)).step();
 
         for (int i = 2; i <= n; i++) {
             int fromOneStep = ways[i - 1];
             int fromTwoSteps = ways[i - 2];
+            int combined = fromOneStep + fromTwoSteps;
+            String substitution = String.format("ways[%d] = ways[%d] + ways[%d] = %d + %d = %d",
+                    i, i - 1, i - 2, fromOneStep, fromTwoSteps, combined);
             emit.at("combine")
                     .say("To stand on stair %d you arrived either with a 1-step from stair %d "
                             + "(which holds %d) or a 2-step from stair %d (which holds %d). No "
                             + "path is counted twice, so the two add: %d + %d = %d.",
                             i, i - 1, fromOneStep, i - 2, fromTwoSteps,
-                            fromOneStep, fromTwoSteps, fromOneStep + fromTwoSteps)
+                            fromOneStep, fromTwoSteps, combined)
                     .var("i", i)
                     .var("fromOneStep", fromOneStep)
                     .var("fromTwoSteps", fromTwoSteps)
-                    .var("ways[i]", fromOneStep + fromTwoSteps)
-                    .dpTable(table(ways, settled, i, String.valueOf(fromOneStep + fromTwoSteps),
-                            Set.of(i - 1, i - 2), false)).step();
+                    .var("ways[i]", combined)
+                    .dpTable(table(ways, settled, i, String.valueOf(combined),
+                            Set.of(i - 1, i - 2), false, FORMULA, substitution)).step();
 
-            ways[i] = fromOneStep + fromTwoSteps;
+            ways[i] = combined;
             settled[i] = true;
         }
 
@@ -117,11 +120,13 @@ public class ClimbingStairsTracer implements AlgorithmTracer {
                         + "naive definition unfolds into.",
                         n, ways[n], n, Math.max(0, n - 1))
                 .var("answer", ways[n])
-                .dpTable(table(ways, settled, -1, "?", Set.of(), true)).step();
+                .dpTable(table(ways, settled, -1, "?", Set.of(), true, null, null)).step();
     }
 
+    private static final String FORMULA = "ways[i] = ways[i-1] + ways[i-2]";
+
     private static DpTable table(int[] ways, boolean[] settled, int probe, String probeValue,
-                                 Set<Integer> reads, boolean done) {
+                                 Set<Integer> reads, boolean done, String formula, String substitution) {
         List<String> colLabels = new ArrayList<>(ways.length);
         List<DpCell> row = new ArrayList<>(ways.length);
         for (int i = 0; i < ways.length; i++) {
@@ -147,6 +152,7 @@ public class ClimbingStairsTracer implements AlgorithmTracer {
             }
             row.add(new DpCell(value, state));
         }
-        return new DpTable(List.of("ways to reach"), colLabels, List.of(row));
+        DpTable dpTable = new DpTable(List.of("ways to reach"), colLabels, List.of(row));
+        return formula != null ? dpTable.withFormula(formula, substitution) : dpTable;
     }
 }

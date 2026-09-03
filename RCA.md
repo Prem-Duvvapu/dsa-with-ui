@@ -273,3 +273,34 @@ phase; do not describe unfinished work as resolved.
   have caught this, since the broken version rendered zero arrows outright rather than
   wrong ones — existence alone was already a meaningful assertion here, but the exact-
   coordinate version is what would catch a *regression* to the same bug later.
+
+## RCA-018 — Guarding a null-safe byte estimator against null undercounted it
+
+- **Discovered:** 2026-09-03, adding `DpTable.formula`/`substitution` (design D3) — caught
+  by `TracerContractTest.byteEstimateTracksActualPayload` before it ever reached a commit.
+- **Status:** Resolved
+- **Symptom and impact:** `climbing-stairs` estimated 4759 bytes for a payload that
+  actually serialised to 5307 (ratio 0.90, below the test's floor). `frog-jump` failed the
+  same way. Both were **regressions on tracers the new fields didn't even touch yet** —
+  the two new `DpTable` fields are null on every tracer except the six that later adopted
+  D3, so this would have undercounted the byte budget on every `DP_TABLE` trace in the
+  catalogue, not just the ones being changed.
+- **Root cause:** `StepEmitter.estimateBytes` wrote
+  `if (table.formula() != null) { bytes += jsonStringBytes(table.formula()) + 4L; }` — but
+  `jsonStringBytes` already returns `4` (the length of the JSON `null` token) when passed
+  `null`; it exists specifically to be called unconditionally. The `if` guard *skipped the
+  call entirely* on the common (null) case, so the estimate charged nothing for a field
+  Jackson still serialises as `"formula":null` on every step. Every other optional-field
+  estimate in this method already calls `jsonStringBytes` unconditionally (see
+  `getDescription()`); this one broke the pattern by re-deriving a null check the helper
+  had already solved.
+- **Resolution:** removed the guard; both lines now call `jsonStringBytes(...)` directly,
+  matching the rest of the method. General rule: when adding an estimate for a new
+  optional field, check whether `jsonStringBytes` (or an equivalent null-aware helper)
+  already exists before writing a new null check around it — a second null check on top of
+  one that already returns the right answer is the bug, not a safety margin.
+- **Regression guard:** `TracerContractTest.byteEstimateTracksActualPayload`, which already
+  existed for this exact purpose (see `RCA-015`) — it caught this on the very first test
+  run after adding the fields, before any golden file was touched or any tracer adopted
+  D3. No new test was needed; this entry exists so the next optional-field addition does
+  not repeat the mistake the existing guard already knows how to catch.

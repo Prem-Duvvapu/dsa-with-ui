@@ -27,6 +27,8 @@ import java.util.Set;
 @Component
 public class MinimumCoinsDpTracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)";
+
     @Override
     public String id() {
         return "minimum-coins-dp";
@@ -182,6 +184,10 @@ public class MinimumCoinsDpTracer implements AlgorithmTracer {
                     verdict = "Both options tie at %s.".formatted(render(best));
                 }
 
+                String substitution = String.format(
+                        "dp[%d][%d] = min(dp[%d][%d], dp[%d][%d] + 1) = min(%s, %s) = %s",
+                        i, x, i - 1, x, i, x - coin, render(skip), render(take), render(best));
+
                 emit.at("compare")
                         .say("Cell (%d,%d): skip coin %d and carry down dp[%d][%d] = %s from "
                                 + "the row above, or take ONE MORE coin %d by reading "
@@ -193,7 +199,7 @@ public class MinimumCoinsDpTracer implements AlgorithmTracer {
                         .var("skip", render(skip)).var("take", render(take))
                         .var("dp[i][x]", render(best))
                         .dpTable(table(dp, settled, rowLabels, colLabels, here, render(best),
-                                reads, false))
+                                reads, false).withFormula(FORMULA, substitution))
                         .step();
             }
         }

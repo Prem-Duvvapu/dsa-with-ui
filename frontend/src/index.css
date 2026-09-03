@@ -1059,6 +1059,40 @@ mark {
 }
 
 /* --- dynamic-programming table --- */
+.dp-stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* The recurrence, symbolic then substituted — design D3. A generic rule above a live
+   worked example, e.g. "ways[i] = ways[i-1] + ways[i-2]" then
+   "ways[4] = ways[3] + ways[2] = 3 + 2 = 5". Only present on tracers that supply it. */
+.dp-recurrence {
+  flex-shrink: 0;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--bench-rule);
+  border-radius: var(--radius-sm);
+  background: var(--bench-panel);
+  font-family: var(--font-code);
+  font-variant-numeric: tabular-nums;
+}
+
+.dp-recurrence-formula {
+  font-size: var(--text-sm);
+  color: var(--bench-ink-secondary);
+}
+
+.dp-recurrence-substitution {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  color: var(--probe);
+}
+
 .dp-table-wrap {
   position: relative;
   align-self: stretch;
