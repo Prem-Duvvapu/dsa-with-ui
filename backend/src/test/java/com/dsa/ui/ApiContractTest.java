@@ -79,12 +79,14 @@ class ApiContractTest {
             "longest-increasing-subsequence", "print-lis", "lis-binary-search",
             "max-rectangle-area-all-ones", "count-square-submatrices",
             "subset-sum-equal-target", "partition-equal-subset-sum",
+            "count-subsets-with-sum-k", "count-partitions-given-diff",
             "largest-element", "max-consecutive-ones", "move-zeros-end",
             "find-missing-number", "stock-buy-sell",
             "second-largest-element", "check-sorted-ii", "remove-duplicates-sorted",
             "left-rotate-one", "linear-search",
             "left-rotate-k", "single-number", "majority-element",
-            "leaders-in-array", "longest-subarray-sum-k-positives");
+            "leaders-in-array", "longest-subarray-sum-k-positives",
+            "minimum-coins-dp", "coin-change-2");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -192,6 +194,8 @@ class ApiContractTest {
                 arguments("/api/dp", "count-square-submatrices"),
                 arguments("/api/dp", "subset-sum-equal-target"),
                 arguments("/api/dp", "partition-equal-subset-sum"),
+                arguments("/api/dp", "count-subsets-with-sum-k"),
+                arguments("/api/dp", "count-partitions-given-diff"),
                 arguments("/api/arrays", "largest-element"),
                 arguments("/api/arrays", "max-consecutive-ones"),
                 arguments("/api/arrays", "move-zeros-end"),
@@ -206,7 +210,9 @@ class ApiContractTest {
                 arguments("/api/arrays", "single-number"),
                 arguments("/api/arrays", "majority-element"),
                 arguments("/api/arrays", "leaders-in-array"),
-                arguments("/api/arrays", "longest-subarray-sum-k-positives"));
+                arguments("/api/arrays", "longest-subarray-sum-k-positives"),
+                arguments("/api/dp", "minimum-coins-dp"),
+                arguments("/api/dp", "coin-change-2"));
     }
 
     /**

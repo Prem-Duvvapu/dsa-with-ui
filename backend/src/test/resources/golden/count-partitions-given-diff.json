@@ -1,0 +1,2408 @@
+{
+  "anchors" : {
+    "base" : 10,
+    "combine" : 15,
+    "done" : 18,
+    "init" : 9,
+    "parityCheck" : 4,
+    "sumTotal" : 2,
+    "target" : 7,
+    "zero" : 5
+  },
+  "code" : "public int countPartitions(int[] nums, int d) {\n    int totalSum = 0;\n    for (int x : nums) totalSum += x;\n    if (d > totalSum || (totalSum + d) % 2 != 0) {\n        return 0;\n    }\n    int target = (totalSum + d) / 2;\n    int n = nums.length;\n    int[][] dp = new int[n + 1][target + 1];\n    dp[0][0] = 1;\n    for (int i = 1; i <= n; i++) {\n        for (int s = 0; s <= target; s++) {\n            int skip = dp[i - 1][s];\n            int take = (s >= nums[i - 1]) ? dp[i - 1][s - nums[i - 1]] : 0;\n            dp[i][s] = skip + take;\n        }\n    }\n    return dp[n][target];\n}",
+  "problemId" : "count-partitions-given-diff",
+  "resolvedInput" : {
+    "d" : 1,
+    "nums" : [ 1, 1, 2, 3 ]
+  },
+  "stepCount" : 26,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "S1 - S2 = 1 and S1 + S2 = totalSum = 7. Adding those, 2*S1 = totalSum + D, so S1 = (totalSum + D) / 2 — this reduces to counting subsets that sum to that target.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "d" : "1",
+      "totalSum" : "7"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "check" ],
+      "colLabels" : [ "totalSum" ],
+      "cells" : [ [ {
+        "value" : "7",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "totalSum + D = 7 + 1 = 8, which is even, so an integer S1 exists.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "totalSum+D" : "8"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "check" ],
+      "colLabels" : [ "totalSum+D" ],
+      "cells" : [ [ {
+        "value" : "8",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "S1 = 4 is achievable, so this reduces to counting subsets of the 4 items that sum to exactly 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "target" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "check" ],
+      "colLabels" : [ "target" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "dp[i][s] will count the subsets of the first i items that sum to exactly s. Building a 5 by 5 table over 4 items and sums 0..4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "With zero items available, the only subset at all is the empty one, and it sums to 0 — exactly one way. dp[0][0] = 1; every dp[0][s] for s > 0 stays 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[0][0]" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 15,
+    "description" : "Item 1 (val=1), sum 0: 1 is larger than the remaining sum, so it cannot be part of any subset reaching s=0 here — only the skip option applies. dp[1][0] = dp[0][0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "1",
+      "i" : "1",
+      "s" : "0",
+      "skip" : "1",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Item 1 (val=1), sum 1: ways that skip it equal dp[0][1]=0; ways that take it need the remaining sum 0 from the earlier items, dp[0][0]=1. dp[1][1] = 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "1",
+      "i" : "1",
+      "s" : "1",
+      "skip" : "0",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "Item 1 (val=1), sum 2: ways that skip it equal dp[0][2]=0; ways that take it need the remaining sum 1 from the earlier items, dp[0][1]=0. dp[1][2] = 0 + 0 = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "0",
+      "i" : "1",
+      "s" : "2",
+      "skip" : "0",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 15,
+    "description" : "Item 1 (val=1), sum 3: ways that skip it equal dp[0][3]=0; ways that take it need the remaining sum 2 from the earlier items, dp[0][2]=0. dp[1][3] = 0 + 0 = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "0",
+      "i" : "1",
+      "s" : "3",
+      "skip" : "0",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 15,
+    "description" : "Item 1 (val=1), sum 4: ways that skip it equal dp[0][4]=0; ways that take it need the remaining sum 3 from the earlier items, dp[0][3]=0. dp[1][4] = 0 + 0 = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "0",
+      "i" : "1",
+      "s" : "4",
+      "skip" : "0",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 15,
+    "description" : "Item 2 (val=1), sum 0: 1 is larger than the remaining sum, so it cannot be part of any subset reaching s=0 here — only the skip option applies. dp[2][0] = dp[1][0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "1",
+      "i" : "2",
+      "s" : "0",
+      "skip" : "1",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 15,
+    "description" : "Item 2 (val=1), sum 1: ways that skip it equal dp[1][1]=1; ways that take it need the remaining sum 0 from the earlier items, dp[1][0]=1. dp[2][1] = 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "2",
+      "i" : "2",
+      "s" : "1",
+      "skip" : "1",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 15,
+    "description" : "Item 2 (val=1), sum 2: ways that skip it equal dp[1][2]=0; ways that take it need the remaining sum 1 from the earlier items, dp[1][1]=1. dp[2][2] = 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "1",
+      "i" : "2",
+      "s" : "2",
+      "skip" : "0",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "Item 2 (val=1), sum 3: ways that skip it equal dp[1][3]=0; ways that take it need the remaining sum 2 from the earlier items, dp[1][2]=0. dp[2][3] = 0 + 0 = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "0",
+      "i" : "2",
+      "s" : "3",
+      "skip" : "0",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "Item 2 (val=1), sum 4: ways that skip it equal dp[1][4]=0; ways that take it need the remaining sum 3 from the earlier items, dp[1][3]=0. dp[2][4] = 0 + 0 = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "0",
+      "i" : "2",
+      "s" : "4",
+      "skip" : "0",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 15,
+    "description" : "Item 3 (val=2), sum 0: 2 is larger than the remaining sum, so it cannot be part of any subset reaching s=0 here — only the skip option applies. dp[3][0] = dp[2][0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "1",
+      "i" : "3",
+      "s" : "0",
+      "skip" : "1",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 15,
+    "description" : "Item 3 (val=2), sum 1: 2 is larger than the remaining sum, so it cannot be part of any subset reaching s=1 here — only the skip option applies. dp[3][1] = dp[2][1] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "2",
+      "i" : "3",
+      "s" : "1",
+      "skip" : "2",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 15,
+    "description" : "Item 3 (val=2), sum 2: ways that skip it equal dp[2][2]=1; ways that take it need the remaining sum 0 from the earlier items, dp[2][0]=1. dp[3][2] = 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "2",
+      "i" : "3",
+      "s" : "2",
+      "skip" : "1",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 15,
+    "description" : "Item 3 (val=2), sum 3: ways that skip it equal dp[2][3]=0; ways that take it need the remaining sum 1 from the earlier items, dp[2][1]=2. dp[3][3] = 0 + 2 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "2",
+      "i" : "3",
+      "s" : "3",
+      "skip" : "0",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 15,
+    "description" : "Item 3 (val=2), sum 4: ways that skip it equal dp[2][4]=0; ways that take it need the remaining sum 2 from the earlier items, dp[2][2]=1. dp[3][4] = 0 + 1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "1",
+      "i" : "3",
+      "s" : "4",
+      "skip" : "0",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 15,
+    "description" : "Item 4 (val=3), sum 0: 3 is larger than the remaining sum, so it cannot be part of any subset reaching s=0 here — only the skip option applies. dp[4][0] = dp[3][0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "1",
+      "i" : "4",
+      "s" : "0",
+      "skip" : "1",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 15,
+    "description" : "Item 4 (val=3), sum 1: 3 is larger than the remaining sum, so it cannot be part of any subset reaching s=1 here — only the skip option applies. dp[4][1] = dp[3][1] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "2",
+      "i" : "4",
+      "s" : "1",
+      "skip" : "2",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 15,
+    "description" : "Item 4 (val=3), sum 2: 3 is larger than the remaining sum, so it cannot be part of any subset reaching s=2 here — only the skip option applies. dp[4][2] = dp[3][2] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "2",
+      "i" : "4",
+      "s" : "2",
+      "skip" : "2",
+      "take" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 15,
+    "description" : "Item 4 (val=3), sum 3: ways that skip it equal dp[3][3]=2; ways that take it need the remaining sum 0 from the earlier items, dp[3][0]=1. dp[4][3] = 2 + 1 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "3",
+      "i" : "4",
+      "s" : "3",
+      "skip" : "2",
+      "take" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 15,
+    "description" : "Item 4 (val=3), sum 4: ways that skip it equal dp[3][4]=1; ways that take it need the remaining sum 1 from the earlier items, dp[3][1]=2. dp[4][4] = 1 + 2 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp[i][s]" : "3",
+      "i" : "4",
+      "s" : "4",
+      "skip" : "1",
+      "take" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      } ], [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 18,
+    "description" : "dp[4][4] = 3: that many partitions split the array with S1 - S2 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "item 0 (none)", "item 1 (val=1)", "item 2 (val=1)", "item 3 (val=2)", "item 4 (val=3)" ],
+      "colLabels" : [ "s=0", "s=1", "s=2", "s=3", "s=4" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}

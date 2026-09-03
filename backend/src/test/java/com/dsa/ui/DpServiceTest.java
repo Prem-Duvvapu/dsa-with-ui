@@ -54,7 +54,11 @@ public class DpServiceTest {
                 "max-rectangle-area-all-ones",
                 "count-square-submatrices",
                 "subset-sum-equal-target",
-                "partition-equal-subset-sum");
+                "partition-equal-subset-sum",
+                "count-subsets-with-sum-k",
+                "count-partitions-given-diff",
+                "minimum-coins-dp",
+                "coin-change-2");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

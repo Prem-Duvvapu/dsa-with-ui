@@ -27,7 +27,7 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These sixteen have real tracers (tracer/impl). Refuse rather than let
+            // These twenty-one have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
             case "climbing-stairs":
@@ -47,6 +47,10 @@ public class DpService implements ProblemProvider {
             case "count-square-submatrices":
             case "subset-sum-equal-target":
             case "partition-equal-subset-sum":
+            case "count-subsets-with-sum-k":
+            case "count-partitions-given-diff":
+            case "minimum-coins-dp":
+            case "coin-change-2":
                 throw new LegacyTraceRetiredException(problemId);
             case "knapsack-01": return generateKnapsackSteps();
             case "longest-common-subsequence": return generateLcsSteps();
@@ -231,7 +235,9 @@ public class DpService implements ProblemProvider {
                     "grid-unique-paths", "unique-paths-2",
                     "minimum-falling-path-sum", "triangle-min-path-sum", "ninjas-training",
                     "longest-increasing-subsequence", "lis-binary-search", "print-lis",
-                    "subset-sum-equal-target", "partition-equal-subset-sum" ->
+                    "subset-sum-equal-target", "partition-equal-subset-sum",
+                    "count-subsets-with-sum-k", "count-partitions-given-diff",
+                    "minimum-coins-dp", "coin-change-2" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;
@@ -365,6 +371,49 @@ public class DpService implements ProblemProvider {
                             + "predecessors stay visible.",
                     "DP table",
                     "Auxiliary Space: O(N * Target)",
+                    "DP table");
+            case "count-subsets-with-sum-k" -> new ComplexityDetail(
+                    "O(N * Target)",
+                    "Fills one cell per (item count, sum) pair, each from two predecessors.",
+                    "2D counting tabulation",
+                    "O(N * Target)",
+                    "Keeps the whole (N+1) by (Target+1) count table so both the skip and "
+                            + "take contributions stay visible.",
+                    "DP table",
+                    "Auxiliary Space: O(N * Target)",
+                    "DP table");
+            case "count-partitions-given-diff" -> new ComplexityDetail(
+                    "O(N * Target)",
+                    "Reduces algebraically to counting subsets summing to "
+                            + "(totalSum + D) / 2, then fills that same (N+1) by "
+                            + "(Target+1) count table.",
+                    "2D counting tabulation via algebraic reduction",
+                    "O(N * Target)",
+                    "Keeps the whole (N+1) by (Target+1) count table so both the skip and "
+                            + "take contributions stay visible.",
+                    "DP table",
+                    "Auxiliary Space: O(N * Target)",
+                    "DP table");
+            case "minimum-coins-dp" -> new ComplexityDetail(
+                    "O(N * Amount)",
+                    "Fills one cell per (denomination count, amount) pair; reusing a coin "
+                            + "reads back along the same row instead of climbing to a new one.",
+                    "Unbounded-knapsack tabulation",
+                    "O(N * Amount)",
+                    "Keeps the whole (N+1) by (Amount+1) table so both the reuse read and "
+                            + "the skip read stay visible.",
+                    "DP table",
+                    "Auxiliary Space: O(N * Amount)",
+                    "DP table");
+            case "coin-change-2" -> new ComplexityDetail(
+                    "O(N * Amount)",
+                    "Fills one cell per (denomination count, amount) pair; counts add rather "
+                            + "than compare, but the same same-row reuse read applies.",
+                    "Unbounded-knapsack tabulation",
+                    "O(N * Amount)",
+                    "Keeps the whole (N+1) by (Amount+1) table of combination counts.",
+                    "DP table",
+                    "Auxiliary Space: O(N * Amount)",
                     "DP table");
             default -> new ComplexityDetail(
                     "O(N * K)",
