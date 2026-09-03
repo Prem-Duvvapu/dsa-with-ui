@@ -84,7 +84,8 @@ class ApiContractTest {
             "second-largest-element", "check-sorted-ii", "remove-duplicates-sorted",
             "left-rotate-one", "linear-search",
             "left-rotate-k", "single-number", "majority-element",
-            "leaders-in-array", "longest-subarray-sum-k-positives");
+            "leaders-in-array", "longest-subarray-sum-k-positives",
+            "minimum-coins-dp", "coin-change-2");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -206,7 +207,9 @@ class ApiContractTest {
                 arguments("/api/arrays", "single-number"),
                 arguments("/api/arrays", "majority-element"),
                 arguments("/api/arrays", "leaders-in-array"),
-                arguments("/api/arrays", "longest-subarray-sum-k-positives"));
+                arguments("/api/arrays", "longest-subarray-sum-k-positives"),
+                arguments("/api/dp", "minimum-coins-dp"),
+                arguments("/api/dp", "coin-change-2"));
     }
 
     /**
