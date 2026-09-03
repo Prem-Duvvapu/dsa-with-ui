@@ -1,0 +1,727 @@
+{
+  "anchors" : {
+    "base" : 4,
+    "combine" : 12,
+    "done" : 19,
+    "init" : 2,
+    "reduce" : 17
+  },
+  "code" : "public int ninjaTraining(int n, int[][] points) {\n    int[][] dp = new int[n][3];\n    for (int task = 0; task < 3; task++) {\n        dp[0][task] = points[0][task];\n    }\n    for (int day = 1; day < n; day++) {\n        for (int task = 0; task < 3; task++) {\n            int best = 0;\n            for (int prev = 0; prev < 3; prev++) {\n                if (prev != task) best = Math.max(best, dp[day - 1][prev]);\n            }\n            dp[day][task] = points[day][task] + best;\n        }\n    }\n    int answer = 0;\n    for (int task = 0; task < 3; task++) {\n        answer = Math.max(answer, dp[n - 1][task]);\n    }\n    return answer;\n}",
+  "problemId" : "ninjas-training",
+  "resolvedInput" : {
+    "points" : [ [ 10, 40, 70 ], [ 20, 50, 80 ], [ 30, 10, 20 ] ]
+  },
+  "stepCount" : 14,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "3 days, three named activities per day. dp[day][task] will hold the best total through that day, ending on that activity.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Day 0, activity 0: no prior day to conflict with, so the score is just this activity's own points, 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "0",
+      "task" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Day 0, activity 1: no prior day to conflict with, so the score is just this activity's own points, 40.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "0",
+      "task" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Day 0, activity 2: no prior day to conflict with, so the score is just this activity's own points, 70.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "0",
+      "task" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "Day 1, activity 0: yesterday's activity 0 is off-limits, so the best carried-forward score is whichever of the other two is higher — activity 2 at 70. dp[1][0] = 20 + 70 = 90.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "70",
+      "day" : "1",
+      "dp[day][task]" : "90",
+      "task" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "70",
+        "state" : "read"
+      } ], [ {
+        "value" : "90",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "Day 1, activity 1: yesterday's activity 1 is off-limits, so the best carried-forward score is whichever of the other two is higher — activity 2 at 70. dp[1][1] = 50 + 70 = 120.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "70",
+      "day" : "1",
+      "dp[day][task]" : "120",
+      "task" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "read"
+      } ], [ {
+        "value" : "90",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "Day 1, activity 2: yesterday's activity 2 is off-limits, so the best carried-forward score is whichever of the other two is higher — activity 1 at 40. dp[1][2] = 80 + 40 = 120.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "40",
+      "day" : "1",
+      "dp[day][task]" : "120",
+      "task" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "read"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "70",
+        "state" : "known"
+      } ], [ {
+        "value" : "90",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "Day 2, activity 0: yesterday's activity 0 is off-limits, so the best carried-forward score is whichever of the other two is higher — activity 1 at 120. dp[2][0] = 30 + 120 = 150.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "120",
+      "day" : "2",
+      "dp[day][task]" : "150",
+      "task" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "known"
+      } ], [ {
+        "value" : "90",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "read"
+      }, {
+        "value" : "120",
+        "state" : "read"
+      } ], [ {
+        "value" : "150",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 12,
+    "description" : "Day 2, activity 1: yesterday's activity 1 is off-limits, so the best carried-forward score is whichever of the other two is higher — activity 2 at 120. dp[2][1] = 10 + 120 = 130.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "120",
+      "day" : "2",
+      "dp[day][task]" : "130",
+      "task" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "known"
+      } ], [ {
+        "value" : "90",
+        "state" : "read"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "read"
+      } ], [ {
+        "value" : "150",
+        "state" : "known"
+      }, {
+        "value" : "130",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "Day 2, activity 2: yesterday's activity 2 is off-limits, so the best carried-forward score is whichever of the other two is higher — activity 1 at 120. dp[2][2] = 20 + 120 = 140.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "120",
+      "day" : "2",
+      "dp[day][task]" : "140",
+      "task" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "known"
+      } ], [ {
+        "value" : "90",
+        "state" : "read"
+      }, {
+        "value" : "120",
+        "state" : "read"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      } ], [ {
+        "value" : "150",
+        "state" : "known"
+      }, {
+        "value" : "130",
+        "state" : "known"
+      }, {
+        "value" : "140",
+        "state" : "probe"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 17,
+    "description" : "The last day's activity is unconstrained by anything after it, so the answer is the best of all three finishing activities. Comparing activity 0 (150) against the running best so far (0): activity 0 is better, so the best rises to 150.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "running" : "150",
+      "task" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "known"
+      } ], [ {
+        "value" : "90",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      } ], [ {
+        "value" : "150",
+        "state" : "read"
+      }, {
+        "value" : "130",
+        "state" : "known"
+      }, {
+        "value" : "140",
+        "state" : "known"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 17,
+    "description" : "The last day's activity is unconstrained by anything after it, so the answer is the best of all three finishing activities. Comparing activity 1 (130) against the running best so far (150): no improvement, the best stays 150.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "running" : "150",
+      "task" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "known"
+      } ], [ {
+        "value" : "90",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      } ], [ {
+        "value" : "150",
+        "state" : "read"
+      }, {
+        "value" : "130",
+        "state" : "read"
+      }, {
+        "value" : "140",
+        "state" : "known"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 17,
+    "description" : "The last day's activity is unconstrained by anything after it, so the answer is the best of all three finishing activities. Comparing activity 2 (140) against the running best so far (150): no improvement, the best stays 150.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "running" : "150",
+      "task" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "known"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "known"
+      } ], [ {
+        "value" : "90",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      }, {
+        "value" : "120",
+        "state" : "known"
+      } ], [ {
+        "value" : "150",
+        "state" : "read"
+      }, {
+        "value" : "130",
+        "state" : "read"
+      }, {
+        "value" : "140",
+        "state" : "read"
+      } ] ]
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 19,
+    "description" : "The most merit points achievable over 3 days is 150.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "150"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day 0", "day 1", "day 2" ],
+      "colLabels" : [ "activity 0", "activity 1", "activity 2" ],
+      "cells" : [ [ {
+        "value" : "10",
+        "state" : "resolved"
+      }, {
+        "value" : "40",
+        "state" : "resolved"
+      }, {
+        "value" : "70",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "90",
+        "state" : "resolved"
+      }, {
+        "value" : "120",
+        "state" : "resolved"
+      }, {
+        "value" : "120",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "150",
+        "state" : "resolved"
+      }, {
+        "value" : "130",
+        "state" : "resolved"
+      }, {
+        "value" : "140",
+        "state" : "resolved"
+      } ] ]
+    }
+  } ],
+  "truncated" : false
+}
