@@ -243,3 +243,33 @@ phase; do not describe unfinished work as resolved.
 - **Not yet resolved:** no other tracer emits `.stack()`, `.bits()`, `.chars()` or `.trie()`
   — those wire methods still sit unused, same as before this fix, just narrower now. See
   `PROMPT-F-visual-fidelity.md` slices F4–F7.
+
+## RCA-017 — A child's layout effect ran before its parent's ref attached
+
+- **Discovered:** 2026-09-03, building DP provenance arrows (PROMPT-F-visual-fidelity.md,
+  design D4)
+- **Status:** Resolved
+- **Symptom and impact:** `DpTableCanvas`'s new provenance-arrow overlay never rendered.
+  Debug logging showed its `useLayoutEffect` DID run on mount, but `wrapRef.current` — a
+  ref owned by the parent, pointing at the parent's own `.dp-table-wrap` div — was `null`
+  inside it, so the effect bailed out before ever attaching its `resize` listener. Every
+  later recompute attempt was silently a no-op for the rest of the component's life.
+- **Root cause:** React commits refs and layout effects bottom-up (children before
+  parents). A component can read `ref.current` on its OWN DOM node reliably inside its own
+  `useLayoutEffect`, but not on an ANCESTOR's ref passed down as a prop — the child's
+  layout effect fires before the parent's own commit step, which is where the parent's ref
+  actually gets attached. `ProvenanceArrows` held the `useLayoutEffect` while `DpTableCanvas`
+  held the ref, so the guarantee didn't hold. No compiler or lint rule catches this; it only
+  showed up as "the feature silently does nothing."
+- **Resolution:** the ref, the `arrows`/`size` state, and the `useLayoutEffect` all moved
+  into `DpTableCanvas`, the component that owns the DOM node. `ProvenanceArrows` became a
+  pure presentational component taking `{ arrows, size }` as props — no ref, no effect.
+  General rule for this codebase: a ref and the layout effect that reads it belong in the
+  same component, never split across a parent/child boundary.
+- **Regression guard:** `DpTableCanvas.test.jsx`'s `provenance arrows` block mocks
+  `getBoundingClientRect` per cell (jsdom has no real layout engine) and asserts exact
+  arrow endpoint coordinates — proved RED against the broken parent/child split before the
+  fix landed, green after. A weaker test (just "an `.dp-arrow` element exists") would not
+  have caught this, since the broken version rendered zero arrows outright rather than
+  wrong ones — existence alone was already a meaningful assertion here, but the exact-
+  coordinate version is what would catch a *regression* to the same bug later.

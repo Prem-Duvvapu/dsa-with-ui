@@ -1060,9 +1060,25 @@ mark {
 
 /* --- dynamic-programming table --- */
 .dp-table-wrap {
+  position: relative;
   align-self: stretch;
   width: 100%;
   overflow: auto;
+}
+
+/* Provenance arrows: read cells -> the cell being resolved this step. Sits inside the
+   scrollable wrap (not fixed to the viewport) so it scrolls together with the table. */
+.dp-arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.dp-arrow {
+  stroke-width: 1.5;
+  opacity: 0.8;
 }
 
 .dp-table {

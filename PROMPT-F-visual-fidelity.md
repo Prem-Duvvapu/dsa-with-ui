@@ -11,12 +11,26 @@
 > clean** — this codebase's tracer discipline is good. The gap this prompt addresses is
 > *coverage and visual fidelity*, not craft.
 >
-> **Slice F1 — landed same day.** Companion panes (D1) built and wired: `bfs-traversal`
+> **Slice F1 — landed 2026-09-02.** Companion panes (D1) built and wired: `bfs-traversal`
 > and `dijkstra-min-heap` now emit `.queue(...)` every step and render a Queue companion
 > pane beside the Graph hero, verified against a live backend and screenshotted mid-run
 > (see `RCA-016`). `bfs-traversal`'s dsType moved `Queue` → `Graph`. No `StackCanvas` was
 > built — no tracer feeds one yet, and building it unfed would repeat the exact mistake
-> this prompt names in PROMPT E's phase 2. F2–F10 have not started.
+> this prompt names in PROMPT E's phase 2.
+>
+> **F2 — provenance arrows only, landed 2026-09-03 (D3 substitution text not built).**
+> `DpTableCanvas` now draws an arrow from every `read` cell to the step's `probe` cell,
+> generic over the payload's `state` field — applies to every `DP_TABLE` tracer
+> automatically (21 as of this writing, up from 8 when this file was first written; see
+> `RCA-017` for a genuine React ordering bug hit and fixed while building it). **The
+> recurrence-substitution line (`dp[4] = max(5, 3+2) = 5`) is still open** — it needs a
+> per-tracer-authored template, which is real wire/backend work across many tracers, not
+> a generic derivation like the arrows were. Re-scope that as its own slice before
+> starting it.
+>
+> Traced count has grown substantially since this file's original 39 (DP batches #34–39
+> landed independently); F3–F10 below have not started and their "8 tracers" framing is
+> now stale — re-verify against `GET /api/problems/stats` before starting any of them.
 
 ---
 
@@ -244,7 +258,7 @@ Ordered so the earliest PRs fix the confirmed defects in Finding 1.
 | # | Slice | Delivers |
 | --- | --- | --- |
 | **F1** | **Companion panes (D1)** | The shell change plus Queue and Stack companion renderers. Retag/emit `bfs-traversal`'s queue and `dijkstra-min-heap`'s heap in the same PR. Fixes two of the four Finding-1 defects immediately. |
-| **F2** | **Recurrence substitution + provenance arrows (D3, D4)** | Applied to the eight existing `DP_TABLE` tracers. No new canvas. |
+| **F2** | ~~Recurrence substitution + provenance arrows (D3, D4)~~ **Provenance arrows (D4) only — landed.** Substitution text (D3) is still open; it needs a per-tracer template, not a generic derivation, and belongs in its own slice. | Arrows apply automatically to every `DP_TABLE` tracer (generic over cell `state`, no new canvas, no per-tracer work). |
 | **F3** | **DP rank-driven layout (D2, 1-D and 2-D)** | `climbing-stairs` / `house-robber-2` / `frog-jump` as strips; the 2-D fan for the matrix tracers. |
 | **F4** | **`SEARCH_SPACE` (D6)** | Canvas with both variants, retag `binary-search-1d` and `search-rotated-sorted`, **and fix their defaults so `left`, `rightSorted` and `miss` are exercised** (Finding 3). |
 | **F5** | **`WINDOW`** | Shared renderer with F4's. Emit real window membership states from both window tracers — the data does not exist today. |
