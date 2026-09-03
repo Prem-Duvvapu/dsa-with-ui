@@ -179,7 +179,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 2,
@@ -345,7 +347,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 3,
@@ -511,7 +515,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 4,
@@ -682,7 +688,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][1] = min(dp[0][1], dp[1][0] + 1) = min(∞, 1) = 1"
     }
   }, {
     "stepNumber" : 5,
@@ -853,7 +861,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][2] = min(dp[0][2], dp[1][1] + 1) = min(∞, 2) = 2"
     }
   }, {
     "stepNumber" : 6,
@@ -1024,7 +1034,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][3] = min(dp[0][3], dp[1][2] + 1) = min(∞, 3) = 3"
     }
   }, {
     "stepNumber" : 7,
@@ -1195,7 +1207,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][4] = min(dp[0][4], dp[1][3] + 1) = min(∞, 4) = 4"
     }
   }, {
     "stepNumber" : 8,
@@ -1366,7 +1380,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][5] = min(dp[0][5], dp[1][4] + 1) = min(∞, 5) = 5"
     }
   }, {
     "stepNumber" : 9,
@@ -1537,7 +1553,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][6] = min(dp[0][6], dp[1][5] + 1) = min(∞, 6) = 6"
     }
   }, {
     "stepNumber" : 10,
@@ -1708,7 +1726,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][7] = min(dp[0][7], dp[1][6] + 1) = min(∞, 7) = 7"
     }
   }, {
     "stepNumber" : 11,
@@ -1879,7 +1899,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][8] = min(dp[0][8], dp[1][7] + 1) = min(∞, 8) = 8"
     }
   }, {
     "stepNumber" : 12,
@@ -2050,7 +2072,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][9] = min(dp[0][9], dp[1][8] + 1) = min(∞, 9) = 9"
     }
   }, {
     "stepNumber" : 13,
@@ -2221,7 +2245,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][10] = min(dp[0][10], dp[1][9] + 1) = min(∞, 10) = 10"
     }
   }, {
     "stepNumber" : 14,
@@ -2392,7 +2418,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[1][11] = min(dp[0][11], dp[1][10] + 1) = min(∞, 11) = 11"
     }
   }, {
     "stepNumber" : 15,
@@ -2561,7 +2589,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 16,
@@ -2732,7 +2762,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][2] = min(dp[1][2], dp[2][0] + 1) = min(2, 1) = 1"
     }
   }, {
     "stepNumber" : 17,
@@ -2903,7 +2935,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][3] = min(dp[1][3], dp[2][1] + 1) = min(3, 2) = 2"
     }
   }, {
     "stepNumber" : 18,
@@ -3074,7 +3108,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][4] = min(dp[1][4], dp[2][2] + 1) = min(4, 2) = 2"
     }
   }, {
     "stepNumber" : 19,
@@ -3245,7 +3281,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][5] = min(dp[1][5], dp[2][3] + 1) = min(5, 3) = 3"
     }
   }, {
     "stepNumber" : 20,
@@ -3416,7 +3454,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][6] = min(dp[1][6], dp[2][4] + 1) = min(6, 3) = 3"
     }
   }, {
     "stepNumber" : 21,
@@ -3587,7 +3627,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][7] = min(dp[1][7], dp[2][5] + 1) = min(7, 4) = 4"
     }
   }, {
     "stepNumber" : 22,
@@ -3758,7 +3800,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][8] = min(dp[1][8], dp[2][6] + 1) = min(8, 4) = 4"
     }
   }, {
     "stepNumber" : 23,
@@ -3929,7 +3973,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][9] = min(dp[1][9], dp[2][7] + 1) = min(9, 5) = 5"
     }
   }, {
     "stepNumber" : 24,
@@ -4100,7 +4146,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][10] = min(dp[1][10], dp[2][8] + 1) = min(10, 5) = 5"
     }
   }, {
     "stepNumber" : 25,
@@ -4271,7 +4319,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[2][11] = min(dp[1][11], dp[2][9] + 1) = min(11, 6) = 6"
     }
   }, {
     "stepNumber" : 26,
@@ -4440,7 +4490,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 27,
@@ -4609,7 +4661,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 28,
@@ -4778,7 +4832,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 29,
@@ -4947,7 +5003,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   }, {
     "stepNumber" : 30,
@@ -5118,7 +5176,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[3][5] = min(dp[2][5], dp[3][0] + 1) = min(3, 1) = 1"
     }
   }, {
     "stepNumber" : 31,
@@ -5289,7 +5349,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[3][6] = min(dp[2][6], dp[3][1] + 1) = min(3, 2) = 2"
     }
   }, {
     "stepNumber" : 32,
@@ -5460,7 +5522,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[3][7] = min(dp[2][7], dp[3][2] + 1) = min(4, 2) = 2"
     }
   }, {
     "stepNumber" : 33,
@@ -5631,7 +5695,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[3][8] = min(dp[2][8], dp[3][3] + 1) = min(4, 3) = 3"
     }
   }, {
     "stepNumber" : 34,
@@ -5802,7 +5868,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[3][9] = min(dp[2][9], dp[3][4] + 1) = min(5, 3) = 3"
     }
   }, {
     "stepNumber" : 35,
@@ -5973,7 +6041,9 @@
       }, {
         "value" : "·",
         "state" : "void"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[3][10] = min(dp[2][10], dp[3][5] + 1) = min(5, 2) = 2"
     }
   }, {
     "stepNumber" : 36,
@@ -6144,7 +6214,9 @@
       }, {
         "value" : "3",
         "state" : "probe"
-      } ] ]
+      } ] ],
+      "formula" : "dp[i][x] = min(dp[i-1][x], dp[i][x-coin] + 1)",
+      "substitution" : "dp[3][11] = min(dp[2][11], dp[3][6] + 1) = min(6, 3) = 3"
     }
   }, {
     "stepNumber" : 37,
@@ -6311,7 +6383,9 @@
       }, {
         "value" : "3",
         "state" : "resolved"
-      } ] ]
+      } ] ],
+      "formula" : null,
+      "substitution" : null
     }
   } ],
   "truncated" : false

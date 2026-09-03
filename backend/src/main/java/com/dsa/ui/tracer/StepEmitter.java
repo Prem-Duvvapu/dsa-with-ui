@@ -402,6 +402,12 @@ public final class StepEmitter {
                             + jsonStringBytes(cell.state());
                 }
             }
+            // jsonStringBytes already returns the JSON `null` token's length for a null
+            // argument, so this must be unconditional: Jackson emits "formula":null on
+            // every tracer that hasn't adopted design D3 yet, and skipping the call here
+            // (as an earlier version of this code did) undercounted every one of them.
+            bytes += jsonStringBytes(table.formula()) + 4L;
+            bytes += jsonStringBytes(table.substitution()) + 4L;
         }
         if (s.getNodeStates() != null) {
             bytes += s.getNodeStates().size() * 24L;

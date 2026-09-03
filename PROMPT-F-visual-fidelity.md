@@ -18,15 +18,28 @@
 > built — no tracer feeds one yet, and building it unfed would repeat the exact mistake
 > this prompt names in PROMPT E's phase 2.
 >
-> **F2 — provenance arrows only, landed 2026-09-03 (D3 substitution text not built).**
-> `DpTableCanvas` now draws an arrow from every `read` cell to the step's `probe` cell,
-> generic over the payload's `state` field — applies to every `DP_TABLE` tracer
-> automatically (21 as of this writing, up from 8 when this file was first written; see
-> `RCA-017` for a genuine React ordering bug hit and fixed while building it). **The
-> recurrence-substitution line (`dp[4] = max(5, 3+2) = 5`) is still open** — it needs a
-> per-tracer-authored template, which is real wire/backend work across many tracers, not
-> a generic derivation like the arrows were. Re-scope that as its own slice before
-> starting it.
+> **F2 — provenance arrows, landed 2026-09-03.** `DpTableCanvas` now draws an arrow from
+> every `read` cell to the step's `probe` cell, generic over the payload's `state` field —
+> applies to every `DP_TABLE` tracer automatically (21 as of this writing, up from 8 when
+> this file was first written; see `RCA-017` for a genuine React ordering bug hit and
+> fixed while building it).
+>
+> **D3 — recurrence substitution, landed 2026-09-03, six tracers.** `DpTable` gained two
+> optional fields (`formula`, `substitution`; backward-compatible, no existing call site
+> changed — see `DpTable.withFormula(...)`), and `DpTableCanvas` renders a symbolic-rule
+> line above a live-substitution line when a tracer supplies both
+> (`ways[4] = ways[3] + ways[2] = 3 + 2 = 5`), never one without the other. Unlike the
+> arrows, this genuinely needs per-tracer authoring — the formula text differs by
+> algorithm. Landed on one tracer per distinct table-shape helper (`ClimbingStairsTracer`
+> direct-build, `FrogJumpTracer`/`SeriesDpTable`, `GridUniquePathsTracer`/`GridDpTable`,
+> `SubsetSumEqualTargetTracer`/`SubsetSumDpTable`, `CountSubsetsWithSumKTracer`/
+> `SubsetCountDpTable`, `MinimumCoinsDpTracer`/`CoinChangeDpTable`) to prove the mechanism
+> generalises across every recurrence shape in the codebase — verified by hand against
+> known values (Fibonacci, the standard 3×3-grid-paths answer of 6, LeetCode 322's
+> `coins=[1,2,5], amount=11 → 3`). **15 other `DP_TABLE` tracers have not adopted it** —
+> this is a per-tracer backfill, not a mechanism gap; each remaining tracer needs its own
+> formula string written and its substitution wired at the one step where the recurrence
+> actually applies (skip base-case/edge/init/done steps, matching the six landed here).
 >
 > Traced count has grown substantially since this file's original 39 (DP batches #34–39
 > landed independently); F3–F10 below have not started and their "8 tracers" framing is
@@ -258,7 +271,7 @@ Ordered so the earliest PRs fix the confirmed defects in Finding 1.
 | # | Slice | Delivers |
 | --- | --- | --- |
 | **F1** | **Companion panes (D1)** | The shell change plus Queue and Stack companion renderers. Retag/emit `bfs-traversal`'s queue and `dijkstra-min-heap`'s heap in the same PR. Fixes two of the four Finding-1 defects immediately. |
-| **F2** | ~~Recurrence substitution + provenance arrows (D3, D4)~~ **Provenance arrows (D4) only — landed.** Substitution text (D3) is still open; it needs a per-tracer template, not a generic derivation, and belongs in its own slice. | Arrows apply automatically to every `DP_TABLE` tracer (generic over cell `state`, no new canvas, no per-tracer work). |
+| **F2** | ~~Recurrence substitution + provenance arrows (D3, D4)~~ **Both landed.** Arrows (D4) are generic, applying to all 21 `DP_TABLE` tracers with no per-tracer work. Substitution (D3) is per-tracer by nature and landed on 6 (one per table-shape helper, proving the mechanism); **15 remain as a backfill** — see the file header. | No new canvas either way. |
 | **F3** | **DP rank-driven layout (D2, 1-D and 2-D)** | `climbing-stairs` / `house-robber-2` / `frog-jump` as strips; the 2-D fan for the matrix tracers. |
 | **F4** | **`SEARCH_SPACE` (D6)** | Canvas with both variants, retag `binary-search-1d` and `search-rotated-sorted`, **and fix their defaults so `left`, `rightSorted` and `miss` are exercised** (Finding 3). |
 | **F5** | **`WINDOW`** | Shared renderer with F4's. Emit real window membership states from both window tracers — the data does not exist today. |

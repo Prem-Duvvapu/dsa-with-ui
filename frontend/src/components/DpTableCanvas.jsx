@@ -152,40 +152,54 @@ export default function DpTableCanvas({ currentStep, step }) {
   // header/legend taking space away from the recurrence table.
   if (!hasTable) return <p className="dp-empty">No DP table data</p>;
 
+  const formula = typeof table.formula === 'string' ? table.formula : null;
+  const substitution = typeof table.substitution === 'string' ? table.substitution : null;
+
   return (
-    <div className="dp-table-wrap" ref={wrapRef}>
-      <table className="dp-table" aria-label="Dynamic programming table">
-        <thead>
-          <tr>
-            <th className="dp-corner" aria-label="Row labels" />
-            {Array.from({ length: columnCount }, (_, columnIndex) => (
-              <th className="dp-col-label" scope="col" key={columnIndex}>
-                {labelAt(colLabels, columnIndex, 'c')}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from({ length: rowCount }, (_, rowIndex) => {
-            const rowLabel = labelAt(rowLabels, rowIndex, 'r');
-            const row = Array.isArray(cells[rowIndex]) ? cells[rowIndex] : [];
+    <div className="dp-stage">
+      {/* Absent on tracers that haven't adopted design D3 yet — see
+          PROMPT-F-visual-fidelity.md. Never render one line without the other; a bare
+          substitution with no rule above it reads as an unexplained arithmetic fact. */}
+      {formula && substitution && (
+        <div className="dp-recurrence">
+          <div className="dp-recurrence-formula">{formula}</div>
+          <div className="dp-recurrence-substitution">{substitution}</div>
+        </div>
+      )}
+      <div className="dp-table-wrap" ref={wrapRef}>
+        <table className="dp-table" aria-label="Dynamic programming table">
+          <thead>
+            <tr>
+              <th className="dp-corner" aria-label="Row labels" />
+              {Array.from({ length: columnCount }, (_, columnIndex) => (
+                <th className="dp-col-label" scope="col" key={columnIndex}>
+                  {labelAt(colLabels, columnIndex, 'c')}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({ length: rowCount }, (_, rowIndex) => {
+              const rowLabel = labelAt(rowLabels, rowIndex, 'r');
+              const row = Array.isArray(cells[rowIndex]) ? cells[rowIndex] : [];
 
-            return (
-              <tr key={rowIndex}>
-                <th className="dp-row-label" scope="row">{rowLabel}</th>
-                {Array.from({ length: columnCount }, (_, columnIndex) => {
-                  const rawCell = row[columnIndex];
-                  const cell = rawCell && typeof rawCell === 'object' ? rawCell : {};
-                  const columnLabel = labelAt(colLabels, columnIndex, 'c');
+              return (
+                <tr key={rowIndex}>
+                  <th className="dp-row-label" scope="row">{rowLabel}</th>
+                  {Array.from({ length: columnCount }, (_, columnIndex) => {
+                    const rawCell = row[columnIndex];
+                    const cell = rawCell && typeof rawCell === 'object' ? rawCell : {};
+                    const columnLabel = labelAt(colLabels, columnIndex, 'c');
 
-                  return renderCell(cell, rowLabel, columnLabel, columnIndex);
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <ProvenanceArrows arrows={arrows} size={size} />
+                    return renderCell(cell, rowLabel, columnLabel, columnIndex);
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <ProvenanceArrows arrows={arrows} size={size} />
+      </div>
     </div>
   );
 }
