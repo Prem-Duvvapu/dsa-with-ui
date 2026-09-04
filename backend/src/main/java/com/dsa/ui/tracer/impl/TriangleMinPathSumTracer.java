@@ -23,6 +23,8 @@ import java.util.Set;
 @Component
 public class TriangleMinPathSumTracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "dp[i][j] = triangle[i][j] + min(dp[i+1][j], dp[i+1][j+1])";
+
     @Override
     public String id() {
         return "triangle-min-path-sum";
@@ -124,6 +126,13 @@ public class TriangleMinPathSumTracer implements AlgorithmTracer {
                 boolean leftWins = leftChild <= rightChild;
                 int chosen = triangle[i][j] + Math.min(leftChild, rightChild);
 
+                String substitution = String.format(
+                        "dp[%d][%d] = triangle[%d][%d] + min(dp[%d][%d], dp[%d][%d]) "
+                                + "= %d + min(%d, %d) = %d + %d = %d",
+                        i, j, i, j, i + 1, j, i + 1, j + 1,
+                        triangle[i][j], leftChild, rightChild,
+                        triangle[i][j], Math.min(leftChild, rightChild), chosen);
+
                 emit.at("combine")
                         .say("Cell (%d,%d): the path continues to whichever child is "
                                 + "cheaper — (%d,%d) at %d, or (%d,%d) at %d. %s wins, so "
@@ -137,7 +146,8 @@ public class TriangleMinPathSumTracer implements AlgorithmTracer {
                         .dpTable(table(dp, settled, outside, new GridDpTable.Coord(i, j),
                                 String.valueOf(chosen),
                                 Set.of(new GridDpTable.Coord(i + 1, j),
-                                        new GridDpTable.Coord(i + 1, j + 1)), false)).step();
+                                        new GridDpTable.Coord(i + 1, j + 1)), false)
+                                .withFormula(FORMULA, substitution)).step();
 
                 dp[i][j] = chosen;
                 settled[i][j] = true;

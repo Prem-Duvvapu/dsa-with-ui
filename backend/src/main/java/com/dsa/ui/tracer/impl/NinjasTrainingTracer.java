@@ -26,6 +26,9 @@ public class NinjasTrainingTracer implements AlgorithmTracer {
 
     private static final int ACTIVITIES = 3;
 
+    private static final String FORMULA =
+            "dp[day][task] = points[day][task] + max(dp[day-1][p] for p != task)";
+
     @Override
     public String id() {
         return "ninjas-training";
@@ -134,6 +137,14 @@ public class NinjasTrainingTracer implements AlgorithmTracer {
                 }
                 int total = points[day][task] + best;
 
+                String substitution = String.format(
+                        "dp[%d][%d] = points[%d][%d] + max(dp[%d][%d], dp[%d][%d]) "
+                                + "= %d + max(%d, %d) = %d + %d = %d",
+                        day, task, day, task,
+                        day - 1, reads.get(0).col(), day - 1, reads.get(1).col(),
+                        points[day][task], dp[day - 1][reads.get(0).col()],
+                        dp[day - 1][reads.get(1).col()], points[day][task], best, total);
+
                 emit.at("combine")
                         .say("Day %d, activity %d: yesterday's activity %d is off-limits, so "
                                 + "the best carried-forward score is whichever of the other "
@@ -144,7 +155,8 @@ public class NinjasTrainingTracer implements AlgorithmTracer {
                         .var("day", day).var("task", task)
                         .var("best", best).var("dp[day][task]", total)
                         .dpTable(table(dp, settled, points, new GridDpTable.Coord(day, task),
-                                String.valueOf(total), Set.copyOf(reads), false)).step();
+                                String.valueOf(total), Set.copyOf(reads), false)
+                                .withFormula(FORMULA, substitution)).step();
 
                 dp[day][task] = total;
                 settled[day][task] = true;

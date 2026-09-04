@@ -26,6 +26,8 @@ import java.util.Set;
 @Component
 public class HouseRobber2Tracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "best[i] = max(best[i-1], nums[i] + best[i-2])";
+
     @Override
     public String id() {
         return "house-robber-2";
@@ -172,6 +174,15 @@ public class HouseRobber2Tracer implements AlgorithmTracer {
                 verdict = "the two tie and house %d is optional".formatted(i);
             }
 
+            DpTable decideTable = table(nums, a, b, active, i, String.valueOf(chosen),
+                    hasGap ? Set.of(i - 1, i - 2) : Set.of(i - 1), false);
+            if (hasGap) {
+                String substitution = String.format(
+                        "best[%d] = max(best[%d], nums[%d] + best[%d]) = max(%d, %d + %d) = max(%d, %d) = %d",
+                        i, i - 1, i, i - 2, skip, nums[i], carried, skip, take, chosen);
+                decideTable = decideTable.withFormula(FORMULA, substitution);
+            }
+
             emit.at("decide")
                     .say("House %d holds %d: %s, or leave it and inherit best[%d] = %d. "
                             + "best[%d] = %d, so %s.",
@@ -181,8 +192,7 @@ public class HouseRobber2Tracer implements AlgorithmTracer {
                     .var("take", take)
                     .var("skip", skip)
                     .var("best[i]", chosen)
-                    .dpTable(table(nums, a, b, active, i, String.valueOf(chosen),
-                            hasGap ? Set.of(i - 1, i - 2) : Set.of(i - 1), false)).step();
+                    .dpTable(decideTable).step();
 
             best[i] = chosen;
             active.settled()[i] = true;

@@ -270,8 +270,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[day][task] = points[day][task] + max(dp[day-1][p] for p != task)",
+      "substitution" : "dp[1][0] = points[1][0] + max(dp[0][1], dp[0][2]) = 20 + max(40, 70) = 20 + 70 = 90"
     }
   }, {
     "stepNumber" : 6,
@@ -324,8 +324,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[day][task] = points[day][task] + max(dp[day-1][p] for p != task)",
+      "substitution" : "dp[1][1] = points[1][1] + max(dp[0][0], dp[0][2]) = 50 + max(10, 70) = 50 + 70 = 120"
     }
   }, {
     "stepNumber" : 7,
@@ -378,8 +378,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[day][task] = points[day][task] + max(dp[day-1][p] for p != task)",
+      "substitution" : "dp[1][2] = points[1][2] + max(dp[0][0], dp[0][1]) = 80 + max(10, 40) = 80 + 40 = 120"
     }
   }, {
     "stepNumber" : 8,
@@ -432,8 +432,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[day][task] = points[day][task] + max(dp[day-1][p] for p != task)",
+      "substitution" : "dp[2][0] = points[2][0] + max(dp[1][1], dp[1][2]) = 30 + max(120, 120) = 30 + 120 = 150"
     }
   }, {
     "stepNumber" : 9,
@@ -486,8 +486,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[day][task] = points[day][task] + max(dp[day-1][p] for p != task)",
+      "substitution" : "dp[2][1] = points[2][1] + max(dp[1][0], dp[1][2]) = 10 + max(90, 120) = 10 + 120 = 130"
     }
   }, {
     "stepNumber" : 10,
@@ -540,8 +540,8 @@
         "value" : "140",
         "state" : "probe"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[day][task] = points[day][task] + max(dp[day-1][p] for p != task)",
+      "substitution" : "dp[2][2] = points[2][2] + max(dp[1][0], dp[1][1]) = 20 + max(90, 120) = 20 + 120 = 140"
     }
   }, {
     "stepNumber" : 11,

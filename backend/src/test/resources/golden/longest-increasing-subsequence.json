@@ -546,8 +546,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][7] = max(dp[8][7], not takeable) = 0"
     }
   }, {
     "stepNumber" : 3,
@@ -817,8 +817,8 @@
         "value" : "0",
         "state" : "read"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][6] = max(dp[8][6], 1 + dp[8][8]) = max(0, 1) = 1"
     }
   }, {
     "stepNumber" : 4,
@@ -1088,8 +1088,8 @@
         "value" : "0",
         "state" : "read"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][5] = max(dp[8][5], 1 + dp[8][8]) = max(0, 1) = 1"
     }
   }, {
     "stepNumber" : 5,
@@ -1359,8 +1359,8 @@
         "value" : "0",
         "state" : "read"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][4] = max(dp[8][4], 1 + dp[8][8]) = max(0, 1) = 1"
     }
   }, {
     "stepNumber" : 6,
@@ -1630,8 +1630,8 @@
         "value" : "0",
         "state" : "read"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][3] = max(dp[8][3], 1 + dp[8][8]) = max(0, 1) = 1"
     }
   }, {
     "stepNumber" : 7,
@@ -1901,8 +1901,8 @@
         "value" : "0",
         "state" : "read"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][2] = max(dp[8][2], 1 + dp[8][8]) = max(0, 1) = 1"
     }
   }, {
     "stepNumber" : 8,
@@ -2172,8 +2172,8 @@
         "value" : "0",
         "state" : "read"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][1] = max(dp[8][1], 1 + dp[8][8]) = max(0, 1) = 1"
     }
   }, {
     "stepNumber" : 9,
@@ -2443,8 +2443,8 @@
         "value" : "0",
         "state" : "read"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[7][0] = max(dp[8][0], 1 + dp[8][8]) = max(0, 1) = 1"
     }
   }, {
     "stepNumber" : 10,
@@ -2714,8 +2714,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[6][6] = max(dp[7][6], 1 + dp[7][7]) = max(1, 1) = 1"
     }
   }, {
     "stepNumber" : 11,
@@ -2985,8 +2985,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[6][5] = max(dp[7][5], 1 + dp[7][7]) = max(1, 1) = 1"
     }
   }, {
     "stepNumber" : 12,
@@ -3256,8 +3256,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[6][4] = max(dp[7][4], 1 + dp[7][7]) = max(1, 1) = 1"
     }
   }, {
     "stepNumber" : 13,
@@ -3527,8 +3527,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[6][3] = max(dp[7][3], 1 + dp[7][7]) = max(1, 1) = 1"
     }
   }, {
     "stepNumber" : 14,
@@ -3798,8 +3798,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[6][2] = max(dp[7][2], 1 + dp[7][7]) = max(1, 1) = 1"
     }
   }, {
     "stepNumber" : 15,
@@ -4069,8 +4069,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[6][1] = max(dp[7][1], 1 + dp[7][7]) = max(1, 1) = 1"
     }
   }, {
     "stepNumber" : 16,
@@ -4340,8 +4340,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[6][0] = max(dp[7][0], 1 + dp[7][7]) = max(1, 1) = 1"
     }
   }, {
     "stepNumber" : 17,
@@ -4611,8 +4611,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[5][5] = max(dp[6][5], 1 + dp[6][6]) = max(1, 2) = 2"
     }
   }, {
     "stepNumber" : 18,
@@ -4882,8 +4882,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[5][4] = max(dp[6][4], 1 + dp[6][6]) = max(1, 2) = 2"
     }
   }, {
     "stepNumber" : 19,
@@ -5153,8 +5153,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[5][3] = max(dp[6][3], 1 + dp[6][6]) = max(1, 2) = 2"
     }
   }, {
     "stepNumber" : 20,
@@ -5424,8 +5424,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[5][2] = max(dp[6][2], not takeable) = 1"
     }
   }, {
     "stepNumber" : 21,
@@ -5695,8 +5695,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[5][1] = max(dp[6][1], not takeable) = 1"
     }
   }, {
     "stepNumber" : 22,
@@ -5966,8 +5966,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[5][0] = max(dp[6][0], 1 + dp[6][6]) = max(1, 2) = 2"
     }
   }, {
     "stepNumber" : 23,
@@ -6237,8 +6237,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[4][4] = max(dp[5][4], not takeable) = 2"
     }
   }, {
     "stepNumber" : 24,
@@ -6508,8 +6508,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[4][3] = max(dp[5][3], 1 + dp[5][5]) = max(2, 3) = 3"
     }
   }, {
     "stepNumber" : 25,
@@ -6779,8 +6779,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[4][2] = max(dp[5][2], not takeable) = 1"
     }
   }, {
     "stepNumber" : 26,
@@ -7050,8 +7050,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[4][1] = max(dp[5][1], not takeable) = 1"
     }
   }, {
     "stepNumber" : 27,
@@ -7321,8 +7321,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[4][0] = max(dp[5][0], 1 + dp[5][5]) = max(2, 3) = 3"
     }
   }, {
     "stepNumber" : 28,
@@ -7592,8 +7592,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[3][3] = max(dp[4][3], 1 + dp[4][4]) = max(3, 3) = 3"
     }
   }, {
     "stepNumber" : 29,
@@ -7863,8 +7863,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[3][2] = max(dp[4][2], not takeable) = 1"
     }
   }, {
     "stepNumber" : 30,
@@ -8134,8 +8134,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[3][1] = max(dp[4][1], not takeable) = 1"
     }
   }, {
     "stepNumber" : 31,
@@ -8405,8 +8405,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[3][0] = max(dp[4][0], 1 + dp[4][4]) = max(3, 3) = 3"
     }
   }, {
     "stepNumber" : 32,
@@ -8676,8 +8676,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[2][2] = max(dp[3][2], not takeable) = 1"
     }
   }, {
     "stepNumber" : 33,
@@ -8947,8 +8947,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[2][1] = max(dp[3][1], not takeable) = 1"
     }
   }, {
     "stepNumber" : 34,
@@ -9218,8 +9218,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[2][0] = max(dp[3][0], 1 + dp[3][3]) = max(3, 4) = 4"
     }
   }, {
     "stepNumber" : 35,
@@ -9489,8 +9489,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[1][1] = max(dp[2][1], not takeable) = 1"
     }
   }, {
     "stepNumber" : 36,
@@ -9760,8 +9760,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[1][0] = max(dp[2][0], 1 + dp[2][2]) = max(4, 2) = 4"
     }
   }, {
     "stepNumber" : 37,
@@ -10031,8 +10031,8 @@
         "value" : "0",
         "state" : "resolved"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)",
+      "substitution" : "dp[0][0] = max(dp[1][0], 1 + dp[1][1]) = max(4, 2) = 4"
     }
   }, {
     "stepNumber" : 38,

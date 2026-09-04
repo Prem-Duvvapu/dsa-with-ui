@@ -23,6 +23,9 @@ import java.util.Set;
 @Component
 public class MinimumFallingPathSumTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][j] = matrix[i][j] + min(dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1])";
+
     @Override
     public String id() {
         return "minimum-falling-path-sum";
@@ -136,6 +139,19 @@ public class MinimumFallingPathSumTracer implements AlgorithmTracer {
                                 : "only the two above it and to its upper-left — there is no "
                                         + "upper-right, this is the last column";
 
+                com.dsa.ui.model.DpTable combineTable = table(dp, settled,
+                        new GridDpTable.Coord(i, j), String.valueOf(total), Set.copyOf(reads),
+                        false);
+                if (reads.size() == 3) {
+                    String substitution = String.format(
+                            "dp[%d][%d] = matrix[%d][%d] + min(dp[%d][%d], dp[%d][%d], dp[%d][%d]) "
+                                    + "= %d + min(%d, %d, %d) = %d + %d = %d",
+                            i, j, i, j, i - 1, j - 1, i - 1, j, i - 1, j + 1,
+                            matrix[i][j], dp[i - 1][j - 1], dp[i - 1][j], dp[i - 1][j + 1],
+                            matrix[i][j], best, total);
+                    combineTable = combineTable.withFormula(FORMULA, substitution);
+                }
+
                 emit.at("combine")
                         .say("Cell (%d,%d) can only have fallen from directly above or one "
                                 + "column over, so it reads %s: the cheapest of those is %d. "
@@ -144,8 +160,7 @@ public class MinimumFallingPathSumTracer implements AlgorithmTracer {
                         .var("row", i).var("col", j)
                         .var("candidates", reads.size())
                         .var("best", best).var("dp[i][j]", total)
-                        .dpTable(table(dp, settled, new GridDpTable.Coord(i, j),
-                                String.valueOf(total), Set.copyOf(reads), false)).step();
+                        .dpTable(combineTable).step();
 
                 dp[i][j] = total;
                 settled[i][j] = true;

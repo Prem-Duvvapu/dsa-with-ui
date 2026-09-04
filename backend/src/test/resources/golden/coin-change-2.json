@@ -401,8 +401,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[1][1] = dp[0][1] + dp[1][0] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 5,
@@ -502,8 +502,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[1][2] = dp[0][2] + dp[1][1] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 6,
@@ -603,8 +603,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[1][3] = dp[0][3] + dp[1][2] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 7,
@@ -704,8 +704,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[1][4] = dp[0][4] + dp[1][3] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 8,
@@ -805,8 +805,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[1][5] = dp[0][5] + dp[1][4] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 9,
@@ -1005,8 +1005,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[2][2] = dp[1][2] + dp[2][0] = 1 + 1 = 2"
     }
   }, {
     "stepNumber" : 11,
@@ -1106,8 +1106,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[2][3] = dp[1][3] + dp[2][1] = 1 + 1 = 2"
     }
   }, {
     "stepNumber" : 12,
@@ -1207,8 +1207,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[2][4] = dp[1][4] + dp[2][2] = 1 + 2 = 3"
     }
   }, {
     "stepNumber" : 13,
@@ -1308,8 +1308,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[2][5] = dp[1][5] + dp[2][3] = 1 + 2 = 3"
     }
   }, {
     "stepNumber" : 14,
@@ -1805,8 +1805,8 @@
         "value" : "4",
         "state" : "probe"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][x] = dp[i-1][x] + dp[i][x-coin]",
+      "substitution" : "dp[3][5] = dp[2][5] + dp[3][0] = 3 + 1 = 4"
     }
   }, {
     "stepNumber" : 19,

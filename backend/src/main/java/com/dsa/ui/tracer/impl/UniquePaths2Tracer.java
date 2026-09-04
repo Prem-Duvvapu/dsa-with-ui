@@ -22,6 +22,8 @@ import java.util.Set;
 @Component
 public class UniquePaths2Tracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "dp[i][j] = dp[i-1][j] + dp[i][j-1]";
+
     @Override
     public String id() {
         return "unique-paths-2";
@@ -143,6 +145,15 @@ public class UniquePaths2Tracer implements AlgorithmTracer {
                     if (hasAbove) reads.add(new GridDpTable.Coord(i - 1, j));
                     if (hasLeft) reads.add(new GridDpTable.Coord(i, j - 1));
 
+                    com.dsa.ui.model.DpTable combineTable = table(dp, settled, blocked, here,
+                            String.valueOf(total), reads, false);
+                    if (hasAbove && hasLeft) {
+                        String substitution = String.format(
+                                "dp[%d][%d] = dp[%d][%d] + dp[%d][%d] = %d + %d = %d",
+                                i, j, i - 1, j, i, j - 1, fromAbove, fromLeft, total);
+                        combineTable = combineTable.withFormula(FORMULA, substitution);
+                    }
+
                     emit.at("combine")
                             .say("Cell (%d,%d): %s and %s, each contributing 0 when it does not "
                                     + "exist or is blocked. dp[%d][%d] = %d + %d = %d.",
@@ -151,8 +162,7 @@ public class UniquePaths2Tracer implements AlgorithmTracer {
                             .var("row", i).var("col", j)
                             .var("fromAbove", fromAbove).var("fromLeft", fromLeft)
                             .var("dp[i][j]", total)
-                            .dpTable(table(dp, settled, blocked, here, String.valueOf(total), reads,
-                                    false)).step();
+                            .dpTable(combineTable).step();
                     dp[i][j] = total;
                 }
                 settled[i][j] = true;
