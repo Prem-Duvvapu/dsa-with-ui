@@ -385,8 +385,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = dp[i-1][j] + dp[i][j-1]",
+      "substitution" : "dp[1][2] = dp[0][2] + dp[1][1] = 1 + 0 = 1"
     }
   }, {
     "stepNumber" : 8,
@@ -495,8 +495,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = dp[i-1][j] + dp[i][j-1]",
+      "substitution" : "dp[2][1] = dp[1][1] + dp[2][0] = 0 + 1 = 1"
     }
   }, {
     "stepNumber" : 10,
@@ -550,8 +550,8 @@
         "value" : "2",
         "state" : "probe"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = dp[i-1][j] + dp[i][j-1]",
+      "substitution" : "dp[2][2] = dp[1][2] + dp[2][1] = 1 + 1 = 2"
     }
   }, {
     "stepNumber" : 11,

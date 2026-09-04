@@ -29,6 +29,8 @@ import java.util.Set;
 @Component
 public class CountPartitionsGivenDiffTracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "dp[i][s] = dp[i-1][s] + dp[i-1][s-nums[i-1]]";
+
     @Override
     public String id() {
         return "count-partitions-given-diff";
@@ -205,12 +207,20 @@ public class CountPartitionsGivenDiffTracer implements AlgorithmTracer {
                                 + "only the skip option applies. dp[%d][%d] = dp[%d][%d] = %d.")
                                 .formatted(i, val, s, val, s, i, s, i - 1, s, skip);
 
+                DpTable combineTable = table(rowLabels, colLabels, dp, settled, here,
+                        String.valueOf(total), reads, false);
+                if (canTake) {
+                    String substitution = String.format(
+                            "dp[%d][%d] = dp[%d][%d] + dp[%d][%d] = %d + %d = %d",
+                            i, s, i - 1, s, i - 1, s - val, skip, take, total);
+                    combineTable = combineTable.withFormula(FORMULA, substitution);
+                }
+
                 emit.at("combine")
                         .say(narration)
                         .var("i", i).var("s", s)
                         .var("skip", skip).var("take", take).var("dp[i][s]", total)
-                        .dpTable(table(rowLabels, colLabels, dp, settled, here,
-                                String.valueOf(total), reads, false))
+                        .dpTable(combineTable)
                         .step();
 
                 dp[i][s] = total;

@@ -278,8 +278,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "best[i] = max(best[i-1], nums[i] + best[i-2])",
+      "substitution" : "best[2] = max(best[1], nums[2] + best[0]) = max(2, 4 + 2) = max(2, 6) = 6"
     }
   }, {
     "stepNumber" : 5,
@@ -347,8 +347,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "best[i] = max(best[i-1], nums[i] + best[i-2])",
+      "substitution" : "best[3] = max(best[2], nums[3] + best[1]) = max(6, 9 + 2) = max(6, 11) = 11"
     }
   }, {
     "stepNumber" : 6,
@@ -416,8 +416,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "best[i] = max(best[i-1], nums[i] + best[i-2])",
+      "substitution" : "best[4] = max(best[3], nums[4] + best[2]) = max(11, 4 + 6) = max(11, 10) = 11"
     }
   }, {
     "stepNumber" : 7,
@@ -485,8 +485,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "best[i] = max(best[i-1], nums[i] + best[i-2])",
+      "substitution" : "best[5] = max(best[4], nums[5] + best[3]) = max(11, 1 + 11) = max(11, 12) = 12"
     }
   }, {
     "stepNumber" : 8,
@@ -554,8 +554,8 @@
         "value" : "19",
         "state" : "probe"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "best[i] = max(best[i-1], nums[i] + best[i-2])",
+      "substitution" : "best[6] = max(best[5], nums[6] + best[4]) = max(12, 8 + 11) = max(12, 19) = 19"
     }
   }, {
     "stepNumber" : 9,

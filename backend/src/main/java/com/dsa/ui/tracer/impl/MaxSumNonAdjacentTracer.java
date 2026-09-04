@@ -21,6 +21,8 @@ import java.util.Set;
 @Component
 public class MaxSumNonAdjacentTracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "best[i] = max(best[i-1], nums[i] + best[i-2])";
+
     @Override
     public String id() {
         return "max-sum-non-adjacent";
@@ -112,6 +114,15 @@ public class MaxSumNonAdjacentTracer implements AlgorithmTracer {
                 verdict = "the two tie and nums[%d] is optional here".formatted(i);
             }
 
+            com.dsa.ui.model.DpTable decideTable = table(nums, best, settled, i,
+                    String.valueOf(chosen), hasGap ? Set.of(i - 1, i - 2) : Set.of(i - 1), false);
+            if (hasGap) {
+                String substitution = String.format(
+                        "best[%d] = max(best[%d], nums[%d] + best[%d]) = max(%d, %d + %d) = max(%d, %d) = %d",
+                        i, i - 1, i, i - 2, skip, nums[i], carried, skip, take, chosen);
+                decideTable = decideTable.withFormula(FORMULA, substitution);
+            }
+
             emit.at("decide")
                     .say("Value %d at index %d: %s, or skip it and inherit best[%d] = %d. "
                             + "best[%d] = %d, so %s.",
@@ -120,8 +131,7 @@ public class MaxSumNonAdjacentTracer implements AlgorithmTracer {
                     .var("take", take)
                     .var("skip", skip)
                     .var("best[i]", chosen)
-                    .dpTable(table(nums, best, settled, i, String.valueOf(chosen),
-                            hasGap ? Set.of(i - 1, i - 2) : Set.of(i - 1), false)).step();
+                    .dpTable(decideTable).step();
 
             best[i] = chosen;
             settled[i] = true;

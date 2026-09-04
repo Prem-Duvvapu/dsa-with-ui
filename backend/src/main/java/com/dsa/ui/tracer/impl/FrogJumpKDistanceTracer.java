@@ -22,6 +22,9 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
 
     private static final String UNDECIDED = "?";
 
+    private static final String FORMULA =
+            "energy[i] = min over j in [i-K, i-1] of (energy[j] + |h[i]-h[j]|)";
+
     @Override
     public String id() {
         return "frog-jump-k-distance";
@@ -151,6 +154,11 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
             settled[i] = true;
 
             int weighed = i - lowest;
+            String substitution = String.format(
+                    "energy[%d] = min over j in [%d, %d] of (energy[j] + |h[%d]-h[j]|), won by "
+                            + "j=%d: energy[%d] + |%d-%d| = %d + %d = %d",
+                    i, lowest, i - 1, i, bestFrom, bestFrom, heights[i], heights[bestFrom],
+                    energy[bestFrom], Math.abs(heights[i] - heights[bestFrom]), best);
             emit.at("settle")
                     .say("%s of stair %d %s been weighed. The cheapest arrives from stair %d at "
                             + "%d energy, so energy[%d] is now fixed and later stairs may read "
@@ -165,7 +173,7 @@ public class FrogJumpKDistanceTracer implements AlgorithmTracer {
                     .var("from", bestFrom)
                     .var("energy[i]", best)
                     .dpTable(SeriesDpTable.of("height", heights, "min energy", energy, settled, -1, UNDECIDED,
-                            Set.of(bestFrom), false))
+                            Set.of(bestFrom), false).withFormula(FORMULA, substitution))
                     .step();
         }
 

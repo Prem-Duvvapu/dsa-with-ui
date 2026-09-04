@@ -26,6 +26,8 @@ import java.util.Set;
 @Component
 public class CoinChange2Tracer implements AlgorithmTracer {
 
+    private static final String FORMULA = "dp[i][x] = dp[i-1][x] + dp[i][x-coin]";
+
     @Override
     public String id() {
         return "coin-change-2";
@@ -170,6 +172,10 @@ public class CoinChange2Tracer implements AlgorithmTracer {
                         new CoinChangeDpTable.Coord(i - 1, x),
                         new CoinChangeDpTable.Coord(i, x - coin));
 
+                String substitution = String.format(
+                        "dp[%d][%d] = dp[%d][%d] + dp[%d][%d] = %d + %d = %d",
+                        i, x, i - 1, x, i, x - coin, without, withAtLeastOne, total);
+
                 emit.at("combine")
                         .say("Cell (%d,%d): %d combination(s) never use coin %d at all "
                                 + "(dp[%d][%d], the row above), plus %d combination(s) that "
@@ -183,7 +189,8 @@ public class CoinChange2Tracer implements AlgorithmTracer {
                         .var("without", without).var("withAtLeastOne", withAtLeastOne)
                         .var("dp[i][x]", total)
                         .dpTable(table(dp, settled, rowLabels, colLabels, here,
-                                String.valueOf(total), reads, false))
+                                String.valueOf(total), reads, false)
+                                .withFormula(FORMULA, substitution))
                         .step();
             }
         }

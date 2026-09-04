@@ -20,6 +20,9 @@ import java.util.Set;
 @Component
 public class PrintLisTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i] = dp[j] + 1, for the j < i with nums[j] < nums[i] that maximizes dp[j]";
+
     @Override
     public String id() {
         return "print-lis";
@@ -105,15 +108,19 @@ public class PrintLisTracer implements AlgorithmTracer {
                             .arrayState(states(nums, dp, parent, i, j))
                             .dpTable(table(nums, dp, parent, i, j, Set.of(),
                                     true, false, false, false)).step();
+                    int dpjBefore = dp[j];
                     dp[i] = dp[j] + 1;
                     parent[i] = j;
+                    String substitution = String.format("dp[%d] = dp[%d] + 1 = %d + 1 = %d",
+                            i, j, dpjBefore, dp[i]);
                     emit.at("take")
                             .say("Record it: dp[%d]=%d with parent[%d]=%d - when printing we will step back to %d next.",
                                     i, dp[i], i, j, j)
                             .var("i", i).var("j", j).var("dp[i]", dp[i]).var("parent[i]", j)
                             .arrayState(states(nums, dp, parent, i, j))
                             .dpTable(table(nums, dp, parent, i, j, Set.of(),
-                                    true, true, false, false)).step();
+                                    true, true, false, false)
+                                    .withFormula(FORMULA, substitution)).step();
                 } else if (nums[j] >= nums[i]) {
                     emit.at("compare")
                             .say("i=%d, j=%d: nums[%d]=%d is not below nums[%d]=%d, so nothing ending at j can extend to i.",

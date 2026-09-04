@@ -19,6 +19,9 @@ import java.util.List;
 @Component
 public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][p] = max(dp[i+1][p], canTake ? 1 + dp[i+1][i+1] : -infinity)";
+
     @Override
     public String id() {
         return "longest-increasing-subsequence";
@@ -97,6 +100,14 @@ public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
                 }
                 dp[i][p] = Math.max(skip, take);
                 computed[i][p] = true;
+
+                String substitution = take == Integer.MIN_VALUE
+                        ? String.format("dp[%d][%d] = max(dp[%d][%d], not takeable) = %d",
+                                i, p, i + 1, p, dp[i][p])
+                        : String.format(
+                                "dp[%d][%d] = max(dp[%d][%d], 1 + dp[%d][%d]) = max(%d, %d) = %d",
+                                i, p, i + 1, p, i + 1, i + 1, skip, take, dp[i][p]);
+
                 emit.at("fill")
                         .say("(%d,%d): skip keeps %d; %s. dp[%d][%d]=%d.",
                                 i, p, skip, verdict, i, p, dp[i][p])
@@ -105,7 +116,8 @@ public class LongestIncreasingSubsequenceTracer implements AlgorithmTracer {
                         .var("value", dp[i][p])
                         .grid(zeroCopy(dp))
                         .dpTable(table(nums, dp, computed, i, p, p,
-                                take != Integer.MIN_VALUE, false)).step();
+                                take != Integer.MIN_VALUE, false)
+                                .withFormula(FORMULA, substitution)).step();
             }
         }
 

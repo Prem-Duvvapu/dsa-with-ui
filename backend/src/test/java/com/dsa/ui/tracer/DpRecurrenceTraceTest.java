@@ -17,11 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * PROMPT-F-visual-fidelity.md design D3: a DP table above the values should show the
  * recurrence itself, symbolic then substituted with this step's numbers
- * ("dp[4] = dp[3] + dp[2] = 3 + 2 = 5"). Six tracers adopted it — one per distinct
- * table-shape family in tracer/impl (Series, Grid, SubsetSum, SubsetCount, CoinChange,
- * and a direct-build table) — proving the mechanism generalises across every shape this
- * codebase has. The other DP_TABLE tracers are deliberately unchanged; this is a
- * per-tracer opt-in, not a wire-format requirement.
+ * ("dp[4] = dp[3] + dp[2] = 3 + 2 = 5"). 18 of the 19 DP_TABLE tracers have adopted it —
+ * every one whose recurrence is a cell computed from other cells. The lone holdout,
+ * lis-binary-search, runs patience sorting: its per-element step is a binary-search
+ * placement into a sorted tails[] array, not a "dp[i] = f(dp[...])" recurrence, so there
+ * is no substitution to show. The other DP_TABLE tracers are deliberately unchanged; this
+ * is a per-tracer opt-in, not a wire-format requirement.
  */
 @SpringBootTest
 class DpRecurrenceTraceTest {
@@ -34,12 +35,22 @@ class DpRecurrenceTraceTest {
 
     private static final Set<String> ADOPTED_D3 = Set.of(
             "climbing-stairs", "frog-jump", "grid-unique-paths",
-            "subset-sum-equal-target", "count-subsets-with-sum-k", "minimum-coins-dp");
+            "subset-sum-equal-target", "count-subsets-with-sum-k", "minimum-coins-dp",
+            "unique-paths-2", "minimum-falling-path-sum", "triangle-min-path-sum",
+            "ninjas-training", "max-sum-non-adjacent", "house-robber-2",
+            "frog-jump-k-distance", "partition-equal-subset-sum",
+            "count-partitions-given-diff", "coin-change-2",
+            "longest-increasing-subsequence", "print-lis");
 
     @ParameterizedTest(name = "{0} carries a formula and a live substitution on at least one step")
     @ValueSource(strings = {
             "climbing-stairs", "frog-jump", "grid-unique-paths",
-            "subset-sum-equal-target", "count-subsets-with-sum-k", "minimum-coins-dp"})
+            "subset-sum-equal-target", "count-subsets-with-sum-k", "minimum-coins-dp",
+            "unique-paths-2", "minimum-falling-path-sum", "triangle-min-path-sum",
+            "ninjas-training", "max-sum-non-adjacent", "house-robber-2",
+            "frog-jump-k-distance", "partition-equal-subset-sum",
+            "count-partitions-given-diff", "coin-change-2",
+            "longest-increasing-subsequence", "print-lis"})
     void recurrenceReachesTheWire(String id) {
         AlgorithmTracer tracer = registry.find(id).orElseThrow();
         List<ExecutionStep> steps = runner.runDefaults(tracer).getSteps();
@@ -57,7 +68,12 @@ class DpRecurrenceTraceTest {
     @ParameterizedTest(name = "{0} never sends a substitution without its formula, or vice versa")
     @ValueSource(strings = {
             "climbing-stairs", "frog-jump", "grid-unique-paths",
-            "subset-sum-equal-target", "count-subsets-with-sum-k", "minimum-coins-dp"})
+            "subset-sum-equal-target", "count-subsets-with-sum-k", "minimum-coins-dp",
+            "unique-paths-2", "minimum-falling-path-sum", "triangle-min-path-sum",
+            "ninjas-training", "max-sum-non-adjacent", "house-robber-2",
+            "frog-jump-k-distance", "partition-equal-subset-sum",
+            "count-partitions-given-diff", "coin-change-2",
+            "longest-increasing-subsequence", "print-lis"})
     void formulaAndSubstitutionArePaired(String id) {
         AlgorithmTracer tracer = registry.find(id).orElseThrow();
         List<ExecutionStep> steps = runner.runDefaults(tracer).getSteps();
@@ -75,11 +91,7 @@ class DpRecurrenceTraceTest {
     }
 
     @ParameterizedTest(name = "every OTHER DP_TABLE tracer still sends null (unchanged, not a regression)")
-    @ValueSource(strings = {
-            "print-lis", "lis-binary-search", "longest-increasing-subsequence", "house-robber-2",
-            "frog-jump-k-distance", "max-sum-non-adjacent", "minimum-falling-path-sum",
-            "ninjas-training", "triangle-min-path-sum", "unique-paths-2",
-            "partition-equal-subset-sum", "count-partitions-given-diff", "coin-change-2"})
+    @ValueSource(strings = {"lis-binary-search"})
     void otherDpTracersAreUntouched(String id) {
         AlgorithmTracer tracer = registry.find(id).orElseThrow();
         List<ExecutionStep> steps = runner.runDefaults(tracer).getSteps();
