@@ -44,7 +44,8 @@ class AdvancedGraphServiceTest {
     @DisplayName("Should generate execution steps for all 62 Graph and String problems")
     void testGenerateSteps() {
         Set<String> retired = Set.of("z-function-algo", "kmp-lps-algo",
-                "shortest-palindrome", "longest-happy-prefix");
+                "shortest-palindrome", "longest-happy-prefix",
+                "bellman-ford", "kosaraju-scc");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
