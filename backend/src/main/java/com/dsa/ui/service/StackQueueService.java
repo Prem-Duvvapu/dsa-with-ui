@@ -27,8 +27,12 @@ public class StackQueueService implements ProblemProvider {
         switch (problemId) {
             case "balanced-parentheses": return generateBalancedParenthesesSteps();
             case "next-greater-element-1": return generateNextGreaterElementSteps();
-            case "trapping-rainwater": return generateTrappingRainwaterSteps();
-            case "largest-rectangle-histogram": return generateHistogramSteps();
+            // trapping-rainwater and largest-rectangle-histogram have real tracers
+            // (tracer/impl). Refuse rather than let default: serve
+            // balanced-parentheses's steps under these ids.
+            case "trapping-rainwater":
+            case "largest-rectangle-histogram":
+                throw new LegacyTraceRetiredException(problemId);
             case "lru-cache": return generateLruCacheSteps();
             default: return generateBalancedParenthesesSteps();
         }
@@ -166,24 +170,6 @@ public class StackQueueService implements ProblemProvider {
             steps.add(createStackStep(stepNum++, 9, "Push " + nums[i] + " onto stack. Stack state: " + stack, new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("pushed", String.valueOf(nums[i]))));
         }
         steps.add(createStackStep(stepNum++, 12, "Next Greater Element Complete! Resulting NGE array: [5, 10, 10, -1, -1]", new ArrayList<>(stack), createArrayState(nums, -1, -1), Map.of("result", "[5, 10, 10, -1, -1]")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateTrappingRainwaterSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] height = new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
-        int stepNum = 1;
-        steps.add(createStackStep(stepNum++, 3, "Trapping Rainwater: Heights [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]. Compute trapped water.", List.of(), createArrayState(height, -1, -1), Map.of("water", "0")));
-        steps.add(createStackStep(stepNum++, 7, "Trapped water calculation complete! Total trapped water = 6 units.", List.of(), createArrayState(height, -1, -1), Map.of("trappedWater", "6")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateHistogramSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] heights = new int[]{2, 1, 5, 6, 2, 3};
-        int stepNum = 1;
-        steps.add(createStackStep(stepNum++, 3, "Largest Rectangle in Histogram: Heights [2, 1, 5, 6, 2, 3]. Use Monotonic Stack.", List.of(), createArrayState(heights, -1, -1), Map.of("maxArea", "0")));
-        steps.add(createStackStep(stepNum++, 7, "Found maximum area rectangle at indices [2..3] (Heights 5 & 6) -> Max Area = 10 units sq.", List.of(), createArrayState(heights, 2, 3), Map.of("maxArea", "10")));
         return steps;
     }
 
