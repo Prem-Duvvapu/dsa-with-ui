@@ -1,0 +1,1080 @@
+{
+  "anchors" : {
+    "base" : 7,
+    "compare" : 19,
+    "done" : 3,
+    "inversion" : 22,
+    "split" : 8,
+    "take" : 20,
+    "writeback" : 29
+  },
+  "code" : "public int numberOfInversions(int[] a, int n) {\n    int total = countInversions(a, 0, n - 1);\n    return total;\n}\n\nprivate int countInversions(int[] a, int low, int high) {\n    if (low >= high) return 0;\n    int mid = (low + high) / 2;\n    int cnt = countInversions(a, low, mid);\n    cnt += countInversions(a, mid + 1, high);\n    cnt += merge(a, low, mid, high);\n    return cnt;\n}\n\nprivate int merge(int[] a, int low, int mid, int high) {\n    List<Integer> temp = new ArrayList<>();\n    int left = low, right = mid + 1, cnt = 0;\n    while (left <= mid && right <= high) {\n        if (a[left] <= a[right]) {\n            temp.add(a[left++]);\n        } else {\n            cnt += (mid - left + 1);\n            temp.add(a[right++]);\n        }\n    }\n    while (left <= mid) temp.add(a[left++]);\n    while (right <= high) temp.add(a[right++]);\n    for (int i = low; i <= high; i++) a[i] = temp.get(i - low);\n    return cnt;\n}",
+  "problemId" : "count-inversions",
+  "resolvedInput" : {
+    "nums" : [ 5, 3, 2, 4, 1 ]
+  },
+  "stepCount" : 28,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "Split [0,4] at mid=2 into [0,2] and [3,4], then recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "0",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "Split [0,2] at mid=1 into [0,1] and [2,2], then recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "0",
+      "mid" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Split [0,1] at mid=0 into [0,0] and [1,1], then recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)", "count(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "0",
+      "mid" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Range [0,0] holds a single element - nothing to compare, so this call contributes 0 inversions.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)", "count(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Range [1,1] holds a single element - nothing to compare, so this call contributes 0 inversions.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)", "count(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "Merging [0,1]: compare a[0]=5 against a[1]=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)", "count(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 22,
+    "description" : "5 > 3, so a[1] is out of order against every remaining left element (indices 0..0) - that is 1 new inversion.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)", "count(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "1",
+      "runningCount" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 29,
+    "description" : "[0,1] merged in sorted order, contributing 1 inversion from this merge.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)", "count(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Range [2,2] holds a single element - nothing to compare, so this call contributes 0 inversions.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "Merging [0,2]: compare a[0]=3 against a[2]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 22,
+    "description" : "3 > 2, so a[2] is out of order against every remaining left element (indices 0..1) - that is 2 new inversions.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "2",
+      "runningCount" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 29,
+    "description" : "[0,2] merged in sorted order, contributing 2 inversions from this merge.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 8,
+    "description" : "Split [3,4] at mid=3 into [3,3] and [4,4], then recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "Range [3,3] holds a single element - nothing to compare, so this call contributes 0 inversions.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 7,
+    "description" : "Range [4,4] holds a single element - nothing to compare, so this call contributes 0 inversions.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 19,
+    "description" : "Merging [3,4]: compare a[3]=4 against a[4]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 22,
+    "description" : "4 > 1, so a[4] is out of order against every remaining left element (indices 3..3) - that is 1 new inversion.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "1",
+      "runningCount" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 29,
+    "description" : "[3,4] merged in sorted order, contributing 1 inversion from this merge.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)", "count(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 19,
+    "description" : "Merging [0,4]: compare a[0]=2 against a[3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 22,
+    "description" : "2 > 1, so a[3] is out of order against every remaining left element (indices 0..2) - that is 3 new inversions.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "3",
+      "runningCount" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 19,
+    "description" : "Merging [0,4]: compare a[0]=2 against a[4]=4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 20,
+    "description" : "2 <= 4, so the left side is not inverted here - take a[0]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 19,
+    "description" : "Merging [0,4]: compare a[1]=3 against a[4]=4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 20,
+    "description" : "3 <= 4, so the left side is not inverted here - take a[1]=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 19,
+    "description" : "Merging [0,4]: compare a[2]=5 against a[4]=4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 22,
+    "description" : "5 > 4, so a[4] is out of order against every remaining left element (indices 2..2) - that is 1 new inversion.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "1",
+      "runningCount" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 29,
+    "description" : "[0,4] merged in sorted order, contributing 4 inversions from this merge.",
+    "queueOrStackState" : null,
+    "callStack" : [ "count(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 3,
+    "description" : "Recursion complete. Total inversions across the whole array: 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

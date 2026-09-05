@@ -171,7 +171,8 @@ them means moving problems between services.
 
 ### Traced so far
 
-`bfs-traversal`, `binary-search-1d`, `check-sorted-ii`, `count-square-submatrices`,
+`bfs-traversal`, `binary-search-1d`, `check-sorted-ii`, `count-inversions`,
+`count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
 `kadane-algo`, `lower-bound`, `minimum-falling-path-sum`,
@@ -181,7 +182,7 @@ them means moving problems between services.
 `majority-element`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
 `max-sum-non-adjacent`, `move-zeros-end`,
 `n-meetings-in-one-room`, `number-of-islands`, `print-lis`, `remove-duplicates-sorted`,
-`reverse-linked-list`, `search-rotated-sorted`, `second-largest-element`, `single-number`,
+`reverse-linked-list`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`, `single-number`,
 `stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
 `triangle-min-path-sum`, `two-sum`, `unique-paths-2`, and `upper-bound`.
 

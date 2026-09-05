@@ -52,7 +52,9 @@ public class ArrayServiceTest {
                 "single-number",
                 "majority-element",
                 "leaders-in-array",
-                "longest-subarray-sum-k-positives");
+                "longest-subarray-sum-k-positives",
+                "count-inversions",
+                "reverse-pairs");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
