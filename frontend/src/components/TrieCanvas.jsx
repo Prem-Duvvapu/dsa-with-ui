@@ -3,15 +3,21 @@ import React, { useMemo } from 'react';
 /**
  * Trie (prefix tree) visualizer.
  *
- * Trie problems currently fall through to GraphCanvas and render a blank SVG.
- * The backend serves trie data in `trieState` (a flat list of trie nodes) or in
- * `treeNodes` (if the tracer emits tree-shaped data). This canvas renders the
- * trie as a top-down tree where each node shows its character and whether it
- * marks the end of a word.
+ * Canonical wire shape (RCA-012): the backend's `TrieNodeModel` is the single source of
+ * truth for both the node fields AND the child-linking shape. A step's `trieState` is a
+ * flat list of:
  *
- * Layout: simple recursive top-down. Each level gets equal vertical space; each
- * node's horizontal position is the midpoint of its children's span. This is the
- * same layout strategy as TreeCanvas but with variable branching factor.
+ *   { id, character, endOfWord, x, y, children: { [char]: childId }, state }
+ *
+ * - `character` is the incoming edge label for this node; the root's is `null`.
+ * - `children` maps each outgoing character to the child node's `id` (NOT an array of
+ *   ids) — this mirrors `Map<String, Integer>` on the Java side exactly.
+ * - `x`/`y` are laid out server-side by the tracer (the same convention `TreeCanvas`
+ *   uses for `treeNodes`), so this canvas only draws — it does not compute its own tree
+ *   layout the way the pre-RCA-012 code did.
+ *
+ * Do not reintroduce a second accepted shape (e.g. `char`/`isEnd`/id-array children) —
+ * that mismatch against the real backend serializer is exactly what RCA-012 tracked.
  */
 
 /** Maps node states to Bench-token CSS. */
@@ -33,88 +39,37 @@ function stateStyle(state) {
   }
 }
 
-/**
- * Builds a laid-out tree from the backend's flat node list.
- *
- * The trie data can come in two shapes:
- *   1. trieState: [{ id, char, isEnd, children: [...ids], state }]
- *   2. treeNodes: [{ id, val, x, y, leftId, rightId, state }] — binary tree shape
- *
- * For shape 1 we do our own layout. For shape 2 we use the provided x/y.
- */
-function layoutTrie(nodes) {
-  if (!nodes || nodes.length === 0) return { positioned: [], edges: [] };
-
-  // If nodes already have x/y (treeNodes shape), use them directly.
-  if (nodes[0]?.x !== undefined && nodes[0]?.y !== undefined) {
-    const edges = [];
-    for (const node of nodes) {
-      if (node.leftId != null) edges.push({ from: node.id, to: node.leftId });
-      if (node.rightId != null) edges.push({ from: node.id, to: node.rightId });
-    }
-    return {
-      positioned: nodes.map(n => ({
-        id: n.id, char: n.val ?? n.char ?? '', isEnd: n.isEnd ?? false,
-        state: n.state || 'default', x: n.x, y: n.y
-      })),
-      edges
-    };
-  }
-
-  // Shape 1: build adjacency and lay out from root.
-  const byId = new Map(nodes.map(n => [n.id ?? n.char, n]));
-  const root = nodes[0];
-  const positioned = [];
+/** Derives the edge list from each node's `children` map (char -> child id). */
+function edgesFromChildren(nodes) {
   const edges = [];
-
-  const NODE_W = 50;
-  const NODE_H = 60;
-
-  // First pass: count leaf descendants to determine widths.
-  function leafCount(node) {
-    const children = (node.children || []).map(cid => byId.get(cid)).filter(Boolean);
-    if (children.length === 0) return 1;
-    return children.reduce((sum, c) => sum + leafCount(c), 0);
-  }
-
-  // Second pass: assign positions.
-  function layout(node, depth, leftEdge) {
-    const children = (node.children || []).map(cid => byId.get(cid)).filter(Boolean);
-    const totalLeaves = leafCount(node);
-    const width = totalLeaves * NODE_W;
-    const x = leftEdge + width / 2;
-    const y = depth * NODE_H + 30;
-
-    positioned.push({
-      id: node.id ?? node.char,
-      char: node.char ?? node.val ?? '',
-      isEnd: node.isEnd ?? false,
-      state: node.state || 'default',
-      x, y
-    });
-
-    let childLeft = leftEdge;
-    for (const child of children) {
-      const childLeaves = leafCount(child);
-      const childWidth = childLeaves * NODE_W;
-      edges.push({ from: node.id ?? node.char, to: child.id ?? child.char });
-      layout(child, depth + 1, childLeft);
-      childLeft += childWidth;
+  for (const node of nodes) {
+    const children = node.children;
+    if (!children) continue;
+    for (const childId of Object.values(children)) {
+      edges.push({ from: node.id, to: childId });
     }
   }
-
-  layout(root, 0, 0);
-
-  return { positioned, edges };
+  return edges;
 }
 
 export default function TrieCanvas({ problem, currentStep, step }) {
   const activeStep = currentStep || step;
+  const rawNodes = activeStep?.trieState;
 
-  // Accept data from either trieState or treeNodes
-  const rawNodes = activeStep?.trieState || activeStep?.treeNodes;
-
-  const { positioned, edges } = useMemo(() => layoutTrie(rawNodes), [rawNodes]);
+  const { positioned, edges } = useMemo(() => {
+    if (!rawNodes || rawNodes.length === 0) return { positioned: [], edges: [] };
+    return {
+      positioned: rawNodes.map((n) => ({
+        id: n.id,
+        character: n.character,
+        endOfWord: Boolean(n.endOfWord),
+        state: n.state || 'default',
+        x: n.x,
+        y: n.y
+      })),
+      edges: edgesFromChildren(rawNodes)
+    };
+  }, [rawNodes]);
 
   if (!positioned.length) {
     return (
@@ -162,6 +117,7 @@ export default function TrieCanvas({ problem, currentStep, step }) {
           const s = stateStyle(node.state);
           const isActive = node.state === 'current' || node.state === 'visiting' || node.state === 'active';
           const radius = isActive ? 20 : 17;
+          const label = node.character == null ? '•' : node.character;
 
           return (
             <g key={node.id} transform={`translate(${node.x}, ${node.y})`}>
@@ -180,10 +136,10 @@ export default function TrieCanvas({ problem, currentStep, step }) {
                 fontWeight="700"
                 fontFamily="var(--font-code)"
               >
-                {node.char}
+                {label}
               </text>
               {/* End-of-word marker */}
-              {node.isEnd && (
+              {node.endOfWord && (
                 <circle
                   cx={radius * 0.7}
                   cy={-radius * 0.7}
