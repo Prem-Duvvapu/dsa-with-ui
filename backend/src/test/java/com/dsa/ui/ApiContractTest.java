@@ -95,7 +95,8 @@ class ApiContractTest {
             "trapping-rainwater", "largest-rectangle-histogram",
             "next-greater-element-2", "asteroid-collision",
             "matrix-chain-multiplication", "burst-balloons",
-            "knapsack-01", "unbounded-knapsack");
+            "knapsack-01", "unbounded-knapsack",
+            "tree-max-path-sum", "serialize-deserialize-bt");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -184,6 +185,8 @@ class ApiContractTest {
                 arguments("/api/trees", "tree-inorder"),
                 arguments("/api/trees", "tree-postorder"),
                 arguments("/api/trees", "tree-level-order"),
+                arguments("/api/trees", "tree-max-path-sum"),
+                arguments("/api/trees", "serialize-deserialize-bt"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/greedy", "n-meetings-in-one-room"),
                 arguments("/api/dp", "climbing-stairs"),
