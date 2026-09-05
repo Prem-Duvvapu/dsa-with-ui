@@ -62,8 +62,12 @@ public class LinkedListService implements ProblemProvider {
             case "pairs-given-sum-dll": return generatePairsGivenSumDllSteps();
             case "remove-duplicates-sorted-dll": return generateRemoveDuplicatesSortedDllSteps();
             case "rotate-ll": return generateRotateLlSteps();
-            case "flattening-ll": return generateFlatteningLlSteps();
-            case "clone-ll-random-pointer": return generateCloneLlRandomPointerSteps();
+            // flattening-ll and clone-ll-random-pointer have real tracers (tracer/impl)
+            // now. Refuse rather than let default: serve generateReverseSteps()'s
+            // unrelated steps under these ids.
+            case "flattening-ll":
+            case "clone-ll-random-pointer":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generateReverseSteps();
         }
     }
@@ -198,8 +202,6 @@ public class LinkedListService implements ProblemProvider {
     private List<ExecutionStep> generatePairsGivenSumDllSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateRemoveDuplicatesSortedDllSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateRotateLlSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateFlatteningLlSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateCloneLlRandomPointerSteps() { return generateReverseSteps(); }
 
     private List<ListNode> createDefaultList() {
         return List.of(

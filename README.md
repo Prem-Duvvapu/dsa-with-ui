@@ -174,10 +174,10 @@ them means moving problems between services.
 `aggressive-cows`, `alien-dictionary`, `asteroid-collision`,
 `bellman-ford`,
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `burst-balloons`,
-`check-sorted-ii`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
+`check-sorted-ii`, `clone-ll-random-pointer`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `edit-distance`, `find-missing-number`,
-`find-min-rotated-sorted`, `find-starting-point-loop`, `four-sum`,
+`find-min-rotated-sorted`, `find-starting-point-loop`, `flattening-ll`, `four-sum`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
 `implement-trie`,
 `kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
@@ -240,6 +240,24 @@ fits the tracer contract without a new `FieldType`: the whole `put`/`get` sequen
 uses for its alphabet. Because the cache's own eviction order IS a doubly linked list —
 most- to least-recently-used, front to back — it traces as `LinkedList` rather than
 `Stack`, with each node labelled `key:value`.
+
+`flattening-ll` (LeetCode 430) and `clone-ll-random-pointer` (LeetCode 138) are the first
+two `LinkedList` traces to need a pointer beyond `next`/`prev`, which is why they were
+deferred out of the Linked List batch that traced `find-starting-point-loop` and
+`reverse-ll-group-k`. `ListNode` gained nullable `childId`/`randomId` fields first, as its
+own additive, independently-verified PR, before either tracer was written — every other
+`LinkedList` tracer leaves both null. `flattening-ll`'s input is a `FieldType.GRAPH` (a
+weight-0 edge is a next pointer, a weight-1 edge is a child pointer) rather than an
+`INT_GRID` of raw pointer indices, because a pointer-chasing traversal over a grid whose
+rows `TracerContractTest`'s auto-grower duplicates would strand every added row as
+unreachable — `GRAPH` is intentionally outside that grower's scope, so
+`stepCountGrowsWithInput` skips it rather than failing on an input shape it cannot safely
+scale. `clone-ll-random-pointer` has no such problem (its `next` chain is always a plain
+sequential list; only the random pointer varies), so it reads a straightforward `INT_GRID`
+row per node (`[value, randomIndex]`) and the growth test exercises it normally. Both
+tracers' canvas edges are new: `LinkedListCanvas` resolves `childId`/`randomId` by node id
+rather than array position, drawing a dashed violet line for a child pointer and a dotted
+orange line for a random pointer, distinct from the existing solid "next" arrow.
 
 `implement-trie` and `word-break-trie` are the first two `Trie`-canvas traces, following
 RCA-012's fix: `implement-trie` ports the legacy character-by-character insert (create a

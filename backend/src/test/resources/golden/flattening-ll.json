@@ -1,0 +1,4214 @@
+{
+  "anchors" : {
+    "done" : 17,
+    "init" : 2,
+    "link" : 7,
+    "pop" : 6,
+    "pushChild" : 12,
+    "pushNext" : 9
+  },
+  "code" : "public Node flatten(Node head) {\n    Deque<Node> stack = new ArrayDeque<>();\n    stack.push(head);\n    Node prev = null;\n    while (!stack.isEmpty()) {\n        Node curr = stack.pop();\n        if (prev != null) prev.next = curr;\n        if (curr.next != null) {\n            stack.push(curr.next);\n        }\n        if (curr.child != null) {\n            stack.push(curr.child);\n            curr.child = null;\n        }\n        prev = curr;\n    }\n    return head;\n}",
+  "problemId" : "flattening-ll",
+  "resolvedInput" : {
+    "structure" : {
+      "edges" : [ [ 0, 1, 0 ], [ 1, 2, 0 ], [ 2, 3, 0 ], [ 3, 4, 0 ], [ 4, 5, 0 ], [ 6, 7, 0 ], [ 7, 8, 0 ], [ 8, 9, 0 ], [ 10, 11, 0 ], [ 2, 6, 1 ], [ 7, 10, 1 ] ],
+      "vertices" : 12
+    }
+  },
+  "stepCount" : 37,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Push the head (1) onto the stack. A child gets pushed before its owner's own next, so popping it splices it in immediately rather than leaving it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "stack" : "[1]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Pop 1 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "1 becomes the head of the flattened list.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1",
+      "prev" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "1's own next (2) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Pop 2 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Link 2 after 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "2",
+      "prev" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "2's own next (3) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "Pop 3 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Link 3 after 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "3",
+      "prev" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "3's own next (4) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : 6,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "3 has a child list starting at 7 — push it so it is processed before 3's own next.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "Pop 7 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 7,
+    "description" : "Link 7 after 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "7",
+      "prev" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 9,
+    "description" : "7's own next (8) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "8"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 6,
+    "description" : "Pop 8 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "8"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 7,
+    "description" : "Link 8 after 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "8",
+      "prev" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 9,
+    "description" : "8's own next (9) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "9"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : 10,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 12,
+    "description" : "8 has a child list starting at 11 — push it so it is processed before 8's own next.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "11"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 6,
+    "description" : "Pop 11 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "11"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 7,
+    "description" : "Link 11 after 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "11",
+      "prev" : "8"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 9,
+    "description" : "11's own next (12) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "12"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 6,
+    "description" : "Pop 12 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "12"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 7,
+    "description" : "Link 12 after 11.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "12",
+      "prev" : "11"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 6,
+    "description" : "Pop 9 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "9"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 7,
+    "description" : "Link 9 after 12.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "9",
+      "prev" : "12"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 9,
+    "description" : "9's own next (10) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 6,
+    "description" : "Pop 10 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 7,
+    "description" : "Link 10 after 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "10",
+      "prev" : "9"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 6,
+    "description" : "Pop 4 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 7,
+    "description" : "Link 4 after 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "4",
+      "prev" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 9,
+    "description" : "4's own next (5) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "5"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 6,
+    "description" : "Pop 5 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "5"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 7,
+    "description" : "Link 5 after 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "5",
+      "prev" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 9,
+    "description" : "5's own next (6) still needs visiting — push it for later.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 6,
+    "description" : "Pop 6 off the stack.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 7,
+    "description" : "Link 6 after 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "6",
+      "prev" : "5"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 17,
+    "description" : "Stack empty — flattening complete. Final order: 1 -> 2 -> 3 -> 7 -> 8 -> 11 -> 12 -> 9 -> 10 -> 4 -> 5 -> 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "1,2,3,7,8,11,12,9,10,4,5,6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "8",
+      "nextId" : 10,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "11",
+      "nextId" : 11,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "12",
+      "nextId" : 8,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "9",
+      "nextId" : 9,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "10",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
