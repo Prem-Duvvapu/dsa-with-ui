@@ -358,7 +358,10 @@ public final class StepEmitter {
             }
         }
         if (s.getListState() != null) {
-            bytes += s.getListState().size() * 88L;
+            // 88 covered {id,val,nextId,prevId,state}; childId/randomId (RCA-020) add up to
+            // ~33 bytes/node in their common (both-null) case — bumped to 130 to stay ahead
+            // of every LINKED_LIST tracer, not just the two that populate them.
+            bytes += s.getListState().size() * 130L;
         }
         if (s.getTrieState() != null) {
             for (TrieNodeModel node : s.getTrieState()) {
