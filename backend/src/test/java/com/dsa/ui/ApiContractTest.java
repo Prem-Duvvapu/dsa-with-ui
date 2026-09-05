@@ -110,7 +110,8 @@ class ApiContractTest {
             "shortest-palindrome", "longest-happy-prefix",
             "repeating-missing-number", "merge-two-sorted-arrays",
             "three-sum", "four-sum",
-            "bellman-ford", "kosaraju-scc");
+            "bellman-ford", "kosaraju-scc",
+            "edit-distance", "wildcard-matching");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -268,7 +269,9 @@ class ApiContractTest {
                 arguments("/api/trees", "morris-inorder"),
                 arguments("/api/trees", "correct-bst-swap"),
                 arguments("/api/dp", "minimum-coins-dp"),
-                arguments("/api/dp", "coin-change-2"));
+                arguments("/api/dp", "coin-change-2"),
+                arguments("/api/dp", "edit-distance"),
+                arguments("/api/dp", "wildcard-matching"));
     }
 
     /**

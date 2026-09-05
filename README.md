@@ -176,7 +176,7 @@ them means moving problems between services.
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `burst-balloons`,
 `check-sorted-ii`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
 `count-square-submatrices`,
-`climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
+`climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `edit-distance`, `find-missing-number`,
 `find-min-rotated-sorted`, `find-starting-point-loop`, `four-sum`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
 `kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
@@ -194,10 +194,10 @@ them means moving problems between services.
 `stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `three-sum`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, `upper-bound`,
-`vertical-order-traversal`,
+`vertical-order-traversal`, `wildcard-matching`,
 `z-function-algo`, and `zigzag-traversal`.
 
-Thirteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
+Fifteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
 variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,
 `max-sum-non-adjacent`, `house-robber-2`, `grid-unique-paths`, `unique-paths-2`,
 `minimum-falling-path-sum`, `triangle-min-path-sum` and `ninjas-training`. The five
@@ -215,7 +215,12 @@ and an answer that reduces over an entire row rather than one fixed corner.
 predecessors above, with its ragged rows carried as permanently excluded cells in a
 square grid. `ninjas-training` is the first three-way choice rather than a fixed
 neighbour shape: each cell excludes exactly one same-column predecessor (yesterday's
-activity) and reads the other two. Migrated ids answer
+activity) and reads the other two. `edit-distance` and `wildcard-matching` are the first
+two **string-alignment** tables: row and column are labelled by the two input strings'
+own characters rather than indices, and a mismatch cell in `edit-distance` compares all
+three neighbours at once (replace, delete, insert) to say which was actually cheapest,
+while `wildcard-matching`'s `*` cells are the only ones in any traced table whose value is
+an OR of two predecessors rather than a single read. Migrated ids answer
 **410 Gone** on their old execute endpoint rather than risking a substitute trace.
 
 ---
