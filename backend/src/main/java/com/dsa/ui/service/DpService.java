@@ -1,9 +1,7 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.dp.Knapsack01;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,11 +25,13 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These twenty-three have real tracers (tracer/impl). Refuse rather than let
+            // These twenty-five have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
             case "matrix-chain-multiplication":
             case "burst-balloons":
+            case "knapsack-01":
+            case "unbounded-knapsack":
             case "climbing-stairs":
             case "frog-jump":
             case "frog-jump-k-distance":
@@ -54,7 +54,6 @@ public class DpService implements ProblemProvider {
             case "minimum-coins-dp":
             case "coin-change-2":
                 throw new LegacyTraceRetiredException(problemId);
-            case "knapsack-01": return generateKnapsackSteps();
             case "longest-common-subsequence": return generateLcsSteps();
             default: return generateClimbingStairsSteps();
         }
@@ -136,7 +135,7 @@ public class DpService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{0, 0, 10, 10, 15, 25}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N * W)", "Time Complexity: N items x Capacity W table.", "2D/1D DP", "O(W)", "Space Complexity: 1D array space-optimized DP table.", "DP Array", "Auxiliary Space: O(W)", "Memory"), "Array"
+            new ComplexityDetail("O(N * W)", "Time Complexity: N items x Capacity W table.", "2D/1D DP", "O(W)", "Space Complexity: 1D array space-optimized DP table.", "DP Array", "Auxiliary Space: O(W)", "Memory"), "DpTable"
         ));
 
         // 4. Longest Common Subsequence
@@ -240,7 +239,7 @@ public class DpService implements ProblemProvider {
                     "subset-sum-equal-target", "partition-equal-subset-sum",
                     "count-subsets-with-sum-k", "count-partitions-given-diff",
                     "minimum-coins-dp", "coin-change-2",
-                    "matrix-chain-multiplication", "burst-balloons" ->
+                    "matrix-chain-multiplication", "burst-balloons", "unbounded-knapsack" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;
@@ -440,12 +439,6 @@ public class DpService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateKnapsackSteps() {
-        int[] weights = {1, 2, 3}; int[] values = {10, 15, 40};
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new Knapsack01().solve(weights, values, 6, recorder);
-        return recorder.toExecutionSteps();
-    }
     private List<ExecutionStep> generateLcsSteps() { return generateClimbingStairsSteps(); }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {

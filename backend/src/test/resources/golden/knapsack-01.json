@@ -1,0 +1,2915 @@
+{
+  "anchors" : {
+    "doesntFit" : 8,
+    "done" : 12,
+    "fits" : 6
+  },
+  "code" : "public int knapsack(int[] wt, int[] val, int n, int W) {\n    int[][] dp = new int[n + 1][W + 1];\n    for (int i = 1; i <= n; i++) {\n        for (int w = 0; w <= W; w++) {\n            if (wt[i - 1] <= w) {\n                dp[i][w] = Math.max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);\n            } else {\n                dp[i][w] = dp[i - 1][w];\n            }\n        }\n    }\n    return dp[n][W];\n}",
+  "problemId" : "knapsack-01",
+  "resolvedInput" : {
+    "capacity" : 5,
+    "values" : [ 5, 4, 8, 6 ],
+    "weights" : [ 1, 2, 4, 5 ]
+  },
+  "stepCount" : 25,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "Item 1 (weight 1) does not fit in capacity 0 - carry forward dp[0][0]=0 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "value" : "0",
+      "w" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Item 1 (weight 1, value 5) fits in capacity 1: take it (5 + dp[0][0]=5) vs skip it (dp[0][1]=0) -> 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "value" : "5",
+      "w" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Item 1 (weight 1, value 5) fits in capacity 2: take it (5 + dp[0][1]=5) vs skip it (dp[0][2]=0) -> 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "value" : "5",
+      "w" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Item 1 (weight 1, value 5) fits in capacity 3: take it (5 + dp[0][2]=5) vs skip it (dp[0][3]=0) -> 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "value" : "5",
+      "w" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Item 1 (weight 1, value 5) fits in capacity 4: take it (5 + dp[0][3]=5) vs skip it (dp[0][4]=0) -> 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "value" : "5",
+      "w" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 6,
+    "description" : "Item 1 (weight 1, value 5) fits in capacity 5: take it (5 + dp[0][4]=5) vs skip it (dp[0][5]=0) -> 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "value" : "5",
+      "w" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Item 2 (weight 2) does not fit in capacity 0 - carry forward dp[1][0]=0 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "value" : "0",
+      "w" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 8,
+    "description" : "Item 2 (weight 2) does not fit in capacity 1 - carry forward dp[1][1]=5 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "value" : "5",
+      "w" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "Item 2 (weight 2, value 4) fits in capacity 2: take it (4 + dp[1][0]=4) vs skip it (dp[1][2]=5) -> 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "value" : "5",
+      "w" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "Item 2 (weight 2, value 4) fits in capacity 3: take it (4 + dp[1][1]=9) vs skip it (dp[1][3]=5) -> 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "value" : "9",
+      "w" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 6,
+    "description" : "Item 2 (weight 2, value 4) fits in capacity 4: take it (4 + dp[1][2]=9) vs skip it (dp[1][4]=5) -> 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "value" : "9",
+      "w" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "Item 2 (weight 2, value 4) fits in capacity 5: take it (4 + dp[1][3]=9) vs skip it (dp[1][5]=5) -> 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "value" : "9",
+      "w" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 8,
+    "description" : "Item 3 (weight 4) does not fit in capacity 0 - carry forward dp[2][0]=0 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "value" : "0",
+      "w" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 8,
+    "description" : "Item 3 (weight 4) does not fit in capacity 1 - carry forward dp[2][1]=5 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "value" : "5",
+      "w" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 8,
+    "description" : "Item 3 (weight 4) does not fit in capacity 2 - carry forward dp[2][2]=5 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "value" : "5",
+      "w" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 8,
+    "description" : "Item 3 (weight 4) does not fit in capacity 3 - carry forward dp[2][3]=9 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "value" : "9",
+      "w" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 6,
+    "description" : "Item 3 (weight 4, value 8) fits in capacity 4: take it (8 + dp[2][0]=8) vs skip it (dp[2][4]=9) -> 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "value" : "9",
+      "w" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 6,
+    "description" : "Item 3 (weight 4, value 8) fits in capacity 5: take it (8 + dp[2][1]=13) vs skip it (dp[2][5]=9) -> 13.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "value" : "13",
+      "w" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 8,
+    "description" : "Item 4 (weight 5) does not fit in capacity 0 - carry forward dp[3][0]=0 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "value" : "0",
+      "w" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 8,
+    "description" : "Item 4 (weight 5) does not fit in capacity 1 - carry forward dp[3][1]=5 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "value" : "5",
+      "w" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 8,
+    "description" : "Item 4 (weight 5) does not fit in capacity 2 - carry forward dp[3][2]=5 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "value" : "5",
+      "w" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 8,
+    "description" : "Item 4 (weight 5) does not fit in capacity 3 - carry forward dp[3][3]=9 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "value" : "9",
+      "w" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 8,
+    "description" : "Item 4 (weight 5) does not fit in capacity 4 - carry forward dp[3][4]=9 unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "value" : "9",
+      "w" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "read"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 6,
+    "description" : "Item 4 (weight 5, value 6) fits in capacity 5: take it (6 + dp[3][0]=6) vs skip it (dp[3][5]=13) -> 13.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "value" : "13",
+      "w" : "5"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "probe"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 12,
+    "description" : "Every item considered at every capacity. Best value within capacity 5: 13.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "13"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "none", "item 1", "item 2", "item 3", "item 4" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "5",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  } ],
+  "truncated" : false
+}

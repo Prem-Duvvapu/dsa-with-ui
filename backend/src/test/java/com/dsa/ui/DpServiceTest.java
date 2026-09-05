@@ -40,6 +40,8 @@ public class DpServiceTest {
         Set<String> retired = Set.of(
                 "matrix-chain-multiplication",
                 "burst-balloons",
+                "knapsack-01",
+                "unbounded-knapsack",
                 "climbing-stairs",
                 "frog-jump",
                 "frog-jump-k-distance",
