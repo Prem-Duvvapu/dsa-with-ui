@@ -1,0 +1,1877 @@
+{
+  "anchors" : {
+    "advance" : 25,
+    "buildDict" : 4,
+    "done" : 28,
+    "mark" : 23,
+    "miss" : 19,
+    "skip" : 13
+  },
+  "code" : "public boolean wordBreak(String s, List<String> wordDict) {\n    Trie trie = new Trie();\n    for (String w : wordDict) {\n        trie.insert(w);\n    }\n\n    int n = s.length();\n    boolean[] dp = new boolean[n + 1];\n    dp[0] = true;\n\n    for (int i = 0; i < n; i++) {\n        if (!dp[i]) {\n            continue;\n        }\n        Node curr = trie.root;\n        for (int j = i; j < n; j++) {\n            char ch = s.charAt(j);\n            if (!curr.containsKey(ch)) {\n                break;\n            }\n            curr = curr.get(ch);\n            if (curr.isEnd()) {\n                dp[j + 1] = true;\n            } else {\n            }\n        }\n    }\n    return dp[n];\n}",
+  "problemId" : "word-break-trie",
+  "resolvedInput" : {
+    "s" : "leetcode",
+    "wordDict" : "leet,code"
+  },
+  "stepCount" : 18,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Insert dictionary word \"leet\" into the trie.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dictWord" : "leet"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 40.0,
+      "children" : {
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Insert dictionary word \"code\" into the trie.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dictWord" : "code"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 25,
+    "description" : "s[0..0]=\"l\" is a trie prefix - keep extending.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,F,F,F,F,F]",
+      "i" : "0",
+      "j" : "0"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 25,
+    "description" : "s[0..1]=\"le\" is a trie prefix - keep extending.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,F,F,F,F,F]",
+      "i" : "0",
+      "j" : "1"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 25,
+    "description" : "s[0..2]=\"lee\" is a trie prefix - keep extending.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,F,F,F,F,F]",
+      "i" : "0",
+      "j" : "2"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "active"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 23,
+    "description" : "s[0..3]=\"leet\" matches a dictionary word - dp[4] = true.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "0",
+      "j" : "3"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 19,
+    "description" : "s[0..4]=\"leetc\" has no trie edge for 'c' - stop extending from i=0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "0",
+      "j" : "4"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "dp[1] is false - no valid split reaches index 1, skip starting here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "1"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "dp[2] is false - no valid split reaches index 2, skip starting here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "2"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "dp[3] is false - no valid split reaches index 3, skip starting here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "3"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 25,
+    "description" : "s[4..4]=\"c\" is a trie prefix - keep extending.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "4",
+      "j" : "4"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "active"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 25,
+    "description" : "s[4..5]=\"co\" is a trie prefix - keep extending.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "4",
+      "j" : "5"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 25,
+    "description" : "s[4..6]=\"cod\" is a trie prefix - keep extending.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,F]",
+      "i" : "4",
+      "j" : "6"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "active"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "visited"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 23,
+    "description" : "s[4..7]=\"code\" matches a dictionary word - dp[8] = true.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,T]",
+      "i" : "4",
+      "j" : "7"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 13,
+    "description" : "dp[5] is false - no valid split reaches index 5, skip starting here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,T]",
+      "i" : "5"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 13,
+    "description" : "dp[6] is false - no valid split reaches index 6, skip starting here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,T]",
+      "i" : "6"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 13,
+    "description" : "dp[7] is false - no valid split reaches index 7, skip starting here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,T]",
+      "i" : "7"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 28,
+    "description" : "s = \"leetcode\" -> dp[8] = true: CAN be segmented using the dictionary.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "[T,F,F,F,T,F,F,F,T]",
+      "result" : "true"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 5,
+        "l" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "l",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "e" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "e" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "e",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : {
+        "t" : 4
+      },
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 200.0,
+      "children" : {
+        "d" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : {
+        "e" : 8
+      },
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "character" : "e",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 360.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

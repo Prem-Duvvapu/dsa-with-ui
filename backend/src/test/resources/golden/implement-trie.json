@@ -1,0 +1,806 @@
+{
+  "anchors" : {
+    "create" : 8,
+    "markEnd" : 13,
+    "traverse" : 10
+  },
+  "code" : "public void buildTrie(String[] words) {\n    Node root = new Node();\n    for (String word : words) {\n        Node curr = root;\n        for (int i = 0; i < word.length(); i++) {\n            char ch = word.charAt(i);\n            if (!curr.children.containsKey(ch)) {\n                curr.children.put(ch, new Node());\n            } else {\n            }\n            curr = curr.children.get(ch);\n        }\n        curr.isEnd = true;\n    }\n}",
+  "problemId" : "implement-trie",
+  "resolvedInput" : {
+    "words" : "cat,car,dog"
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "\"cat\"[0]='c': no child here yet - create a new trie node.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "created",
+      "char" : "c",
+      "word" : "cat"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : { },
+      "state" : "active"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "\"cat\"[1]='a': no child here yet - create a new trie node.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "created",
+      "char" : "a",
+      "word" : "cat"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : { },
+      "state" : "active"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "\"cat\"[2]='t': no child here yet - create a new trie node.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "created",
+      "char" : "t",
+      "word" : "cat"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "active"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 13,
+    "description" : "Word \"cat\" fully inserted - mark its final node as end of word.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "endOfWord" : "true",
+      "word" : "cat"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "\"car\"[0]='c': child already exists - traverse into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "found",
+      "char" : "c",
+      "word" : "car"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 10,
+    "description" : "\"car\"[1]='a': child already exists - traverse into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "found",
+      "char" : "a",
+      "word" : "car"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 30.0,
+      "y" : 200.0,
+      "children" : {
+        "t" : 3
+      },
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "\"car\"[2]='r': no child here yet - create a new trie node.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "created",
+      "char" : "r",
+      "word" : "car"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 200.0,
+      "children" : {
+        "r" : 4,
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "character" : "r",
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "active"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "Word \"car\" fully inserted - mark its final node as end of word.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "endOfWord" : "true",
+      "word" : "car"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 200.0,
+      "children" : {
+        "r" : 4,
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "character" : "r",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "\"dog\"[0]='d': no child here yet - create a new trie node.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "created",
+      "char" : "d",
+      "word" : "dog"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1,
+        "d" : 5
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 200.0,
+      "children" : {
+        "r" : 4,
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "character" : "r",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 120.0,
+      "children" : { },
+      "state" : "active"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "\"dog\"[1]='o': no child here yet - create a new trie node.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "created",
+      "char" : "o",
+      "word" : "dog"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1,
+        "d" : 5
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 200.0,
+      "children" : {
+        "r" : 4,
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "character" : "r",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 200.0,
+      "children" : { },
+      "state" : "active"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "\"dog\"[2]='g': no child here yet - create a new trie node.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "action" : "created",
+      "char" : "g",
+      "word" : "dog"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1,
+        "d" : 5
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 200.0,
+      "children" : {
+        "r" : 4,
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "character" : "r",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 200.0,
+      "children" : {
+        "g" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "g",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "active"
+    } ],
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "Word \"dog\" fully inserted - mark its final node as end of word.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "endOfWord" : "true",
+      "word" : "dog"
+    },
+    "dsType" : "Trie",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : [ {
+      "id" : 0,
+      "character" : null,
+      "endOfWord" : false,
+      "x" : 90.0,
+      "y" : 40.0,
+      "children" : {
+        "c" : 1,
+        "d" : 5
+      },
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "character" : "c",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 120.0,
+      "children" : {
+        "a" : 2
+      },
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "character" : "a",
+      "endOfWord" : false,
+      "x" : 60.0,
+      "y" : 200.0,
+      "children" : {
+        "r" : 4,
+        "t" : 3
+      },
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "character" : "t",
+      "endOfWord" : true,
+      "x" : 30.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "character" : "r",
+      "endOfWord" : true,
+      "x" : 90.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "character" : "d",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 120.0,
+      "children" : {
+        "o" : 6
+      },
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "character" : "o",
+      "endOfWord" : false,
+      "x" : 150.0,
+      "y" : 200.0,
+      "children" : {
+        "g" : 7
+      },
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "character" : "g",
+      "endOfWord" : true,
+      "x" : 150.0,
+      "y" : 280.0,
+      "children" : { },
+      "state" : "done"
+    } ],
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
