@@ -1,0 +1,429 @@
+{
+  "anchors" : {
+    "capture" : 9,
+    "done" : 4,
+    "nonPick" : 15,
+    "pick" : 13
+  },
+  "code" : "public List<List<Integer>> subsets(int[] nums) {\n    List<List<Integer>> res = new ArrayList<>();\n    generate(0, nums, new ArrayList<>(), res);\n    return res;\n}\n\nprivate void generate(int index, int[] nums, List<Integer> current, List<List<Integer>> res) {\n    if (index == nums.length) {\n        res.add(new ArrayList<>(current));\n        return;\n    }\n    current.add(nums[index]);\n    generate(index + 1, nums, current, res);\n    current.remove(current.size() - 1);\n    generate(index + 1, nums, current, res);\n}",
+  "problemId" : "subsets-i",
+  "resolvedInput" : {
+    "nums" : [ 1, 2, 3 ]
+  },
+  "stepCount" : 23,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 13,
+    "description" : "At index 0: include nums[0] = 1 in the path and recurse into index 1. Current path: [1].",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "generate(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "picked" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "At index 1: include nums[1] = 2 in the path and recurse into index 2. Current path: [1, 2].",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "picked" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "At index 2: include nums[2] = 3 in the path and recurse into index 3. Current path: [1, 2, 3].",
+    "queueOrStackState" : [ "1", "2", "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "picked" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [1, 2, 3] as subset #1.",
+    "queueOrStackState" : [ "1", "2", "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "subset" : "[1, 2, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 15,
+    "description" : "Back at index 2: undo including nums[2] = 3, then recurse into index 3 again for the path that leaves it out entirely. Current path: [1, 2].",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "excluded" : "3",
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [1, 2] as subset #2.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "subset" : "[1, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Back at index 1: undo including nums[1] = 2, then recurse into index 2 again for the path that leaves it out entirely. Current path: [1].",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "excluded" : "2",
+      "index" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "At index 2: include nums[2] = 3 in the path and recurse into index 3. Current path: [1, 3].",
+    "queueOrStackState" : [ "1", "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "picked" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [1, 3] as subset #3.",
+    "queueOrStackState" : [ "1", "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "subset" : "[1, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 15,
+    "description" : "Back at index 2: undo including nums[2] = 3, then recurse into index 3 again for the path that leaves it out entirely. Current path: [1].",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "excluded" : "3",
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [1] as subset #4.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "subset" : "[1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 15,
+    "description" : "Back at index 0: undo including nums[0] = 1, then recurse into index 1 again for the path that leaves it out entirely. Current path: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "generate(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "excluded" : "1",
+      "index" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "At index 1: include nums[1] = 2 in the path and recurse into index 2. Current path: [2].",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "picked" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 13,
+    "description" : "At index 2: include nums[2] = 3 in the path and recurse into index 3. Current path: [2, 3].",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "picked" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [2, 3] as subset #5.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5",
+      "subset" : "[2, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 15,
+    "description" : "Back at index 2: undo including nums[2] = 3, then recurse into index 3 again for the path that leaves it out entirely. Current path: [2].",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "excluded" : "3",
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [2] as subset #6.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "6",
+      "subset" : "[2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 15,
+    "description" : "Back at index 1: undo including nums[1] = 2, then recurse into index 2 again for the path that leaves it out entirely. Current path: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "excluded" : "2",
+      "index" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 13,
+    "description" : "At index 2: include nums[2] = 3 in the path and recurse into index 3. Current path: [3].",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "picked" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [3] as subset #7.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "7",
+      "subset" : "[3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 15,
+    "description" : "Back at index 2: undo including nums[2] = 3, then recurse into index 3 again for the path that leaves it out entirely. Current path: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "excluded" : "3",
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 9,
+    "description" : "Index 3 reached the end of the array with every earlier index already decided - capture the accumulated path [] as subset #8.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "generate(idx=0)", "generate(idx=1)", "generate(idx=2)", "generate(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "8",
+      "subset" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 4,
+    "description" : "Every index decided at every leaf. 8 subsets generated (2^3).",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "subsets" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

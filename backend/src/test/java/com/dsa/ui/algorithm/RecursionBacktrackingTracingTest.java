@@ -56,16 +56,16 @@ public class RecursionBacktrackingTracingTest {
 
     @Test
     void testSubsetsTracing() {
-        List<ExecutionStep> steps = service.generateSteps("subsets-i");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 15, "Subsets trace should have >=15 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("subsets-i"),
+                "subsets-i is traced by the v2 layer and must not fall back");
     }
 
     @Test
     void testCombinationSumTracing() {
-        List<ExecutionStep> steps = service.generateSteps("combination-sum-i");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 10, "Combination Sum trace should have >=10 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("combination-sum-i"),
+                "combination-sum-i is traced by the v2 layer and must not fall back");
     }
 
     @Test

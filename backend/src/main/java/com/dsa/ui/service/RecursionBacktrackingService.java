@@ -27,18 +27,20 @@ public class RecursionBacktrackingService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // n-queens and sudoku-solver have real tracers now (tracer/impl). Their
-            // generators are gone; refusing loudly beats falling into default: (or, for
-            // n-queens, the many unrelated ids below that already borrow its generator
-            // as a filler) and serving another problem's animation.
+            // n-queens, sudoku-solver, subsets-i and combination-sum-i have real tracers
+            // now (tracer/impl). Their generators are gone; refusing loudly beats falling
+            // into default: (or, for the other three, the many unrelated ids below that
+            // already borrow their generator as a filler) and serving another problem's
+            // animation. generateSubsetsSteps()/generateCombinationSumSteps() stay - they
+            // are still every one of those other ids' filler until each is migrated too.
             case "n-queens":
             case "sudoku-solver":
+            case "subsets-i":
+            case "combination-sum-i":
                 throw new LegacyTraceRetiredException(problemId);
             case "rat-in-a-maze": return generateRatInMazeSteps();
             case "m-coloring": return generateMColoringSteps();
             case "palindrome-partitioning": return generatePalindromePartitioningSteps();
-            case "subsets-i": return generateSubsetsSteps();
-            case "combination-sum-i": return generateCombinationSumSteps();
             case "permutations": return generatePermutationsSteps();
             case "word-search": return generateWordSearchSteps();
             case "atoi-recursive": return generateNQueensSteps();

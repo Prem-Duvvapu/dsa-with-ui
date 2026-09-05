@@ -98,7 +98,8 @@ class ApiContractTest {
             "knapsack-01", "unbounded-knapsack",
             "tree-max-path-sum", "serialize-deserialize-bt",
             "zigzag-traversal", "tree-lca",
-            "n-queens", "sudoku-solver");
+            "n-queens", "sudoku-solver",
+            "subsets-i", "combination-sum-i");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -193,6 +194,8 @@ class ApiContractTest {
                 arguments("/api/trees", "tree-lca"),
                 arguments("/api/recursion-backtracking", "n-queens"),
                 arguments("/api/recursion-backtracking", "sudoku-solver"),
+                arguments("/api/recursion-backtracking", "subsets-i"),
+                arguments("/api/recursion-backtracking", "combination-sum-i"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/greedy", "n-meetings-in-one-room"),
                 arguments("/api/dp", "climbing-stairs"),

@@ -1,0 +1,913 @@
+{
+  "anchors" : {
+    "backtrack" : 19,
+    "done" : 4,
+    "match" : 11,
+    "pick" : 17,
+    "skip" : 20
+  },
+  "code" : "public List<List<Integer>> combinationSum(int[] candidates, int target) {\n    List<List<Integer>> res = new ArrayList<>();\n    find(0, candidates, target, new ArrayList<>(), res);\n    return res;\n}\n\nprivate void find(int idx, int[] candidates, int target,\n                   List<Integer> current, List<List<Integer>> res) {\n    if (idx == candidates.length) {\n        if (target == 0) {\n            res.add(new ArrayList<>(current));\n        }\n        return;\n    }\n    if (candidates[idx] <= target) {\n        current.add(candidates[idx]);\n        find(idx, candidates, target - candidates[idx], current, res);\n        current.remove(current.size() - 1);\n    }\n    find(idx + 1, candidates, target, current, res);\n}",
+  "problemId" : "combination-sum-i",
+  "resolvedInput" : {
+    "candidates" : [ 2, 3, 6, 7 ],
+    "target" : 7
+  },
+  "stepCount" : 52,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 17,
+    "description" : "Take 2 again (reuse allowed) - remaining target 7 -> 5. Path: [2].",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "find(idx=0, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "2",
+      "remaining" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 17,
+    "description" : "Take 2 again (reuse allowed) - remaining target 5 -> 3. Path: [2, 2].",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "2",
+      "remaining" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 17,
+    "description" : "Take 2 again (reuse allowed) - remaining target 3 -> 1. Path: [2, 2, 2].",
+    "queueOrStackState" : [ "2", "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "2",
+      "remaining" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 20,
+    "description" : "2 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=0, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=0, target=1)", "find(idx=1, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=0, target=1)", "find(idx=1, target=1)", "find(idx=2, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=0, target=1)", "find(idx=1, target=1)", "find(idx=2, target=1)", "find(idx=3, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "Undo the last 2 - restore the path to try leaving this candidate out. Path: [2, 2].",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 20,
+    "description" : "2 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "Take 3 again (reuse allowed) - remaining target 3 -> 0. Path: [2, 2, 3].",
+    "queueOrStackState" : [ "2", "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "3",
+      "remaining" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (exceeds the remaining target 0) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)", "find(idx=1, target=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 0) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)", "find(idx=1, target=0)", "find(idx=2, target=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 0) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)", "find(idx=1, target=0)", "find(idx=2, target=0)", "find(idx=3, target=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 11,
+    "description" : "Every candidate considered and the running target hit exactly 0 - [2, 2, 3] is combination #1.",
+    "queueOrStackState" : [ "2", "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)", "find(idx=1, target=0)", "find(idx=2, target=0)", "find(idx=3, target=0)", "find(idx=4, target=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "[2, 2, 3]",
+      "count" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 19,
+    "description" : "Undo the last 3 - restore the path to try leaving this candidate out. Path: [2, 2].",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 3) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)", "find(idx=2, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 3) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=0, target=3)", "find(idx=1, target=3)", "find(idx=2, target=3)", "find(idx=3, target=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 19,
+    "description" : "Undo the last 2 - restore the path to try leaving this candidate out. Path: [2].",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 20,
+    "description" : "2 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 17,
+    "description" : "Take 3 again (reuse allowed) - remaining target 5 -> 2. Path: [2, 3].",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "3",
+      "remaining" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (exceeds the remaining target 2) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)", "find(idx=1, target=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 2) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)", "find(idx=1, target=2)", "find(idx=2, target=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 2) - move to the next candidate.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)", "find(idx=1, target=2)", "find(idx=2, target=2)", "find(idx=3, target=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 19,
+    "description" : "Undo the last 3 - restore the path to try leaving this candidate out. Path: [2].",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 5) - move to the next candidate.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)", "find(idx=2, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 5) - move to the next candidate.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=0, target=5)", "find(idx=1, target=5)", "find(idx=2, target=5)", "find(idx=3, target=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 19,
+    "description" : "Undo the last 2 - restore the path to try leaving this candidate out. Path: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 20,
+    "description" : "2 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 17,
+    "description" : "Take 3 again (reuse allowed) - remaining target 7 -> 4. Path: [3].",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "3",
+      "remaining" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 17,
+    "description" : "Take 3 again (reuse allowed) - remaining target 4 -> 1. Path: [3, 3].",
+    "queueOrStackState" : [ "3", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "3",
+      "remaining" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "3", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)", "find(idx=1, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "3", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)", "find(idx=1, target=1)", "find(idx=2, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "3", "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)", "find(idx=1, target=1)", "find(idx=2, target=1)", "find(idx=3, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 19,
+    "description" : "Undo the last 3 - restore the path to try leaving this candidate out. Path: [3].",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 4) - move to the next candidate.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)", "find(idx=2, target=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 4) - move to the next candidate.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=1, target=4)", "find(idx=2, target=4)", "find(idx=3, target=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 19,
+    "description" : "Undo the last 3 - restore the path to try leaving this candidate out. Path: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 20,
+    "description" : "3 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 17,
+    "description" : "Take 6 again (reuse allowed) - remaining target 7 -> 1. Path: [6].",
+    "queueOrStackState" : [ "6" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "6",
+      "remaining" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "6" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)", "find(idx=2, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 1) - move to the next candidate.",
+    "queueOrStackState" : [ "6" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)", "find(idx=2, target=1)", "find(idx=3, target=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 45,
+    "activeLine" : 19,
+    "description" : "Undo the last 6 - restore the path to try leaving this candidate out. Path: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 46,
+    "activeLine" : 20,
+    "description" : "6 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 47,
+    "activeLine" : 17,
+    "description" : "Take 7 again (reuse allowed) - remaining target 7 -> 0. Path: [7].",
+    "queueOrStackState" : [ "7" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)", "find(idx=3, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "picked" : "7",
+      "remaining" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 48,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (exceeds the remaining target 0) - move to the next candidate.",
+    "queueOrStackState" : [ "7" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)", "find(idx=3, target=7)", "find(idx=3, target=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 49,
+    "activeLine" : 11,
+    "description" : "Every candidate considered and the running target hit exactly 0 - [7] is combination #2.",
+    "queueOrStackState" : [ "7" ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)", "find(idx=3, target=7)", "find(idx=3, target=0)", "find(idx=4, target=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "[7]",
+      "count" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 50,
+    "activeLine" : 19,
+    "description" : "Undo the last 7 - restore the path to try leaving this candidate out. Path: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)", "find(idx=3, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "undone" : "7"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 51,
+    "activeLine" : 20,
+    "description" : "7 is done for good at this branch (every reuse of it here has been tried) - move to the next candidate.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "find(idx=0, target=7)", "find(idx=1, target=7)", "find(idx=2, target=7)", "find(idx=3, target=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 52,
+    "activeLine" : 4,
+    "description" : "Every candidate exhausted at every branch. 2 combinations found summing to 7.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combinations" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
