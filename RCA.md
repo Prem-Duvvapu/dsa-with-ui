@@ -160,17 +160,22 @@ phase; do not describe unfinished work as resolved.
 ## RCA-012 — Trie canvas and backend node shapes do not yet agree
 
 - **Discovered:** 2026-08-31
-- **Status:** Open — deferred to visualization Phase 3
+- **Status:** Resolved
 - **Symptom and impact:** activating a real trie trace would not connect/render nodes
   correctly: the canvas expects `char`, `isEnd`, and child-id arrays, while the backend emits
   `character`, `endOfWord`, and character-to-id child maps.
 - **Root cause:** the canvas was created before live trie transport was wired and has never
   been exercised by a tracer.
-- **Resolution required:** define one JSON shape at the decoder/canvas boundary, add a fixture
-  from the real backend serializer, then activate the canvas. Do not hide the mismatch with
-  catalogue defaults or an Array fallback.
-- **Regression guard required:** a backend-shaped trie fixture that renders its exact node and
-  edge set, plus empty/malformed payload cases.
+- **Resolution:** the backend's real `TrieNodeModel` serialization is now the one canonical
+  shape at the decoder/canvas boundary: `{ id, character, endOfWord, x, y, children: {char:
+  childId}, state }`. `TrieCanvas` derives its edge list from each node's `children` map
+  (rather than an id array) and renders the backend-supplied `x`/`y` directly — the same
+  convention `TreeCanvas` already uses for `treeNodes` — instead of computing its own
+  recursive layout from a shape the backend never sent. The speculative `treeNodes`
+  fallback path is removed; `trieState` is the only accepted input.
+- **Regression guard:** `TrieCanvas.test.jsx` renders a fixture shaped exactly like the
+  backend serializer (character/endOfWord/children-map), proves it round-trips through
+  `decodeTrace`'s delta carry-forward, and covers the empty and absent-`trieState` cases.
 
 ## RCA-013 — New wire helpers still need activation conventions
 
