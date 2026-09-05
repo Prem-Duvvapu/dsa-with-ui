@@ -1,0 +1,455 @@
+{
+  "anchors" : {
+    "done" : 16,
+    "init" : 3,
+    "pop" : 9,
+    "push" : 14,
+    "record" : 12
+  },
+  "code" : "public int[] nextGreaterElements(int[] nums) {\n    int n = nums.length;\n    int[] result = new int[n];\n    Arrays.fill(result, -1);\n    Deque<Integer> stack = new ArrayDeque<>();\n    for (int i = 2 * n - 1; i >= 0; i--) {\n        int idx = i % n;\n        while (!stack.isEmpty() && nums[stack.peek()] <= nums[idx]) {\n            stack.pop();\n        }\n        if (i < n) {\n            result[idx] = stack.isEmpty() ? -1 : nums[stack.peek()];\n        }\n        stack.push(idx);\n    }\n    return result;\n}",
+  "problemId" : "next-greater-element-2",
+  "resolvedInput" : {
+    "nums" : [ 1, 2, 1 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Walk the index space twice (i from 5 down to 0, using i mod 3) so the circular wrap-around is primed into the stack before any answer is recorded. All results start at -1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 14,
+    "description" : "Push index 2 (value 1) onto the stack.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "nums[2]=1 is not greater than nums[1]=2 - it can never be anyone's next greater element from here on, pop it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 14,
+    "description" : "Push index 1 (value 2) onto the stack.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Push index 0 (value 1) onto the stack.",
+    "queueOrStackState" : [ "0", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "nums[0]=1 is not greater than nums[2]=1 - it can never be anyone's next greater element from here on, pop it.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "The nearest survivor on the stack is nums[1]=2 - that is index 2's next greater element.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "result" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "Push index 2 (value 1) onto the stack.",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 9,
+    "description" : "nums[2]=1 is not greater than nums[1]=2 - it can never be anyone's next greater element from here on, pop it.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "nums[1]=2 is not greater than nums[1]=2 - it can never be anyone's next greater element from here on, pop it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Nothing greater remains on the stack - index 1 has no next greater element.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "result" : "-1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "Push index 1 (value 2) onto the stack.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 12,
+    "description" : "The nearest survivor on the stack is nums[1]=2 - that is index 0's next greater element.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0",
+      "result" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Push index 0 (value 1) onto the stack.",
+    "queueOrStackState" : [ "0", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 16,
+    "description" : "Every index visited twice. Result: [2, -1, 2].",
+    "queueOrStackState" : [ "0", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[2, -1, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

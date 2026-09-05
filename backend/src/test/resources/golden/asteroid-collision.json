@@ -1,0 +1,188 @@
+{
+  "anchors" : {
+    "bothExplode" : 9,
+    "currentExplodes" : 12,
+    "done" : 19,
+    "init" : 2,
+    "push" : 16,
+    "topExplodes" : 7
+  },
+  "code" : "public int[] asteroidCollision(int[] asteroids) {\n    Deque<Integer> stack = new ArrayDeque<>();\n    for (int a : asteroids) {\n        boolean alive = true;\n        while (alive && a < 0 && !stack.isEmpty() && stack.peek() > 0) {\n            if (stack.peek() < -a) {\n                stack.pop();\n            } else if (stack.peek() == -a) {\n                stack.pop();\n                alive = false;\n            } else {\n                alive = false;\n            }\n        }\n        if (alive) {\n            stack.push(a);\n        }\n    }\n    return toArray(stack);\n}",
+  "problemId" : "asteroid-collision",
+  "resolvedInput" : {
+    "asteroids" : [ 10, 2, -5 ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "An empty stack of surviving right-movers. Each new asteroid can only collide with whatever survives on top of the stack.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : -5,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 16,
+    "description" : "Asteroid 10 survives every collision in its way - add it to the stack.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "value" : "10"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : -5,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 16,
+    "description" : "Asteroid 2 survives every collision in its way - add it to the stack.",
+    "queueOrStackState" : [ "2", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "value" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : -5,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Asteroid 2 (size 2, moving right) is smaller than the incoming -5 - it explodes. The incoming asteroid keeps going.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "exploded" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : -5,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "Asteroid 10 (size 10, moving right) is larger than the incoming -5 - the incoming asteroid explodes instead.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : -5,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "Every asteroid processed. Survivors, left to right: [10].",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[10]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : -5,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
