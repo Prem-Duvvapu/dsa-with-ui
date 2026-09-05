@@ -94,6 +94,7 @@ class ApiContractTest {
             "find-min-rotated-sorted", "single-element-sorted",
             "koko-eating-bananas", "split-array-largest-sum",
             "median-2-sorted-arrays", "kth-element-2-sorted-arrays",
+            "sliding-window-maximum", "min-stack", "sum-subarray-minimums",
             "trapping-rainwater", "largest-rectangle-histogram",
             "next-greater-element-2", "asteroid-collision",
             "matrix-chain-multiplication", "burst-balloons",
@@ -250,6 +251,9 @@ class ApiContractTest {
                 arguments("/api/arrays", "merge-two-sorted-arrays"),
                 arguments("/api/arrays", "three-sum"),
                 arguments("/api/arrays", "four-sum"),
+                arguments("/api/stackqueue", "sliding-window-maximum"),
+                arguments("/api/stackqueue", "min-stack"),
+                arguments("/api/stackqueue", "sum-subarray-minimums"),
                 arguments("/api/dp", "minimum-coins-dp"),
                 arguments("/api/dp", "coin-change-2"));
     }

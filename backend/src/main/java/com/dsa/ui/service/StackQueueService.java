@@ -35,6 +35,14 @@ public class StackQueueService implements ProblemProvider {
             case "next-greater-element-2":
             case "asteroid-collision":
                 throw new LegacyTraceRetiredException(problemId);
+            // sliding-window-maximum, min-stack, and sum-subarray-minimums have real
+            // tracers (tracer/impl) now. They never had their own case at all - just
+            // default: serving balanced-parentheses's steps. Refuse rather than keep
+            // that silent.
+            case "sliding-window-maximum":
+            case "min-stack":
+            case "sum-subarray-minimums":
+                throw new LegacyTraceRetiredException(problemId);
             case "lru-cache": return generateLruCacheSteps();
             default: return generateBalancedParenthesesSteps();
         }
