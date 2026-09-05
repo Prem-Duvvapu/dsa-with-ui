@@ -80,8 +80,12 @@ public class AdvancedGraphService implements ProblemProvider {
             case "count-and-say": return generateCountAndSaySteps();
             case "string-hashing-theory": return generateStringHashingTheorySteps();
             case "rabin-karp-algo": return generateRabinKarpSteps();
-            case "z-function-algo": return generateZFunctionSteps();
-            case "kmp-lps-algo": return generateKmpLpsSteps();
+            // z-function-algo and kmp-lps-algo have real tracers now (tracer/impl).
+            // Their generators are gone; refusing loudly beats serving this service's
+            // graph-intro animation under a string algorithm's name.
+            case "z-function-algo":
+            case "kmp-lps-algo":
+                throw new LegacyTraceRetiredException(problemId);
             case "shortest-palindrome": return generateShortestPalindromeSteps();
             case "longest-happy-prefix": return generateLongestHappyPrefixSteps();
             case "count-palindromic-subsequences": return generateCountPalindromicSubsequencesSteps();
@@ -527,8 +531,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateCountAndSaySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateStringHashingTheorySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateRabinKarpSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateZFunctionSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateKmpLpsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPalindromeSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateLongestHappyPrefixSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCountPalindromicSubsequencesSteps() { return generateGraphIntroSteps(); }
