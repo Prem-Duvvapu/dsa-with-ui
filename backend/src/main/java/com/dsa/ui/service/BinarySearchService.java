@@ -70,8 +70,12 @@ public class BinarySearchService implements ProblemProvider {
                 throw new LegacyTraceRetiredException(problemId);
             case "painters-partition": return generatePaintersPartitionSteps();
             case "minimize-max-distance-gas-station": return generateGasStationSteps();
-            case "median-2-sorted-arrays": return generateMedian2SortedArraysSteps();
-            case "kth-element-2-sorted-arrays": return generateKthElement2SortedArraysSteps();
+            // median-2-sorted-arrays and kth-element-2-sorted-arrays have real tracers
+            // (tracer/impl) now. Refuse rather than let default: serve
+            // binary-search-1d's unrelated value-lookup steps under these ids.
+            case "median-2-sorted-arrays":
+            case "kth-element-2-sorted-arrays":
+                throw new LegacyTraceRetiredException(problemId);
             case "row-max-ones": return generateRowMaxOnesSteps();
             case "search-2d-matrix": return generateSearch2dMatrixSteps();
             case "search-2d-matrix-2": return generateSearch2dMatrix2Steps();
@@ -458,8 +462,6 @@ public class BinarySearchService implements ProblemProvider {
     private List<ExecutionStep> generateKthMissingPositiveSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generatePaintersPartitionSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateGasStationSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateMedian2SortedArraysSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateKthElement2SortedArraysSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateRowMaxOnesSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSearch2dMatrixSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSearch2dMatrix2Steps() { return generateBs1dSteps(); }

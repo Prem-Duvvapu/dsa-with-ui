@@ -311,3 +311,41 @@ phase; do not describe unfinished work as resolved.
   run after adding the fields, before any golden file was touched or any tracer adopted
   D3. No new test was needed; this entry exists so the next optional-field addition does
   not repeat the mistake the existing guard already knows how to catch.
+
+## RCA-019 — Partition-search tracers can fail stepCountGrowsWithInput on a lucky default
+
+- **Discovered:** 2026-09-05, tracing `median-2-sorted-arrays` and
+  `kth-element-2-sorted-arrays` (Binary Search batch 5) — caught by
+  `TracerContractTest.stepCountGrowsWithInput` before either tracer was committed.
+- **Status:** Resolved (per-tracer default choice), pattern documented for future
+  partition-search tracers.
+- **Symptom and impact:** Both tracers' first-draft defaults (their own LeetCode examples)
+  emitted *fewer* steps on `stepCountGrowsWithInput`'s auto-scaled "larger" input than on
+  the plain default — the opposite of what the test requires. This is not the canned-
+  narration bug the test exists to catch; both tracers already passed
+  `traceRespondsToItsInput` and `noTwoTracersProduceIdenticalTraces` at the time.
+- **Root cause:** every other `INT_ARRAY`-driven tracer that passes this test does real
+  *per-element* work inside its search loop (`aggressive-cows`' `canPlace` scans every
+  stall, `koko-eating-bananas`' feasibility check scans every pile), so a longer array
+  directly means more steps per binary-search round. Partition-based binary search across
+  two arrays has no such inner scan — each round does exactly four boundary lookups
+  regardless of array length, so total steps are `O(log(min(n1,n2)))` rounds, not
+  `O(n)`. `stepCountGrowsWithInput`'s auto-grower (`TracerContractTest.growList`) always
+  prepends smaller values below the existing first element for a `.sorted()` field, and
+  for a partition search that specific reshaping can converge in *fewer* rounds than the
+  original values did — round count here depends on where the correct cut falls, not
+  simply on array length, so growing the array is not guaranteed to add rounds the way it
+  would for a per-element scan.
+- **Resolution:** chose each tracer's default input by hand-simulating `growList`'s exact
+  transformation in Python first and picking a default whose auto-grown counterpart
+  provably takes more rounds (not just a larger array) — see
+  `MedianTwoSortedArraysTracer`/`KthElementTwoSortedArraysTracer`'s defaults, verified
+  against a Python port of `growList` before writing any Java. The chosen defaults no
+  longer double as the cleanest LeetCode examples; a code comment was not enough context,
+  so this entry carries the reasoning instead.
+- **Regression guard:** `TracerContractTest.stepCountGrowsWithInput` already existed and
+  caught this before either tracer was committed — no new test was needed. The guidance
+  for the next partition-based tracer (e.g. `matrix-median`, still untraced): hand-simulate
+  `growList`'s transformation against candidate defaults *before* committing to one, the
+  same way anchor coverage is hand-verified — round count for this algorithm shape is a
+  property of the specific values, not the array length alone.
