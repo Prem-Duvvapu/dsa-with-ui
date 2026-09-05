@@ -44,7 +44,8 @@ class TreeServiceTest {
         Set<String> retired = Set.of("tree-preorder", "tree-inorder", "tree-postorder",
                 "tree-level-order", "tree-max-path-sum", "serialize-deserialize-bt",
                 "zigzag-traversal", "tree-lca",
-                "tree-burn-time", "vertical-order-traversal");
+                "tree-burn-time", "vertical-order-traversal",
+                "morris-inorder", "correct-bst-swap");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

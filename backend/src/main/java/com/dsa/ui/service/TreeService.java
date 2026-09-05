@@ -45,6 +45,12 @@ public class TreeService implements ProblemProvider {
             case "tree-burn-time":
             case "vertical-order-traversal":
                 throw new LegacyTraceRetiredException(problemId);
+            // morris-inorder and correct-bst-swap have real tracers (tracer/impl) now.
+            // Neither had a case at all, silently falling to default:. Refuse rather
+            // than serve an unrelated preorder walk under either id.
+            case "morris-inorder":
+            case "correct-bst-swap":
+                throw new LegacyTraceRetiredException(problemId);
             case "tree-height": return generatePreorderSteps();
             case "tree-balanced": return generatePreorderSteps();
             case "tree-diameter": return generatePreorderSteps();
