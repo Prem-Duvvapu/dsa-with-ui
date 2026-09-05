@@ -55,6 +55,7 @@ public class DpService implements ProblemProvider {
             case "coin-change-2":
             case "edit-distance":
             case "wildcard-matching":
+            case "ninja-and-his-friends":
                 throw new LegacyTraceRetiredException(problemId);
             case "longest-common-subsequence": return generateLcsSteps();
             default: return generateClimbingStairsSteps();
@@ -242,7 +243,7 @@ public class DpService implements ProblemProvider {
                     "count-subsets-with-sum-k", "count-partitions-given-diff",
                     "minimum-coins-dp", "coin-change-2",
                     "matrix-chain-multiplication", "burst-balloons", "unbounded-knapsack",
-                    "edit-distance", "wildcard-matching" ->
+                    "edit-distance", "wildcard-matching", "ninja-and-his-friends" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;
