@@ -176,7 +176,7 @@ them means moving problems between services.
 `check-sorted-ii`, `combination-sum-i`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
-`find-min-rotated-sorted`,
+`find-min-rotated-sorted`, `four-sum`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
 `kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
 `ninjas-training`,
@@ -190,7 +190,7 @@ them means moving problems between services.
 `serialize-deserialize-bt`, `shortest-palindrome`,
 `single-element-sorted`, `single-number`,
 `sort-0-1-2`,
-`stock-buy-sell`, `subsets-i`, `sudoku-solver`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
+`stock-buy-sell`, `subsets-i`, `sudoku-solver`, `three-sum`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, `upper-bound`,
 `z-function-algo`, and `zigzag-traversal`.

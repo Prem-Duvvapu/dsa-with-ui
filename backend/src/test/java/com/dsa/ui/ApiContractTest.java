@@ -102,7 +102,8 @@ class ApiContractTest {
             "subsets-i", "combination-sum-i",
             "z-function-algo", "kmp-lps-algo",
             "shortest-palindrome", "longest-happy-prefix",
-            "repeating-missing-number", "merge-two-sorted-arrays");
+            "repeating-missing-number", "merge-two-sorted-arrays",
+            "three-sum", "four-sum");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -241,6 +242,8 @@ class ApiContractTest {
                 arguments("/api/arrays", "longest-subarray-sum-k-positives"),
                 arguments("/api/arrays", "repeating-missing-number"),
                 arguments("/api/arrays", "merge-two-sorted-arrays"),
+                arguments("/api/arrays", "three-sum"),
+                arguments("/api/arrays", "four-sum"),
                 arguments("/api/dp", "minimum-coins-dp"),
                 arguments("/api/dp", "coin-change-2"));
     }

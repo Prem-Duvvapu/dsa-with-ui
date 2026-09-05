@@ -58,7 +58,9 @@ public class ArrayServiceTest {
                 "sort-0-1-2",
                 "next-permutation",
                 "repeating-missing-number",
-                "merge-two-sorted-arrays");
+                "merge-two-sorted-arrays",
+                "three-sum",
+                "four-sum");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
