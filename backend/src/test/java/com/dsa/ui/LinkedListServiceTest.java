@@ -37,7 +37,8 @@ public class LinkedListServiceTest {
     @Test
     public void testGenerateStepsForAllLinkedListProblems() {
         Set<String> retired = Set.of("reverse-linked-list",
-                "find-starting-point-loop", "reverse-ll-group-k");
+                "find-starting-point-loop", "reverse-ll-group-k",
+                "flattening-ll", "clone-ll-random-pointer");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

@@ -1,0 +1,1158 @@
+{
+  "anchors" : {
+    "createClone" : 5,
+    "done" : 19,
+    "init" : 2,
+    "pass2Start" : 10,
+    "wireNext" : 12,
+    "wireRandom" : 15
+  },
+  "code" : "public Node copyRandomList(Node head) {\n    Map<Node, Node> clones = new LinkedHashMap<>();\n    Node curr = head;\n    while (curr != null) {\n        clones.put(curr, new Node(curr.val));\n        curr = curr.next;\n    }\n    curr = head;\n    while (curr != null) {\n        Node clone = clones.get(curr);\n        if (curr.next != null) {\n            clone.next = clones.get(curr.next);\n        }\n        if (curr.random != null) {\n            clone.random = clones.get(curr.random);\n        }\n        curr = curr.next;\n    }\n    return clones.get(head);\n}",
+  "problemId" : "clone-ll-random-pointer",
+  "resolvedInput" : {
+    "nodes" : [ [ 7, -1 ], [ 13, 0 ], [ 11, 4 ], [ 10, 2 ], [ 1, 0 ] ]
+  },
+  "stepCount" : 20,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Walk the original list once, creating an empty clone for each of its 5 nodes.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Create a clone of node 0 (val 7).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cloned" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "Create a clone of node 1 (val 13).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cloned" : "13"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Create a clone of node 2 (val 11).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cloned" : "11"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "Create a clone of node 3 (val 10).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cloned" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "?",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "Create a clone of node 4 (val 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cloned" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Look up the clone for original node 0 (val 7); wire its pointers to other clones only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "clone(7).next = clone(13).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "next" : "13"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "Look up the clone for original node 1 (val 13); wire its pointers to other clones only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "13"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "clone(13).next = clone(11).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "next" : "11"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 15,
+    "description" : "clone(13).random = clone(7), following the original's own random pointer.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "random" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 10,
+    "description" : "Look up the clone for original node 2 (val 11); wire its pointers to other clones only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "11"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 12,
+    "description" : "clone(11).next = clone(10).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "next" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "clone(11).random = clone(1), following the original's own random pointer.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "random" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 4,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 10,
+    "description" : "Look up the clone for original node 3 (val 10); wire its pointers to other clones only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 12,
+    "description" : "clone(10).next = clone(1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "next" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 15,
+    "description" : "clone(10).random = clone(11), following the original's own random pointer.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "random" : "11"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 2,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 10,
+    "description" : "Look up the clone for original node 4 (val 1); wire its pointers to other clones only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 15,
+    "description" : "clone(1).random = clone(7), following the original's own random pointer.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "random" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 19,
+    "description" : "Both passes complete — the clone list is fully wired and shares no node with the original.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "7",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "13",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "11",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "10",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : 0,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
