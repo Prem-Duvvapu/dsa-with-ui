@@ -175,6 +175,7 @@ them means moving problems between services.
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `check-sorted-ii`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
+`find-min-rotated-sorted`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
 `kadane-algo`, `lower-bound`, `minimum-falling-path-sum`,
 `ninjas-training`,
@@ -184,7 +185,8 @@ them means moving problems between services.
 `max-sum-non-adjacent`, `move-zeros-end`,
 `n-meetings-in-one-room`, `next-permutation`, `number-of-islands`, `print-lis`,
 `remove-duplicates-sorted`,
-`reverse-linked-list`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`, `single-number`,
+`reverse-linked-list`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`,
+`single-element-sorted`, `single-number`,
 `sort-0-1-2`,
 `stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
 `triangle-min-path-sum`, `two-sum`, `unique-paths-2`, and `upper-bound`.
