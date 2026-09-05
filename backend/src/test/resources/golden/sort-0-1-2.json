@@ -1,0 +1,351 @@
+{
+  "anchors" : {
+    "done" : 14,
+    "init" : 2,
+    "one" : 8,
+    "two" : 10,
+    "zero" : 5
+  },
+  "code" : "public void sortColors(int[] nums) {\n    int low = 0, mid = 0, high = nums.length - 1;\n    while (mid <= high) {\n        if (nums[mid] == 0) {\n            int temp = nums[low]; nums[low] = nums[mid]; nums[mid] = temp;\n            low++; mid++;\n        } else if (nums[mid] == 1) {\n            mid++;\n        } else {\n            int temp = nums[mid]; nums[mid] = nums[high]; nums[high] = temp;\n            high--;\n        }\n    }\n}",
+  "problemId" : "sort-0-1-2",
+  "resolvedInput" : {
+    "nums" : [ 2, 0, 2, 1, 1, 0 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "low and mid start at 0, high at the last index (5). Invariant: [0,low) holds only 0s and [low,mid) only 1s - both empty so far - and (high,n) will hold only 2s.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5",
+      "low" : "0",
+      "mid" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "nums[0]=2 belongs in the 2-region - swap it with nums[5], then shrink high. mid does not advance: the value just swapped in from the high end is still unexamined.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5",
+      "mid" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "nums[0]=0 belongs in the 0-region - swap it with nums[0], then advance both low and mid.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "0",
+      "mid" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "nums[1]=0 belongs in the 0-region - swap it with nums[1], then advance both low and mid.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "1",
+      "mid" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "nums[2]=2 belongs in the 2-region - swap it with nums[4], then shrink high. mid does not advance: the value just swapped in from the high end is still unexamined.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "nums[2]=1 is already in the 1-region - just advance mid.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "nums[3]=1 is already in the 1-region - just advance mid.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "mid" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "mid has passed high, so every index is in its region. Result: [0, 0, 1, 1, 2, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[0, 0, 1, 1, 2, 2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

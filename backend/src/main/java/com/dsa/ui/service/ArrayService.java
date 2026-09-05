@@ -47,15 +47,17 @@ public class ArrayService implements ProblemProvider {
             // rather than let default: serve largest-element's steps under these ids.
             case "count-inversions":
             case "reverse-pairs":
+            // sort-0-1-2 and next-permutation have real tracers (tracer/impl). Refuse
+            // rather than let default: serve largest-element's steps under these ids.
+            case "sort-0-1-2":
+            case "next-permutation":
                 throw new LegacyTraceRetiredException(problemId);
             case "union-sorted-arrays": return generateUnionSortedArraysSteps();
             case "longest-subarray-sum-k": return generateLongestSubarraySumKSteps();
             case "two-sum": return generateTwoSumSteps();
-            case "sort-0-1-2": return generateSort012Steps();
             case "kadane-algo": return generateKadaneSteps();
             case "print-max-subarray": return generatePrintMaxSubarraySteps();
             case "rearrange-by-sign": return generateRearrangeBySignSteps();
-            case "next-permutation": return generateNextPermutationSteps();
             case "longest-consecutive-sequence": return generateLongestConsecutiveSteps();
             case "set-matrix-zeroes": return generateSetMatrixZeroesSteps();
             case "rotate-matrix-90": return generateRotateMatrixSteps();
@@ -1470,60 +1472,6 @@ public class ArrayService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateSort012Steps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{2, 0, 2, 1, 1, 0};
-        int low = 0, mid = 0, high = nums.length - 1;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Dutch National Flag Algorithm: Maintain 3 pointers low=0, mid=0, high=5. Invariants: [0..low-1]=0s, [low..mid-1]=1s, [high+1..n-1]=2s.",
-            List.of(), Map.of(), List.of(), Map.of("low", "0", "mid", "0", "high", "5"),
-            "Array", null, createArrayState(nums, mid, high), null, null
-        ));
-
-        while (mid <= high) {
-            if (nums[mid] == 0) {
-                int temp = nums[low]; nums[low] = nums[mid]; nums[mid] = temp;
-                steps.add(new ExecutionStep(
-                    stepNum++, 7,
-                    String.format("nums[mid=%d] == 0: Swap nums[low=%d] (%d) and nums[mid=%d] (%d). Increment low++, mid++. Array: %s.", mid, low, temp, mid, nums[low], Arrays.toString(nums)),
-                    List.of(), Map.of(), List.of(), Map.of("low", String.valueOf(low + 1), "mid", String.valueOf(mid + 1), "high", String.valueOf(high)),
-                    "Array", null, createArrayState(nums, low, mid), null, null
-                ));
-                low++; mid++;
-            } else if (nums[mid] == 1) {
-                steps.add(new ExecutionStep(
-                    stepNum++, 10,
-                    String.format("nums[mid=%d] == 1: Element 1 is already in correct region [low..mid-1]. Increment mid++.", mid),
-                    List.of(), Map.of(), List.of(), Map.of("mid", String.valueOf(mid + 1)),
-                    "Array", null, createArrayState(nums, mid, -1), null, null
-                ));
-                mid++;
-            } else { // nums[mid] == 2
-                int temp = nums[mid]; nums[mid] = nums[high]; nums[high] = temp;
-                steps.add(new ExecutionStep(
-                    stepNum++, 13,
-                    String.format("nums[mid=%d] == 2: Swap nums[mid=%d] (%d) and nums[high=%d] (%d). Decrement high--. Array: %s.", mid, mid, temp, high, nums[mid], Arrays.toString(nums)),
-                    List.of(), Map.of(), List.of(), Map.of("high", String.valueOf(high - 1)),
-                    "Array", null, createArrayState(nums, mid, high), null, null
-                ));
-                high--;
-            }
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 16,
-            "Dutch National Flag Complete! Array is sorted in single pass O(N) time: [0, 0, 1, 1, 2, 2].",
-            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[0, 0, 1, 1, 2, 2]"),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        return steps;
-    }
-
-
     private List<ExecutionStep> generateKadaneSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
@@ -1710,64 +1658,6 @@ public class ArrayService implements ProblemProvider {
             String.format("Rearrange Complete! Final rearranged output: %s.", Arrays.toString(ans)),
             List.of(), Map.of(), List.of(), Map.of("Status", "Rearranged", "Output", Arrays.toString(ans)),
             "Array", null, createArrayState(ans, -1, -1), null, null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateNextPermutationSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 2, 3, 5, 4, 2};
-        int n = nums.length;
-        int ind = -1;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Next Permutation: Step 1 - Scan right-to-left to find first breakpoint index where nums[i] < nums[i+1]. Input: [1, 2, 3, 5, 4, 2].",
-            List.of(), Map.of(), List.of(), Map.of("N", "6"),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        for (int i = n - 2; i >= 0; i--) {
-            if (nums[i] < nums[i + 1]) {
-                ind = i;
-                steps.add(new ExecutionStep(
-                    stepNum++, 7,
-                    String.format("Breakpoint Found: nums[i=%d] (%d) < nums[i+1=%d] (%d). Set breakpoint index ind = %d.", i, nums[i], i + 1, nums[i + 1], ind),
-                    List.of(), Map.of(), List.of(), Map.of("ind", String.valueOf(ind), "val", String.valueOf(nums[ind])),
-                    "Array", null, createArrayState(nums, ind, -1), null, null
-                ));
-                break;
-            }
-        }
-
-        if (ind != -1) {
-            for (int i = n - 1; i > ind; i--) {
-                if (nums[i] > nums[ind]) {
-                    int temp = nums[i]; nums[i] = nums[ind]; nums[ind] = temp;
-                    steps.add(new ExecutionStep(
-                        stepNum++, 13,
-                        String.format("Step 2 - Swap with next greater: Swap nums[ind=%d] (%d) with nums[%d] (%d). Array: %s.", ind, temp, i, nums[ind], Arrays.toString(nums)),
-                        List.of(), Map.of(), List.of(), Map.of("swapped", String.format("nums[%d] <-> nums[%d]", ind, i)),
-                        "Array", null, createArrayState(nums, ind, i), null, null
-                    ));
-                    break;
-                }
-            }
-        }
-
-        int l = ind + 1, r = n - 1;
-        while (l < r) {
-            int temp = nums[l]; nums[l] = nums[r]; nums[r] = temp;
-            l++; r--;
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 17,
-            String.format("Step 3 - Reverse Suffix [ind+1..n-1]: Reversing suffix creates lexicographically smallest next permutation: %s.", Arrays.toString(nums)),
-            List.of(), Map.of(), List.of(), Map.of("Next Permutation", Arrays.toString(nums)),
-            "Array", null, createRangeArrayState(nums, ind + 1, n - 1), null, null
         ));
 
         return steps;
