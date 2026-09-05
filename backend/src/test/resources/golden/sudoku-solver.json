@@ -1,0 +1,353 @@
+{
+  "anchors" : {
+    "backtrack" : 20,
+    "conflict" : 13,
+    "deadEnd" : 21,
+    "done" : 8,
+    "place" : 16,
+    "propagate" : 17
+  },
+  "code" : "public boolean solveSudoku(int[][] board) {\n    return solve(board);\n}\n\nprivate boolean solve(int[][] board) {\n    int[] empty = findEmpty(board);\n    if (empty == null) {\n        return true;\n    }\n    int row = empty[0], col = empty[1];\n    for (int digit = 1; digit <= 9; digit++) {\n        if (!isValid(board, row, col, digit)) {\n            continue;\n        }\n        board[row][col] = digit;\n        if (solve(board)) {\n            return true;\n        }\n        board[row][col] = 0;\n    }\n    return false;\n}",
+  "problemId" : "sudoku-solver",
+  "resolvedInput" : {
+    "puzzle" : "..4678912.72195348198342567859761423426853791713924856961537284287419635345286179"
+  },
+  "stepCount" : 18,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 13,
+    "description" : "1 at (0,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "2 at (0,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "3 at (0,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "3",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 13,
+    "description" : "4 at (0,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "4",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 16,
+    "description" : "5 at (0,0) breaks no row, column, or box rule - place it and move to the next empty cell.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "5",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 0, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "1 at (0,1) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "digit" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 0, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 13,
+    "description" : "2 at (0,1) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "digit" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 0, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "3 at (0,1) breaks no row, column, or box rule - place it and move to the next empty cell.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "digit" : "3",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "1 at (1,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "1",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "2 at (1,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "3 at (1,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "3",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "4 at (1,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "4",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "5 at (1,0) repeats in its row, column, or 3x3 box - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "5",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 0, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 16,
+    "description" : "6 at (1,0) breaks no row, column, or box rule - place it and move to the next empty cell.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "digit" : "6",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 6, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 8,
+    "description" : "No empty cell remains - the puzzle is solved.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 6, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 17,
+    "description" : "The rest of the board completed with 6 still at (1,0) - keep it and report success upward.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 6, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 17,
+    "description" : "The rest of the board completed with 3 still at (0,1) - keep it and report success upward.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 6, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 17,
+    "description" : "The rest of the board completed with 5 still at (0,0) - keep it and report success upward.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 5, 3, 4, 6, 7, 8, 9, 1, 2 ], [ 6, 7, 2, 1, 9, 5, 3, 4, 8 ], [ 1, 9, 8, 3, 4, 2, 5, 6, 7 ], [ 8, 5, 9, 7, 6, 1, 4, 2, 3 ], [ 4, 2, 6, 8, 5, 3, 7, 9, 1 ], [ 7, 1, 3, 9, 2, 4, 8, 5, 6 ], [ 9, 6, 1, 5, 3, 7, 2, 8, 4 ], [ 2, 8, 7, 4, 1, 9, 6, 3, 5 ], [ 3, 4, 5, 2, 8, 6, 1, 7, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

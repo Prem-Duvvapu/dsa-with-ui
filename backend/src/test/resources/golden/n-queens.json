@@ -1,0 +1,1436 @@
+{
+  "anchors" : {
+    "backtrack" : 20,
+    "conflict" : 15,
+    "done" : 5,
+    "placeQueen" : 18,
+    "solutionFound" : 10
+  },
+  "code" : "public List<List<String>> solveNQueens(int n) {\n    List<List<String>> solutions = new ArrayList<>();\n    boolean[][] board = new boolean[n][n];\n    place(0, board, solutions, n);\n    return solutions;\n}\n\nprivate void place(int col, boolean[][] board, List<List<String>> solutions, int n) {\n    if (col == n) {\n        solutions.add(snapshot(board, n));\n        return;\n    }\n    for (int row = 0; row < n; row++) {\n        if (!isSafe(board, row, col, n)) {\n            continue;\n        }\n        board[row][col] = true;\n        place(col + 1, board, solutions, n);\n        board[row][col] = false;\n    }\n}",
+  "problemId" : "n-queens",
+  "resolvedInput" : {
+    "n" : 4
+  },
+  "stepCount" : 79,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 18,
+    "description" : "Row 0 in column 0 is safe - place a queen there and recurse into column 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "Row 2 in column 1 is safe - place a queen there and recurse into column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (2,1) - column 1 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 18,
+    "description" : "Row 3 in column 1 is safe - place a queen there and recurse into column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 18,
+    "description" : "Row 1 in column 2 is safe - place a queen there and recurse into column 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (1,2) - column 2 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (3,1) - column 1 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (0,0) - column 0 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 18,
+    "description" : "Row 1 in column 0 is safe - place a queen there and recurse into column 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 18,
+    "description" : "Row 3 in column 1 is safe - place a queen there and recurse into column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 18,
+    "description" : "Row 0 in column 2 is safe - place a queen there and recurse into column 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 18,
+    "description" : "Row 2 in column 3 is safe - place a queen there and recurse into column 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 10,
+    "description" : "Column 4 reached with every earlier queen placed safely - arrangement #1 recorded.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "solutions" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (2,3) - column 3 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (0,2) - column 2 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (3,1) - column 1 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (1,0) - column 0 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 18,
+    "description" : "Row 2 in column 0 is safe - place a queen there and recurse into column 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 18,
+    "description" : "Row 0 in column 1 is safe - place a queen there and recurse into column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 45,
+    "activeLine" : 18,
+    "description" : "Row 3 in column 2 is safe - place a queen there and recurse into column 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 46,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 47,
+    "activeLine" : 18,
+    "description" : "Row 1 in column 3 is safe - place a queen there and recurse into column 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 1 ], [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 48,
+    "activeLine" : 10,
+    "description" : "Column 4 reached with every earlier queen placed safely - arrangement #2 recorded.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "solutions" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 1 ], [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 49,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (1,3) - column 3 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 50,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 51,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 52,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (3,2) - column 2 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 53,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (0,1) - column 1 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 54,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 55,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 56,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 57,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (2,0) - column 0 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 58,
+    "activeLine" : 18,
+    "description" : "Row 3 in column 0 is safe - place a queen there and recurse into column 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 59,
+    "activeLine" : 18,
+    "description" : "Row 0 in column 1 is safe - place a queen there and recurse into column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 60,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 61,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 62,
+    "activeLine" : 18,
+    "description" : "Row 2 in column 2 is safe - place a queen there and recurse into column 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 63,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 64,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 65,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 66,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 67,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (2,2) - column 2 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 68,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 69,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (0,1) - column 1 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 70,
+    "activeLine" : 18,
+    "description" : "Row 1 in column 1 is safe - place a queen there and recurse into column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 71,
+    "activeLine" : 15,
+    "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 72,
+    "activeLine" : 15,
+    "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 73,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 74,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 75,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (1,1) - column 1 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 76,
+    "activeLine" : 15,
+    "description" : "Row 2 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 77,
+    "activeLine" : 15,
+    "description" : "Row 3 in column 1 shares a row or diagonal with an earlier queen - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 78,
+    "activeLine" : 20,
+    "description" : "Remove the queen at (3,0) - column 0 still has other rows left to try.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 79,
+    "activeLine" : 5,
+    "description" : "Every column exhausted. 2 distinct arrangements found for 4 queens.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "solutions" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

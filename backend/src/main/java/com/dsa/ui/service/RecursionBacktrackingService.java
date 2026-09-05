@@ -27,9 +27,14 @@ public class RecursionBacktrackingService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "n-queens": return generateNQueensSteps();
+            // n-queens and sudoku-solver have real tracers now (tracer/impl). Their
+            // generators are gone; refusing loudly beats falling into default: (or, for
+            // n-queens, the many unrelated ids below that already borrow its generator
+            // as a filler) and serving another problem's animation.
+            case "n-queens":
+            case "sudoku-solver":
+                throw new LegacyTraceRetiredException(problemId);
             case "rat-in-a-maze": return generateRatInMazeSteps();
-            case "sudoku-solver": return generateSudokuSteps();
             case "m-coloring": return generateMColoringSteps();
             case "palindrome-partitioning": return generatePalindromePartitioningSteps();
             case "subsets-i": return generateSubsetsSteps();
@@ -197,12 +202,6 @@ public class RecursionBacktrackingService implements ProblemProvider {
     private List<ExecutionStep> generateRatInMazeSteps() {
         ListTraceRecorder recorder = new ListTraceRecorder();
         new RatInMaze().solve(createMazeGrid(), recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateSudokuSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new SudokuSolver().solve(createSudokuGrid(), recorder);
         return recorder.toExecutionSteps();
     }
 

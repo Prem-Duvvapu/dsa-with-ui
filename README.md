@@ -184,13 +184,13 @@ them means moving problems between services.
 `lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
 `majority-element`, `matrix-chain-multiplication`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
 `max-sum-non-adjacent`, `move-zeros-end`,
-`n-meetings-in-one-room`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `print-lis`,
+`n-meetings-in-one-room`, `n-queens`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `print-lis`,
 `remove-duplicates-sorted`,
 `reverse-linked-list`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`,
 `serialize-deserialize-bt`,
 `single-element-sorted`, `single-number`,
 `sort-0-1-2`,
-`stock-buy-sell`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
+`stock-buy-sell`, `sudoku-solver`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, `upper-bound`, and `zigzag-traversal`.
 

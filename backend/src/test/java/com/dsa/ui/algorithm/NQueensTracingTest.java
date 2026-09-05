@@ -2,6 +2,7 @@ package com.dsa.ui.algorithm;
 
 import com.dsa.ui.algorithm.backtracking.NQueens;
 import com.dsa.ui.model.ExecutionStep;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.RecursionBacktrackingService;
 import com.dsa.ui.trace.ListTraceRecorder;
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,8 @@ public class NQueensTracingTest {
     @Test
     void testServiceNQueensExecutionSteps() {
         RecursionBacktrackingService service = new RecursionBacktrackingService();
-        List<ExecutionStep> steps = service.generateSteps("n-queens");
-        assertNotNull(steps);
-        assertTrue(steps.size() > 40, "Service should return full execution steps for N-Queens");
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("n-queens"),
+                "n-queens is traced by the v2 layer and must not fall back");
     }
 }
