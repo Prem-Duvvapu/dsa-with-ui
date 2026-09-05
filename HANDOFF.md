@@ -1,13 +1,13 @@
 # DSA Visualizer — handoff prompts for remaining work
 
-> **Current status — 2026-08-31.** The snapshots embedded in the original prompts below are
-> historical. The live system has 433 unique catalogue ids and 44 tracers; the frontend uses
+> **Current status — 2026-09-05.** The snapshots embedded in the original prompts below are
+> historical. The live system has 433 unique catalogue ids and 109 tracers; the frontend uses
 > the v2 `/api/problems` API. Prompt E Phase 0 (closed `DsType` registry) and Phase 1
 > (trace-owned tree/graph topology) are complete, and its Phase 2 wire contract is complete.
 > The three LIS tracers and `DpTableCanvas` are an intentional partial delivery of Phases 3/4.
 > Dedicated canvases/retagging for the other types, `CaptureStrip` Phase 5, and the remaining
-> tracer migration are still open. Trie transport exists, but activation is blocked on the
-> backend/canvas shape mismatch recorded in `RCA.md`. Read live counts from
+> tracer migration are still open. `RCA-012` (trie canvas/backend shape mismatch) is resolved
+> — Tries & Prefixes is fully traced (2/2). Read live counts from
 > `GET /api/problems/stats`; do not treat old counts below as current claims.
 
 > ## ⚠️ TEMPORARY — delete this file when the work is done
@@ -20,7 +20,7 @@
 > **Delete it once PROMPT D is complete.** Prompt D's checklist includes doing so.
 > Anything here still worth keeping by then belongs in `README.md` or `plan.md` instead.
 >
-> Snapshot taken at: 433 catalogued / 8 traced, on `main` at `a5970fb`. If those numbers
+> Snapshot taken at: 433 catalogued / 109 traced, on `main` at `2bfe62a`. If those numbers
 > no longer match `GET /api/problems/stats`, treat this file with suspicion.
 
 Five prompts. **Z is done** — CI runs on every push and PR, and branch protection
