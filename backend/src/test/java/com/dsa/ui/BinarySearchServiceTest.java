@@ -36,7 +36,7 @@ public class BinarySearchServiceTest {
 
     @Test
     public void testGenerateStepsForAllBinarySearchProblems() {
-        Set<String> retired = Set.of("search-rotated-sorted");
+        Set<String> retired = Set.of("search-rotated-sorted", "lower-bound");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

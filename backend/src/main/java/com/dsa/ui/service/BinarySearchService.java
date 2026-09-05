@@ -26,7 +26,10 @@ public class BinarySearchService implements ProblemProvider {
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
             case "binary-search-1d": return generateBs1dSteps();
-            case "lower-bound": return generateLowerBoundSteps();
+            // lower-bound has a real tracer (tracer/impl). Refuse rather than let default:
+            // serve binary-search-1d's steps under this id.
+            case "lower-bound":
+                throw new LegacyTraceRetiredException(problemId);
             case "upper-bound": return generateUpperBoundSteps();
             case "search-insert-position": return generateSearchInsertSteps();
             case "floor-ceil-sorted-array": return generateFloorCeilSteps();
@@ -426,7 +429,6 @@ public class BinarySearchService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateLowerBoundSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateUpperBoundSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSearchInsertSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateFloorCeilSteps() { return generateBs1dSteps(); }
