@@ -62,7 +62,9 @@ public class DpServiceTest {
                 "count-subsets-with-sum-k",
                 "count-partitions-given-diff",
                 "minimum-coins-dp",
-                "coin-change-2");
+                "coin-change-2",
+                "edit-distance",
+                "wildcard-matching");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
