@@ -27,11 +27,13 @@ public class StackQueueService implements ProblemProvider {
         switch (problemId) {
             case "balanced-parentheses": return generateBalancedParenthesesSteps();
             case "next-greater-element-1": return generateNextGreaterElementSteps();
-            // trapping-rainwater and largest-rectangle-histogram have real tracers
-            // (tracer/impl). Refuse rather than let default: serve
-            // balanced-parentheses's steps under these ids.
+            // trapping-rainwater, largest-rectangle-histogram, next-greater-element-2,
+            // and asteroid-collision have real tracers (tracer/impl). Refuse rather than
+            // let default: serve balanced-parentheses's steps under these ids.
             case "trapping-rainwater":
             case "largest-rectangle-histogram":
+            case "next-greater-element-2":
+            case "asteroid-collision":
                 throw new LegacyTraceRetiredException(problemId);
             case "lru-cache": return generateLruCacheSteps();
             default: return generateBalancedParenthesesSteps();
