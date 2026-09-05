@@ -1,0 +1,133 @@
+{
+  "anchors" : {
+    "checkBreak" : 8,
+    "checkSwap" : 20,
+    "done" : 24,
+    "foundBreak" : 5,
+    "foundSwap" : 17,
+    "noBreak" : 12,
+    "reverseSuffix" : 23
+  },
+  "code" : "public void nextPermutation(int[] nums) {\n    int n = nums.length, ind = -1;\n    for (int i = n - 2; i >= 0; i--) {\n        if (nums[i] < nums[i + 1]) {\n            ind = i;\n            break;\n        } else {\n            continue;\n        }\n    }\n    if (ind == -1) {\n        reverse(nums, 0, n - 1);\n        return;\n    }\n    for (int i = n - 1; i > ind; i--) {\n        if (nums[i] > nums[ind]) {\n            swap(nums, i, ind);\n            break;\n        } else {\n            continue;\n        }\n    }\n    reverse(nums, ind + 1, n - 1);\n    return;\n}",
+  "problemId" : "next-permutation",
+  "resolvedInput" : {
+    "nums" : [ 3, 2, 1 ]
+  },
+  "stepCount" : 4,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "nums[1]=2 >= nums[2]=1 - still non-increasing here, keep scanning left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "nums[0]=3 >= nums[1]=2 - still non-increasing here, keep scanning left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "No ascent exists anywhere: the array is strictly non-increasing, so it is already the last permutation. Reverse the whole array to wrap around to the first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 24,
+    "description" : "Wrapped to the first permutation: [1, 2, 3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 3]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

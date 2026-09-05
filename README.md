@@ -181,8 +181,10 @@ them means moving problems between services.
 `lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
 `majority-element`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
 `max-sum-non-adjacent`, `move-zeros-end`,
-`n-meetings-in-one-room`, `number-of-islands`, `print-lis`, `remove-duplicates-sorted`,
+`n-meetings-in-one-room`, `next-permutation`, `number-of-islands`, `print-lis`,
+`remove-duplicates-sorted`,
 `reverse-linked-list`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`, `single-number`,
+`sort-0-1-2`,
 `stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
 `triangle-min-path-sum`, `two-sum`, `unique-paths-2`, and `upper-bound`.
 

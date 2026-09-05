@@ -54,7 +54,9 @@ public class ArrayServiceTest {
                 "leaders-in-array",
                 "longest-subarray-sum-k-positives",
                 "count-inversions",
-                "reverse-pairs");
+                "reverse-pairs",
+                "sort-0-1-2",
+                "next-permutation");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
