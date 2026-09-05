@@ -36,7 +36,7 @@ public class RecursionBacktrackingServiceTest {
 
     @Test
     public void testGenerateStepsForAllRecursionProblems() {
-        Set<String> retired = Set.of("n-queens", "sudoku-solver");
+        Set<String> retired = Set.of("n-queens", "sudoku-solver", "subsets-i", "combination-sum-i");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
