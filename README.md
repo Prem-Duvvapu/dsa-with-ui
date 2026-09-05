@@ -180,7 +180,7 @@ them means moving problems between services.
 `find-min-rotated-sorted`, `find-starting-point-loop`, `four-sum`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
 `kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
-`ninjas-training`,
+`ninja-and-his-friends`, `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-happy-prefix`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
 `lru-cache`,
@@ -198,7 +198,7 @@ them means moving problems between services.
 `vertical-order-traversal`, `wildcard-matching`,
 `z-function-algo`, and `zigzag-traversal`.
 
-Fifteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
+Sixteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
 variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,
 `max-sum-non-adjacent`, `house-robber-2`, `grid-unique-paths`, `unique-paths-2`,
 `minimum-falling-path-sum`, `triangle-min-path-sum` and `ninjas-training`. The five
@@ -221,7 +221,13 @@ two **string-alignment** tables: row and column are labelled by the two input st
 own characters rather than indices, and a mismatch cell in `edit-distance` compares all
 three neighbours at once (replace, delete, insert) to say which was actually cheapest,
 while `wildcard-matching`'s `*` cells are the only ones in any traced table whose value is
-an OR of two predecessors rather than a single read. Migrated ids answer
+an OR of two predecessors rather than a single read. `ninja-and-his-friends` is the only
+genuinely **3D** DP problem traced so far — state is `(row, col1, col2)`, which does not fit
+a single 2D `DpTable` — so each step instead shows a col1-by-col2 **slice** for the row
+currently being computed, with the row index driving which slice is on screen counting down
+from the last row to row 0; a slice reads only the previous row's finished values (named in
+the narration, since that table has already been retired from view) and is never a fixed
+narration for a fixed shape. Migrated ids answer
 **410 Gone** on their old execute endpoint rather than risking a substitute trace.
 
 `lru-cache` is the first traced problem whose input is a *sequence of operations* on one
