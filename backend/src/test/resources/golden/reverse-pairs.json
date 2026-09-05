@@ -1,0 +1,1676 @@
+{
+  "anchors" : {
+    "advanceRight" : 19,
+    "base" : 7,
+    "done" : 3,
+    "mergeCompare" : 29,
+    "mergeTakeLeft" : 30,
+    "mergeTakeRight" : 32,
+    "mergeWriteback" : 38,
+    "split" : 8,
+    "tally" : 20
+  },
+  "code" : "public int reversePairs(int[] a, int n) {\n    int total = mergeSort(a, 0, n - 1);\n    return total;\n}\n\nprivate int mergeSort(int[] a, int low, int high) {\n    if (low >= high) return 0;\n    int mid = (low + high) / 2;\n    int cnt = mergeSort(a, low, mid);\n    cnt += mergeSort(a, mid + 1, high);\n    cnt += countPairs(a, low, mid, high);\n    merge(a, low, mid, high);\n    return cnt;\n}\n\nprivate int countPairs(int[] a, int low, int mid, int high) {\n    int cnt = 0, right = mid + 1;\n    for (int i = low; i <= mid; i++) {\n        while (right <= high && a[i] > 2 * a[right]) right++;\n        cnt += (right - (mid + 1));\n    }\n    return cnt;\n}\n\nprivate void merge(int[] a, int low, int mid, int high) {\n    List<Integer> temp = new ArrayList<>();\n    int left = low, right = mid + 1;\n    while (left <= mid && right <= high) {\n        if (a[left] <= a[right]) {\n            temp.add(a[left++]);\n        } else {\n            temp.add(a[right++]);\n        }\n    }\n    while (left <= mid) temp.add(a[left++]);\n    while (right <= high) temp.add(a[right++]);\n    for (int i = low; i <= high; i++) a[i] = temp.get(i - low);\n}",
+  "problemId" : "reverse-pairs",
+  "resolvedInput" : {
+    "nums" : [ 1, 3, 2, 3, 1 ]
+  },
+  "stepCount" : 44,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "Split [0,4] at mid=2 into two already-independent halves [0,2] and [3,4].",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "0",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "Split [0,2] at mid=1 into two already-independent halves [0,1] and [2,2].",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "0",
+      "mid" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Split [0,1] at mid=0 into two already-independent halves [0,0] and [1,1].",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "0",
+      "mid" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Range [0,0] holds a single element - nothing to pair.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Range [1,1] holds a single element - nothing to pair.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "a[0]=1 beats none of the right half yet at index 1 (a[1]=3), so right stays put.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "right" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 20,
+    "description" : "a[0]=1 pairs with 0 elements on the right (indices 1..0) - running total 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "0",
+      "runningCount" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 29,
+    "description" : "Merging [0,1]: compare a[0]=1 against a[1]=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 30,
+    "description" : "1 <= 3, take a[0]=1 from the left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 38,
+    "description" : "[0,1] merged in sorted order.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)", "reversePairs(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 7,
+    "description" : "Range [2,2] holds a single element - nothing to pair.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 19,
+    "description" : "a[0]=1 beats none of the right half yet at index 2 (a[2]=2), so right stays put.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 20,
+    "description" : "a[0]=1 pairs with 0 elements on the right (indices 2..1) - running total 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "0",
+      "runningCount" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 19,
+    "description" : "a[1]=3 beats none of the right half yet at index 2 (a[2]=2), so right stays put.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 20,
+    "description" : "a[1]=3 pairs with 0 elements on the right (indices 2..1) - running total 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "0",
+      "runningCount" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 29,
+    "description" : "Merging [0,2]: compare a[0]=1 against a[2]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 30,
+    "description" : "1 <= 2, take a[0]=1 from the left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 29,
+    "description" : "Merging [0,2]: compare a[1]=3 against a[2]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 32,
+    "description" : "3 > 2, take a[2]=2 from the right (already counted above).",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 38,
+    "description" : "[0,2] merged in sorted order.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 8,
+    "description" : "Split [3,4] at mid=3 into two already-independent halves [3,3] and [4,4].",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 7,
+    "description" : "Range [3,3] holds a single element - nothing to pair.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 7,
+    "description" : "Range [4,4] holds a single element - nothing to pair.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 19,
+    "description" : "a[3]=3 beats indices 4..4 of the right half (each more than half of a[3]=3), so right advances to 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "right" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 20,
+    "description" : "a[3]=3 pairs with 1 element on the right (indices 4..4) - running total 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "1",
+      "runningCount" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 29,
+    "description" : "Merging [3,4]: compare a[3]=3 against a[4]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 32,
+    "description" : "3 > 1, take a[4]=1 from the right (already counted above).",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 38,
+    "description" : "[3,4] merged in sorted order.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)", "reversePairs(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 19,
+    "description" : "a[0]=1 beats none of the right half yet at index 3 (a[3]=1), so right stays put.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "right" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 20,
+    "description" : "a[0]=1 pairs with 0 elements on the right (indices 3..2) - running total 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "0",
+      "runningCount" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 19,
+    "description" : "a[1]=2 beats none of the right half yet at index 3 (a[3]=1), so right stays put.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "right" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 20,
+    "description" : "a[1]=2 pairs with 0 elements on the right (indices 3..2) - running total 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "0",
+      "runningCount" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 19,
+    "description" : "a[2]=3 beats indices 3..3 of the right half (each more than half of a[2]=3), so right advances to 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 20,
+    "description" : "a[2]=3 pairs with 1 element on the right (indices 3..3) - running total 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributed" : "1",
+      "runningCount" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 29,
+    "description" : "Merging [0,4]: compare a[0]=1 against a[3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 30,
+    "description" : "1 <= 1, take a[0]=1 from the left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 29,
+    "description" : "Merging [0,4]: compare a[1]=2 against a[3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "right" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 32,
+    "description" : "2 > 1, take a[3]=1 from the right (already counted above).",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 29,
+    "description" : "Merging [0,4]: compare a[1]=2 against a[4]=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 30,
+    "description" : "2 <= 3, take a[1]=2 from the left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 29,
+    "description" : "Merging [0,4]: compare a[2]=3 against a[4]=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 30,
+    "description" : "3 <= 3, take a[2]=3 from the left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 38,
+    "description" : "[0,4] merged in sorted order.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reversePairs(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 3,
+    "description" : "Recursion complete. Total pairs with a[i] > 2*a[j]: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

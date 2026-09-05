@@ -43,6 +43,10 @@ public class ArrayService implements ProblemProvider {
             case "majority-element":
             case "leaders-in-array":
             case "longest-subarray-sum-k-positives":
+            // count-inversions and reverse-pairs have real tracers (tracer/impl). Refuse
+            // rather than let default: serve largest-element's steps under these ids.
+            case "count-inversions":
+            case "reverse-pairs":
                 throw new LegacyTraceRetiredException(problemId);
             case "union-sorted-arrays": return generateUnionSortedArraysSteps();
             case "longest-subarray-sum-k": return generateLongestSubarraySumKSteps();
@@ -66,8 +70,6 @@ public class ArrayService implements ProblemProvider {
             case "merge-intervals": return generateMergeIntervalsSteps();
             case "merge-two-sorted-arrays": return generateMergeTwoSortedArraysSteps();
             case "repeating-missing-number": return generateRepeatingMissingSteps();
-            case "count-inversions": return generateCountInversionsSteps();
-            case "reverse-pairs": return generateReversePairsSteps();
             case "max-product-subarray": return generateMaxProductSubarraySteps();
             default: return generateLargestElementSteps();
         }
@@ -2446,78 +2448,6 @@ public class ArrayService implements ProblemProvider {
             String.format("Repeating & Missing Complete! Repeating Number X = %d, Missing Number Y = %d.", x, y),
             List.of(), Map.of(), List.of(), Map.of("Repeating (X)", String.valueOf(x), "Missing (Y)", String.valueOf(y)),
             "Array", null, createArrayState(a, 0, 4), null, null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateCountInversionsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] a = new int[]{5, 3, 2, 4, 1};
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Count Inversions: Use Divide & Conquer Merge Sort. An inversion is a pair (i, j) where i < j and arr[i] > arr[j]. Input: [5, 3, 2, 4, 1].",
-            List.of(), Map.of(), List.of(), Map.of("N", "5"),
-            "Array", null, createArrayState(a, -1, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 10,
-            "Merge Phase 1: Left [5] vs Right [3] -> Inversion (5, 3). Inversion count += 1.",
-            List.of("mergeAndCount(0, 1)"), Map.of(), List.of(), Map.of("Inversions", "1"),
-            "Array", null, createArrayState(new int[]{3, 5, 2, 4, 1}, 0, 1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 15,
-            "Merge Phase 2: Sorted Left [3, 5] vs Right [2] -> Inversions (3, 2) and (5, 2). Inversion count += 2.",
-            List.of("mergeAndCount(0, 2)"), Map.of(), List.of(), Map.of("Inversions", "3"),
-            "Array", null, createArrayState(new int[]{2, 3, 5, 4, 1}, 0, 2), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 20,
-            "Merge Phase 3: Final Merge of Left [2, 3, 5] and Right [1, 4] -> Total Inversions count = 8.",
-            List.of("mergeAndCount(0, 4)"), Map.of(), List.of(), Map.of("Total Inversions", "8"),
-            "Array", null, createArrayState(new int[]{1, 2, 3, 4, 5}, -1, -1), null, null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateReversePairsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 3, 2, 3, 1};
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Reverse Pairs: Count pairs (i, j) where i < j and arr[i] > 2 * arr[j] using Merge Sort Divide & Conquer. Input: [1, 3, 2, 3, 1].",
-            List.of(), Map.of(), List.of(), Map.of("N", "5"),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 10,
-            "Pair Count 1: Check arr[1]=3 > 2 * arr[4]=1 (3 > 2) -> Valid Reverse Pair (3, 1)!",
-            List.of("countPairs(0, 4)"), Map.of(), List.of(), Map.of("Reverse Pairs", "1"),
-            "Array", null, createArrayState(nums, 1, 4), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 12,
-            "Pair Count 2: Check arr[3]=3 > 2 * arr[4]=1 (3 > 2) -> Valid Reverse Pair (3, 1)!",
-            List.of("countPairs(0, 4)"), Map.of(), List.of(), Map.of("Reverse Pairs", "2"),
-            "Array", null, createArrayState(nums, 3, 4), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 16,
-            "Reverse Pairs Complete! Total Reverse Pairs (arr[i] > 2 * arr[j]) = 2.",
-            List.of(), Map.of(), List.of(), Map.of("Total Reverse Pairs", "2"),
-            "Array", null, createArrayState(new int[]{1, 1, 2, 3, 3}, -1, -1), null, null
         ));
 
         return steps;
