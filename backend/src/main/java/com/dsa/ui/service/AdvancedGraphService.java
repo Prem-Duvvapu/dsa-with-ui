@@ -39,7 +39,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "nearest-cell-1": return generateNearestCell1Steps();
             case "surrounded-regions": return generateSurroundedRegionsSteps();
             case "number-of-enclaves": return generateNumberOfEnclavesSteps();
-            case "word-ladder-1": return generateWordLadder1Steps();
+            case "word-ladder-1": throw new LegacyTraceRetiredException(problemId);
             case "word-ladder-2": return generateWordLadder2Steps();
             case "number-of-islands": return generateNumberOfIslandsSteps();
             case "bipartite-graph-dfs": return generateBipartiteGraphDfsSteps();
@@ -50,7 +50,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "course-schedule-1": return generateCourseSchedule1Steps();
             case "course-schedule-2": return generateCourseSchedule2Steps();
             case "find-eventual-safe-states": return generateFindEventualSafeStatesSteps();
-            case "alien-dictionary": return generateAlienDictionarySteps();
+            case "alien-dictionary": throw new LegacyTraceRetiredException(problemId);
             case "shortest-path-undirected": return generateShortestPathUndirectedSteps();
             case "shortest-path-dag": return generateShortestPathDagSteps();
             case "dijkstra-pq-theory": return generateDijkstraPqTheorySteps();
@@ -423,7 +423,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateNearestCell1Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateSurroundedRegionsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfEnclavesSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateWordLadder1Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateWordLadder2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateBipartiteGraphDfsSteps() { return generateGraphIntroSteps(); }
@@ -434,7 +433,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateCourseSchedule1Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCourseSchedule2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateFindEventualSafeStatesSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateAlienDictionarySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPathUndirectedSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPathDagSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }

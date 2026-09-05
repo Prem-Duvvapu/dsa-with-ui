@@ -112,6 +112,7 @@ class ApiContractTest {
             "three-sum", "four-sum",
             "bellman-ford", "kosaraju-scc",
             "edit-distance", "wildcard-matching",
+            "word-ladder-1", "alien-dictionary",
             "lru-cache", "ninja-and-his-friends");
 
     private String firstProblemId(String base) throws Exception {
@@ -273,6 +274,8 @@ class ApiContractTest {
                 arguments("/api/dp", "coin-change-2"),
                 arguments("/api/dp", "edit-distance"),
                 arguments("/api/dp", "wildcard-matching"),
+                arguments("/api/graphs/advanced", "word-ladder-1"),
+                arguments("/api/graphs/advanced", "alien-dictionary"),
                 arguments("/api/stackqueue", "lru-cache"),
                 arguments("/api/dp", "ninja-and-his-friends"));
     }
