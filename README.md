@@ -190,9 +190,10 @@ them means moving problems between services.
 `serialize-deserialize-bt`, `shortest-palindrome`,
 `single-element-sorted`, `single-number`, `sliding-window-maximum`,
 `sort-0-1-2`, `split-array-largest-sum`,
-`stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `three-sum`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
+`stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `three-sum`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, `upper-bound`,
+`vertical-order-traversal`,
 `z-function-algo`, and `zigzag-traversal`.
 
 Thirteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS

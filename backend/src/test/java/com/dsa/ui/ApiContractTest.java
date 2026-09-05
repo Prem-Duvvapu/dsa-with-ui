@@ -96,6 +96,7 @@ class ApiContractTest {
             "median-2-sorted-arrays", "kth-element-2-sorted-arrays",
             "sliding-window-maximum", "min-stack", "sum-subarray-minimums",
             "reverse-linked-list", "find-starting-point-loop", "reverse-ll-group-k",
+            "tree-burn-time", "vertical-order-traversal",
             "trapping-rainwater", "largest-rectangle-histogram",
             "next-greater-element-2", "asteroid-collision",
             "matrix-chain-multiplication", "burst-balloons",
@@ -258,6 +259,8 @@ class ApiContractTest {
                 arguments("/api/linkedlist", "reverse-linked-list"),
                 arguments("/api/linkedlist", "find-starting-point-loop"),
                 arguments("/api/linkedlist", "reverse-ll-group-k"),
+                arguments("/api/trees", "tree-burn-time"),
+                arguments("/api/trees", "vertical-order-traversal"),
                 arguments("/api/dp", "minimum-coins-dp"),
                 arguments("/api/dp", "coin-change-2"));
     }
