@@ -183,6 +183,7 @@ them means moving problems between services.
 `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-happy-prefix`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
+`lru-cache`,
 `majority-element`, `matrix-chain-multiplication`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
 `max-sum-non-adjacent`, `median-2-sorted-arrays`, `merge-two-sorted-arrays`, `min-stack`, `morris-inorder`, `move-zeros-end`,
 `n-meetings-in-one-room`, `n-queens`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `print-lis`,
@@ -222,6 +223,16 @@ three neighbours at once (replace, delete, insert) to say which was actually che
 while `wildcard-matching`'s `*` cells are the only ones in any traced table whose value is
 an OR of two predecessors rather than a single read. Migrated ids answer
 **410 Gone** on their old execute endpoint rather than risking a substitute trace.
+
+`lru-cache` is the first traced problem whose input is a *sequence of operations* on one
+stateful object rather than a single before/after computation — the same shape that got
+the Heaps & PriorityQueue topic rejected outright (see `PROMPT-J-full-roadmap.md`). It
+fits the tracer contract without a new `FieldType`: the whole `put`/`get` sequence is one
+`FieldType.STRING` in a small semicolon-separated mini-language (`"put 1 1;put 2 2;get
+1"`), validated with the same `.constraint("pattern", regex)` approach `kmp-lps-algo`
+uses for its alphabet. Because the cache's own eviction order IS a doubly linked list —
+most- to least-recently-used, front to back — it traces as `LinkedList` rather than
+`Stack`, with each node labelled `key:value`.
 
 ---
 

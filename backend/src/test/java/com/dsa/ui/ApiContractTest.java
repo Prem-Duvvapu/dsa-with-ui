@@ -112,7 +112,8 @@ class ApiContractTest {
             "three-sum", "four-sum",
             "bellman-ford", "kosaraju-scc",
             "edit-distance", "wildcard-matching",
-            "word-ladder-1", "alien-dictionary");
+            "word-ladder-1", "alien-dictionary",
+            "lru-cache");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -274,7 +275,8 @@ class ApiContractTest {
                 arguments("/api/dp", "edit-distance"),
                 arguments("/api/dp", "wildcard-matching"),
                 arguments("/api/graphs/advanced", "word-ladder-1"),
-                arguments("/api/graphs/advanced", "alien-dictionary"));
+                arguments("/api/graphs/advanced", "alien-dictionary"),
+                arguments("/api/stackqueue", "lru-cache"));
     }
 
     /**
