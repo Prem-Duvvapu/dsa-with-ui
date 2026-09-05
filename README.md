@@ -183,7 +183,7 @@ them means moving problems between services.
 `n-meetings-in-one-room`, `number-of-islands`, `print-lis`, `remove-duplicates-sorted`,
 `reverse-linked-list`, `search-rotated-sorted`, `second-largest-element`, `single-number`,
 `stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
-`triangle-min-path-sum`, `two-sum`, and `unique-paths-2`.
+`triangle-min-path-sum`, `two-sum`, `unique-paths-2`, and `upper-bound`.
 
 Thirteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
 variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,
