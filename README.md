@@ -190,9 +190,9 @@ them means moving problems between services.
 `serialize-deserialize-bt`,
 `single-element-sorted`, `single-number`,
 `sort-0-1-2`,
-`stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
+`stock-buy-sell`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
-`triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, and `upper-bound`.
+`triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, `upper-bound`, and `zigzag-traversal`.
 
 Thirteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
 variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,

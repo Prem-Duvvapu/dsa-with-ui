@@ -1,0 +1,948 @@
+{
+  "anchors" : {
+    "close" : 18,
+    "dequeue" : 10,
+    "done" : 21,
+    "enqueue" : 12,
+    "init" : 2,
+    "level" : 7,
+    "reverse" : 16
+  },
+  "code" : "public List<List<Integer>> zigzagLevelOrder(Node root) {\n    Queue<Node> queue = new ArrayDeque<>();\n    List<List<Integer>> levels = new ArrayList<>();\n    boolean leftToRight = true;\n    if (root != null) queue.add(root);\n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        List<Integer> level = new ArrayList<>();\n        for (int i = 0; i < size; i++) {\n            Node node = queue.poll();\n            level.add(node.val);\n            if (node.left != null) queue.add(node.left);\n            if (node.right != null) queue.add(node.right);\n        }\n        if (!leftToRight) {\n            Collections.reverse(level);\n        }\n        levels.add(level);\n        leftToRight = !leftToRight;\n    }\n    return levels;\n}",
+  "problemId" : "zigzag-traversal",
+  "resolvedInput" : {
+    "tree" : [ 3, 9, 20, null, null, 15, 7 ]
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Seed the queue with the root 3. Reading direction starts left-to-right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "direction" : "left-to-right",
+      "queue" : "[3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "queued"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Freeze the frontier: 1 node form level 0, read left-to-right this time.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "direction" : "left-to-right",
+      "levelIndex" : "0",
+      "queueSize" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "queued"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Take 3 off the front - the queue never changes order - and append it to level 0's raw order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levelSoFar" : "[3]",
+      "node" : "3",
+      "queue" : "[]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 12,
+    "description" : "3's children 9 and 20 always enqueue left-to-right, no matter which direction this level reads.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "queue" : "[9, 20]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 18,
+    "description" : "Level 0 is complete: [3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levels" : "[[3]]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Freeze the frontier: 2 nodes form level 1, read right-to-left this time.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "direction" : "right-to-left",
+      "levelIndex" : "1",
+      "queueSize" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Take 9 off the front - the queue never changes order - and append it to level 1's raw order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levelSoFar" : "[9]",
+      "node" : "9",
+      "queue" : "[20]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Take 20 off the front - the queue never changes order - and append it to level 1's raw order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levelSoFar" : "[9, 20]",
+      "node" : "20",
+      "queue" : "[]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 12,
+    "description" : "20's children 15 and 7 always enqueue left-to-right, no matter which direction this level reads.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "queue" : "[15, 7]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "This level reads right-to-left - reverse the raw dequeue order: [20, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "level" : "[20, 9]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 18,
+    "description" : "Level 1 is complete: [20, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levels" : "[[3], [20, 9]]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "Freeze the frontier: 2 nodes form level 2, read left-to-right this time.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "direction" : "left-to-right",
+      "levelIndex" : "2",
+      "queueSize" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 10,
+    "description" : "Take 15 off the front - the queue never changes order - and append it to level 2's raw order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levelSoFar" : "[15]",
+      "node" : "15",
+      "queue" : "[7]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 10,
+    "description" : "Take 7 off the front - the queue never changes order - and append it to level 2's raw order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levelSoFar" : "[15, 7]",
+      "node" : "7",
+      "queue" : "[]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 18,
+    "description" : "Level 2 is complete: [15, 7].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levels" : "[[3], [20, 9], [15, 7]]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 21,
+    "description" : "Queue drained - zigzag order: [[3], [20, 9], [15, 7]].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "levels" : "[[3], [20, 9], [15, 7]]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "15",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  } ],
+  "truncated" : false
+}

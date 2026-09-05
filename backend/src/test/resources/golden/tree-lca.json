@@ -1,0 +1,1442 @@
+{
+  "anchors" : {
+    "bothSides" : 13,
+    "done" : 3,
+    "foundOrNull" : 8,
+    "oneSide" : 15
+  },
+  "code" : "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    TreeNode result = lca(root, p, q);\n    return result;\n}\n\nprivate TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {\n    if (root == null || root.val == p.val || root.val == q.val) {\n        return root;\n    }\n    TreeNode left = lca(root.left, p, q);\n    TreeNode right = lca(root.right, p, q);\n    if (left != null && right != null) {\n        return root;\n    }\n    return left != null ? left : right;\n}",
+  "problemId" : "tree-lca",
+  "resolvedInput" : {
+    "p" : 7,
+    "q" : 4,
+    "tree" : [ 3, 5, 1, 6, 2, 0, 8, null, null, 7, 4 ]
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "Empty branch - nothing here to be an ancestor of anything.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(5)", "lca(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "Empty branch - nothing here to be an ancestor of anything.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(5)", "lca(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 15,
+    "description" : "Neither side of 6 found a target - pass null up.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(5)", "lca(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "7 matches one of the targets - stop descending here and report it upward.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(5)", "lca(2)", "lca(7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "4 matches one of the targets - stop descending here and report it upward.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(5)", "lca(2)", "lca(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Both subtrees of 2 reported a target - 2 is exactly where their paths split, the LCA.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(5)", "lca(2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Only one side of 5 found anything - pass 2 straight up unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 8,
+    "description" : "Empty branch - nothing here to be an ancestor of anything.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(1)", "lca(0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "Empty branch - nothing here to be an ancestor of anything.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(1)", "lca(0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 15,
+    "description" : "Neither side of 0 found a target - pass null up.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(1)", "lca(0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "Empty branch - nothing here to be an ancestor of anything.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(1)", "lca(8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 8,
+    "description" : "Empty branch - nothing here to be an ancestor of anything.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(1)", "lca(8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 15,
+    "description" : "Neither side of 8 found a target - pass null up.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(1)", "lca(8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "Neither side of 1 found a target - pass null up.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)", "lca(1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "null"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "Only one side of 3 found anything - pass 2 straight up unchanged.",
+    "queueOrStackState" : null,
+    "callStack" : [ "lca(3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 3,
+    "description" : "Lowest common ancestor of 7 and 4 is 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "6",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "2",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "0",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "7",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 10,
+      "val" : "4",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  } ],
+  "truncated" : false
+}
