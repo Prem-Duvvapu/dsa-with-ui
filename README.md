@@ -179,6 +179,7 @@ them means moving problems between services.
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `edit-distance`, `find-missing-number`,
 `find-min-rotated-sorted`, `find-starting-point-loop`, `four-sum`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
+`implement-trie`,
 `kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
 `ninja-and-his-friends`, `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
@@ -195,7 +196,7 @@ them means moving problems between services.
 `stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `three-sum`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, `upper-bound`,
-`vertical-order-traversal`, `wildcard-matching`, `word-ladder-1`,
+`vertical-order-traversal`, `wildcard-matching`, `word-break-trie`, `word-ladder-1`,
 `z-function-algo`, and `zigzag-traversal`.
 
 Sixteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
@@ -239,6 +240,14 @@ fits the tracer contract without a new `FieldType`: the whole `put`/`get` sequen
 uses for its alphabet. Because the cache's own eviction order IS a doubly linked list —
 most- to least-recently-used, front to back — it traces as `LinkedList` rather than
 `Stack`, with each node labelled `key:value`.
+
+`implement-trie` and `word-break-trie` are the first two `Trie`-canvas traces, following
+RCA-012's fix: `implement-trie` ports the legacy character-by-character insert (create a
+child, or traverse into an existing one, then mark the final node as an end of word)
+across a list of words rather than one fixed call, so the shared-prefix branching the
+problem is about is visible; `word-break-trie` is a full rewrite that walks a real trie
+alongside the segment-DP array, stopping the moment the trie has no edge for the next
+character and setting `dp[j+1]` the moment it reaches an end-of-word node.
 
 ---
 

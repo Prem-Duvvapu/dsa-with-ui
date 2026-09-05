@@ -27,9 +27,13 @@ public class TrieService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "implement-trie": return generateImplementTrieSteps();
+            // implement-trie and word-break-trie are traced by the v2 tracer layer
+            // (tracer/impl/ImplementTrieTracer, tracer/impl/WordBreakTrieTracer); serving
+            // their legacy narration here would substitute a canned trace for the real one.
+            case "implement-trie":
+            case "word-break-trie":
+                throw new LegacyTraceRetiredException(problemId);
             case "longest-common-prefix": return generateLcpSteps();
-            case "word-break-trie": return generateWordBreakSteps();
             default: return generateImplementTrieSteps();
         }
     }
@@ -97,7 +101,7 @@ public class TrieService implements ProblemProvider {
                 "Auxiliary Space: O(26) per node",
                 "Total Trie Space: O(N x L)"
             ),
-            "Stack"
+            "Trie"
         ));
 
         // 2. Longest Common Prefix
@@ -173,7 +177,7 @@ public class TrieService implements ProblemProvider {
                 "Auxiliary Space: O(N)",
                 "Trie Memory: O(W x L)"
             ),
-            "Stack"
+            "Trie"
         ));
     }
 
@@ -190,15 +194,6 @@ public class TrieService implements ProblemProvider {
         steps.add(new ExecutionStep(1, 4, "Longest Common Prefix: Insert strings [\"flower\", \"flow\", \"flight\"] into Trie.", List.of("LCP"), Map.of(), List.of(), Map.of("Input", "[\"flower\", \"flow\", \"flight\"]"), "Stack", null));
         steps.add(new ExecutionStep(2, 9, "Traverse Trie from root: Node 'f' has 1 child ('l'). Node 'l' has 1 child ('o' and 'i' split at node 'l'!).", List.of("LCP traversal"), Map.of(), List.of(), Map.of("Common Prefix", "\"fl\""), "Stack", null));
         steps.add(new ExecutionStep(3, 13, "Longest Common Prefix Complete! Result = \"fl\".", List.of(), Map.of(), List.of(), Map.of("LCP", "\"fl\""), "Stack", null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateWordBreakSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 4, "Word Break: s = \"leetcode\", wordDict = [\"leet\", \"code\"]. Insert dict into Trie.", List.of("wordBreak"), Map.of(), List.of(), Map.of("s", "leetcode"), "Stack", null));
-        steps.add(new ExecutionStep(2, 11, "Match s[0..3] (\"leet\") in Trie -> isEnd() TRUE! Set dp[4] = true.", List.of("dp[4] = true"), Map.of(), List.of(), Map.of("match1", "\"leet\""), "Stack", null));
-        steps.add(new ExecutionStep(3, 11, "Match s[4..7] (\"code\") in Trie -> isEnd() TRUE! Set dp[8] = true.", List.of("dp[8] = true"), Map.of(), List.of(), Map.of("match2", "\"code\""), "Stack", null));
-        steps.add(new ExecutionStep(4, 15, "Word Break Complete! dp[8] is TRUE. String \"leetcode\" can be segmented!", List.of(), Map.of(), List.of(), Map.of("Result", "TRUE"), "Stack", null));
         return steps;
     }
 

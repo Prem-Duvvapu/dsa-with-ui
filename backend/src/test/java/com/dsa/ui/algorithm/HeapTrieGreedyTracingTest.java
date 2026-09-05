@@ -34,9 +34,11 @@ public class HeapTrieGreedyTracingTest {
 
     @Test
     void testImplementTrieTracing() {
-        List<ExecutionStep> steps = trieService.generateSteps("implement-trie");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 6, "Implement Trie should have >=6 steps, actual: " + steps.size());
+        // implement-trie has a real tracer now (ImplementTrieTracer) — the legacy path
+        // retires it rather than serving substitute steps. Content is pinned by its
+        // golden file.
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> trieService.generateSteps("implement-trie"));
     }
 
     @Test
