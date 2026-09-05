@@ -33,11 +33,12 @@ public class TreeService implements ProblemProvider {
             case "tree-inorder":
             case "tree-postorder":
             case "tree-level-order":
+            case "tree-max-path-sum":
+            case "serialize-deserialize-bt":
                 throw new LegacyTraceRetiredException(problemId);
             case "tree-height": return generatePreorderSteps();
             case "tree-balanced": return generatePreorderSteps();
             case "tree-diameter": return generatePreorderSteps();
-            case "tree-max-path-sum": return generatePreorderSteps();
             case "tree-lca": return generatePreorderSteps();
             case "tree-burn-time": return generatePreorderSteps();
             case "bst-search": return generatePreorderSteps();
@@ -167,7 +168,8 @@ public class TreeService implements ProblemProvider {
 
     private static DsType bulkDsType(String id) {
         return switch (id) {
-            case "tree-postorder", "tree-level-order" -> DsType.TREE;
+            case "tree-postorder", "tree-level-order", "tree-max-path-sum",
+                    "serialize-deserialize-bt" -> DsType.TREE;
             default -> DsType.STACK;
         };
     }

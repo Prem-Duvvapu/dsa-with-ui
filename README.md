@@ -187,9 +187,10 @@ them means moving problems between services.
 `n-meetings-in-one-room`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `print-lis`,
 `remove-duplicates-sorted`,
 `reverse-linked-list`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`,
+`serialize-deserialize-bt`,
 `single-element-sorted`, `single-number`,
 `sort-0-1-2`,
-`stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
+`stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, and `upper-bound`.
 
