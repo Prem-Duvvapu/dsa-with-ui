@@ -1,0 +1,2372 @@
+{
+  "anchors" : {
+    "base" : 7,
+    "done" : 31,
+    "rowDone" : 28,
+    "rowStart" : 12,
+    "transition" : 25
+  },
+  "code" : "public int cherryPickup(int[][] grid) {\n    int rows = grid.length, cols = grid[0].length;\n    int[][] dp = new int[cols][cols];\n\n    for (int c1 = 0; c1 < cols; c1++) {\n        for (int c2 = 0; c2 < cols; c2++) {\n            dp[c1][c2] = grid[rows - 1][c1] + (c1 == c2 ? 0 : grid[rows - 1][c2]);\n        }\n    }\n\n    for (int row = rows - 2; row >= 0; row--) {\n        int[][] next = new int[cols][cols];\n        for (int c1 = 0; c1 < cols; c1++) {\n            for (int c2 = 0; c2 < cols; c2++) {\n                int best = 0;\n                for (int d1 = -1; d1 <= 1; d1++) {\n                    for (int d2 = -1; d2 <= 1; d2++) {\n                        int n1 = c1 + d1, n2 = c2 + d2;\n                        if (n1 >= 0 && n1 < cols && n2 >= 0 && n2 < cols) {\n                            best = Math.max(best, dp[n1][n2]);\n                        }\n                    }\n                }\n                int collected = grid[row][c1] + (c1 == c2 ? 0 : grid[row][c2]);\n                next[c1][c2] = collected + best;\n            }\n        }\n        dp = next;\n    }\n\n    return dp[0][cols - 1];\n}",
+  "problemId" : "ninja-and-his-friends",
+  "resolvedInput" : {
+    "grid" : [ [ 3, 1, 1 ], [ 2, 5, 1 ], [ 1, 5, 5 ], [ 2, 1, 1 ] ]
+  },
+  "stepCount" : 43,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so both robots share column 0, so its chocolates count once. dp[0][0] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "0",
+      "col2" : "0",
+      "row" : "3",
+      "value" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so robot 1 is at column 0 and robot 2 at column 1 - different cells, so both count. dp[0][1] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "0",
+      "col2" : "1",
+      "row" : "3",
+      "value" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so robot 1 is at column 0 and robot 2 at column 2 - different cells, so both count. dp[0][2] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "0",
+      "col2" : "2",
+      "row" : "3",
+      "value" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so robot 1 is at column 1 and robot 2 at column 0 - different cells, so both count. dp[1][0] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "1",
+      "col2" : "0",
+      "row" : "3",
+      "value" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so both robots share column 1, so its chocolates count once. dp[1][1] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "1",
+      "col2" : "1",
+      "row" : "3",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so robot 1 is at column 1 and robot 2 at column 2 - different cells, so both count. dp[1][2] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "1",
+      "col2" : "2",
+      "row" : "3",
+      "value" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so robot 1 is at column 2 and robot 2 at column 0 - different cells, so both count. dp[2][0] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "2",
+      "col2" : "0",
+      "row" : "3",
+      "value" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so robot 1 is at column 2 and robot 2 at column 1 - different cells, so both count. dp[2][1] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "2",
+      "col2" : "1",
+      "row" : "3",
+      "value" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Showing row 3 (the last row): no further moves are possible, so both robots share column 2, so its chocolates count once. dp[2][2] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col1" : "2",
+      "col2" : "2",
+      "row" : "3",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "Row 3's table (just shown) is finished and retired. Now showing a fresh table for row 2 - every cell here will read only from row 3's finished values, never anything further down.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[0][0]: collect 1 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 1 + 3 = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "0",
+      "col2" : "0",
+      "collected" : "1",
+      "row" : "2",
+      "value" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[0][1]: collect 6 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 6 + 3 = 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "0",
+      "col2" : "1",
+      "collected" : "6",
+      "row" : "2",
+      "value" : "9"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[0][2]: collect 6 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 6 + 3 = 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "0",
+      "col2" : "2",
+      "collected" : "6",
+      "row" : "2",
+      "value" : "9"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[1][0]: collect 6 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 6 + 3 = 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "1",
+      "col2" : "0",
+      "collected" : "6",
+      "row" : "2",
+      "value" : "9"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[1][1]: collect 5 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 5 + 3 = 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "1",
+      "col2" : "1",
+      "collected" : "5",
+      "row" : "2",
+      "value" : "8"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[1][2]: collect 10 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 10 + 3 = 13.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "1",
+      "col2" : "2",
+      "collected" : "10",
+      "row" : "2",
+      "value" : "13"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[2][0]: collect 6 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 6 + 3 = 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "2",
+      "col2" : "0",
+      "collected" : "6",
+      "row" : "2",
+      "value" : "9"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[2][1]: collect 10 here, plus the best 3 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 10 + 3 = 13.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "3",
+      "col1" : "2",
+      "col2" : "1",
+      "collected" : "10",
+      "row" : "2",
+      "value" : "13"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 25,
+    "description" : "Row 2, dp[2][2]: collect 5 here, plus the best 2 reachable from row 3's table over every combination of column-1/column/column+1 for both robots -> 5 + 2 = 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "2",
+      "col1" : "2",
+      "col2" : "2",
+      "collected" : "5",
+      "row" : "2",
+      "value" : "7"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "probe"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 28,
+    "description" : "Row 2's table is complete. It becomes the 'below' reference for row 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "4",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "9",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "8",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      } ], [ {
+        "value" : "9",
+        "state" : "known"
+      }, {
+        "value" : "13",
+        "state" : "known"
+      }, {
+        "value" : "7",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 12,
+    "description" : "Row 2's table (just shown) is finished and retired. Now showing a fresh table for row 1 - every cell here will read only from row 2's finished values, never anything further down.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[0][0]: collect 2 here, plus the best 9 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 2 + 9 = 11.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "9",
+      "col1" : "0",
+      "col2" : "0",
+      "collected" : "2",
+      "row" : "1",
+      "value" : "11"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[0][1]: collect 7 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 7 + 13 = 20.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "0",
+      "col2" : "1",
+      "collected" : "7",
+      "row" : "1",
+      "value" : "20"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[0][2]: collect 3 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 3 + 13 = 16.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "0",
+      "col2" : "2",
+      "collected" : "3",
+      "row" : "1",
+      "value" : "16"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[1][0]: collect 7 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 7 + 13 = 20.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "1",
+      "col2" : "0",
+      "collected" : "7",
+      "row" : "1",
+      "value" : "20"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "known"
+      } ], [ {
+        "value" : "20",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[1][1]: collect 5 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 5 + 13 = 18.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "1",
+      "col2" : "1",
+      "collected" : "5",
+      "row" : "1",
+      "value" : "18"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "known"
+      } ], [ {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[1][2]: collect 6 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 6 + 13 = 19.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "1",
+      "col2" : "2",
+      "collected" : "6",
+      "row" : "1",
+      "value" : "19"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "known"
+      } ], [ {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[2][0]: collect 3 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 3 + 13 = 16.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "2",
+      "col2" : "0",
+      "collected" : "3",
+      "row" : "1",
+      "value" : "16"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "known"
+      } ], [ {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "known"
+      } ], [ {
+        "value" : "16",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[2][1]: collect 6 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 6 + 13 = 19.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "2",
+      "col2" : "1",
+      "collected" : "6",
+      "row" : "1",
+      "value" : "19"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "known"
+      } ], [ {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "known"
+      } ], [ {
+        "value" : "16",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 25,
+    "description" : "Row 1, dp[2][2]: collect 1 here, plus the best 13 reachable from row 2's table over every combination of column-1/column/column+1 for both robots -> 1 + 13 = 14.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "13",
+      "col1" : "2",
+      "col2" : "2",
+      "collected" : "1",
+      "row" : "1",
+      "value" : "14"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "known"
+      } ], [ {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "known"
+      } ], [ {
+        "value" : "16",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "known"
+      }, {
+        "value" : "14",
+        "state" : "probe"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 28,
+    "description" : "Row 1's table is complete. It becomes the 'below' reference for row 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "11",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "16",
+        "state" : "known"
+      } ], [ {
+        "value" : "20",
+        "state" : "known"
+      }, {
+        "value" : "18",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "known"
+      } ], [ {
+        "value" : "16",
+        "state" : "known"
+      }, {
+        "value" : "19",
+        "state" : "known"
+      }, {
+        "value" : "14",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 12,
+    "description" : "Row 1's table (just shown) is finished and retired. Now showing a fresh table for row 0 - every cell here will read only from row 1's finished values, never anything further down.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[0][0]: collect 3 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 3 + 20 = 23.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "0",
+      "col2" : "0",
+      "collected" : "3",
+      "row" : "0",
+      "value" : "23"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[0][1]: collect 4 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 4 + 20 = 24.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "0",
+      "col2" : "1",
+      "collected" : "4",
+      "row" : "0",
+      "value" : "24"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[0][2]: collect 4 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 4 + 20 = 24.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "0",
+      "col2" : "2",
+      "collected" : "4",
+      "row" : "0",
+      "value" : "24"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[1][0]: collect 4 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 4 + 20 = 24.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "1",
+      "col2" : "0",
+      "collected" : "4",
+      "row" : "0",
+      "value" : "24"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[1][1]: collect 1 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 1 + 20 = 21.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "1",
+      "col2" : "1",
+      "collected" : "1",
+      "row" : "0",
+      "value" : "21"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "21",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[1][2]: collect 2 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 2 + 20 = 22.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "1",
+      "col2" : "2",
+      "collected" : "2",
+      "row" : "0",
+      "value" : "22"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "21",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "probe"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[2][0]: collect 4 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 4 + 20 = 24.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "2",
+      "col2" : "0",
+      "collected" : "4",
+      "row" : "0",
+      "value" : "24"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "21",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[2][1]: collect 2 here, plus the best 20 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 2 + 20 = 22.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "20",
+      "col1" : "2",
+      "col2" : "1",
+      "collected" : "2",
+      "row" : "0",
+      "value" : "22"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "21",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 25,
+    "description" : "Row 0, dp[2][2]: collect 1 here, plus the best 19 reachable from row 1's table over every combination of column-1/column/column+1 for both robots -> 1 + 19 = 20.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestBelow" : "19",
+      "col1" : "2",
+      "col2" : "2",
+      "collected" : "1",
+      "row" : "0",
+      "value" : "20"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "21",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "probe"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 28,
+    "description" : "Row 0's table is complete. This is row 0: dp[0][2] is the answer.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "0"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "24",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "21",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "known"
+      } ], [ {
+        "value" : "24",
+        "state" : "known"
+      }, {
+        "value" : "22",
+        "state" : "known"
+      }, {
+        "value" : "20",
+        "state" : "known"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 31,
+    "description" : "Robot 1 starts at (row 0, col 0), robot 2 at (row 0, col 2). dp[0][2] = 24 chocolates collected in total.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "24"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "c1=0", "c1=1", "c1=2" ],
+      "colLabels" : [ "c2=0", "c2=1", "c2=2" ],
+      "cells" : [ [ {
+        "value" : "23",
+        "state" : "resolved"
+      }, {
+        "value" : "24",
+        "state" : "resolved"
+      }, {
+        "value" : "24",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "24",
+        "state" : "resolved"
+      }, {
+        "value" : "21",
+        "state" : "resolved"
+      }, {
+        "value" : "22",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "24",
+        "state" : "resolved"
+      }, {
+        "value" : "22",
+        "state" : "resolved"
+      }, {
+        "value" : "20",
+        "state" : "resolved"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  } ],
+  "truncated" : false
+}

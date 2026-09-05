@@ -64,7 +64,8 @@ public class DpServiceTest {
                 "minimum-coins-dp",
                 "coin-change-2",
                 "edit-distance",
-                "wildcard-matching");
+                "wildcard-matching",
+                "ninja-and-his-friends");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
