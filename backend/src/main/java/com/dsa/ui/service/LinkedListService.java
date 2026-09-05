@@ -35,10 +35,19 @@ public class LinkedListService implements ProblemProvider {
             case "delete-head-dll": return generateDeleteHeadDllSteps();
             case "reverse-dll": return generateReverseDllSteps();
             case "middle-linked-list": return generateMiddleSteps();
-            case "reverse-linked-list": return generateReverseSteps();
+            // reverse-linked-list has a real tracer (tracer/impl) and has for a while -
+            // this case was never updated to refuse, so its legacy endpoint has been
+            // serving a real trace by coincidence rather than by guard. Fixed now.
+            case "reverse-linked-list":
+                throw new LegacyTraceRetiredException(problemId);
             case "reverse-ll-recursive": return generateReverseRecursiveSteps();
             case "detect-loop-linked-list": return generateDetectLoopSteps();
-            case "find-starting-point-loop": return generateFindStartingPointLoopSteps();
+            // find-starting-point-loop and reverse-ll-group-k have real tracers
+            // (tracer/impl) now. Refuse rather than let default: serve
+            // generateReverseSteps()'s unrelated steps under these ids.
+            case "find-starting-point-loop":
+            case "reverse-ll-group-k":
+                throw new LegacyTraceRetiredException(problemId);
             case "length-of-loop-ll": return generateLengthOfLoopSteps();
             case "palindrome-ll": return generatePalindromeLlSteps();
             case "segregate-odd-even-ll": return generateSegregateOddEvenSteps();
@@ -52,7 +61,6 @@ public class LinkedListService implements ProblemProvider {
             case "delete-occurrences-key-dll": return generateDeleteOccurrencesKeyDllSteps();
             case "pairs-given-sum-dll": return generatePairsGivenSumDllSteps();
             case "remove-duplicates-sorted-dll": return generateRemoveDuplicatesSortedDllSteps();
-            case "reverse-ll-group-k": return generateReverseLlGroupKSteps();
             case "rotate-ll": return generateRotateLlSteps();
             case "flattening-ll": return generateFlatteningLlSteps();
             case "clone-ll-random-pointer": return generateCloneLlRandomPointerSteps();
@@ -176,7 +184,6 @@ public class LinkedListService implements ProblemProvider {
     private List<ExecutionStep> generateReverseDllSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateReverseRecursiveSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateDetectLoopSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateFindStartingPointLoopSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateLengthOfLoopSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generatePalindromeLlSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateSegregateOddEvenSteps() { return generateReverseSteps(); }
@@ -190,7 +197,6 @@ public class LinkedListService implements ProblemProvider {
     private List<ExecutionStep> generateDeleteOccurrencesKeyDllSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generatePairsGivenSumDllSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateRemoveDuplicatesSortedDllSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateReverseLlGroupKSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateRotateLlSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateFlatteningLlSteps() { return generateReverseSteps(); }
     private List<ExecutionStep> generateCloneLlRandomPointerSteps() { return generateReverseSteps(); }

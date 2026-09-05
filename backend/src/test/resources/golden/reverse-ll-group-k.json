@@ -1,0 +1,444 @@
+{
+  "anchors" : {
+    "countGroup" : 6,
+    "done" : 27,
+    "groupComplete" : 22,
+    "partialGroupLeftAsIs" : 24,
+    "reverseWithinGroup" : 14
+  },
+  "code" : "public ListNode reverseKGroup(ListNode head, int k) {\n    ListNode node = head;\n    List<Integer> result = new ArrayList<>();\n\n    while (node != null) {\n        int count = 0;\n        ListNode check = node;\n        while (check != null && count < k) {\n            check = check.next;\n            count++;\n        }\n\n        if (count == k) {\n            ListNode prev = check;\n            ListNode curr = node;\n            for (int i = 0; i < k; i++) {\n                ListNode next = curr.next;\n                curr.next = prev;\n                prev = curr;\n                curr = next;\n            }\n            node = check;\n        } else {\n            node = null;\n        }\n    }\n    return head;\n}",
+  "problemId" : "reverse-ll-group-k",
+  "resolvedInput" : {
+    "k" : 2,
+    "values" : [ 1, 2, 3, 4, 5 ]
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "Starting at index 0: 2 more nodes remain - a full group of 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "groupStart" : "0"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 14,
+    "description" : "Reverse this group of 2 in place: [2, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "reversedGroup" : "[2, 1]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 22,
+    "description" : "Group complete. Result so far: [2, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[2, 1]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Starting at index 2: 2 more nodes remain - a full group of 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "groupStart" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Reverse this group of 2 in place: [4, 3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "reversedGroup" : "[4, 3]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 22,
+    "description" : "Group complete. Result so far: [2, 1, 4, 3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[2, 1, 4, 3]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Starting at index 4: only 1 nodes remain - fewer than 2, this is a partial group.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "groupStart" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 24,
+    "description" : "Fewer than 2 nodes left - leave this trailing group in its original order. Result so far: [2, 1, 4, 3, 5].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[2, 1, 4, 3, 5]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 27,
+    "description" : "Every group processed. Final list: [2, 1, 4, 3, 5].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[2, 1, 4, 3, 5]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
