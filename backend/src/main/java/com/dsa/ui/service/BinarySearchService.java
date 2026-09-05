@@ -43,9 +43,13 @@ public class BinarySearchService implements ProblemProvider {
             case "search-rotated-sorted":
                 throw new LegacyTraceRetiredException(problemId);
             case "search-rotated-sorted-2": return generateSearchRotated2Steps();
-            case "find-min-rotated-sorted": return generateFindMinRotatedSteps();
+            // find-min-rotated-sorted and single-element-sorted have real tracers
+            // (tracer/impl). Refuse rather than let default: serve binary-search-1d's
+            // steps under these ids.
+            case "find-min-rotated-sorted":
+            case "single-element-sorted":
+                throw new LegacyTraceRetiredException(problemId);
             case "count-rotations": return generateCountRotationsSteps();
-            case "single-element-sorted": return generateSingleElementSortedSteps();
             case "find-peak-element": return generateFindPeakSteps();
             case "square-root-number": return generateSquareRootSteps();
             case "nth-root-number": return generateNthRootSteps();
@@ -440,9 +444,7 @@ public class BinarySearchService implements ProblemProvider {
     private List<ExecutionStep> generateFirstLastOccurrenceSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateCountOccurrencesSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSearchRotated2Steps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateFindMinRotatedSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateCountRotationsSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSingleElementSortedSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateFindPeakSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSquareRootSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateNthRootSteps() { return generateBs1dSteps(); }
