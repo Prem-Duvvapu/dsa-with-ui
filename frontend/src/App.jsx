@@ -13,7 +13,7 @@ import LiveTraceTicker from './components/LiveTraceTicker';
 import useTrace from './hooks/useTrace';
 import { CANVAS_BY_DSTYPE } from './canvas/registry';
 import { getCompanions } from './canvas/companions';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
 
 const DEFAULT_FALLBACK_PROBLEMS = [
   {
@@ -198,6 +198,8 @@ export default function App() {
 
   // ── Layout state ─────────────────────────────────────────────────────────
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
+  // Collapsing this row frees up vertical space for the canvas while a trace is playing.
+  const [isBottomPanelOpen, setIsBottomPanelOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('code');
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const isMobile = viewportWidth <= 768;
@@ -359,7 +361,41 @@ export default function App() {
               onSelectProblem={handleSelectProblem}
               onRetry={fetchAllProblems}
             />
+            {/* Collapse handle: sits on the sidebar's own edge, right where a viewer
+                watching the canvas is already looking, instead of only in the header. */}
+            <button
+              type="button"
+              onClick={() => setIsSidebarOpen(false)}
+              aria-label="Collapse the problem list"
+              title="Collapse the problem list"
+              style={{
+                position: 'absolute', top: '50%', right: '-13px', transform: 'translateY(-50%)',
+                width: '26px', height: '44px', borderRadius: 'var(--radius-full)',
+                background: 'var(--bg-panel, #1a1a24)', border: '1px solid var(--border-default)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', color: 'var(--text-muted)', zIndex: 2
+              }}
+            >
+              <ChevronLeft size={14} />
+            </button>
           </div>
+        )}
+        {!isSidebarOpen && !isMobile && (
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(true)}
+            aria-label="Open the problem list"
+            title="Open the problem list"
+            style={{
+              alignSelf: 'flex-start', marginTop: '8px', width: '22px', height: '56px',
+              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+              background: 'var(--bg-panel, #1a1a24)', border: '1px solid var(--border-default)',
+              borderLeft: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', color: 'var(--text-muted)', flexShrink: 0
+            }}
+          >
+            <ChevronRight size={14} />
+          </button>
         )}
 
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', overflow: 'hidden' }}>
@@ -447,8 +483,26 @@ export default function App() {
             </div>
           </div>
 
+          {/* Collapse handle for the whole bottom section, so the canvas can take the
+              full height while a trace is playing. Always visible so it can be reopened. */}
+          <button
+            type="button"
+            onClick={() => setIsBottomPanelOpen(prev => !prev)}
+            aria-expanded={isBottomPanelOpen}
+            aria-label={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
+            title={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
+            className="btn btn-outline"
+            style={{
+              alignSelf: 'center', padding: '2px 16px', fontSize: '0.68rem',
+              display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0
+            }}
+          >
+            {isBottomPanelOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+            {isBottomPanelOpen ? 'Hide code & details' : 'Show code & details'}
+          </button>
+
           {/* Desktop Bottom Section: Wide Java Code + Input Panel + Right Tabbed Memory/Complexity Card */}
-          {!isMobile ? (
+          {!isBottomPanelOpen ? null : !isMobile ? (
             <div style={{
               height: '210px', minHeight: '210px', display: 'grid',
               gridTemplateColumns: hasInputSpec ? '1.2fr 1fr 1fr' : '1.6fr 1fr',
