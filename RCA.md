@@ -187,6 +187,13 @@ phase; do not describe unfinished work as resolved.
   before their responses are presented as separated memory state.
 - **Regression guard required:** emoji-index and deque-order fixtures plus a scan/test covering
   direct `ExecutionStep` recursion producers.
+- **Partial progress (2026-09-05):** `kmp-lps-algo` and `z-function-algo` are the first
+  tracers to call `chars()`, confirming the helper's `arrayState` shape renders correctly
+  through the existing `ArrayCanvas` with no frontend change needed. The codepoint/UTF-16
+  divergence itself is still open — both tracers sidestep it rather than resolve it, by
+  constraining their `STRING` `InputField`s to lowercase ASCII (`[a-z]+`), where every
+  character is one code point and one UTF-16 unit by construction. The general case
+  (astral characters / surrogate pairs) is untouched; do not read this as RCA-013 closed.
 
 ## RCA-014 — New compact tabs failed contrast in the dark theme
 
