@@ -1,0 +1,559 @@
+{
+  "anchors" : {
+    "done" : 17,
+    "newMin" : 8,
+    "pop" : 15,
+    "sameMin" : 10
+  },
+  "code" : "class MinStack {\n    Deque<Integer> stack = new ArrayDeque<>();\n    Deque<Integer> minStack = new ArrayDeque<>();\n\n    void push(int val) {\n        stack.push(val);\n        if (minStack.isEmpty() || val <= minStack.peek()) {\n            minStack.push(val);\n        } else {\n            minStack.push(minStack.peek());\n        }\n    }\n\n    void pop() {\n        stack.pop();\n        minStack.pop();\n    }\n\n    int getMin() {\n        return minStack.peek();\n    }\n}",
+  "problemId" : "min-stack",
+  "resolvedInput" : {
+    "values" : [ 3, 5, 1, 4, 1, 2 ]
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "Push 3. It is now <= the running minimum - the new minimum is 3.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "3",
+      "pushed" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "Push 5. The running minimum stays 3.",
+    "queueOrStackState" : [ "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "3",
+      "pushed" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Push 1. It is now <= the running minimum - the new minimum is 1.",
+    "queueOrStackState" : [ "1", "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "1",
+      "pushed" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 10,
+    "description" : "Push 4. The running minimum stays 1.",
+    "queueOrStackState" : [ "4", "1", "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "1",
+      "pushed" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "Push 1. It is now <= the running minimum - the new minimum is 1.",
+    "queueOrStackState" : [ "1", "4", "1", "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "1",
+      "pushed" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 10,
+    "description" : "Push 2. The running minimum stays 1.",
+    "queueOrStackState" : [ "2", "1", "4", "1", "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "1",
+      "pushed" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Pop 2. The running minimum is now 1 - the level underneath.",
+    "queueOrStackState" : [ "1", "4", "1", "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "1",
+      "popped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "Pop 1. The running minimum is now 1 - the level underneath.",
+    "queueOrStackState" : [ "4", "1", "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "1",
+      "popped" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 15,
+    "description" : "Pop 4. The running minimum is now 1 - the level underneath.",
+    "queueOrStackState" : [ "1", "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "1",
+      "popped" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 15,
+    "description" : "Pop 1. The running minimum is now 3 - the level underneath.",
+    "queueOrStackState" : [ "5", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "3",
+      "popped" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 15,
+    "description" : "Pop 5. The running minimum is now 3 - the level underneath.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "3",
+      "popped" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 15,
+    "description" : "Pop 3. The stack is now empty.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "min" : "none",
+      "popped" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 17,
+    "description" : "Every value pushed and popped back off. The stack is empty.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
