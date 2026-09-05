@@ -100,7 +100,8 @@ class ApiContractTest {
             "zigzag-traversal", "tree-lca",
             "n-queens", "sudoku-solver",
             "subsets-i", "combination-sum-i",
-            "z-function-algo", "kmp-lps-algo");
+            "z-function-algo", "kmp-lps-algo",
+            "shortest-palindrome", "longest-happy-prefix");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -199,6 +200,8 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "kmp-lps-algo"),
                 arguments("/api/recursion-backtracking", "subsets-i"),
                 arguments("/api/recursion-backtracking", "combination-sum-i"),
+                arguments("/api/graphs/advanced", "shortest-palindrome"),
+                arguments("/api/graphs/advanced", "longest-happy-prefix"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/greedy", "n-meetings-in-one-room"),
                 arguments("/api/dp", "climbing-stairs"),
