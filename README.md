@@ -178,7 +178,7 @@ them means moving problems between services.
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `find-min-rotated-sorted`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
-`kadane-algo`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
+`kadane-algo`, `knapsack-01`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
 `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
@@ -191,7 +191,7 @@ them means moving problems between services.
 `sort-0-1-2`,
 `stock-buy-sell`, `tree-inorder`, `tree-level-order`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
-`triangle-min-path-sum`, `two-sum`, `unique-paths-2`, and `upper-bound`.
+`triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, and `upper-bound`.
 
 Thirteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
 variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,

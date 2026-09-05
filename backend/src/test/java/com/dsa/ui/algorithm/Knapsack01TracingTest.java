@@ -3,6 +3,7 @@ package com.dsa.ui.algorithm;
 import com.dsa.ui.algorithm.dp.Knapsack01;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.service.DpService;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.trace.ListTraceRecorder;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +32,8 @@ public class Knapsack01TracingTest {
     @Test
     void testDpServiceKnapsackSteps() {
         DpService service = new DpService();
-        List<ExecutionStep> steps = service.generateSteps("knapsack-01");
-        assertNotNull(steps);
-        assertEquals(23, steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("knapsack-01"),
+                "knapsack-01 is traced by the v2 layer and must not fall back");
     }
 }

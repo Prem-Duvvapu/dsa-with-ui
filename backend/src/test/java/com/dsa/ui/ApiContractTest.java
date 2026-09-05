@@ -86,7 +86,16 @@ class ApiContractTest {
             "left-rotate-one", "linear-search",
             "left-rotate-k", "single-number", "majority-element",
             "leaders-in-array", "longest-subarray-sum-k-positives",
-            "minimum-coins-dp", "coin-change-2");
+            "minimum-coins-dp", "coin-change-2",
+            "lower-bound", "upper-bound",
+            "count-inversions", "reverse-pairs",
+            "sort-0-1-2", "next-permutation",
+            "aggressive-cows", "book-allocation",
+            "find-min-rotated-sorted", "single-element-sorted",
+            "trapping-rainwater", "largest-rectangle-histogram",
+            "next-greater-element-2", "asteroid-collision",
+            "matrix-chain-multiplication", "burst-balloons",
+            "knapsack-01", "unbounded-knapsack");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
