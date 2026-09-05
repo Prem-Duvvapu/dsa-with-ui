@@ -1,0 +1,1526 @@
+{
+  "anchors" : {
+    "addToCurrent" : 22,
+    "done" : 12,
+    "feasible" : 6,
+    "infeasible" : 9,
+    "init" : 3,
+    "mid" : 4,
+    "newStudent" : 19
+  },
+  "code" : "public int findPages(int[] pages, int m) {\n    int low = max(pages), high = sum(pages), ans = high;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (countStudents(pages, mid) <= m) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}\n\nprivate int countStudents(int[] pages, int cap) {\n    int students = 1, pageSum = 0;\n    for (int p : pages) {\n        if (pageSum + p > cap) {\n            students++;\n            pageSum = p;\n        } else {\n            pageSum += p;\n        }\n    }\n    return students;\n}",
+  "problemId" : "book-allocation",
+  "resolvedInput" : {
+    "m" : 2,
+    "pages" : [ 12, 34, 67, 90 ]
+  },
+  "stepCount" : 44,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Binary search the answer: the smallest possible cap on any one student's pages. It cannot be below the single largest book (90, since that book cannot be split) or above giving everything to one student (203).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "203",
+      "high" : "203",
+      "low" : "90"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 146 pages needs at most 2 students.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "203",
+      "low" : "90",
+      "mid" : "146"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 22,
+    "description" : "Book 0 (12 pages) still fits this student's pile (12 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pageSum" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 22,
+    "description" : "Book 1 (34 pages) still fits this student's pile (46 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pageSum" : "46"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 22,
+    "description" : "Book 2 (67 pages) still fits this student's pile (113 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pageSum" : "113"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "Book 3 (90 pages) would push this student past 146 - start student #2 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "2 students suffice (allowed 2) - cap 146 works. Try a smaller cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "146",
+      "high" : "145",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 117 pages needs at most 2 students.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "145",
+      "low" : "90",
+      "mid" : "117"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 22,
+    "description" : "Book 0 (12 pages) still fits this student's pile (12 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pageSum" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 22,
+    "description" : "Book 1 (34 pages) still fits this student's pile (46 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pageSum" : "46"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 22,
+    "description" : "Book 2 (67 pages) still fits this student's pile (113 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pageSum" : "113"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 19,
+    "description" : "Book 3 (90 pages) would push this student past 117 - start student #2 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 6,
+    "description" : "2 students suffice (allowed 2) - cap 117 works. Try a smaller cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "117",
+      "high" : "116",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 103 pages needs at most 2 students.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "116",
+      "low" : "90",
+      "mid" : "103"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 22,
+    "description" : "Book 0 (12 pages) still fits this student's pile (12 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pageSum" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 22,
+    "description" : "Book 1 (34 pages) still fits this student's pile (46 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pageSum" : "46"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 19,
+    "description" : "Book 2 (67 pages) would push this student past 103 - start student #2 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 19,
+    "description" : "Book 3 (90 pages) would push this student past 103 - start student #3 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 9,
+    "description" : "3 students are needed (allowed 2) - cap 103 is too tight. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "104",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 110 pages needs at most 2 students.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "116",
+      "low" : "104",
+      "mid" : "110"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 22,
+    "description" : "Book 0 (12 pages) still fits this student's pile (12 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pageSum" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 22,
+    "description" : "Book 1 (34 pages) still fits this student's pile (46 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pageSum" : "46"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 19,
+    "description" : "Book 2 (67 pages) would push this student past 110 - start student #2 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 19,
+    "description" : "Book 3 (90 pages) would push this student past 110 - start student #3 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 9,
+    "description" : "3 students are needed (allowed 2) - cap 110 is too tight. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "111",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 113 pages needs at most 2 students.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "116",
+      "low" : "111",
+      "mid" : "113"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 22,
+    "description" : "Book 0 (12 pages) still fits this student's pile (12 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pageSum" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 22,
+    "description" : "Book 1 (34 pages) still fits this student's pile (46 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pageSum" : "46"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 22,
+    "description" : "Book 2 (67 pages) still fits this student's pile (113 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pageSum" : "113"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 19,
+    "description" : "Book 3 (90 pages) would push this student past 113 - start student #2 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 6,
+    "description" : "2 students suffice (allowed 2) - cap 113 works. Try a smaller cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "113",
+      "high" : "112",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 111 pages needs at most 2 students.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "112",
+      "low" : "111",
+      "mid" : "111"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 22,
+    "description" : "Book 0 (12 pages) still fits this student's pile (12 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pageSum" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 22,
+    "description" : "Book 1 (34 pages) still fits this student's pile (46 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pageSum" : "46"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 19,
+    "description" : "Book 2 (67 pages) would push this student past 111 - start student #2 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 19,
+    "description" : "Book 3 (90 pages) would push this student past 111 - start student #3 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 9,
+    "description" : "3 students are needed (allowed 2) - cap 111 is too tight. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "112",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 112 pages needs at most 2 students.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "112",
+      "low" : "112",
+      "mid" : "112"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 22,
+    "description" : "Book 0 (12 pages) still fits this student's pile (12 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pageSum" : "12"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 22,
+    "description" : "Book 1 (34 pages) still fits this student's pile (46 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pageSum" : "46"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 19,
+    "description" : "Book 2 (67 pages) would push this student past 112 - start student #2 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "students" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 19,
+    "description" : "Book 3 (90 pages) would push this student past 112 - start student #3 here instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 9,
+    "description" : "3 students are needed (allowed 2) - cap 112 is too tight. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "113",
+      "students" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 12,
+    "description" : "low passed high. The smallest workable cap is 113.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "113"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 34,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 90,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
