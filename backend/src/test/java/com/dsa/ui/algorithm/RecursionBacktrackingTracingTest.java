@@ -1,6 +1,7 @@
 package com.dsa.ui.algorithm;
 
 import com.dsa.ui.model.ExecutionStep;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.RecursionBacktrackingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,10 +21,9 @@ public class RecursionBacktrackingTracingTest {
 
     @Test
     void testNQueensTracing() {
-        List<ExecutionStep> steps = service.generateSteps("n-queens");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 40, "N-Queens trace should have >=40 steps, actual: " + steps.size());
-        assertEquals(1, steps.get(0).getStepNumber());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("n-queens"),
+                "n-queens is traced by the v2 layer and must not fall back");
     }
 
     @Test
@@ -35,9 +35,9 @@ public class RecursionBacktrackingTracingTest {
 
     @Test
     void testSudokuSolverTracing() {
-        List<ExecutionStep> steps = service.generateSteps("sudoku-solver");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 10, "Sudoku Solver trace should have >=10 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("sudoku-solver"),
+                "sudoku-solver is traced by the v2 layer and must not fall back");
     }
 
     @Test
