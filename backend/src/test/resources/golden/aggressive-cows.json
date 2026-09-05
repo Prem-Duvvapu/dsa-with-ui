@@ -1,0 +1,778 @@
+{
+  "anchors" : {
+    "done" : 13,
+    "feasible" : 7,
+    "infeasible" : 10,
+    "init" : 3,
+    "mid" : 5,
+    "place" : 20,
+    "skip" : 23
+  },
+  "code" : "public int aggressiveCows(int[] stalls, int k) {\n    int n = stalls.length;\n    int low = 1, high = stalls[n - 1] - stalls[0], ans = 0;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (canPlace(stalls, k, mid)) {\n            ans = mid;\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    return ans;\n}\n\nprivate boolean canPlace(int[] stalls, int k, int dist) {\n    int count = 1, last = stalls[0];\n    for (int i = 1; i < stalls.length; i++) {\n        if (stalls[i] - last >= dist) {\n            count++;\n            last = stalls[i];\n        } else {\n            continue;\n        }\n    }\n    return count >= k;\n}",
+  "problemId" : "aggressive-cows",
+  "resolvedInput" : {
+    "k" : 3,
+    "stalls" : [ 1, 2, 4, 8, 9 ]
+  },
+  "stepCount" : 20,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Binary search the answer itself: the largest minimum distance between any two cows. Range starts at [1, 8] - 1 is the smallest useful gap, 8 is the full span of the stalls.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "0",
+      "high" : "8",
+      "low" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Test whether 3 cows can be placed with every pair at least 4 apart.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "8",
+      "low" : "1",
+      "mid" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 23,
+    "description" : "Stall 2 is only 1 away from the last placed cow (< 4) - too close, skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 23,
+    "description" : "Stall 4 is only 3 away from the last placed cow (< 4) - too close, skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 20,
+    "description" : "Stall 8 is 7 away from the last placed cow (>= 4) - place cow #2 here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 23,
+    "description" : "Stall 9 is only 1 away from the last placed cow (< 4) - too close, skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Only placed 2 cows (needed 3) - distance 4 is too large. Try smaller.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "high" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 5,
+    "description" : "Test whether 3 cows can be placed with every pair at least 2 apart.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "1",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 23,
+    "description" : "Stall 2 is only 1 away from the last placed cow (< 2) - too close, skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 20,
+    "description" : "Stall 4 is 3 away from the last placed cow (>= 2) - place cow #2 here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 20,
+    "description" : "Stall 8 is 4 away from the last placed cow (>= 2) - place cow #3 here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "i" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 23,
+    "description" : "Stall 9 is only 1 away from the last placed cow (< 2) - too close, skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 7,
+    "description" : "Placed 3 cows (needed 3) - distance 2 works. Record it and try a larger distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "2",
+      "count" : "3",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 5,
+    "description" : "Test whether 3 cows can be placed with every pair at least 3 apart.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "3",
+      "mid" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 23,
+    "description" : "Stall 2 is only 1 away from the last placed cow (< 3) - too close, skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 20,
+    "description" : "Stall 4 is 3 away from the last placed cow (>= 3) - place cow #2 here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 20,
+    "description" : "Stall 8 is 4 away from the last placed cow (>= 3) - place cow #3 here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "i" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 23,
+    "description" : "Stall 9 is only 1 away from the last placed cow (< 3) - too close, skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 7,
+    "description" : "Placed 3 cows (needed 3) - distance 3 works. Record it and try a larger distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "3",
+      "count" : "3",
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 13,
+    "description" : "low passed high. The largest distance that still works is 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

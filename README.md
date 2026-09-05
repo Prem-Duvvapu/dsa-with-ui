@@ -171,7 +171,8 @@ them means moving problems between services.
 
 ### Traced so far
 
-`bfs-traversal`, `binary-search-1d`, `check-sorted-ii`, `count-inversions`,
+`aggressive-cows`,
+`bfs-traversal`, `binary-search-1d`, `book-allocation`, `check-sorted-ii`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,

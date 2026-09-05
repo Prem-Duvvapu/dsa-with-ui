@@ -54,8 +54,11 @@ public class BinarySearchService implements ProblemProvider {
             case "smallest-divisor": return generateSmallestDivisorSteps();
             case "ship-packages-d-days": return generateShipPackagesSteps();
             case "kth-missing-positive": return generateKthMissingPositiveSteps();
-            case "aggressive-cows": return generateAggressiveCowsSteps();
-            case "book-allocation": return generateBookAllocationSteps();
+            // aggressive-cows and book-allocation have real tracers (tracer/impl). Refuse
+            // rather than let default: serve binary-search-1d's steps under these ids.
+            case "aggressive-cows":
+            case "book-allocation":
+                throw new LegacyTraceRetiredException(problemId);
             case "split-array-largest-sum": return generateSplitArrayLargestSumSteps();
             case "painters-partition": return generatePaintersPartitionSteps();
             case "minimize-max-distance-gas-station": return generateGasStationSteps();
@@ -448,8 +451,6 @@ public class BinarySearchService implements ProblemProvider {
     private List<ExecutionStep> generateSmallestDivisorSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateShipPackagesSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateKthMissingPositiveSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateAggressiveCowsSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateBookAllocationSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSplitArrayLargestSumSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generatePaintersPartitionSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateGasStationSteps() { return generateBs1dSteps(); }
