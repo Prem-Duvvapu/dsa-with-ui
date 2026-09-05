@@ -43,7 +43,8 @@ class TreeServiceTest {
         // Ids with real tracers refuse the legacy path rather than serve a substitute.
         Set<String> retired = Set.of("tree-preorder", "tree-inorder", "tree-postorder",
                 "tree-level-order", "tree-max-path-sum", "serialize-deserialize-bt",
-                "zigzag-traversal", "tree-lca");
+                "zigzag-traversal", "tree-lca",
+                "tree-burn-time", "vertical-order-traversal");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

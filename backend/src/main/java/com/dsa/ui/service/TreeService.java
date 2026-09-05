@@ -38,10 +38,16 @@ public class TreeService implements ProblemProvider {
             case "zigzag-traversal":
             case "tree-lca":
                 throw new LegacyTraceRetiredException(problemId);
+            // tree-burn-time and vertical-order-traversal have real tracers (tracer/impl)
+            // now. tree-burn-time used to delegate to generatePreorderSteps();
+            // vertical-order-traversal had no case at all, silently falling to
+            // default:. Refuse rather than serve either's unrelated steps.
+            case "tree-burn-time":
+            case "vertical-order-traversal":
+                throw new LegacyTraceRetiredException(problemId);
             case "tree-height": return generatePreorderSteps();
             case "tree-balanced": return generatePreorderSteps();
             case "tree-diameter": return generatePreorderSteps();
-            case "tree-burn-time": return generatePreorderSteps();
             case "bst-search": return generatePreorderSteps();
             case "bst-validate": return generatePreorderSteps();
             case "bst-kth-smallest": return generatePreorderSteps();
@@ -170,7 +176,9 @@ public class TreeService implements ProblemProvider {
     private static DsType bulkDsType(String id) {
         return switch (id) {
             case "tree-postorder", "tree-level-order", "tree-max-path-sum",
-                    "serialize-deserialize-bt", "zigzag-traversal", "tree-lca" -> DsType.TREE;
+                    "serialize-deserialize-bt", "zigzag-traversal", "tree-lca",
+                    "tree-burn-time", "vertical-order-traversal", "morris-inorder",
+                    "correct-bst-swap" -> DsType.TREE;
             default -> DsType.STACK;
         };
     }
