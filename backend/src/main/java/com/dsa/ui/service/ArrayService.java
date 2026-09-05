@@ -57,6 +57,11 @@ public class ArrayService implements ProblemProvider {
             // are gone; refusing loudly beats serving the same canned trace forever.
             case "repeating-missing-number":
             case "merge-two-sorted-arrays":
+            // three-sum and four-sum have real tracers (tracer/impl) now. Same
+            // hardcoded-narration pattern as the pair above - gone rather than kept
+            // as dead weight that could accidentally get called again.
+            case "three-sum":
+            case "four-sum":
                 throw new LegacyTraceRetiredException(problemId);
             case "union-sorted-arrays": return generateUnionSortedArraysSteps();
             case "longest-subarray-sum-k": return generateLongestSubarraySumKSteps();
@@ -71,8 +76,6 @@ public class ArrayService implements ProblemProvider {
             case "count-subarrays-given-sum": return generateCountSubarraysGivenSumSteps();
             case "pascals-triangle": return generatePascalsTriangleSteps();
             case "majority-element-ii": return generateMajorityElement2Steps();
-            case "three-sum": return generateThreeSumSteps();
-            case "four-sum": return generateFourSumSteps();
             case "largest-subarray-sum-0": return generateLargestSubarraySum0Steps();
             case "count-subarrays-xor-k": return generateCountSubarraysXorKSteps();
             case "merge-intervals": return generateMergeIntervalsSteps();
@@ -2007,119 +2010,6 @@ public class ArrayService implements ProblemProvider {
             stepNum++, 18,
             String.format("Majority Element II Complete! Elements appearing > N/3 times: %s.", ls.toString()),
             List.of(), Map.of(), List.of(), Map.of("Majority Elements", ls.toString()),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateThreeSumSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
-        Arrays.sort(nums); // [-4, -1, -1, 0, 1, 2]
-        int n = nums.length;
-        List<List<Integer>> ans = new ArrayList<>();
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "3 Sum: Step 1 - Sort input array -> [-4, -1, -1, 0, 1, 2]. Use outer loop i and 2 pointers j=i+1, k=n-1 to find triplets summing to 0.",
-            List.of(), Map.of(), List.of(), Map.of("Sorted Array", Arrays.toString(nums)),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        for (int i = 0; i < n; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
-            int j = i + 1, k = n - 1;
-
-            while (j < k) {
-                int sum = nums[i] + nums[j] + nums[k];
-                if (sum == 0) {
-                    ans.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    steps.add(new ExecutionStep(
-                        stepNum++, 13,
-                        String.format("Found 3Sum Triplet! nums[%d]=%d + nums[%d]=%d + nums[%d]=%d = 0! Triplets: %s.", i, nums[i], j, nums[j], k, nums[k], ans.toString()),
-                        List.of(), Map.of(), List.of(), Map.of("Triplet", String.format("[%d, %d, %d]", nums[i], nums[j], nums[k])),
-                        "Array", null, createArrayState(nums, j, k), null, null
-                    ));
-                    j++; k--;
-                    while (j < k && nums[j] == nums[j - 1]) j++;
-                    while (j < k && nums[k] == nums[k + 1]) k--;
-                } else if (sum < 0) {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 11,
-                        String.format("3Sum scan: nums[%d]=%d + nums[%d]=%d + nums[%d]=%d = %d < 0. Move j++.", i, nums[i], j, nums[j], k, nums[k], sum),
-                        List.of(), Map.of(), List.of(), Map.of("sum", String.valueOf(sum), "j", String.valueOf(j + 1)),
-                        "Array", null, createArrayState(nums, j, k), null, null
-                    ));
-                    j++;
-                } else {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 12,
-                        String.format("3Sum scan: nums[%d]=%d + nums[%d]=%d + nums[%d]=%d = %d > 0. Move k--.", i, nums[i], j, nums[j], k, nums[k], sum),
-                        List.of(), Map.of(), List.of(), Map.of("sum", String.valueOf(sum), "k", String.valueOf(k - 1)),
-                        "Array", null, createArrayState(nums, j, k), null, null
-                    ));
-                    k--;
-                }
-            }
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 19,
-            String.format("3 Sum Complete! Found unique triplets: %s.", ans.toString()),
-            List.of(), Map.of(), List.of(), Map.of("Triplets", ans.toString()),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateFourSumSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 0, -1, 0, -2, 2};
-        int target = 0;
-        Arrays.sort(nums); // [-2, -1, 0, 0, 1, 2]
-        int n = nums.length;
-        List<List<Integer>> ans = new ArrayList<>();
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "4 Sum: Sort input array -> [-2, -1, 0, 0, 1, 2]. Use 2 nested loops (i, j) and 2 pointers (k, l) to find quadruplets summing to target 0.",
-            List.of(), Map.of(), List.of(), Map.of("Sorted Array", Arrays.toString(nums)),
-            "Array", null, createArrayState(nums, -1, -1), null, null
-        ));
-
-        for (int i = 0; i < n; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
-            for (int j = i + 1; j < n; j++) {
-                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
-                int k = j + 1, l = n - 1;
-
-                while (k < l) {
-                    long sum = (long)nums[i] + nums[j] + nums[k] + nums[l];
-                    if (sum == target) {
-                        ans.add(Arrays.asList(nums[i], nums[j], nums[k], nums[l]));
-                        steps.add(new ExecutionStep(
-                            stepNum++, 14,
-                            String.format("Found 4Sum Quadruplet! (%d, %d, %d, %d) sum = 0! Quadruplets: %s.", nums[i], nums[j], nums[k], nums[l], ans.toString()),
-                            List.of(), Map.of(), List.of(), Map.of("Quadruplet", String.format("[%d, %d, %d, %d]", nums[i], nums[j], nums[k], nums[l])),
-                            "Array", null, createArrayState(nums, k, l), null, null
-                        ));
-                        k++; l--;
-                        while (k < l && nums[k] == nums[k - 1]) k++;
-                        while (k < l && nums[l] == nums[l + 1]) l--;
-                    } else if (sum < target) k++;
-                    else l--;
-                }
-            }
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 22,
-            String.format("4 Sum Complete! Found unique quadruplets: %s.", ans.toString()),
-            List.of(), Map.of(), List.of(), Map.of("Quadruplets", ans.toString()),
             "Array", null, createArrayState(nums, -1, -1), null, null
         ));
 
