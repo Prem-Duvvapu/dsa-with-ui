@@ -171,7 +171,7 @@ them means moving problems between services.
 
 ### Traced so far
 
-`aggressive-cows`, `asteroid-collision`,
+`aggressive-cows`, `alien-dictionary`, `asteroid-collision`,
 `bellman-ford`,
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `burst-balloons`,
 `check-sorted-ii`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
@@ -194,7 +194,7 @@ them means moving problems between services.
 `stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `three-sum`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `unique-paths-2`, `upper-bound`,
-`vertical-order-traversal`, `wildcard-matching`,
+`vertical-order-traversal`, `wildcard-matching`, `word-ladder-1`,
 `z-function-algo`, and `zigzag-traversal`.
 
 Fifteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS

@@ -1,0 +1,1877 @@
+{
+  "anchors" : {
+    "enqueueNeighbor" : 17,
+    "found" : 11,
+    "init" : 7,
+    "unreachable" : 20,
+    "visit" : 10
+  },
+  "code" : "public int wordLadderLength(String beginWord, String endWord,\n                             Map<String, List<String>> adjacency) {\n    Deque<String> queue = new ArrayDeque<>();\n    Map<String, Integer> length = new HashMap<>();\n    queue.add(beginWord);\n    length.put(beginWord, 1);\n\n    while (!queue.isEmpty()) {\n        String word = queue.poll();\n        if (word.equals(endWord)) {\n            return length.get(word);\n        }\n        for (String neighbor : adjacency.getOrDefault(word, List.of())) {\n            if (!length.containsKey(neighbor)) {\n                length.put(neighbor, length.get(word) + 1);\n                queue.add(neighbor);\n            }\n        }\n    }\n    return 0;\n}",
+  "problemId" : "word-ladder-1",
+  "resolvedInput" : {
+    "beginWord" : "hit",
+    "endWord" : "cog",
+    "wordList" : "hot,dot,dog,lot,log,cog"
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "Built the one-letter-transformation graph over 7 words. Seed the queue with 'hit' at length 1.",
+    "queueOrStackState" : [ "hit" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "Dequeue 'hit' (length 1).",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "hit"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 17,
+    "description" : "'hot' differs from 'hit' by one letter and is unvisited - enqueue it at length 2.",
+    "queueOrStackState" : [ "hot" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "length" : "2",
+      "neighbor" : "hot"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 10,
+    "description" : "Dequeue 'hot' (length 2).",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "2",
+      "word" : "hot"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 17,
+    "description" : "'dot' differs from 'hot' by one letter and is unvisited - enqueue it at length 3.",
+    "queueOrStackState" : [ "dot" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "length" : "3",
+      "neighbor" : "dot"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 17,
+    "description" : "'lot' differs from 'hot' by one letter and is unvisited - enqueue it at length 3.",
+    "queueOrStackState" : [ "dot", "lot" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-4" ],
+    "variables" : {
+      "length" : "3",
+      "neighbor" : "lot"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Dequeue 'dot' (length 3).",
+    "queueOrStackState" : [ "lot" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "unvisited",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "3",
+      "word" : "dot"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 17,
+    "description" : "'dog' differs from 'dot' by one letter and is unvisited - enqueue it at length 4.",
+    "queueOrStackState" : [ "lot", "dog" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "queued",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "length" : "4",
+      "neighbor" : "dog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "Dequeue 'lot' (length 3).",
+    "queueOrStackState" : [ "dog" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "queued",
+      "4" : "visiting",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "3",
+      "word" : "lot"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "'log' differs from 'lot' by one letter and is unvisited - enqueue it at length 4.",
+    "queueOrStackState" : [ "dog", "log" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "queued",
+      "4" : "visiting",
+      "5" : "queued",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "4-5" ],
+    "variables" : {
+      "length" : "4",
+      "neighbor" : "log"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 10,
+    "description" : "Dequeue 'dog' (length 4).",
+    "queueOrStackState" : [ "log" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "visited",
+      "5" : "queued",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "4",
+      "word" : "dog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 17,
+    "description" : "'cog' differs from 'dog' by one letter and is unvisited - enqueue it at length 5.",
+    "queueOrStackState" : [ "log", "cog" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "visited",
+      "5" : "queued",
+      "6" : "queued"
+    },
+    "activeEdges" : [ "3-6" ],
+    "variables" : {
+      "length" : "5",
+      "neighbor" : "cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 10,
+    "description" : "Dequeue 'log' (length 4).",
+    "queueOrStackState" : [ "cog" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visiting",
+      "6" : "queued"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "4",
+      "word" : "log"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 10,
+    "description" : "Dequeue 'cog' (length 5).",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "5",
+      "word" : "cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 11,
+    "description" : "'cog' is the target word - the transformation sequence has 5 words.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "5"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}

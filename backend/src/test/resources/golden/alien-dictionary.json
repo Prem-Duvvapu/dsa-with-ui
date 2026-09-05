@@ -1,0 +1,1141 @@
+{
+  "anchors" : {
+    "addEdge" : 20,
+    "cycleDetected" : 48,
+    "done" : 50,
+    "enqueueNeighbor" : 43,
+    "init" : 10,
+    "visit" : 39
+  },
+  "code" : "public String alienOrder(String[] words) {\n    Map<Character, List<Character>> adj = new HashMap<>();\n    Map<Character, Integer> indegree = new HashMap<>();\n    for (String w : words) {\n        for (char c : w.toCharArray()) {\n            adj.putIfAbsent(c, new ArrayList<>());\n            indegree.putIfAbsent(c, 0);\n        }\n    }\n\n    for (int i = 0; i + 1 < words.length; i++) {\n        String w1 = words[i], w2 = words[i + 1];\n        int minLen = Math.min(w1.length(), w2.length());\n        boolean differed = false;\n        for (int j = 0; j < minLen; j++) {\n            if (w1.charAt(j) != w2.charAt(j)) {\n                if (!adj.get(w1.charAt(j)).contains(w2.charAt(j))) {\n                    adj.get(w1.charAt(j)).add(w2.charAt(j));\n                    indegree.merge(w2.charAt(j), 1, Integer::sum);\n                }\n                differed = true;\n                break;\n            }\n        }\n        if (!differed && w1.length() > w2.length()) {\n            return \"\"; // w2 is an invalid shorter prefix of w1\n        }\n    }\n\n    Deque<Character> queue = new ArrayDeque<>();\n    for (char c : indegree.keySet()) {\n        if (indegree.get(c) == 0) queue.add(c);\n    }\n\n    StringBuilder order = new StringBuilder();\n    while (!queue.isEmpty()) {\n        char c = queue.poll();\n        order.append(c);\n        for (char next : adj.get(c)) {\n            indegree.put(next, indegree.get(next) - 1);\n            if (indegree.get(next) == 0) {\n                queue.add(next);\n            }\n        }\n    }\n\n    if (order.length() < indegree.size()) {\n        return \"\";\n    }\n    return order.toString();\n}",
+  "problemId" : "alien-dictionary",
+  "resolvedInput" : {
+    "words" : "wrt,wrf,er,ett,rftt"
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 10,
+    "description" : "5 distinct characters appear across 5 words. Compare each adjacent pair to find which character must come before which.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 20,
+    "description" : "'t' before 'f' (from comparing 'wrt' and 'wrf'): 't' must precede 'f' in the alien alphabet.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "edge" : "t->f"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 20,
+    "description" : "'w' before 'e' (from comparing 'wrf' and 'er'): 'w' must precede 'e' in the alien alphabet.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-4" ],
+    "variables" : {
+      "edge" : "w->e"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 20,
+    "description" : "'r' before 't' (from comparing 'er' and 'ett'): 'r' must precede 't' in the alien alphabet.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "edge" : "r->t"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 20,
+    "description" : "'e' before 'r' (from comparing 'ett' and 'rftt'): 'e' must precede 'r' in the alien alphabet.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "4-1" ],
+    "variables" : {
+      "edge" : "e->r"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 39,
+    "description" : "'w' has no unresolved predecessor left - append it to the order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "w"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 43,
+    "description" : "'e' has no predecessors left unresolved - enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "queued"
+    },
+    "activeEdges" : [ "0-4" ],
+    "variables" : {
+      "neighbor" : "e"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 39,
+    "description" : "'e' has no unresolved predecessor left - append it to the order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "we"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 43,
+    "description" : "'r' has no predecessors left unresolved - enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ "4-1" ],
+    "variables" : {
+      "neighbor" : "r"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 39,
+    "description" : "'r' has no unresolved predecessor left - append it to the order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "wer"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 43,
+    "description" : "'t' has no predecessors left unresolved - enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "neighbor" : "t"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 39,
+    "description" : "'t' has no unresolved predecessor left - append it to the order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "unvisited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "wert"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 43,
+    "description" : "'f' has no predecessors left unresolved - enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "queued",
+      "4" : "visited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "neighbor" : "f"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 39,
+    "description" : "'f' has no unresolved predecessor left - append it to the order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "wertf"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 50,
+    "description" : "Every character resolved. Alien alphabet order: wertf.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "wertf"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "w",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "r",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "t",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "f",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "e",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}
