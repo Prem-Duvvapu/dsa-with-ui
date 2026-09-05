@@ -1,0 +1,185 @@
+{
+  "anchors" : {
+    "boundaries" : 13,
+    "found" : 19,
+    "partition" : 10,
+    "shrinkHigh" : 21,
+    "shrinkLow" : 23,
+    "swapToSmaller" : 4
+  },
+  "code" : "public int kthElement(int[] nums1, int[] nums2, int k) {\n    int[] a = nums1, b = nums2;\n    if (a.length > b.length) {\n        a = nums2; b = nums1;\n    }\n    int n1 = a.length, n2 = b.length;\n    int low = Math.max(0, k - n2), high = Math.min(k, n1);\n\n    while (low <= high) {\n        int cut1 = (low + high) / 2;\n        int cut2 = k - cut1;\n\n        int l1 = cut1 == 0 ? Integer.MIN_VALUE : a[cut1 - 1];\n        int l2 = cut2 == 0 ? Integer.MIN_VALUE : b[cut2 - 1];\n        int r1 = cut1 == n1 ? Integer.MAX_VALUE : a[cut1];\n        int r2 = cut2 == n2 ? Integer.MAX_VALUE : b[cut2];\n\n        if (l1 <= r2 && l2 <= r1) {\n            return Math.max(l1, l2);\n        } else if (l1 > r2) {\n            high = cut1 - 1;\n        } else {\n            low = cut1 + 1;\n        }\n    }\n    return -1;\n}",
+  "problemId" : "kth-element-2-sorted-arrays",
+  "resolvedInput" : {
+    "k" : 4,
+    "nums1" : [ -13, -11, 14, 16 ],
+    "nums2" : [ -14, -9, -1, 15, 17 ]
+  },
+  "stepCount" : 3,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 10,
+    "description" : "Try cutting the smaller array after 2 elements. That forces the larger array's cut after 2 elements, so the left side holds exactly 4 elements - the first 4 of the merged order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cut1" : "2",
+      "cut2" : "2",
+      "high" : "4",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -13,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -11,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 16,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -14,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -9,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 17,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "Left boundaries: -11, -9. Right boundaries: 14, -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "l1" : "-11",
+      "l2" : "-9",
+      "r1" : "14",
+      "r2" : "-1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -13,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -11,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 16,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -14,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -9,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 17,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 19,
+    "description" : "Every left element is <= every right element in both arrays - valid partition. The 4-th element is -9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "-9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -13,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -11,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 16,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : -14,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -9,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 17,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
