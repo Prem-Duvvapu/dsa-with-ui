@@ -174,7 +174,7 @@ them means moving problems between services.
 `bfs-traversal`, `binary-search-1d`, `check-sorted-ii`, `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
-`kadane-algo`, `minimum-falling-path-sum`,
+`kadane-algo`, `lower-bound`, `minimum-falling-path-sum`,
 `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
