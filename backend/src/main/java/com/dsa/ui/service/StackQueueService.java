@@ -43,7 +43,11 @@ public class StackQueueService implements ProblemProvider {
             case "min-stack":
             case "sum-subarray-minimums":
                 throw new LegacyTraceRetiredException(problemId);
-            case "lru-cache": return generateLruCacheSteps();
+            // lru-cache has a real tracer (tracer/impl) now, tracing the whole put/get
+            // sequence as one FieldType.STRING mini-language input. Refuse rather than
+            // let default: serve balanced-parentheses's steps under this id.
+            case "lru-cache":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generateBalancedParenthesesSteps();
         }
     }
@@ -135,9 +139,24 @@ public class StackQueueService implements ProblemProvider {
                 id, title, cat, "Stack & Queue", diff, desc,
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Stack & Queue Striver A2Z Implementation\n}", title),
                 null, null, null, createArrayState(new int[]{4, 2, 7, 5}, -1, -1), null, null, null,
-                new ComplexityDetail("O(N)", "Time Complexity: Linear O(N) stack / queue operations.", "Stack Processing", "O(N)", "Space Complexity: Stack memory O(N).", "Memory", "Auxiliary Space: O(N)", "Memory"), "Stack"
+                new ComplexityDetail("O(N)", "Time Complexity: Linear O(N) stack / queue operations.", "Stack Processing", "O(N)", "Space Complexity: Stack memory O(N).", "Memory", "Auxiliary Space: O(N)", "Memory"), bulkDsType(id).wireValue()
             ));
         }
+    }
+
+    /**
+     * Most bulk-registered problems are genuinely Stack-shaped. lru-cache is not: its
+     * eviction order IS a doubly linked list (most- to least-recently-used), not a stack,
+     * and {@link com.dsa.ui.tracer.impl.LruCacheTracer} traces it as one. This must agree
+     * with the tracer's own {@code dsType()} — {@code CatalogTracerMetadataTest} fails
+     * application-wide if the catalogue routes a traced problem to a canvas its tracer
+     * never emits.
+     */
+    private static DsType bulkDsType(String id) {
+        return switch (id) {
+            case "lru-cache" -> DsType.LINKED_LIST;
+            default -> DsType.STACK;
+        };
     }
 
     // Step Generators
@@ -180,16 +199,6 @@ public class StackQueueService implements ProblemProvider {
             steps.add(createStackStep(stepNum++, 9, "Push " + nums[i] + " onto stack. Stack state: " + stack, new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("pushed", String.valueOf(nums[i]))));
         }
         steps.add(createStackStep(stepNum++, 12, "Next Greater Element Complete! Resulting NGE array: [5, 10, 10, -1, -1]", new ArrayList<>(stack), createArrayState(nums, -1, -1), Map.of("result", "[5, 10, 10, -1, -1]")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateLruCacheSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] keys = new int[]{1, 2, 3, 4};
-        int stepNum = 1;
-        steps.add(createStackStep(stepNum++, 3, "LRU Cache (Capacity = 2): Put(1,1), Put(2,2). Cache: [2=2, 1=1].", List.of("2", "1"), createArrayState(keys, 0, 1), Map.of("cache", "{2=2, 1=1}")));
-        steps.add(createStackStep(stepNum++, 6, "Get(1): Cache Hit! Move key 1 to MRU head. Cache: [1=1, 2=2].", List.of("1", "2"), createArrayState(keys, 0, 1), Map.of("cache", "{1=1, 2=2}")));
-        steps.add(createStackStep(stepNum++, 9, "Put(3,3): Capacity full! Evict LRU key 2. Insert 3. Cache: [3=3, 1=1].", List.of("3", "1"), createArrayState(keys, 2, 0), Map.of("evicted", "2", "cache", "{3=3, 1=1}")));
         return steps;
     }
 

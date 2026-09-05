@@ -1,0 +1,358 @@
+{
+  "anchors" : {
+    "get.hit" : 14,
+    "get.miss" : 12,
+    "init" : 7,
+    "put.evict" : 27,
+    "put.insert" : 30,
+    "put.update" : 21
+  },
+  "code" : "public class LRUCache {\n    private final int capacity;\n    private final Map<Integer, Integer> cache = new HashMap<>();\n    private final LinkedList<Integer> order = new LinkedList<>(); // front = MRU\n\n    public LRUCache(int capacity) {\n        this.capacity = capacity;\n    }\n\n    public int get(int key) {\n        if (!cache.containsKey(key)) {\n            return -1;\n        }\n        order.remove((Integer) key);\n        order.addFirst(key);\n        return cache.get(key);\n    }\n\n    public void put(int key, int value) {\n        if (cache.containsKey(key)) {\n            cache.put(key, value);\n            order.remove((Integer) key);\n            order.addFirst(key);\n            return;\n        }\n        if (cache.size() == capacity) {\n            int lruKey = order.removeLast();\n            cache.remove(lruKey);\n        }\n        cache.put(key, value);\n        order.addFirst(key);\n    }\n}",
+  "problemId" : "lru-cache",
+  "resolvedInput" : {
+    "capacity" : 2,
+    "operations" : "put 1 1;put 2 2;get 1;put 3 3;get 2;put 4 4;get 1;get 3;get 4"
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "Capacity 2. The cache starts empty; the chain will track recency from most- to least-recently-used, front to back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{}",
+      "capacity" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 30,
+    "description" : "put(1,1): new key, inserted at the front.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{1=1}",
+      "key" : "1",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "1:1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 30,
+    "description" : "put(2,2): new key, inserted at the front.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{1=1, 2=2}",
+      "key" : "2",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 2,
+      "val" : "2:2",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "1:1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 14,
+    "description" : "get(1): hit, value 1. Move 1 to the front — it is now the most recently used.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{1=1, 2=2}",
+      "key" : "1",
+      "result" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "1:1",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "2:2",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 27,
+    "description" : "put(3,3): cache is full at capacity 2. Evict 2, the least recently used key.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{1=1}",
+      "evicted" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "1:1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 30,
+    "description" : "put(3,3): new key, inserted at the front.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{1=1, 3=3}",
+      "key" : "3",
+      "value" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "1:1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "get(2): key 2 is not in the cache — miss, return -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{1=1, 3=3}",
+      "key" : "2",
+      "result" : "-1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "1:1",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 27,
+    "description" : "put(4,4): cache is full at capacity 2. Evict 1, the least recently used key.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{3=3}",
+      "evicted" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 30,
+    "description" : "put(4,4): new key, inserted at the front.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{3=3, 4=4}",
+      "key" : "4",
+      "value" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 4,
+      "val" : "4:4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "get(1): key 1 is not in the cache — miss, return -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{3=3, 4=4}",
+      "key" : "1",
+      "result" : "-1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 4,
+      "val" : "4:4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 14,
+    "description" : "get(3): hit, value 3. Move 3 to the front — it is now the most recently used.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{3=3, 4=4}",
+      "key" : "3",
+      "result" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : 4,
+      "prevId" : null,
+      "state" : "active"
+    }, {
+      "id" : 4,
+      "val" : "4:4",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "get(4): hit, value 4. Move 4 to the front — it is now the most recently used.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{3=3, 4=4}",
+      "key" : "4",
+      "result" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 4,
+      "val" : "4:4",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : null,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
