@@ -60,7 +60,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "network-delay-time": return generateNetworkDelayTimeSteps();
             case "number-of-ways-destination": return generateNumberOfWaysDestinationSteps();
             case "min-multiplications-reach-end": return generateMinMultiplicationsReachEndSteps();
-            case "bellman-ford": return generateBellmanFordSteps();
+            case "bellman-ford": throw new LegacyTraceRetiredException(problemId);
             case "floyd-warshall": return generateFloydWarshallSteps();
             case "city-smallest-neighbors": return generateCitySmallestNeighborsSteps();
             case "mst-theory": return generateMstTheorySteps();
@@ -75,7 +75,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "swim-in-rising-water": return generateSwimInRisingWaterSteps();
             case "tarjan-bridges": return generateTarjanBridgesSteps();
             case "articulation-points": return generateArticulationPointsSteps();
-            case "kosaraju-scc": return generateKosarajuSteps();
+            case "kosaraju-scc": throw new LegacyTraceRetiredException(problemId);
             case "bracket-reversals": return generateBracketReversalsSteps();
             case "count-and-say": return generateCountAndSaySteps();
             case "string-hashing-theory": return generateStringHashingTheorySteps();
@@ -444,7 +444,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateNetworkDelayTimeSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfWaysDestinationSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMinMultiplicationsReachEndSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateBellmanFordSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateFloydWarshallSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCitySmallestNeighborsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
@@ -527,7 +526,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateSwimInRisingWaterSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateTarjanBridgesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateArticulationPointsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateKosarajuSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateBracketReversalsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCountAndSaySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateStringHashingTheorySteps() { return generateGraphIntroSteps(); }

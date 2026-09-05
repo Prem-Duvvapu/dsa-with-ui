@@ -172,13 +172,14 @@ them means moving problems between services.
 ### Traced so far
 
 `aggressive-cows`, `asteroid-collision`,
+`bellman-ford`,
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `burst-balloons`,
 `check-sorted-ii`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `find-min-rotated-sorted`, `find-starting-point-loop`, `four-sum`,
 `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
-`kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
+`kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
 `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-happy-prefix`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,

@@ -1,0 +1,2776 @@
+{
+  "anchors" : {
+    "done" : 24,
+    "init" : 2,
+    "negativeCycleDetected" : 21,
+    "noImprovement" : 13,
+    "relax" : 11,
+    "roundComplete" : 16
+  },
+  "code" : "public int[] bellmanFord(int v, int[][] edges, int src) {\n    int[] dist = new int[v];\n    Arrays.fill(dist, Integer.MAX_VALUE);\n    dist[src] = 0;\n\n    for (int round = 0; round < v - 1; round++) {\n        for (int[] edge : edges) {\n            int from = edge[0], to = edge[1], weight = edge[2];\n            if (dist[from] != Integer.MAX_VALUE\n                    && dist[from] + weight < dist[to]) {\n                dist[to] = dist[from] + weight;\n            } else {\n                continue;\n            }\n        }\n    }\n\n    for (int[] edge : edges) {\n        int from = edge[0], to = edge[1], weight = edge[2];\n        if (dist[from] != Integer.MAX_VALUE && dist[from] + weight < dist[to]) {\n            return null;\n        }\n    }\n    return dist;\n}",
+  "problemId" : "bellman-ford",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 1, 4 ], [ 0, 2, 1 ], [ 2, 1, -2 ], [ 1, 3, 2 ], [ 2, 3, 5 ], [ 3, 4, 1 ] ],
+      "vertices" : 5
+    },
+    "start" : 0
+  },
+  "stepCount" : 30,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "5 vertices. dist[0] = 0, everything else infinite.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, ∞, ∞, ∞, ∞]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "Round 1, edge 0-1 (weight 4): 0 + 4 = 4 beats infinity. Update dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, 4, ∞, ∞, ∞]",
+      "edge" : "0-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 11,
+    "description" : "Round 1, edge 0-2 (weight 1): 0 + 1 = 1 beats infinity. Update dist[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "dist" : "[0, 4, 1, ∞, ∞]",
+      "edge" : "0-2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "Round 1, edge 2-1 (weight -2): 1 + -2 = -1 beats 4. Update dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-1" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, ∞, ∞]",
+      "edge" : "2-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 11,
+    "description" : "Round 1, edge 1-3 (weight 2): -1 + 2 = 1 beats infinity. Update dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, ∞]",
+      "edge" : "1-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Round 1, edge 2-3 (weight 5): no improvement to dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, ∞]",
+      "edge" : "2-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 11,
+    "description" : "Round 1, edge 3-4 (weight 1): 1 + 1 = 2 beats infinity. Update dist[4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "3-4" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "3-4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "Round 1 complete. Distances so far: [0, -1, 1, 1, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "Round 2, edge 0-1 (weight 4): no improvement to dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "0-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "Round 2, edge 0-2 (weight 1): no improvement to dist[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "0-2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "Round 2, edge 2-1 (weight -2): no improvement to dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-1" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "2-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "Round 2, edge 1-3 (weight 2): no improvement to dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "1-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "Round 2, edge 2-3 (weight 5): no improvement to dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "2-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 13,
+    "description" : "Round 2, edge 3-4 (weight 1): no improvement to dist[4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "3-4" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "3-4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 16,
+    "description" : "Round 2 complete. Distances so far: [0, -1, 1, 1, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 13,
+    "description" : "Round 3, edge 0-1 (weight 4): no improvement to dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "0-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 13,
+    "description" : "Round 3, edge 0-2 (weight 1): no improvement to dist[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "0-2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 13,
+    "description" : "Round 3, edge 2-1 (weight -2): no improvement to dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-1" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "2-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 13,
+    "description" : "Round 3, edge 1-3 (weight 2): no improvement to dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "1-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 13,
+    "description" : "Round 3, edge 2-3 (weight 5): no improvement to dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "2-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 13,
+    "description" : "Round 3, edge 3-4 (weight 1): no improvement to dist[4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "3-4" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "3-4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 16,
+    "description" : "Round 3 complete. Distances so far: [0, -1, 1, 1, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 13,
+    "description" : "Round 4, edge 0-1 (weight 4): no improvement to dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "0-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 13,
+    "description" : "Round 4, edge 0-2 (weight 1): no improvement to dist[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "0-2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 13,
+    "description" : "Round 4, edge 2-1 (weight -2): no improvement to dist[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-1" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "2-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 13,
+    "description" : "Round 4, edge 1-3 (weight 2): no improvement to dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "1-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 13,
+    "description" : "Round 4, edge 2-3 (weight 5): no improvement to dist[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "2-3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 13,
+    "description" : "Round 4, edge 3-4 (weight 1): no improvement to dist[4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ "3-4" ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]",
+      "edge" : "3-4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 16,
+    "description" : "Round 4 complete. Distances so far: [0, -1, 1, 1, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 24,
+    "description" : "No negative cycle. Final shortest distances from 0: [0, -1, 1, 1, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 4,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 1,
+      "weight" : -2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 2,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 5,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : 1,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}
