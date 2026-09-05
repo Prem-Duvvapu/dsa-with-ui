@@ -56,7 +56,9 @@ public class ArrayServiceTest {
                 "count-inversions",
                 "reverse-pairs",
                 "sort-0-1-2",
-                "next-permutation");
+                "next-permutation",
+                "repeating-missing-number",
+                "merge-two-sorted-arrays");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

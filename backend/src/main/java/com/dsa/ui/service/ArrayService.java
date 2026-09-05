@@ -51,6 +51,12 @@ public class ArrayService implements ProblemProvider {
             // rather than let default: serve largest-element's steps under these ids.
             case "sort-0-1-2":
             case "next-permutation":
+            // repeating-missing-number and merge-two-sorted-arrays have real tracers
+            // (tracer/impl) now. Their generators were hardcoded narrations - a real
+            // algorithm always run on one baked-in array, ignoring caller input - and
+            // are gone; refusing loudly beats serving the same canned trace forever.
+            case "repeating-missing-number":
+            case "merge-two-sorted-arrays":
                 throw new LegacyTraceRetiredException(problemId);
             case "union-sorted-arrays": return generateUnionSortedArraysSteps();
             case "longest-subarray-sum-k": return generateLongestSubarraySumKSteps();
@@ -70,8 +76,6 @@ public class ArrayService implements ProblemProvider {
             case "largest-subarray-sum-0": return generateLargestSubarraySum0Steps();
             case "count-subarrays-xor-k": return generateCountSubarraysXorKSteps();
             case "merge-intervals": return generateMergeIntervalsSteps();
-            case "merge-two-sorted-arrays": return generateMergeTwoSortedArraysSteps();
-            case "repeating-missing-number": return generateRepeatingMissingSteps();
             case "max-product-subarray": return generateMaxProductSubarraySteps();
             default: return generateLargestElementSteps();
         }
@@ -2253,91 +2257,6 @@ public class ArrayService implements ProblemProvider {
             String.format("Merge Overlapping Intervals Complete! Merged non-overlapping intervals: %s.", formatIntervals(res)),
             List.of(), Map.of(), List.of(), Map.of("Merged Intervals", formatIntervals(res)),
             "Matrix", cloneGrid(intervals), null, null, null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateMergeTwoSortedArraysSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] arr = new int[]{1, 3, 5, 7, 0, 2, 6, 8};
-        int n = 4, m = 4, len = n + m;
-        int gap = (len / 2) + (len % 2);
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Merge Two Sorted Arrays Without Extra Space (Gap Method): arr1 = [1, 3, 5, 7], arr2 = [0, 2, 6, 8]. Initialize Gap = ceil((N+M)/2) = 4.",
-            List.of(), Map.of(), List.of(), Map.of("gap", "4"),
-            "Array", null, createArrayState(arr, -1, -1), null, null
-        ));
-
-        while (gap > 0) {
-            int left = 0, right = left + gap;
-            while (right < len) {
-                if (arr[left] > arr[right]) {
-                    int temp = arr[left]; arr[left] = arr[right]; arr[right] = temp;
-                    steps.add(new ExecutionStep(
-                        stepNum++, 12,
-                        String.format("Gap = %d: Compare arr[%d] (%d) > arr[%d] (%d): Swap! Array: %s.", gap, left, temp, right, arr[left], Arrays.toString(arr)),
-                        List.of(), Map.of(), List.of(), Map.of("gap", String.valueOf(gap), "swap", String.format("%d <-> %d", temp, arr[left])),
-                        "Array", null, createArrayState(arr, left, right), null, null
-                    ));
-                }
-                left++; right++;
-            }
-            if (gap == 1) break;
-            gap = (gap / 2) + (gap % 2);
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 18,
-            String.format("Merge Two Sorted Arrays Complete! In-place merged array: %s.", Arrays.toString(arr)),
-            List.of(), Map.of(), List.of(), Map.of("Merged Output", Arrays.toString(arr)),
-            "Array", null, createArrayState(arr, -1, -1), null, null
-        ));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateRepeatingMissingSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] a = new int[]{3, 1, 2, 5, 3};
-        long n = a.length;
-        long SN = (n * (n + 1)) / 2; // 15
-        long S2N = (n * (n + 1) * (2 * n + 1)) / 6; // 55
-        long S = 0, S2 = 0;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 4,
-            "Find Repeating & Missing Number: Use math sum equations S - SN = X - Y and S^2 - S2N = X^2 - Y^2. Expected sum SN = 15, expected sum of squares S2N = 55.",
-            List.of(), Map.of(), List.of(), Map.of("SN", "15", "S2N", "55"),
-            "Array", null, createArrayState(a, -1, -1), null, null
-        ));
-
-        for (int val : a) {
-            S += val; S2 += (long)val * val;
-        }
-
-        long val1 = S - SN; // -1
-        long val2 = S2 - S2N; // -6
-        val2 = val2 / val1; // 6
-        long x = (val1 + val2) / 2; // 3
-        long y = x - val1; // 4
-
-        steps.add(new ExecutionStep(
-            stepNum++, 10,
-            String.format("Calculate Sums: Array sum S = %d, sum of squares S2 = %d. Equation 1 (X - Y) = %d. Equation 2 (X + Y) = %d.", S, S2, val1, val2),
-            List.of(), Map.of(), List.of(), Map.of("S", String.valueOf(S), "S2", String.valueOf(S2), "X-Y", String.valueOf(val1), "X+Y", String.valueOf(val2)),
-            "Array", null, createArrayState(a, -1, -1), null, null
-        ));
-
-        steps.add(new ExecutionStep(
-            stepNum++, 15,
-            String.format("Repeating & Missing Complete! Repeating Number X = %d, Missing Number Y = %d.", x, y),
-            List.of(), Map.of(), List.of(), Map.of("Repeating (X)", String.valueOf(x), "Missing (Y)", String.valueOf(y)),
-            "Array", null, createArrayState(a, 0, 4), null, null
         ));
 
         return steps;
