@@ -354,3 +354,24 @@ phase; do not describe unfinished work as resolved.
   `growList`'s transformation against candidate defaults *before* committing to one, the
   same way anchor coverage is hand-verified — round count for this algorithm shape is a
   property of the specific values, not the array length alone.
+
+## RCA-020 — Adding nullable ListNode fields undercounted every LINKED_LIST tracer's byte estimate
+
+- **Discovered:** 2026-09-05, adding `childId`/`randomId` to `ListNode` for `flattening-ll`
+  and `clone-ll-random-pointer` — caught before commit by re-running
+  `TracerContractTest.byteEstimateTracksActualPayload` across all `LINKED_LIST` tracers.
+- **Status:** Resolved
+- **Symptom and impact:** `StepEmitter.estimateBytes` charged a flat `88` bytes per
+  `ListNode`, calibrated against the original five-field shape. Adding two more nullable
+  `Integer` fields means Jackson now serialises `"childId":null,"randomId":null` on every
+  step of every pre-existing `LINKED_LIST` tracer too, not just the two new ones — the same
+  shape of bug as RCA-018 (a fixed per-element constant silently drifting low the moment a
+  model field is added), just on the linked-list byte estimator instead of the DP one.
+- **Root cause:** the estimator's per-node constant was never revisited when the model
+  gained fields; nothing forces the two to change together.
+- **Resolution:** bumped the per-node constant from 88 to 130, covering the worst case
+  (both new fields absent, `,"childId":null,"randomId":null` ≈ 33 bytes) with margin.
+- **Regression guard:** `TracerContractTest.byteEstimateTracksActualPayload`, parameterized
+  over every tracer including `reverse-linked-list`, `find-starting-point-loop`, and
+  `reverse-ll-group-k` — none of which populate the new fields, which is exactly what makes
+  them the tracers that would have caught a re-introduction of this bug first.
