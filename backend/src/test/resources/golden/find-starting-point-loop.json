@@ -1,0 +1,352 @@
+{
+  "anchors" : {
+    "advanceBoth" : 15,
+    "advanceSlowFast" : 4,
+    "foundStart" : 18,
+    "init" : 2,
+    "metInLoop" : 7,
+    "noLoop" : 11,
+    "resetToHead" : 13
+  },
+  "code" : "public ListNode detectCycle(ListNode head) {\n    ListNode slow = head, fast = head;\n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        if (slow == fast) {\n            break;\n        }\n    }\n    if (fast == null || fast.next == null) {\n        return null;\n    }\n    slow = head;\n    while (slow != fast) {\n        slow = slow.next;\n        fast = fast.next;\n    }\n    return slow;\n}",
+  "problemId" : "find-starting-point-loop",
+  "resolvedInput" : {
+    "loopPos" : 1,
+    "values" : [ 3, 2, 0, -4 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "slow = head, fast = head. Neither pointer has moved yet.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fast" : "3",
+      "slow" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "slow moves to 2, fast moves to 0 (two steps).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fast" : "0",
+      "slow" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "slow"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "fast"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "slow moves to 0, fast moves to 2 (two steps).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fast" : "2",
+      "slow" : "0"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "fast"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "slow"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "slow moves to -4, fast moves to -4 (two steps).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fast" : "-4",
+      "slow" : "-4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "slow and fast are on the same node - a cycle exists. Its exact start is still unknown; only phase 2 finds that.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Reset slow to the head. fast stays at the meeting point (-4). Advance both one step at a time from here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fast" : "-4",
+      "slow" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "slow"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "fast"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "slow moves to 2, fast moves to 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fast" : "2",
+      "slow" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 18,
+    "description" : "slow and fast met at node 2 (index 1) - this is where the loop begins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "state" : "curr"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 3,
+      "prevId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "-4",
+      "nextId" : 1,
+      "prevId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

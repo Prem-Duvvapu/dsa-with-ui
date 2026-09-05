@@ -2,6 +2,7 @@ package com.dsa.ui.algorithm;
 
 import com.dsa.ui.algorithm.linkedlist.ReverseLinkedList;
 import com.dsa.ui.model.ExecutionStep;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.LinkedListService;
 import com.dsa.ui.trace.ListTraceRecorder;
 import org.junit.jupiter.api.Test;
@@ -35,8 +36,8 @@ public class ReverseLinkedListTracingTest {
     @Test
     void testLinkedListServiceReverseSteps() {
         LinkedListService service = new LinkedListService();
-        List<ExecutionStep> steps = service.generateSteps("reverse-linked-list");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 3);
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("reverse-linked-list"),
+                "reverse-linked-list is traced by the v2 layer and must not fall back");
     }
 }
