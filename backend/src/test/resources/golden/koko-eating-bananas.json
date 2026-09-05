@@ -1,0 +1,689 @@
+{
+  "anchors" : {
+    "done" : 19,
+    "feasible" : 13,
+    "hoursTally" : 10,
+    "infeasible" : 16,
+    "init" : 4,
+    "mid" : 7
+  },
+  "code" : "public int minEatingSpeed(int[] piles, int h) {\n    int max = 0;\n    for (int p : piles) max = Math.max(max, p);\n    int low = 1, high = max, ans = high;\n\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        long hours = 0;\n        for (int p : piles) {\n            hours += (p + mid - 1) / mid;\n        }\n        if (hours <= h) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}",
+  "problemId" : "koko-eating-bananas",
+  "resolvedInput" : {
+    "h" : 8,
+    "piles" : [ 3, 6, 7, 11 ]
+  },
+  "stepCount" : 20,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Binary search the answer itself: the slowest eating speed that still finishes in 8 hours. Range starts at [1, 11] - 1 is the slowest possible speed, 11 is fast enough to eat any single pile in one hour.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "11",
+      "high" : "11",
+      "low" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Test whether eating at speed 6 finishes within 8 hours.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "11",
+      "low" : "1",
+      "mid" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Pile 0 has 3 bananas - takes ceil(3/6)=1 hours at this speed. Running total: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 10,
+    "description" : "Pile 1 has 6 bananas - takes ceil(6/6)=1 hours at this speed. Running total: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Pile 2 has 7 bananas - takes ceil(7/6)=2 hours at this speed. Running total: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 10,
+    "description" : "Pile 3 has 11 bananas - takes ceil(11/6)=2 hours at this speed. Running total: 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 13,
+    "description" : "6 hours <= 8 available - speed 6 works. Record it and try slower.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "6",
+      "high" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 7,
+    "description" : "Test whether eating at speed 3 finishes within 8 hours.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5",
+      "low" : "1",
+      "mid" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "Pile 0 has 3 bananas - takes ceil(3/3)=1 hours at this speed. Running total: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 10,
+    "description" : "Pile 1 has 6 bananas - takes ceil(6/3)=2 hours at this speed. Running total: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 10,
+    "description" : "Pile 2 has 7 bananas - takes ceil(7/3)=3 hours at this speed. Running total: 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 10,
+    "description" : "Pile 3 has 11 bananas - takes ceil(11/3)=4 hours at this speed. Running total: 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 16,
+    "description" : "10 hours > 8 available - speed 3 is too slow. Try faster.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "Test whether eating at speed 4 finishes within 8 hours.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5",
+      "low" : "4",
+      "mid" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 10,
+    "description" : "Pile 0 has 3 bananas - takes ceil(3/4)=1 hours at this speed. Running total: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 10,
+    "description" : "Pile 1 has 6 bananas - takes ceil(6/4)=2 hours at this speed. Running total: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 10,
+    "description" : "Pile 2 has 7 bananas - takes ceil(7/4)=2 hours at this speed. Running total: 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 10,
+    "description" : "Pile 3 has 11 bananas - takes ceil(11/4)=3 hours at this speed. Running total: 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "hours" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 13,
+    "description" : "8 hours <= 8 available - speed 4 works. Record it and try slower.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "4",
+      "high" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 19,
+    "description" : "low passed high. The slowest speed that still finishes in time is 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 11,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

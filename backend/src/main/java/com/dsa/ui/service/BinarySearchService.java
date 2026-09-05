@@ -53,7 +53,12 @@ public class BinarySearchService implements ProblemProvider {
             case "find-peak-element": return generateFindPeakSteps();
             case "square-root-number": return generateSquareRootSteps();
             case "nth-root-number": return generateNthRootSteps();
-            case "koko-eating-bananas": return generateKokoSteps();
+            // koko-eating-bananas and split-array-largest-sum have real tracers
+            // (tracer/impl) now. Refuse rather than let default: serve
+            // binary-search-1d's unrelated value-lookup steps under these ids.
+            case "koko-eating-bananas":
+            case "split-array-largest-sum":
+                throw new LegacyTraceRetiredException(problemId);
             case "min-days-bouquets": return generateMinDaysBouquetsSteps();
             case "smallest-divisor": return generateSmallestDivisorSteps();
             case "ship-packages-d-days": return generateShipPackagesSteps();
@@ -63,7 +68,6 @@ public class BinarySearchService implements ProblemProvider {
             case "aggressive-cows":
             case "book-allocation":
                 throw new LegacyTraceRetiredException(problemId);
-            case "split-array-largest-sum": return generateSplitArrayLargestSumSteps();
             case "painters-partition": return generatePaintersPartitionSteps();
             case "minimize-max-distance-gas-station": return generateGasStationSteps();
             case "median-2-sorted-arrays": return generateMedian2SortedArraysSteps();
@@ -448,12 +452,10 @@ public class BinarySearchService implements ProblemProvider {
     private List<ExecutionStep> generateFindPeakSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSquareRootSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateNthRootSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateKokoSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateMinDaysBouquetsSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateSmallestDivisorSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateShipPackagesSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateKthMissingPositiveSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSplitArrayLargestSumSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generatePaintersPartitionSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateGasStationSteps() { return generateBs1dSteps(); }
     private List<ExecutionStep> generateMedian2SortedArraysSteps() { return generateBs1dSteps(); }
