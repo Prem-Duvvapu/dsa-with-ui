@@ -27,9 +27,11 @@ public class DpService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These twenty-one have real tracers (tracer/impl). Refuse rather than let
+            // These twenty-three have real tracers (tracer/impl). Refuse rather than let
             // default: serve climbing-stairs' steps under these ids. The default:
             // stays until PROMPT D; other ids in this service still rely on it.
+            case "matrix-chain-multiplication":
+            case "burst-balloons":
             case "climbing-stairs":
             case "frog-jump":
             case "frog-jump-k-distance":
@@ -237,7 +239,8 @@ public class DpService implements ProblemProvider {
                     "longest-increasing-subsequence", "lis-binary-search", "print-lis",
                     "subset-sum-equal-target", "partition-equal-subset-sum",
                     "count-subsets-with-sum-k", "count-partitions-given-diff",
-                    "minimum-coins-dp", "coin-change-2" ->
+                    "minimum-coins-dp", "coin-change-2",
+                    "matrix-chain-multiplication", "burst-balloons" ->
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;

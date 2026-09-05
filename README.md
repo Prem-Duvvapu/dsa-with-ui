@@ -172,7 +172,8 @@ them means moving problems between services.
 ### Traced so far
 
 `aggressive-cows`, `asteroid-collision`,
-`bfs-traversal`, `binary-search-1d`, `book-allocation`, `check-sorted-ii`, `count-inversions`,
+`bfs-traversal`, `binary-search-1d`, `book-allocation`, `burst-balloons`,
+`check-sorted-ii`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `find-missing-number`,
 `find-min-rotated-sorted`,
@@ -181,7 +182,7 @@ them means moving problems between services.
 `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
-`majority-element`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
+`majority-element`, `matrix-chain-multiplication`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
 `max-sum-non-adjacent`, `move-zeros-end`,
 `n-meetings-in-one-room`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `print-lis`,
 `remove-duplicates-sorted`,

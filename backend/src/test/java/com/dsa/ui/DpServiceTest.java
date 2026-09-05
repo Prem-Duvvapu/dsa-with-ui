@@ -38,6 +38,8 @@ public class DpServiceTest {
     @Test
     public void testGenerateStepsForAllDpProblems() {
         Set<String> retired = Set.of(
+                "matrix-chain-multiplication",
+                "burst-balloons",
                 "climbing-stairs",
                 "frog-jump",
                 "frog-jump-k-distance",

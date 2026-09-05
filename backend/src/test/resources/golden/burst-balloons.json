@@ -1,0 +1,4857 @@
+{
+  "anchors" : {
+    "done" : 20,
+    "newBest" : 15,
+    "tryK" : 14
+  },
+  "code" : "public int maxCoins(int[] nums) {\n    int n = nums.length;\n    int[] balloons = new int[n + 2];\n    balloons[0] = 1;\n    balloons[n + 1] = 1;\n    for (int i = 0; i < n; i++) balloons[i + 1] = nums[i];\n    int[][] dp = new int[n + 2][n + 2];\n    for (int length = 1; length <= n; length++) {\n        for (int left = 1; left <= n - length + 1; left++) {\n            int right = left + length - 1;\n            for (int k = left; k <= right; k++) {\n                int coins = balloons[left - 1] * balloons[k] * balloons[right + 1]\n                        + dp[left][k - 1] + dp[k + 1][right];\n                if (coins > dp[left][right]) {\n                    dp[left][right] = coins;\n                }\n            }\n        }\n    }\n    return dp[1][n];\n}",
+  "problemId" : "burst-balloons",
+  "resolvedInput" : {
+    "nums" : [ 3, 1, 5, 8 ]
+  },
+  "stepCount" : 36,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 14,
+    "description" : "Range [1,1]: if balloon at 1 (value 3) bursts last, its neighbors by then are 1 and 1 - 1*3*1 + 0 + 0 = 3. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "3",
+      "k" : "1",
+      "left" : "1",
+      "right" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[1][1] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "3",
+      "left" : "1",
+      "right" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 14,
+    "description" : "Range [2,2]: if balloon at 2 (value 1) bursts last, its neighbors by then are 3 and 5 - 3*1*5 + 0 + 0 = 15. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "15",
+      "k" : "2",
+      "left" : "2",
+      "right" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[2][2] = 15.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "15",
+      "left" : "2",
+      "right" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Range [3,3]: if balloon at 3 (value 5) bursts last, its neighbors by then are 1 and 8 - 1*5*8 + 0 + 0 = 40. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "40",
+      "k" : "3",
+      "left" : "3",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[3][3] = 40.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "40",
+      "left" : "3",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 14,
+    "description" : "Range [4,4]: if balloon at 4 (value 8) bursts last, its neighbors by then are 5 and 1 - 5*8*1 + 0 + 0 = 40. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "40",
+      "k" : "4",
+      "left" : "4",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[4][4] = 40.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "40",
+      "left" : "4",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 14,
+    "description" : "Range [1,2]: if balloon at 1 (value 3) bursts last, its neighbors by then are 1 and 5 - 1*3*5 + 0 + 15 = 30. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "30",
+      "k" : "1",
+      "left" : "1",
+      "right" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[1][2] = 30.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "30",
+      "left" : "1",
+      "right" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 14,
+    "description" : "Range [1,2]: if balloon at 2 (value 1) bursts last, its neighbors by then are 1 and 5 - 1*1*5 + 3 + 0 = 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "8",
+      "k" : "2",
+      "left" : "1",
+      "right" : "2"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "30",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "Range [2,3]: if balloon at 2 (value 1) bursts last, its neighbors by then are 3 and 8 - 3*1*8 + 0 + 40 = 64. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "64",
+      "k" : "2",
+      "left" : "2",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[2][3] = 64.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "64",
+      "left" : "2",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "64",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Range [2,3]: if balloon at 3 (value 5) bursts last, its neighbors by then are 3 and 8 - 3*5*8 + 15 + 0 = 135. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "135",
+      "k" : "3",
+      "left" : "2",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "read"
+      }, {
+        "value" : "64",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[2][3] = 135.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "135",
+      "left" : "2",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "read"
+      }, {
+        "value" : "135",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 14,
+    "description" : "Range [3,4]: if balloon at 3 (value 5) bursts last, its neighbors by then are 1 and 1 - 1*5*1 + 0 + 40 = 45. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "45",
+      "k" : "3",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[3][4] = 45.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "45",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "45",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 14,
+    "description" : "Range [3,4]: if balloon at 4 (value 8) bursts last, its neighbors by then are 1 and 1 - 1*8*1 + 40 + 0 = 48. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "48",
+      "k" : "4",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "45",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[3][4] = 48.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "48",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "48",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 14,
+    "description" : "Range [1,3]: if balloon at 1 (value 3) bursts last, its neighbors by then are 1 and 8 - 1*3*8 + 0 + 135 = 159. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "159",
+      "k" : "1",
+      "left" : "1",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[1][3] = 159.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "159",
+      "left" : "1",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 14,
+    "description" : "Range [1,3]: if balloon at 2 (value 1) bursts last, its neighbors by then are 1 and 8 - 1*1*8 + 3 + 40 = 51.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "51",
+      "k" : "2",
+      "left" : "1",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 14,
+    "description" : "Range [1,3]: if balloon at 3 (value 5) bursts last, its neighbors by then are 1 and 8 - 1*5*8 + 30 + 0 = 70.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "70",
+      "k" : "3",
+      "left" : "1",
+      "right" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "read"
+      }, {
+        "value" : "159",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 14,
+    "description" : "Range [2,4]: if balloon at 2 (value 1) bursts last, its neighbors by then are 3 and 1 - 3*1*1 + 0 + 48 = 51. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "51",
+      "k" : "2",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[2][4] = 51.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "51",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "51",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 14,
+    "description" : "Range [2,4]: if balloon at 3 (value 5) bursts last, its neighbors by then are 3 and 1 - 3*5*1 + 15 + 40 = 70. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "70",
+      "k" : "3",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "read"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "51",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[2][4] = 70.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "70",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "read"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "70",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 14,
+    "description" : "Range [2,4]: if balloon at 4 (value 8) bursts last, its neighbors by then are 3 and 1 - 3*8*1 + 135 + 0 = 159. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "159",
+      "k" : "4",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "read"
+      }, {
+        "value" : "70",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[2][4] = 159.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "159",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "read"
+      }, {
+        "value" : "159",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 14,
+    "description" : "Range [1,4]: if balloon at 1 (value 3) bursts last, its neighbors by then are 1 and 1 - 1*3*1 + 0 + 159 = 162. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "162",
+      "k" : "1",
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[1][4] = 162.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "162",
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "162",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 14,
+    "description" : "Range [1,4]: if balloon at 2 (value 1) bursts last, its neighbors by then are 1 and 1 - 1*1*1 + 3 + 48 = 52.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "52",
+      "k" : "2",
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "162",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 14,
+    "description" : "Range [1,4]: if balloon at 3 (value 5) bursts last, its neighbors by then are 1 and 1 - 1*5*1 + 30 + 40 = 75.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "75",
+      "k" : "3",
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "read"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "162",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 14,
+    "description" : "Range [1,4]: if balloon at 4 (value 8) bursts last, its neighbors by then are 1 and 1 - 1*8*1 + 159 + 0 = 167. New best for this range.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "coins" : "167",
+      "k" : "4",
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "read"
+      }, {
+        "value" : "162",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 15,
+    "description" : "Recorded: dp[1][4] = 167.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dp" : "167",
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "read"
+      }, {
+        "value" : "167",
+        "state" : "probe"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 20,
+    "description" : "Every range solved. Bursting all 4 balloons optimally earns 167 coins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "167"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "colLabels" : [ "0", "1", "2", "3", "4", "5" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "30",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "167",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "15",
+        "state" : "known"
+      }, {
+        "value" : "135",
+        "state" : "known"
+      }, {
+        "value" : "159",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "48",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "40",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "0",
+        "state" : "void"
+      } ] ],
+      "formula" : null,
+      "substitution" : null
+    }
+  } ],
+  "truncated" : false
+}
