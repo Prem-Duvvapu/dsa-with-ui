@@ -34,16 +34,16 @@ public class AdvancedGraphService implements ProblemProvider {
             case "connected-matrix": return generateConnectedMatrixSteps();
             case "rotten-oranges": return generateRottenOrangesSteps();
             case "flood-fill": return generateFloodFillSteps();
-            case "cycle-undirected-bfs": return generateCycleUndirectedBfsSteps();
-            case "cycle-undirected-dfs": return generateCycleUndirectedDfsSteps();
+            case "cycle-undirected-bfs": throw new LegacyTraceRetiredException(problemId);
+            case "cycle-undirected-dfs": throw new LegacyTraceRetiredException(problemId);
             case "nearest-cell-1": return generateNearestCell1Steps();
             case "surrounded-regions": return generateSurroundedRegionsSteps();
             case "number-of-enclaves": return generateNumberOfEnclavesSteps();
             case "word-ladder-1": throw new LegacyTraceRetiredException(problemId);
             case "word-ladder-2": return generateWordLadder2Steps();
             case "number-of-islands": return generateNumberOfIslandsSteps();
-            case "bipartite-graph-dfs": return generateBipartiteGraphDfsSteps();
-            case "cycle-directed-dfs": return generateCycleDirectedDfsSteps();
+            case "bipartite-graph-dfs": throw new LegacyTraceRetiredException(problemId);
+            case "cycle-directed-dfs": throw new LegacyTraceRetiredException(problemId);
             case "topo-sort-dfs": return generateTopoSortDfsSteps();
             case "kahn-algo-bfs": throw new LegacyTraceRetiredException(problemId);
             case "cycle-directed-bfs": throw new LegacyTraceRetiredException(problemId);
@@ -418,15 +418,11 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateConnectedMatrixSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateRottenOrangesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateFloodFillSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCycleUndirectedBfsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCycleUndirectedDfsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNearestCell1Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateSurroundedRegionsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfEnclavesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateWordLadder2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateBipartiteGraphDfsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCycleDirectedDfsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateTopoSortDfsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCourseSchedule1Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCourseSchedule2Steps() { return generateGraphIntroSteps(); }
