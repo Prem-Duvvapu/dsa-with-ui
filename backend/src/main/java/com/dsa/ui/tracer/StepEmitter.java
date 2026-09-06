@@ -334,7 +334,15 @@ public final class StepEmitter {
      * enforce, which is the failure that matters.
      */
     static long estimateBytes(ExecutionStep s) {
-        long bytes = 190;                                    // envelope: field names, numbers, dsType, nulls
+        // Envelope: field names, numbers, dsType, and the `"field":null` Jackson writes for
+        // every structure this step does not carry. Measured, not guessed — an ExecutionStep
+        // with an empty description, no variables and no structure serialises to 239 bytes.
+        // 190 was ~50 bytes light on EVERY step, which stayed invisible while every tracer
+        // also emitted an array or a graph whose own per-element constants lean high enough
+        // to cover it. A step carrying only queueOrStackState has no such cover:
+        // byteEstimateTracksActualPayload put stack-queue-impl at 0.896 and task-scheduler,
+        // already live, at 0.901 against a 0.9 floor. See RCA-022.
+        long bytes = 240;
 
         if (s.getDescription() != null) {
             bytes += jsonStringBytes(s.getDescription());

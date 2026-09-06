@@ -1,0 +1,605 @@
+{
+  "anchors" : {
+    "done" : 13,
+    "init" : 2,
+    "match" : 11,
+    "mismatch" : 9,
+    "push" : 5
+  },
+  "code" : "public boolean isValid(String s) {\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (c == '(' || c == '[' || c == '{') {\n            stack.push(c);\n            continue;\n        }\n        if (stack.isEmpty() || stack.peek() != opener(c)) {\n            return false;\n        }\n        stack.pop();\n    }\n    return stack.isEmpty();\n}",
+  "problemId" : "balanced-parentheses",
+  "resolvedInput" : {
+    "expression" : "{[()]}()"
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Scan \"{[()]}()\" left to right with an empty stack. Every opener waits on the stack until its own closer arrives.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "expression" : "{[()]}()",
+      "length" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "s[0] = '{' opens. Push it; it is now the only bracket that may be closed next.",
+    "queueOrStackState" : [ "{" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "1",
+      "i" : "0",
+      "pushed" : "{"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "current",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "s[1] = '[' opens. Push it; it is now the only bracket that may be closed next.",
+    "queueOrStackState" : [ "[", "{" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "1",
+      "pushed" : "["
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "current",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "s[2] = '(' opens. Push it; it is now the only bracket that may be closed next.",
+    "queueOrStackState" : [ "(", "[", "{" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "3",
+      "i" : "2",
+      "pushed" : "("
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "current",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 11,
+    "description" : "s[3] = ')' matches the '(' on top. Pop it — that pair is closed.",
+    "queueOrStackState" : [ "[", "{" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "3",
+      "matched" : "("
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "s[4] = ']' matches the '[' on top. Pop it — that pair is closed.",
+    "queueOrStackState" : [ "{" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "1",
+      "i" : "4",
+      "matched" : "["
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "current",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 11,
+    "description" : "s[5] = '}' matches the '{' on top. Pop it — that pair is closed.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "0",
+      "i" : "5",
+      "matched" : "{"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "current",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 5,
+    "description" : "s[6] = '(' opens. Push it; it is now the only bracket that may be closed next.",
+    "queueOrStackState" : [ "(" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "1",
+      "i" : "6",
+      "pushed" : "("
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "current",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 11,
+    "description" : "s[7] = ')' matches the '(' on top. Pop it — that pair is closed.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "0",
+      "i" : "7",
+      "matched" : "("
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "End of the string with nothing left open. \"{[()]}()\" is balanced.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "true",
+      "leftOpen" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 123,
+      "state" : "default",
+      "label" : "{"
+    }, {
+      "index" : 1,
+      "value" : 91,
+      "state" : "default",
+      "label" : "["
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 93,
+      "state" : "default",
+      "label" : "]"
+    }, {
+      "index" : 5,
+      "value" : 125,
+      "state" : "default",
+      "label" : "}"
+    }, {
+      "index" : 6,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 7,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

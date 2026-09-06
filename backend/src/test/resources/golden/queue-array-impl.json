@@ -1,0 +1,452 @@
+{
+  "anchors" : {
+    "dequeue" : 22,
+    "done" : 36,
+    "enqueue" : 13,
+    "front" : 32,
+    "frontEmpty" : 30,
+    "init" : 6,
+    "overflow" : 11,
+    "underflow" : 20
+  },
+  "code" : "class ArrayQueue {\n    int[] ring;\n    int front = 0, rear = -1, size = 0;\n\n    ArrayQueue(int capacity) {\n        ring = new int[capacity];\n    }\n\n    void enqueue(int value) {\n        if (size == ring.length) {\n            throw new IllegalStateException();\n        }\n        rear = (rear + 1) % ring.length;\n        ring[rear] = value;\n        size++;\n    }\n\n    int dequeue() {\n        if (size == 0) {\n            throw new NoSuchElementException();\n        }\n        int value = ring[front];\n        front = (front + 1) % ring.length;\n        size--;\n        return value;\n    }\n\n    int front() {\n        if (size == 0) {\n            throw new NoSuchElementException();\n        }\n        return ring[front];\n    }\n\n    int size() {\n        return size;\n    }\n}",
+  "problemId" : "queue-array-impl",
+  "resolvedInput" : {
+    "capacity" : 4,
+    "operations" : "enqueue 10;enqueue 20;enqueue 30;front;dequeue;dequeue;enqueue 40;enqueue 50;enqueue 60;enqueue 70"
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "A 4-slot ring with front = 0, rear = -1 and size = 0. Both ends move forward modulo 4 instead of shifting the contents.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "capacity" : "4",
+      "front" : "0",
+      "rear" : "-1",
+      "size" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "enqueue(10): rear moves to slot 0 and takes the value. size is now 1.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "10",
+      "front" : "0",
+      "rear" : "0",
+      "size" : "1"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "enqueue(20): rear moves to slot 1 and takes the value. size is now 2.",
+    "queueOrStackState" : [ "10", "20" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "20",
+      "front" : "0",
+      "rear" : "1",
+      "size" : "2"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 13,
+    "description" : "enqueue(30): rear moves to slot 2 and takes the value. size is now 3.",
+    "queueOrStackState" : [ "10", "20", "30" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "30",
+      "front" : "0",
+      "rear" : "2",
+      "size" : "3"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 32,
+    "description" : "front(): slot 0 holds 10. Read it without moving anything.",
+    "queueOrStackState" : [ "10", "20", "30" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "front" : "0",
+      "peeked" : "10",
+      "rear" : "2",
+      "size" : "3"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 22,
+    "description" : "dequeue(): slot 0 holds 10 — serve it and move front to 1. Nothing is shifted; slot 0 simply stops being live. size is now 2.",
+    "queueOrStackState" : [ "20", "30" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "10",
+      "front" : "1",
+      "rear" : "2",
+      "size" : "2"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 22,
+    "description" : "dequeue(): slot 1 holds 20 — serve it and move front to 2. Nothing is shifted; slot 1 simply stops being live. size is now 1.",
+    "queueOrStackState" : [ "30" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "20",
+      "front" : "2",
+      "rear" : "2",
+      "size" : "1"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "enqueue(40): rear moves to slot 3 and takes the value. size is now 2.",
+    "queueOrStackState" : [ "30", "40" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "40",
+      "front" : "2",
+      "rear" : "3",
+      "size" : "2"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "enqueue(50): rear wraps from 3 back to slot 0 — that slot was freed by an earlier dequeue. size is now 3.",
+    "queueOrStackState" : [ "30", "40", "50" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "50",
+      "front" : "2",
+      "rear" : "0",
+      "size" : "3"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 50,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "enqueue(60): rear moves to slot 1 and takes the value. size is now 4.",
+    "queueOrStackState" : [ "30", "40", "50", "60" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "60",
+      "front" : "2",
+      "rear" : "1",
+      "size" : "4"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 50,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 60,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 11,
+    "description" : "enqueue(70): size is 4, every slot is live. Overflow; 70 is rejected.",
+    "queueOrStackState" : [ "30", "40", "50", "60" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "front" : "2",
+      "rear" : "1",
+      "rejected" : "70",
+      "size" : "4"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 50,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 60,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 36,
+    "description" : "Sequence finished. front = 2, rear = 1, size = 4 in a 4-slot ring.",
+    "queueOrStackState" : [ "30", "40", "50", "60" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "front" : "2",
+      "rear" : "1",
+      "size" : "4"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 50,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 60,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
