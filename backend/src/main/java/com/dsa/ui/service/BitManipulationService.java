@@ -25,27 +25,32 @@ public class BitManipulationService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
+            // single-number, single-number-1, check-power-of-2, count-set-bits,
+            // xor-numbers-in-range, single-number-3 and pow-x-n-math have real tracers
+            // (tracer/impl) now. Refuse rather than let default: serve
+            // generateSingleNumberSteps()'s unrelated steps under these ids.
             case "single-number":
-            case "single-number-1": return generateSingleNumberSteps();
+            case "single-number-1":
+            case "check-power-of-2":
+            case "count-set-bits":
+            case "xor-numbers-in-range":
+            case "single-number-3":
+            case "pow-x-n-math":
+                throw new LegacyTraceRetiredException(problemId);
             case "subsets-bitmasking":
             case "power-set-bitwise": return generateBitmaskSubsetsSteps();
             case "intro-bits-tricks": return generateIntroBitsTricksSteps();
             case "check-ith-bit-set": return generateCheckIthBitSetSteps();
             case "check-number-odd": return generateCheckNumberOddSteps();
-            case "check-power-of-2": return generateCheckPowerOf2Steps();
-            case "count-set-bits": return generateCountSetBitsSteps();
             case "set-unset-rightmost-bit": return generateSetUnsetRightmostBitSteps();
             case "swap-two-numbers": return generateSwapTwoNumbersSteps();
             case "divide-two-numbers-bitwise": return generateDivideTwoNumbersBitwiseSteps();
             case "min-bit-flips": return generateMinBitFlipsSteps();
-            case "xor-numbers-in-range": return generateXorNumbersInRangeSteps();
-            case "single-number-3": return generateSingleNumber3Steps();
             case "print-prime-factors": return generatePrintPrimeFactorsSteps();
             case "divisors-of-number": return generateDivisorsOfNumberSteps();
             case "count-primes-range-sieve": return generateCountPrimesRangeSieveSteps();
             case "prime-factorisation-queries": return generatePrimeFactorisationQueriesSteps();
-            case "pow-x-n-math": return generatePowXNMathSteps();
-            default: return generateSingleNumberSteps();
+            default: return generateCheckNumberOddSteps();
         }
     }
 
@@ -119,9 +124,27 @@ public class BitManipulationService implements ProblemProvider {
                 id, title, cat, "Bit Manipulation", diff, desc,
                 String.format("// Java Implementation for %s\npublic int solve(int n) {\n    return n;\n}", title),
                 null, null, null, createArrayState(new int[]{1, 0, 1, 1}, -1, -1), null, null, null,
-                new ComplexityDetail("O(1) / O(log N)", "Time Complexity: Bitwise operation or binary exponentiation.", "Bitwise", "O(1)", "Space Complexity: Constant memory.", "Memory", "Auxiliary Space: O(1)", "Memory"), "Array"
+                new ComplexityDetail("O(1) / O(log N)", "Time Complexity: Bitwise operation or binary exponentiation.", "Bitwise", "O(1)", "Space Complexity: Constant memory.", "Memory", "Auxiliary Space: O(1)", "Memory"), bulkDsType(id).wireValue()
             ));
         }
+    }
+
+    /**
+     * Every bulk-registered id previously hardcoded {@code "Array"} regardless of what it
+     * actually operates on — the same category of gap {@code TreeService.bulkDsType} and
+     * {@code DpService.bulkDsType} had before their own batches fixed it. The four ids now
+     * traced as {@link DsType#BITS} (rendered via {@code emit.bits(...)}, a single number's
+     * binary track) would otherwise mismatch their tracer's {@code dsType()} and fail
+     * {@code CatalogTracerMetadataTest}; the rest keep reporting {@code Array} unchanged.
+     */
+    private static DsType bulkDsType(String id) {
+        return switch (id) {
+            case "intro-bits-tricks", "check-ith-bit-set", "check-number-odd",
+                    "check-power-of-2", "count-set-bits", "set-unset-rightmost-bit",
+                    "min-bit-flips", "xor-numbers-in-range", "divide-two-numbers-bitwise",
+                    "pow-x-n-math" -> DsType.BITS;
+            default -> DsType.ARRAY;
+        };
     }
 
     private ExecutionStep createStep(int stepNum, int line, String desc, List<ArrayElement> arrayState, Map<String, String> vars) {
@@ -133,21 +156,6 @@ public class BitManipulationService implements ProblemProvider {
     }
 
     // Step Generators
-    private List<ExecutionStep> generateSingleNumberSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{4, 1, 2, 1, 2};
-        int xor = 0;
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 4, "Single Number: Input nums = [4, 1, 2, 1, 2]. Initialize running xor = 0.", createArrayState(nums, -1, -1), Map.of("xor", "0")));
-        for (int i = 0; i < nums.length; i++) {
-            int prevXor = xor; xor ^= nums[i];
-            steps.add(createStep(stepNum++, 6, String.format("Loop i = %d (val %d): xor = %d ^ %d = %d (Binary: %s).", i, nums[i], prevXor, nums[i], xor, Integer.toBinaryString(xor)), createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "num", String.valueOf(nums[i]), "xor", String.valueOf(xor))));
-        }
-        steps.add(createStep(stepNum++, 8, "Single Number Complete! All paired duplicates (1^1=0, 2^2=0) canceled out! Single unique element = 4.", createArrayState(nums, 0, -1), Map.of("Single Number", "4")));
-        return steps;
-    }
-
     private List<ExecutionStep> generateBitmaskSubsetsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] nums = new int[]{1, 2, 3};
@@ -191,35 +199,6 @@ public class BitManipulationService implements ProblemProvider {
         steps.add(createStep(stepNum++, 3, "Check if N = 13 is Odd using Bitwise AND (N & 1).", createArrayState(bits, 3, -1), Map.of("N", "13")));
         boolean isOdd = (n & 1) == 1;
         steps.add(createStep(stepNum++, 5, "13 & 1 = 1 (LSB is 1). Result: 13 is ODD!", createArrayState(bits, 3, -1), Map.of("isOdd", String.valueOf(isOdd))));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateCheckPowerOf2Steps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int n = 16;
-        int[] bits = new int[]{1, 0, 0, 0, 0};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Check if N = 16 (10000_2) is Power of 2 using (N & (N - 1)).", createArrayState(bits, 0, -1), Map.of("N", "16")));
-        boolean isPower = (n > 0) && ((n & (n - 1)) == 0);
-        steps.add(createStep(stepNum++, 5, "N - 1 = 15 (01111_2). Compute 16 & 15 = 0. Result: 16 is POWER OF 2!", createArrayState(bits, -1, -1), Map.of("isPowerOf2", String.valueOf(isPower))));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateCountSetBitsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int n = 13;
-        int count = 0;
-        int[] bits = new int[]{1, 1, 0, 1};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Count Set Bits for N = 13 (1101_2) using Brian Kernighan's Algorithm.", createArrayState(bits, -1, -1), Map.of("N", "13", "count", "0")));
-
-        int temp = n;
-        while (temp > 0) {
-            temp = temp & (temp - 1);
-            count++;
-            steps.add(createStep(stepNum++, 6, "Clear rightmost set bit: N = N & (N - 1) -> N = " + temp + ". Updated count = " + count, createArrayState(bits, -1, -1), Map.of("N", String.valueOf(temp), "setBitsCount", String.valueOf(count))));
-        }
-        steps.add(createStep(stepNum++, 9, "Set Bits Counting Complete! Total Set Bits in 13 = " + count, createArrayState(bits, -1, -1), Map.of("totalSetBits", String.valueOf(count))));
         return steps;
     }
 
@@ -271,25 +250,6 @@ public class BitManipulationService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateXorNumbersInRangeSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int l = 3, r = 9;
-        int[] vals = new int[]{3, 9};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Compute XOR of numbers in range [3..9] using XOR(R) ^ XOR(L-1).", createArrayState(vals, 0, 1), Map.of("L", "3", "R", "9")));
-        steps.add(createStep(stepNum++, 6, "XOR(9) = 1, XOR(2) = 3 -> Result = 1 ^ 3 = 2", createArrayState(vals, -1, -1), Map.of("rangeXOR", "2")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateSingleNumber3Steps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 2, 1, 3, 2, 5};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Single Number III: Find two numbers appearing once in [1, 2, 1, 3, 2, 5].", createArrayState(nums, -1, -1), Map.of("nums", Arrays.toString(nums))));
-        steps.add(createStep(stepNum++, 7, "Total XOR = 3 ^ 5 = 6 (110_2). Partition into 2 buckets by rightmost set bit -> B1=[3], B2=[5].", createArrayState(nums, 3, 5), Map.of("Bucket1", "3", "Bucket2", "5")));
-        return steps;
-    }
-
     private List<ExecutionStep> generatePrintPrimeFactorsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int n = 60;
@@ -327,16 +287,6 @@ public class BitManipulationService implements ProblemProvider {
         int stepNum = 1;
         steps.add(createStep(stepNum++, 3, "Prime Factorisation of N = 30 using Smallest Prime Factor (SPF) array.", createArrayState(spf, -1, -1), Map.of("N", "30")));
         steps.add(createStep(stepNum++, 6, "SPF[30] = 2 -> 30/2=15 -> SPF[15] = 3 -> 15/3=5 -> Factors: 2 * 3 * 5", createArrayState(spf, -1, -1), Map.of("factors", "2 * 3 * 5")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generatePowXNMathSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        double x = 2.0; int n = 10;
-        int[] vals = new int[]{2, 10};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Compute 2.0^10 using Binary Exponentiation O(log N).", createArrayState(vals, -1, -1), Map.of("x", "2.0", "n", "10")));
-        steps.add(createStep(stepNum++, 6, "n=10 (even): 2^10 = (2^2)^5 = 4^5. n=5 (odd): ans *= 4 -> n=4 -> 4^4 = (16)^2 = 256. Result = 1024.0", createArrayState(vals, -1, -1), Map.of("result", "1024.0")));
         return steps;
     }
 
