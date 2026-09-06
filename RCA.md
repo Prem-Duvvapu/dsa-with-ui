@@ -375,3 +375,42 @@ phase; do not describe unfinished work as resolved.
   over every tracer including `reverse-linked-list`, `find-starting-point-loop`, and
   `reverse-ll-group-k` — none of which populate the new fields, which is exactly what makes
   them the tracers that would have caught a re-introduction of this bug first.
+
+## RCA-021 — `TracerContractTest`'s BINARY_TREE auto-grower never produces a valid BST
+
+- **Discovered:** 2026-09-06, tracing `bst-validate`, `bst-lca`, `bst-kth-smallest`
+- **Status:** Open — deferred, three tracers held out of `bst-*` batch scope until resolved
+- **Symptom and impact:** `stepCountGrowsWithInput`'s `growTree` helper builds its "larger"
+  input as a level-order array `[1, 2, ..., target]` — a complete binary tree whose value at
+  index `i` is always `i + 1`. This is provably **never a valid BST** for any `target >= 3`:
+  the deepest-left leaf always holds a *larger* value than its ancestors (level-order fills
+  breadth-first, so depth and value both increase together), which is the opposite of what
+  an inorder walk requires. Feeding this to a tracer whose algorithm exploits the BST
+  ordering property to skip work — `bst-validate`'s inorder-strictly-increasing check,
+  `bst-lca`'s left/right descent, `bst-kth-smallest`'s early stop at the kth visit — makes
+  it terminate *early* on the "larger" input, the same class of tension `RCA-019` documents
+  for partition-search binary search, just triggered by tree shape instead of array values.
+  Hand-simulation confirmed this is not a matter of picking better defaults: the violation
+  `bst-validate` needs to detect appears at the second inorder-visited node for *any*
+  `target >= 3`, so no choice of default tree size changes the outcome.
+- **Root cause:** `growTree` optimizes for "produces a structurally valid level-order array
+  of the right size" and has no concept of BST-ordering, because every other `BINARY_TREE`
+  tracer traced so far (`tree-lca`, `correct-bst-swap`, `morris-inorder`, ...) treats the
+  tree as a plain binary tree, where level-order shape is all that matters and ordering is
+  irrelevant.
+- **A real bug found and fixed while investigating this:** `BstDeleteTracer.delete()` had no
+  `node == null` base case before this — deleting a key genuinely absent from the tree (not
+  just via `growTree`'s malformed input) threw a `NullPointerException` in real use.
+  `bst-delete` itself passes `stepCountGrowsWithInput` cleanly once fixed, since a longer
+  search path before hitting the (now-handled) "not found" case is itself more real work.
+- **Resolution required:** either (a) give `growTree` a BST-aware mode — sort the grown
+  values and place them via an actual BST-insert sequence rather than raw level-order, which
+  `InputField` would need to opt into per-tracer, since plain-binary-tree tracers must keep
+  today's shape-only growth; or (b) accept that a handful of BST algorithms have a
+  legitimate, provable early-exit on this specific synthetic input and give them a narrow,
+  named exemption. Not decided here — whoever picks this up should read this entry's
+  hand-simulation before choosing either path, not re-derive it.
+- **Regression guard:** none yet — `bst-validate`, `bst-lca`, `bst-kth-smallest` remain
+  untraced (still delegating to `generatePreorderSteps()`) specifically so
+  `stepCountGrowsWithInput` keeps skipping them via the "declares no growable field" path
+  rather than a tracer being merged that this test cannot pass.
