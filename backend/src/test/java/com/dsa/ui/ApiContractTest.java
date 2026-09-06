@@ -132,7 +132,8 @@ class ApiContractTest {
             "armstrong-check", "print-divisors", "check-prime",
             "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "merge-k-sorted-lists",
             "fruit-into-baskets", "longest-repeating-character-replacement",
-            "minimum-window-substring", "subarrays-k-different-integers");
+            "minimum-window-substring", "subarrays-k-different-integers",
+            "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -246,6 +247,9 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "longest-happy-prefix"),
                 arguments("/api/graphs/advanced", "bellman-ford"),
                 arguments("/api/graphs/advanced", "kosaraju-scc"),
+                arguments("/api/graphs/advanced", "kahn-algo-bfs"),
+                arguments("/api/graphs/advanced", "cycle-directed-bfs"),
+                arguments("/api/graphs/advanced", "disjoint-set-dsu"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),
