@@ -1,0 +1,230 @@
+{
+  "anchors" : {
+    "blocked" : 38,
+    "borderSeed" : 9,
+    "capture" : 22,
+    "done" : 25,
+    "init" : 2,
+    "reach" : 33,
+    "spread" : 40,
+    "survives" : 20
+  },
+  "code" : "public void solve(char[][] board) {\n    int n = board.length, m = board[0].length;\n    boolean[][] safe = new boolean[n][m];\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            boolean edge = i == 0 || i == n - 1 || j == 0 || j == m - 1;\n            if (edge && board[i][j] == 'O' && !safe[i][j]) {\n                floodFromBorder(i, j, board, safe);\n            }\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            if (board[i][j] != 'O') {\n                continue;\n            }\n            if (safe[i][j]) {\n                continue;\n            }\n            board[i][j] = 'X';\n        }\n    }\n}\n\nprivate void floodFromBorder(int r, int c, char[][] board, boolean[][] safe) {\n    safe[r][c] = true;\n    Deque<int[]> stack = new ArrayDeque<>();\n    stack.push(new int[]{r, c});\n\n    while (!stack.isEmpty()) {\n        int[] cell = stack.pop();\n        for (int[] d : DIRECTIONS) {\n            int nr = cell[0] + d[0], nc = cell[1] + d[1];\n            if (nr < 0 || nr >= board.length || nc < 0 || nc >= board[0].length\n                    || board[nr][nc] != 'O' || safe[nr][nc]) {\n                continue;\n            }\n            safe[nr][nc] = true;\n            stack.push(new int[]{nr, nc});\n        }\n    }\n}",
+  "problemId" : "surrounded-regions",
+  "resolvedInput" : {
+    "board" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ] ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "A 4x4 board. Only an 'O' the border can reach survives, so flood inward from the edges first and capture whatever the flood misses.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cols" : "4",
+      "rows" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "(3,1) is an 'O' sitting on the border, so its whole region can walk off the board. Flood from it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 33,
+    "description" : "(3,1) is safe. Look for neighbouring 'O' cells that inherit that escape route.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 38,
+    "description" : "(2,1) is off the board, an 'X', or already marked - the flood does not go there.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 38,
+    "description" : "(4,1) is off the board, an 'X', or already marked - the flood does not go there.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 38,
+    "description" : "(3,0) is off the board, an 'X', or already marked - the flood does not go there.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 38,
+    "description" : "(3,2) is off the board, an 'X', or already marked - the flood does not go there.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 22,
+    "description" : "(1,1) is an 'O' the border never reached - it is surrounded, so it flips to 'X'.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "captured" : "1",
+      "cell" : "(1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 22,
+    "description" : "(1,2) is an 'O' the border never reached - it is surrounded, so it flips to 'X'.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "captured" : "2",
+      "cell" : "(1,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 22,
+    "description" : "(2,2) is an 'O' the border never reached - it is surrounded, so it flips to 'X'.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "captured" : "3",
+      "cell" : "(2,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 2, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 20,
+    "description" : "(3,1) was marked by the border flood, so it stays 'O'.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,1)",
+      "survivors" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 25,
+    "description" : "Board settled: 3 'O' captured, 1 survived on a border-connected region.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "captured" : "3",
+      "survivors" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 1, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

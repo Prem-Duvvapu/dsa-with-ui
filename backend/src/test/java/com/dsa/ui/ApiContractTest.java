@@ -147,7 +147,9 @@ class ApiContractTest {
             "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
             "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
             "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
-            "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed");
+            "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
+            "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
+            "nearest-cell-1", "surrounded-regions", "number-of-enclaves");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -280,6 +282,13 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "kruskals-mst"),
                 arguments("/api/graphs/advanced", "network-connected-ops"),
                 arguments("/api/graphs/advanced", "most-stones-removed"),
+                arguments("/api/graphs/advanced", "num-provinces"),
+                arguments("/api/graphs/advanced", "connected-matrix"),
+                arguments("/api/graphs/advanced", "rotten-oranges"),
+                arguments("/api/graphs/advanced", "flood-fill"),
+                arguments("/api/graphs/advanced", "nearest-cell-1"),
+                arguments("/api/graphs/advanced", "surrounded-regions"),
+                arguments("/api/graphs/advanced", "number-of-enclaves"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),
