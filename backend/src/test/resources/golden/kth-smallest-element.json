@@ -1,0 +1,315 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "evict" : 7,
+    "push" : 4
+  },
+  "code" : "public int findKthSmallest(int[] nums, int k) {\n    List<Integer> heap = new ArrayList<>(); // max-heap: parent >= children\n    for (int num : nums) {\n        heap.add(num);\n        siftUp(heap, heap.size() - 1);\n        if (heap.size() > k) {\n            swap(heap, 0, heap.size() - 1);\n            heap.remove(heap.size() - 1);\n            siftDown(heap, 0);\n        }\n    }\n    return heap.get(0);\n}\n\nprivate int siftUp(List<Integer> heap, int i) {\n    while (i > 0 && heap.get(i) > heap.get((i - 1) / 2)) {\n        swap(heap, i, (i - 1) / 2);\n        i = (i - 1) / 2;\n    }\n    return i;\n}\n\nprivate int siftDown(List<Integer> heap, int i) {\n    int n = heap.size();\n    while (true) {\n        int l = 2 * i + 1, r = 2 * i + 2, largest = i;\n        if (l < n && heap.get(l) > heap.get(largest)) largest = l;\n        if (r < n && heap.get(r) > heap.get(largest)) largest = r;\n        if (largest == i) return i;\n        swap(heap, i, largest);\n        i = largest;\n    }\n}\n\nprivate void swap(List<Integer> heap, int i, int j) {\n    Integer tmp = heap.get(i);\n    heap.set(i, heap.get(j));\n    heap.set(j, tmp);\n}",
+  "problemId" : "kth-smallest-element",
+  "resolvedInput" : {
+    "k" : 3,
+    "nums" : [ 7, 10, 4, 3, 20, 15 ]
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Insert 7. Heap now holds 1 value; its root, 7, is the largest of them.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "heapSize" : "1",
+      "inserted" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Insert 10. Heap now holds 2 values; its root, 10, is the largest of them.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "heapSize" : "2",
+      "inserted" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Insert 4. Heap now holds 3 values; its root, 10, is the largest of them.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "heapSize" : "3",
+      "inserted" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Insert 3. Heap now holds 4 values; its root, 10, is the largest of them.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "heapSize" : "4",
+      "inserted" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Heap exceeds size 3 - evict the largest value, 10, keeping only the 3 smallest seen so far.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "evicted" : "10",
+      "heapSize" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Insert 20. Heap now holds 4 values; its root, 20, is the largest of them.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "heapSize" : "4",
+      "inserted" : "20"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "Heap exceeds size 3 - evict the largest value, 20, keeping only the 3 smallest seen so far.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "evicted" : "20",
+      "heapSize" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "Insert 15. Heap now holds 4 values; its root, 15, is the largest of them.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "heapSize" : "4",
+      "inserted" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Heap exceeds size 3 - evict the largest value, 15, keeping only the 3 smallest seen so far.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "evicted" : "15",
+      "heapSize" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "Every value processed. The heap's root, 7, is the 3-th smallest.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

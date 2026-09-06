@@ -27,23 +27,27 @@ public class HeapService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "kth-largest-element": return generateKthLargestSteps();
+            // These ids have real tracers (tracer/impl). Refuse rather than let default:
+            // serve another algorithm's steps under this id. The default: stays until
+            // PROMPT D; other ids in this service still rely on it.
+            case "kth-largest-element":
+            case "kth-smallest-element":
+            case "task-scheduler":
+            case "top-k-frequent-elements":
+                throw new LegacyTraceRetiredException(problemId);
             case "merge-k-sorted-lists": return generateMergeKListsSteps();
             case "heaps-theory": return generateKthLargestSteps();
             case "implement-min-heap": return generateKthLargestSteps();
             case "check-min-heap": return generateKthLargestSteps();
             case "min-to-max-heap": return generateKthLargestSteps();
-            case "kth-smallest-element": return generateKthLargestSteps();
             case "sort-k-sorted-array": return generateKthLargestSteps();
             case "replace-rank-array": return generateKthLargestSteps();
-            case "task-scheduler": return generateKthLargestSteps();
             case "hand-of-straights": return generateKthLargestSteps();
             case "design-twitter": return generateKthLargestSteps();
             case "min-cost-connect-sticks": return generateKthLargestSteps();
             case "kth-largest-stream": return generateKthLargestSteps();
             case "maximum-sum-combination": return generateKthLargestSteps();
             case "median-data-stream": return generateKthLargestSteps();
-            case "top-k-frequent-elements": return generateKthLargestSteps();
             default: return generateKthLargestSteps();
         }
     }
@@ -65,7 +69,7 @@ public class HeapService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{3, 2, 1, 5, 6, 4}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N log K)", "Time Complexity: Min-Heap size K.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue bounded by K.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "PriorityQueue"
+            new ComplexityDetail("O(N log K)", "Time Complexity: Min-Heap size K.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue bounded by K.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "Tree"
         ));
 
         // 2. Merge K Sorted Lists
@@ -113,13 +117,18 @@ public class HeapService implements ProblemProvider {
             {"top-k-frequent-elements", "Top K Frequent Elements", "Heaps - Hard", "Medium", "Find top K frequent elements using HashMap count + Min-Heap PriorityQueue."}
         };
 
+        // These three now have real tracers whose emitted structure is Array, not the
+        // heap-as-tree default every other id in this bulk list still carries.
+        Set<String> arrayDsType = Set.of("kth-smallest-element", "task-scheduler", "top-k-frequent-elements");
+
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
+            String dsType = arrayDsType.contains(id) ? "Array" : "PriorityQueue";
             problems.put(id, new ProblemDetail(
                 id, title, cat, "Heaps & PriorityQueue", diff, desc,
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Heap Striver A2Z Implementation\n}", title),
                 null, null, null, createArrayState(new int[]{5, 3, 8, 1, 2}, -1, -1), null, null, null,
-                new ComplexityDetail("O(N log K)", "Time Complexity: Min/Max-Heap priority queue operations.", "PriorityQueue", "O(K)", "Space Complexity: PriorityQueue space.", "Memory", "Auxiliary Space: O(K)", "Memory"), "PriorityQueue"
+                new ComplexityDetail("O(N log K)", "Time Complexity: Min/Max-Heap priority queue operations.", "PriorityQueue", "O(K)", "Space Complexity: PriorityQueue space.", "Memory", "Auxiliary Space: O(K)", "Memory"), dsType
             ));
         }
     }

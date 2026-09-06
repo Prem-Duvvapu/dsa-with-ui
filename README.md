@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 149 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 150 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -183,7 +183,8 @@ them means moving problems between services.
 `fractional-knapsack`, `frog-jump`, `frog-jump-k-distance`, `gcd-two-numbers`, `grid-unique-paths`, `house-robber-2`,
 `implement-trie`, `insert-interval`, `insertion-sort`,
 `jump-game-1`,
-`kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lemonade-change`, `lower-bound`, `minimum-falling-path-sum`, `minimum-platforms`,
+`kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`,
+`kth-largest-element`, `kth-smallest-element`, `largest-rectangle-histogram`, `lemonade-change`, `lower-bound`, `minimum-falling-path-sum`, `minimum-platforms`,
 `ninja-and-his-friends`, `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-happy-prefix`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
@@ -200,7 +201,7 @@ them means moving problems between services.
 `selection-sort`, `serialize-deserialize-bt`, `shortest-palindrome`,
 `single-element-sorted`, `single-number`, `single-number-1`, `single-number-3`, `sliding-window-maximum`,
 `sort-0-1-2`, `split-array-largest-sum`, `subset-sum-equal-target`, `sum-first-n`,
-`stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `three-sum`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
+`stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `task-scheduler`, `three-sum`, `top-k-frequent-elements`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `undirected-cycle-bfs`, `undirected-cycle-dfs`, `unique-paths-2`, `upper-bound`,
 `vertical-order-traversal`, `wildcard-matching`, `word-break-trie`, `word-ladder-1`,
