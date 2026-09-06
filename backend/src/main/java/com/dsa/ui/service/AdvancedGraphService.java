@@ -44,12 +44,12 @@ public class AdvancedGraphService implements ProblemProvider {
             case "number-of-islands": return generateNumberOfIslandsSteps();
             case "bipartite-graph-dfs": throw new LegacyTraceRetiredException(problemId);
             case "cycle-directed-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "topo-sort-dfs": return generateTopoSortDfsSteps();
+            case "topo-sort-dfs": throw new LegacyTraceRetiredException(problemId);
             case "kahn-algo-bfs": throw new LegacyTraceRetiredException(problemId);
             case "cycle-directed-bfs": throw new LegacyTraceRetiredException(problemId);
-            case "course-schedule-1": return generateCourseSchedule1Steps();
-            case "course-schedule-2": return generateCourseSchedule2Steps();
-            case "find-eventual-safe-states": return generateFindEventualSafeStatesSteps();
+            case "course-schedule-1": throw new LegacyTraceRetiredException(problemId);
+            case "course-schedule-2": throw new LegacyTraceRetiredException(problemId);
+            case "find-eventual-safe-states": throw new LegacyTraceRetiredException(problemId);
             case "alien-dictionary": throw new LegacyTraceRetiredException(problemId);
             case "shortest-path-undirected": return generateShortestPathUndirectedSteps();
             case "shortest-path-dag": return generateShortestPathDagSteps();
@@ -423,10 +423,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateNumberOfEnclavesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateWordLadder2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateTopoSortDfsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCourseSchedule1Steps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCourseSchedule2Steps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateFindEventualSafeStatesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPathUndirectedSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateShortestPathDagSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }

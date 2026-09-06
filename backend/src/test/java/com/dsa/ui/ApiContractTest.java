@@ -144,7 +144,8 @@ class ApiContractTest {
             "number-substrings-all-three-chars", "maximum-points-cards",
             "longest-substring-k-distinct", "minimum-window-subsequence",
             "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu",
-            "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs");
+            "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
+            "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -265,6 +266,10 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "cycle-undirected-dfs"),
                 arguments("/api/graphs/advanced", "bipartite-graph-dfs"),
                 arguments("/api/graphs/advanced", "cycle-directed-dfs"),
+                arguments("/api/graphs/advanced", "topo-sort-dfs"),
+                arguments("/api/graphs/advanced", "course-schedule-1"),
+                arguments("/api/graphs/advanced", "course-schedule-2"),
+                arguments("/api/graphs/advanced", "find-eventual-safe-states"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),
