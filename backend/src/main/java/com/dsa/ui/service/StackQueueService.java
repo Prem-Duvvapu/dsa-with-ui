@@ -25,11 +25,9 @@ public class StackQueueService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "balanced-parentheses": return generateBalancedParenthesesSteps();
-            case "next-greater-element-1": return generateNextGreaterElementSteps();
             // trapping-rainwater, largest-rectangle-histogram, next-greater-element-2,
             // and asteroid-collision have real tracers (tracer/impl). Refuse rather than
-            // let default: serve balanced-parentheses's steps under these ids.
+            // let default: serve the placeholder steps under these ids.
             case "trapping-rainwater":
             case "largest-rectangle-histogram":
             case "next-greater-element-2":
@@ -45,10 +43,22 @@ public class StackQueueService implements ProblemProvider {
                 throw new LegacyTraceRetiredException(problemId);
             // lru-cache has a real tracer (tracer/impl) now, tracing the whole put/get
             // sequence as one FieldType.STRING mini-language input. Refuse rather than
-            // let default: serve balanced-parentheses's steps under this id.
+            // let default: serve the placeholder steps under this id.
             case "lru-cache":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateBalancedParenthesesSteps();
+            // The Learning cluster is traced (tracer/impl). balanced-parentheses and
+            // next-greater-element-1 are the only two that ever had real generators here;
+            // both are deleted, and the other six were on default: all along.
+            case "balanced-parentheses":
+            case "next-greater-element-1":
+            case "stack-array-impl":
+            case "queue-array-impl":
+            case "stack-queue-impl":
+            case "queue-stack-impl":
+            case "stack-ll-impl":
+            case "queue-ll-impl":
+                throw new LegacyTraceRetiredException(problemId);
+            default: return generatePlaceholderStackSteps();
         }
     }
 
@@ -145,16 +155,29 @@ public class StackQueueService implements ProblemProvider {
     }
 
     /**
-     * Most bulk-registered problems are genuinely Stack-shaped. lru-cache is not: its
-     * eviction order IS a doubly linked list (most- to least-recently-used), not a stack,
-     * and {@link com.dsa.ui.tracer.impl.LruCacheTracer} traces it as one. This must agree
-     * with the tracer's own {@code dsType()} — {@code CatalogTracerMetadataTest} fails
-     * application-wide if the catalogue routes a traced problem to a canvas its tracer
-     * never emits.
+     * Most bulk-registered problems are genuinely Stack-shaped, but several are not, and the
+     * canvas has to follow the structure the algorithm actually operates on:
+     *
+     * <ul>
+     *   <li>lru-cache's eviction order IS a doubly linked list (most- to least-recently-used),
+     *       not a stack.</li>
+     *   <li>queue-array-impl is a circular buffer read front-to-back — a queue.</li>
+     *   <li>stack-queue-impl builds a stack out of ONE queue, and the rotation that keeps the
+     *       queue's front equal to the stack's top is the thing worth watching.</li>
+     *   <li>queue-stack-impl is the mirror: two stacks whose combined contents are one
+     *       logical queue, emitted front-to-back with each element labelled by its home stack.</li>
+     *   <li>stack-ll-impl and queue-ll-impl are chains of nodes; the pointer work is the
+     *       lesson, and the array versions already cover the pile-of-slots picture.</li>
+     * </ul>
+     *
+     * <p>This must agree with each tracer's own {@code dsType()} —
+     * {@code CatalogTracerMetadataTest} fails application-wide if the catalogue routes a
+     * traced problem to a canvas its tracer never emits.
      */
     private static DsType bulkDsType(String id) {
         return switch (id) {
-            case "lru-cache" -> DsType.LINKED_LIST;
+            case "lru-cache", "stack-ll-impl", "queue-ll-impl" -> DsType.LINKED_LIST;
+            case "queue-array-impl", "stack-queue-impl", "queue-stack-impl" -> DsType.QUEUE;
             default -> DsType.STACK;
         };
     }
@@ -168,37 +191,22 @@ public class StackQueueService implements ProblemProvider {
         );
     }
 
-    private List<ExecutionStep> generateBalancedParenthesesSteps() {
+    /**
+     * The legacy {@code default:} branch, for the Stack &amp; Queue ids that still have no
+     * tracer. It used to be {@code generateBalancedParenthesesSteps()}, which is exactly the
+     * substitution this migration exists to remove: every untraced id in this service served
+     * balanced-parentheses's animation under its own name. balanced-parentheses now has a
+     * real tracer, so the content stays only as an unattributed placeholder until the
+     * remaining ids are migrated and this method, with {@code default:}, is deleted.
+     */
+    private List<ExecutionStep> generatePlaceholderStackSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[] vals = new int[]{1, 2, 2, 1};
         int stepNum = 1;
-        steps.add(createStackStep(stepNum++, 4, "Balanced Parentheses: Input string s = \"()[]{}\". Initialize empty stack.", List.of(), createArrayState(vals, -1, -1), Map.of("stack", "[]")));
-        steps.add(createStackStep(stepNum++, 6, "Process '(': Push '(' onto stack. Stack: ['('].", List.of("("), createArrayState(vals, 0, -1), Map.of("top", "(")));
-        steps.add(createStackStep(stepNum++, 8, "Process ')': Match top '('! Pop '('. Stack: [].", List.of(), createArrayState(vals, 1, -1), Map.of("popped", "(")));
-        steps.add(createStackStep(stepNum++, 12, "Balanced Parentheses Complete! Stack is empty -> Return TRUE.", List.of(), createArrayState(vals, -1, -1), Map.of("Result", "TRUE")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateNextGreaterElementSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{4, 5, 2, 10, 8};
-        int n = nums.length;
-        List<String> stack = new ArrayList<>();
-        int stepNum = 1;
-        steps.add(createStackStep(stepNum++, 4, "Next Greater Element: Scan right to left on [4, 5, 2, 10, 8]. Initialize Monotonic Decreasing Stack.", stack, createArrayState(nums, -1, -1), Map.of("nums", Arrays.toString(nums))));
-
-        for (int i = n - 1; i >= 0; i--) {
-            steps.add(createStackStep(stepNum++, 6, "i=" + i + " (nums[i]=" + nums[i] + "): Compare with stack top " + (stack.isEmpty() ? "EMPTY" : stack.get(stack.size() - 1)), new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "num", String.valueOf(nums[i]))));
-            while (!stack.isEmpty() && Integer.parseInt(stack.get(stack.size() - 1)) <= nums[i]) {
-                String popped = stack.remove(stack.size() - 1);
-                steps.add(createStackStep(stepNum++, 7, "Pop " + popped + " <= " + nums[i] + " from stack.", new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("popped", popped)));
-            }
-            String ngeVal = stack.isEmpty() ? "-1" : stack.get(stack.size() - 1);
-            steps.add(createStackStep(stepNum++, 8, "Next Greater Element for " + nums[i] + " = " + ngeVal, new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("NGE", ngeVal)));
-            stack.add(String.valueOf(nums[i]));
-            steps.add(createStackStep(stepNum++, 9, "Push " + nums[i] + " onto stack. Stack state: " + stack, new ArrayList<>(stack), createArrayState(nums, i, -1), Map.of("pushed", String.valueOf(nums[i]))));
-        }
-        steps.add(createStackStep(stepNum++, 12, "Next Greater Element Complete! Resulting NGE array: [5, 10, 10, -1, -1]", new ArrayList<>(stack), createArrayState(nums, -1, -1), Map.of("result", "[5, 10, 10, -1, -1]")));
+        steps.add(createStackStep(stepNum++, 4, "Not yet traced. Placeholder stack narration; see /api/problems for the migrated animations.", List.of(), createArrayState(vals, -1, -1), Map.of("stack", "[]")));
+        steps.add(createStackStep(stepNum++, 6, "Push onto the stack. Stack: ['('].", List.of("("), createArrayState(vals, 0, -1), Map.of("top", "(")));
+        steps.add(createStackStep(stepNum++, 8, "Pop the top. Stack: [].", List.of(), createArrayState(vals, 1, -1), Map.of("popped", "(")));
+        steps.add(createStackStep(stepNum++, 12, "Placeholder complete.", List.of(), createArrayState(vals, -1, -1), Map.of("Result", "TRUE")));
         return steps;
     }
 

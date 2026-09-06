@@ -1,0 +1,321 @@
+{
+  "anchors" : {
+    "dequeue" : 21,
+    "done" : 33,
+    "enqueue" : 6,
+    "init" : 2,
+    "peek" : 29,
+    "peekEmpty" : 27,
+    "pour" : 12,
+    "underflow" : 19
+  },
+  "code" : "class StackQueue {\n    Deque<Integer> in = new ArrayDeque<>();\n    Deque<Integer> out = new ArrayDeque<>();\n\n    void enqueue(int value) {\n        in.push(value);\n    }\n\n    private void pourIfNeeded() {\n        if (!out.isEmpty()) return;\n        while (!in.isEmpty()) {\n            out.push(in.pop());\n        }\n    }\n\n    int dequeue() {\n        pourIfNeeded();\n        if (out.isEmpty()) {\n            throw new NoSuchElementException();\n        }\n        return out.pop();\n    }\n\n    int peek() {\n        pourIfNeeded();\n        if (out.isEmpty()) {\n            throw new NoSuchElementException();\n        }\n        return out.peek();\n    }\n\n    int size() {\n        return in.size() + out.size();\n    }\n}",
+  "problemId" : "queue-stack-impl",
+  "resolvedInput" : {
+    "operations" : "enqueue 1;enqueue 2;enqueue 3;dequeue;enqueue 4;dequeue;peek;dequeue;dequeue;dequeue"
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Two empty stacks. Arrivals land on in (newest on top, the wrong end to serve); out holds them already reversed, so its top is the oldest. Each element is labelled with the stack currently holding it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "in" : "0",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "enqueue(1): push onto in. It joins the back of the queue, and out is untouched — arrivals never cost more than one push.",
+    "queueOrStackState" : [ "1·in" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "1",
+      "in" : "1",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "enqueue(2): push onto in. It joins the back of the queue, and out is untouched — arrivals never cost more than one push.",
+    "queueOrStackState" : [ "1·in", "2·in" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "2",
+      "in" : "2",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "enqueue(3): push onto in. It joins the back of the queue, and out is untouched — arrivals never cost more than one push.",
+    "queueOrStackState" : [ "1·in", "2·in", "3·in" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "3",
+      "in" : "3",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "dequeue(): out is empty, so pour in into out. Move 1 of 3 — 3 comes off in and goes onto out, to be buried by the older values still on in.",
+    "queueOrStackState" : [ "1·in", "2·in", "3·out" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "in" : "2",
+      "moved" : "3",
+      "out" : "1"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "dequeue(): out is empty, so pour in into out. Move 2 of 3 — 2 comes off in and goes onto out, to be buried by the older values still on in.",
+    "queueOrStackState" : [ "1·in", "2·out", "3·out" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "in" : "1",
+      "moved" : "2",
+      "out" : "2"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "dequeue(): out is empty, so pour in into out. Move 3 of 3 — 1 comes off in and goes onto out, ending on top, which is where the oldest element belongs.",
+    "queueOrStackState" : [ "1·out", "2·out", "3·out" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "in" : "0",
+      "moved" : "1",
+      "out" : "3"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 21,
+    "description" : "dequeue(): out's top is now 1, the oldest element queued. Pop it — the pour that just ran is what put it there.",
+    "queueOrStackState" : [ "2·out", "3·out" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "1",
+      "in" : "0",
+      "out" : "2"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "enqueue(4): push onto in. It joins the back of the queue, and out is untouched — arrivals never cost more than one push.",
+    "queueOrStackState" : [ "2·out", "3·out", "4·in" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "4",
+      "in" : "1",
+      "out" : "2"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 21,
+    "description" : "dequeue(): out already held the reversed older values, so no pour was needed. Its top is 2 — pop it in O(1).",
+    "queueOrStackState" : [ "3·out", "4·in" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "2",
+      "in" : "1",
+      "out" : "1"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 29,
+    "description" : "peek(): out's top is 3 — the front of the queue, read without removing it.",
+    "queueOrStackState" : [ "3·out", "4·in" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "front" : "3",
+      "in" : "1",
+      "out" : "1"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 21,
+    "description" : "dequeue(): out already held the reversed older values, so no pour was needed. Its top is 3 — pop it in O(1).",
+    "queueOrStackState" : [ "4·in" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "3",
+      "in" : "1",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 12,
+    "description" : "dequeue(): out is empty, so pour in into out. Move 1 of 1 — 4 comes off in and goes onto out, ending on top, which is where the oldest element belongs.",
+    "queueOrStackState" : [ "4·out" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "in" : "0",
+      "moved" : "4",
+      "out" : "1"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 21,
+    "description" : "dequeue(): out's top is now 4, the oldest element queued. Pop it — the pour that just ran is what put it there.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "4",
+      "in" : "0",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 19,
+    "description" : "dequeue(): both stacks are empty, so the queue is empty. Nothing to serve.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "in" : "0",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 33,
+    "description" : "Sequence finished. 0 value(s) still queued, front first: [].",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "in" : "0",
+      "out" : "0"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

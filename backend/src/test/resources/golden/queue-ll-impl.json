@@ -1,0 +1,376 @@
+{
+  "anchors" : {
+    "append" : 10,
+    "clearTail" : 23,
+    "dequeue" : 20,
+    "done" : 37,
+    "first" : 8,
+    "front" : 33,
+    "frontEmpty" : 31,
+    "init" : 2,
+    "underflow" : 18
+  },
+  "code" : "class LinkedQueue {\n    Node head = null, tail = null;\n    int size = 0;\n\n    void enqueue(int value) {\n        Node node = new Node(value);\n        if (tail == null) {\n            head = tail = node;\n        } else {\n            tail.next = node;\n            tail = node;\n        }\n        size++;\n    }\n\n    int dequeue() {\n        if (head == null) {\n            throw new NoSuchElementException();\n        }\n        int value = head.value;\n        head = head.next;\n        if (head == null) {\n            tail = null;\n        }\n        size--;\n        return value;\n    }\n\n    int front() {\n        if (head == null) {\n            throw new NoSuchElementException();\n        }\n        return head.value;\n    }\n\n    int size() {\n        return size;\n    }\n}",
+  "problemId" : "queue-ll-impl",
+  "resolvedInput" : {
+    "operations" : "enqueue 10;enqueue 20;enqueue 30;front;dequeue;dequeue;enqueue 40;dequeue;dequeue"
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "head = tail = null. Two pointers, one at each end, so both serving and arriving stay O(1) with no traversal.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "null",
+      "size" : "0",
+      "tail" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "enqueue(10): the queue is empty, so there is no tail to append to. This node becomes BOTH head and tail.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "10",
+      "head" : "10",
+      "size" : "1",
+      "tail" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "enqueue(20): link it off the current tail (10) and move tail to it. head does not move — the front of the queue is unaffected by an arrival.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "20",
+      "head" : "10",
+      "size" : "2",
+      "tail" : "20"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 10,
+    "description" : "enqueue(30): link it off the current tail (20) and move tail to it. head does not move — the front of the queue is unaffected by an arrival.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "30",
+      "head" : "10",
+      "size" : "3",
+      "tail" : "30"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 33,
+    "description" : "front(): the head node holds 10 — the oldest value still queued. Read it without unlinking anything.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "peeked" : "10",
+      "size" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "dequeue(): the head node holds 10. Serve it and move head along to 20.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "10",
+      "head" : "20",
+      "size" : "2",
+      "tail" : "30"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 20,
+    "description" : "dequeue(): the head node holds 20. Serve it and move head along to 30.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "20",
+      "head" : "30",
+      "size" : "1",
+      "tail" : "30"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "enqueue(40): link it off the current tail (30) and move tail to it. head does not move — the front of the queue is unaffected by an arrival.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "40",
+      "head" : "30",
+      "size" : "2",
+      "tail" : "40"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 20,
+    "description" : "dequeue(): the head node holds 30. Serve it and move head along to 40.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "30",
+      "head" : "40",
+      "size" : "1",
+      "tail" : "40"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 20,
+    "description" : "dequeue(): the head node holds 40. Serve it and move head along to null.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dequeued" : "40",
+      "head" : "null",
+      "size" : "0",
+      "tail" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 23,
+    "description" : "head is now null, which means that was the last node — so tail has to be cleared too. Leaving it pointing at the served node would make the next enqueue append onto a node nothing can reach.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "null",
+      "size" : "0",
+      "tail" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 37,
+    "description" : "Sequence finished with 0 node(s) between head and tail.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "null",
+      "size" : "0",
+      "tail" : "null"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

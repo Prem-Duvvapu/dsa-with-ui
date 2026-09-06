@@ -1,0 +1,439 @@
+{
+  "anchors" : {
+    "done" : 31,
+    "init" : 6,
+    "overflow" : 11,
+    "peek" : 27,
+    "peekEmpty" : 25,
+    "pop" : 20,
+    "push" : 13,
+    "underflow" : 18
+  },
+  "code" : "class ArrayStack {\n    int[] slots;\n    int top = -1;\n\n    ArrayStack(int capacity) {\n        slots = new int[capacity];\n    }\n\n    void push(int value) {\n        if (top == slots.length - 1) {\n            throw new StackOverflowError();\n        }\n        slots[++top] = value;\n    }\n\n    int pop() {\n        if (top == -1) {\n            throw new NoSuchElementException();\n        }\n        return slots[top--];\n    }\n\n    int peek() {\n        if (top == -1) {\n            throw new NoSuchElementException();\n        }\n        return slots[top];\n    }\n\n    int size() {\n        return top + 1;\n    }\n}",
+  "problemId" : "stack-array-impl",
+  "resolvedInput" : {
+    "capacity" : 4,
+    "operations" : "push 10;push 20;push 30;peek;pop;pop;push 40;push 50;push 60;push 70"
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "A 4-slot array and one integer, top = -1, meaning the stack is empty. Every operation is just arithmetic on top.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "capacity" : "4",
+      "top" : "-1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "push(10): step top to 0 and write 10 into slot 0.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "10",
+      "size" : "1",
+      "top" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "push(20): step top to 1 and write 20 into slot 1.",
+    "queueOrStackState" : [ "20", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "20",
+      "size" : "2",
+      "top" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 13,
+    "description" : "push(30): step top to 2 and write 30 into slot 2.",
+    "queueOrStackState" : [ "30", "20", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "30",
+      "size" : "3",
+      "top" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 27,
+    "description" : "peek(): slot 2 holds 30. Read it without moving top.",
+    "queueOrStackState" : [ "30", "20", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "peeked" : "30",
+      "size" : "3",
+      "top" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "pop(): read slot 2 to get 30, then step top back to 1. 30 is still sitting in the array, but it is above top now, so it no longer counts.",
+    "queueOrStackState" : [ "20", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "30",
+      "size" : "2",
+      "top" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 20,
+    "description" : "pop(): read slot 1 to get 20, then step top back to 0. 20 is still sitting in the array, but it is above top now, so it no longer counts.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "20",
+      "size" : "1",
+      "top" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "push(40): step top to 1 and write 40 into slot 1.",
+    "queueOrStackState" : [ "40", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "40",
+      "size" : "2",
+      "top" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "push(50): step top to 2 and write 50 into slot 2.",
+    "queueOrStackState" : [ "50", "40", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "50",
+      "size" : "3",
+      "top" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 50,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "push(60): step top to 3 and write 60 into slot 3.",
+    "queueOrStackState" : [ "60", "50", "40", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "60",
+      "size" : "4",
+      "top" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 50,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 60,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 11,
+    "description" : "push(70): top is 3, the last slot — the array is full at capacity 4. Overflow; 70 is rejected.",
+    "queueOrStackState" : [ "60", "50", "40", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "rejected" : "70",
+      "size" : "4",
+      "top" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 50,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 60,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 31,
+    "description" : "Sequence finished. top = 3, so 4 value(s) remain in the 4-slot array.",
+    "queueOrStackState" : [ "60", "50", "40", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "size" : "4",
+      "top" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 50,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 60,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

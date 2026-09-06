@@ -1,0 +1,547 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "init" : 3,
+    "pop" : 7,
+    "push" : 10,
+    "record" : 9
+  },
+  "code" : "public int[] nextGreaterElement(int[] nums) {\n    int n = nums.length;\n    int[] nge = new int[n];\n    Deque<Integer> stack = new ArrayDeque<>();\n    for (int i = n - 1; i >= 0; i--) {\n        while (!stack.isEmpty() && stack.peek() <= nums[i]) {\n            stack.pop();\n        }\n        nge[i] = stack.isEmpty() ? -1 : stack.peek();\n        stack.push(nums[i]);\n    }\n    return nge;\n}",
+  "problemId" : "next-greater-element-1",
+  "resolvedInput" : {
+    "nums" : [ 4, 5, 2, 10, 8 ]
+  },
+  "stepCount" : 14,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Walk [4, 5, 2, 10, 8] from the right. Everything already scanned is everything to the right of the current index, and the stack keeps only the values that could still be an answer.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "Nothing is left on the stack, so no value to the right of nums[4]=8 is greater. Record -1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "nge[i]" : "-1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Push nums[4]=8 — it is now the candidate for everything further left.",
+    "queueOrStackState" : [ "8" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "pushed" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "8 on top is not greater than nums[3]=10, so nothing further left can ever pick it — nums[3] blocks the view. Pop it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "popped" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Nothing is left on the stack, so no value to the right of nums[3]=10 is greater. Record -1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "nge[i]" : "-1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 10,
+    "description" : "Push nums[3]=10 — it is now the candidate for everything further left.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "pushed" : "10"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "The survivor on top is 10 — the nearest value to the right of nums[2]=2 that beats it. Record 10.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "nge[i]" : "10"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Push nums[2]=2 — it is now the candidate for everything further left.",
+    "queueOrStackState" : [ "2", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pushed" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "2 on top is not greater than nums[1]=5, so nothing further left can ever pick it — nums[1] blocks the view. Pop it.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "popped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "The survivor on top is 10 — the nearest value to the right of nums[1]=5 that beats it. Record 10.",
+    "queueOrStackState" : [ "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "nge[i]" : "10"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 10,
+    "description" : "Push nums[1]=5 — it is now the candidate for everything further left.",
+    "queueOrStackState" : [ "5", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pushed" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "The survivor on top is 5 — the nearest value to the right of nums[0]=4 that beats it. Record 5.",
+    "queueOrStackState" : [ "5", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "nge[i]" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 10,
+    "description" : "Push nums[0]=4 — it is now the candidate for everything further left.",
+    "queueOrStackState" : [ "4", "5", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pushed" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 12,
+    "description" : "Every index answered, right to left. Next greater elements: [5, 10, 10, -1, -1].",
+    "queueOrStackState" : [ "4", "5", "10" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[5, 10, 10, -1, -1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

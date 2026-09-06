@@ -414,3 +414,36 @@ phase; do not describe unfinished work as resolved.
   untraced (still delegating to `generatePreorderSteps()`) specifically so
   `stepCountGrowsWithInput` keeps skipping them via the "declares no growable field" path
   rather than a tracer being merged that this test cannot pass.
+
+## RCA-022 — The per-step envelope constant was 50 bytes light on every step ever emitted
+
+- **Discovered:** 2026-09-06, tracing the Stack & Queue Learning cluster — `stack-queue-impl`
+  failed `TracerContractTest.byteEstimateTracksActualPayload` at ratio 0.896 against a 0.9
+  floor.
+- **Status:** Resolved
+- **Symptom and impact:** `StepEmitter.estimateBytes` opens with a flat constant for the step
+  envelope — the field names, the numbers, the `dsType`, and the `"field":null` Jackson
+  writes for every structure a step does NOT carry. It was `190`. Measured, an
+  `ExecutionStep` with an empty description, no variables and no structure at all serialises
+  to **239** bytes. Every step ever estimated, by every tracer, was therefore ~50 bytes
+  light. The byte budget exists to stop a trace before it becomes a response the browser
+  cannot use, and the estimator's own doc says it must lean HIGH because under-estimating
+  lets a trace past the ceiling it exists to enforce — so this was the failure direction that
+  matters, on every tracer, silently.
+- **Root cause:** the constant was calibrated against real responses whose steps all carried
+  an `arrayState` or a graph. Those per-element constants lean generously high (52 bytes per
+  `ArrayElement`, 96 per `GraphNode`), and on a step with a dozen elements that surplus more
+  than covered a 50-byte envelope shortfall. The shortfall only becomes visible on a step
+  whose *only* payload is `queueOrStackState`, which no tracer emitted until the Stack &
+  Queue "implement X using Y" problems — they have no array to show, only the structure being
+  implemented. `task-scheduler`, already live, was sitting at 0.901: one existing tracer was
+  already within 0.001 of the same failure and nobody had cause to look.
+- **Resolution:** bumped the envelope constant from 190 to 240, one byte above the measured
+  239. Ratios across the whole registry now sit between ~1.0 and ~1.31, against a permitted
+  band of 0.9–2.5, so the estimate leans high everywhere with wide margin at both ends.
+- **Regression guard:** `TracerContractTest.byteEstimateTracksActualPayload`, which is what
+  caught this. It is parameterized over every registered tracer, and the tracers that will
+  catch a re-introduction first are the structure-light ones — `stack-queue-impl`,
+  `queue-stack-impl`, `stack-array-impl`, `task-scheduler` — because they have no array
+  payload whose own constant can absorb the error. Note the guard is a *ratio* band, so it
+  cannot be satisfied by inflating the constant without limit either.

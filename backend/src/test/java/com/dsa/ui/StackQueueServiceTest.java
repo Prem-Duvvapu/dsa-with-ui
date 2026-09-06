@@ -38,7 +38,10 @@ public class StackQueueServiceTest {
     public void testGenerateStepsForAllStackQueueProblems() {
         Set<String> retired = Set.of("trapping-rainwater", "largest-rectangle-histogram",
                 "next-greater-element-2", "asteroid-collision",
-                "sliding-window-maximum", "min-stack", "sum-subarray-minimums", "lru-cache");
+                "sliding-window-maximum", "min-stack", "sum-subarray-minimums", "lru-cache",
+                "balanced-parentheses", "next-greater-element-1",
+                "stack-array-impl", "queue-array-impl", "stack-queue-impl", "queue-stack-impl",
+                "stack-ll-impl", "queue-ll-impl");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
