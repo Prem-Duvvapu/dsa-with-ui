@@ -147,7 +147,9 @@ class ApiContractTest {
             "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
             "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
             "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
-            "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed");
+            "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
+            "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
+            "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -280,6 +282,12 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "kruskals-mst"),
                 arguments("/api/graphs/advanced", "network-connected-ops"),
                 arguments("/api/graphs/advanced", "most-stones-removed"),
+                arguments("/api/graphs/advanced", "cheapest-flights-k-stops"),
+                arguments("/api/graphs/advanced", "network-delay-time"),
+                arguments("/api/graphs/advanced", "number-of-ways-destination"),
+                arguments("/api/graphs/advanced", "min-multiplications-reach-end"),
+                arguments("/api/graphs/advanced", "floyd-warshall"),
+                arguments("/api/graphs/advanced", "city-smallest-neighbors"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),

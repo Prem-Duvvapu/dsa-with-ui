@@ -1,0 +1,1092 @@
+{
+  "anchors" : {
+    "dequeue" : 11,
+    "enqueue" : 18,
+    "exhausted" : 25,
+    "init" : 2,
+    "reached" : 15,
+    "seen" : 21
+  },
+  "code" : "public int minimumMultiplications(int[] arr, int start, int end) {\n    int mod = 100000;\n    if (start == end) return 0;\n    int[] steps = new int[mod];\n    Arrays.fill(steps, -1);\n    steps[start] = 0;\n    Queue<Integer> queue = new ArrayDeque<>();\n    queue.add(start);\n\n    while (!queue.isEmpty()) {\n        int value = queue.poll();\n        for (int multiplier : arr) {\n            int next = (int) ((long) value * multiplier % mod);\n            if (next == end) {\n                return steps[value] + 1;\n            }\n            if (steps[next] == -1) {\n                steps[next] = steps[value] + 1;\n                queue.add(next);\n            } else {\n                continue;\n            }\n        }\n    }\n    return -1;\n}",
+  "problemId" : "min-multiplications-reach-end",
+  "resolvedInput" : {
+    "arr" : [ 3, 4, 65 ],
+    "end" : 66175,
+    "start" : 7
+  },
+  "stepCount" : 53,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Breadth-first search over the values 0..99999. Seed the queue with 7 at depth 0; every multiplier costs one step, so the first time a value appears it appears at its minimum step count. Target: 66175.",
+    "queueOrStackState" : [ "7 (0)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "1",
+      "end" : "66175",
+      "multipliers" : "[3, 4, 65]",
+      "start" : "7"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "Dequeue 7, reached in 0 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "1",
+      "steps" : "0",
+      "value" : "7"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 18,
+    "description" : "7 x 3 = 21 (mod 100000), a value never produced before. Record it at depth 1 and queue it.",
+    "queueOrStackState" : [ "21 (1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "2",
+      "multiplier" : "3",
+      "product" : "21",
+      "steps" : "1",
+      "value" : "7"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "7 x 4 = 28 (mod 100000), a value never produced before. Record it at depth 1 and queue it.",
+    "queueOrStackState" : [ "21 (1)", "28 (1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "3",
+      "multiplier" : "4",
+      "product" : "28",
+      "steps" : "1",
+      "value" : "7"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 18,
+    "description" : "7 x 65 = 455 (mod 100000), a value never produced before. Record it at depth 1 and queue it.",
+    "queueOrStackState" : [ "21 (1)", "28 (1)", "455 (1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "4",
+      "multiplier" : "65",
+      "product" : "455",
+      "steps" : "1",
+      "value" : "7"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "Dequeue 21, reached in 1 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "28 (1)", "455 (1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "4",
+      "steps" : "1",
+      "value" : "21"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 18,
+    "description" : "21 x 3 = 63 (mod 100000), a value never produced before. Record it at depth 2 and queue it.",
+    "queueOrStackState" : [ "28 (1)", "455 (1)", "63 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "5",
+      "multiplier" : "3",
+      "product" : "63",
+      "steps" : "2",
+      "value" : "21"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 18,
+    "description" : "21 x 4 = 84 (mod 100000), a value never produced before. Record it at depth 2 and queue it.",
+    "queueOrStackState" : [ "28 (1)", "455 (1)", "63 (2)", "84 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "6",
+      "multiplier" : "4",
+      "product" : "84",
+      "steps" : "2",
+      "value" : "21"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 18,
+    "description" : "21 x 65 = 1365 (mod 100000), a value never produced before. Record it at depth 2 and queue it.",
+    "queueOrStackState" : [ "28 (1)", "455 (1)", "63 (2)", "84 (2)", "1365 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "7",
+      "multiplier" : "65",
+      "product" : "1365",
+      "steps" : "2",
+      "value" : "21"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "Dequeue 28, reached in 1 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "455 (1)", "63 (2)", "84 (2)", "1365 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "7",
+      "steps" : "1",
+      "value" : "28"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 21,
+    "description" : "28 x 3 = 84 (mod 100000), but 84 was already produced at depth 2 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "455 (1)", "63 (2)", "84 (2)", "1365 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "7",
+      "multiplier" : "3",
+      "product" : "84",
+      "value" : "28"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 18,
+    "description" : "28 x 4 = 112 (mod 100000), a value never produced before. Record it at depth 2 and queue it.",
+    "queueOrStackState" : [ "455 (1)", "63 (2)", "84 (2)", "1365 (2)", "112 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "8",
+      "multiplier" : "4",
+      "product" : "112",
+      "steps" : "2",
+      "value" : "28"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 18,
+    "description" : "28 x 65 = 1820 (mod 100000), a value never produced before. Record it at depth 2 and queue it.",
+    "queueOrStackState" : [ "455 (1)", "63 (2)", "84 (2)", "1365 (2)", "112 (2)", "1820 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "9",
+      "multiplier" : "65",
+      "product" : "1820",
+      "steps" : "2",
+      "value" : "28"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 11,
+    "description" : "Dequeue 455, reached in 1 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "63 (2)", "84 (2)", "1365 (2)", "112 (2)", "1820 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "9",
+      "steps" : "1",
+      "value" : "455"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 21,
+    "description" : "455 x 3 = 1365 (mod 100000), but 1365 was already produced at depth 2 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "63 (2)", "84 (2)", "1365 (2)", "112 (2)", "1820 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "9",
+      "multiplier" : "3",
+      "product" : "1365",
+      "value" : "455"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 21,
+    "description" : "455 x 4 = 1820 (mod 100000), but 1820 was already produced at depth 2 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "63 (2)", "84 (2)", "1365 (2)", "112 (2)", "1820 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "9",
+      "multiplier" : "4",
+      "product" : "1820",
+      "value" : "455"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 18,
+    "description" : "455 x 65 = 29575 (mod 100000), a value never produced before. Record it at depth 2 and queue it.",
+    "queueOrStackState" : [ "63 (2)", "84 (2)", "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "10",
+      "multiplier" : "65",
+      "product" : "29575",
+      "steps" : "2",
+      "value" : "455"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 11,
+    "description" : "Dequeue 63, reached in 2 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "84 (2)", "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "10",
+      "steps" : "2",
+      "value" : "63"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 18,
+    "description" : "63 x 3 = 189 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "84 (2)", "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)", "189 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "11",
+      "multiplier" : "3",
+      "product" : "189",
+      "steps" : "3",
+      "value" : "63"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 18,
+    "description" : "63 x 4 = 252 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "84 (2)", "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "12",
+      "multiplier" : "4",
+      "product" : "252",
+      "steps" : "3",
+      "value" : "63"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 18,
+    "description" : "63 x 65 = 4095 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "84 (2)", "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "13",
+      "multiplier" : "65",
+      "product" : "4095",
+      "steps" : "3",
+      "value" : "63"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 11,
+    "description" : "Dequeue 84, reached in 2 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "13",
+      "steps" : "2",
+      "value" : "84"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 21,
+    "description" : "84 x 3 = 252 (mod 100000), but 252 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "13",
+      "multiplier" : "3",
+      "product" : "252",
+      "value" : "84"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 18,
+    "description" : "84 x 4 = 336 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "14",
+      "multiplier" : "4",
+      "product" : "336",
+      "steps" : "3",
+      "value" : "84"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 18,
+    "description" : "84 x 65 = 5460 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "1365 (2)", "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "15",
+      "multiplier" : "65",
+      "product" : "5460",
+      "steps" : "3",
+      "value" : "84"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 11,
+    "description" : "Dequeue 1365, reached in 2 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "15",
+      "steps" : "2",
+      "value" : "1365"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 21,
+    "description" : "1365 x 3 = 4095 (mod 100000), but 4095 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "15",
+      "multiplier" : "3",
+      "product" : "4095",
+      "value" : "1365"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 21,
+    "description" : "1365 x 4 = 5460 (mod 100000), but 5460 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "15",
+      "multiplier" : "4",
+      "product" : "5460",
+      "value" : "1365"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 18,
+    "description" : "1365 x 65 = 88725 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "112 (2)", "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "16",
+      "multiplier" : "65",
+      "product" : "88725",
+      "steps" : "3",
+      "value" : "1365"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 11,
+    "description" : "Dequeue 112, reached in 2 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "16",
+      "steps" : "2",
+      "value" : "112"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 21,
+    "description" : "112 x 3 = 336 (mod 100000), but 336 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "16",
+      "multiplier" : "3",
+      "product" : "336",
+      "value" : "112"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 18,
+    "description" : "112 x 4 = 448 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "17",
+      "multiplier" : "4",
+      "product" : "448",
+      "steps" : "3",
+      "value" : "112"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 18,
+    "description" : "112 x 65 = 7280 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "1820 (2)", "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "18",
+      "multiplier" : "65",
+      "product" : "7280",
+      "steps" : "3",
+      "value" : "112"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 11,
+    "description" : "Dequeue 1820, reached in 2 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "18",
+      "steps" : "2",
+      "value" : "1820"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 21,
+    "description" : "1820 x 3 = 5460 (mod 100000), but 5460 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "18",
+      "multiplier" : "3",
+      "product" : "5460",
+      "value" : "1820"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 21,
+    "description" : "1820 x 4 = 7280 (mod 100000), but 7280 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "18",
+      "multiplier" : "4",
+      "product" : "7280",
+      "value" : "1820"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 18,
+    "description" : "1820 x 65 = 18300 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "29575 (2)", "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "19",
+      "multiplier" : "65",
+      "product" : "18300",
+      "steps" : "3",
+      "value" : "1820"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 11,
+    "description" : "Dequeue 29575, reached in 2 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "19",
+      "steps" : "2",
+      "value" : "29575"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 21,
+    "description" : "29575 x 3 = 88725 (mod 100000), but 88725 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "19",
+      "multiplier" : "3",
+      "product" : "88725",
+      "value" : "29575"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 21,
+    "description" : "29575 x 4 = 18300 (mod 100000), but 18300 was already produced at depth 3 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "19",
+      "multiplier" : "4",
+      "product" : "18300",
+      "value" : "29575"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 18,
+    "description" : "29575 x 65 = 22375 (mod 100000), a value never produced before. Record it at depth 3 and queue it.",
+    "queueOrStackState" : [ "189 (3)", "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "20",
+      "multiplier" : "65",
+      "product" : "22375",
+      "steps" : "3",
+      "value" : "29575"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 11,
+    "description" : "Dequeue 189, reached in 3 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "20",
+      "steps" : "3",
+      "value" : "189"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 18,
+    "description" : "189 x 3 = 567 (mod 100000), a value never produced before. Record it at depth 4 and queue it.",
+    "queueOrStackState" : [ "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "21",
+      "multiplier" : "3",
+      "product" : "567",
+      "steps" : "4",
+      "value" : "189"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 18,
+    "description" : "189 x 4 = 756 (mod 100000), a value never produced before. Record it at depth 4 and queue it.",
+    "queueOrStackState" : [ "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "22",
+      "multiplier" : "4",
+      "product" : "756",
+      "steps" : "4",
+      "value" : "189"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 45,
+    "activeLine" : 18,
+    "description" : "189 x 65 = 12285 (mod 100000), a value never produced before. Record it at depth 4 and queue it.",
+    "queueOrStackState" : [ "252 (3)", "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "23",
+      "multiplier" : "65",
+      "product" : "12285",
+      "steps" : "4",
+      "value" : "189"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 46,
+    "activeLine" : 11,
+    "description" : "Dequeue 252, reached in 3 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "23",
+      "steps" : "3",
+      "value" : "252"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 47,
+    "activeLine" : 21,
+    "description" : "252 x 3 = 756 (mod 100000), but 756 was already produced at depth 4 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "23",
+      "multiplier" : "3",
+      "product" : "756",
+      "value" : "252"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 48,
+    "activeLine" : 18,
+    "description" : "252 x 4 = 1008 (mod 100000), a value never produced before. Record it at depth 4 and queue it.",
+    "queueOrStackState" : [ "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)", "1008 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "24",
+      "multiplier" : "4",
+      "product" : "1008",
+      "steps" : "4",
+      "value" : "252"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 49,
+    "activeLine" : 18,
+    "description" : "252 x 65 = 16380 (mod 100000), a value never produced before. Record it at depth 4 and queue it.",
+    "queueOrStackState" : [ "4095 (3)", "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)", "1008 (4)", "16380 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "25",
+      "multiplier" : "65",
+      "product" : "16380",
+      "steps" : "4",
+      "value" : "252"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 50,
+    "activeLine" : 11,
+    "description" : "Dequeue 4095, reached in 3 multiplication(s). Try every multiplier on it.",
+    "queueOrStackState" : [ "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)", "1008 (4)", "16380 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "25",
+      "steps" : "3",
+      "value" : "4095"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 51,
+    "activeLine" : 21,
+    "description" : "4095 x 3 = 12285 (mod 100000), but 12285 was already produced at depth 4 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)", "1008 (4)", "16380 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "25",
+      "multiplier" : "3",
+      "product" : "12285",
+      "value" : "4095"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 52,
+    "activeLine" : 21,
+    "description" : "4095 x 4 = 16380 (mod 100000), but 16380 was already produced at depth 4 - no later route to it can be shorter, so it is not queued again.",
+    "queueOrStackState" : [ "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)", "1008 (4)", "16380 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "discovered" : "25",
+      "multiplier" : "4",
+      "product" : "16380",
+      "value" : "4095"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 53,
+    "activeLine" : 15,
+    "description" : "4095 x 65 = 66175 (mod 100000) - that is the target. It was produced from a value at depth 3, so the answer is 4 multiplication(s).",
+    "queueOrStackState" : [ "336 (3)", "5460 (3)", "88725 (3)", "448 (3)", "7280 (3)", "18300 (3)", "22375 (3)", "567 (4)", "756 (4)", "12285 (4)", "1008 (4)", "16380 (4)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4",
+      "discovered" : "25",
+      "multiplier" : "65",
+      "product" : "66175",
+      "value" : "4095"
+    },
+    "dsType" : "Queue",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

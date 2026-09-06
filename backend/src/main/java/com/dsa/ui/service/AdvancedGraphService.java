@@ -56,13 +56,13 @@ public class AdvancedGraphService implements ProblemProvider {
             case "dijkstra-pq-theory": return generateDijkstraPqTheorySteps();
             case "shortest-path-binary-maze": throw new LegacyTraceRetiredException(problemId);
             case "path-min-effort": throw new LegacyTraceRetiredException(problemId);
-            case "cheapest-flights-k-stops": return generateCheapestFlightsKStopsSteps();
-            case "network-delay-time": return generateNetworkDelayTimeSteps();
-            case "number-of-ways-destination": return generateNumberOfWaysDestinationSteps();
-            case "min-multiplications-reach-end": return generateMinMultiplicationsReachEndSteps();
+            case "cheapest-flights-k-stops": throw new LegacyTraceRetiredException(problemId);
+            case "network-delay-time": throw new LegacyTraceRetiredException(problemId);
+            case "number-of-ways-destination": throw new LegacyTraceRetiredException(problemId);
+            case "min-multiplications-reach-end": throw new LegacyTraceRetiredException(problemId);
             case "bellman-ford": throw new LegacyTraceRetiredException(problemId);
-            case "floyd-warshall": return generateFloydWarshallSteps();
-            case "city-smallest-neighbors": return generateCitySmallestNeighborsSteps();
+            case "floyd-warshall": throw new LegacyTraceRetiredException(problemId);
+            case "city-smallest-neighbors": throw new LegacyTraceRetiredException(problemId);
             case "mst-theory": return generateMstTheorySteps();
             case "prims-mst": throw new LegacyTraceRetiredException(problemId);
             case "disjoint-set-dsu": throw new LegacyTraceRetiredException(problemId);
@@ -394,7 +394,9 @@ public class AdvancedGraphService implements ProblemProvider {
         }
         return switch (id) {
             case "disjoint-set-dsu", "most-stones-removed" -> DsType.DSU;
-            case "number-of-islands", "shortest-path-binary-maze", "path-min-effort" -> DsType.MATRIX;
+            case "number-of-islands", "shortest-path-binary-maze", "path-min-effort",
+                 "floyd-warshall", "city-smallest-neighbors" -> DsType.MATRIX;
+            case "min-multiplications-reach-end" -> DsType.QUEUE;
             default -> DsType.GRAPH;
         };
     }
@@ -424,12 +426,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateWordLadder2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCheapestFlightsKStopsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNetworkDelayTimeSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNumberOfWaysDestinationSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateMinMultiplicationsReachEndSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateFloydWarshallSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCitySmallestNeighborsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateAccountsMergeSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslands2Steps() { return generateGraphIntroSteps(); }

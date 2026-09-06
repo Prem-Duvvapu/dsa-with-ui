@@ -51,7 +51,9 @@ class AdvancedGraphServiceTest {
                 "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
                 "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
                 "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
-                "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed");
+                "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
+                "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
+                "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
