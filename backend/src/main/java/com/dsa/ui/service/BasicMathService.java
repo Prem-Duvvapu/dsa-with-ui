@@ -25,13 +25,17 @@ public class BasicMathService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "count-digits": return generateCountDigitsSteps();
-            case "reverse-number": return generateReverseNumberSteps();
-            case "palindrome-number": return generatePalindromeNumberSteps();
-            case "gcd-two-numbers": return generateGcdSteps();
-            case "armstrong-check": return generateArmstrongSteps();
-            case "print-divisors": return generatePrintDivisorsSteps();
-            case "check-prime": return generateCheckPrimeSteps();
+            // These ids have real tracers (tracer/impl). Refuse rather than let default:
+            // serve another algorithm's steps under this id. The default: stays until
+            // PROMPT D; no other ids remain in this service.
+            case "count-digits":
+            case "reverse-number":
+            case "palindrome-number":
+            case "gcd-two-numbers":
+            case "armstrong-check":
+            case "print-divisors":
+            case "check-prime":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generateCountDigitsSteps();
         }
     }

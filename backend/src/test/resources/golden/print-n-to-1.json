@@ -1,0 +1,807 @@
+{
+  "anchors" : {
+    "base" : 3,
+    "print" : 5,
+    "unwind" : 6
+  },
+  "code" : "public void printNTo1(int n) {\n    if (n == 0) {\n        return;\n    }\n    System.out.print(n + \" \");\n    printNTo1(n - 1);\n}",
+  "problemId" : "print-n-to-1",
+  "resolvedInput" : {
+    "n" : 5
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 5,
+    "description" : "printNTo1(n=5) prints 5, then calls n=4 next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "printNTo1(n=4) prints 4, then calls n=3 next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "printNTo1(n=3) prints 3, then calls n=2 next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)", "printNTo1(n=3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "printNTo1(n=2) prints 2, then calls n=1 next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)", "printNTo1(n=3)", "printNTo1(n=2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "calling",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "2"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "printNTo1(n=1) prints 1, then calls n=0 next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)", "printNTo1(n=3)", "printNTo1(n=2)", "printNTo1(n=1)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "calling",
+      "5" : "calling",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "n=0 — base case: stop, nothing more to print.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)", "printNTo1(n=3)", "printNTo1(n=2)", "printNTo1(n=1)", "printNTo1(n=0)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "calling",
+      "5" : "calling",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "0"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "printNTo1(n=1) returns now that its recursive call has finished.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)", "printNTo1(n=3)", "printNTo1(n=2)", "printNTo1(n=1)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "calling",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "printNTo1(n=2) returns now that its recursive call has finished.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)", "printNTo1(n=3)", "printNTo1(n=2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "2"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "printNTo1(n=3) returns now that its recursive call has finished.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)", "printNTo1(n=3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "printNTo1(n=4) returns now that its recursive call has finished.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)", "printNTo1(n=4)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 6,
+    "description" : "printNTo1(n=5) returns now that its recursive call has finished.",
+    "queueOrStackState" : null,
+    "callStack" : [ "printNTo1(n=5)" ],
+    "nodeStates" : {
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,176 @@
+{
+  "anchors" : {
+    "base" : 3,
+    "call" : 5
+  },
+  "code" : "public int factorial(int n) {\n    if (n == 0 || n == 1) {\n        return 1;\n    }\n    return n * factorial(n - 1);\n}",
+  "problemId" : "factorial-number",
+  "resolvedInput" : {
+    "n" : 5
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 5,
+    "description" : "factorial(5) must call factorial(4) before it can multiply by 5.",
+    "queueOrStackState" : [ "factorial(5)" ],
+    "callStack" : [ "factorial(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "factorial(4) must call factorial(3) before it can multiply by 4.",
+    "queueOrStackState" : [ "factorial(5)", "factorial(4)" ],
+    "callStack" : [ "factorial(5)", "factorial(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "factorial(3) must call factorial(2) before it can multiply by 3.",
+    "queueOrStackState" : [ "factorial(5)", "factorial(4)", "factorial(3)" ],
+    "callStack" : [ "factorial(5)", "factorial(4)", "factorial(3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "factorial(2) must call factorial(1) before it can multiply by 2.",
+    "queueOrStackState" : [ "factorial(5)", "factorial(4)", "factorial(3)", "factorial(2)" ],
+    "callStack" : [ "factorial(5)", "factorial(4)", "factorial(3)", "factorial(2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 3,
+    "description" : "factorial(1) is the base case — returns 1.",
+    "queueOrStackState" : [ "factorial(5)", "factorial(4)", "factorial(3)", "factorial(2)", "factorial(1)" ],
+    "callStack" : [ "factorial(5)", "factorial(4)", "factorial(3)", "factorial(2)", "factorial(1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1",
+      "returns" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "factorial(2) received 1 back from factorial(1) — returns 2 * 1 = 2.",
+    "queueOrStackState" : [ "factorial(5)", "factorial(4)", "factorial(3)", "factorial(2)" ],
+    "callStack" : [ "factorial(5)", "factorial(4)", "factorial(3)", "factorial(2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inner" : "1",
+      "n" : "2",
+      "result" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "factorial(3) received 2 back from factorial(2) — returns 3 * 2 = 6.",
+    "queueOrStackState" : [ "factorial(5)", "factorial(4)", "factorial(3)" ],
+    "callStack" : [ "factorial(5)", "factorial(4)", "factorial(3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inner" : "2",
+      "n" : "3",
+      "result" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 5,
+    "description" : "factorial(4) received 6 back from factorial(3) — returns 4 * 6 = 24.",
+    "queueOrStackState" : [ "factorial(5)", "factorial(4)" ],
+    "callStack" : [ "factorial(5)", "factorial(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inner" : "6",
+      "n" : "4",
+      "result" : "24"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 5,
+    "description" : "factorial(5) received 24 back from factorial(4) — returns 5 * 24 = 120.",
+    "queueOrStackState" : [ "factorial(5)" ],
+    "callStack" : [ "factorial(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inner" : "24",
+      "n" : "5",
+      "result" : "120"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,3409 @@
+{
+  "anchors" : {
+    "base" : 3,
+    "call" : 5
+  },
+  "code" : "public int fib(int n) {\n    if (n <= 1) {\n        return n;\n    }\n    return fib(n - 1) + fib(n - 2);\n}",
+  "problemId" : "fibonacci-recursion",
+  "resolvedInput" : {
+    "n" : 5
+  },
+  "stepCount" : 22,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 5,
+    "description" : "fib(5) splits into fib(4) + fib(3).",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited",
+      "7" : "unvisited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "fib(4) splits into fib(3) + fib(2).",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited",
+      "7" : "unvisited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "fib(3) splits into fib(2) + fib(1).",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited",
+      "7" : "unvisited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "calling"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "fib(2) splits into fib(1) + fib(0).",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(3)", "fib(2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "calling",
+      "5" : "unvisited",
+      "6" : "unvisited",
+      "7" : "unvisited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "2"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "calling"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "calling"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 3,
+    "description" : "fib(1) is a base case — returns 1 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(3)", "fib(2)", "fib(1)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "calling",
+      "5" : "calling",
+      "6" : "unvisited",
+      "7" : "unvisited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1",
+      "returns" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "calling"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "calling"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "fib(0) is a base case — returns 0 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(3)", "fib(2)", "fib(0)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "calling",
+      "5" : "visited",
+      "6" : "calling",
+      "7" : "unvisited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "0",
+      "returns" : "0"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "calling"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "calling"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "fib(2) = fib(1) + fib(0) = 1 + 0 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(3)", "fib(2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "merging",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "unvisited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "n" : "2",
+      "result" : "1",
+      "right" : "0"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "calling"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "merging"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 3,
+    "description" : "fib(1) is a base case — returns 1 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(3)", "fib(1)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "calling",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "calling",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1",
+      "returns" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "calling"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 5,
+    "description" : "fib(3) = fib(2) + fib(1) = 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "merging",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "unvisited",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "n" : "3",
+      "result" : "2",
+      "right" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "merging"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 5,
+    "description" : "fib(2) splits into fib(1) + fib(0).",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "calling",
+      "9" : "unvisited",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "2"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "calling"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 3,
+    "description" : "fib(1) is a base case — returns 1 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(2)", "fib(1)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "calling",
+      "9" : "calling",
+      "10" : "unvisited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1",
+      "returns" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "calling"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 3,
+    "description" : "fib(0) is a base case — returns 0 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(2)", "fib(0)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "calling",
+      "9" : "visited",
+      "10" : "calling",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "0",
+      "returns" : "0"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "calling"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 5,
+    "description" : "fib(2) = fib(1) + fib(0) = 1 + 0 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)", "fib(2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "merging",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "n" : "2",
+      "result" : "1",
+      "right" : "0"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "calling"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "merging"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 5,
+    "description" : "fib(4) = fib(3) + fib(2) = 2 + 1 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(4)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "merging",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "unvisited",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "n" : "4",
+      "result" : "3",
+      "right" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "merging"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 5,
+    "description" : "fib(3) splits into fib(2) + fib(1).",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "calling",
+      "12" : "unvisited",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "calling"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 5,
+    "description" : "fib(2) splits into fib(1) + fib(0).",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(3)", "fib(2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "calling",
+      "12" : "calling",
+      "13" : "unvisited",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "2"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "calling"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "calling"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 3,
+    "description" : "fib(1) is a base case — returns 1 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(3)", "fib(2)", "fib(1)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "calling",
+      "12" : "calling",
+      "13" : "calling",
+      "14" : "unvisited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1",
+      "returns" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "calling"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "calling"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 3,
+    "description" : "fib(0) is a base case — returns 0 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(3)", "fib(2)", "fib(0)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "calling",
+      "12" : "calling",
+      "13" : "visited",
+      "14" : "calling",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "0",
+      "returns" : "0"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "calling"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "calling"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 5,
+    "description" : "fib(2) = fib(1) + fib(0) = 1 + 0 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(3)", "fib(2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "calling",
+      "12" : "merging",
+      "13" : "visited",
+      "14" : "visited",
+      "15" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "n" : "2",
+      "result" : "1",
+      "right" : "0"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "calling"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "merging"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 3,
+    "description" : "fib(1) is a base case — returns 1 directly, no further calls.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(3)", "fib(1)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "calling",
+      "12" : "visited",
+      "13" : "visited",
+      "14" : "visited",
+      "15" : "calling"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "1",
+      "returns" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "calling"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "visited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "calling"
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 5,
+    "description" : "fib(3) = fib(2) + fib(1) = 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)", "fib(3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "merging",
+      "12" : "visited",
+      "13" : "visited",
+      "14" : "visited",
+      "15" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "n" : "3",
+      "result" : "2",
+      "right" : "1"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "calling"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "merging"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "visited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 5,
+    "description" : "fib(5) = fib(4) + fib(3) = 3 + 2 = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "fib(5)" ],
+    "nodeStates" : {
+      "1" : "merging",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "visited",
+      "12" : "visited",
+      "13" : "visited",
+      "14" : "visited",
+      "15" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3",
+      "n" : "5",
+      "result" : "5",
+      "right" : "2"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "merging"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "visited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "visited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  } ],
+  "truncated" : false
+}

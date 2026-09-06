@@ -1,0 +1,345 @@
+{
+  "anchors" : {
+    "base" : 3,
+    "recurse" : 8,
+    "swap" : 6
+  },
+  "code" : "public void reverseArray(int l, int r, int[] arr) {\n    if (l >= r) {\n        return;\n    }\n    int temp = arr[l];\n    arr[l] = arr[r];\n    arr[r] = temp;\n    reverseArray(l + 1, r - 1, arr);\n}",
+  "problemId" : "reverse-array-recursion",
+  "resolvedInput" : {
+    "nums" : [ 1, 2, 3, 4, 5 ]
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "Swap arr[0] and arr[4]: they are now 5 and 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverseArray(l=0, r=4)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "l" : "0",
+      "r" : "4"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "reverseArray(#1)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "reverseArray(#2)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "reverseArray(#3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Swap arr[1] and arr[3]: they are now 4 and 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverseArray(l=0, r=4)", "reverseArray(l=1, r=3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "l" : "1",
+      "r" : "3"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "reverseArray(#1)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "reverseArray(#2)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "reverseArray(#3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 3,
+    "description" : "l == r == 2 — the middle element needs no swap. Reversal complete.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverseArray(l=0, r=4)", "reverseArray(l=1, r=3)", "reverseArray(l=2, r=2)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "calling",
+      "3" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "l" : "2",
+      "r" : "2"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "reverseArray(#1)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "reverseArray(#2)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "reverseArray(#3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "reverseArray(l=1, r=3) returns now that its recursive call has finished.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverseArray(l=0, r=4)", "reverseArray(l=1, r=3)" ],
+    "nodeStates" : {
+      "1" : "calling",
+      "2" : "visited",
+      "3" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "l" : "1",
+      "r" : "3"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "reverseArray(#1)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "reverseArray(#2)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "reverseArray(#3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "reverseArray(l=0, r=4) returns now that its recursive call has finished.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverseArray(l=0, r=4)" ],
+    "nodeStates" : {
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "l" : "0",
+      "r" : "4"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "reverseArray(#1)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "reverseArray(#2)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "reverseArray(#3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  } ],
+  "truncated" : false
+}

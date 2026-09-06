@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 136 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 150 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -171,15 +171,16 @@ them means moving problems between services.
 
 ### Traced so far
 
-`aggressive-cows`, `alien-dictionary`, `assign-cookies`, `asteroid-collision`,
+`aggressive-cows`, `alien-dictionary`, `armstrong-check`, `assign-cookies`, `asteroid-collision`,
 `bellman-ford`,
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `bst-delete`, `bst-floor-ceil`,
 `bst-insert`, `bubble-sort`, `burst-balloons`,
-`check-power-of-2`, `check-sorted-ii`, `clone-ll-random-pointer`, `coin-change-2`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
+`check-power-of-2`, `check-prime`, `check-sorted-ii`, `clone-ll-random-pointer`, `coin-change-2`, `combination-sum-i`, `correct-bst-swap`, `count-digits`, `count-inversions`,
 `count-partitions-given-diff`, `count-set-bits`, `count-square-submatrices`, `count-subsets-with-sum-k`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `directed-cycle-dfs`, `distance-nearest-1`, `edit-distance`, `find-missing-number`,
+`factorial-number`, `fibonacci-recursion`,
 `find-min-rotated-sorted`, `find-starting-point-loop`, `flattening-ll`, `four-sum`,
-`fractional-knapsack`, `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
+`fractional-knapsack`, `frog-jump`, `frog-jump-k-distance`, `gcd-two-numbers`, `grid-unique-paths`, `house-robber-2`,
 `implement-trie`, `insert-interval`, `insertion-sort`,
 `jump-game-1`,
 `kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`,
@@ -188,17 +189,18 @@ them means moving problems between services.
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-happy-prefix`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
 `lru-cache`,
-`majority-element`, `matrix-chain-multiplication`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
-`merge-sort`, `minimum-coins-dp`,
+`majority-element`, `matrix-chain-multiplication`, `max-consecutive-ones`, `max-rectangle-area-all-ones`, `minimum-coins-dp`,
+`merge-sort`,
 `max-sum-non-adjacent`, `median-2-sorted-arrays`, `merge-two-sorted-arrays`, `min-stack`, `morris-inorder`, `move-zeros-end`,
-`n-meetings-in-one-room`, `n-queens`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `number-of-provinces`, `partition-equal-subset-sum`,
-`pow-x-n-math`, `print-lis`,
+`n-meetings-in-one-room`, `n-queens`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `number-of-provinces`,
+`palindrome-number`, `palindrome-string-recursion`, `partition-equal-subset-sum`,
+`pow-x-n-math`, `print-1-to-n`, `print-divisors`, `print-lis`, `print-n-to-1`,
 `quick-sort`,
-`remove-duplicates-sorted`, `repeating-missing-number`, `rotting-oranges`,
+`remove-duplicates-sorted`, `repeating-missing-number`, `reverse-array-recursion`, `reverse-number`, `rotting-oranges`,
 `reverse-linked-list`, `reverse-ll-group-k`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`,
 `selection-sort`, `serialize-deserialize-bt`, `shortest-palindrome`,
 `single-element-sorted`, `single-number`, `single-number-1`, `single-number-3`, `sliding-window-maximum`,
-`sort-0-1-2`, `split-array-largest-sum`, `subset-sum-equal-target`,
+`sort-0-1-2`, `split-array-largest-sum`, `subset-sum-equal-target`, `sum-first-n`,
 `stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `task-scheduler`, `three-sum`, `top-k-frequent-elements`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `undirected-cycle-bfs`, `undirected-cycle-dfs`, `unique-paths-2`, `upper-bound`,

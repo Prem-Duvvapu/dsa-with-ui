@@ -125,7 +125,11 @@ class ApiContractTest {
             "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort",
             "single-number-1", "check-power-of-2", "count-set-bits",
             "xor-numbers-in-range", "single-number-3", "pow-x-n-math",
-            "kth-largest-element", "kth-smallest-element", "task-scheduler", "top-k-frequent-elements");
+            "kth-largest-element", "kth-smallest-element", "task-scheduler", "top-k-frequent-elements",
+            "print-1-to-n", "print-n-to-1", "sum-first-n", "factorial-number",
+            "reverse-array-recursion", "palindrome-string-recursion", "fibonacci-recursion",
+            "count-digits", "reverse-number", "palindrome-number", "gcd-two-numbers",
+            "armstrong-check", "print-divisors", "check-prime");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -336,7 +340,21 @@ class ApiContractTest {
                 arguments("/api/heaps", "kth-largest-element"),
                 arguments("/api/heaps", "kth-smallest-element"),
                 arguments("/api/heaps", "task-scheduler"),
-                arguments("/api/heaps", "top-k-frequent-elements"));
+                arguments("/api/heaps", "top-k-frequent-elements"),
+                arguments("/api/basic-recursion", "print-1-to-n"),
+                arguments("/api/basic-recursion", "print-n-to-1"),
+                arguments("/api/basic-recursion", "sum-first-n"),
+                arguments("/api/basic-recursion", "factorial-number"),
+                arguments("/api/basic-recursion", "reverse-array-recursion"),
+                arguments("/api/basic-recursion", "palindrome-string-recursion"),
+                arguments("/api/basic-recursion", "fibonacci-recursion"),
+                arguments("/api/maths", "count-digits"),
+                arguments("/api/maths", "reverse-number"),
+                arguments("/api/maths", "palindrome-number"),
+                arguments("/api/maths", "gcd-two-numbers"),
+                arguments("/api/maths", "armstrong-check"),
+                arguments("/api/maths", "print-divisors"),
+                arguments("/api/maths", "check-prime"));
     }
 
     /**
