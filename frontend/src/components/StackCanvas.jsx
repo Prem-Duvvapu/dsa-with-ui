@@ -10,8 +10,19 @@ import { Layers } from 'lucide-react';
  * describes ("push 4", "pop the top").
  *
  * Index 0 is the top, matching StepEmitter.stack()'s push-to-front convention (an
- * ArrayDeque used as a stack iterates head-first). Drawn growing downward from the top so
- * "push" reads as "a new box appears above the others", the way a hand-drawn stack does.
+ * ArrayDeque used as a stack iterates head-first).
+ *
+ * FILLS BOTTOM-UP, which is a property of the container, not of the iteration order. The
+ * items are drawn in array order — index 0 first, so the top of the stack is highest on
+ * screen — and the well is anchored to its FLOOR (`justify-content: flex-end`). The last
+ * index, the earliest push, therefore rests on the bottom edge and stays there; every
+ * later push adds a block ABOVE the pile, growing it upward the way a physical stack does.
+ *
+ * Anchored to the ceiling (`flex-start`, as it was) the same DOM produced the opposite
+ * reading: a single element hung from the top of the panel and the pile grew DOWNWARD as
+ * values were pushed, which is a list, not a stack. Reversing the iteration instead of the
+ * anchor is the tempting fix and it is wrong — it puts the bottom of the stack on top and
+ * the "top" badge on the floor.
  */
 export default function StackCanvas({ step, currentStep, title = 'Stack' }) {
   const activeStep = currentStep || step;
@@ -34,7 +45,7 @@ export default function StackCanvas({ step, currentStep, title = 'Stack' }) {
       <div
         style={{
           flex: 1, width: '100%', display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: items.length ? 'flex-start' : 'center',
+          alignItems: 'center', justifyContent: items.length ? 'flex-end' : 'center',
           gap: '8px', padding: '20px', overflowY: 'auto',
           background: 'radial-gradient(ellipse at center, rgba(15, 23, 42, 0.6), rgba(9, 13, 22, 0.9))',
           borderRadius: 'var(--radius-md)', border: '1px solid var(--border-default)',
@@ -49,6 +60,7 @@ export default function StackCanvas({ step, currentStep, title = 'Stack' }) {
           items.map((value, idx) => (
             <div
               key={`${idx}-${value}`}
+              data-stack-index={idx}
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 gap: '12px', width: '160px', padding: '8px 14px',

@@ -4,7 +4,7 @@ import DsuCanvas from '../components/DsuCanvas';
 import GraphCanvas from '../components/GraphCanvas';
 import GridCanvas from '../components/GridCanvas';
 import LinkedListCanvas from '../components/LinkedListCanvas';
-import QueueCanvas from '../components/QueueCanvas';
+import { QueueHeroCanvas } from '../components/QueueCanvas';
 import RecursionTreeCanvas from '../components/RecursionTreeCanvas';
 import StackCanvas from '../components/StackCanvas';
 import TreeCanvas from '../components/TreeCanvas';
@@ -17,9 +17,10 @@ import TrieCanvas from '../components/TrieCanvas';
  * their PROMPT-F-visual-fidelity.md slice does. `Stack` and `Queue` are the hero mappings
  * for a problem whose stack/queue IS the picture, reading `queueOrStackState`
  * (StepEmitter.stack()/.queue()) rather than `arrayState` — every DsType.STACK tracer
- * emits it already; ArrayCanvas would draw the wrong structure. bfs-traversal is
- * `Graph`-hero with a queue companion pane instead (see canvas/companions.js) because its
- * graph topology is the point.
+ * emits it already; ArrayCanvas would draw the wrong structure. `Queue` routes to the hero
+ * variant of QueueCanvas, which widens the pane the companion usage keeps narrow.
+ * bfs-traversal is `Graph`-hero with a queue companion pane instead (see
+ * canvas/companions.js) because its graph topology is the point.
  */
 export const CANVAS_BY_DSTYPE = Object.freeze({
   Array: ArrayCanvas,
@@ -33,7 +34,7 @@ export const CANVAS_BY_DSTYPE = Object.freeze({
   Graph: GraphCanvas,
   LinkedList: LinkedListCanvas,
   Stack: StackCanvas,
-  Queue: QueueCanvas,
+  Queue: QueueHeroCanvas,
   PriorityQueue: ArrayCanvas,
   Trie: TrieCanvas,
   RecursionTree: RecursionTreeCanvas,
