@@ -115,7 +115,10 @@ class ApiContractTest {
             "edit-distance", "wildcard-matching",
             "word-ladder-1", "alien-dictionary",
             "lru-cache", "ninja-and-his-friends",
-            "implement-trie", "word-break-trie");
+            "implement-trie", "word-break-trie",
+            "bfs-traversal", "dfs-traversal", "number-of-provinces", "rotting-oranges",
+            "undirected-cycle-bfs", "undirected-cycle-dfs", "directed-cycle-dfs",
+            "distance-nearest-1");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -283,7 +286,15 @@ class ApiContractTest {
                 arguments("/api/stackqueue", "lru-cache"),
                 arguments("/api/dp", "ninja-and-his-friends"),
                 arguments("/api/tries", "implement-trie"),
-                arguments("/api/tries", "word-break-trie"));
+                arguments("/api/tries", "word-break-trie"),
+                arguments("/api/graphs/bfs-dfs", "bfs-traversal"),
+                arguments("/api/graphs/bfs-dfs", "dfs-traversal"),
+                arguments("/api/graphs/bfs-dfs", "number-of-provinces"),
+                arguments("/api/graphs/bfs-dfs", "rotting-oranges"),
+                arguments("/api/graphs/bfs-dfs", "undirected-cycle-bfs"),
+                arguments("/api/graphs/bfs-dfs", "undirected-cycle-dfs"),
+                arguments("/api/graphs/bfs-dfs", "directed-cycle-dfs"),
+                arguments("/api/graphs/bfs-dfs", "distance-nearest-1"));
     }
 
     /**

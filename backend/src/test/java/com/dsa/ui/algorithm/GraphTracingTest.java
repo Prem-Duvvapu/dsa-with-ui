@@ -3,6 +3,7 @@ package com.dsa.ui.algorithm;
 import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.service.AdvancedGraphService;
 import com.dsa.ui.service.GraphBfsDfsService;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,23 +24,22 @@ public class GraphTracingTest {
 
     @Test
     void testBfsTraversalTracing() {
-        List<ExecutionStep> steps = bfsDfsService.generateSteps("bfs-traversal");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 8, "BFS Traversal should have >=8 steps, actual: " + steps.size());
+        // Real tracer now serves this id on /api/problems; the legacy path refuses rather
+        // than falling back to a substitute trace.
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> bfsDfsService.generateSteps("bfs-traversal"));
     }
 
     @Test
     void testDfsTraversalTracing() {
-        List<ExecutionStep> steps = bfsDfsService.generateSteps("dfs-traversal");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 8, "DFS Traversal should have >=8 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> bfsDfsService.generateSteps("dfs-traversal"));
     }
 
     @Test
     void testRottingOrangesTracing() {
-        List<ExecutionStep> steps = bfsDfsService.generateSteps("rotting-oranges");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 5, "Rotting Oranges should have >=5 steps, actual: " + steps.size());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> bfsDfsService.generateSteps("rotting-oranges"));
     }
 
     @Test
