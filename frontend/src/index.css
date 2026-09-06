@@ -1008,20 +1008,36 @@ mark {
   text-align: center;
 }
 
+/* Hero usage (DsType.QUEUE via canvas/registry.js) — the companion column's fixed 200px
+   is the wrong width when the queue IS the picture rather than a sidecar. */
+.queue-pane-hero {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Front-to-back, left to right: a queue is served from the front and grown at the back, so
+   it reads as an array-shaped row. Wraps rather than scrolling in the narrow companion
+   column; overflow-x is the fallback for a single row too wide to break. */
 .queue-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: var(--space-xs);
   list-style: none;
   padding: 0;
   margin: 0;
+  overflow-x: auto;
 }
 
 .queue-cell {
   display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-sm);
+  justify-content: center;
+  min-width: 2.5rem;
+  gap: var(--space-2xs);
   padding: var(--space-xs) var(--space-sm);
   border: 1px solid var(--bench-rule-strong);
   border-radius: var(--radius-sm);
