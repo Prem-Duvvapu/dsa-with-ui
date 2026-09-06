@@ -143,7 +143,8 @@ class ApiContractTest {
             "binary-subarrays-with-sum", "count-nice-subarrays",
             "number-substrings-all-three-chars", "maximum-points-cards",
             "longest-substring-k-distinct", "minimum-window-subsequence",
-            "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu");
+            "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu",
+            "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -260,6 +261,10 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "kahn-algo-bfs"),
                 arguments("/api/graphs/advanced", "cycle-directed-bfs"),
                 arguments("/api/graphs/advanced", "disjoint-set-dsu"),
+                arguments("/api/graphs/advanced", "cycle-undirected-bfs"),
+                arguments("/api/graphs/advanced", "cycle-undirected-dfs"),
+                arguments("/api/graphs/advanced", "bipartite-graph-dfs"),
+                arguments("/api/graphs/advanced", "cycle-directed-dfs"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),

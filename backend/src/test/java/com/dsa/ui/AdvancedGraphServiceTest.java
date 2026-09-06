@@ -47,7 +47,8 @@ class AdvancedGraphServiceTest {
                 "shortest-palindrome", "longest-happy-prefix",
                 "bellman-ford", "kosaraju-scc",
                 "word-ladder-1", "alien-dictionary",
-                "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu");
+                "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu",
+                "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
