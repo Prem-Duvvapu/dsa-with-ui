@@ -1,0 +1,213 @@
+{
+  "anchors" : {
+    "boundary" : 10,
+    "done" : 37,
+    "follow" : 24,
+    "init" : 2,
+    "stuck" : 22,
+    "trapped" : 33,
+    "walk" : 17
+  },
+  "code" : "public int numEnclaves(int[][] grid) {\n    int n = grid.length, m = grid[0].length;\n    boolean[][] escapes = new boolean[n][m];\n    Queue<int[]> queue = new LinkedList<>();\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            boolean edge = i == 0 || i == n - 1 || j == 0 || j == m - 1;\n            if (edge && grid[i][j] == 1 && !escapes[i][j]) {\n                escapes[i][j] = true;\n                queue.add(new int[]{i, j});\n            }\n        }\n    }\n\n    while (!queue.isEmpty()) {\n        int[] cell = queue.poll();\n        for (int[] d : DIRECTIONS) {\n            int r = cell[0] + d[0], c = cell[1] + d[1];\n            if (r < 0 || r >= n || c < 0 || c >= m\n                    || grid[r][c] == 0 || escapes[r][c]) {\n                continue;\n            }\n            escapes[r][c] = true;\n            queue.add(new int[]{r, c});\n        }\n    }\n\n    int enclaves = 0;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            if (grid[i][j] == 1 && !escapes[i][j]) {\n                enclaves++;\n            }\n        }\n    }\n    return enclaves;\n}",
+  "problemId" : "number-of-enclaves",
+  "resolvedInput" : {
+    "grid" : [ [ 0, 0, 0, 0 ], [ 1, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ]
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "A 4x4 map. Instead of asking which land is trapped, flood from the boundary and see which land escapes; the rest is the answer.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cols" : "4",
+      "rows" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "(1,0) is land on the boundary - one step and you are off the map. Seed the flood there.",
+    "queueOrStackState" : [ "(1,0)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,0)",
+      "seeds" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 17,
+    "description" : "Walk out from (1,0): any land next to it can reach the boundary the same way.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,0)",
+      "escaped" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 22,
+    "description" : "(0,0) is off the map, sea, or already known to escape - nothing to add.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 22,
+    "description" : "(2,0) is off the map, sea, or already known to escape - nothing to add.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 22,
+    "description" : "(1,-1) is off the map, sea, or already known to escape - nothing to add.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,-1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 22,
+    "description" : "(1,1) is off the map, sea, or already known to escape - nothing to add.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 33,
+    "description" : "(1,2) is land the boundary flood never reached - enclave cell #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,2)",
+      "enclaves" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 33,
+    "description" : "(2,1) is land the boundary flood never reached - enclave cell #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)",
+      "enclaves" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 3, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 33,
+    "description" : "(2,2) is land the boundary flood never reached - enclave cell #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,2)",
+      "enclaves" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 3, 3, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 37,
+    "description" : "1 land cell(s) can walk off the map and 3 cannot. Answer: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enclaves" : "3",
+      "escaped" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 3, 3, 0 ], [ 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,578 @@
+{
+  "anchors" : {
+    "alreadyPainted" : 4,
+    "done" : 23,
+    "paint" : 19,
+    "pop" : 12,
+    "reject" : 17,
+    "start" : 2
+  },
+  "code" : "public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {\n    int startColor = image[sr][sc];\n    if (startColor == newColor) {\n        return image;\n    }\n\n    Deque<int[]> stack = new ArrayDeque<>();\n    stack.push(new int[]{sr, sc});\n    image[sr][sc] = newColor;\n\n    while (!stack.isEmpty()) {\n        int[] pixel = stack.pop();\n        for (int[] d : DIRECTIONS) {\n            int r = pixel[0] + d[0], c = pixel[1] + d[1];\n            if (r < 0 || r >= image.length || c < 0 || c >= image[0].length\n                    || image[r][c] != startColor) {\n                continue;\n            }\n            image[r][c] = newColor;\n            stack.push(new int[]{r, c});\n        }\n    }\n    return image;\n}",
+  "problemId" : "flood-fill",
+  "resolvedInput" : {
+    "image" : [ [ 1, 1, 1 ], [ 1, 1, 0 ], [ 1, 0, 1 ] ],
+    "newColor" : 2,
+    "sc" : 1,
+    "sr" : 1
+  },
+  "stepCount" : 32,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Start at (1,1). Its colour is 1, and every pixel connected to it through colour 1 becomes 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "newColor" : "2",
+      "start" : "(1,1)",
+      "startColor" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 1 ], [ 1, 1, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 12,
+    "description" : "Take (1,1) off the stack and look at its four neighbours.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "1",
+      "pixel" : "(1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 1 ], [ 1, 2, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 19,
+    "description" : "(0,1) still carries the original colour 1, so it belongs to the region. Paint it 2.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "2",
+      "pixel" : "(0,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 1 ], [ 1, 2, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 17,
+    "description" : "(2,1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(2,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 1 ], [ 1, 2, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 19,
+    "description" : "(1,0) still carries the original colour 1, so it belongs to the region. Paint it 2.",
+    "queueOrStackState" : [ "(1,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "3",
+      "pixel" : "(1,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 1 ], [ 2, 2, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 17,
+    "description" : "(1,2) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(1,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(1,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 1 ], [ 2, 2, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "Take (1,0) off the stack and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "3",
+      "pixel" : "(1,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 1 ], [ 2, 2, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "(0,0) still carries the original colour 1, so it belongs to the region. Paint it 2.",
+    "queueOrStackState" : [ "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "4",
+      "pixel" : "(0,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 19,
+    "description" : "(2,0) still carries the original colour 1, so it belongs to the region. Paint it 2.",
+    "queueOrStackState" : [ "(2,0)", "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "5",
+      "pixel" : "(2,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "(1,-1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(2,0)", "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(1,-1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 17,
+    "description" : "(1,1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(2,0)", "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 12,
+    "description" : "Take (2,0) off the stack and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "5",
+      "pixel" : "(2,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 17,
+    "description" : "(1,0) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(1,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 17,
+    "description" : "(3,0) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(3,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 17,
+    "description" : "(2,-1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(2,-1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 17,
+    "description" : "(2,1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,0)", "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(2,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 12,
+    "description" : "Take (0,0) off the stack and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "5",
+      "pixel" : "(0,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 17,
+    "description" : "(-1,0) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(-1,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 17,
+    "description" : "(1,0) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(1,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 17,
+    "description" : "(0,-1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(0,-1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 17,
+    "description" : "(0,1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ "(0,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(0,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 12,
+    "description" : "Take (0,1) off the stack and look at its four neighbours.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "5",
+      "pixel" : "(0,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 17,
+    "description" : "(-1,1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(-1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 17,
+    "description" : "(1,1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 17,
+    "description" : "(0,0) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(0,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 1 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 19,
+    "description" : "(0,2) still carries the original colour 1, so it belongs to the region. Paint it 2.",
+    "queueOrStackState" : [ "(0,2)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "6",
+      "pixel" : "(0,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 12,
+    "description" : "Take (0,2) off the stack and look at its four neighbours.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "6",
+      "pixel" : "(0,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 17,
+    "description" : "(-1,2) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(-1,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 17,
+    "description" : "(1,2) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(1,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 17,
+    "description" : "(0,1) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(0,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 17,
+    "description" : "(0,3) is off the image or is not colour 1 - the region stops here.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pixel" : "(0,3)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 23,
+    "description" : "The stack is empty: 6 pixel(s) repainted from 1 to 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "painted" : "6"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
