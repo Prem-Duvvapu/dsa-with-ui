@@ -119,6 +119,8 @@ class ApiContractTest {
             "bfs-traversal", "dfs-traversal", "number-of-provinces", "rotting-oranges",
             "undirected-cycle-bfs", "undirected-cycle-dfs", "directed-cycle-dfs",
             "distance-nearest-1",
+            "jump-game-1", "assign-cookies", "fractional-knapsack",
+            "lemonade-change", "minimum-platforms", "insert-interval",
             "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort");
 
     /**
@@ -307,6 +309,12 @@ class ApiContractTest {
                 arguments("/api/graphs/bfs-dfs", "undirected-cycle-dfs"),
                 arguments("/api/graphs/bfs-dfs", "directed-cycle-dfs"),
                 arguments("/api/graphs/bfs-dfs", "distance-nearest-1"),
+                arguments("/api/greedy", "jump-game-1"),
+                arguments("/api/greedy", "assign-cookies"),
+                arguments("/api/greedy", "fractional-knapsack"),
+                arguments("/api/greedy", "lemonade-change"),
+                arguments("/api/greedy", "minimum-platforms"),
+                arguments("/api/greedy", "insert-interval"),
                 arguments("/api/sorting", "selection-sort"),
                 arguments("/api/sorting", "bubble-sort"),
                 arguments("/api/sorting", "insertion-sort"),

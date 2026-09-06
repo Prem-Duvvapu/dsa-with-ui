@@ -1,0 +1,258 @@
+{
+  "anchors" : {
+    "check" : 6,
+    "done" : 18,
+    "rank" : 2,
+    "skip" : 7,
+    "takeFraction" : 13,
+    "takeFull" : 10
+  },
+  "code" : "public double fractionalKnapsack(int[] values, int[] weights, int capacity) {\n    Integer[] order = sortByRatioDescending(values, weights);\n    double totalValue = 0;\n    int remaining = capacity;\n    for (int idx : order) {\n        if (remaining <= 0) {\n            continue;\n        }\n        if (weights[idx] <= remaining) {\n            totalValue += values[idx];\n            remaining -= weights[idx];\n        } else {\n            double fraction = (double) remaining / weights[idx];\n            totalValue += fraction * values[idx];\n            remaining = 0;\n        }\n    }\n    return totalValue;\n}",
+  "problemId" : "fractional-knapsack",
+  "resolvedInput" : {
+    "capacity" : 50,
+    "values" : [ 60, 100, 120 ],
+    "weights" : [ 10, 20, 30 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Rank every item by value/weight ratio, best first: #0(60/10=6.00), #1(100/20=5.00), #2(120/30=4.00).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "#0(60/10=6.00), #1(100/20=5.00), #2(120/30=4.00)"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Item #0 weighs 10, worth 60. 50 of capacity remains.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "remaining" : "50",
+      "totalValue" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "It fits whole: take all of item #0 for +60 value. Capacity left: 40.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "remaining" : "40",
+      "totalValue" : "60"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Item #1 weighs 20, worth 100. 40 of capacity remains.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "remaining" : "40",
+      "totalValue" : "60"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "It fits whole: take all of item #1 for +100 value. Capacity left: 20.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "remaining" : "20",
+      "totalValue" : "160"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 6,
+    "description" : "Item #2 weighs 30, worth 120. 20 of capacity remains.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "remaining" : "20",
+      "totalValue" : "160"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 13,
+    "description" : "Only 20/30 of item #2 fits. Take that fraction for +80.00 value, then the bag is full.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fraction" : "0.67",
+      "totalValue" : "240"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 18,
+    "description" : "Bag finished with total value 240.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "totalValue" : "240"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 60,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 120,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
