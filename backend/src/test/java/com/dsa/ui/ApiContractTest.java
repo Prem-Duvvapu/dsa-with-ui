@@ -116,6 +116,8 @@ class ApiContractTest {
             "word-ladder-1", "alien-dictionary",
             "lru-cache", "ninja-and-his-friends",
             "implement-trie", "word-break-trie",
+            "jump-game-1", "assign-cookies", "fractional-knapsack",
+            "lemonade-change", "minimum-platforms", "insert-interval",
             "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort");
 
     /**
@@ -296,6 +298,12 @@ class ApiContractTest {
                 arguments("/api/dp", "ninja-and-his-friends"),
                 arguments("/api/tries", "implement-trie"),
                 arguments("/api/tries", "word-break-trie"),
+                arguments("/api/greedy", "jump-game-1"),
+                arguments("/api/greedy", "assign-cookies"),
+                arguments("/api/greedy", "fractional-knapsack"),
+                arguments("/api/greedy", "lemonade-change"),
+                arguments("/api/greedy", "minimum-platforms"),
+                arguments("/api/greedy", "insert-interval"),
                 arguments("/api/sorting", "selection-sort"),
                 arguments("/api/sorting", "bubble-sort"),
                 arguments("/api/sorting", "insertion-sort"),
