@@ -1,0 +1,156 @@
+{
+  "anchors" : {
+    "done" : 19,
+    "init" : 2,
+    "reverse" : 14,
+    "transpose" : 6
+  },
+  "code" : "public void rotate(int[][] matrix) {\n    int n = matrix.length;\n    // Pass 1: Transpose — swap (i,j) with (j,i)\n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            int temp = matrix[i][j];\n            matrix[i][j] = matrix[j][i];\n            matrix[j][i] = temp;\n        }\n    }\n    // Pass 2: Reverse each row\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n / 2; j++) {\n            int temp = matrix[i][j];\n            matrix[i][j] = matrix[i][n - 1 - j];\n            matrix[i][n - 1 - j] = temp;\n        }\n    }\n}",
+  "problemId" : "rotate-matrix-90",
+  "resolvedInput" : {
+    "grid" : [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Rotate 3×3 matrix 90° clockwise. Step 1: transpose, Step 2: reverse rows.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Transpose: swap (0,1)↔(1,0). Values 2 ↔ 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 3 ], [ 2, 5, 6 ], [ 7, 8, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Transpose: swap (0,2)↔(2,0). Values 3 ↔ 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7 ], [ 2, 5, 6 ], [ 3, 8, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Transpose: swap (1,2)↔(2,1). Values 6 ↔ 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7 ], [ 2, 5, 8 ], [ 3, 6, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Reverse row 0: swap col 0 ↔ col 2. Values 1 ↔ 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 7, 4, 1 ], [ 2, 5, 8 ], [ 3, 6, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "Reverse row 1: swap col 0 ↔ col 2. Values 2 ↔ 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 7, 4, 1 ], [ 8, 5, 2 ], [ 3, 6, 9 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 14,
+    "description" : "Reverse row 2: swap col 0 ↔ col 2. Values 3 ↔ 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 7, 4, 1 ], [ 8, 5, 2 ], [ 9, 6, 3 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "Rotation complete.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 7, 4, 1 ], [ 8, 5, 2 ], [ 9, 6, 3 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

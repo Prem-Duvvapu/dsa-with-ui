@@ -1,0 +1,596 @@
+{
+  "anchors" : {
+    "addElement" : 6,
+    "done" : 19,
+    "foundMatch" : 12,
+    "init" : 2,
+    "storePrefix" : 16,
+    "wholePrefix" : 8
+  },
+  "code" : "public int getLongestSubarray(int[] a, long k) {\n    Map<Long, Integer> preSumMap = new HashMap<>();\n    long sum = 0;\n    int maxLen = 0;\n    for (int i = 0; i < a.length; i++) {\n        sum += a[i];\n        if (sum == k) {\n            maxLen = Math.max(maxLen, i + 1);\n        }\n        long rem = sum - k;\n        if (preSumMap.containsKey(rem)) {\n            int len = i - preSumMap.get(rem);\n            maxLen = Math.max(maxLen, len);\n        }\n        if (!preSumMap.containsKey(sum)) {\n            preSumMap.put(sum, i);\n        }\n    }\n    return maxLen;\n}",
+  "problemId" : "longest-subarray-sum-k",
+  "resolvedInput" : {
+    "k" : 3,
+    "nums" : [ -1, 2, 3, -2, 1 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Find longest subarray with sum 3 in [-1, 2, 3, -2, 1]. HashMap stores first index of each prefix sum.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "3",
+      "maxLen" : "0",
+      "sum" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "i=0: add a[0]=-1, prefix sum is now -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "maxLen" : "0",
+      "sum" : "-1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 16,
+    "description" : "First time seeing prefix sum -1 — store index 0 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{-1=0}",
+      "sum" : "-1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "i=1: add a[1]=2, prefix sum is now 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "maxLen" : "0",
+      "sum" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 16,
+    "description" : "First time seeing prefix sum 1 — store index 1 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{-1=0, 1=1}",
+      "sum" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 6,
+    "description" : "i=2: add a[2]=3, prefix sum is now 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "maxLen" : "0",
+      "sum" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "sum - K = 1 found in map at index 1. Subarray a[2..2] has sum 3, length 1. New best!",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "1",
+      "prevIdx" : "1",
+      "rem" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "First time seeing prefix sum 4 — store index 2 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{-1=0, 1=1, 4=2}",
+      "sum" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "i=3: add a[3]=-2, prefix sum is now 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "maxLen" : "1",
+      "sum" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "sum - K = -1 found in map at index 0. Subarray a[1..3] has sum 3, length 3. New best!",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "3",
+      "prevIdx" : "0",
+      "rem" : "-1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 16,
+    "description" : "First time seeing prefix sum 2 — store index 3 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{-1=0, 1=1, 2=3, 4=2}",
+      "sum" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "i=4: add a[4]=1, prefix sum is now 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "maxLen" : "3",
+      "sum" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 8,
+    "description" : "Prefix sum 3 == K! The entire subarray a[0..4] sums to 3. maxLen = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "5",
+      "sum" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 16,
+    "description" : "First time seeing prefix sum 3 — store index 4 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{-1=0, 1=1, 2=3, 3=4, 4=2}",
+      "sum" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 19,
+    "description" : "Longest subarray with sum 3 has length 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

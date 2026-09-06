@@ -1,0 +1,526 @@
+{
+  "anchors" : {
+    "done" : 25,
+    "drainA" : 16,
+    "drainB" : 21,
+    "init" : 2,
+    "pickA" : 6,
+    "pickB" : 10
+  },
+  "code" : "public List<Integer> findUnion(int[] a, int[] b) {\n    List<Integer> union = new ArrayList<>();\n    int i = 0, j = 0;\n    while (i < a.length && j < b.length) {\n        if (a[i] <= b[j]) {\n            if (union.isEmpty() || union.get(union.size() - 1) != a[i])\n                union.add(a[i]);\n            i++;\n        } else {\n            if (union.isEmpty() || union.get(union.size() - 1) != b[j])\n                union.add(b[j]);\n            j++;\n        }\n    }\n    while (i < a.length) {\n        if (union.isEmpty() || union.get(union.size() - 1) != a[i])\n            union.add(a[i]);\n        i++;\n    }\n    while (j < b.length) {\n        if (union.isEmpty() || union.get(union.size() - 1) != b[j])\n            union.add(b[j]);\n        j++;\n    }\n    return union;\n}",
+  "problemId" : "union-sorted-arrays",
+  "resolvedInput" : {
+    "a" : [ 1, 2, 3, 4, 6 ],
+    "b" : [ 2, 3, 5 ]
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Two sorted arrays: A = [1, 2, 3, 4, 6], B = [2, 3, 5]. Two pointers i=0, j=0 walk them simultaneously.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "0",
+      "union" : "[]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "a[0]=1 <= b[0]=2, so pick from A. Added 1 to union. Advance i.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "0",
+      "union" : "[1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "a[1]=2 <= b[0]=2, so pick from A. Added 2 to union. Advance i.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "0",
+      "union" : "[1, 2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 10,
+    "description" : "b[0]=2 < a[2]=3, so pick from B. Duplicate — skip. Advance j.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "0",
+      "union" : "[1, 2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "a[2]=3 <= b[1]=3, so pick from A. Added 3 to union. Advance i.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1",
+      "union" : "[1, 2, 3]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 10,
+    "description" : "b[1]=3 < a[3]=4, so pick from B. Duplicate — skip. Advance j.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "1",
+      "union" : "[1, 2, 3]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "a[3]=4 <= b[2]=5, so pick from A. Added 4 to union. Advance i.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "2",
+      "union" : "[1, 2, 3, 4]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "b[2]=5 < a[4]=6, so pick from B. Added 5 to union. Advance j.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "2",
+      "union" : "[1, 2, 3, 4, 5]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 16,
+    "description" : "B exhausted. Drain A: a[4]=6. Added.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "union" : "[1, 2, 3, 4, 5, 6]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 25,
+    "description" : "Union complete: [1, 2, 3, 4, 5, 6] (6 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "union" : "[1, 2, 3, 4, 5, 6]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

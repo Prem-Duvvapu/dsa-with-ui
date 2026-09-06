@@ -1,0 +1,314 @@
+{
+  "anchors" : {
+    "addNew" : 7,
+    "done" : 13,
+    "merge" : 9,
+    "sort" : 2
+  },
+  "code" : "public int[][] merge(int[][] intervals) {\n    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));\n    List<int[]> res = new ArrayList<>();\n\n    for (int[] interval : intervals) {\n        if (res.isEmpty() || res.get(res.size() - 1)[1] < interval[0]) {\n            res.add(interval);\n        } else {\n            res.get(res.size() - 1)[1] =\n                Math.max(res.get(res.size() - 1)[1], interval[1]);\n        }\n    }\n    return res.toArray(new int[res.size()][]);\n}",
+  "problemId" : "merge-intervals",
+  "resolvedInput" : {
+    "intervals" : [ [ 1, 3 ], [ 2, 6 ], [ 8, 10 ], [ 15, 18 ] ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Sorted 4 intervals by start time: [[1,3], [2,6], [8,10], [15,18]].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "[1, 3] does not overlap with the last merged interval → add as new segment. Merged: [[1,3]].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "current" : "[1,3]",
+      "merged" : "[[1,3]]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "[2, 6] overlaps with last [1, 3] → extend end to max(3, 6) = 6. Merged: [[1,6]].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "current" : "[2,6]",
+      "merged" : "[[1,6]]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "[8, 10] does not overlap with the last merged interval [1, 6] → add as new segment. Merged: [[1,6], [8,10]].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "current" : "[8,10]",
+      "merged" : "[[1,6], [8,10]]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 10,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "[15, 18] does not overlap with the last merged interval [8, 10] → add as new segment. Merged: [[1,6], [8,10], [15,18]].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "current" : "[15,18]",
+      "merged" : "[[1,6], [8,10], [15,18]]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 15,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 18,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Merge complete: 4 intervals → 3 non-overlapping segments: [[1,6], [8,10], [15,18]].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[[1,6], [8,10], [15,18]]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 18,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

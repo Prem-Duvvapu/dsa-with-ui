@@ -1,0 +1,181 @@
+{
+  "anchors" : {
+    "done" : 20,
+    "goDown" : 9,
+    "goLeft" : 12,
+    "goRight" : 7,
+    "goUp" : 16,
+    "init" : 2
+  },
+  "code" : "public List<Integer> spiralOrder(int[][] matrix) {\n    List<Integer> ans = new ArrayList<>();\n    int n = matrix.length, m = matrix[0].length;\n    int top = 0, left = 0, bottom = n - 1, right = m - 1;\n\n    while (top <= bottom && left <= right) {\n        for (int i = left; i <= right; i++) ans.add(matrix[top][i]);\n        top++;\n        for (int i = top; i <= bottom; i++) ans.add(matrix[i][right]);\n        right--;\n        if (top <= bottom) {\n            for (int i = right; i >= left; i--) ans.add(matrix[bottom][i]);\n            bottom--;\n        }\n        if (left <= right) {\n            for (int i = bottom; i >= top; i--) ans.add(matrix[i][left]);\n            left++;\n        }\n    }\n    return ans;\n}",
+  "problemId" : "spiral-matrix",
+  "resolvedInput" : {
+    "grid" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Spiral traverse 3×4 matrix. Boundaries: top=0, bottom=2, left=0, right=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bottom" : "2",
+      "left" : "0",
+      "right" : "3",
+      "top" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "→ Right along row 0 from col 0 to 3: [1, 2, 3, 4]. Then top++ → 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "[1, 2, 3, 4]",
+      "top" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "↓ Down along col 3 from row 1 to 2: [8, 12]. Then right-- → 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "[1, 2, 3, 4, 8, 12]",
+      "right" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 12,
+    "description" : "← Left along row 2 from col 2 to 0: [11, 10, 9]. Then bottom-- → 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "[1, 2, 3, 4, 8, 12, 11, 10, 9]",
+      "bottom" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 16,
+    "description" : "↑ Up along col 0 from row 1 to 1: [5]. Then left++ → 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "[1, 2, 3, 4, 8, 12, 11, 10, 9, 5]",
+      "left" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "→ Right along row 1 from col 1 to 2: [6, 7]. Then top++ → 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "[1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]",
+      "top" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "↓ Down along col 2 from row 2 to 1: []. Then right-- → 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "[1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]",
+      "right" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "↑ Up along col 1 from row 1 to 2: []. Then left++ → 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "[1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]",
+      "left" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 20,
+    "description" : "Spiral order: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7] (12 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

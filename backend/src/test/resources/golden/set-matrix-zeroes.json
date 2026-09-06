@@ -1,0 +1,106 @@
+{
+  "anchors" : {
+    "done" : 26,
+    "init" : 2,
+    "markCol0" : 6,
+    "markHeaders" : 10,
+    "zeroCell" : 19,
+    "zeroCol0" : 23
+  },
+  "code" : "public void setZeroes(int[][] matrix) {\n    int col0 = 1, rows = matrix.length, cols = matrix[0].length;\n    // Pass 1: mark zeroes using first row and column as flags\n    for (int i = 0; i < rows; i++) {\n        if (matrix[i][0] == 0) {\n            col0 = 0;\n        }\n        for (int j = 1; j < cols; j++) {\n            if (matrix[i][j] == 0) {\n                matrix[i][0] = 0;\n                matrix[0][j] = 0;\n            }\n        }\n    }\n    // Pass 2: propagate zeroes bottom-up\n    for (int i = rows - 1; i >= 0; i--) {\n        for (int j = cols - 1; j >= 1; j--) {\n            if (matrix[i][0] == 0 || matrix[0][j] == 0) {\n                matrix[i][j] = 0;\n            }\n        }\n        if (col0 == 0) {\n            matrix[i][0] = 0;\n        }\n    }\n}",
+  "problemId" : "set-matrix-zeroes",
+  "resolvedInput" : {
+    "grid" : [ [ 1, 1, 1 ], [ 1, 0, 1 ], [ 1, 1, 1 ] ]
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Matrix is 3×3. col0 flag = 1. Pass 1: scan for zeroes, mark headers.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col0" : "1",
+      "cols" : "3",
+      "rows" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 1 ], [ 1, 0, 1 ], [ 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "Found zero at (1,1) → mark row header matrix[1][0]=0 and column header matrix[0][1]=0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 1 ], [ 0, 0, 1 ], [ 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 19,
+    "description" : "Row header matrix[2][0]=1 or col header matrix[0][1]=0 is 0 → zero out (2,1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 1 ], [ 0, 0, 1 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 19,
+    "description" : "Row header matrix[1][0]=0 or col header matrix[0][2]=1 is 0 → zero out (1,2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 1 ], [ 0, 0, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 26,
+    "description" : "Matrix zeroing complete.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 1 ], [ 0, 0, 0 ], [ 1, 0, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,601 @@
+{
+  "anchors" : {
+    "buildSet" : 2,
+    "done" : 16,
+    "extend" : 10,
+    "skip" : 14,
+    "startStreak" : 8,
+    "updateBest" : 12
+  },
+  "code" : "public int longestConsecutive(int[] nums) {\n    Set<Integer> set = new HashSet<>();\n    for (int num : nums) set.add(num);\n    int longest = 0;\n\n    for (int it : set) {\n        if (!set.contains(it - 1)) {\n            int cnt = 1, x = it;\n            while (set.contains(x + 1)) {\n                x++; cnt++;\n            }\n            longest = Math.max(longest, cnt);\n        } else {\n        }\n    }\n    return longest;\n}",
+  "problemId" : "longest-consecutive-sequence",
+  "resolvedInput" : {
+    "nums" : [ 100, 4, 200, 1, 3, 2 ]
+  },
+  "stepCount" : 14,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Build HashSet from [100, 4, 200, 1, 3, 2] → unique values: [1, 2, 3, 100, 4, 200] (6 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "setSize" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "1 has no predecessor (0 not in set) → it's a sequence starter. Begin counting.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "longest" : "0",
+      "starter" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Set contains 2 → extend streak to length 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "2",
+      "x" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 10,
+    "description" : "Set contains 3 → extend streak to length 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "3",
+      "x" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Set contains 4 → extend streak to length 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "4",
+      "x" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "Streak starting at 1 ended at 4 (length 4). New best!",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "longest" : "4",
+      "streakLen" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 14,
+    "description" : "2 has predecessor 1 in set — not a sequence starter, skip.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "it" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "3 has predecessor 2 in set — not a sequence starter, skip.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "it" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 14,
+    "description" : "4 has predecessor 3 in set — not a sequence starter, skip.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "it" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "100 has no predecessor (99 not in set) → it's a sequence starter. Begin counting.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "longest" : "4",
+      "starter" : "100"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Streak starting at 100 ended at 100 (length 1). Not longer than current best 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "longest" : "4",
+      "streakLen" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 8,
+    "description" : "200 has no predecessor (199 not in set) → it's a sequence starter. Begin counting.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "longest" : "4",
+      "starter" : "200"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 12,
+    "description" : "Streak starting at 200 ended at 200 (length 1). Not longer than current best 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "longest" : "4",
+      "streakLen" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 16,
+    "description" : "Longest consecutive sequence has length 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "longest" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 200,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

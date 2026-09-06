@@ -1,0 +1,357 @@
+{
+  "anchors" : {
+    "done" : 15,
+    "init" : 3,
+    "placeNegative" : 11,
+    "placePositive" : 8
+  },
+  "code" : "public int[] rearrangeArray(int[] nums) {\n    int n = nums.length;\n    int[] ans = new int[n];\n    int posIndex = 0, negIndex = 1;\n\n    for (int i = 0; i < n; i++) {\n        if (nums[i] > 0) {\n            ans[posIndex] = nums[i];\n            posIndex += 2;\n        } else {\n            ans[negIndex] = nums[i];\n            negIndex += 2;\n        }\n    }\n    return ans;\n}",
+  "problemId" : "rearrange-by-sign",
+  "resolvedInput" : {
+    "nums" : [ 3, 1, -2, -5, 2, -4 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Input: [3, 1, -2, -5, 2, -4]. Build output array of size 6. posIndex starts at 0, negIndex at 1, both jump by 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "negIndex" : "1",
+      "posIndex" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -5,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "nums[0]=3 is positive → place at ans[0]. posIndex advances to 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "negIndex" : "1",
+      "posIndex" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "nums[1]=1 is positive → place at ans[2]. posIndex advances to 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "negIndex" : "1",
+      "posIndex" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "nums[2]=-2 is negative → place at ans[1]. negIndex advances to 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "negIndex" : "1",
+      "posIndex" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 11,
+    "description" : "nums[3]=-5 is negative → place at ans[3]. negIndex advances to 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "negIndex" : "3",
+      "posIndex" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : -5,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "nums[4]=2 is positive → place at ans[4]. posIndex advances to 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "negIndex" : "5",
+      "posIndex" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : -5,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 11,
+    "description" : "nums[5]=-4 is negative → place at ans[5]. negIndex advances to 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "negIndex" : "5",
+      "posIndex" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : -5,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "Rearranged: [3, -2, 1, -5, 2, -4]. Positives at even indices, negatives at odd indices.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[3, -2, 1, -5, 2, -4]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : -5,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

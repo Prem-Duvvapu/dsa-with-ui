@@ -37,41 +37,13 @@ public class ArrayServiceTest {
 
     @Test
     public void testGenerateStepsForAllArrayProblems() {
-        Set<String> retired = Set.of(
-                "largest-element",
-                "max-consecutive-ones",
-                "move-zeros-end",
-                "find-missing-number",
-                "stock-buy-sell",
-                "second-largest-element",
-                "check-sorted-ii",
-                "remove-duplicates-sorted",
-                "left-rotate-one",
-                "linear-search",
-                "left-rotate-k",
-                "single-number",
-                "majority-element",
-                "leaders-in-array",
-                "longest-subarray-sum-k-positives",
-                "count-inversions",
-                "reverse-pairs",
-                "sort-0-1-2",
-                "next-permutation",
-                "repeating-missing-number",
-                "merge-two-sorted-arrays",
-                "three-sum",
-                "four-sum");
+        // ALL array problems now have real tracers in tracer/impl/.
+        // Every generateSteps() call must throw LegacyTraceRetiredException.
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
-            if (retired.contains(p.getId())) {
-                assertThrows(LegacyTraceRetiredException.class,
-                        () -> service.generateSteps(p.getId()),
-                        p.getId() + " is traced by the v2 layer and must not fall back");
-                continue;
-            }
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps list should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

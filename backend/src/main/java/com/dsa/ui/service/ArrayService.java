@@ -63,24 +63,28 @@ public class ArrayService implements ProblemProvider {
             case "three-sum":
             case "four-sum":
                 throw new LegacyTraceRetiredException(problemId);
-            case "union-sorted-arrays": return generateUnionSortedArraysSteps();
-            case "longest-subarray-sum-k": return generateLongestSubarraySumKSteps();
-            case "two-sum": return generateTwoSumSteps();
-            case "kadane-algo": return generateKadaneSteps();
-            case "print-max-subarray": return generatePrintMaxSubarraySteps();
-            case "rearrange-by-sign": return generateRearrangeBySignSteps();
-            case "longest-consecutive-sequence": return generateLongestConsecutiveSteps();
-            case "set-matrix-zeroes": return generateSetMatrixZeroesSteps();
-            case "rotate-matrix-90": return generateRotateMatrixSteps();
-            case "spiral-matrix": return generateSpiralMatrixSteps();
-            case "count-subarrays-given-sum": return generateCountSubarraysGivenSumSteps();
-            case "pascals-triangle": return generatePascalsTriangleSteps();
-            case "majority-element-ii": return generateMajorityElement2Steps();
-            case "largest-subarray-sum-0": return generateLargestSubarraySum0Steps();
-            case "count-subarrays-xor-k": return generateCountSubarraysXorKSteps();
-            case "merge-intervals": return generateMergeIntervalsSteps();
-            case "max-product-subarray": return generateMaxProductSubarraySteps();
-            default: return generateLargestElementSteps();
+            // All 15 remaining array problems now have real tracers (tracer/impl).
+            // two-sum and kadane-algo already had tracers — now explicitly retired too.
+            case "union-sorted-arrays":
+            case "longest-subarray-sum-k":
+            case "two-sum":
+            case "kadane-algo":
+            case "print-max-subarray":
+            case "rearrange-by-sign":
+            case "longest-consecutive-sequence":
+            case "set-matrix-zeroes":
+            case "rotate-matrix-90":
+            case "spiral-matrix":
+            case "count-subarrays-given-sum":
+            case "pascals-triangle":
+            case "majority-element-ii":
+            case "largest-subarray-sum-0":
+            case "count-subarrays-xor-k":
+            case "merge-intervals":
+            case "max-product-subarray":
+                throw new LegacyTraceRetiredException(problemId);
+            default:
+                throw new LegacyTraceRetiredException(problemId);
         }
     }
 

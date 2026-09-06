@@ -1,0 +1,720 @@
+{
+  "anchors" : {
+    "done" : 17,
+    "extend" : 7,
+    "init" : 2,
+    "newBest" : 9,
+    "reset" : 14,
+    "resetStart" : 6
+  },
+  "code" : "public int[] maxSubarrayWithPrint(int[] arr) {\n    int maxi = Integer.MIN_VALUE, sum = 0;\n    int start = 0, ansStart = -1, ansEnd = -1;\n\n    for (int i = 0; i < arr.length; i++) {\n        if (sum == 0) start = i;\n        sum += arr[i];\n        if (sum > maxi) {\n            maxi = sum;\n            ansStart = start;\n            ansEnd = i;\n        }\n        if (sum < 0) {\n            sum = 0;\n        }\n    }\n    return Arrays.copyOfRange(arr, ansStart, ansEnd + 1);\n}",
+  "problemId" : "print-max-subarray",
+  "resolvedInput" : {
+    "nums" : [ 1, -2, 6, -1, 3, -4, 2 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Track running sum and the best window [ansStart..ansEnd]. maxi = -INF, sum = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ansEnd" : "-1",
+      "ansStart" : "-1",
+      "maxi" : "-INF",
+      "sum" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Running sum is 0, so a new candidate subarray starts at index 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "start" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "i=0: add arr[0]=1, running sum = 1. Current candidate: arr[0..0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "start" : "0",
+      "sum" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "New best! sum 1 > previous best -INF. Best subarray is now arr[0..0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ansEnd" : "0",
+      "ansStart" : "0",
+      "maxi" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "i=1: add arr[1]=-2, running sum = -1. Current candidate: arr[0..1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "start" : "0",
+      "sum" : "-1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "Running sum went negative (-1) — any subarray starting fresh beats extending this. Reset to 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "sum" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Running sum is 0, so a new candidate subarray starts at index 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "start" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 7,
+    "description" : "i=2: add arr[2]=6, running sum = 6. Current candidate: arr[2..2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "start" : "2",
+      "sum" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 9,
+    "description" : "New best! sum 6 > previous best -INF. Best subarray is now arr[2..2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ansEnd" : "2",
+      "ansStart" : "2",
+      "maxi" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 7,
+    "description" : "i=3: add arr[3]=-1, running sum = 5. Current candidate: arr[2..3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "start" : "2",
+      "sum" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 7,
+    "description" : "i=4: add arr[4]=3, running sum = 8. Current candidate: arr[2..4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "start" : "2",
+      "sum" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "New best! sum 8 > previous best -INF. Best subarray is now arr[2..4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ansEnd" : "4",
+      "ansStart" : "2",
+      "maxi" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 7,
+    "description" : "i=5: add arr[5]=-4, running sum = 4. Current candidate: arr[2..5].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "start" : "2",
+      "sum" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "i=6: add arr[6]=2, running sum = 6. Current candidate: arr[2..6].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "start" : "2",
+      "sum" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 17,
+    "description" : "Max subarray sum = 8, from arr[2..4] = [6, -1, 3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "8",
+      "result" : "[6, -1, 3]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : -1,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : -4,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,507 @@
+{
+  "anchors" : {
+    "addRow" : 12,
+    "boundary" : 7,
+    "done" : 14,
+    "init" : 2,
+    "newRow" : 4,
+    "sum" : 9
+  },
+  "code" : "public List<List<Integer>> generate(int numRows) {\n    List<List<Integer>> res = new ArrayList<>();\n    for (int i = 0; i < numRows; i++) {\n        List<Integer> row = new ArrayList<>();\n        for (int j = 0; j <= i; j++) {\n            if (j == 0 || j == i) {\n                row.add(1);\n            } else {\n                row.add(res.get(i - 1).get(j - 1) + res.get(i - 1).get(j));\n            }\n        }\n        res.add(row);\n    }\n    return res;\n}",
+  "problemId" : "pascals-triangle",
+  "resolvedInput" : {
+    "numRows" : 5
+  },
+  "stepCount" : 27,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Generate 5 rows of Pascal's Triangle.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "numRows" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Start building row 0 (will have 1 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "Row 0, col 0 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "0",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 12,
+    "description" : "Row 0 complete: [1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "[1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "Start building row 1 (will have 2 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Row 1, col 0 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "0",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "Row 1, col 1 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "1",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "Row 1 complete: [1, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "[1, 1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 4,
+    "description" : "Start building row 2 (will have 3 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 7,
+    "description" : "Row 2, col 0 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "0",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 9,
+    "description" : "Row 2, col 1 = row[1][0] + row[1][1] = 1 + 1 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1",
+      "value" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "Row 2, col 2 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "2",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 12,
+    "description" : "Row 2 complete: [1, 2, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "[1, 2, 1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 4,
+    "description" : "Start building row 3 (will have 4 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 7,
+    "description" : "Row 3, col 0 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "0",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 9,
+    "description" : "Row 3, col 1 = row[2][0] + row[2][1] = 1 + 2 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "1",
+      "value" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 9,
+    "description" : "Row 3, col 2 = row[2][1] + row[2][2] = 2 + 1 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "2",
+      "value" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 0, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 7,
+    "description" : "Row 3, col 3 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "3",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 12,
+    "description" : "Row 3 complete: [1, 3, 3, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "[1, 3, 3, 1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 4,
+    "description" : "Start building row 4 (will have 5 elements).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 0, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 7,
+    "description" : "Row 4, col 0 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "0",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 1, 0, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 9,
+    "description" : "Row 4, col 1 = row[3][0] + row[3][1] = 1 + 3 = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "1",
+      "value" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 1, 4, 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 9,
+    "description" : "Row 4, col 2 = row[3][1] + row[3][2] = 3 + 3 = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "2",
+      "value" : "6"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 1, 4, 6, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 9,
+    "description" : "Row 4, col 3 = row[3][2] + row[3][3] = 3 + 1 = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "3",
+      "value" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 1, 4, 6, 4, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 7,
+    "description" : "Row 4, col 4 is a boundary (first or last) → value = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "4",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 1, 4, 6, 4, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 12,
+    "description" : "Row 4 complete: [1, 4, 6, 4, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "[1, 4, 6, 4, 1]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 1, 4, 6, 4, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 14,
+    "description" : "Pascal's Triangle with 5 rows is complete.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "numRows" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 1, 2, 1, 0, 0 ], [ 1, 3, 3, 1, 0 ], [ 1, 4, 6, 4, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

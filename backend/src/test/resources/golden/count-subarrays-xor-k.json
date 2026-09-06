@@ -1,0 +1,593 @@
+{
+  "anchors" : {
+    "countMatch" : 10,
+    "done" : 14,
+    "init" : 2,
+    "updateMap" : 12,
+    "xorElement" : 7
+  },
+  "code" : "public int subarraysWithXorK(int[] a, int k) {\n    int xr = 0, cnt = 0;\n    Map<Integer, Integer> map = new HashMap<>();\n    map.put(0, 1);\n\n    for (int i = 0; i < a.length; i++) {\n        xr = xr ^ a[i];\n        int x = xr ^ k;\n        if (map.containsKey(x)) {\n            cnt += map.getOrDefault(x, 0);\n        }\n        map.put(xr, map.getOrDefault(xr, 0) + 1);\n    }\n    return cnt;\n}",
+  "problemId" : "count-subarrays-xor-k",
+  "resolvedInput" : {
+    "k" : 6,
+    "nums" : [ 4, 2, 2, 6, 4 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Count subarrays with XOR = 6 in [4, 2, 2, 6, 4]. Prefix XOR starts at 0, map = {0: 1}.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "0",
+      "k" : "6",
+      "xr" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "i=0: XOR with 4 → prefix XOR = 4. Need xr^K = 4^6 = 2 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "x" : "2",
+      "xr" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "Store prefix XOR 4 in map (now seen 1 time(s)).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{0=1, 4=1}",
+      "xr" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "i=1: XOR with 2 → prefix XOR = 6. Need xr^K = 6^6 = 0 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "x" : "0",
+      "xr" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Map contains 0 with frequency 1 → 1 subarray(s) ending at index 1 have XOR = 6. Total = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "1",
+      "freq" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "Store prefix XOR 6 in map (now seen 1 time(s)).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{0=1, 4=1, 6=1}",
+      "xr" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "i=2: XOR with 2 → prefix XOR = 4. Need xr^K = 4^6 = 2 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "x" : "2",
+      "xr" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "Store prefix XOR 4 in map (now seen 2 time(s)).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{0=1, 4=2, 6=1}",
+      "xr" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "i=3: XOR with 6 → prefix XOR = 2. Need xr^K = 2^6 = 4 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "x" : "4",
+      "xr" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 10,
+    "description" : "Map contains 4 with frequency 2 → 2 subarray(s) ending at index 3 have XOR = 6. Total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "3",
+      "freq" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Store prefix XOR 2 in map (now seen 1 time(s)).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{0=1, 2=1, 4=2, 6=1}",
+      "xr" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "i=4: XOR with 4 → prefix XOR = 6. Need xr^K = 6^6 = 0 in map.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "x" : "0",
+      "xr" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 10,
+    "description" : "Map contains 0 with frequency 1 → 1 subarray(s) ending at index 4 have XOR = 6. Total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "4",
+      "freq" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 12,
+    "description" : "Store prefix XOR 6 in map (now seen 2 time(s)).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{0=1, 2=1, 4=2, 6=2}",
+      "xr" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 14,
+    "description" : "Total subarrays with XOR 6: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

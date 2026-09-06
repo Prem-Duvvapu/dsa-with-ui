@@ -1,0 +1,296 @@
+{
+  "anchors" : {
+    "boost1" : 11,
+    "boost2" : 13,
+    "cancel" : 15,
+    "count" : 22,
+    "init" : 2,
+    "newCandidate1" : 7,
+    "newCandidate2" : 9,
+    "result" : 26,
+    "startVerify" : 19
+  },
+  "code" : "public List<Integer> majorityElement(int[] nums) {\n    int cnt1 = 0, cnt2 = 0;\n    int el1 = Integer.MIN_VALUE, el2 = Integer.MIN_VALUE;\n    // Pass 1: find up to 2 candidates\n    for (int i = 0; i < nums.length; i++) {\n        if (cnt1 == 0 && nums[i] != el2) {\n            cnt1 = 1; el1 = nums[i];\n        } else if (cnt2 == 0 && nums[i] != el1) {\n            cnt2 = 1; el2 = nums[i];\n        } else if (nums[i] == el1) {\n            cnt1++;\n        } else if (nums[i] == el2) {\n            cnt2++;\n        } else {\n            cnt1--; cnt2--;\n        }\n    }\n    // Pass 2: verify candidates\n    List<Integer> ls = new ArrayList<>();\n    cnt1 = 0; cnt2 = 0;\n    for (int v : nums) {\n        if (v == el1) cnt1++;\n        if (v == el2) cnt2++;\n    }\n    int mini = nums.length / 3;\n    if (cnt1 > mini) ls.add(el1);\n    if (cnt2 > mini) ls.add(el2);\n    return ls;\n}",
+  "problemId" : "majority-element-ii",
+  "resolvedInput" : {
+    "nums" : [ 3, 2, 3 ]
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Find elements appearing > ⌊3/3⌋ = 1 times. Two candidate slots, both empty.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt1" : "0",
+      "cnt2" : "0",
+      "el1" : "∅",
+      "el2" : "∅"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Slot 1 is empty and 3 ≠ el2 → new candidate el1 = 3, cnt1 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt1" : "1",
+      "cnt2" : "0",
+      "el1" : "3",
+      "el2" : "∅"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "Slot 2 is empty and 2 ≠ el1 → new candidate el2 = 2, cnt2 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt1" : "1",
+      "cnt2" : "1",
+      "el1" : "3",
+      "el2" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "nums[2]=3 matches el1 → cnt1++ = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt1" : "2",
+      "el1" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 19,
+    "description" : "Candidates: el1=3, el2=2. Pass 2: count their actual frequencies.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "el1" : "3",
+      "el2" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 22,
+    "description" : "nums[0]=3: cnt1(3)=1, cnt2(2)=0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt1" : "1",
+      "cnt2" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 22,
+    "description" : "nums[1]=2: cnt1(3)=1, cnt2(2)=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt1" : "1",
+      "cnt2" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 22,
+    "description" : "nums[2]=3: cnt1(3)=2, cnt2(2)=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt1" : "2",
+      "cnt2" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 26,
+    "description" : "Threshold = 1. el1=3 appears 2 times ✓. el2=2 appears 1 times ✗. Result: [3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[3]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

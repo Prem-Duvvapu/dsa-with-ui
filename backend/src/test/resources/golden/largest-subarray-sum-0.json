@@ -1,0 +1,927 @@
+{
+  "anchors" : {
+    "addElement" : 6,
+    "done" : 17,
+    "foundMatch" : 11,
+    "init" : 2,
+    "storePrefix" : 13,
+    "wholePrefix" : 8
+  },
+  "code" : "public int maxLen(int[] arr) {\n    Map<Integer, Integer> map = new HashMap<>();\n    int maxi = 0, sum = 0;\n\n    for (int i = 0; i < arr.length; i++) {\n        sum += arr[i];\n        if (sum == 0) {\n            maxi = i + 1;\n        } else {\n            if (map.containsKey(sum)) {\n                maxi = Math.max(maxi, i - map.get(sum));\n            } else {\n                map.put(sum, i);\n            }\n        }\n    }\n    return maxi;\n}",
+  "problemId" : "largest-subarray-sum-0",
+  "resolvedInput" : {
+    "nums" : [ 15, -2, 2, -8, 1, 7, 10, 23 ]
+  },
+  "stepCount" : 18,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Find longest subarray with sum 0 in [15, -2, 2, -8, 1, 7, 10, 23]. HashMap stores first index of each prefix sum.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "0",
+      "sum" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "i=0: add 15 → prefix sum = 15.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "maxi" : "0",
+      "sum" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "First time seeing prefix sum 15 — store index 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{15=0}",
+      "sum" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "i=1: add -2 → prefix sum = 13.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "maxi" : "0",
+      "sum" : "13"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 13,
+    "description" : "First time seeing prefix sum 13 — store index 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{13=1, 15=0}",
+      "sum" : "13"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 6,
+    "description" : "i=2: add 2 → prefix sum = 15.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "maxi" : "0",
+      "sum" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 11,
+    "description" : "Prefix sum 15 was seen at index 0. Subarray arr[1..2] sums to 0 (length 2). New best!",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "len" : "2",
+      "maxi" : "2",
+      "prevIdx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "i=3: add -8 → prefix sum = 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "maxi" : "2",
+      "sum" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "First time seeing prefix sum 7 — store index 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{7=3, 13=1, 15=0}",
+      "sum" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "i=4: add 1 → prefix sum = 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "maxi" : "2",
+      "sum" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "First time seeing prefix sum 8 — store index 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{7=3, 8=4, 13=1, 15=0}",
+      "sum" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "i=5: add 7 → prefix sum = 15.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "maxi" : "2",
+      "sum" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "Prefix sum 15 was seen at index 0. Subarray arr[1..5] sums to 0 (length 5). New best!",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "len" : "5",
+      "maxi" : "5",
+      "prevIdx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 6,
+    "description" : "i=6: add 10 → prefix sum = 25.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "maxi" : "5",
+      "sum" : "25"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 13,
+    "description" : "First time seeing prefix sum 25 — store index 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{7=3, 8=4, 25=6, 13=1, 15=0}",
+      "sum" : "25"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 6,
+    "description" : "i=7: add 23 → prefix sum = 48.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "maxi" : "5",
+      "sum" : "48"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 13,
+    "description" : "First time seeing prefix sum 48 — store index 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "map" : "{48=7, 7=3, 8=4, 25=6, 13=1, 15=0}",
+      "sum" : "48"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 17,
+    "description" : "Longest subarray with sum 0 has length 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 15,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : -8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 23,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

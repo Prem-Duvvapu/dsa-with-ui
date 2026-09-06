@@ -1,0 +1,357 @@
+{
+  "anchors" : {
+    "done" : 13,
+    "init" : 3,
+    "multiply" : 9,
+    "resetCheck" : 7,
+    "updateMax" : 11
+  },
+  "code" : "public int maxProduct(int[] nums) {\n    int n = nums.length;\n    double pre = 1, suff = 1;\n    double maxi = Integer.MIN_VALUE;\n\n    for (int i = 0; i < n; i++) {\n        if (pre == 0) pre = 1;\n        if (suff == 0) suff = 1;\n        pre *= nums[i];\n        suff *= nums[n - 1 - i];\n        maxi = Math.max(maxi, Math.max(pre, suff));\n    }\n    return (int) maxi;\n}",
+  "problemId" : "max-product-subarray",
+  "resolvedInput" : {
+    "nums" : [ 2, 3, -2, 4 ]
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Scan from both ends simultaneously. prefix product = 1, suffix product = 1, maxi = -INF.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "-INF",
+      "pre" : "1",
+      "suff" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "i=0: prefix *= nums[0](2) = 2, suffix *= nums[3](4) = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pre" : "2",
+      "suff" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 11,
+    "description" : "max(prefix=2, suffix=4) = 4. New best! maxi = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "i=1: prefix *= nums[1](3) = 6, suffix *= nums[2](-2) = -8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pre" : "6",
+      "suff" : "-8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 11,
+    "description" : "max(prefix=6, suffix=-8) = 6. New best! maxi = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "i=2: prefix *= nums[2](-2) = -12, suffix *= nums[1](3) = -24.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pre" : "-12",
+      "suff" : "-24"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 11,
+    "description" : "max(prefix=-12, suffix=-24) = -12. maxi = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 9,
+    "description" : "i=3: prefix *= nums[3](4) = -48, suffix *= nums[0](2) = -48.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "pre" : "-48",
+      "suff" : "-48"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 11,
+    "description" : "max(prefix=-48, suffix=-48) = -48. maxi = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxi" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "Maximum product subarray = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : -2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
