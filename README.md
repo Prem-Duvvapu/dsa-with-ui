@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 109 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 112 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -173,7 +173,7 @@ them means moving problems between services.
 
 `aggressive-cows`, `alien-dictionary`, `asteroid-collision`,
 `bellman-ford`,
-`bfs-traversal`, `binary-search-1d`, `book-allocation`, `burst-balloons`,
+`bfs-traversal`, `binary-search-1d`, `book-allocation`, `bst-delete`, `bst-floor-ceil`, `bst-insert`, `burst-balloons`,
 `check-sorted-ii`, `clone-ll-random-pointer`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `edit-distance`, `find-missing-number`,

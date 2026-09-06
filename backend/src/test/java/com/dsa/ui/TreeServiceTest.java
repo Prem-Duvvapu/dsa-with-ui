@@ -45,7 +45,8 @@ class TreeServiceTest {
                 "tree-level-order", "tree-max-path-sum", "serialize-deserialize-bt",
                 "zigzag-traversal", "tree-lca",
                 "tree-burn-time", "vertical-order-traversal",
-                "morris-inorder", "correct-bst-swap");
+                "morris-inorder", "correct-bst-swap",
+                "bst-insert", "bst-delete", "bst-floor-ceil");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
