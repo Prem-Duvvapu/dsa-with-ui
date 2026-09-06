@@ -1,0 +1,325 @@
+{
+  "anchors" : {
+    "done" : 25,
+    "idle" : 19,
+    "release" : 21,
+    "schedule" : 16,
+    "seed" : 7
+  },
+  "code" : "public int leastInterval(int[] tasks, int n) {\n    Map<Integer, Integer> freq = new LinkedHashMap<>();\n    for (int t : tasks) freq.merge(t, 1, Integer::sum);\n\n    List<Integer> heap = new ArrayList<>();\n    for (int count : freq.values()) {\n        heap.add(count);\n        siftUp(heap, heap.size() - 1);\n    }\n\n    Deque<int[]> cooling = new ArrayDeque<>(); // {remainingCount, availableAtTime}\n    int time = 0;\n    while (!heap.isEmpty() || !cooling.isEmpty()) {\n        time++;\n        if (!heap.isEmpty()) {\n            int remaining = removeMax(heap) - 1;\n            if (remaining > 0) cooling.addLast(new int[]{remaining, time + n});\n        } else {\n        }\n        if (!cooling.isEmpty() && cooling.peekFirst()[1] == time) {\n            heap.add(cooling.pollFirst()[0]);\n            siftUp(heap, heap.size() - 1);\n        }\n    }\n    return time;\n}\n\nprivate int removeMax(List<Integer> heap) {\n    int max = heap.get(0);\n    int last = heap.remove(heap.size() - 1);\n    if (!heap.isEmpty()) {\n        heap.set(0, last);\n        siftDown(heap, 0);\n    }\n    return max;\n}\n\nprivate int siftUp(List<Integer> heap, int i) {\n    while (i > 0 && heap.get(i) > heap.get((i - 1) / 2)) {\n        swap(heap, i, (i - 1) / 2);\n        i = (i - 1) / 2;\n    }\n    return i;\n}\n\nprivate int siftDown(List<Integer> heap, int i) {\n    int n = heap.size();\n    while (true) {\n        int l = 2 * i + 1, r = 2 * i + 2, largest = i;\n        if (l < n && heap.get(l) > heap.get(largest)) largest = l;\n        if (r < n && heap.get(r) > heap.get(largest)) largest = r;\n        if (largest == i) return i;\n        swap(heap, i, largest);\n        i = largest;\n    }\n}\n\nprivate void swap(List<Integer> heap, int i, int j) {\n    Integer tmp = heap.get(i);\n    heap.set(i, heap.get(j));\n    heap.set(j, tmp);\n}",
+  "problemId" : "task-scheduler",
+  "resolvedInput" : {
+    "n" : 2,
+    "tasks" : [ 0, 0, 0, 1, 1, 1 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "A task type with count 3 joins the max-heap (size now 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "heapSize" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "A task type with count 3 joins the max-heap (size now 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "heapSize" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 16,
+    "description" : "Time 1: run the most frequent remaining task type (2 instances left after this run - cools down until t=3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "1",
+      "heapSize" : "1",
+      "time" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 16,
+    "description" : "Time 2: run the most frequent remaining task type (2 instances left after this run - cools down until t=4).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "2",
+      "heapSize" : "0",
+      "time" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 19,
+    "description" : "Time 3: nothing is schedulable - every remaining task is still cooling down. The CPU sits idle.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "2",
+      "time" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 21,
+    "description" : "Time 3: a task type's cooldown ends - 2 instances rejoin the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "released" : "2",
+      "time" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 16,
+    "description" : "Time 4: run the most frequent remaining task type (1 instance left after this run - cools down until t=6).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "2",
+      "heapSize" : "0",
+      "time" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 21,
+    "description" : "Time 4: a task type's cooldown ends - 2 instances rejoin the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "released" : "2",
+      "time" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 16,
+    "description" : "Time 5: run the most frequent remaining task type (1 instance left after this run - cools down until t=7).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "2",
+      "heapSize" : "0",
+      "time" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "Time 6: nothing is schedulable - every remaining task is still cooling down. The CPU sits idle.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "2",
+      "time" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 21,
+    "description" : "Time 6: a task type's cooldown ends - 1 instance rejoin the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "released" : "1",
+      "time" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 16,
+    "description" : "Time 7: run the most frequent remaining task type (0 instances left after this run).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "1",
+      "heapSize" : "0",
+      "time" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 21,
+    "description" : "Time 7: a task type's cooldown ends - 1 instance rejoin the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "released" : "1",
+      "time" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 16,
+    "description" : "Time 8: run the most frequent remaining task type (0 instances left after this run).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cooling" : "0",
+      "heapSize" : "0",
+      "time" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 25,
+    "description" : "The CPU finished at time 8 - the minimum number of intervals needed.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
