@@ -51,6 +51,16 @@ public class TreeService implements ProblemProvider {
             case "morris-inorder":
             case "correct-bst-swap":
                 throw new LegacyTraceRetiredException(problemId);
+            // bst-insert, bst-delete and bst-floor-ceil have real tracers (tracer/impl)
+            // now; they had no case at all before, silently falling to default:. Refuse
+            // rather than serve an unrelated preorder walk under any of them.
+            // bst-validate, bst-kth-smallest and bst-lca are deliberately NOT retired here
+            // yet - see RCA.md's entry on TracerContractTest.stepCountGrowsWithInput and
+            // BINARY_TREE auto-growth for why.
+            case "bst-insert":
+            case "bst-delete":
+            case "bst-floor-ceil":
+                throw new LegacyTraceRetiredException(problemId);
             case "tree-height": return generatePreorderSteps();
             case "tree-balanced": return generatePreorderSteps();
             case "tree-diameter": return generatePreorderSteps();
@@ -184,7 +194,14 @@ public class TreeService implements ProblemProvider {
             case "tree-postorder", "tree-level-order", "tree-max-path-sum",
                     "serialize-deserialize-bt", "zigzag-traversal", "tree-lca",
                     "tree-burn-time", "vertical-order-traversal", "morris-inorder",
-                    "correct-bst-swap" -> DsType.TREE;
+                    "correct-bst-swap",
+                    // These three BST ids fell through to the STACK default below with no
+                    // tracer to catch the mismatch - the same gap four Binary Trees ids
+                    // had earlier. Now that each has a real tracer declaring DsType.TREE,
+                    // the catalogue entry has to agree or CatalogTracerMetadataTest fails.
+                    // bst-validate/bst-kth-smallest/bst-lca stay on the STACK default below
+                    // deliberately - see RCA.md - until they have real tracers too.
+                    "bst-insert", "bst-delete", "bst-floor-ceil" -> DsType.TREE;
             default -> DsType.STACK;
         };
     }

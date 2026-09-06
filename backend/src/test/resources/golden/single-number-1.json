@@ -1,0 +1,284 @@
+{
+  "anchors" : {
+    "done" : 6,
+    "init" : 2,
+    "xor" : 4
+  },
+  "code" : "public int singleNumber(int[] nums) {\n    int xor = 0;\n    for (int i = 0; i < nums.length; i++) {\n        xor ^= nums[i];\n    }\n    return xor;\n}",
+  "problemId" : "single-number-1",
+  "resolvedInput" : {
+    "nums" : [ 2, 2, 3, 3, 7 ]
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Every value except one appears twice. XOR cancels a value with itself (a ^ a = 0), so a running XOR over the whole array leaves only the unpaired one behind. Start xor = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "xor" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "i=0: xor = 0 ^ 2 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "nums[i]" : "2",
+      "xor" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "i=1: xor = 2 ^ 2 = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "nums[i]" : "2",
+      "xor" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "i=2: xor = 0 ^ 3 = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "nums[i]" : "3",
+      "xor" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "i=3: xor = 3 ^ 3 = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "nums[i]" : "3",
+      "xor" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "i=4: xor = 0 ^ 7 = 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "nums[i]" : "7",
+      "xor" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "All paired values cancelled to 0. The single number is 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
