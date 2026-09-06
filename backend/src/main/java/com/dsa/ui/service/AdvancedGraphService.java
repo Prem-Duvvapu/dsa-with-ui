@@ -30,15 +30,15 @@ public class AdvancedGraphService implements ProblemProvider {
             case "graph-rep-java": return generateGraphRepJavaSteps();
             case "connected-components-intro": return generateConnectedComponentsIntroSteps();
             case "bfs-dfs-intro": return generateBfsDfsIntroSteps();
-            case "num-provinces": return generateNumProvincesSteps();
-            case "connected-matrix": return generateConnectedMatrixSteps();
-            case "rotten-oranges": return generateRottenOrangesSteps();
-            case "flood-fill": return generateFloodFillSteps();
+            case "num-provinces": throw new LegacyTraceRetiredException(problemId);
+            case "connected-matrix": throw new LegacyTraceRetiredException(problemId);
+            case "rotten-oranges": throw new LegacyTraceRetiredException(problemId);
+            case "flood-fill": throw new LegacyTraceRetiredException(problemId);
             case "cycle-undirected-bfs": throw new LegacyTraceRetiredException(problemId);
             case "cycle-undirected-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "nearest-cell-1": return generateNearestCell1Steps();
-            case "surrounded-regions": return generateSurroundedRegionsSteps();
-            case "number-of-enclaves": return generateNumberOfEnclavesSteps();
+            case "nearest-cell-1": throw new LegacyTraceRetiredException(problemId);
+            case "surrounded-regions": throw new LegacyTraceRetiredException(problemId);
+            case "number-of-enclaves": throw new LegacyTraceRetiredException(problemId);
             case "word-ladder-1": throw new LegacyTraceRetiredException(problemId);
             case "word-ladder-2": throw new LegacyTraceRetiredException(problemId);
             case "number-of-islands": return generateNumberOfIslandsSteps();
@@ -56,13 +56,13 @@ public class AdvancedGraphService implements ProblemProvider {
             case "dijkstra-pq-theory": return generateDijkstraPqTheorySteps();
             case "shortest-path-binary-maze": throw new LegacyTraceRetiredException(problemId);
             case "path-min-effort": throw new LegacyTraceRetiredException(problemId);
-            case "cheapest-flights-k-stops": return generateCheapestFlightsKStopsSteps();
-            case "network-delay-time": return generateNetworkDelayTimeSteps();
-            case "number-of-ways-destination": return generateNumberOfWaysDestinationSteps();
-            case "min-multiplications-reach-end": return generateMinMultiplicationsReachEndSteps();
+            case "cheapest-flights-k-stops": throw new LegacyTraceRetiredException(problemId);
+            case "network-delay-time": throw new LegacyTraceRetiredException(problemId);
+            case "number-of-ways-destination": throw new LegacyTraceRetiredException(problemId);
+            case "min-multiplications-reach-end": throw new LegacyTraceRetiredException(problemId);
             case "bellman-ford": throw new LegacyTraceRetiredException(problemId);
-            case "floyd-warshall": return generateFloydWarshallSteps();
-            case "city-smallest-neighbors": return generateCitySmallestNeighborsSteps();
+            case "floyd-warshall": throw new LegacyTraceRetiredException(problemId);
+            case "city-smallest-neighbors": throw new LegacyTraceRetiredException(problemId);
             case "mst-theory": return generateMstTheorySteps();
             case "prims-mst": throw new LegacyTraceRetiredException(problemId);
             case "disjoint-set-dsu": throw new LegacyTraceRetiredException(problemId);
@@ -395,7 +395,10 @@ public class AdvancedGraphService implements ProblemProvider {
         return switch (id) {
             case "disjoint-set-dsu", "most-stones-removed", "accounts-merge" -> DsType.DSU;
             case "number-of-islands", "shortest-path-binary-maze", "path-min-effort",
+                 "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
+                 "floyd-warshall", "city-smallest-neighbors",
                  "number-of-islands-2", "making-large-island", "swim-in-rising-water" -> DsType.MATRIX;
+            case "min-multiplications-reach-end" -> DsType.QUEUE;
             default -> DsType.GRAPH;
         };
     }
@@ -415,21 +418,8 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateGraphRepJavaSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateConnectedComponentsIntroSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateBfsDfsIntroSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNumProvincesSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateConnectedMatrixSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateRottenOrangesSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateFloodFillSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNearestCell1Steps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateSurroundedRegionsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNumberOfEnclavesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCheapestFlightsKStopsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNetworkDelayTimeSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNumberOfWaysDestinationSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateMinMultiplicationsReachEndSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateFloydWarshallSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCitySmallestNeighborsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateBracketReversalsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCountAndSaySteps() { return generateGraphIntroSteps(); }

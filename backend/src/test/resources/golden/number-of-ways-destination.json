@@ -1,0 +1,3819 @@
+{
+  "anchors" : {
+    "answer" : 28,
+    "extract" : 11,
+    "init" : 2,
+    "shorter" : 18,
+    "slower" : 24,
+    "tie" : 22
+  },
+  "code" : "public int countPaths(int n, List<List<int[]>> adj) {\n    long[] time = new long[n];\n    long[] ways = new long[n];\n    Arrays.fill(time, Long.MAX_VALUE);\n    time[0] = 0;\n    ways[0] = 1;\n    PriorityQueue<long[]> pq = new PriorityQueue<>((a, b) -> Long.compare(a[1], b[1]));\n    pq.add(new long[]{0, 0});\n\n    while (!pq.isEmpty()) {\n        long[] top = pq.poll();\n        int node = (int) top[0];\n        long t = top[1];\n        if (t > time[node]) continue;\n        for (int[] road : adj.get(node)) {\n            int next = road[0], cost = road[1];\n            if (t + cost < time[next]) {\n                time[next] = t + cost;\n                ways[next] = ways[node];\n                pq.add(new long[]{next, time[next]});\n            } else if (t + cost == time[next]) {\n                ways[next] = (ways[next] + ways[node]) % 1000000007;\n            } else {\n                continue;\n            }\n        }\n    }\n    return (int) (ways[n - 1] % 1000000007);\n}",
+  "problemId" : "number-of-ways-destination",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 6, 7 ], [ 0, 1, 2 ], [ 1, 2, 3 ], [ 1, 3, 3 ], [ 6, 3, 3 ], [ 3, 5, 1 ], [ 6, 5, 1 ], [ 2, 5, 1 ], [ 0, 4, 5 ], [ 4, 6, 2 ] ],
+      "vertices" : 7
+    }
+  },
+  "stepCount" : 29,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "7 intersections. Start at 0 with time 0 and exactly one way to be standing there; every other intersection has an unknown time and zero known ways. The destination is intersection 6.",
+    "queueOrStackState" : [ "0 in 0" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "time" : "[0, ?, ?, ?, ?, ?, ?]",
+      "ways" : "[1, 0, 0, 0, 0, 0, 0]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "Settle intersection 0: 0 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "0",
+      "time" : "[0, ?, ?, ?, ?, ?, ?]",
+      "ways" : "[1, 0, 0, 0, 0, 0, 0]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 18,
+    "description" : "Road 0-6 takes 7: 0 + 7 = 7 beats unknown. Everything counted for intersection 6 used a slower route, so its count is REPLACED by 0's 1 way(s), not added to.",
+    "queueOrStackState" : [ "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "0-6" ],
+    "variables" : {
+      "road" : "0-6",
+      "time" : "[0, ?, ?, ?, ?, ?, 7]",
+      "ways" : "[1, 0, 0, 0, 0, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "Road 0-1 takes 2: 0 + 2 = 2 beats unknown. Everything counted for intersection 1 used a slower route, so its count is REPLACED by 0's 1 way(s), not added to.",
+    "queueOrStackState" : [ "1 in 2", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "road" : "0-1",
+      "time" : "[0, 2, ?, ?, ?, ?, 7]",
+      "ways" : "[1, 1, 0, 0, 0, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 18,
+    "description" : "Road 0-4 takes 5: 0 + 5 = 5 beats unknown. Everything counted for intersection 4 used a slower route, so its count is REPLACED by 0's 1 way(s), not added to.",
+    "queueOrStackState" : [ "1 in 2", "6 in 7", "4 in 5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "0-4" ],
+    "variables" : {
+      "road" : "0-4",
+      "time" : "[0, 2, ?, ?, 5, ?, 7]",
+      "ways" : "[1, 1, 0, 0, 1, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "Settle intersection 1: 2 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "queueOrStackState" : [ "4 in 5", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "1",
+      "time" : "[0, 2, ?, ?, 5, ?, 7]",
+      "ways" : "[1, 1, 0, 0, 1, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 24,
+    "description" : "Road 1-0 takes 2: 2 + 2 = 4 is slower than intersection 0's best 0. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ "4 in 5", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visiting",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "1-0" ],
+    "variables" : {
+      "road" : "1-0",
+      "time" : "[0, 2, ?, ?, 5, ?, 7]",
+      "ways" : "[1, 1, 0, 0, 1, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 18,
+    "description" : "Road 1-2 takes 3: 2 + 3 = 5 beats unknown. Everything counted for intersection 2 used a slower route, so its count is REPLACED by 1's 1 way(s), not added to.",
+    "queueOrStackState" : [ "4 in 5", "6 in 7", "2 in 5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "road" : "1-2",
+      "time" : "[0, 2, 5, ?, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 0, 1, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 18,
+    "description" : "Road 1-3 takes 3: 2 + 3 = 5 beats unknown. Everything counted for intersection 3 used a slower route, so its count is REPLACED by 1's 1 way(s), not added to.",
+    "queueOrStackState" : [ "4 in 5", "3 in 5", "2 in 5", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "road" : "1-3",
+      "time" : "[0, 2, 5, 5, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "Settle intersection 4: 5 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "queueOrStackState" : [ "3 in 5", "6 in 7", "2 in 5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "4",
+      "time" : "[0, 2, 5, 5, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 24,
+    "description" : "Road 4-0 takes 5: 5 + 5 = 10 is slower than intersection 0's best 0. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ "3 in 5", "6 in 7", "2 in 5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "visiting",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "4-0" ],
+    "variables" : {
+      "road" : "4-0",
+      "time" : "[0, 2, 5, 5, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 0, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 22,
+    "description" : "Road 4-6 takes 2: 5 + 2 = 7 ties the best known time to 6. These are different routes arriving equally fast, so ADD: 1 + 1 = 2 way(s).",
+    "queueOrStackState" : [ "3 in 5", "6 in 7", "2 in 5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "visiting",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "4-6" ],
+    "variables" : {
+      "road" : "4-6",
+      "time" : "[0, 2, 5, 5, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 0, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "Settle intersection 3: 5 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "queueOrStackState" : [ "2 in 5", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "done",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "3",
+      "time" : "[0, 2, 5, 5, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 0, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 24,
+    "description" : "Road 3-1 takes 3: 5 + 3 = 8 is slower than intersection 1's best 2. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ "2 in 5", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "visiting",
+      "4" : "done",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "3-1" ],
+    "variables" : {
+      "road" : "3-1",
+      "time" : "[0, 2, 5, 5, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 0, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 24,
+    "description" : "Road 3-6 takes 3: 5 + 3 = 8 is slower than intersection 6's best 7. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ "2 in 5", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "visiting",
+      "4" : "done",
+      "5" : "unvisited",
+      "6" : "target"
+    },
+    "activeEdges" : [ "3-6" ],
+    "variables" : {
+      "road" : "3-6",
+      "time" : "[0, 2, 5, 5, 5, ?, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 0, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 18,
+    "description" : "Road 3-5 takes 1: 5 + 1 = 6 beats unknown. Everything counted for intersection 5 used a slower route, so its count is REPLACED by 3's 1 way(s), not added to.",
+    "queueOrStackState" : [ "2 in 5", "6 in 7", "5 in 6" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "visiting",
+      "4" : "done",
+      "5" : "queued",
+      "6" : "target"
+    },
+    "activeEdges" : [ "3-5" ],
+    "variables" : {
+      "road" : "3-5",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 11,
+    "description" : "Settle intersection 2: 5 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "queueOrStackState" : [ "5 in 6", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "queued",
+      "3" : "done",
+      "4" : "done",
+      "5" : "queued",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "2",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 24,
+    "description" : "Road 2-1 takes 3: 5 + 3 = 8 is slower than intersection 1's best 2. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ "5 in 6", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "visiting",
+      "3" : "done",
+      "4" : "done",
+      "5" : "queued",
+      "6" : "target"
+    },
+    "activeEdges" : [ "2-1" ],
+    "variables" : {
+      "road" : "2-1",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 1, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 22,
+    "description" : "Road 2-5 takes 1: 5 + 1 = 6 ties the best known time to 5. These are different routes arriving equally fast, so ADD: 1 + 1 = 2 way(s).",
+    "queueOrStackState" : [ "5 in 6", "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "visiting",
+      "3" : "done",
+      "4" : "done",
+      "5" : "queued",
+      "6" : "target"
+    },
+    "activeEdges" : [ "2-5" ],
+    "variables" : {
+      "road" : "2-5",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 11,
+    "description" : "Settle intersection 5: 6 is the shortest time to it, reachable in 2 way(s). Its roads can now be counted.",
+    "queueOrStackState" : [ "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "queued",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "5",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 24,
+    "description" : "Road 5-3 takes 1: 6 + 1 = 7 is slower than intersection 3's best 5. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "visiting",
+      "6" : "target"
+    },
+    "activeEdges" : [ "5-3" ],
+    "variables" : {
+      "road" : "5-3",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 2]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 22,
+    "description" : "Road 5-6 takes 1: 6 + 1 = 7 ties the best known time to 6. These are different routes arriving equally fast, so ADD: 2 + 2 = 4 way(s).",
+    "queueOrStackState" : [ "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "visiting",
+      "6" : "target"
+    },
+    "activeEdges" : [ "5-6" ],
+    "variables" : {
+      "road" : "5-6",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 24,
+    "description" : "Road 5-2 takes 1: 6 + 1 = 7 is slower than intersection 2's best 5. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ "6 in 7" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "visiting",
+      "6" : "target"
+    },
+    "activeEdges" : [ "5-2" ],
+    "variables" : {
+      "road" : "5-2",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 11,
+    "description" : "Settle intersection 6: 7 is the shortest time to it, reachable in 4 way(s). Its roads can now be counted.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "done",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "6",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 24,
+    "description" : "Road 6-0 takes 7: 7 + 7 = 14 is slower than intersection 0's best 0. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "done",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ "6-0" ],
+    "variables" : {
+      "road" : "6-0",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 24,
+    "description" : "Road 6-3 takes 3: 7 + 3 = 10 is slower than intersection 3's best 5. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "done",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ "6-3" ],
+    "variables" : {
+      "road" : "6-3",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 24,
+    "description" : "Road 6-5 takes 1: 7 + 1 = 8 is slower than intersection 5's best 6. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "done",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ "6-5" ],
+    "variables" : {
+      "road" : "6-5",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 24,
+    "description" : "Road 6-4 takes 2: 7 + 2 = 9 is slower than intersection 4's best 5. A slower route is never part of a shortest one - no count changes.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "done",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ "6-4" ],
+    "variables" : {
+      "road" : "6-4",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 28,
+    "description" : "Queue empty. The shortest time from 0 to 6 is 7, and 4 distinct route(s) achieve it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "done",
+      "2" : "done",
+      "3" : "done",
+      "4" : "done",
+      "5" : "done",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4",
+      "time" : "[0, 2, 5, 5, 5, 6, 7]",
+      "ways" : "[1, 1, 1, 1, 1, 2, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 6,
+      "weight" : 7,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 3,
+      "weight" : 3,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 6,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : 1,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 4,
+      "weight" : 5,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : 2,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}

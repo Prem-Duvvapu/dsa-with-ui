@@ -1,0 +1,643 @@
+{
+  "anchors" : {
+    "already" : 22,
+    "dequeue" : 16,
+    "done" : 29,
+    "enqueue" : 24,
+    "init" : 2,
+    "newProvince" : 10,
+    "settled" : 8
+  },
+  "code" : "public int findCircleNum(int[][] isConnected) {\n    int n = isConnected.length;\n    boolean[] visited = new boolean[n];\n    int provinces = 0;\n\n    for (int i = 0; i < n; i++) {\n        if (visited[i]) {\n            continue;\n        }\n        provinces++;\n        Queue<Integer> queue = new LinkedList<>();\n        queue.add(i);\n        visited[i] = true;\n\n        while (!queue.isEmpty()) {\n            int city = queue.poll();\n            for (int j = 0; j < n; j++) {\n                if (isConnected[city][j] == 0) {\n                    continue;\n                }\n                if (visited[j]) {\n                    continue;\n                }\n                visited[j] = true;\n                queue.add(j);\n            }\n        }\n    }\n    return provinces;\n}",
+  "problemId" : "num-provinces",
+  "resolvedInput" : {
+    "isConnected" : [ [ 1, 1, 0 ], [ 1, 1, 0 ], [ 0, 0, 1 ] ]
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "3 cities. A city's neighbours are found by scanning its own row of the matrix, so every lookup costs a full row walk.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "3",
+      "provinces" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "City 0 has not been reached yet, so it opens province #1. Seed the queue with it.",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "provinces" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 16,
+    "description" : "Walk row 0 of isConnected to find every city joined to 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "city" : "0",
+      "provinces" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 22,
+    "description" : "isConnected[0][0] = 1, but city 0 is already in province #1 - nothing new.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "city" : "0",
+      "j" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 24,
+    "description" : "isConnected[0][1] = 1 and city 1 is unseen - it joins province #1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "city" : "0",
+      "j" : "1",
+      "provinces" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 16,
+    "description" : "Walk row 1 of isConnected to find every city joined to 1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "city" : "1",
+      "provinces" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 22,
+    "description" : "isConnected[1][0] = 1, but city 0 is already in province #1 - nothing new.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ "1-0" ],
+    "variables" : {
+      "city" : "1",
+      "j" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 22,
+    "description" : "isConnected[1][1] = 1, but city 1 is already in province #1 - nothing new.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "city" : "1",
+      "j" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "City 1 already belongs to a counted province - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "provinces" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 10,
+    "description" : "City 2 has not been reached yet, so it opens province #2. Seed the queue with it.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "provinces" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 16,
+    "description" : "Walk row 2 of isConnected to find every city joined to 2.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "city" : "2",
+      "provinces" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 22,
+    "description" : "isConnected[2][2] = 1, but city 2 is already in province #2 - nothing new.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "city" : "2",
+      "j" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 29,
+    "description" : "Every city assigned. The map splits into 2 province(s).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "provinces" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}
