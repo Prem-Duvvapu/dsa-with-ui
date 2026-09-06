@@ -40,7 +40,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "surrounded-regions": throw new LegacyTraceRetiredException(problemId);
             case "number-of-enclaves": throw new LegacyTraceRetiredException(problemId);
             case "word-ladder-1": throw new LegacyTraceRetiredException(problemId);
-            case "word-ladder-2": return generateWordLadder2Steps();
+            case "word-ladder-2": throw new LegacyTraceRetiredException(problemId);
             case "number-of-islands": return generateNumberOfIslandsSteps();
             case "bipartite-graph-dfs": throw new LegacyTraceRetiredException(problemId);
             case "cycle-directed-dfs": throw new LegacyTraceRetiredException(problemId);
@@ -69,12 +69,12 @@ public class AdvancedGraphService implements ProblemProvider {
             case "kruskals-mst": throw new LegacyTraceRetiredException(problemId);
             case "network-connected-ops": throw new LegacyTraceRetiredException(problemId);
             case "most-stones-removed": throw new LegacyTraceRetiredException(problemId);
-            case "accounts-merge": return generateAccountsMergeSteps();
-            case "number-of-islands-2": return generateNumberOfIslands2Steps();
-            case "making-large-island": return generateMakingLargeIslandSteps();
-            case "swim-in-rising-water": return generateSwimInRisingWaterSteps();
-            case "tarjan-bridges": return generateTarjanBridgesSteps();
-            case "articulation-points": return generateArticulationPointsSteps();
+            case "accounts-merge": throw new LegacyTraceRetiredException(problemId);
+            case "number-of-islands-2": throw new LegacyTraceRetiredException(problemId);
+            case "making-large-island": throw new LegacyTraceRetiredException(problemId);
+            case "swim-in-rising-water": throw new LegacyTraceRetiredException(problemId);
+            case "tarjan-bridges": throw new LegacyTraceRetiredException(problemId);
+            case "articulation-points": throw new LegacyTraceRetiredException(problemId);
             case "kosaraju-scc": throw new LegacyTraceRetiredException(problemId);
             case "bracket-reversals": return generateBracketReversalsSteps();
             case "count-and-say": return generateCountAndSaySteps();
@@ -393,10 +393,11 @@ public class AdvancedGraphService implements ProblemProvider {
             return DsType.STRING;
         }
         return switch (id) {
-            case "disjoint-set-dsu", "most-stones-removed" -> DsType.DSU;
+            case "disjoint-set-dsu", "most-stones-removed", "accounts-merge" -> DsType.DSU;
             case "number-of-islands", "shortest-path-binary-maze", "path-min-effort",
                  "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
-                 "floyd-warshall", "city-smallest-neighbors" -> DsType.MATRIX;
+                 "floyd-warshall", "city-smallest-neighbors",
+                 "number-of-islands-2", "making-large-island", "swim-in-rising-water" -> DsType.MATRIX;
             case "min-multiplications-reach-end" -> DsType.QUEUE;
             default -> DsType.GRAPH;
         };
@@ -417,16 +418,9 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateGraphRepJavaSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateConnectedComponentsIntroSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateBfsDfsIntroSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateWordLadder2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateAccountsMergeSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNumberOfIslands2Steps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateMakingLargeIslandSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateSwimInRisingWaterSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateTarjanBridgesSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateArticulationPointsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateBracketReversalsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCountAndSaySteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateStringHashingTheorySteps() { return generateGraphIntroSteps(); }

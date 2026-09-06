@@ -1,0 +1,3276 @@
+{
+  "anchors" : {
+    "backEdge" : 25,
+    "childAp" : 22,
+    "childReturn" : 20,
+    "done" : 8,
+    "init" : 2,
+    "rootAp" : 29,
+    "treeEdge" : 19,
+    "visit" : 13
+  },
+  "code" : "public Set<Integer> articulationPoints(int v, List<List<Integer>> adj) {\n    int[] disc = new int[v], low = new int[v];\n    Arrays.fill(disc, -1);\n    Set<Integer> cut = new TreeSet<>();\n    for (int i = 0; i < v; i++) {\n        if (disc[i] == -1) dfs(i, -1, adj, disc, low, cut);\n    }\n    return cut;\n}\n\nprivate void dfs(int u, int parent, List<List<Integer>> adj,\n                  int[] disc, int[] low, Set<Integer> cut) {\n    disc[u] = low[u] = timer++;\n    int children = 0;\n    for (int w : adj.get(u)) {\n        if (w == parent) continue;\n        if (disc[w] == -1) {\n            children++;\n            dfs(w, u, adj, disc, low, cut);\n            low[u] = Math.min(low[u], low[w]);\n            if (parent != -1 && low[w] >= disc[u]) {\n                cut.add(u);\n            }\n        } else {\n            low[u] = Math.min(low[u], disc[w]);\n        }\n    }\n    if (parent == -1 && children > 1) {\n        cut.add(u);\n    }\n}",
+  "problemId" : "articulation-points",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 1 ], [ 1, 2 ], [ 2, 0 ], [ 1, 3 ], [ 1, 4 ], [ 1, 6 ], [ 3, 5 ], [ 4, 5 ] ],
+      "vertices" : 7
+    }
+  },
+  "stepCount" : 27,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "7 vertices, 8 undirected edges. Same disc[]/low[] DFS as bridges, but the test is low[child] >= disc[u] - and the DFS root is judged by its child count.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "none",
+      "disc[]" : "[-1, -1, -1, -1, -1, -1, -1]",
+      "low[]" : "[-1, -1, -1, -1, -1, -1, -1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "Discover 0 (a DFS root): disc[0] = low[0] = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "none",
+      "disc[]" : "[0, -1, -1, -1, -1, -1, -1]",
+      "low[]" : "[0, -1, -1, -1, -1, -1, -1]",
+      "parent" : "-1",
+      "u" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 19,
+    "description" : "0 - 1 is unexplored: DFS tree child number 1 of 0. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "child" : "1",
+      "children" : "1",
+      "disc[]" : "[0, -1, -1, -1, -1, -1, -1]",
+      "low[]" : "[0, -1, -1, -1, -1, -1, -1]",
+      "u" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 13,
+    "description" : "Discover 1 from parent 0: disc[1] = low[1] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "none",
+      "disc[]" : "[0, 1, -1, -1, -1, -1, -1]",
+      "low[]" : "[0, 1, -1, -1, -1, -1, -1]",
+      "parent" : "0",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 19,
+    "description" : "1 - 2 is unexplored: DFS tree child number 1 of 1. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "child" : "2",
+      "children" : "1",
+      "disc[]" : "[0, 1, -1, -1, -1, -1, -1]",
+      "low[]" : "[0, 1, -1, -1, -1, -1, -1]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Discover 2 from parent 1: disc[2] = low[2] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(2, parent=1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "none",
+      "disc[]" : "[0, 1, 2, -1, -1, -1, -1]",
+      "low[]" : "[0, 1, 2, -1, -1, -1, -1]",
+      "parent" : "1",
+      "u" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 25,
+    "description" : "2 - 0 is a back-edge to already-discovered 0: low[2] = min(2, disc[0] = 0) = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(2, parent=1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "2-0" ],
+    "variables" : {
+      "back" : "0",
+      "disc[]" : "[0, 1, 2, -1, -1, -1, -1]",
+      "low[]" : "[0, 1, 0, -1, -1, -1, -1]",
+      "u" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 20,
+    "description" : "Back at 1 from child 2: low[1] = min(1, low[2] = 0) = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "child" : "2",
+      "disc[]" : "[0, 1, 2, -1, -1, -1, -1]",
+      "low[]" : "[0, 0, 0, -1, -1, -1, -1]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 19,
+    "description" : "1 - 3 is unexplored: DFS tree child number 2 of 1. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "child" : "3",
+      "children" : "2",
+      "disc[]" : "[0, 1, 2, -1, -1, -1, -1]",
+      "low[]" : "[0, 0, 0, -1, -1, -1, -1]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "Discover 3 from parent 1: disc[3] = low[3] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "none",
+      "disc[]" : "[0, 1, 2, 3, -1, -1, -1]",
+      "low[]" : "[0, 0, 0, 3, -1, -1, -1]",
+      "parent" : "1",
+      "u" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 19,
+    "description" : "3 - 5 is unexplored: DFS tree child number 1 of 3. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "3-5" ],
+    "variables" : {
+      "child" : "5",
+      "children" : "1",
+      "disc[]" : "[0, 1, 2, 3, -1, -1, -1]",
+      "low[]" : "[0, 0, 0, 3, -1, -1, -1]",
+      "u" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "Discover 5 from parent 3: disc[5] = low[5] = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)", "dfs(5, parent=3)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "unvisited",
+      "5" : "visiting",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "none",
+      "disc[]" : "[0, 1, 2, 3, -1, 4, -1]",
+      "low[]" : "[0, 0, 0, 3, -1, 4, -1]",
+      "parent" : "3",
+      "u" : "5"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 19,
+    "description" : "5 - 4 is unexplored: DFS tree child number 1 of 5. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)", "dfs(5, parent=3)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "unvisited",
+      "5" : "visiting",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "5-4" ],
+    "variables" : {
+      "child" : "4",
+      "children" : "1",
+      "disc[]" : "[0, 1, 2, 3, -1, 4, -1]",
+      "low[]" : "[0, 0, 0, 3, -1, 4, -1]",
+      "u" : "5"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 13,
+    "description" : "Discover 4 from parent 5: disc[4] = low[4] = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)", "dfs(5, parent=3)", "dfs(4, parent=5)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "visiting",
+      "5" : "visiting",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "none",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 3, 5, 4, -1]",
+      "parent" : "5",
+      "u" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 25,
+    "description" : "4 - 1 is a back-edge to already-discovered 1: low[4] = min(5, disc[1] = 1) = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)", "dfs(5, parent=3)", "dfs(4, parent=5)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "visiting",
+      "5" : "visiting",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "4-1" ],
+    "variables" : {
+      "back" : "1",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 3, 1, 4, -1]",
+      "u" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 20,
+    "description" : "Back at 5 from child 4: low[5] = min(4, low[4] = 1) = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)", "dfs(5, parent=3)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "visited",
+      "5" : "visiting",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "5-4" ],
+    "variables" : {
+      "child" : "4",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 3, 1, 1, -1]",
+      "u" : "5"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 20,
+    "description" : "Back at 3 from child 5: low[3] = min(3, low[5] = 1) = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(3, parent=1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "3-5" ],
+    "variables" : {
+      "child" : "5",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, -1]",
+      "u" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 20,
+    "description" : "Back at 1 from child 3: low[1] = min(0, low[3] = 1) = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "child" : "3",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, -1]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 22,
+    "description" : "low[3] = 1 >= disc[1] = 1, so subtree 3 cannot reach anything discovered before 1. 1 is an ARTICULATION POINT.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "articulation points" : "[1]",
+      "child" : "3",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, -1]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 25,
+    "description" : "1 - 4 is a back-edge to already-discovered 4: low[1] = min(0, disc[4] = 5) = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-4" ],
+    "variables" : {
+      "back" : "4",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, -1]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 19,
+    "description" : "1 - 6 is unexplored: DFS tree child number 3 of 1. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-6" ],
+    "variables" : {
+      "child" : "6",
+      "children" : "3",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, -1]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, -1]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 13,
+    "description" : "Discover 6 from parent 1: disc[6] = low[6] = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)", "dfs(6, parent=1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "[1]",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, 6]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, 6]",
+      "parent" : "1",
+      "u" : "6"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 20,
+    "description" : "Back at 1 from child 6: low[1] = min(0, low[6] = 6) = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ "1-6" ],
+    "variables" : {
+      "child" : "6",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, 6]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, 6]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 22,
+    "description" : "low[6] = 6 >= disc[1] = 1, so subtree 6 cannot reach anything discovered before 1. 1 was already recorded as an articulation point.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)", "dfs(1, parent=0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ "1-6" ],
+    "variables" : {
+      "articulation points" : "[1]",
+      "child" : "6",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, 6]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, 6]",
+      "u" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 20,
+    "description" : "Back at 0 from child 1: low[0] = min(0, low[1] = 0) = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "child" : "1",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, 6]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, 6]",
+      "u" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 25,
+    "description" : "0 - 2 is a back-edge to already-discovered 2: low[0] = min(0, disc[2] = 2) = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0, parent=-1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "back" : "2",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, 6]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, 6]",
+      "u" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 8,
+    "description" : "DFS complete. Articulation points: [1]. Removing any one of them breaks the graph into more components.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "articulation points" : "[1]",
+      "disc[]" : "[0, 1, 2, 3, 5, 4, 6]",
+      "low[]" : "[0, 0, 0, 1, 1, 1, 6]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}

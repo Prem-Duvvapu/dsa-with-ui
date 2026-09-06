@@ -151,7 +151,9 @@ class ApiContractTest {
             "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
             "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
             "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
-            "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors");
+            "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors",
+            "word-ladder-2", "accounts-merge", "number-of-islands-2", "making-large-island",
+            "swim-in-rising-water", "tarjan-bridges", "articulation-points");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -297,6 +299,13 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "min-multiplications-reach-end"),
                 arguments("/api/graphs/advanced", "floyd-warshall"),
                 arguments("/api/graphs/advanced", "city-smallest-neighbors"),
+                arguments("/api/graphs/advanced", "word-ladder-2"),
+                arguments("/api/graphs/advanced", "accounts-merge"),
+                arguments("/api/graphs/advanced", "number-of-islands-2"),
+                arguments("/api/graphs/advanced", "making-large-island"),
+                arguments("/api/graphs/advanced", "swim-in-rising-water"),
+                arguments("/api/graphs/advanced", "tarjan-bridges"),
+                arguments("/api/graphs/advanced", "articulation-points"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),

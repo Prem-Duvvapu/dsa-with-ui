@@ -1,0 +1,812 @@
+{
+  "anchors" : {
+    "arrived" : 13,
+    "extract" : 10,
+    "init" : 3,
+    "relax" : 20
+  },
+  "code" : "public int swimInWater(int[][] grid) {\n    int n = grid.length, m = grid[0].length;\n    int[][] time = new int[n][m];\n    for (int[] row : time) Arrays.fill(row, Integer.MAX_VALUE);\n    time[0][0] = grid[0][0];\n    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);\n    pq.add(new int[]{0, 0, grid[0][0]});\n\n    while (!pq.isEmpty()) {\n        int[] top = pq.poll();\n        int row = top[0], col = top[1], t = top[2];\n        if (row == n - 1 && col == m - 1) {\n            return t;\n        }\n        for (int[] d : DIRECTIONS) {\n            int nrow = row + d[0], ncol = col + d[1];\n            if (nrow < 0 || nrow >= n || ncol < 0 || ncol >= m) continue;\n            int wait = Math.max(t, grid[nrow][ncol]);\n            if (wait < time[nrow][ncol]) {\n                time[nrow][ncol] = wait;\n                pq.add(new int[]{nrow, ncol, wait});\n            }\n        }\n    }\n    return time[n - 1][m - 1];\n}",
+  "problemId" : "swim-in-rising-water",
+  "resolvedInput" : {
+    "grid" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ]
+  },
+  "stepCount" : 42,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "5x5 elevation map. Entering (0,0) already costs its own elevation 0, so time(0,0) = 0 and every other cell starts unreachable.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "target" : "(4,4)",
+      "time" : "[[0, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (0,0), swimmable from time 0 (its own elevation is 0).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,0)",
+      "t" : "0",
+      "time" : "[[0, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 20,
+    "description" : "(0,0) -> (1,0): elevation 24, so this route reaches it at max(0, 24) = 24, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,0)",
+      "t" : "24",
+      "time" : "[[0, ∞, ∞, ∞, ∞], [24, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 20,
+    "description" : "(0,0) -> (0,1): elevation 1, so this route reaches it at max(0, 1) = 1, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,1)",
+      "t" : "1",
+      "time" : "[[0, 1, ∞, ∞, ∞], [24, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (0,1), swimmable from time 1 (its own elevation is 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,1)",
+      "t" : "1",
+      "time" : "[[0, 1, ∞, ∞, ∞], [24, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "(0,1) -> (1,1): elevation 23, so this route reaches it at max(1, 23) = 23, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,1)",
+      "t" : "23",
+      "time" : "[[0, 1, ∞, ∞, ∞], [24, 23, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 20,
+    "description" : "(0,1) -> (0,2): elevation 2, so this route reaches it at max(1, 2) = 2, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,2)",
+      "t" : "2",
+      "time" : "[[0, 1, 2, ∞, ∞], [24, 23, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (0,2), swimmable from time 2 (its own elevation is 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,2)",
+      "t" : "2",
+      "time" : "[[0, 1, 2, ∞, ∞], [24, 23, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 20,
+    "description" : "(0,2) -> (1,2): elevation 22, so this route reaches it at max(2, 22) = 22, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,2)",
+      "t" : "22",
+      "time" : "[[0, 1, 2, ∞, ∞], [24, 23, 22, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 20,
+    "description" : "(0,2) -> (0,3): elevation 3, so this route reaches it at max(2, 3) = 3, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,3)",
+      "t" : "3",
+      "time" : "[[0, 1, 2, 3, ∞], [24, 23, 22, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (0,3), swimmable from time 3 (its own elevation is 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,3)",
+      "t" : "3",
+      "time" : "[[0, 1, 2, 3, ∞], [24, 23, 22, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 20,
+    "description" : "(0,3) -> (1,3): elevation 21, so this route reaches it at max(3, 21) = 21, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,3)",
+      "t" : "21",
+      "time" : "[[0, 1, 2, 3, ∞], [24, 23, 22, 21, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 20,
+    "description" : "(0,3) -> (0,4): elevation 4, so this route reaches it at max(3, 4) = 4, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,4)",
+      "t" : "4",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (0,4), swimmable from time 4 (its own elevation is 4).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,4)",
+      "t" : "4",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 20,
+    "description" : "(0,4) -> (1,4): elevation 5, so this route reaches it at max(4, 5) = 5, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,4)",
+      "t" : "5",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (1,4), swimmable from time 5 (its own elevation is 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,4)",
+      "t" : "5",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 20,
+    "description" : "(1,4) -> (2,4): elevation 16, so this route reaches it at max(5, 16) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,4)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, ∞, 16], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (2,4), swimmable from time 16 (its own elevation is 16).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,4)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, ∞, 16], [∞, ∞, ∞, ∞, ∞], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 20,
+    "description" : "(2,4) -> (3,4): elevation 20, so this route reaches it at max(16, 20) = 20, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,4)",
+      "t" : "20",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, ∞, 16], [∞, ∞, ∞, ∞, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 20,
+    "description" : "(2,4) -> (2,3): elevation 15, so this route reaches it at max(16, 15) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,3)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, 16, 16], [∞, ∞, ∞, ∞, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (2,3), swimmable from time 16 (its own elevation is 15).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,3)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, 16, 16], [∞, ∞, ∞, ∞, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 20,
+    "description" : "(2,3) -> (3,3): elevation 19, so this route reaches it at max(16, 19) = 19, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,3)",
+      "t" : "19",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, ∞, 16, 16], [∞, ∞, ∞, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 20,
+    "description" : "(2,3) -> (2,2): elevation 14, so this route reaches it at max(16, 14) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,2)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, 16, 16, 16], [∞, ∞, ∞, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (2,2), swimmable from time 16 (its own elevation is 14).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,2)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, 16, 16, 16], [∞, ∞, ∞, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 20,
+    "description" : "(2,2) -> (3,2): elevation 18, so this route reaches it at max(16, 18) = 18, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,2)",
+      "t" : "18",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, ∞, 16, 16, 16], [∞, ∞, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 20,
+    "description" : "(2,2) -> (2,1): elevation 13, so this route reaches it at max(16, 13) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, 16, 16, 16, 16], [∞, ∞, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (2,1), swimmable from time 16 (its own elevation is 13).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, 16, 16, 16, 16], [∞, ∞, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 20,
+    "description" : "(2,1) -> (3,1): elevation 17, so this route reaches it at max(16, 17) = 17, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,1)",
+      "t" : "17",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [∞, 16, 16, 16, 16], [∞, 17, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 20,
+    "description" : "(2,1) -> (2,0): elevation 12, so this route reaches it at max(16, 12) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,0)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [∞, 17, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (2,0), swimmable from time 16 (its own elevation is 12).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,0)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [∞, 17, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 20,
+    "description" : "(2,0) -> (3,0): elevation 11, so this route reaches it at max(16, 11) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,0)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (3,0), swimmable from time 16 (its own elevation is 11).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(3,0)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [∞, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 20,
+    "description" : "(3,0) -> (4,0): elevation 10, so this route reaches it at max(16, 10) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,0)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (4,0), swimmable from time 16 (its own elevation is 10).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,0)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, ∞, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 20,
+    "description" : "(4,0) -> (4,1): elevation 9, so this route reaches it at max(16, 9) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,1)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (4,1), swimmable from time 16 (its own elevation is 9).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,1)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, ∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 20,
+    "description" : "(4,1) -> (4,2): elevation 8, so this route reaches it at max(16, 8) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,2)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, 16, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (4,2), swimmable from time 16 (its own elevation is 8).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,2)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, 16, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 20,
+    "description" : "(4,2) -> (4,3): elevation 7, so this route reaches it at max(16, 7) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,3)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, 16, 16, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 10,
+    "description" : "Pop the earliest-reachable cell: (4,3), swimmable from time 16 (its own elevation is 7).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,3)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, 16, 16, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 20,
+    "description" : "(4,3) -> (4,4): elevation 6, so this route reaches it at max(16, 6) = 16, beating its old best. Enqueue it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(4,4)",
+      "t" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, 16, 16, 16]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 13,
+    "description" : "The bottom-right corner (4,4) comes off the queue at time 16. The smallest bottleneck always surfaces first, so 16 is the answer.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "16",
+      "time" : "[[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [16, 16, 16, 16, 16], [16, 17, 18, 19, 20], [16, 16, 16, 16, 16]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 1, 2, 3, 4 ], [ 24, 23, 22, 21, 5 ], [ 12, 13, 14, 15, 16 ], [ 11, 17, 18, 19, 20 ], [ 10, 9, 8, 7, 6 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

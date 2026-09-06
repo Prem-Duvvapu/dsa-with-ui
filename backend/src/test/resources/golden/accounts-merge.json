@@ -1,0 +1,241 @@
+{
+  "anchors" : {
+    "claim" : 12,
+    "done" : 33,
+    "init" : 5,
+    "merge" : 27,
+    "union" : 14
+  },
+  "code" : "public List<List<String>> accountsMerge(List<List<String>> accounts) {\n    int n = accounts.size();\n    int[] parent = new int[n + 1];\n    int[] rank = new int[n + 1];\n    for (int i = 0; i <= n; i++) parent[i] = i;\n    Map<String, Integer> owner = new HashMap<>();\n\n    for (int i = 1; i <= n; i++) {\n        List<String> row = accounts.get(i - 1);\n        for (String email : row.subList(1, row.size())) {\n            if (!owner.containsKey(email)) {\n                owner.put(email, i);\n            } else {\n                union(i, owner.get(email), parent, rank);\n            }\n        }\n    }\n\n    Map<Integer, TreeSet<String>> groups = new TreeMap<>();\n    for (Map.Entry<String, Integer> e : owner.entrySet()) {\n        groups.computeIfAbsent(find(e.getValue(), parent),\n                               k -> new TreeSet<>()).add(e.getKey());\n    }\n\n    List<List<String>> merged = new ArrayList<>();\n    for (Map.Entry<Integer, TreeSet<String>> g : groups.entrySet()) {\n        List<String> row = new ArrayList<>();\n        row.add(nameOfFirstAccountIn(g.getKey()));\n        row.addAll(g.getValue());\n        merged.add(row);\n    }\n\n    return merged;\n}",
+  "problemId" : "accounts-merge",
+  "resolvedInput" : {
+    "accounts" : "John:johnsmith@mail.com,john_newyork@mail.com;John:johnsmith@mail.com,john00@mail.com;Mary:mary@mail.com;John:johnnybravo@mail.com"
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 5,
+    "description" : "4 account(s). Each starts in its own set - two accounts only merge once they are found to share an email.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1}, {2}, {3}, {4}",
+      "Operation" : "Initialize DSU(4)",
+      "parent[]" : "[0, 1, 2, 3, 4]",
+      "rank[]" : "[0, 0, 0, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 12,
+    "description" : "Account 1 ('John') is the first to list johnsmith@mail.com - it becomes that email's owner.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1}, {2}, {3}, {4}",
+      "Operation" : "claim johnsmith@mail.com -> account 1",
+      "parent[]" : "[0, 1, 2, 3, 4]",
+      "rank[]" : "[0, 0, 0, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "Account 1 ('John') is the first to list john_newyork@mail.com - it becomes that email's owner.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1}, {2}, {3}, {4}",
+      "Operation" : "claim john_newyork@mail.com -> account 1",
+      "parent[]" : "[0, 1, 2, 3, 4]",
+      "rank[]" : "[0, 0, 0, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 14,
+    "description" : "Account 2 ('John') also lists johnsmith@mail.com, already owned by account 1: ranks tie, so root 1 joins root 2 and rank[2] becomes 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Operation" : "union(2, 1)",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "Account 2 ('John') is the first to list john00@mail.com - it becomes that email's owner.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Operation" : "claim john00@mail.com -> account 2",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "Account 3 ('Mary') is the first to list mary@mail.com - it becomes that email's owner.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Operation" : "claim mary@mail.com -> account 3",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "Account 4 ('John') is the first to list johnnybravo@mail.com - it becomes that email's owner.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Operation" : "claim johnnybravo@mail.com -> account 4",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 27,
+    "description" : "Root 2 covers accounts {1, 2}. Its 3 distinct email(s) sort to john00@mail.com, john_newyork@mail.com, johnsmith@mail.com, and the name comes from account 1 ('John').",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Merged" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]",
+      "Operation" : "merge group 2",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 27,
+    "description" : "Root 3 covers accounts {3}. Its 1 distinct email(s) sort to mary@mail.com, and the name comes from account 3 ('Mary').",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Merged" : "[Mary: mary@mail.com]",
+      "Operation" : "merge group 3",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 27,
+    "description" : "Root 4 covers accounts {4}. Its 1 distinct email(s) sort to johnnybravo@mail.com, and the name comes from account 4 ('John').",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Merged" : "[John: johnnybravo@mail.com]",
+      "Operation" : "merge group 4",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 33,
+    "description" : "4 account(s) collapse into 3 merged account(s): [John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{1, 2}, {3}, {4}",
+      "Merged" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
+      "Operation" : "Done: 3 merged account(s)",
+      "parent[]" : "[0, 2, 2, 3, 4]",
+      "rank[]" : "[0, 0, 1, 0, 0]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

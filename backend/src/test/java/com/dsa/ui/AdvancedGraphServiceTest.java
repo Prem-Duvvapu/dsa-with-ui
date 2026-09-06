@@ -55,7 +55,9 @@ class AdvancedGraphServiceTest {
                 "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
                 "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
                 "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
-                "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors");
+                "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors",
+                "word-ladder-2", "accounts-merge", "number-of-islands-2", "making-large-island",
+                "swim-in-rising-water", "tarjan-bridges", "articulation-points");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
