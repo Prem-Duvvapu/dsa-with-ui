@@ -1221,7 +1221,7 @@ public class ArrayService implements ProblemProvider {
                 "Auxiliary Space: O(N)",
                 "Result Grid: O(N)"
             ),
-            "Matrix"
+            "Array"
         ));
 
         // 22. Merge Two Sorted Arrays Without Extra Space

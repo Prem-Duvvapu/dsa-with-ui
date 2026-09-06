@@ -65,7 +65,7 @@ public class SlidingWindowService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{1, 2, 3, 1, 2, 3, 1, 1}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass with two pointers left & right.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 character map.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass with two pointers left & right.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 character map.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "String"
         ));
 
         // Bulk register remaining 11 Sliding Window problems
@@ -87,8 +87,11 @@ public class SlidingWindowService implements ProblemProvider {
             {"minimum-window-subsequence", "Minimum Window Subsequence", "Sliding Window - Hard", "Hard", "Find minimum window subsequence matching S2 in S1."}
         };
 
-        // These two now have real tracers that trace a string window, not an int array.
-        Set<String> stringDsType = Set.of("longest-repeating-character-replacement", "minimum-window-substring");
+        // These now have real tracers that trace a string window, not an int array.
+        Set<String> stringDsType = Set.of(
+                "longest-repeating-character-replacement", "minimum-window-substring",
+                "number-substrings-all-three-chars", "longest-substring-k-distinct",
+                "minimum-window-subsequence");
 
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
