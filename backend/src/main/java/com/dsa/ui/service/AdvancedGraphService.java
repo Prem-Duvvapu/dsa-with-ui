@@ -51,11 +51,11 @@ public class AdvancedGraphService implements ProblemProvider {
             case "course-schedule-2": throw new LegacyTraceRetiredException(problemId);
             case "find-eventual-safe-states": throw new LegacyTraceRetiredException(problemId);
             case "alien-dictionary": throw new LegacyTraceRetiredException(problemId);
-            case "shortest-path-undirected": return generateShortestPathUndirectedSteps();
-            case "shortest-path-dag": return generateShortestPathDagSteps();
+            case "shortest-path-undirected": throw new LegacyTraceRetiredException(problemId);
+            case "shortest-path-dag": throw new LegacyTraceRetiredException(problemId);
             case "dijkstra-pq-theory": return generateDijkstraPqTheorySteps();
-            case "shortest-path-binary-maze": return generateShortestPathBinaryMazeSteps();
-            case "path-min-effort": return generatePathMinEffortSteps();
+            case "shortest-path-binary-maze": throw new LegacyTraceRetiredException(problemId);
+            case "path-min-effort": throw new LegacyTraceRetiredException(problemId);
             case "cheapest-flights-k-stops": return generateCheapestFlightsKStopsSteps();
             case "network-delay-time": return generateNetworkDelayTimeSteps();
             case "number-of-ways-destination": return generateNumberOfWaysDestinationSteps();
@@ -394,7 +394,7 @@ public class AdvancedGraphService implements ProblemProvider {
         }
         return switch (id) {
             case "disjoint-set-dsu" -> DsType.DSU;
-            case "number-of-islands" -> DsType.MATRIX;
+            case "number-of-islands", "shortest-path-binary-maze", "path-min-effort" -> DsType.MATRIX;
             default -> DsType.GRAPH;
         };
     }
@@ -423,11 +423,7 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateNumberOfEnclavesSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateWordLadder2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateShortestPathUndirectedSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateShortestPathDagSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateShortestPathBinaryMazeSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generatePathMinEffortSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCheapestFlightsKStopsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNetworkDelayTimeSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfWaysDestinationSteps() { return generateGraphIntroSteps(); }

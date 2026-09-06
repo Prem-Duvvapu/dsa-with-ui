@@ -1,0 +1,366 @@
+{
+  "anchors" : {
+    "arrived" : 13,
+    "extract" : 10,
+    "init" : 3,
+    "relax" : 20
+  },
+  "code" : "public int minimumEffortPath(int[][] heights) {\n    int n = heights.length, m = heights[0].length;\n    int[][] effort = new int[n][m];\n    for (int[] row : effort) Arrays.fill(row, Integer.MAX_VALUE);\n    effort[0][0] = 0;\n    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);\n    pq.add(new int[]{0, 0, 0});\n\n    while (!pq.isEmpty()) {\n        int[] top = pq.poll();\n        int row = top[0], col = top[1], e = top[2];\n        if (row == n - 1 && col == m - 1) {\n            return e;\n        }\n        for (int[] d : DIRECTIONS) {\n            int nrow = row + d[0], ncol = col + d[1];\n            if (nrow < 0 || nrow >= n || ncol < 0 || ncol >= m) continue;\n            int newEffort = Math.max(e, Math.abs(heights[row][col] - heights[nrow][ncol]));\n            if (newEffort < effort[nrow][ncol]) {\n                effort[nrow][ncol] = newEffort;\n                pq.add(new int[]{nrow, ncol, newEffort});\n            }\n        }\n    }\n    return effort[n - 1][m - 1];\n}",
+  "problemId" : "path-min-effort",
+  "resolvedInput" : {
+    "heights" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ]
+  },
+  "stepCount" : 19,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "3x3 height map. effort(0,0) = 0, everywhere else infinite. Enqueue the start.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "effort" : "[[0, ∞, ∞], [∞, ∞, ∞], [∞, ∞, ∞]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "Pop the smallest-effort entry: (0,0) at effort 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,0)",
+      "effort" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 20,
+    "description" : "(0,0) -> (1,0): height gap 2, bottleneck max(0, 2) = 2 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,0)",
+      "effort" : "[[0, ∞, ∞], [2, ∞, ∞], [∞, ∞, ∞]]",
+      "newEffort" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 20,
+    "description" : "(0,0) -> (0,1): height gap 1, bottleneck max(0, 1) = 1 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,1)",
+      "effort" : "[[0, 1, ∞], [2, ∞, ∞], [∞, ∞, ∞]]",
+      "newEffort" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Pop the smallest-effort entry: (0,1) at effort 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,1)",
+      "effort" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "(0,1) -> (1,1): height gap 6, bottleneck max(1, 6) = 6 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,1)",
+      "effort" : "[[0, 1, ∞], [2, 6, ∞], [∞, ∞, ∞]]",
+      "newEffort" : "6"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 20,
+    "description" : "(0,1) -> (0,2): height gap 0, bottleneck max(1, 0) = 1 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,2)",
+      "effort" : "[[0, 1, 1], [2, 6, ∞], [∞, ∞, ∞]]",
+      "newEffort" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Pop the smallest-effort entry: (0,2) at effort 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,2)",
+      "effort" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 20,
+    "description" : "(0,2) -> (1,2): height gap 0, bottleneck max(1, 0) = 1 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,2)",
+      "effort" : "[[0, 1, 1], [2, 6, 1], [∞, ∞, ∞]]",
+      "newEffort" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 10,
+    "description" : "Pop the smallest-effort entry: (1,2) at effort 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,2)",
+      "effort" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 20,
+    "description" : "(1,2) -> (2,2): height gap 3, bottleneck max(1, 3) = 3 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,2)",
+      "effort" : "[[0, 1, 1], [2, 6, 1], [∞, ∞, 3]]",
+      "newEffort" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 10,
+    "description" : "Pop the smallest-effort entry: (1,0) at effort 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,0)",
+      "effort" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 20,
+    "description" : "(1,0) -> (2,0): height gap 2, bottleneck max(2, 2) = 2 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,0)",
+      "effort" : "[[0, 1, 1], [2, 6, 1], [2, ∞, 3]]",
+      "newEffort" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 20,
+    "description" : "(1,0) -> (1,1): height gap 5, bottleneck max(2, 5) = 5 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,1)",
+      "effort" : "[[0, 1, 1], [2, 5, 1], [2, ∞, 3]]",
+      "newEffort" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 10,
+    "description" : "Pop the smallest-effort entry: (2,0) at effort 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,0)",
+      "effort" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 20,
+    "description" : "(2,0) -> (2,1): height gap 2, bottleneck max(2, 2) = 2 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)",
+      "effort" : "[[0, 1, 1], [2, 5, 1], [2, 2, 3]]",
+      "newEffort" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 10,
+    "description" : "Pop the smallest-effort entry: (2,1) at effort 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)",
+      "effort" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 20,
+    "description" : "(2,1) -> (2,2): height gap 2, bottleneck max(2, 2) = 2 beats its old best. Update and enqueue.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,2)",
+      "effort" : "[[0, 1, 1], [2, 5, 1], [2, 2, 2]]",
+      "newEffort" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 13,
+    "description" : "Reached (2,2) with effort 2 - the smallest bottleneck reaches it first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 2, 2 ], [ 3, 8, 2 ], [ 5, 3, 5 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

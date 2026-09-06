@@ -1,0 +1,1315 @@
+{
+  "anchors" : {
+    "done" : 17,
+    "init" : 2,
+    "poll" : 9,
+    "relax" : 12
+  },
+  "code" : "public int[] shortestPath(int v, List<List<Integer>> adj, int src) {\n    int[] dist = new int[v];\n    Arrays.fill(dist, -1);\n    dist[src] = 0;\n    Queue<Integer> queue = new LinkedList<>();\n    queue.add(src);\n\n    while (!queue.isEmpty()) {\n        int node = queue.poll();\n        for (int next : adj.get(node)) {\n            if (dist[next] == -1) {\n                dist[next] = dist[node] + 1;\n                queue.add(next);\n            }\n        }\n    }\n    return dist;\n}",
+  "problemId" : "shortest-path-undirected",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 1 ], [ 0, 2 ], [ 1, 3 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ] ],
+      "vertices" : 6
+    },
+    "start" : 0
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "6 vertices. dist[0] = 0, everything else unreached (-1). Enqueue the source.",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -1, -1, -1, -1, -1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "Dequeue 0, already finalized at distance 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -1, -1, -1, -1, -1]",
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "1 is unreached - its shortest distance is 0 + 1 = 1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, 1, -1, -1, -1, -1]",
+      "neighbour" : "1",
+      "newDist" : "1",
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 12,
+    "description" : "2 is unreached - its shortest distance is 0 + 1 = 1.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "dist" : "[0, 1, 1, -1, -1, -1]",
+      "neighbour" : "2",
+      "newDist" : "1",
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Dequeue 1, already finalized at distance 1.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 1, 1, -1, -1, -1]",
+      "node" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "3 is unreached - its shortest distance is 1 + 1 = 2.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, -1, -1]",
+      "neighbour" : "3",
+      "newDist" : "2",
+      "node" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "Dequeue 2, already finalized at distance 1.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "queued",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, -1, -1]",
+      "node" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 9,
+    "description" : "Dequeue 3, already finalized at distance 2.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "unvisited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, -1, -1]",
+      "node" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 12,
+    "description" : "4 is unreached - its shortest distance is 2 + 1 = 3.",
+    "queueOrStackState" : [ "4" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "queued",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ "3-4" ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, 3, -1]",
+      "neighbour" : "4",
+      "newDist" : "3",
+      "node" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "Dequeue 4, already finalized at distance 3.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, 3, -1]",
+      "node" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "5 is unreached - its shortest distance is 3 + 1 = 4.",
+    "queueOrStackState" : [ "5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "queued"
+    },
+    "activeEdges" : [ "4-5" ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, 3, 4]",
+      "neighbour" : "5",
+      "newDist" : "4",
+      "node" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "Dequeue 5, already finalized at distance 4.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, 3, 4]",
+      "node" : "5"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 17,
+    "description" : "Queue empty. Final shortest distances from 0: [0, 1, 1, 2, 3, 4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 1, 1, 2, 3, 4]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 100.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 76.07695154586737,
+      "y" : 99.99999999999999,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}
