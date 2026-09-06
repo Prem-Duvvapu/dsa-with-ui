@@ -1,10 +1,7 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.sorting.MergeSort;
-import com.dsa.ui.algorithm.sorting.QuickSort;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,12 +25,15 @@ public class SortingService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "selection-sort": return generateSelectionSortSteps();
-            case "bubble-sort": return generateBubbleSortSteps();
-            case "insertion-sort": return generateInsertionSortSteps();
-            case "merge-sort": return generateMergeSortSteps();
-            case "quick-sort": return generateQuickSortSteps();
-            default: return generateSelectionSortSteps();
+            // All five have real tracers now (tracer/impl). Refuse rather than let
+            // default: serve another sorting algorithm's steps under these ids.
+            case "selection-sort":
+            case "bubble-sort":
+            case "insertion-sort":
+            case "merge-sort":
+            case "quick-sort":
+                throw new LegacyTraceRetiredException(problemId);
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 
@@ -182,7 +182,10 @@ public class SortingService implements ProblemProvider {
                 "Auxiliary Space: O(N) (Temp Merge Array)",
                 "Call Stack Space: O(log N)"
             ),
-            "Stack"
+            // The tracer emits DsType.ARRAY (the merge itself is shown as in-place array
+            // swaps/writes, matching the other four sorts) - this catalogue entry previously
+            // said "Stack", which CatalogTracerMetadataTest now catches as a mismatch.
+            "Array"
         ));
 
         // 5. Quick Sort
@@ -232,231 +235,6 @@ public class SortingService implements ProblemProvider {
             ),
             "Array"
         ));
-    }
-
-    // Granular Selection Sort Step Generator
-    private List<ExecutionStep> generateSelectionSortSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
-        int n = arr.length;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 43,
-            "Input Array: [13, 46, 24, 52, 20, 9] (Length N = 6). Target: Sort in ascending order using Selection Sort.",
-            List.of(), Map.of(), List.of(), Map.of("N", "6", "Algorithm", "Selection Sort"),
-            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 0), null, null
-        ));
-
-        for (int i = 0; i < n - 1; i++) {
-            int mini = i;
-
-            steps.add(new ExecutionStep(
-                stepNum++, 45,
-                String.format("Pass %d (i = %d): Set initial mini = %d (val = %d). Unsorted region is indices [%d..%d].", i + 1, i, mini, arr[mini], i, n - 1),
-                List.of(), Map.of(), List.of(), Map.of("Pass", String.valueOf(i + 1), "i", String.valueOf(i), "mini", String.valueOf(mini), "arr[mini]", String.valueOf(arr[mini])),
-                "Array", null, createDetailedArrayState(arr, i, mini, -1, i), null, null
-            ));
-
-            for (int j = i + 1; j < n; j++) {
-                boolean isSmaller = arr[j] < arr[mini];
-                if (isSmaller) {
-                    int prevMini = mini;
-                    mini = j;
-                    steps.add(new ExecutionStep(
-                        stepNum++, 48,
-                        String.format("Compare arr[j=%d] (%d) with arr[mini=%d] (%d): %d < %d is TRUE! Update mini = %d.", j, arr[j], prevMini, arr[prevMini], arr[j], arr[prevMini], mini),
-                        List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "j", String.valueOf(j), "prevMini", String.valueOf(prevMini), "newMini", String.valueOf(mini), "arr[mini]", String.valueOf(arr[mini])),
-                        "Array", null, createDetailedArrayState(arr, i, mini, j, i), null, null
-                    ));
-                } else {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 47,
-                        String.format("Compare arr[j=%d] (%d) with arr[mini=%d] (%d): %d >= %d. mini remains %d (val %d).", j, arr[j], mini, arr[mini], arr[j], arr[mini], mini, arr[mini]),
-                        List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "j", String.valueOf(j), "mini", String.valueOf(mini), "arr[mini]", String.valueOf(arr[mini])),
-                        "Array", null, createDetailedArrayState(arr, i, mini, j, i), null, null
-                    ));
-                }
-            }
-
-            if (mini != i) {
-                int temp = arr[i];
-                arr[i] = arr[mini];
-                arr[mini] = temp;
-
-                steps.add(new ExecutionStep(
-                    stepNum++, 53,
-                    String.format("Pass %d Complete: Swap arr[i=%d] (%d) with minimum arr[mini=%d] (%d). Element %d is placed in sorted position!", i + 1, i, temp, mini, arr[i], arr[i]),
-                    List.of(), Map.of(), List.of(), Map.of("Swapped", String.format("arr[%d] (%d) <-> arr[%d] (%d)", i, temp, mini, arr[i]), "Sorted Prefix Length", String.valueOf(i + 1)),
-                    "Array", null, createDetailedArrayState(arr, -1, i, mini, i + 1), null, null
-                ));
-            } else {
-                steps.add(new ExecutionStep(
-                    stepNum++, 52,
-                    String.format("Pass %d Complete: arr[i=%d] (%d) is already the minimum. No swap needed. Element %d is in sorted position!", i + 1, i, arr[i], arr[i]),
-                    List.of(), Map.of(), List.of(), Map.of("Sorted Prefix Length", String.valueOf(i + 1)),
-                    "Array", null, createDetailedArrayState(arr, -1, i, -1, i + 1), null, null
-                ));
-            }
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 56,
-            "Selection Sort Complete! Input: [13, 46, 24, 52, 20, 9] -> Final Sorted Output: [9, 13, 20, 24, 46, 52].",
-            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
-            "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
-        ));
-
-        return steps;
-    }
-
-    // Granular Bubble Sort Step Generator
-    private List<ExecutionStep> generateBubbleSortSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
-        int n = arr.length;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 43,
-            "Input Array: [13, 46, 24, 52, 20, 9] (N = 6). Target: Bubbling largest element to end in each pass.",
-            List.of(), Map.of(), List.of(), Map.of("N", "6"),
-            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 0), null, null
-        ));
-
-        for (int i = n - 1; i >= 0; i--) {
-            boolean didSwap = false;
-
-            steps.add(new ExecutionStep(
-                stepNum++, 44,
-                String.format("Pass %d (i = %d): Bubbling largest element in unsorted range [0..%d] to index %d.", n - i, i, i, i),
-                List.of(), Map.of(), List.of(), Map.of("Pass", String.valueOf(n - i), "i", String.valueOf(i)),
-                "Array", null, createDetailedArrayState(arr, -1, -1, -1, n - 1 - i), null, null
-            ));
-
-            for (int j = 0; j <= i - 1; j++) {
-                boolean needsSwap = arr[j] > arr[j + 1];
-                if (needsSwap) {
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                    didSwap = true;
-
-                    steps.add(new ExecutionStep(
-                        stepNum++, 48,
-                        String.format("Compare arr[j=%d] (%d) > arr[j+1=%d] (%d): TRUE! Swap arr[%d] and arr[%d]. Array: %s.", j, temp, j + 1, arr[j], j, j + 1, Arrays.toString(arr)),
-                        List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "swap", String.format("%d <-> %d", temp, arr[j])),
-                        "Array", null, createDetailedArrayState(arr, j, j + 1, -1, n - 1 - i), null, null
-                    ));
-                } else {
-                    steps.add(new ExecutionStep(
-                        stepNum++, 47,
-                        String.format("Compare arr[j=%d] (%d) > arr[j+1=%d] (%d): FALSE. Order is correct, no swap.", j, arr[j], j + 1, arr[j + 1]),
-                        List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "arr[j]", String.valueOf(arr[j]), "arr[j+1]", String.valueOf(arr[j + 1])),
-                        "Array", null, createDetailedArrayState(arr, j, j + 1, -1, n - 1 - i), null, null
-                    ));
-                }
-            }
-
-            if (!didSwap) {
-                steps.add(new ExecutionStep(
-                    stepNum++, 52,
-                    String.format("Pass %d Optimization Check: No swaps occurred in entire pass! Array is already fully sorted. Breaking loop early!", n - i),
-                    List.of(), Map.of(), List.of(), Map.of("didSwap", "false", "Status", "Sorted Early"),
-                    "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
-                ));
-                break;
-            } else {
-                steps.add(new ExecutionStep(
-                    stepNum++, 51,
-                    String.format("Pass %d Complete: Element %d bubbled to its final sorted position at index %d.", n - i, arr[i], i),
-                    List.of(), Map.of(), List.of(), Map.of("Bubbled Element", String.valueOf(arr[i]), "Sorted Position", String.valueOf(i)),
-                    "Array", null, createDetailedArrayState(arr, -1, -1, -1, n - i), null, null
-                ));
-            }
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 53,
-            "Bubble Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
-            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
-            "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
-        ));
-
-        return steps;
-    }
-
-    // Granular Insertion Sort Step Generator (Key-based Shifting)
-    private List<ExecutionStep> generateInsertionSortSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
-        int n = arr.length;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(
-            stepNum++, 1,
-            "Input Array: [13, 46, 24, 52, 20, 9] (N = 6). Target: Insert elements one by one into sorted prefix using key-based shifting.",
-            List.of(), Map.of(), List.of(), Map.of("N", "6"),
-            "Array", null, createDetailedArrayState(arr, -1, -1, -1, 1), null, null
-        ));
-
-        for (int i = 1; i < n; i++) {
-            int key = arr[i];
-            int j = i - 1;
-
-            steps.add(new ExecutionStep(
-                stepNum++, 4,
-                String.format("Pass %d (i = %d): Set key = arr[%d] (%d). Compare with sorted prefix elements at indices [0..%d].", i, i, i, key, i - 1),
-                List.of(), Map.of(), List.of(), Map.of("i", String.valueOf(i), "key", String.valueOf(key)),
-                "Array", null, createDetailedArrayState(arr, i, -1, j, i), null, null
-            ));
-
-            while (j >= 0 && arr[j] > key) {
-                steps.add(new ExecutionStep(
-                    stepNum++, 8,
-                    String.format("Compare arr[j=%d] (%d) > key (%d): TRUE! Shift arr[%d] (%d) right to arr[%d].", j, arr[j], key, j, arr[j], j + 1),
-                    List.of(), Map.of(), List.of(), Map.of("j", String.valueOf(j), "arr[j]", String.valueOf(arr[j]), "key", String.valueOf(key), "shiftedTo", String.valueOf(j + 1)),
-                    "Array", null, createDetailedArrayState(arr, j, -1, j + 1, i), null, null
-                ));
-
-                arr[j + 1] = arr[j];
-                j--;
-            }
-
-            arr[j + 1] = key;
-
-            steps.add(new ExecutionStep(
-                stepNum++, 11,
-                String.format("Insert key (%d) at index %d (arr[j+1]). Sorted prefix length is now %d.", key, j + 1, i + 1),
-                List.of(), Map.of(), List.of(), Map.of("key", String.valueOf(key), "insertedAt", String.valueOf(j + 1), "Sorted Prefix", String.valueOf(i + 1)),
-                "Array", null, createDetailedArrayState(arr, -1, j + 1, -1, i + 1), null, null
-            ));
-        }
-
-        steps.add(new ExecutionStep(
-            stepNum++, 13,
-            "Insertion Sort Complete! Final Sorted Output: [9, 13, 20, 24, 46, 52].",
-            List.of(), Map.of(), List.of(), Map.of("Status", "Sorted", "Output", "[9, 13, 20, 24, 46, 52]"),
-            "Array", null, createDetailedArrayState(arr, -1, -1, -1, n), null, null
-        ));
-
-        return steps;
-    }
-
-    // Full Execution Trace Merge Sort Generator using TraceRecorder
-    private List<ExecutionStep> generateMergeSortSteps() {
-        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new MergeSort().solve(arr, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    // Full Execution Trace Quick Sort Generator using TraceRecorder
-    private List<ExecutionStep> generateQuickSortSteps() {
-        int[] arr = new int[]{13, 46, 24, 52, 20, 9};
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new QuickSort().solve(arr, recorder);
-        return recorder.toExecutionSteps();
     }
 
     // Helper tree nodes for Merge Sort Recursion Tree

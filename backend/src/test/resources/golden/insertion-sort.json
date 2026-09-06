@@ -1,0 +1,513 @@
+{
+  "anchors" : {
+    "done" : 11,
+    "pickKey" : 3,
+    "place" : 9,
+    "shift" : 6
+  },
+  "code" : "public void insertionSort(int[] arr, int n) {\n    for (int i = 1; i < n; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j--;\n        }\n        arr[j + 1] = key;\n    }\n}",
+  "problemId" : "insertion-sort",
+  "resolvedInput" : {
+    "nums" : [ 5, 2, 8, 1, 9 ]
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Pass 1: hold key = arr[1] = 2, and walk backward through the sorted prefix [0..0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "0",
+      "key" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "arr[0]=5 > key(2) - shift it right into arr[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "0",
+      "key" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "comparing"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "Place key(2) into arr[0]. Sorted prefix now covers [0..1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "insertedAt" : "0",
+      "key" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 3,
+    "description" : "Pass 2: hold key = arr[2] = 8, and walk backward through the sorted prefix [0..1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1",
+      "key" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Place key(8) into arr[2]. Sorted prefix now covers [0..2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "insertedAt" : "2",
+      "key" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "Pass 3: hold key = arr[3] = 1, and walk backward through the sorted prefix [0..2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "2",
+      "key" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "arr[2]=8 > key(1) - shift it right into arr[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "2",
+      "key" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "comparing"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "arr[1]=5 > key(1) - shift it right into arr[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "1",
+      "key" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "comparing"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "arr[0]=2 > key(1) - shift it right into arr[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "0",
+      "key" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "comparing"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "Place key(1) into arr[0]. Sorted prefix now covers [0..3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "insertedAt" : "0",
+      "key" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 3,
+    "description" : "Pass 4: hold key = arr[4] = 9, and walk backward through the sorted prefix [0..3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "3",
+      "key" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "pivot"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "Place key(9) into arr[4]. Sorted prefix now covers [0..4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "insertedAt" : "4",
+      "key" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "pivot"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "Sorted array: [1, 2, 5, 8, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 5, 8, 9]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
