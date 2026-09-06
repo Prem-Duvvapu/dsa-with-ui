@@ -1,0 +1,1084 @@
+{
+  "anchors" : {
+    "combine" : 4,
+    "done" : 5,
+    "mod0" : 11,
+    "mod1" : 13,
+    "mod2" : 15,
+    "mod3" : 17,
+    "upToL" : 3,
+    "upToR" : 2
+  },
+  "code" : "public int xorInRange(int l, int r) {\n    int upToR = xorUpTo(r);\n    int upToLMinus1 = xorUpTo(l - 1);\n    int result = upToR ^ upToLMinus1;\n    return result;\n}\n\nprivate static int xorUpTo(int n) {\n    int rem = n % 4;\n    if (rem == 0) {\n        return n;\n    } else if (rem == 1) {\n        return 1;\n    } else if (rem == 2) {\n        return n + 1;\n    } else {\n        return 0;\n    }\n}",
+  "problemId" : "xor-numbers-in-range",
+  "resolvedInput" : {
+    "l" : 3,
+    "r" : 9
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Compute f(R) = XOR(0..9) using the pattern-of-4 trick, one residue class at a time.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "L" : "3",
+      "R" : "9"
+    },
+    "dsType" : "Bits",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 31,
+      "value" : 0,
+      "state" : "default",
+      "label" : "31"
+    }, {
+      "index" : 30,
+      "value" : 0,
+      "state" : "default",
+      "label" : "30"
+    }, {
+      "index" : 29,
+      "value" : 0,
+      "state" : "default",
+      "label" : "29"
+    }, {
+      "index" : 28,
+      "value" : 0,
+      "state" : "default",
+      "label" : "28"
+    }, {
+      "index" : 27,
+      "value" : 0,
+      "state" : "default",
+      "label" : "27"
+    }, {
+      "index" : 26,
+      "value" : 0,
+      "state" : "default",
+      "label" : "26"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "25"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "24"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "23"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "22"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "21"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "20"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "19"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "18"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "17"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "16"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "15"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "14"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "13"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "12"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "11"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "10"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "9"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "8"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "7"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "6"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "f(9) — n % 4 == 1, so XOR(0..9) is always 1: f(9) = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "f(n)" : "1"
+    },
+    "dsType" : "Bits",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 31,
+      "value" : 0,
+      "state" : "default",
+      "label" : "31"
+    }, {
+      "index" : 30,
+      "value" : 0,
+      "state" : "default",
+      "label" : "30"
+    }, {
+      "index" : 29,
+      "value" : 0,
+      "state" : "default",
+      "label" : "29"
+    }, {
+      "index" : 28,
+      "value" : 0,
+      "state" : "default",
+      "label" : "28"
+    }, {
+      "index" : 27,
+      "value" : 0,
+      "state" : "default",
+      "label" : "27"
+    }, {
+      "index" : 26,
+      "value" : 0,
+      "state" : "default",
+      "label" : "26"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "25"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "24"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "23"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "22"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "21"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "20"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "19"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "18"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "17"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "16"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "15"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "14"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "13"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "12"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "11"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "10"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "9"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "8"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "7"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "6"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 3,
+    "description" : "Compute f(L-1) = XOR(0..2) the same way, to subtract off everything below L.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "L-1" : "2"
+    },
+    "dsType" : "Bits",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 31,
+      "value" : 0,
+      "state" : "default",
+      "label" : "31"
+    }, {
+      "index" : 30,
+      "value" : 0,
+      "state" : "default",
+      "label" : "30"
+    }, {
+      "index" : 29,
+      "value" : 0,
+      "state" : "default",
+      "label" : "29"
+    }, {
+      "index" : 28,
+      "value" : 0,
+      "state" : "default",
+      "label" : "28"
+    }, {
+      "index" : 27,
+      "value" : 0,
+      "state" : "default",
+      "label" : "27"
+    }, {
+      "index" : 26,
+      "value" : 0,
+      "state" : "default",
+      "label" : "26"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "25"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "24"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "23"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "22"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "21"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "20"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "19"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "18"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "17"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "16"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "15"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "14"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "13"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "12"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "11"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "10"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "9"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "8"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "7"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "6"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 15,
+    "description" : "f(2) — n % 4 == 2, so XOR(0..2) is n + 1: f(2) = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "f(n)" : "3"
+    },
+    "dsType" : "Bits",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 31,
+      "value" : 0,
+      "state" : "default",
+      "label" : "31"
+    }, {
+      "index" : 30,
+      "value" : 0,
+      "state" : "default",
+      "label" : "30"
+    }, {
+      "index" : 29,
+      "value" : 0,
+      "state" : "default",
+      "label" : "29"
+    }, {
+      "index" : 28,
+      "value" : 0,
+      "state" : "default",
+      "label" : "28"
+    }, {
+      "index" : 27,
+      "value" : 0,
+      "state" : "default",
+      "label" : "27"
+    }, {
+      "index" : 26,
+      "value" : 0,
+      "state" : "default",
+      "label" : "26"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "25"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "24"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "23"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "22"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "21"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "20"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "19"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "18"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "17"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "16"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "15"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "14"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "13"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "12"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "11"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "10"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "9"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "8"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "7"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "6"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "XOR(3..9) = f(9) ^ f(2) = 1 ^ 3 = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "2"
+    },
+    "dsType" : "Bits",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 31,
+      "value" : 0,
+      "state" : "default",
+      "label" : "31"
+    }, {
+      "index" : 30,
+      "value" : 0,
+      "state" : "default",
+      "label" : "30"
+    }, {
+      "index" : 29,
+      "value" : 0,
+      "state" : "default",
+      "label" : "29"
+    }, {
+      "index" : 28,
+      "value" : 0,
+      "state" : "default",
+      "label" : "28"
+    }, {
+      "index" : 27,
+      "value" : 0,
+      "state" : "default",
+      "label" : "27"
+    }, {
+      "index" : 26,
+      "value" : 0,
+      "state" : "default",
+      "label" : "26"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "25"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "24"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "23"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "22"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "21"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "20"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "19"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "18"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "17"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "16"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "15"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "14"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "13"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "12"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "11"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "10"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "9"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "8"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "7"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "6"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "XOR of every integer from 3 to 9 is 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "XOR(L..R)" : "2"
+    },
+    "dsType" : "Bits",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 31,
+      "value" : 0,
+      "state" : "default",
+      "label" : "31"
+    }, {
+      "index" : 30,
+      "value" : 0,
+      "state" : "default",
+      "label" : "30"
+    }, {
+      "index" : 29,
+      "value" : 0,
+      "state" : "default",
+      "label" : "29"
+    }, {
+      "index" : 28,
+      "value" : 0,
+      "state" : "default",
+      "label" : "28"
+    }, {
+      "index" : 27,
+      "value" : 0,
+      "state" : "default",
+      "label" : "27"
+    }, {
+      "index" : 26,
+      "value" : 0,
+      "state" : "default",
+      "label" : "26"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "25"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "24"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "23"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "22"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "21"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "20"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "19"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "18"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "17"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "16"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "15"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "14"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "13"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "12"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "11"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "10"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "9"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "8"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "7"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "6"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
