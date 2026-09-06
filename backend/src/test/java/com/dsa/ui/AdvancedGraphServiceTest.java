@@ -49,7 +49,8 @@ class AdvancedGraphServiceTest {
                 "word-ladder-1", "alien-dictionary",
                 "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu",
                 "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
-                "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states");
+                "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
+                "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
