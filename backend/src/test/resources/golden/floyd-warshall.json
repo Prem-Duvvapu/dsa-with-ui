@@ -1,0 +1,464 @@
+{
+  "anchors" : {
+    "done" : 24,
+    "init" : 3,
+    "keep" : 18,
+    "roundDone" : 22,
+    "viaK" : 16
+  },
+  "code" : "public void shortestDistance(int[][] matrix) {\n    int n = matrix.length;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            if (matrix[i][j] == -1) matrix[i][j] = INF;\n            if (i == j) matrix[i][j] = 0;\n        }\n    }\n\n    for (int k = 0; k < n; k++) {\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < n; j++) {\n                if (i == j) continue;\n                if (matrix[i][k] == INF || matrix[k][j] == INF) continue;\n                if (matrix[i][k] + matrix[k][j] < matrix[i][j]) {\n                    matrix[i][j] = matrix[i][k] + matrix[k][j];\n                } else {\n                    continue;\n                }\n            }\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            if (matrix[i][j] == INF) matrix[i][j] = -1;\n        }\n    }\n}",
+  "problemId" : "floyd-warshall",
+  "resolvedInput" : {
+    "matrix" : [ [ 0, 4, -1, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ]
+  },
+  "stepCount" : 23,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "4 vertices. Read the matrix as a distance table: -1 becomes 'no route known yet' and the diagonal is 0. Right now every entry is a single edge, because no waypoints are allowed at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "4",
+      "waypoints" : "none"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, -1, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 18,
+    "description" : "k = 0: 0 -> 0 -> 1 costs 0 + 4 = 4, which does not beat the known dist[0][1] = 4. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "4",
+      "i" : "0",
+      "j" : "1",
+      "k" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, -1, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 18,
+    "description" : "k = 0: 0 -> 0 -> 3 costs 0 + 5 = 5, which does not beat the known dist[0][3] = 5. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "0",
+      "j" : "3",
+      "k" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, -1, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 22,
+    "description" : "Vertex 0 is now an allowed waypoint. Every entry is the cheapest route that may pass through vertices 0..0 only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "0",
+      "waypoints" : "0..0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, -1, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 18,
+    "description" : "k = 1: 0 -> 1 -> 1 costs 4 + 0 = 4, which does not beat the known dist[0][1] = 4. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "4",
+      "i" : "0",
+      "j" : "1",
+      "k" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, -1, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 16,
+    "description" : "k = 1: 0 -> 1 -> 2 costs 4 + 1 = 5, beating no route. dist[0][2] = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "0",
+      "j" : "2",
+      "k" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 18,
+    "description" : "k = 1: 1 -> 1 -> 2 costs 0 + 1 = 1, which does not beat the known dist[1][2] = 1. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "1",
+      "i" : "1",
+      "j" : "2",
+      "k" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 22,
+    "description" : "Vertex 1 is now an allowed waypoint. Every entry is the cheapest route that may pass through vertices 0..1 only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "1",
+      "waypoints" : "0..1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 18,
+    "description" : "k = 2: 0 -> 2 -> 2 costs 5 + 0 = 5, which does not beat the known dist[0][2] = 5. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "0",
+      "j" : "2",
+      "k" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 18,
+    "description" : "k = 2: 0 -> 2 -> 3 costs 5 + 3 = 8, which does not beat the known dist[0][3] = 5. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "8",
+      "i" : "0",
+      "j" : "3",
+      "k" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 18,
+    "description" : "k = 2: 1 -> 2 -> 2 costs 1 + 0 = 1, which does not beat the known dist[1][2] = 1. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "1",
+      "i" : "1",
+      "j" : "2",
+      "k" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, -1 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 16,
+    "description" : "k = 2: 1 -> 2 -> 3 costs 1 + 3 = 4, beating no route. dist[1][3] = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "4",
+      "i" : "1",
+      "j" : "3",
+      "k" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 18,
+    "description" : "k = 2: 2 -> 2 -> 3 costs 0 + 3 = 3, which does not beat the known dist[2][3] = 3. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "3",
+      "i" : "2",
+      "j" : "3",
+      "k" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 18,
+    "description" : "k = 2: 3 -> 2 -> 2 costs 1 + 0 = 1, which does not beat the known dist[3][2] = 1. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "1",
+      "i" : "3",
+      "j" : "2",
+      "k" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 22,
+    "description" : "Vertex 2 is now an allowed waypoint. Every entry is the cheapest route that may pass through vertices 0..2 only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "waypoints" : "0..2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 18,
+    "description" : "k = 3: 0 -> 3 -> 2 costs 5 + 1 = 6, which does not beat the known dist[0][2] = 5. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "6",
+      "i" : "0",
+      "j" : "2",
+      "k" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 18,
+    "description" : "k = 3: 0 -> 3 -> 3 costs 5 + 0 = 5, which does not beat the known dist[0][3] = 5. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "0",
+      "j" : "3",
+      "k" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 18,
+    "description" : "k = 3: 1 -> 3 -> 2 costs 4 + 1 = 5, which does not beat the known dist[1][2] = 1. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "1",
+      "j" : "2",
+      "k" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 18,
+    "description" : "k = 3: 1 -> 3 -> 3 costs 4 + 0 = 4, which does not beat the known dist[1][3] = 4. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "4",
+      "i" : "1",
+      "j" : "3",
+      "k" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 18,
+    "description" : "k = 3: 2 -> 3 -> 3 costs 3 + 0 = 3, which does not beat the known dist[2][3] = 3. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "3",
+      "i" : "2",
+      "j" : "3",
+      "k" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 18,
+    "description" : "k = 3: 3 -> 3 -> 2 costs 0 + 1 = 1, which does not beat the known dist[3][2] = 1. Leave it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "1",
+      "i" : "3",
+      "j" : "2",
+      "k" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 22,
+    "description" : "Vertex 3 is now an allowed waypoint. Every entry is the cheapest route that may pass through vertices 0..3 only.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "3",
+      "waypoints" : "0..3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 24,
+    "description" : "Every vertex has served as a waypoint, so the table is the all-pairs shortest path matrix: [[0, 4, 5, 5], [-1, 0, 1, 4], [-1, -1, 0, 3], [-1, -1, 1, 0]]. Remaining -1 entries are pairs with no route at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[[0, 4, 5, 5], [-1, 0, 1, 4], [-1, -1, 0, 3], [-1, -1, 1, 0]]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 4, 5, 5 ], [ -1, 0, 1, 4 ], [ -1, -1, 0, 3 ], [ -1, -1, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

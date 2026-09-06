@@ -1,0 +1,1312 @@
+{
+  "anchors" : {
+    "done" : 19,
+    "init" : 2,
+    "noImprovement" : 14,
+    "relax" : 12,
+    "roundEnd" : 17,
+    "roundStart" : 7
+  },
+  "code" : "public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {\n    int[] dist = new int[n];\n    Arrays.fill(dist, Integer.MAX_VALUE);\n    dist[src] = 0;\n\n    for (int round = 0; round <= k; round++) {\n        int[] next = dist.clone();\n        for (int[] flight : flights) {\n            int from = flight[0], to = flight[1], price = flight[2];\n            if (dist[from] != Integer.MAX_VALUE\n                    && dist[from] + price < next[to]) {\n                next[to] = dist[from] + price;\n            } else {\n                continue;\n            }\n        }\n        dist = next;\n    }\n    return dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];\n}",
+  "problemId" : "cheapest-flights-k-stops",
+  "resolvedInput" : {
+    "dst" : 3,
+    "graph" : {
+      "edges" : [ [ 0, 1, 100 ], [ 1, 2, 100 ], [ 2, 0, 100 ], [ 1, 3, 600 ], [ 2, 3, 200 ] ],
+      "vertices" : 4
+    },
+    "k" : 1,
+    "src" : 0
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "4 cities, 5 flights. dist[0] = 0 and every other city is unreachable. At most 1 stops means at most 2 flights, so the relaxation gets exactly 2 rounds.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -, -, -]",
+      "dst" : "3",
+      "k" : "1",
+      "src" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Round 1 of 2: copy dist into next. Every relaxation below reads the frozen dist, so a price discovered in this round cannot be extended again until the next one - that copy is the whole hop cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, -, -, -]",
+      "next" : "[0, -, -, -]",
+      "round" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "Flight 0 -> 1 costs 100. Reaching 0 for 0 and paying 100 gets to 1 for 100, beating unreachable within this round's budget.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, -, -, -]",
+      "flight" : "0-1",
+      "next" : "[0, 100, -, -]",
+      "round" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 14,
+    "description" : "Flight 1 -> 2 costs 100, but city 1 is not reachable in 0 flight(s) yet. Leave next[2] alone.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "dist" : "[0, -, -, -]",
+      "flight" : "1-2",
+      "next" : "[0, 100, -, -]",
+      "round" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Flight 2 -> 0 costs 100, but city 2 is not reachable in 0 flight(s) yet. Leave next[0] alone.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ "2-0" ],
+    "variables" : {
+      "dist" : "[0, -, -, -]",
+      "flight" : "2-0",
+      "next" : "[0, 100, -, -]",
+      "round" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "Flight 1 -> 3 costs 600, but city 1 is not reachable in 0 flight(s) yet. Leave next[3] alone.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, -, -, -]",
+      "flight" : "1-3",
+      "next" : "[0, 100, -, -]",
+      "round" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 14,
+    "description" : "Flight 2 -> 3 costs 200, but city 2 is not reachable in 0 flight(s) yet. Leave next[3] alone.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "dist" : "[0, -, -, -]",
+      "flight" : "2-3",
+      "next" : "[0, 100, -, -]",
+      "round" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 17,
+    "description" : "Round 1 done. dist = [0, 100, -, -] - these are the cheapest prices using at most 1 flight(s).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 100, -, -]",
+      "round" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Round 2 of 2: copy dist into next. Every relaxation below reads the frozen dist, so a price discovered in this round cannot be extended again until the next one - that copy is the whole hop cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 100, -, -]",
+      "next" : "[0, 100, -, -]",
+      "round" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 14,
+    "description" : "Flight 0 -> 1 costs 100, but 0 + 100 = 100 does not beat next[1] = 100. Leave next[1] alone.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "target"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "dist" : "[0, 100, -, -]",
+      "flight" : "0-1",
+      "next" : "[0, 100, -, -]",
+      "round" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Flight 1 -> 2 costs 100. Reaching 1 for 100 and paying 100 gets to 2 for 200, beating unreachable within this round's budget.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "target"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "dist" : "[0, 100, -, -]",
+      "flight" : "1-2",
+      "next" : "[0, 100, 200, -]",
+      "round" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "Flight 2 -> 0 costs 100, but city 2 is not reachable in 1 flight(s) yet. Leave next[0] alone.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "target"
+    },
+    "activeEdges" : [ "2-0" ],
+    "variables" : {
+      "dist" : "[0, 100, -, -]",
+      "flight" : "2-0",
+      "next" : "[0, 100, 200, -]",
+      "round" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 12,
+    "description" : "Flight 1 -> 3 costs 600. Reaching 1 for 100 and paying 600 gets to 3 for 700, beating unreachable within this round's budget.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "target"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "dist" : "[0, 100, -, -]",
+      "flight" : "1-3",
+      "next" : "[0, 100, 200, 700]",
+      "round" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Flight 2 -> 3 costs 200, but city 2 is not reachable in 1 flight(s) yet. Leave next[3] alone.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "target"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "dist" : "[0, 100, -, -]",
+      "flight" : "2-3",
+      "next" : "[0, 100, 200, 700]",
+      "round" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 17,
+    "description" : "Round 2 done. dist = [0, 100, 200, 700] - these are the cheapest prices using at most 2 flight(s).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "dist" : "[0, 100, 200, 700]",
+      "round" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 19,
+    "description" : "All 2 round(s) complete. dist = [0, 100, 200, 700], so the cheapest 0 -> 3 route within 1 stop(s) costs 700.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "700",
+      "dist" : "[0, 100, 200, 700]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : 100,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : 600,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : 200,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}

@@ -149,7 +149,9 @@ class ApiContractTest {
             "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
             "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
             "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
-            "nearest-cell-1", "surrounded-regions", "number-of-enclaves");
+            "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
+            "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
+            "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -289,6 +291,12 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "nearest-cell-1"),
                 arguments("/api/graphs/advanced", "surrounded-regions"),
                 arguments("/api/graphs/advanced", "number-of-enclaves"),
+                arguments("/api/graphs/advanced", "cheapest-flights-k-stops"),
+                arguments("/api/graphs/advanced", "network-delay-time"),
+                arguments("/api/graphs/advanced", "number-of-ways-destination"),
+                arguments("/api/graphs/advanced", "min-multiplications-reach-end"),
+                arguments("/api/graphs/advanced", "floyd-warshall"),
+                arguments("/api/graphs/advanced", "city-smallest-neighbors"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),
