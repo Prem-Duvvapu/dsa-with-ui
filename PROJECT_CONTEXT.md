@@ -139,3 +139,26 @@ The platform is designed to pair step-by-step execution with:
 ### 14. **Heaps & PriorityQueue**
 - [x] Kth Largest Element in an Array
 - [x] Merge K Sorted Lists
+
+### 15. **Stack & Queue (All 30 Traced)**
+- [x] Balanced Parentheses
+- [x] Next Greater Element I & II
+- [x] Next Smaller Element
+- [x] Implement Stack & Queue (Arrays, Linked Lists, Dual Stack/Queue)
+- [x] Min Stack
+- [x] Infix, Prefix & Postfix Conversions (All 6 conversions)
+- [x] Monotonic Stack Problems (Trapping Rainwater, Asteroid Collision, Sum of Subarray Minimums/Ranges, Remove K Digits, Largest Rectangle in Histogram, Max Rectangle in Binary Matrix, Sliding Window Maximum)
+- [x] Stock Span & Celebrity Problem
+- [x] LRU Cache & LFU Cache (Linked List canvas)
+
+### 16. **Sliding Window & Two Pointer (All 12 Traced)**
+- [x] Longest Substring Without Repeating Characters
+- [x] Max Consecutive Ones III
+- [x] Fruit Into Baskets
+- [x] Longest Repeating Character Replacement
+- [x] Binary Subarrays With Sum & Count Nice Subarrays
+- [x] Number of Substrings Containing All Three Characters
+- [x] Maximum Points You Can Obtain from Cards
+- [x] Longest Substring with At Most K Distinct Characters
+- [x] Subarrays with K Different Integers
+- [x] Minimum Window Substring & Minimum Window Subsequence

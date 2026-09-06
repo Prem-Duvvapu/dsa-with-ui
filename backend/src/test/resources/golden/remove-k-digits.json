@@ -1,0 +1,707 @@
+{
+  "anchors" : {
+    "build" : 14,
+    "done" : 17,
+    "init" : 2,
+    "pop" : 5,
+    "push" : 8,
+    "trimTail" : 11
+  },
+  "code" : "public String removeKdigits(String num, int k) {\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : num.toCharArray()) {\n        while (k > 0 && !stack.isEmpty() && stack.peek() > c) {\n            stack.pop();\n            k--;\n        }\n        stack.push(c);\n    }\n    while (k > 0) {\n        stack.pop();\n        k--;\n    }\n    StringBuilder sb = new StringBuilder();\n    for (char c : stack) sb.append(c);\n    String result = sb.reverse().toString().replaceFirst(\"^0+\", \"\");\n    return result.isEmpty() ? \"0\" : result;\n}",
+  "problemId" : "remove-k-digits",
+  "resolvedInput" : {
+    "k" : 3,
+    "num" : "1432219"
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Remove 3 digits from \"1432219\" to form the smallest number. Use a monotonic increasing stack.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "3",
+      "num" : "1432219"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "Push '1'. Stack maintains increasing order from bottom to top.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "1",
+      "stackSize" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "current",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Push '4'. Stack maintains increasing order from bottom to top.",
+    "queueOrStackState" : [ "4", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "4",
+      "stackSize" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "current",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "'4' > '3' — pop '4' (removal 1 of 3). Smaller digit ahead makes this one wasteful.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "4",
+      "remaining" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "current",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "Push '3'. Stack maintains increasing order from bottom to top.",
+    "queueOrStackState" : [ "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "3",
+      "stackSize" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "current",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "'3' > '2' — pop '3' (removal 2 of 3). Smaller digit ahead makes this one wasteful.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "3",
+      "remaining" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "current",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Push '2'. Stack maintains increasing order from bottom to top.",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "2",
+      "stackSize" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "current",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 8,
+    "description" : "Push '2'. Stack maintains increasing order from bottom to top.",
+    "queueOrStackState" : [ "2", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "2",
+      "stackSize" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "current",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 5,
+    "description" : "'2' > '1' — pop '2' (removal 3 of 3). Smaller digit ahead makes this one wasteful.",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "2",
+      "remaining" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "current",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "Push '1'. Stack maintains increasing order from bottom to top.",
+    "queueOrStackState" : [ "1", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "1",
+      "stackSize" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "current",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "Push '9'. Stack maintains increasing order from bottom to top.",
+    "queueOrStackState" : [ "9", "1", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pushed" : "9",
+      "stackSize" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "current",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "Build result from stack: \"1219\". Strip leading zeros: \"1219\".",
+    "queueOrStackState" : [ "9", "1", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "raw" : "1219",
+      "result" : "1219"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 17,
+    "description" : "Smallest number after removing 3 digits: \"1219\".",
+    "queueOrStackState" : [ "9", "1", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "1219"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 2,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 5,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 6,
+      "value" : 57,
+      "state" : "default",
+      "label" : "9"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

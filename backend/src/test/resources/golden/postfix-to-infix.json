@@ -1,0 +1,319 @@
+{
+  "anchors" : {
+    "combine" : 9,
+    "done" : 12,
+    "init" : 2,
+    "pushOperand" : 5
+  },
+  "code" : "public String postfixToInfix(String s) {\n    Deque<String> stack = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (Character.isLetter(c)) {\n            stack.push(String.valueOf(c));\n        } else {\n            String op1 = stack.pop();\n            String op2 = stack.pop();\n            stack.push(\"(\" + op2 + c + op1 + \")\");\n        }\n    }\n    return stack.peek();\n}",
+  "problemId" : "postfix-to-infix",
+  "resolvedInput" : {
+    "expression" : "ABC*+"
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Convert postfix \"ABC*+\" to infix. Scan left to right.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "expression" : "ABC*+"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "s[0] = 'A' is an operand — push \"A\".",
+    "queueOrStackState" : [ "A" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pushed" : "A"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "s[1] = 'B' is an operand — push \"B\".",
+    "queueOrStackState" : [ "B", "A" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pushed" : "B"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "s[2] = 'C' is an operand — push \"C\".",
+    "queueOrStackState" : [ "C", "B", "A" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pushed" : "C"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "s[3] = '*' is an operator — pop \"C\" and \"B\", push \"(B*C)\".",
+    "queueOrStackState" : [ "(B*C)", "A" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combined" : "(B*C)",
+      "i" : "3",
+      "op1" : "C",
+      "op2" : "B"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "s[4] = '+' is an operator — pop \"(B*C)\" and \"A\", push \"(A+(B*C))\".",
+    "queueOrStackState" : [ "(A+(B*C))" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combined" : "(A+(B*C))",
+      "i" : "4",
+      "op1" : "(B*C)",
+      "op2" : "A"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "current",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "Conversion complete. Infix: \"(A+(B*C))\".",
+    "queueOrStackState" : [ "(A+(B*C))" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "(A+(B*C))"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

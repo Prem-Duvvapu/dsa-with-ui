@@ -1,0 +1,338 @@
+{
+  "anchors" : {
+    "evict" : 28,
+    "freqUp" : 42,
+    "hit" : 17,
+    "init" : 6,
+    "insert" : 34,
+    "miss" : 15,
+    "update" : 24
+  },
+  "code" : "class LFUCache {\n    int capacity, minFreq;\n    Map<Integer, int[]> cache;     // key -> {value, freq}\n    Map<Integer, LinkedHashSet<Integer>> freqMap;\n\n    LFUCache(int capacity) {\n        this.capacity = capacity;\n        this.minFreq = 0;\n        this.cache = new HashMap<>();\n        this.freqMap = new HashMap<>();\n    }\n\n    int get(int key) {\n        if (!cache.containsKey(key)) {\n            return -1;\n        }\n        increaseFreq(key);\n        return cache.get(key)[0];\n    }\n\n    void put(int key, int value) {\n        if (cache.containsKey(key)) {\n            cache.get(key)[0] = value;\n            increaseFreq(key);\n            return;\n        }\n        if (cache.size() >= capacity) {\n            int evictKey = freqMap.get(minFreq).iterator().next();\n            freqMap.get(minFreq).remove(evictKey);\n            cache.remove(evictKey);\n        }\n        cache.put(key, new int[]{value, 1});\n        freqMap.computeIfAbsent(1, k -> new LinkedHashSet<>()).add(key);\n        minFreq = 1;\n    }\n\n    void increaseFreq(int key) {\n        int freq = cache.get(key)[1];\n        cache.get(key)[1] = freq + 1;\n        freqMap.get(freq).remove(key);\n        if (freqMap.get(freq).isEmpty() && freq == minFreq) minFreq++;\n        freqMap.computeIfAbsent(freq + 1, k -> new LinkedHashSet<>()).add(key);\n    }\n}",
+  "problemId" : "lfu-cache",
+  "resolvedInput" : {
+    "capacity" : 2,
+    "operations" : "put 1 1;put 2 2;get 1;put 3 3;get 2;get 3"
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "LFU Cache with capacity 2. Process 6 operations.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "capacity" : "2",
+      "ops" : "6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 34,
+    "description" : "put(1, 1) — insert new key with frequency 1. minFreq reset to 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "1",
+      "minFreq" : "1",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k1:v1(f1)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 34,
+    "description" : "put(2, 2) — insert new key with frequency 1. minFreq reset to 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "2",
+      "minFreq" : "1",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k1:v1(f1)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k2:v2(f1)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 17,
+    "description" : "get(1) → 1. Frequency of key 1 increased.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "1",
+      "result" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k2:v2(f1)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k1:v1(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 42,
+    "description" : "Key 1 frequency bumped. minFreq = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "1",
+      "minFreq" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k2:v2(f1)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k1:v1(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 28,
+    "description" : "Cache full — evict key 2 (least frequent, then least recent).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "evicted" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k3:v3(f1)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k1:v1(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 34,
+    "description" : "put(3, 3) — insert new key with frequency 1. minFreq reset to 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "3",
+      "minFreq" : "1",
+      "value" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k3:v3(f1)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k1:v1(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "get(2) → cache miss, return -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "2",
+      "result" : "-1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k3:v3(f1)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k1:v1(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 17,
+    "description" : "get(3) → 3. Frequency of key 3 increased.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "3",
+      "result" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k1:v1(f2)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k3:v3(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 42,
+    "description" : "Key 3 frequency bumped. minFreq = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "key" : "3",
+      "minFreq" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k1:v1(f2)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k3:v3(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

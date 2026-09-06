@@ -1,0 +1,109 @@
+{
+  "anchors" : {
+    "elimA" : 6,
+    "elimB" : 8,
+    "found" : 18,
+    "init" : 3,
+    "noCeleb" : 15,
+    "verify" : 11
+  },
+  "code" : "public int findCelebrity(int[][] knows) {\n    int n = knows.length;\n    int a = 0, b = n - 1;\n    while (a < b) {\n        if (knows[a][b] == 1) {\n            a++;\n        } else {\n            b--;\n        }\n    }\n    int candidate = a;\n    for (int i = 0; i < n; i++) {\n        if (i == candidate) continue;\n        if (knows[candidate][i] == 1 || knows[i][candidate] == 0) {\n            return -1;\n        }\n    }\n    return candidate;\n}",
+  "problemId" : "celebrity-problem",
+  "resolvedInput" : {
+    "matrix" : [ [ 0, 1, 0 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ]
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Celebrity problem with 3 people. Two-pointer elimination: a=0, b=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "0",
+      "b" : "2",
+      "n" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 0, 1, 0 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "Person 0 does not know person 2 — 2 cannot be a celebrity. Retreat b.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "0",
+      "b" : "2",
+      "eliminated" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 0, 1, 0 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Person 0 knows person 1 — 0 cannot be a celebrity. Advance a.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "0",
+      "b" : "1",
+      "eliminated" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 0, 1, 0 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "One candidate survives: person 1. Verify that everyone knows them and they know nobody.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 0, 1, 0 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 18,
+    "description" : "Verification passed. Person 1 is the celebrity — known by all, knows nobody.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 0, 1, 0 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

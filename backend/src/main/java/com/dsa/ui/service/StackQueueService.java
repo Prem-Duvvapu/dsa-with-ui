@@ -24,42 +24,8 @@ public class StackQueueService implements ProblemProvider {
     }
 
     public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // trapping-rainwater, largest-rectangle-histogram, next-greater-element-2,
-            // and asteroid-collision have real tracers (tracer/impl). Refuse rather than
-            // let default: serve the placeholder steps under these ids.
-            case "trapping-rainwater":
-            case "largest-rectangle-histogram":
-            case "next-greater-element-2":
-            case "asteroid-collision":
-                throw new LegacyTraceRetiredException(problemId);
-            // sliding-window-maximum, min-stack, and sum-subarray-minimums have real
-            // tracers (tracer/impl) now. They never had their own case at all - just
-            // default: serving balanced-parentheses's steps. Refuse rather than keep
-            // that silent.
-            case "sliding-window-maximum":
-            case "min-stack":
-            case "sum-subarray-minimums":
-                throw new LegacyTraceRetiredException(problemId);
-            // lru-cache has a real tracer (tracer/impl) now, tracing the whole put/get
-            // sequence as one FieldType.STRING mini-language input. Refuse rather than
-            // let default: serve the placeholder steps under this id.
-            case "lru-cache":
-                throw new LegacyTraceRetiredException(problemId);
-            // The Learning cluster is traced (tracer/impl). balanced-parentheses and
-            // next-greater-element-1 are the only two that ever had real generators here;
-            // both are deleted, and the other six were on default: all along.
-            case "balanced-parentheses":
-            case "next-greater-element-1":
-            case "stack-array-impl":
-            case "queue-array-impl":
-            case "stack-queue-impl":
-            case "queue-stack-impl":
-            case "stack-ll-impl":
-            case "queue-ll-impl":
-                throw new LegacyTraceRetiredException(problemId);
-            default: return generatePlaceholderStackSteps();
-        }
+        // All 30 Stack & Queue problems now have real tracers (tracer/impl).
+        throw new LegacyTraceRetiredException(problemId);
     }
 
     private void initProblems() {
@@ -176,38 +142,10 @@ public class StackQueueService implements ProblemProvider {
      */
     private static DsType bulkDsType(String id) {
         return switch (id) {
-            case "lru-cache", "stack-ll-impl", "queue-ll-impl" -> DsType.LINKED_LIST;
+            case "lru-cache", "lfu-cache", "stack-ll-impl", "queue-ll-impl" -> DsType.LINKED_LIST;
             case "queue-array-impl", "stack-queue-impl", "queue-stack-impl" -> DsType.QUEUE;
             default -> DsType.STACK;
         };
-    }
-
-    // Step Generators
-    private ExecutionStep createStackStep(int stepNum, int line, String desc, List<String> stackState, List<ArrayElement> arrayState, Map<String, String> vars) {
-        return new ExecutionStep(
-            stepNum, line, desc,
-            stackState, Map.of(), List.of(), vars,
-            "Stack", null, arrayState, null, null
-        );
-    }
-
-    /**
-     * The legacy {@code default:} branch, for the Stack &amp; Queue ids that still have no
-     * tracer. It used to be {@code generateBalancedParenthesesSteps()}, which is exactly the
-     * substitution this migration exists to remove: every untraced id in this service served
-     * balanced-parentheses's animation under its own name. balanced-parentheses now has a
-     * real tracer, so the content stays only as an unattributed placeholder until the
-     * remaining ids are migrated and this method, with {@code default:}, is deleted.
-     */
-    private List<ExecutionStep> generatePlaceholderStackSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] vals = new int[]{1, 2, 2, 1};
-        int stepNum = 1;
-        steps.add(createStackStep(stepNum++, 4, "Not yet traced. Placeholder stack narration; see /api/problems for the migrated animations.", List.of(), createArrayState(vals, -1, -1), Map.of("stack", "[]")));
-        steps.add(createStackStep(stepNum++, 6, "Push onto the stack. Stack: ['('].", List.of("("), createArrayState(vals, 0, -1), Map.of("top", "(")));
-        steps.add(createStackStep(stepNum++, 8, "Pop the top. Stack: [].", List.of(), createArrayState(vals, 1, -1), Map.of("popped", "(")));
-        steps.add(createStackStep(stepNum++, 12, "Placeholder complete.", List.of(), createArrayState(vals, -1, -1), Map.of("Result", "TRUE")));
-        return steps;
     }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {

@@ -1,0 +1,404 @@
+{
+  "anchors" : {
+    "closeParen" : 12,
+    "done" : 25,
+    "flush" : 23,
+    "higherPrec" : 17,
+    "init" : 2,
+    "openParen" : 9,
+    "operand" : 7,
+    "pushOp" : 19
+  },
+  "code" : "public String infixToPrefix(String s) {\n    String reversed = reverseAndSwapParens(s);\n    StringBuilder result = new StringBuilder();\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : reversed.toCharArray()) {\n        if (Character.isLetter(c)) {\n            result.append(c);\n        } else if (c == '(') {\n            stack.push(c);\n        } else if (c == ')') {\n            while (stack.peek() != '(') {\n                result.append(stack.pop());\n            }\n            stack.pop();\n        } else {\n            while (!stack.isEmpty() && precedence(stack.peek()) > precedence(c)) {\n                result.append(stack.pop());\n            }\n            stack.push(c);\n        }\n    }\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n    }\n    return result.reverse().toString();\n}",
+  "problemId" : "infix-to-prefix",
+  "resolvedInput" : {
+    "expression" : "A+B*C"
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Convert infix \"A+B*C\" to prefix. Step 1: reverse and swap parens → \"C*B+A\".",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "original" : "A+B*C",
+      "reversed" : "C*B+A"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "'C' is an operand — append to intermediate result.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "C",
+      "result" : "C"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 19,
+    "description" : "Push operator '*' (precedence 2).",
+    "queueOrStackState" : [ "*" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "operator" : "*"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "'B' is an operand — append to intermediate result.",
+    "queueOrStackState" : [ "*" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "B",
+      "result" : "CB"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 17,
+    "description" : "'+' (prec 1) < '*' (prec 2) on top — pop '*'.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "*",
+      "result" : "CB*"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "current",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "Push operator '+' (precedence 1).",
+    "queueOrStackState" : [ "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "operator" : "+"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "current",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "'A' is an operand — append to intermediate result.",
+    "queueOrStackState" : [ "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "A",
+      "result" : "CB*A"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 23,
+    "description" : "Flush '+' from remaining stack.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "+",
+      "result" : "CB*A+"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 4,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 25,
+    "description" : "Reverse intermediate \"CB*A+\" → prefix: \"+A*BC\".",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "+A*BC"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

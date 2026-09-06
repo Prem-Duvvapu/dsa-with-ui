@@ -1,6 +1,5 @@
 package com.dsa.ui;
 
-import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.StackQueueService;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,23 +34,11 @@ public class StackQueueServiceTest {
 
     @Test
     public void testGenerateStepsForAllStackQueueProblems() {
-        Set<String> retired = Set.of("trapping-rainwater", "largest-rectangle-histogram",
-                "next-greater-element-2", "asteroid-collision",
-                "sliding-window-maximum", "min-stack", "sum-subarray-minimums", "lru-cache",
-                "balanced-parentheses", "next-greater-element-1",
-                "stack-array-impl", "queue-array-impl", "stack-queue-impl", "queue-stack-impl",
-                "stack-ll-impl", "queue-ll-impl");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
-            if (retired.contains(p.getId())) {
-                assertThrows(LegacyTraceRetiredException.class,
-                        () -> service.generateSteps(p.getId()),
-                        p.getId() + " is traced by the v2 layer and must not fall back");
-                continue;
-            }
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps list should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

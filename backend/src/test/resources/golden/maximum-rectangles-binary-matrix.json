@@ -1,0 +1,1596 @@
+{
+  "anchors" : {
+    "buildHeight" : 7,
+    "done" : 21,
+    "histogramStart" : 9,
+    "init" : 3,
+    "popRect" : 16,
+    "pushCol" : 18
+  },
+  "code" : "public int maximalRectangle(int[][] matrix) {\n    int cols = matrix[0].length;\n    int[] heights = new int[cols];\n    int maxArea = 0;\n    for (int row = 0; row < matrix.length; row++) {\n        for (int col = 0; col < cols; col++) {\n            heights[col] = matrix[row][col] == 1 ? heights[col] + 1 : 0;\n        }\n        Deque<Integer> stack = new ArrayDeque<>();\n        for (int i = 0; i <= cols; i++) {\n            int h = (i == cols) ? 0 : heights[i];\n            while (!stack.isEmpty() && h < heights[stack.peek()]) {\n                int top = stack.pop();\n                int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n                int area = heights[top] * width;\n                if (area > maxArea) maxArea = area;\n            }\n            stack.push(i);\n        }\n    }\n    return maxArea;\n}",
+  "problemId" : "maximum-rectangles-binary-matrix",
+  "resolvedInput" : {
+    "matrix" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ]
+  },
+  "stepCount" : 43,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Binary matrix 4x5. Build histograms row by row, apply largest-rectangle on each.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cols" : "5",
+      "rows" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Row 0: heights updated to [1, 0, 1, 0, 0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "Run histogram algorithm on row 0 heights.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "Push column 0 (height 1).",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 16,
+    "description" : "Pop index 0 (h=1), width=1, area=1. maxArea=1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "1",
+      "maxArea" : "1",
+      "popped" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 18,
+    "description" : "Push column 1 (height 0).",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 18,
+    "description" : "Push column 2 (height 1).",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "Pop index 2 (h=1), width=1, area=1. maxArea=1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "1",
+      "maxArea" : "1",
+      "popped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 18,
+    "description" : "Push column 3 (height 0).",
+    "queueOrStackState" : [ "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 18,
+    "description" : "Push column 4 (height 0).",
+    "queueOrStackState" : [ "4", "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 7,
+    "description" : "Row 1: heights updated to [2, 0, 2, 1, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "Run histogram algorithm on row 1 heights.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 18,
+    "description" : "Push column 0 (height 2).",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 16,
+    "description" : "Pop index 0 (h=2), width=1, area=2. maxArea=2.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "2",
+      "maxArea" : "2",
+      "popped" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 18,
+    "description" : "Push column 1 (height 0).",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 18,
+    "description" : "Push column 2 (height 2).",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 16,
+    "description" : "Pop index 2 (h=2), width=1, area=2. maxArea=2.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "2",
+      "maxArea" : "2",
+      "popped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 18,
+    "description" : "Push column 3 (height 1).",
+    "queueOrStackState" : [ "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 18,
+    "description" : "Push column 4 (height 1).",
+    "queueOrStackState" : [ "4", "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 16,
+    "description" : "Pop index 4 (h=1), width=1, area=1. maxArea=2.",
+    "queueOrStackState" : [ "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "1",
+      "maxArea" : "2",
+      "popped" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 16,
+    "description" : "Pop index 3 (h=1), width=3, area=3. maxArea=3.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "maxArea" : "3",
+      "popped" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 7,
+    "description" : "Row 2: heights updated to [3, 1, 3, 2, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 9,
+    "description" : "Run histogram algorithm on row 2 heights.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 18,
+    "description" : "Push column 0 (height 3).",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 16,
+    "description" : "Pop index 0 (h=3), width=1, area=3. maxArea=3.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "maxArea" : "3",
+      "popped" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 18,
+    "description" : "Push column 1 (height 1).",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 18,
+    "description" : "Push column 2 (height 3).",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 16,
+    "description" : "Pop index 2 (h=3), width=1, area=3. maxArea=3.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "maxArea" : "3",
+      "popped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 18,
+    "description" : "Push column 3 (height 2).",
+    "queueOrStackState" : [ "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 18,
+    "description" : "Push column 4 (height 2).",
+    "queueOrStackState" : [ "4", "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 16,
+    "description" : "Pop index 4 (h=2), width=1, area=2. maxArea=3.",
+    "queueOrStackState" : [ "3", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "2",
+      "maxArea" : "3",
+      "popped" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 16,
+    "description" : "Pop index 3 (h=2), width=3, area=6. maxArea=6.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "6",
+      "maxArea" : "6",
+      "popped" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 16,
+    "description" : "Pop index 1 (h=1), width=5, area=5. maxArea=6.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "5",
+      "maxArea" : "6",
+      "popped" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 7,
+    "description" : "Row 3: heights updated to [4, 0, 0, 3, 0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 9,
+    "description" : "Run histogram algorithm on row 3 heights.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "row" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 18,
+    "description" : "Push column 0 (height 4).",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 16,
+    "description" : "Pop index 0 (h=4), width=1, area=4. maxArea=6.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "4",
+      "maxArea" : "6",
+      "popped" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 18,
+    "description" : "Push column 1 (height 0).",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 18,
+    "description" : "Push column 2 (height 0).",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 18,
+    "description" : "Push column 3 (height 3).",
+    "queueOrStackState" : [ "3", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 16,
+    "description" : "Pop index 3 (h=3), width=1, area=3. maxArea=6.",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "area" : "3",
+      "maxArea" : "6",
+      "popped" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 18,
+    "description" : "Push column 4 (height 0).",
+    "queueOrStackState" : [ "4", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 21,
+    "description" : "All rows processed. Largest rectangle of all 1s has area 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : [ [ 1, 0, 1, 0, 0 ], [ 1, 0, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ], [ 1, 0, 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

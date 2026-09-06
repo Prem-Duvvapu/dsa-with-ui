@@ -1,0 +1,585 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "init" : 3,
+    "pop" : 7,
+    "push" : 10,
+    "record" : 9
+  },
+  "code" : "public int[] nextSmallerElement(int[] nums) {\n    int n = nums.length;\n    int[] nse = new int[n];\n    Deque<Integer> stack = new ArrayDeque<>();\n    for (int i = n - 1; i >= 0; i--) {\n        while (!stack.isEmpty() && stack.peek() >= nums[i]) {\n            stack.pop();\n        }\n        nse[i] = stack.isEmpty() ? -1 : stack.peek();\n        stack.push(nums[i]);\n    }\n    return nse;\n}",
+  "problemId" : "next-smaller-element",
+  "resolvedInput" : {
+    "nums" : [ 4, 5, 2, 10, 8 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Walk [4, 5, 2, 10, 8] from the right with a monotonic increasing stack. Pop anything >= the current value.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "Stack empty — no value to the right of nums[4]=8 is smaller. Record -1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "nse[i]" : "-1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Push nums[4]=8 onto the stack.",
+    "queueOrStackState" : [ "8" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "pushed" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Top is 8 — the nearest smaller value to the right of nums[3]=10. Record 8.",
+    "queueOrStackState" : [ "8" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "nse[i]" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Push nums[3]=10 onto the stack.",
+    "queueOrStackState" : [ "10", "8" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "pushed" : "10"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "10 on top is not smaller than nums[2]=2 — pop it.",
+    "queueOrStackState" : [ "8" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "popped" : "10"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "8 on top is not smaller than nums[2]=2 — pop it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "popped" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 9,
+    "description" : "Stack empty — no value to the right of nums[2]=2 is smaller. Record -1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "nse[i]" : "-1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "Push nums[2]=2 onto the stack.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "pushed" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "Top is 2 — the nearest smaller value to the right of nums[1]=5. Record 2.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "nse[i]" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 10,
+    "description" : "Push nums[1]=5 onto the stack.",
+    "queueOrStackState" : [ "5", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "pushed" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "5 on top is not smaller than nums[0]=4 — pop it.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "popped" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 9,
+    "description" : "Top is 2 — the nearest smaller value to the right of nums[0]=4. Record 2.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "nse[i]" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 10,
+    "description" : "Push nums[0]=4 onto the stack.",
+    "queueOrStackState" : [ "4", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "pushed" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 12,
+    "description" : "Every index answered. Next smaller elements: [2, 2, -1, 8, -1].",
+    "queueOrStackState" : [ "4", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[2, 2, -1, 8, -1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 8,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
