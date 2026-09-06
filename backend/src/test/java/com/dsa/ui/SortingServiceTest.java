@@ -1,7 +1,7 @@
 package com.dsa.ui;
 
-import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.SortingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,15 +37,20 @@ class SortingServiceTest {
         assertEquals("O(N log N)", mergeSort.getComplexity().getTimeComplexity());
     }
 
+    /**
+     * All five sorting problems now have real tracers in tracer/impl - the legacy
+     * generators are gone on purpose, so every id must refuse rather than fall back to
+     * another algorithm's steps.
+     */
     @Test
-    @DisplayName("Should generate execution steps for ALL sorting algorithms")
-    void testGenerateStepsForAllSortingProblems() {
+    @DisplayName("Should refuse the legacy execute path for every sorting algorithm")
+    void testGenerateStepsRetiredForAllSortingProblems() {
         List<ProblemDetail> problems = sortingService.getAllProblems();
+        assertEquals(5, problems.size());
         for (ProblemDetail p : problems) {
-            List<ExecutionStep> steps = sortingService.generateSteps(p.getId());
-            assertNotNull(steps, "Steps list should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
-            assertTrue(steps.get(0).getStepNumber() > 0, "Step number should be positive for " + p.getId());
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> sortingService.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

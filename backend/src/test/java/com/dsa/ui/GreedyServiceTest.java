@@ -36,7 +36,9 @@ public class GreedyServiceTest {
 
     @Test
     public void testGenerateStepsForAllGreedyProblems() {
-        Set<String> retired = Set.of("n-meetings-in-one-room");
+        Set<String> retired = Set.of("n-meetings-in-one-room",
+                "jump-game-1", "assign-cookies", "fractional-knapsack",
+                "lemonade-change", "minimum-platforms", "insert-interval");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

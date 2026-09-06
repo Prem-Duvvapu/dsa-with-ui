@@ -1,0 +1,251 @@
+{
+  "anchors" : {
+    "already" : 5,
+    "done" : 17,
+    "payTen" : 9,
+    "payTwenty" : 12,
+    "takeFive" : 7
+  },
+  "code" : "public boolean lemonadeChange(int[] bills) {\n    int five = 0, ten = 0;\n    boolean ok = true;\n    for (int bill : bills) {\n        if (!ok) continue;\n        if (bill == 5) {\n            five++;\n        } else if (bill == 10) {\n            if (five >= 1) { five--; ten++; }\n            else { ok = false; }\n        } else {\n            if (ten >= 1 && five >= 1) { ten--; five--; }\n            else if (five >= 3) { five -= 3; }\n            else { ok = false; }\n        }\n    }\n    return ok;\n}",
+  "problemId" : "lemonade-change",
+  "resolvedInput" : {
+    "bills" : [ 5, 5, 5, 10, 20 ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "Customer 1 pays with $5 — no change needed. Fives on hand: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "five" : "1",
+      "ok" : "true",
+      "ten" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Customer 2 pays with $5 — no change needed. Fives on hand: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "five" : "2",
+      "ok" : "true",
+      "ten" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "Customer 3 pays with $5 — no change needed. Fives on hand: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "five" : "3",
+      "ok" : "true",
+      "ten" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Customer 4 pays with $10 — break one $5 as change. Fives: 2, tens: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "five" : "2",
+      "ok" : "true",
+      "ten" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "Customer 5 pays with $20 — give a $10+$5 pair rather than spend three fives. Fives: 1, tens: 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "five" : "1",
+      "ok" : "true",
+      "ten" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 17,
+    "description" : "Every customer got correct change.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "five" : "1",
+      "ok" : "true",
+      "ten" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
