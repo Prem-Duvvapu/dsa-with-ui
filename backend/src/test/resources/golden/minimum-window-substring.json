@@ -1,0 +1,2270 @@
+{
+  "anchors" : {
+    "done" : 25,
+    "expand" : 10,
+    "recordBest" : 15,
+    "shrink" : 19
+  },
+  "code" : "public String minWindow(String s, String t) {\n    Map<Character, Integer> need = new HashMap<>();\n    for (char c : t.toCharArray()) need.merge(c, 1, Integer::sum);\n\n    Map<Character, Integer> window = new HashMap<>();\n    int have = 0, needCount = need.size();\n    int left = 0, bestLen = Integer.MAX_VALUE, bestStart = 0;\n\n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        window.merge(c, 1, Integer::sum);\n        if (need.containsKey(c) && window.get(c).intValue() == need.get(c).intValue()) have++;\n\n        while (have == needCount) {\n            if (right - left + 1 < bestLen) {\n                bestLen = right - left + 1;\n                bestStart = left;\n            }\n            char leftChar = s.charAt(left);\n            window.merge(leftChar, -1, Integer::sum);\n            if (need.containsKey(leftChar) && window.get(leftChar) < need.get(leftChar)) have--;\n            left++;\n        }\n    }\n    return bestLen == Integer.MAX_VALUE ? \"\" : s.substring(bestStart, bestStart + bestLen);\n}",
+  "problemId" : "minimum-window-substring",
+  "resolvedInput" : {
+    "s" : "ADOBECODEBANC",
+    "t" : "ABC"
+  },
+  "stepCount" : 27,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 10,
+    "description" : "Add 'A'. Covering 1 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "1",
+      "need" : "3",
+      "right" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "Add 'D'. Covering 1 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "1",
+      "need" : "3",
+      "right" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "current",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Add 'O'. Covering 1 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "1",
+      "need" : "3",
+      "right" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "current",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 10,
+    "description" : "Add 'B'. Covering 2 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "need" : "3",
+      "right" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Add 'E'. Covering 2 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "need" : "3",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "current",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 10,
+    "description" : "Add 'C'. Covering 3 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "need" : "3",
+      "right" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Window [0,5] (\"ADOBEC\") covers t and beats the best so far: length 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestLen" : "6",
+      "bestWindow" : "ADOBEC"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "Shrink past 'A' - window now starts at 1 (covering 2 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "left" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "target",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "Add 'O'. Covering 2 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "need" : "3",
+      "right" : "6"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "target",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "current",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 10,
+    "description" : "Add 'D'. Covering 2 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "need" : "3",
+      "right" : "7"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "target",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "current",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 10,
+    "description" : "Add 'E'. Covering 2 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "need" : "3",
+      "right" : "8"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "target",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "current",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 10,
+    "description" : "Add 'B'. Covering 2 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "need" : "3",
+      "right" : "9"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "target",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 10,
+    "description" : "Add 'A'. Covering 3 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "need" : "3",
+      "right" : "10"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "target",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 19,
+    "description" : "Shrink past 'D' - window now starts at 2 (covering 3 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "left" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "target",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 19,
+    "description" : "Shrink past 'O' - window now starts at 3 (covering 3 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "left" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "target",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 19,
+    "description" : "Shrink past 'B' - window now starts at 4 (covering 3 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "left" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "target",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "active",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 19,
+    "description" : "Shrink past 'E' - window now starts at 5 (covering 3 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "left" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "target",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "active",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 19,
+    "description" : "Shrink past 'C' - window now starts at 6 (covering 2 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "left" : "6"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "target",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 10,
+    "description" : "Add 'N'. Covering 2 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "need" : "3",
+      "right" : "11"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "target",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "current",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 10,
+    "description" : "Add 'C'. Covering 3 of 3 required distinct characters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "need" : "3",
+      "right" : "12"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "target",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "active",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "active",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 19,
+    "description" : "Shrink past 'O' - window now starts at 7 (covering 3 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "left" : "7"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "target",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "active",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "active",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 19,
+    "description" : "Shrink past 'D' - window now starts at 8 (covering 3 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "left" : "8"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "target",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "active",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 15,
+    "description" : "Window [8,12] (\"EBANC\") covers t and beats the best so far: length 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestLen" : "5",
+      "bestWindow" : "EBANC"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "target",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "active",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 19,
+    "description" : "Shrink past 'E' - window now starts at 9 (covering 3 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "3",
+      "left" : "9"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "target",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "active",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 15,
+    "description" : "Window [9,12] (\"BANC\") covers t and beats the best so far: length 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestLen" : "4",
+      "bestWindow" : "BANC"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "target",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "active",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 19,
+    "description" : "Shrink past 'B' - window now starts at 10 (covering 2 of 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "have" : "2",
+      "left" : "10"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "active",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 25,
+    "description" : "Shortest window covering t: \"BANC\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "BANC"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

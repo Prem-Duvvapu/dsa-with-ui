@@ -129,7 +129,10 @@ class ApiContractTest {
             "print-1-to-n", "print-n-to-1", "sum-first-n", "factorial-number",
             "reverse-array-recursion", "palindrome-string-recursion", "fibonacci-recursion",
             "count-digits", "reverse-number", "palindrome-number", "gcd-two-numbers",
-            "armstrong-check", "print-divisors", "check-prime");
+            "armstrong-check", "print-divisors", "check-prime",
+            "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "merge-k-sorted-lists",
+            "fruit-into-baskets", "longest-repeating-character-replacement",
+            "minimum-window-substring", "subarrays-k-different-integers");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -341,6 +344,14 @@ class ApiContractTest {
                 arguments("/api/heaps", "kth-smallest-element"),
                 arguments("/api/heaps", "task-scheduler"),
                 arguments("/api/heaps", "top-k-frequent-elements"),
+                arguments("/api/heaps", "hand-of-straights"),
+                arguments("/api/heaps", "min-cost-connect-sticks"),
+                arguments("/api/heaps", "median-data-stream"),
+                arguments("/api/heaps", "merge-k-sorted-lists"),
+                arguments("/api/slidingwindow", "fruit-into-baskets"),
+                arguments("/api/slidingwindow", "longest-repeating-character-replacement"),
+                arguments("/api/slidingwindow", "minimum-window-substring"),
+                arguments("/api/slidingwindow", "subarrays-k-different-integers"),
                 arguments("/api/basic-recursion", "print-1-to-n"),
                 arguments("/api/basic-recursion", "print-n-to-1"),
                 arguments("/api/basic-recursion", "sum-first-n"),

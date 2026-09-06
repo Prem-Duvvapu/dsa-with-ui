@@ -1,0 +1,1489 @@
+{
+  "anchors" : {
+    "append" : 8,
+    "done" : 12,
+    "pickSmallestHead" : 7
+  },
+  "code" : "public ListNode mergeKLists(ListNode[] lists) {\n    PriorityQueue<ListNode> heap = new PriorityQueue<>((a, b) -> a.val - b.val);\n    for (ListNode head : lists) if (head != null) heap.add(head);\n\n    ListNode dummy = new ListNode(-1), tail = dummy;\n    while (!heap.isEmpty()) {\n        ListNode smallest = heap.poll();\n        tail.next = smallest;\n        tail = tail.next;\n        if (smallest.next != null) heap.add(smallest.next);\n    }\n    return dummy.next;\n}",
+  "problemId" : "merge-k-sorted-lists",
+  "resolvedInput" : {
+    "list1" : [ 1, 4, 5 ],
+    "list2" : [ 1, 3, 4 ],
+    "list3" : [ 2, 6 ]
+  },
+  "stepCount" : 18,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "Three sorted lists to merge: [1, 4, 5], [1, 3, 4], [2, 6].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 1 (list 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "1",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Append 1 to the merged output (1 node so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "1",
+      "mergedSoFar" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 1 (list 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "2",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "Append 1 to the merged output (2 nodes so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "1",
+      "mergedSoFar" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 2 (list 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "3",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Append 2 to the merged output (3 nodes so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "2",
+      "mergedSoFar" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 3 (list 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "2",
+      "value" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "Append 3 to the merged output (4 nodes so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "3",
+      "mergedSoFar" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 4 (list 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "1",
+      "value" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "Append 4 to the merged output (5 nodes so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "4",
+      "mergedSoFar" : "5"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 4 (list 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "2",
+      "value" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 8,
+    "description" : "Append 4 to the merged output (6 nodes so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "4",
+      "mergedSoFar" : "6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 5 (list 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "1",
+      "value" : "5"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 8,
+    "description" : "Append 5 to the merged output (7 nodes so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "5",
+      "mergedSoFar" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 7,
+    "description" : "Smallest head among the three candidates is 6 (list 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "fromList" : "3",
+      "value" : "6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 8,
+    "description" : "Append 6 to the merged output (8 nodes so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "appended" : "6",
+      "mergedSoFar" : "8"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "curr"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 12,
+    "description" : "All three lists exhausted. Merged result: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 6,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "2",
+      "nextId" : 4,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 5,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "5",
+      "nextId" : 7,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "visited"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

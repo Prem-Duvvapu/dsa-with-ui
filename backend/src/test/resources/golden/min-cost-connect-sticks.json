@@ -1,0 +1,153 @@
+{
+  "anchors" : {
+    "connect" : 9,
+    "done" : 13,
+    "popTwo" : 7
+  },
+  "code" : "public int connectSticks(int[] sticks) {\n    PriorityQueue<Integer> heap = new PriorityQueue<>();\n    for (int s : sticks) heap.add(s);\n\n    int totalCost = 0;\n    while (heap.size() > 1) {\n        int a = heap.poll();\n        int b = heap.poll();\n        int cost = a + b;\n        totalCost += cost;\n        heap.add(cost);\n    }\n    return totalCost;\n}",
+  "problemId" : "min-cost-connect-sticks",
+  "resolvedInput" : {
+    "sticks" : [ 2, 4, 3 ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "Start with sticks [2, 3, 4].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "heapSize" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Two shortest sticks are 2 and 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "2",
+      "b" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "Connect 2 + 3 for cost 5 (running total 5) - the joined stick, length 5, rejoins the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cost" : "5",
+      "totalCost" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Two shortest sticks are 4 and 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "4",
+      "b" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Connect 4 + 5 for cost 9 (running total 14) - the joined stick, length 9, rejoins the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cost" : "9",
+      "totalCost" : "14"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "One stick remains, length 9. Total cost to connect them all: 14.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "14"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
