@@ -2,6 +2,7 @@ package com.dsa.ui.algorithm;
 
 import com.dsa.ui.algorithm.sorting.MergeSort;
 import com.dsa.ui.model.ExecutionStep;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.SortingService;
 import com.dsa.ui.trace.ListTraceRecorder;
 import org.junit.jupiter.api.Test;
@@ -27,11 +28,15 @@ public class MergeSortTracingTest {
         assertTrue(steps.size() >= 25, "Merge sort should generate at least 25 trace steps for 6 elements");
     }
 
+    /**
+     * merge-sort now has a real tracer in tracer/impl - the legacy generator this used to
+     * exercise is gone on purpose, so the service must refuse rather than serve it.
+     */
     @Test
-    void testSortingServiceMergeSortSteps() {
+    void testSortingServiceMergeSortStepsRetired() {
         SortingService service = new SortingService();
-        List<ExecutionStep> steps = service.generateSteps("merge-sort");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 25);
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("merge-sort"),
+                "merge-sort is traced by the v2 layer and must not fall back");
     }
 }
