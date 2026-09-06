@@ -64,11 +64,11 @@ public class AdvancedGraphService implements ProblemProvider {
             case "floyd-warshall": return generateFloydWarshallSteps();
             case "city-smallest-neighbors": return generateCitySmallestNeighborsSteps();
             case "mst-theory": return generateMstTheorySteps();
-            case "prims-mst": return generatePrimsSteps();
+            case "prims-mst": throw new LegacyTraceRetiredException(problemId);
             case "disjoint-set-dsu": throw new LegacyTraceRetiredException(problemId);
-            case "kruskals-mst": return generateKruskalsSteps();
-            case "network-connected-ops": return generateNetworkConnectedOpsSteps();
-            case "most-stones-removed": return generateMostStonesRemovedSteps();
+            case "kruskals-mst": throw new LegacyTraceRetiredException(problemId);
+            case "network-connected-ops": throw new LegacyTraceRetiredException(problemId);
+            case "most-stones-removed": throw new LegacyTraceRetiredException(problemId);
             case "accounts-merge": return generateAccountsMergeSteps();
             case "number-of-islands-2": return generateNumberOfIslands2Steps();
             case "making-large-island": return generateMakingLargeIslandSteps();
@@ -393,7 +393,7 @@ public class AdvancedGraphService implements ProblemProvider {
             return DsType.STRING;
         }
         return switch (id) {
-            case "disjoint-set-dsu" -> DsType.DSU;
+            case "disjoint-set-dsu", "most-stones-removed" -> DsType.DSU;
             case "number-of-islands", "shortest-path-binary-maze", "path-min-effort" -> DsType.MATRIX;
             default -> DsType.GRAPH;
         };
@@ -431,10 +431,6 @@ public class AdvancedGraphService implements ProblemProvider {
     private List<ExecutionStep> generateFloydWarshallSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateCitySmallestNeighborsSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generatePrimsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateKruskalsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNetworkConnectedOpsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateMostStonesRemovedSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateAccountsMergeSteps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateNumberOfIslands2Steps() { return generateGraphIntroSteps(); }
     private List<ExecutionStep> generateMakingLargeIslandSteps() { return generateGraphIntroSteps(); }
