@@ -124,7 +124,8 @@ class ApiContractTest {
             "lemonade-change", "minimum-platforms", "insert-interval",
             "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort",
             "single-number-1", "check-power-of-2", "count-set-bits",
-            "xor-numbers-in-range", "single-number-3", "pow-x-n-math");
+            "xor-numbers-in-range", "single-number-3", "pow-x-n-math",
+            "kth-largest-element", "kth-smallest-element", "task-scheduler", "top-k-frequent-elements");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -331,7 +332,11 @@ class ApiContractTest {
                 arguments("/api/bitmanipulation", "count-set-bits"),
                 arguments("/api/bitmanipulation", "xor-numbers-in-range"),
                 arguments("/api/bitmanipulation", "single-number-3"),
-                arguments("/api/bitmanipulation", "pow-x-n-math"));
+                arguments("/api/bitmanipulation", "pow-x-n-math"),
+                arguments("/api/heaps", "kth-largest-element"),
+                arguments("/api/heaps", "kth-smallest-element"),
+                arguments("/api/heaps", "task-scheduler"),
+                arguments("/api/heaps", "top-k-frequent-elements"));
     }
 
     /**
