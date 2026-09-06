@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 123 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 129 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -175,8 +175,8 @@ them means moving problems between services.
 `bellman-ford`,
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `bst-delete`, `bst-floor-ceil`,
 `bst-insert`, `bubble-sort`, `burst-balloons`,
-`check-sorted-ii`, `clone-ll-random-pointer`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
-`count-square-submatrices`,
+`check-power-of-2`, `check-sorted-ii`, `clone-ll-random-pointer`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
+`count-set-bits`, `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `directed-cycle-dfs`, `distance-nearest-1`, `edit-distance`, `find-missing-number`,
 `find-min-rotated-sorted`, `find-starting-point-loop`, `flattening-ll`, `four-sum`,
 `fractional-knapsack`, `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
@@ -190,17 +190,19 @@ them means moving problems between services.
 `majority-element`, `matrix-chain-multiplication`, `max-consecutive-ones`, `max-rectangle-area-all-ones`,
 `merge-sort`,
 `max-sum-non-adjacent`, `median-2-sorted-arrays`, `merge-two-sorted-arrays`, `min-stack`, `morris-inorder`, `move-zeros-end`,
-`n-meetings-in-one-room`, `n-queens`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `number-of-provinces`, `print-lis`,
+`n-meetings-in-one-room`, `n-queens`, `next-greater-element-2`, `next-permutation`, `number-of-islands`, `number-of-provinces`,
+`pow-x-n-math`, `print-lis`,
 `quick-sort`,
 `remove-duplicates-sorted`, `repeating-missing-number`, `rotting-oranges`,
 `reverse-linked-list`, `reverse-ll-group-k`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`,
 `selection-sort`, `serialize-deserialize-bt`, `shortest-palindrome`,
-`single-element-sorted`, `single-number`, `sliding-window-maximum`,
+`single-element-sorted`, `single-number`, `single-number-1`, `single-number-3`, `sliding-window-maximum`,
 `sort-0-1-2`, `split-array-largest-sum`,
 `stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `three-sum`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
 `trapping-rainwater`,
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `undirected-cycle-bfs`, `undirected-cycle-dfs`, `unique-paths-2`, `upper-bound`,
 `vertical-order-traversal`, `wildcard-matching`, `word-break-trie`, `word-ladder-1`,
+`xor-numbers-in-range`,
 `z-function-algo`, and `zigzag-traversal`.
 
 Sixteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
@@ -270,6 +272,26 @@ across a list of words rather than one fixed call, so the shared-prefix branchin
 problem is about is visible; `word-break-trie` is a full rewrite that walks a real trie
 alongside the segment-DP array, stopping the moment the trie has no edge for the next
 character and setting `dp[j+1]` the moment it reaches an end-of-word node.
+
+The first six **Bit Manipulation** traces are also the first to use `DsType.BITS`:
+`StepEmitter.bits(value, primaryBit, secondaryBit)` renders a fixed 32-wide MSB-to-LSB
+track over the existing `ArrayCanvas`, rather than a new canvas. `check-power-of-2` and
+`count-set-bits` are single-number bit tricks (`N & (N-1)` clears the rightmost set bit
+either to test for a lone one or to count them one Brian Kernighan pass at a time);
+`xor-numbers-in-range` computes `XOR(L..R)` in O(1) via the `f(n) = XOR(0..n)`
+pattern-of-4 closed form rather than looping the range; `pow-x-n-math` is binary
+exponentiation, folding the base into the result only on the exponent's odd (bit-set)
+steps — restricted to a non-negative integer exponent since the tracer contract has no
+floating-point `FieldType`. `single-number-1` and `single-number-3` trace as `Array`
+instead: the first is the same XOR-cancellation idea as `single-number` (a distinct
+catalogue id owned by `BitManipulationService` rather than `ArrayService`, so its default
+input had to differ or the two traces would fingerprint identically); the second finds
+*two* uniques by XOR-ing everything, isolating their one differing bit, and partitioning
+the array into two buckets on it. Tracing these four to `Bits` surfaced a metadata gap in
+`BitManipulationService`'s bulk registration — every id had hardcoded `dsType: "Array"`
+regardless of what it actually renders, the same category of gap `TreeService.bulkDsType`
+and `DpService.bulkDsType` had before their own batches — fixed alongside by giving the
+service its own `bulkDsType(id)` allowlist.
 
 ---
 

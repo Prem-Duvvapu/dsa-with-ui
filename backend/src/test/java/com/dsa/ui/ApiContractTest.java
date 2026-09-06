@@ -122,7 +122,9 @@ class ApiContractTest {
             "distance-nearest-1",
             "jump-game-1", "assign-cookies", "fractional-knapsack",
             "lemonade-change", "minimum-platforms", "insert-interval",
-            "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort");
+            "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort",
+            "single-number-1", "check-power-of-2", "count-set-bits",
+            "xor-numbers-in-range", "single-number-3", "pow-x-n-math");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -323,7 +325,13 @@ class ApiContractTest {
                 arguments("/api/sorting", "bubble-sort"),
                 arguments("/api/sorting", "insertion-sort"),
                 arguments("/api/sorting", "merge-sort"),
-                arguments("/api/sorting", "quick-sort"));
+                arguments("/api/sorting", "quick-sort"),
+                arguments("/api/bitmanipulation", "single-number-1"),
+                arguments("/api/bitmanipulation", "check-power-of-2"),
+                arguments("/api/bitmanipulation", "count-set-bits"),
+                arguments("/api/bitmanipulation", "xor-numbers-in-range"),
+                arguments("/api/bitmanipulation", "single-number-3"),
+                arguments("/api/bitmanipulation", "pow-x-n-math"));
     }
 
     /**
