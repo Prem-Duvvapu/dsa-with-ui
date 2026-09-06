@@ -115,7 +115,9 @@ class ApiContractTest {
             "edit-distance", "wildcard-matching",
             "word-ladder-1", "alien-dictionary",
             "lru-cache", "ninja-and-his-friends",
-            "implement-trie", "word-break-trie");
+            "implement-trie", "word-break-trie",
+            "jump-game-1", "assign-cookies", "fractional-knapsack",
+            "lemonade-change", "minimum-platforms", "insert-interval");
 
     private String firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
@@ -283,7 +285,13 @@ class ApiContractTest {
                 arguments("/api/stackqueue", "lru-cache"),
                 arguments("/api/dp", "ninja-and-his-friends"),
                 arguments("/api/tries", "implement-trie"),
-                arguments("/api/tries", "word-break-trie"));
+                arguments("/api/tries", "word-break-trie"),
+                arguments("/api/greedy", "jump-game-1"),
+                arguments("/api/greedy", "assign-cookies"),
+                arguments("/api/greedy", "fractional-knapsack"),
+                arguments("/api/greedy", "lemonade-change"),
+                arguments("/api/greedy", "minimum-platforms"),
+                arguments("/api/greedy", "insert-interval"));
     }
 
     /**

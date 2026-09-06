@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 109 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 115 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -171,16 +171,17 @@ them means moving problems between services.
 
 ### Traced so far
 
-`aggressive-cows`, `alien-dictionary`, `asteroid-collision`,
+`aggressive-cows`, `alien-dictionary`, `assign-cookies`, `asteroid-collision`,
 `bellman-ford`,
 `bfs-traversal`, `binary-search-1d`, `book-allocation`, `burst-balloons`,
 `check-sorted-ii`, `clone-ll-random-pointer`, `combination-sum-i`, `correct-bst-swap`, `count-inversions`,
 `count-square-submatrices`,
 `climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `edit-distance`, `find-missing-number`,
 `find-min-rotated-sorted`, `find-starting-point-loop`, `flattening-ll`, `four-sum`,
-`frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
-`implement-trie`,
-`kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lower-bound`, `minimum-falling-path-sum`,
+`fractional-knapsack`, `frog-jump`, `frog-jump-k-distance`, `grid-unique-paths`, `house-robber-2`,
+`implement-trie`, `insert-interval`,
+`jump-game-1`,
+`kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`, `largest-rectangle-histogram`, `lemonade-change`, `lower-bound`, `minimum-falling-path-sum`, `minimum-platforms`,
 `ninja-and-his-friends`, `ninjas-training`,
 `largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
 `lis-binary-search`, `longest-happy-prefix`, `longest-increasing-subsequence`, `longest-subarray-sum-k-positives`,
