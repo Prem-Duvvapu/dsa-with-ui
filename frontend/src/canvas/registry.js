@@ -6,6 +6,7 @@ import GridCanvas from '../components/GridCanvas';
 import LinkedListCanvas from '../components/LinkedListCanvas';
 import QueueCanvas from '../components/QueueCanvas';
 import RecursionTreeCanvas from '../components/RecursionTreeCanvas';
+import StackCanvas from '../components/StackCanvas';
 import TreeCanvas from '../components/TreeCanvas';
 import TrieCanvas from '../components/TrieCanvas';
 
@@ -13,9 +14,12 @@ import TrieCanvas from '../components/TrieCanvas';
  * The sole dsType-to-renderer routing table.
  *
  * Types whose dedicated canvas has not landed yet retain a placeholder renderer until
- * their PROMPT-F-visual-fidelity.md slice does. `Queue` is the hero mapping for a problem
- * whose queue IS the picture; bfs-traversal is `Graph`-hero with a queue companion pane
- * instead (see canvas/companions.js) because its graph topology is the point.
+ * their PROMPT-F-visual-fidelity.md slice does. `Stack` and `Queue` are the hero mappings
+ * for a problem whose stack/queue IS the picture, reading `queueOrStackState`
+ * (StepEmitter.stack()/.queue()) rather than `arrayState` — every DsType.STACK tracer
+ * emits it already; ArrayCanvas would draw the wrong structure. bfs-traversal is
+ * `Graph`-hero with a queue companion pane instead (see canvas/companions.js) because its
+ * graph topology is the point.
  */
 export const CANVAS_BY_DSTYPE = Object.freeze({
   Array: ArrayCanvas,
@@ -28,7 +32,7 @@ export const CANVAS_BY_DSTYPE = Object.freeze({
   Tree: TreeCanvas,
   Graph: GraphCanvas,
   LinkedList: LinkedListCanvas,
-  Stack: ArrayCanvas,
+  Stack: StackCanvas,
   Queue: QueueCanvas,
   PriorityQueue: ArrayCanvas,
   Trie: TrieCanvas,

@@ -180,4 +180,18 @@ describe('CaptureStrip', () => {
     const { container } = render(<CaptureStrip steps={[]} current={0} />);
     expect(container.firstChild).toBeNull();
   });
+
+  it('collapses and reopens via the disclosure button, keeping the header visible', () => {
+    const { container } = render(<CaptureStrip steps={steps} current={0} />);
+    const toggle = screen.getByRole('button', { name: 'Hide execution capture' });
+    expect(container.querySelector('.cs-grid')).toBeTruthy();
+
+    fireEvent.click(toggle);
+    expect(container.querySelector('.cs-label')).toBeTruthy();
+    expect(container.querySelector('.cs-grid')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Show execution capture' })).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Show execution capture' }));
+    expect(container.querySelector('.cs-grid')).toBeTruthy();
+  });
 });

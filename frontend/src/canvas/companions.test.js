@@ -30,11 +30,22 @@ describe('getCompanions', () => {
     expect(getCompanions('Graph', allSteps[0], allSteps)).toEqual([]);
   });
 
-  it('adds nothing for a non-Graph hero, even with a populated queueOrStackState', () => {
+  it('adds nothing for a non-Graph, non-Matrix hero, even with a populated queueOrStackState', () => {
     // A dsType whose OWN hero already draws queueOrStackState (once one exists) must not
     // also get a companion for the same field — that would draw the same structure twice.
     const allSteps = [{ queueOrStackState: ['0'] }];
     expect(getCompanions('Array', allSteps[0], allSteps)).toEqual([]);
+  });
+
+  it('adds a queue companion for a Matrix hero too', () => {
+    // rotting-oranges is Matrix-hero (the grid is the point) but its multi-source BFS
+    // still runs a real queue, which was previously computed and never shown anywhere.
+    const currentStep = { queueOrStackState: ['0,0', '0,1'] };
+    const allSteps = [currentStep];
+    const companions = getCompanions('Matrix', currentStep, allSteps);
+
+    expect(companions).toHaveLength(1);
+    expect(companions[0].Component).toBe(QueueCanvas);
   });
 
   it('handles a missing step or trace without throwing', () => {

@@ -26,7 +26,9 @@ export function getCompanions(heroDsType, step, allSteps) {
   const runHasQueue = Array.isArray(allSteps)
     && allSteps.some((s) => s?.queueOrStackState?.length > 0);
 
-  if (heroDsType === 'Graph' && runHasQueue) {
+  // Graph (bfs-traversal, dijkstra-min-heap, ...) and Matrix (rotting-oranges' multi-source
+  // BFS over a grid) both narrate a real queue alongside their hero structure.
+  if ((heroDsType === 'Graph' || heroDsType === 'Matrix') && runHasQueue) {
     companions.push({ key: 'queue', Component: QueueCanvas, props: { step, title: 'Queue' } });
   }
 

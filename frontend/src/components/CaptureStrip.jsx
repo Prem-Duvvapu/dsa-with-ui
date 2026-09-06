@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 /**
  * The whole execution, on screen at once.
@@ -95,6 +96,7 @@ const LABELLED_UP_TO = 40;
 const DOM_UP_TO = 400;
 
 export default function CaptureStrip({ steps = [], current = 0, onSeek }) {
+  const [isOpen, setIsOpen] = useState(true);
   const columns = steps.length;
   const mode = columns <= LABELLED_UP_TO ? 'labelled' : columns <= DOM_UP_TO ? 'dense' : 'band';
 
@@ -114,12 +116,23 @@ export default function CaptureStrip({ steps = [], current = 0, onSeek }) {
           Execution capture &mdash; {columns} step{columns === 1 ? '' : 's'}, {rows} row
           {rows === 1 ? '' : 's'}
         </span>
-        {mode !== 'labelled' && (
+        {isOpen && mode !== 'labelled' && (
           <span className="cs-mode">{mode === 'dense' ? 'compressed' : 'density band'}</span>
         )}
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="sb-disclosure"
+          aria-expanded={isOpen}
+          aria-label={isOpen ? 'Hide execution capture' : 'Show execution capture'}
+          title={isOpen ? 'Hide execution capture' : 'Show execution capture'}
+          style={{ marginLeft: 'auto' }}
+        >
+          {isOpen ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+        </button>
       </div>
 
-      {mode === 'band' ? (
+      {isOpen && (mode === 'band' ? (
         <BandStrip grid={grid} rows={rows} current={current} onSeek={seek} />
       ) : (
         <div className="cs-grid">
@@ -158,7 +171,7 @@ export default function CaptureStrip({ steps = [], current = 0, onSeek }) {
             ))}
           </div>
         </div>
-      )}
+      ))}
     </section>
   );
 }
