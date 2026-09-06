@@ -1,0 +1,1801 @@
+{
+  "anchors" : {
+    "done" : 11,
+    "expand" : 4,
+    "shrink" : 6,
+    "windowComplete" : 9
+  },
+  "code" : "public int longestOnes(int[] nums, int k) {\n    int left = 0, zeroes = 0, maxLen = 0;\n    for (int right = 0; right < nums.length; right++) {\n        if (nums[right] == 0) zeroes++;\n        while (zeroes > k) {\n            if (nums[left] == 0) zeroes--;\n            left++;\n        }\n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    return maxLen;\n}",
+  "problemId" : "max-consecutive-ones-3",
+  "resolvedInput" : {
+    "k" : 2,
+    "nums" : [ 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0 ]
+  },
+  "stepCount" : 28,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Expand right to 0 (value 1). Zeroes in window: 0 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "0",
+      "right" : "0",
+      "zeroes" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "Window [0,0] is valid with 0 zeroes. Current length: 1 (max: 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "1",
+      "right" : "0",
+      "windowLen" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Expand right to 1 (value 1). Zeroes in window: 0 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "0",
+      "right" : "1",
+      "zeroes" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Window [0,1] is valid with 0 zeroes. Current length: 2 (max: 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "2",
+      "right" : "1",
+      "windowLen" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "Expand right to 2 (value 1). Zeroes in window: 0 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "0",
+      "right" : "2",
+      "zeroes" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "Window [0,2] is valid with 0 zeroes. Current length: 3 (max: 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "3",
+      "right" : "2",
+      "windowLen" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 4,
+    "description" : "Expand right to 3 (value 0). Zeroes in window: 1 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "0",
+      "right" : "3",
+      "zeroes" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 9,
+    "description" : "Window [0,3] is valid with 1 zeroes. Current length: 4 (max: 4).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "4",
+      "right" : "3",
+      "windowLen" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 4,
+    "description" : "Expand right to 4 (value 0). Zeroes in window: 2 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "0",
+      "right" : "4",
+      "zeroes" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "Window [0,4] is valid with 2 zeroes. Current length: 5 (max: 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "5",
+      "right" : "4",
+      "windowLen" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 4,
+    "description" : "Expand right to 5 (value 0). Zeroes in window: 3 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "0",
+      "right" : "5",
+      "zeroes" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "Zeroes (3) exceeded budget 2 → shrink left past 0 (value 1). Left is now 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "right" : "5",
+      "zeroes" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 6,
+    "description" : "Zeroes (3) exceeded budget 2 → shrink left past 1 (value 1). Left is now 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "right" : "5",
+      "zeroes" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 6,
+    "description" : "Zeroes (3) exceeded budget 2 → shrink left past 2 (value 1). Left is now 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3",
+      "right" : "5",
+      "zeroes" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 6,
+    "description" : "Zeroes (3) exceeded budget 2 → shrink left past 3 (value 0). Left is now 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "4",
+      "right" : "5",
+      "zeroes" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 9,
+    "description" : "Window [4,5] is valid with 2 zeroes. Current length: 2 (max: 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "4",
+      "maxLen" : "5",
+      "right" : "5",
+      "windowLen" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 4,
+    "description" : "Expand right to 6 (value 1). Zeroes in window: 2 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "4",
+      "right" : "6",
+      "zeroes" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 9,
+    "description" : "Window [4,6] is valid with 2 zeroes. Current length: 3 (max: 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "4",
+      "maxLen" : "5",
+      "right" : "6",
+      "windowLen" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 4,
+    "description" : "Expand right to 7 (value 1). Zeroes in window: 2 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "4",
+      "right" : "7",
+      "zeroes" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 9,
+    "description" : "Window [4,7] is valid with 2 zeroes. Current length: 4 (max: 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "4",
+      "maxLen" : "5",
+      "right" : "7",
+      "windowLen" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 4,
+    "description" : "Expand right to 8 (value 1). Zeroes in window: 2 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "4",
+      "right" : "8",
+      "zeroes" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 9,
+    "description" : "Window [4,8] is valid with 2 zeroes. Current length: 5 (max: 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "4",
+      "maxLen" : "5",
+      "right" : "8",
+      "windowLen" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 4,
+    "description" : "Expand right to 9 (value 1). Zeroes in window: 2 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "4",
+      "right" : "9",
+      "zeroes" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 9,
+    "description" : "Window [4,9] is valid with 2 zeroes. Current length: 6 (max: 6).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "4",
+      "maxLen" : "6",
+      "right" : "9",
+      "windowLen" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 4,
+    "description" : "Expand right to 10 (value 0). Zeroes in window: 3 (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "left" : "4",
+      "right" : "10",
+      "zeroes" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 6,
+    "description" : "Zeroes (3) exceeded budget 2 → shrink left past 4 (value 0). Left is now 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "5",
+      "right" : "10",
+      "zeroes" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 9,
+    "description" : "Window [5,10] is valid with 2 zeroes. Current length: 6 (max: 6).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "5",
+      "maxLen" : "6",
+      "right" : "10",
+      "windowLen" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "active"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 11,
+    "description" : "Scan complete. Longest contiguous subarray of 1s after flipping at most 2 zeroes: 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

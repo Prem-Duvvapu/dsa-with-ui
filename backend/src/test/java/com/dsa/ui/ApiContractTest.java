@@ -139,6 +139,10 @@ class ApiContractTest {
             "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "merge-k-sorted-lists",
             "fruit-into-baskets", "longest-repeating-character-replacement",
             "minimum-window-substring", "subarrays-k-different-integers",
+            "longest-substring-without-repeating", "max-consecutive-ones-3",
+            "binary-subarrays-with-sum", "count-nice-subarrays",
+            "number-substrings-all-three-chars", "maximum-points-cards",
+            "longest-substring-k-distinct", "minimum-window-subsequence",
             "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu");
 
     /**

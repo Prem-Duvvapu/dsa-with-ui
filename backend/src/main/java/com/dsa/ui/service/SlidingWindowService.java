@@ -25,17 +25,22 @@ public class SlidingWindowService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // These ids have real tracers (tracer/impl). Refuse rather than let default:
-            // serve another algorithm's steps under this id. The default: stays until
-            // PROMPT D; other ids in this service still rely on it.
+            // All 12 sliding window problems now have real tracers (tracer/impl).
             case "fruit-into-baskets":
             case "longest-repeating-character-replacement":
             case "minimum-window-substring":
             case "subarrays-k-different-integers":
+            case "longest-substring-without-repeating":
+            case "max-consecutive-ones-3":
+            case "binary-subarrays-with-sum":
+            case "count-nice-subarrays":
+            case "number-substrings-all-three-chars":
+            case "maximum-points-cards":
+            case "longest-substring-k-distinct":
+            case "minimum-window-subsequence":
                 throw new LegacyTraceRetiredException(problemId);
-            case "longest-substring-without-repeating": return generateLongestSubstringSteps();
-            case "max-consecutive-ones-3": return generateMaxConsecutiveOnesSteps();
-            default: return generateLongestSubstringSteps();
+            default:
+                throw new LegacyTraceRetiredException(problemId);
         }
     }
 

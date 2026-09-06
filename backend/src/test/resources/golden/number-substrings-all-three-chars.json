@@ -1,0 +1,568 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "updateLastSeen" : 6,
+    "validWindow" : 8
+  },
+  "code" : "public int numberOfSubstrings(String s) {\n    int[] last = new int[]{-1, -1, -1};\n    int count = 0;\n\n    for (int i = 0; i < s.length(); i++) {\n        last[s.charAt(i) - 'a'] = i;\n        if (last[0] != -1 && last[1] != -1 && last[2] != -1) {\n            int minLast = Math.min(last[0], Math.min(last[1], last[2]));\n            count += 1 + minLast;\n        }\n    }\n    return count;\n}",
+  "problemId" : "number-substrings-all-three-chars",
+  "resolvedInput" : {
+    "s" : "abcabc"
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "Index 0: char 'a'. Last seen: a=0, b=-1, c=-1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "a",
+      "i" : "0",
+      "lastA" : "0",
+      "lastB" : "-1",
+      "lastC" : "-1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Index 1: char 'b'. Last seen: a=0, b=1, c=-1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "b",
+      "i" : "1",
+      "lastA" : "0",
+      "lastB" : "1",
+      "lastC" : "-1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Index 2: char 'c'. Last seen: a=0, b=1, c=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "c",
+      "i" : "2",
+      "lastA" : "0",
+      "lastB" : "1",
+      "lastC" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "All 3 characters present! Shortest window ending at 2 is [0,2]. Substrings starting at 0..0 ending at 2 are valid (+1). Total: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "1",
+      "i" : "2",
+      "minLast" : "0",
+      "total" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "target",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "active",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Index 3: char 'a'. Last seen: a=3, b=1, c=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "a",
+      "i" : "3",
+      "lastA" : "3",
+      "lastB" : "1",
+      "lastC" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "All 3 characters present! Shortest window ending at 3 is [1,3]. Substrings starting at 0..1 ending at 3 are valid (+2). Total: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "2",
+      "i" : "3",
+      "minLast" : "1",
+      "total" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "target",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "active",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Index 4: char 'b'. Last seen: a=3, b=4, c=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "b",
+      "i" : "4",
+      "lastA" : "3",
+      "lastB" : "4",
+      "lastC" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 8,
+    "description" : "All 3 characters present! Shortest window ending at 4 is [2,4]. Substrings starting at 0..2 ending at 4 are valid (+3). Total: 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "3",
+      "i" : "4",
+      "minLast" : "2",
+      "total" : "6"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "target",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "active",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "Index 5: char 'c'. Last seen: a=3, b=4, c=5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "char" : "c",
+      "i" : "5",
+      "lastA" : "3",
+      "lastB" : "4",
+      "lastC" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "All 3 characters present! Shortest window ending at 5 is [3,5]. Substrings starting at 0..3 ending at 5 are valid (+4). Total: 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "4",
+      "i" : "5",
+      "minLast" : "3",
+      "total" : "10"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "target",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "active",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Finished string. Total substrings containing at least one 'a', 'b', and 'c': 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "10"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

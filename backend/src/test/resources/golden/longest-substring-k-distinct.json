@@ -1,0 +1,641 @@
+{
+  "anchors" : {
+    "done" : 18,
+    "expand" : 6,
+    "shrink" : 10,
+    "windowComplete" : 16
+  },
+  "code" : "public int lengthOfLongestSubstringKDistinct(String s, int k) {\n    Map<Character, Integer> map = new LinkedHashMap<>();\n    int left = 0, maxLen = 0;\n\n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        map.merge(c, 1, Integer::sum);\n\n        while (map.size() > k) {\n            char leftChar = s.charAt(left);\n            int rem = map.merge(leftChar, -1, Integer::sum);\n            if (rem == 0) map.remove(leftChar);\n            left++;\n        }\n\n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    return maxLen;\n}",
+  "problemId" : "longest-substring-k-distinct",
+  "resolvedInput" : {
+    "k" : 2,
+    "s" : "eceba"
+  },
+  "stepCount" : 14,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "Add 'e' at index 0. Window [0,0] holds 1 distinct char (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "1",
+      "k" : "2",
+      "left" : "0",
+      "right" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 16,
+    "description" : "Window [0,0]=\"e\" is valid (len 1). Best so far: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "1",
+      "right" : "0",
+      "windowLen" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Add 'c' at index 1. Window [0,1] holds 2 distinct chars (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 16,
+    "description" : "Window [0,1]=\"ec\" is valid (len 2). Best so far: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "2",
+      "right" : "1",
+      "windowLen" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Add 'e' at index 2. Window [0,2] holds 2 distinct chars (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "active",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 16,
+    "description" : "Window [0,2]=\"ece\" is valid (len 3). Best so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "maxLen" : "3",
+      "right" : "2",
+      "windowLen" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "active",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Add 'b' at index 3. Window [0,3] holds 3 distinct chars (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "3",
+      "k" : "2",
+      "left" : "0",
+      "right" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "active",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "active",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Distinct count (3) > K (2) → drop 'e' from left. Window now starts at 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "3",
+      "left" : "1",
+      "right" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "target",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "active",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "Distinct count (3) > K (2) → drop 'c' from left. Window now starts at 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "left" : "2",
+      "right" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "Window [2,3]=\"eb\" is valid (len 2). Best so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "maxLen" : "3",
+      "right" : "3",
+      "windowLen" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 6,
+    "description" : "Add 'a' at index 4. Window [2,4] holds 3 distinct chars (budget K=2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "3",
+      "k" : "2",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "active",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 10,
+    "description" : "Distinct count (3) > K (2) → drop 'e' from left. Window now starts at 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "target",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 16,
+    "description" : "Window [3,4]=\"ba\" is valid (len 2). Best so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3",
+      "maxLen" : "3",
+      "right" : "4",
+      "windowLen" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "target",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 18,
+    "description" : "Scan complete. Longest substring with at most 2 distinct characters has length 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
