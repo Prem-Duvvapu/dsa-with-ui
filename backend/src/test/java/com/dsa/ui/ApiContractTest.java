@@ -147,7 +147,9 @@ class ApiContractTest {
             "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
             "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
             "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
-            "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed");
+            "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
+            "word-ladder-2", "accounts-merge", "number-of-islands-2", "making-large-island",
+            "swim-in-rising-water", "tarjan-bridges", "articulation-points");
 
     /**
      * Returns empty when every catalogued id for this base is retired - Sorting is the
@@ -280,6 +282,13 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "kruskals-mst"),
                 arguments("/api/graphs/advanced", "network-connected-ops"),
                 arguments("/api/graphs/advanced", "most-stones-removed"),
+                arguments("/api/graphs/advanced", "word-ladder-2"),
+                arguments("/api/graphs/advanced", "accounts-merge"),
+                arguments("/api/graphs/advanced", "number-of-islands-2"),
+                arguments("/api/graphs/advanced", "making-large-island"),
+                arguments("/api/graphs/advanced", "swim-in-rising-water"),
+                arguments("/api/graphs/advanced", "tarjan-bridges"),
+                arguments("/api/graphs/advanced", "articulation-points"),
                 arguments("/api/binarysearch", "search-rotated-sorted"),
                 arguments("/api/binarysearch", "koko-eating-bananas"),
                 arguments("/api/binarysearch", "split-array-largest-sum"),

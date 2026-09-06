@@ -1,0 +1,224 @@
+{
+  "anchors" : {
+    "addLand" : 9,
+    "done" : 30,
+    "init" : 2,
+    "report" : 27,
+    "sameSet" : 23,
+    "union" : 20
+  },
+  "code" : "public List<Integer> numIslands2(int m, int n, int[][] positions) {\n    int[] parent = new int[m * n];\n    Arrays.fill(parent, -1);          // -1 means \"still water\"\n    int count = 0;\n    List<Integer> answer = new ArrayList<>();\n\n    for (int[] p : positions) {\n        int r = p[0], c = p[1], cell = r * n + c;\n        if (parent[cell] == -1) {\n            parent[cell] = cell;\n            count++;\n        }\n\n        for (int[] d : DIRECTIONS) {\n            int nr = r + d[0], nc = c + d[1];\n            if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;\n            int nb = nr * n + nc;\n            if (parent[nb] == -1) continue;\n            if (find(cell, parent) != find(nb, parent)) {\n                parent[find(nb, parent)] = find(cell, parent);\n                count--;\n            } else {\n                continue;                 // already one island\n            }\n        }\n\n        answer.add(count);\n    }\n\n    return answer;\n}",
+  "problemId" : "number-of-islands-2",
+  "resolvedInput" : {
+    "cols" : 3,
+    "operations" : [ [ 0, 0 ], [ 0, 1 ], [ 1, 2 ], [ 2, 1 ] ],
+    "rows" : 3
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "A 3x3 board of water and 4 add-land operation(s). parent[cell] = -1 marks water; the island count is reported after every single addition.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[]",
+      "islands" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 9,
+    "description" : "Turn (0,0) into land. On its own it is a brand-new island, so the count rises to 1 before any merging.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[]",
+      "cell" : "(0,0)",
+      "islands" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 27,
+    "description" : "Report the count after this operation: 1 island(s). answer = [1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1]",
+      "islands" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Turn (0,1) into land. On its own it is a brand-new island, so the count rises to 2 before any merging.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1]",
+      "cell" : "(0,1)",
+      "islands" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 20,
+    "description" : "Neighbour (0,0) is land in a different island (root 0 vs 1) - merge them and drop the count to 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1]",
+      "cell" : "(0,1)",
+      "islands" : "1",
+      "neighbour" : "(0,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 27,
+    "description" : "Report the count after this operation: 1 island(s). answer = [1, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1, 1]",
+      "islands" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "Turn (1,2) into land. On its own it is a brand-new island, so the count rises to 2 before any merging.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1, 1]",
+      "cell" : "(1,2)",
+      "islands" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 1 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 27,
+    "description" : "Report the count after this operation: 2 island(s). answer = [1, 1, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1, 1, 2]",
+      "islands" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 1 ], [ 0, 0, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 9,
+    "description" : "Turn (2,1) into land. On its own it is a brand-new island, so the count rises to 3 before any merging.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1, 1, 2]",
+      "cell" : "(2,1)",
+      "islands" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 27,
+    "description" : "Report the count after this operation: 3 island(s). answer = [1, 1, 2, 3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1, 1, 2, 3]",
+      "islands" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 30,
+    "description" : "All 4 operation(s) applied. Island count after each: [1, 1, 2, 3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1, 1, 2, 3]",
+      "islands" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
