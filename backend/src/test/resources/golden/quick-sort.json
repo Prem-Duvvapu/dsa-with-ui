@@ -1,0 +1,866 @@
+{
+  "anchors" : {
+    "base" : 7,
+    "compare" : 14,
+    "done" : 8,
+    "partition" : 3,
+    "pivotChoice" : 11,
+    "placePivot" : 19,
+    "swapLess" : 16
+  },
+  "code" : "public void quickSort(int[] arr, int low, int high) {\n    if (low < high) {\n        int pIndex = partition(arr, low, high);\n        quickSort(arr, low, pIndex - 1);\n        quickSort(arr, pIndex + 1, high);\n    } else {\n    }\n}\n\nprivate int partition(int[] arr, int low, int high) {\n    int pivot = arr[low];\n    int i = low;\n    for (int j = low + 1; j <= high; j++) {\n        if (arr[j] < pivot) {\n            i++;\n            swap(arr, i, j);\n        }\n    }\n    swap(arr, low, i);\n    return i;\n}",
+  "problemId" : "quick-sort",
+  "resolvedInput" : {
+    "nums" : [ 5, 2, 8, 1, 9 ]
+  },
+  "stepCount" : 22,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Range [0,4] has more than one element - partition it around a pivot, then recurse on both sides.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "Partitioning [0,4]: pivot = arr[0] = 5. i starts at 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "i" : "0",
+      "low" : "0",
+      "pivot" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 14,
+    "description" : "Compare arr[j=1]=2 against pivot(5).",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "1",
+      "pivot" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 16,
+    "description" : "2 < pivot(5) - advance i to 1 and swap arr[1] with arr[1].",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Compare arr[j=2]=8 against pivot(5).",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "2",
+      "pivot" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "Compare arr[j=3]=1 against pivot(5).",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "3",
+      "pivot" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 16,
+    "description" : "1 < pivot(5) - advance i to 2 and swap arr[2] with arr[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "Compare arr[j=4]=9 against pivot(5).",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "4",
+      "pivot" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 19,
+    "description" : "Scan done - place the pivot at its final index 2 by swapping arr[0] and arr[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 3,
+    "description" : "Range [0,1] has more than one element - partition it around a pivot, then recurse on both sides.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 11,
+    "description" : "Partitioning [0,1]: pivot = arr[0] = 1. i starts at 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "i" : "0",
+      "low" : "0",
+      "pivot" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "Compare arr[j=1]=2 against pivot(1).",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "j" : "1",
+      "pivot" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 19,
+    "description" : "Scan done - place the pivot at its final index 0 by swapping arr[0] and arr[0].",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "Range [0,-1] holds no elements - nothing to partition.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "-1",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 7,
+    "description" : "Range [1,1] holds a single element - nothing to partition.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 3,
+    "description" : "Range [3,4] has more than one element - partition it around a pivot, then recurse on both sides.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 11,
+    "description" : "Partitioning [3,4]: pivot = arr[3] = 8. i starts at 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "i" : "3",
+      "low" : "3",
+      "pivot" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 14,
+    "description" : "Compare arr[j=4]=9 against pivot(8).",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "4",
+      "pivot" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 19,
+    "description" : "Scan done - place the pivot at its final index 3 by swapping arr[3] and arr[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 7,
+    "description" : "Range [3,2] holds no elements - nothing to partition.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 7,
+    "description" : "Range [4,4] holds a single element - nothing to partition.",
+    "queueOrStackState" : null,
+    "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 8,
+    "description" : "Recursion complete. Sorted array: [1, 2, 5, 8, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 5, 8, 9]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
