@@ -1,0 +1,84 @@
+{
+  "anchors" : {
+    "check" : 10,
+    "factor" : 6,
+    "init" : 3
+  },
+  "code" : "public boolean isPrime(int n) {\n    if (n <= 1) return false;\n    int count = 0;\n    for (int i = 1; i * i <= n; i++) {\n        if (n % i == 0) {\n            count++;\n            if ((n / i) != i) count++;\n        }\n    }\n    return count == 2;\n}",
+  "problemId" : "check-prime",
+  "resolvedInput" : {
+    "n" : 29
+  },
+  "stepCount" : 3,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Count factors of 29 for i from 1 up to sqrt(29) ~= 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "0",
+      "n" : "29"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 29,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "i=1 divides 29 (paired with 29). Factor count is now 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 29,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Factor count = 2 -> PRIME (exactly 1 and n).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "PRIME"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 29,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,8 +1,8 @@
 package com.dsa.ui;
 
-import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.service.BasicMathService;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,13 +33,18 @@ public class BasicMathServiceTest {
         assertEquals("Count Digits of a Number", problem.getTitle());
     }
 
+    /**
+     * All seven ids in this service now have real tracers in tracer/impl - the legacy
+     * generators are gone on purpose, so every id must refuse rather than fall back to
+     * another algorithm's steps.
+     */
     @Test
-    public void testGenerateStepsForAllMathProblems() {
+    public void testGenerateStepsRetiredForAllMathProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps should not be empty for " + p.getId());
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

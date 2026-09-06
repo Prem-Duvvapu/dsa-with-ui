@@ -25,13 +25,17 @@ public class BasicRecursionService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "print-1-to-n": return generatePrint1ToNSteps();
-            case "print-n-to-1": return generatePrintNTo1Steps();
-            case "sum-first-n": return generateSumFirstNSteps();
-            case "factorial-number": return generateFactorialSteps();
-            case "reverse-array-recursion": return generateReverseArrayRecursionSteps();
-            case "palindrome-string-recursion": return generatePalindromeStringRecursionSteps();
-            case "fibonacci-recursion": return generateFibonacciRecursionSteps();
+            // These ids have real tracers (tracer/impl). Refuse rather than let default:
+            // serve another algorithm's steps under this id. The default: stays until
+            // PROMPT D; no other ids remain in this service.
+            case "print-1-to-n":
+            case "print-n-to-1":
+            case "sum-first-n":
+            case "factorial-number":
+            case "reverse-array-recursion":
+            case "palindrome-string-recursion":
+            case "fibonacci-recursion":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generatePrint1ToNSteps();
         }
     }
@@ -52,7 +56,7 @@ public class BasicRecursionService implements ProblemProvider {
             null, null, createTreeNodes("print1ToN"), createArrayState(new int[]{1, 2, 3, 4, 5}), null, null, null,
             new ComplexityDetail("O(N)", "Makes N recursive function calls.", "Direct call sequence from 1 to N.",
                                 "O(N)", "Auxiliary call stack space of depth N.", "Stack frames allocated for N active recursive calls.", "O(N)", "O(1)"),
-            "Stack"
+            "RecursionTree"
         ));
 
         // 2. Print N to 1 using Recursion
@@ -70,7 +74,7 @@ public class BasicRecursionService implements ProblemProvider {
             null, null, createTreeNodes("printNTo1"), createArrayState(new int[]{5, 4, 3, 2, 1}), null, null, null,
             new ComplexityDetail("O(N)", "Makes N recursive calls.", "Reduces N by 1 until base case n = 0.",
                                 "O(N)", "Auxiliary recursion stack depth N.", "Call stack frames.", "O(N)", "O(1)"),
-            "Stack"
+            "RecursionTree"
         ));
 
         // 3. Sum of First N Numbers
@@ -124,7 +128,7 @@ public class BasicRecursionService implements ProblemProvider {
             null, null, null, createArrayState(new int[]{1, 2, 3, 4, 5}), null, null, null,
             new ComplexityDetail("O(N)", "N/2 recursive swaps.", "Processes two pointers moving inward.",
                                 "O(N/2)", "Call stack depth N/2.", "Auxiliary call stack memory.", "O(N/2)", "O(1)"),
-            "Array"
+            "RecursionTree"
         ));
 
         // 6. Palindrome String Check (Recursive)
@@ -142,7 +146,7 @@ public class BasicRecursionService implements ProblemProvider {
             null, null, null, createArrayState(new int[]{77, 65, 68, 65, 77}), null, null, null,
             new ComplexityDetail("O(N/2)", "Compares characters from ends inward.", "Matches N/2 characters.",
                                 "O(N/2)", "Recursion stack depth N/2.", "Call stack frames.", "O(N/2)", "O(1)"),
-            "Array"
+            "String"
         ));
 
         // 7. Fibonacci Number (Recursive)
@@ -159,7 +163,7 @@ public class BasicRecursionService implements ProblemProvider {
             null, null, createFibonacciTreeNodes(), createArrayState(new int[]{0, 1, 1, 2, 3, 5, 8}), null, null, null,
             new ComplexityDetail("O(2^N)", "Exponential call tree branches.", "Binary tree calls double at each level.",
                                 "O(N)", "Maximum call stack depth N.", "Auxiliary recursion stack.", "O(N)", "O(1)"),
-            "Stack"
+            "RecursionTree"
         ));
     }
 
