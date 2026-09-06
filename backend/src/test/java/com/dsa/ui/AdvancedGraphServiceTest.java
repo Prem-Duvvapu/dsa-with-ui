@@ -46,7 +46,8 @@ class AdvancedGraphServiceTest {
         Set<String> retired = Set.of("z-function-algo", "kmp-lps-algo",
                 "shortest-palindrome", "longest-happy-prefix",
                 "bellman-ford", "kosaraju-scc",
-                "word-ladder-1", "alien-dictionary");
+                "word-ladder-1", "alien-dictionary",
+                "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 161 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 164 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below.
 
@@ -206,6 +206,7 @@ them means moving problems between services.
 `triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `undirected-cycle-bfs`, `undirected-cycle-dfs`, `unique-paths-2`, `upper-bound`,
 `vertical-order-traversal`, `wildcard-matching`, `word-break-trie`, `word-ladder-1`,
 `xor-numbers-in-range`,
+`cycle-directed-bfs`, `disjoint-set-dsu`, `kahn-algo-bfs`,
 `z-function-algo`, and `zigzag-traversal`.
 
 Sixteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
