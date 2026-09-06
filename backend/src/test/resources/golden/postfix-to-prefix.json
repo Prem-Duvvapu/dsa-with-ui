@@ -1,0 +1,494 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "init" : 2,
+    "operand" : 5,
+    "rebuild" : 7
+  },
+  "code" : "public String toPrefix(String postfix) {\n    Deque<String> pieces = new ArrayDeque<>();\n    for (char c : postfix.toCharArray()) {\n        if (isOperand(c)) {\n            pieces.push(String.valueOf(c));\n        } else {\n            String right = pieces.pop();\n            String left = pieces.pop();\n            pieces.push(c + left + right);\n        }\n    }\n    return pieces.pop();\n}",
+  "problemId" : "postfix-to-prefix",
+  "resolvedInput" : {
+    "expression" : "AB+CD-*"
+  },
+  "stepCount" : 9,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "\"AB+CD-*\" is postfix, so scan it LEFT to right — the operator trails its operands, which means both are already on the stack by the time it appears.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "expression" : "AB+CD-*"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "'A' is an operand and is already valid prefix on its own. Push it.",
+    "queueOrStackState" : [ "A" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "1",
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "'B' is an operand and is already valid prefix on its own. Push it.",
+    "queueOrStackState" : [ "B", "A" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "'+' claims the two pieces on top. Scanning forwards, the piece popped first (B) is the RIGHT operand and the second (A) the left, so moving the operator in front gives +AB.",
+    "queueOrStackState" : [ "+AB" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "+AB",
+      "depth" : "1",
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "current",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "'C' is an operand and is already valid prefix on its own. Push it.",
+    "queueOrStackState" : [ "C", "+AB" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "'D' is an operand and is already valid prefix on its own. Push it.",
+    "queueOrStackState" : [ "D", "C", "+AB" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "3",
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "current",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "'-' claims the two pieces on top. Scanning forwards, the piece popped first (D) is the RIGHT operand and the second (C) the left, so moving the operator in front gives -CD.",
+    "queueOrStackState" : [ "-CD", "+AB" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "-CD",
+      "depth" : "2",
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 7,
+    "description" : "'*' claims the two pieces on top. Scanning forwards, the piece popped first (-CD) is the RIGHT operand and the second (+AB) the left, so moving the operator in front gives *+AB-CD.",
+    "queueOrStackState" : [ "*+AB-CD" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "*+AB-CD",
+      "depth" : "1",
+      "i" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 12,
+    "description" : "\"AB+CD-*\" in prefix is \"*+AB-CD\" — every operator moved from behind its operands to in front of them.",
+    "queueOrStackState" : [ "*+AB-CD" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "*+AB-CD"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 3,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 4,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 5,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 6,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

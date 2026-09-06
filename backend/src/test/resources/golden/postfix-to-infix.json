@@ -1,0 +1,317 @@
+{
+  "anchors" : {
+    "bracket" : 7,
+    "done" : 12,
+    "init" : 2,
+    "operand" : 5
+  },
+  "code" : "public String toInfix(String postfix) {\n    Deque<String> operands = new ArrayDeque<>();\n    for (char c : postfix.toCharArray()) {\n        if (isOperand(c)) {\n            operands.push(String.valueOf(c));\n        } else {\n            String right = operands.pop();\n            String left = operands.pop();\n            operands.push(\"(\" + left + c + right + \")\");\n        }\n    }\n    return operands.pop();\n}",
+  "problemId" : "postfix-to-infix",
+  "resolvedInput" : {
+    "expression" : "ab*c+"
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Read \"ab*c+\" left to right. Unlike the other conversions this one has to invent something — infix cannot encode grouping by position, so every sub-expression gets brackets.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "expression" : "ab*c+"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "'a' is an operand — push it as a complete sub-expression needing no brackets of its own.",
+    "queueOrStackState" : [ "a" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "1",
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "'b' is an operand — push it as a complete sub-expression needing no brackets of its own.",
+    "queueOrStackState" : [ "b", "a" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "'*' applies to the top two. Forwards, the first popped (b) is the right operand and the second (a) the left; bracket them into (a*b) so the grouping survives.",
+    "queueOrStackState" : [ "(a*b)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "(a*b)",
+      "depth" : "1",
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "'c' is an operand — push it as a complete sub-expression needing no brackets of its own.",
+    "queueOrStackState" : [ "c", "(a*b)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "'+' applies to the top two. Forwards, the first popped (c) is the right operand and the second ((a*b)) the left; bracket them into ((a*b)+c) so the grouping survives.",
+    "queueOrStackState" : [ "((a*b)+c)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "((a*b)+c)",
+      "depth" : "1",
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "current",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "\"ab*c+\" in infix is ((a*b)+c) — fully bracketed, so it reads the same way with or without precedence rules.",
+    "queueOrStackState" : [ "((a*b)+c)" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "((a*b)+c)"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

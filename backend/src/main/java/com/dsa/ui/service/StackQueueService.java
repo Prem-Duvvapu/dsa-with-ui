@@ -58,6 +58,15 @@ public class StackQueueService implements ProblemProvider {
             case "stack-ll-impl":
             case "queue-ll-impl":
                 throw new LegacyTraceRetiredException(problemId);
+            // All six Conversions ids are traced (tracer/impl). None of them ever had a
+            // generator here either - every one was on default:.
+            case "infix-to-postfix":
+            case "infix-to-prefix":
+            case "prefix-to-infix":
+            case "prefix-to-postfix":
+            case "postfix-to-prefix":
+            case "postfix-to-infix":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generatePlaceholderStackSteps();
         }
     }

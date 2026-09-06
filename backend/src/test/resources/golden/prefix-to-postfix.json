@@ -1,0 +1,968 @@
+{
+  "anchors" : {
+    "done" : 13,
+    "init" : 2,
+    "operand" : 6,
+    "rebuild" : 8
+  },
+  "code" : "public String toPostfix(String prefix) {\n    Deque<String> pieces = new ArrayDeque<>();\n    for (int i = prefix.length() - 1; i >= 0; i--) {\n        char c = prefix.charAt(i);\n        if (isOperand(c)) {\n            pieces.push(String.valueOf(c));\n        } else {\n            String left = pieces.pop();\n            String right = pieces.pop();\n            pieces.push(left + right + c);\n        }\n    }\n    return pieces.pop();\n}",
+  "problemId" : "prefix-to-postfix",
+  "resolvedInput" : {
+    "expression" : "*-A/BC-/AKL"
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "\"*-A/BC-/AKL\" is prefix, so scan it from the right. No precedence rules are involved: both notations are bracket-free, and the only difference is whether the operator sits in front of its operands or behind them.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "expression" : "*-A/BC-/AKL"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "'L' is an operand and is already valid postfix on its own. Push it.",
+    "queueOrStackState" : [ "L" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "1",
+      "i" : "10"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "current",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "'K' is an operand and is already valid postfix on its own. Push it.",
+    "queueOrStackState" : [ "K", "L" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "9"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "current",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "'A' is an operand and is already valid postfix on its own. Push it.",
+    "queueOrStackState" : [ "A", "K", "L" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "3",
+      "i" : "8"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "'/' owns the two pieces on top. Right-to-left, the first popped (A) is the left operand and the second (K) the right, so moving the operator behind them gives AK/.",
+    "queueOrStackState" : [ "AK/", "L" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "AK/",
+      "depth" : "2",
+      "i" : "7"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "current",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "'-' owns the two pieces on top. Right-to-left, the first popped (AK/) is the left operand and the second (L) the right, so moving the operator behind them gives AK/L-.",
+    "queueOrStackState" : [ "AK/L-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "AK/L-",
+      "depth" : "1",
+      "i" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "'C' is an operand and is already valid postfix on its own. Push it.",
+    "queueOrStackState" : [ "C", "AK/L-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "2",
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "current",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "'B' is an operand and is already valid postfix on its own. Push it.",
+    "queueOrStackState" : [ "B", "C", "AK/L-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "3",
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "'/' owns the two pieces on top. Right-to-left, the first popped (B) is the left operand and the second (C) the right, so moving the operator behind them gives BC/.",
+    "queueOrStackState" : [ "BC/", "AK/L-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "BC/",
+      "depth" : "2",
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "current",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "'A' is an operand and is already valid postfix on its own. Push it.",
+    "queueOrStackState" : [ "A", "BC/", "AK/L-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "depth" : "3",
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "'-' owns the two pieces on top. Right-to-left, the first popped (A) is the left operand and the second (BC/) the right, so moving the operator behind them gives ABC/-.",
+    "queueOrStackState" : [ "ABC/-", "AK/L-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "ABC/-",
+      "depth" : "2",
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 8,
+    "description" : "'*' owns the two pieces on top. Right-to-left, the first popped (ABC/-) is the left operand and the second (AK/L-) the right, so moving the operator behind them gives ABC/-AK/L-*.",
+    "queueOrStackState" : [ "ABC/-AK/L-*" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "built" : "ABC/-AK/L-*",
+      "depth" : "1",
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "\"*-A/BC-/AKL\" in postfix is \"ABC/-AK/L-*\" — the same tree, every operator moved to the far side of its operands.",
+    "queueOrStackState" : [ "ABC/-AK/L-*" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "ABC/-AK/L-*"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 3,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 7,
+      "value" : 47,
+      "state" : "default",
+      "label" : "/"
+    }, {
+      "index" : 8,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 9,
+      "value" : 75,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 10,
+      "value" : 76,
+      "state" : "default",
+      "label" : "L"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

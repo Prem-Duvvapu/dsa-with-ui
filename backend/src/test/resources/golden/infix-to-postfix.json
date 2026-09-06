@@ -1,0 +1,3585 @@
+{
+  "anchors" : {
+    "done" : 25,
+    "flush" : 23,
+    "init" : 2,
+    "lparen" : 8,
+    "operand" : 6,
+    "popHigher" : 17,
+    "pushOp" : 19,
+    "rparen" : 11
+  },
+  "code" : "public String toPostfix(String s) {\n    StringBuilder out = new StringBuilder();\n    Deque<Character> ops = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (isOperand(c)) {\n            out.append(c);\n        } else if (c == '(') {\n            ops.push(c);\n        } else if (c == ')') {\n            while (ops.peek() != '(') {\n                out.append(ops.pop());\n            }\n            ops.pop();\n        } else {\n            while (!ops.isEmpty() && ops.peek() != '('\n                    && binds(ops.peek(), c)) {\n                out.append(ops.pop());\n            }\n            ops.push(c);\n        }\n    }\n    while (!ops.isEmpty()) {\n        out.append(ops.pop());\n    }\n    return out.toString();\n}",
+  "problemId" : "infix-to-postfix",
+  "resolvedInput" : {
+    "expression" : "a+b*(c^d-e)^(f+g*h)-i"
+  },
+  "stepCount" : 29,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Convert \"a+b*(c^d-e)^(f+g*h)-i\". Operands go straight to the output; operators wait on the stack until everything that binds at least as tightly has already been written.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "expression" : "a+b*(c^d-e)^(f+g*h)-i",
+      "output" : ""
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "'a' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "output" : "a"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 19,
+    "description" : "Push '+'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "output" : "a"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "current",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "'b' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "output" : "ab"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 19,
+    "description" : "Push '*'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "output" : "ab"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "'(' opens a group. Push it as a floor — nothing below it may be popped until the matching ')' arrives.",
+    "queueOrStackState" : [ "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "output" : "ab"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "current",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "'c' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "output" : "abc"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "Push '^'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "^", "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "output" : "abc"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "current",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "'d' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "^", "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "output" : "abcd"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "current",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "'^' is on the stack and binds tighter than '-', so its operands are already complete — write it out before '-' goes on.",
+    "queueOrStackState" : [ "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "8",
+      "output" : "abcd^"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 19,
+    "description" : "Push '-'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "-", "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "8",
+      "output" : "abcd^"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "'e' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "-", "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "9",
+      "output" : "abcd^e"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "')' closes the group: '-' belongs inside it, so it comes off now, ahead of anything outside the brackets.",
+    "queueOrStackState" : [ "(", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "10",
+      "output" : "abcd^e-"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 19,
+    "description" : "Push '^'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "11",
+      "output" : "abcd^e-"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "current",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 8,
+    "description" : "'(' opens a group. Push it as a floor — nothing below it may be popped until the matching ')' arrives.",
+    "queueOrStackState" : [ "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "12",
+      "output" : "abcd^e-"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "current",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 6,
+    "description" : "'f' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "13",
+      "output" : "abcd^e-f"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "current",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 19,
+    "description" : "Push '+'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "+", "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "14",
+      "output" : "abcd^e-f"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "current",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 6,
+    "description" : "'g' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "+", "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "15",
+      "output" : "abcd^e-fg"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "current",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 19,
+    "description" : "Push '*'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "*", "+", "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "16",
+      "output" : "abcd^e-fg"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 6,
+    "description" : "'h' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "*", "+", "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "17",
+      "output" : "abcd^e-fgh"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "current",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 11,
+    "description" : "')' closes the group: '*' belongs inside it, so it comes off now, ahead of anything outside the brackets.",
+    "queueOrStackState" : [ "+", "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "18",
+      "output" : "abcd^e-fgh*"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 11,
+    "description" : "')' closes the group: '+' belongs inside it, so it comes off now, ahead of anything outside the brackets.",
+    "queueOrStackState" : [ "(", "^", "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "18",
+      "output" : "abcd^e-fgh*+"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 17,
+    "description" : "'^' is on the stack and binds tighter than '-', so its operands are already complete — write it out before '-' goes on.",
+    "queueOrStackState" : [ "*", "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "19",
+      "output" : "abcd^e-fgh*+^"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 17,
+    "description" : "'*' is on the stack and binds tighter than '-', so its operands are already complete — write it out before '-' goes on.",
+    "queueOrStackState" : [ "+" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "19",
+      "output" : "abcd^e-fgh*+^*"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 17,
+    "description" : "'+' is on the stack and binds as tightly as (and left to right, so first before) '-', so its operands are already complete — write it out before '-' goes on.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "19",
+      "output" : "abcd^e-fgh*+^*+"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 19,
+    "description" : "Push '-'. It waits until something binding less tightly arrives, or the expression ends.",
+    "queueOrStackState" : [ "-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "19",
+      "output" : "abcd^e-fgh*+^*+"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 6,
+    "description" : "'i' is an operand. Its position in the output is already settled, so append it immediately.",
+    "queueOrStackState" : [ "-" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "20",
+      "output" : "abcd^e-fgh*+^*+i"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "current",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 23,
+    "description" : "The expression is finished, so every operator still waiting is complete. Write '-' out.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "output" : "abcd^e-fgh*+^*+i-"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 25,
+    "description" : "Postfix form of \"a+b*(c^d-e)^(f+g*h)-i\" is \"abcd^e-fgh*+^*+i-\" — no brackets needed; the order alone records the grouping.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "abcd^e-fgh*+^*+i-"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 6,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 7,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 8,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 10,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 11,
+      "value" : 94,
+      "state" : "default",
+      "label" : "^"
+    }, {
+      "index" : 12,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 13,
+      "value" : 102,
+      "state" : "default",
+      "label" : "f"
+    }, {
+      "index" : 14,
+      "value" : 43,
+      "state" : "default",
+      "label" : "+"
+    }, {
+      "index" : 15,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 16,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 17,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 18,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 19,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 20,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
