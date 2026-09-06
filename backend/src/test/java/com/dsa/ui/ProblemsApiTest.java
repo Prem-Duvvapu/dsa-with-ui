@@ -177,7 +177,11 @@ class ProblemsApiTest {
     @Test
     @DisplayName("Legacy per-topic endpoints still work during the migration")
     void legacyEndpointsUnaffected() throws Exception {
+        // Arrays retired its last legacy id in the same batch that traced its remaining
+        // problems, so /api/arrays/execute/{anyId} now answers 410 for everything - a real,
+        // permanent state (Sorting was first; Arrays and Sliding Window followed). Exercise
+        // a category that has not fully migrated instead: graph-intro has no tracer yet.
         mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isOk());
-        mockMvc.perform(get("/api/arrays/execute/two-sum")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/graphs/advanced/execute/graph-intro")).andExpect(status().isOk());
     }
 }
