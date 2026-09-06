@@ -1,0 +1,495 @@
+{
+  "anchors" : {
+    "backtrack" : 26,
+    "component" : 6,
+    "cycleDetected" : 23,
+    "init" : 2,
+    "noCycle" : 11,
+    "recurse" : 19,
+    "visit" : 15
+  },
+  "code" : "public boolean isCyclic(int v, List<List<Integer>> adj) {\n    boolean[] vis = new boolean[v];\n    boolean[] pathVis = new boolean[v];\n    for (int i = 0; i < v; i++) {\n        if (!vis[i]) {\n            if (dfsCheck(i, adj, vis, pathVis)) {\n                return true;\n            }\n        }\n    }\n    return false;\n}\n\nprivate boolean dfsCheck(int node, List<List<Integer>> adj, boolean[] vis, boolean[] pathVis) {\n    vis[node] = true;\n    pathVis[node] = true;\n    for (int next : adj.get(node)) {\n        if (!vis[next]) {\n            if (dfsCheck(next, adj, vis, pathVis)) {\n                return true;\n            }\n        } else if (pathVis[next]) {\n            return true;\n        }\n    }\n    pathVis[node] = false;\n    return false;\n}",
+  "problemId" : "directed-cycle-dfs",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 1 ], [ 1, 2 ], [ 2, 0 ] ],
+      "vertices" : 3
+    }
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "3 vertices, 3 directed edges. Track an overall visited set plus the current recursion path.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "0 starts a new component. dfsCheck(0).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "src" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 15,
+    "description" : "Enter 0. Mark it visited and add it to the current recursion path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfsCheck(0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 19,
+    "description" : "0 -> 1 is unvisited. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfsCheck(0)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "neighbour" : "1",
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 15,
+    "description" : "Enter 1. Mark it visited and add it to the current recursion path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "1 -> 2 is unvisited. Descend into it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "unvisited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "neighbour" : "2",
+      "node" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Enter 2. Mark it visited and add it to the current recursion path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 23,
+    "description" : "2 -> 0: 0 is already on the CURRENT recursion path - a directed cycle exists.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)" ],
+    "nodeStates" : {
+      "0" : "cycle",
+      "1" : "visiting",
+      "2" : "visiting"
+    },
+    "activeEdges" : [ "2-0" ],
+    "variables" : {
+      "neighbour" : "0",
+      "node" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}

@@ -99,6 +99,7 @@ class ApiContractTest {
             "flattening-ll", "clone-ll-random-pointer",
             "tree-burn-time", "vertical-order-traversal",
             "morris-inorder", "correct-bst-swap",
+            "bst-insert", "bst-delete", "bst-floor-ceil",
             "trapping-rainwater", "largest-rectangle-histogram",
             "next-greater-element-2", "asteroid-collision",
             "matrix-chain-multiplication", "burst-balloons",
@@ -116,18 +117,29 @@ class ApiContractTest {
             "word-ladder-1", "alien-dictionary",
             "lru-cache", "ninja-and-his-friends",
             "implement-trie", "word-break-trie",
+            "bfs-traversal", "dfs-traversal", "number-of-provinces", "rotting-oranges",
+            "undirected-cycle-bfs", "undirected-cycle-dfs", "directed-cycle-dfs",
+            "distance-nearest-1",
+            "jump-game-1", "assign-cookies", "fractional-knapsack",
+            "lemonade-change", "minimum-platforms", "insert-interval",
+            "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort",
             "single-number-1", "check-power-of-2", "count-set-bits",
             "xor-numbers-in-range", "single-number-3", "pow-x-n-math");
 
-    private String firstProblemId(String base) throws Exception {
+    /**
+     * Returns empty when every catalogued id for this base is retired - Sorting is the
+     * first controller to fully migrate, so {@code /api/sorting} has no legacy id left to
+     * exercise. That is a real, permanent state for a fully-migrated controller, not a bug.
+     */
+    private java.util.Optional<String> firstProblemId(String base) throws Exception {
         JsonNode catalog = getJson(base + "/problems");
         for (JsonNode problem : catalog) {
             String id = problem.get("id").asText();
             if (!RETIRED_IDS.contains(id)) {
-                return id;   // a retired id answers 410, so it cannot prove the execute path
+                return java.util.Optional.of(id);   // a retired id answers 410, so it cannot prove the execute path
             }
         }
-        throw new IllegalStateException(base + " has no non-retired problem to exercise");
+        return java.util.Optional.empty();
     }
 
     @ParameterizedTest(name = "{0}/problems returns a non-empty catalog")
@@ -154,7 +166,10 @@ class ApiContractTest {
     @MethodSource("basePaths")
     @DisplayName("A valid id returns that same problem")
     void detailReturnsTheRequestedProblem(String base) throws Exception {
-        String id = firstProblemId(base);
+        java.util.Optional<String> maybeId = firstProblemId(base);
+        org.junit.jupiter.api.Assumptions.assumeTrue(maybeId.isPresent(),
+                base + " has no non-retired problem left - every catalogued id is fully migrated");
+        String id = maybeId.get();
         JsonNode problem = getJson(base + "/problems/" + id);
         assertEquals(id, problem.get("id").asText(),
                 base + "/problems/" + id + " returned a different problem");
@@ -172,7 +187,10 @@ class ApiContractTest {
     @MethodSource("basePaths")
     @DisplayName("Execution steps are non-empty and sequentially numbered from 1")
     void executeReturnsWellFormedSteps(String base) throws Exception {
-        String id = firstProblemId(base);
+        java.util.Optional<String> maybeId = firstProblemId(base);
+        org.junit.jupiter.api.Assumptions.assumeTrue(maybeId.isPresent(),
+                base + " has no non-retired problem left - every catalogued id is fully migrated");
+        String id = maybeId.get();
         JsonNode steps = getJson(base + "/execute/" + id);
 
         assertTrue(steps.isArray(), base + "/execute/" + id + " must return a JSON array");
@@ -276,6 +294,9 @@ class ApiContractTest {
                 arguments("/api/trees", "vertical-order-traversal"),
                 arguments("/api/trees", "morris-inorder"),
                 arguments("/api/trees", "correct-bst-swap"),
+                arguments("/api/trees", "bst-insert"),
+                arguments("/api/trees", "bst-delete"),
+                arguments("/api/trees", "bst-floor-ceil"),
                 arguments("/api/dp", "minimum-coins-dp"),
                 arguments("/api/dp", "coin-change-2"),
                 arguments("/api/dp", "edit-distance"),
@@ -286,6 +307,25 @@ class ApiContractTest {
                 arguments("/api/dp", "ninja-and-his-friends"),
                 arguments("/api/tries", "implement-trie"),
                 arguments("/api/tries", "word-break-trie"),
+                arguments("/api/graphs/bfs-dfs", "bfs-traversal"),
+                arguments("/api/graphs/bfs-dfs", "dfs-traversal"),
+                arguments("/api/graphs/bfs-dfs", "number-of-provinces"),
+                arguments("/api/graphs/bfs-dfs", "rotting-oranges"),
+                arguments("/api/graphs/bfs-dfs", "undirected-cycle-bfs"),
+                arguments("/api/graphs/bfs-dfs", "undirected-cycle-dfs"),
+                arguments("/api/graphs/bfs-dfs", "directed-cycle-dfs"),
+                arguments("/api/graphs/bfs-dfs", "distance-nearest-1"),
+                arguments("/api/greedy", "jump-game-1"),
+                arguments("/api/greedy", "assign-cookies"),
+                arguments("/api/greedy", "fractional-knapsack"),
+                arguments("/api/greedy", "lemonade-change"),
+                arguments("/api/greedy", "minimum-platforms"),
+                arguments("/api/greedy", "insert-interval"),
+                arguments("/api/sorting", "selection-sort"),
+                arguments("/api/sorting", "bubble-sort"),
+                arguments("/api/sorting", "insertion-sort"),
+                arguments("/api/sorting", "merge-sort"),
+                arguments("/api/sorting", "quick-sort"),
                 arguments("/api/bitmanipulation", "single-number-1"),
                 arguments("/api/bitmanipulation", "check-power-of-2"),
                 arguments("/api/bitmanipulation", "count-set-bits"),

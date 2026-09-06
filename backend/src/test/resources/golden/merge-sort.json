@@ -1,0 +1,1303 @@
+{
+  "anchors" : {
+    "base" : 2,
+    "compare" : 13,
+    "done" : 7,
+    "drain" : 19,
+    "split" : 3,
+    "takeLeft" : 14,
+    "takeRight" : 16,
+    "writeback" : 23
+  },
+  "code" : "public void mergeSort(int[] arr, int low, int high) {\n    if (low >= high) return;\n    int mid = (low + high) / 2;\n    mergeSort(arr, low, mid);\n    mergeSort(arr, mid + 1, high);\n    merge(arr, low, mid, high);\n}\n\nprivate void merge(int[] arr, int low, int mid, int high) {\n    List<Integer> temp = new ArrayList<>();\n    int left = low, right = mid + 1;\n    while (left <= mid && right <= high) {\n        if (arr[left] <= arr[right]) {\n            temp.add(arr[left++]);\n        } else {\n            temp.add(arr[right++]);\n        }\n    }\n    while (left <= mid) temp.add(arr[left++]);\n    while (right <= high) temp.add(arr[right++]);\n\n    for (int i = low; i <= high; i++) {\n        arr[i] = temp.get(i - low);\n    }\n}",
+  "problemId" : "merge-sort",
+  "resolvedInput" : {
+    "nums" : [ 5, 2, 8, 1, 9 ]
+  },
+  "stepCount" : 34,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Split [0,4] at mid=2 into [0,2] and [3,4], and recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "0",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 3,
+    "description" : "Split [0,2] at mid=1 into [0,1] and [2,2], and recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "0",
+      "mid" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 3,
+    "description" : "Split [0,1] at mid=0 into [0,0] and [1,1], and recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)", "mergeSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "0",
+      "mid" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 2,
+    "description" : "Range [0,0] holds a single element - nothing left to split.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)", "mergeSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 2,
+    "description" : "Range [1,1] holds a single element - nothing left to split.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)", "mergeSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "low" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Merging [0,1]: compare left pointer arr[0]=5 against right pointer arr[1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)", "mergeSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 16,
+    "description" : "5 > 2 - the left side is not ready yet, take the right element arr[1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)", "mergeSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "swapping"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "One side is exhausted - copy whatever remains of the other side (starting at index 0) straight into place.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)", "mergeSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 23,
+    "description" : "[0,1] merged in sorted order: [2, 5].",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)", "mergeSort(0..1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "[0,1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 2,
+    "description" : "Range [2,2] holds a single element - nothing left to split.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "Merging [0,2]: compare left pointer arr[0]=2 against right pointer arr[2]=8.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "2 <= 8 - take the left element arr[0]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "Merging [0,2]: compare left pointer arr[1]=5 against right pointer arr[2]=8.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "5 <= 8 - take the left element arr[1]=5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 19,
+    "description" : "One side is exhausted - copy whatever remains of the other side (starting at index 2) straight into place.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "right" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "swapping"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 23,
+    "description" : "[0,2] merged in sorted order: [2, 5, 8].",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(0..2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "[0,2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 3,
+    "description" : "Split [3,4] at mid=3 into [3,3] and [4,4], and recurse on each half.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 2,
+    "description" : "Range [3,3] holds a single element - nothing left to split.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 2,
+    "description" : "Range [4,4] holds a single element - nothing left to split.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 13,
+    "description" : "Merging [3,4]: compare left pointer arr[3]=1 against right pointer arr[4]=9.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 14,
+    "description" : "1 <= 9 - take the left element arr[3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 19,
+    "description" : "One side is exhausted - copy whatever remains of the other side (starting at index 4) straight into place.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "4",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 23,
+    "description" : "[3,4] merged in sorted order: [1, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)", "mergeSort(3..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "[3,4]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 13,
+    "description" : "Merging [0,4]: compare left pointer arr[0]=2 against right pointer arr[3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 16,
+    "description" : "2 > 1 - the left side is not ready yet, take the right element arr[3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "swapping"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 13,
+    "description" : "Merging [0,4]: compare left pointer arr[0]=2 against right pointer arr[4]=9.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 14,
+    "description" : "2 <= 9 - take the left element arr[0]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 13,
+    "description" : "Merging [0,4]: compare left pointer arr[1]=5 against right pointer arr[4]=9.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 14,
+    "description" : "5 <= 9 - take the left element arr[1]=5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 13,
+    "description" : "Merging [0,4]: compare left pointer arr[2]=8 against right pointer arr[4]=9.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 14,
+    "description" : "8 <= 9 - take the left element arr[2]=8.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "taken" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 19,
+    "description" : "One side is exhausted - copy whatever remains of the other side (starting at index 4) straight into place.",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "swapping"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 23,
+    "description" : "[0,4] merged in sorted order: [1, 2, 5, 8, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ "mergeSort(0..4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "[0,4]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 7,
+    "description" : "Recursion complete. Sorted array: [1, 2, 5, 8, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 5, 8, 9]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

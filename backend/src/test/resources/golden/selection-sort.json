@@ -1,0 +1,851 @@
+{
+  "anchors" : {
+    "compare" : 5,
+    "done" : 16,
+    "newMin" : 6,
+    "noSwap" : 14,
+    "passStart" : 3,
+    "swap" : 10
+  },
+  "code" : "public void selectionSort(int[] arr, int n) {\n    for (int i = 0; i < n - 1; i++) {\n        int mini = i;\n        for (int j = i + 1; j < n; j++) {\n            if (arr[j] < arr[mini]) {\n                mini = j;\n            }\n        }\n        if (mini != i) {\n            int temp = arr[i];\n            arr[i] = arr[mini];\n            arr[mini] = temp;\n        } else {\n        }\n    }\n}",
+  "problemId" : "selection-sort",
+  "resolvedInput" : {
+    "nums" : [ 5, 2, 8, 1, 9 ]
+  },
+  "stepCount" : 22,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Pass 1: scan indices [0..4] for the minimum, starting from arr[0]=5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "mini" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=1]=2 against current minimum arr[mini=0]=5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "1",
+      "mini" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "comparing"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "2 < 5 - mini becomes 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "1",
+      "mini" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=2]=8 against current minimum arr[mini=1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "2",
+      "mini" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "comparing"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=3]=1 against current minimum arr[mini=1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "3",
+      "mini" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "comparing"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 6,
+    "description" : "1 < 2 - mini becomes 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "3",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=4]=9 against current minimum arr[mini=3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "4",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "comparing"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Minimum found at index 3 - swap arr[0] and arr[3]. Index 0 is now sorted.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 3,
+    "description" : "Pass 2: scan indices [1..4] for the minimum, starting from arr[1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "mini" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=2]=8 against current minimum arr[mini=1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "2",
+      "mini" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "comparing"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=3]=5 against current minimum arr[mini=1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "3",
+      "mini" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "comparing"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=4]=9 against current minimum arr[mini=1]=2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "4",
+      "mini" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "pivot"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "comparing"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 14,
+    "description" : "arr[1]=2 was already the minimum of its suffix - no swap needed. Index 1 is now sorted.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 3,
+    "description" : "Pass 3: scan indices [2..4] for the minimum, starting from arr[2]=8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "mini" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=3]=5 against current minimum arr[mini=2]=8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "3",
+      "mini" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "comparing"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 6,
+    "description" : "5 < 8 - mini becomes 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "3",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=4]=9 against current minimum arr[mini=3]=5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "4",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "comparing"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 10,
+    "description" : "Minimum found at index 3 - swap arr[2] and arr[3]. Index 2 is now sorted.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 3,
+    "description" : "Pass 4: scan indices [3..4] for the minimum, starting from arr[3]=8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 5,
+    "description" : "Compare arr[j=4]=9 against current minimum arr[mini=3]=8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "j" : "4",
+      "mini" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "pivot"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "comparing"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 14,
+    "description" : "arr[3]=8 was already the minimum of its suffix - no swap needed. Index 3 is now sorted.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 16,
+    "description" : "All passes complete. Sorted array: [1, 2, 5, 8, 9].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 5, 8, 9]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 9,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

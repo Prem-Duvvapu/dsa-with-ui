@@ -1,0 +1,1288 @@
+{
+  "anchors" : {
+    "compare" : 7,
+    "done" : 16,
+    "freeOne" : 11,
+    "init" : 4,
+    "needMore" : 8,
+    "sort" : 2,
+    "track" : 14
+  },
+  "code" : "public int findPlatform(int[] arrival, int[] departure) {\n    Arrays.sort(arrival);\n    Arrays.sort(departure);\n    int platforms = 1, maxPlatforms = 1;\n    int i = 1, j = 0;\n    while (i < arrival.length && j < departure.length) {\n        if (arrival[i] <= departure[j]) {\n            platforms++;\n            i++;\n        } else {\n            platforms--;\n            j++;\n        }\n        maxPlatforms = Math.max(maxPlatforms, platforms);\n    }\n    return maxPlatforms;\n}",
+  "problemId" : "minimum-platforms",
+  "resolvedInput" : {
+    "arrival" : [ 900, 940, 950, 1100, 1500, 1800 ],
+    "departure" : [ 910, 1120, 1130, 1200, 1900, 2000 ]
+  },
+  "stepCount" : 30,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Sort arrivals [900, 940, 950, 1100, 1500, 1800] and departures [910, 1120, 1130, 1200, 1900, 2000] independently — only the order of events matters now.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "arrival" : "[900, 940, 950, 1100, 1500, 1800]",
+      "departure" : "[910, 1120, 1130, 1200, 1900, 2000]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Train 0 has already arrived, so we start with 1 platform in use.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "1",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "Next arrival is 940 (train 1); earliest still-open departure is 910.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "0",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "940 > 910 — a train left before the next one arrives. A platform frees up: 0 in use.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "1",
+      "platforms" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Next arrival is 940 (train 1); earliest still-open departure is 1120.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "1",
+      "platforms" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "940 <= 1120 — that arrival lands before any platform frees up. One more platform is needed: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Next arrival is 950 (train 2); earliest still-open departure is 1120.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "950 <= 1120 — that arrival lands before any platform frees up. One more platform is needed: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "1",
+      "platforms" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "Next arrival is 1100 (train 3); earliest still-open departure is 1120.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "1",
+      "platforms" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 8,
+    "description" : "1100 <= 1120 — that arrival lands before any platform frees up. One more platform is needed: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "1",
+      "platforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 7,
+    "description" : "Next arrival is 1500 (train 4); earliest still-open departure is 1120.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "1",
+      "platforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 11,
+    "description" : "1500 > 1120 — a train left before the next one arrives. A platform frees up: 2 in use.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "2",
+      "platforms" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 7,
+    "description" : "Next arrival is 1500 (train 4); earliest still-open departure is 1130.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "2",
+      "platforms" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 11,
+    "description" : "1500 > 1130 — a train left before the next one arrives. A platform frees up: 1 in use.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "3",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 7,
+    "description" : "Next arrival is 1500 (train 4); earliest still-open departure is 1200.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "3",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 11,
+    "description" : "1500 > 1200 — a train left before the next one arrives. A platform frees up: 0 in use.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "4",
+      "platforms" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 7,
+    "description" : "Next arrival is 1500 (train 4); earliest still-open departure is 1900.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "4",
+      "platforms" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 8,
+    "description" : "1500 <= 1900 — that arrival lands before any platform frees up. One more platform is needed: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "4",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 7,
+    "description" : "Next arrival is 1800 (train 5); earliest still-open departure is 1900.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "4",
+      "platforms" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 8,
+    "description" : "1800 <= 1900 — that arrival lands before any platform frees up. One more platform is needed: 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "4",
+      "platforms" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 14,
+    "description" : "Highest platform count seen so far: 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 16,
+    "description" : "Every train accounted for. Peak simultaneous trains: 3 — that many platforms are required.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxPlatforms" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 900,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 940,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 950,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 1100,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1500,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 1800,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

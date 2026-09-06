@@ -26,24 +26,24 @@ public class GreedyService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // n-meetings-in-one-room has a real tracer (tracer/impl). Refuse rather than
-            // let default: serve another meeting set's steps under this id. The default:
-            // stays until PROMPT D; other ids in this service still rely on it.
+            // These ids have real tracers (tracer/impl). Refuse rather than let default:
+            // serve another algorithm's steps under this id. The default: stays until
+            // PROMPT D; other ids in this service still rely on it.
             case "n-meetings-in-one-room":
+            case "jump-game-1":
+            case "assign-cookies":
+            case "fractional-knapsack":
+            case "lemonade-change":
+            case "minimum-platforms":
+            case "insert-interval":
                 throw new LegacyTraceRetiredException(problemId);
-            case "jump-game-i":
-            case "jump-game-1": return generateJumpGameSteps();
+            case "jump-game-i": return generateJumpGameSteps();
             case "job-sequencing": return generateJobSequencingSteps();
-            case "assign-cookies": return generateJumpGameSteps();
-            case "fractional-knapsack": return generateJumpGameSteps();
-            case "lemonade-change": return generateJumpGameSteps();
             case "valid-parentheses-checker": return generateJumpGameSteps();
             case "jump-game-2": return generateJumpGameSteps();
-            case "minimum-platforms": return generateJumpGameSteps();
             case "candy": return generateJumpGameSteps();
             case "shortest-job-first": return generateJumpGameSteps();
             case "lru-page-replacement": return generateJumpGameSteps();
-            case "insert-interval": return generateJumpGameSteps();
             case "merge-intervals": return generateJumpGameSteps();
             case "non-overlapping-intervals": return generateJumpGameSteps();
             default: return generateMeetingsSteps();

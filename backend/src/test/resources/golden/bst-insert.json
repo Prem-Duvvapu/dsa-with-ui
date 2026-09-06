@@ -1,0 +1,327 @@
+{
+  "anchors" : {
+    "attachLeft" : 6,
+    "attachRight" : 12,
+    "compareLeft" : 5,
+    "compareRight" : 11,
+    "done" : 18
+  },
+  "code" : "public TreeNode insertIntoBST(TreeNode root, int val) {\n    TreeNode curr = root;\n    while (true) {\n        if (val < curr.val) {\n            if (curr.left == null) {\n                curr.left = new TreeNode(val);\n                break;\n            }\n            curr = curr.left;\n        } else {\n            if (curr.right == null) {\n                curr.right = new TreeNode(val);\n                break;\n            }\n            curr = curr.right;\n        }\n    }\n    return root;\n}",
+  "problemId" : "bst-insert",
+  "resolvedInput" : {
+    "tree" : [ 5, 3, 8, 1, 4, 7, 9 ],
+    "val" : 6
+  },
+  "stepCount" : 4,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 11,
+    "description" : "6 >= 5 - 6 belongs in 5's right subtree.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "current" : "5",
+      "value" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "x" : 137.14285714285714,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 45.714285714285715,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 228.57142857142858,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "8",
+      "x" : 502.85714285714283,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "7",
+      "x" : 411.42857142857144,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 594.2857142857143,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "6 < 8 - 6 belongs in 8's left subtree.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "current" : "8",
+      "value" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "x" : 137.14285714285714,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 45.714285714285715,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 228.57142857142858,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "8",
+      "x" : 502.85714285714283,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "7",
+      "x" : 411.42857142857144,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 594.2857142857143,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "6 < 7 and 7 has no left child - attach 6 there.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "6",
+      "parent" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 280.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "x" : 120.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 200.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "8",
+      "x" : 520.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "7",
+      "x" : 440.0,
+      "y" : 188.0,
+      "leftId" : 7,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "x" : 360.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 600.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "6 inserted - the BST ordering property holds everywhere.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 280.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "x" : 120.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 200.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "8",
+      "x" : 520.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "7",
+      "x" : 440.0,
+      "y" : 188.0,
+      "leftId" : 7,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 7,
+      "val" : "6",
+      "x" : 360.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 600.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  } ],
+  "truncated" : false
+}
