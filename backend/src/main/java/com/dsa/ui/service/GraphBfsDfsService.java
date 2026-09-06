@@ -1,9 +1,7 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.graph.*;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,18 +25,18 @@ public class GraphBfsDfsService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "bfs-traversal": return generateBfsSteps();
-            case "dfs-traversal": return generateDfsSteps();
-            case "number-of-provinces": return generateProvincesSteps();
+            case "bfs-traversal": throw new LegacyTraceRetiredException(problemId);
+            case "dfs-traversal": throw new LegacyTraceRetiredException(problemId);
+            case "number-of-provinces": throw new LegacyTraceRetiredException(problemId);
             case "number-of-islands": return generateIslandsSteps();
-            case "rotting-oranges": return generateRottingOrangesSteps();
+            case "rotting-oranges": throw new LegacyTraceRetiredException(problemId);
             case "flood-fill": return generateFloodFillSteps();
-            case "undirected-cycle-bfs": return generateUndirectedCycleBfsSteps();
-            case "undirected-cycle-dfs": return generateUndirectedCycleDfsSteps();
-            case "directed-cycle-dfs": return generateDirectedCycleDfsSteps();
-            case "distance-nearest-1": return generateDistanceNearest1Steps();
+            case "undirected-cycle-bfs": throw new LegacyTraceRetiredException(problemId);
+            case "undirected-cycle-dfs": throw new LegacyTraceRetiredException(problemId);
+            case "directed-cycle-dfs": throw new LegacyTraceRetiredException(problemId);
+            case "distance-nearest-1": throw new LegacyTraceRetiredException(problemId);
             case "surrounded-regions": return generateSurroundedRegionsSteps();
-            default: return generateBfsSteps();
+            default: return generateIslandsSteps();
         }
     }
 
@@ -163,7 +161,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(V)",
                 "Matrix Input Space: O(V^2)"
             ),
-            "Stack"
+            DsType.GRAPH.wireValue()
         ));
 
         // 4. Number of Islands
@@ -271,7 +269,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(N x M) (Queue)",
                 "Grid Space: O(N x M)"
             ),
-            "Queue"
+            DsType.MATRIX.wireValue()
         ));
 
         // 6. Flood Fill
@@ -367,7 +365,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(V) (Queue & Visited array)",
                 "Adjacency List Space: O(V + 2E)"
             ),
-            "Queue"
+            DsType.GRAPH.wireValue()
         ));
 
         // 8. Undirected Cycle DFS
@@ -409,7 +407,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(V)",
                 "Adjacency List Space: O(V + 2E)"
             ),
-            "Stack"
+            DsType.GRAPH.wireValue()
         ));
 
         // 9. Directed Cycle DFS
@@ -457,7 +455,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(V) (vis[], pathVis[], Recursion Call Stack)",
                 "Adjacency List Space: O(V + E)"
             ),
-            "Stack"
+            DsType.GRAPH.wireValue()
         ));
 
         // 10. Distance of Nearest 1 (0/1 Matrix)
@@ -511,7 +509,7 @@ public class GraphBfsDfsService implements ProblemProvider {
                 "Auxiliary Space: O(N x M)",
                 "Distance Output Space: O(N x M)"
             ),
-            "Queue"
+            DsType.MATRIX.wireValue()
         ));
 
         // 11. Surrounded Regions
@@ -571,62 +569,6 @@ public class GraphBfsDfsService implements ProblemProvider {
     }
 
     // Step Generators
-    private List<ExecutionStep> generateBfsSteps() {
-        int v = 6;
-        Map<Integer, List<Integer>> adj = Map.of(
-            0, List.of(1, 2),
-            1, List.of(0, 3),
-            2, List.of(0, 4, 5),
-            3, List.of(1),
-            4, List.of(2),
-            5, List.of(2)
-        );
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new BfsTraversal().solve(v, adj, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateDfsSteps() {
-        int v = 6;
-        Map<Integer, List<Integer>> adj = Map.of(
-            0, List.of(1, 2),
-            1, List.of(0, 3),
-            2, List.of(0, 4, 5),
-            3, List.of(1),
-            4, List.of(2),
-            5, List.of(2)
-        );
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new DfsTraversal().solve(v, adj, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateProvincesSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "visiting");
-        steps.add(new ExecutionStep(1, 8, "i = 0 is unvisited. Increment provinces = 1. Start DFS(0)", List.of("dfs(0)"), new HashMap<>(nodeStates), List.of(), Map.of("provinces", "1"), "Stack", null));
-
-        nodeStates.put(1, "visiting");
-        steps.add(new ExecutionStep(2, 16, "isConnected[0][1] == 1. Invoke dfs(1)", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("provinces", "1"), "Stack", null));
-
-        nodeStates.put(1, "visited"); nodeStates.put(0, "visited");
-        steps.add(new ExecutionStep(3, 9, "Finish Province 1 (Nodes 0, 1)", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("provinces", "1"), "Stack", null));
-
-        nodeStates.put(2, "visiting");
-        steps.add(new ExecutionStep(4, 8, "i = 2 is unvisited. Increment provinces = 2. Start DFS(2)", List.of("dfs(2)"), new HashMap<>(nodeStates), List.of(), Map.of("provinces", "2"), "Stack", null));
-
-        nodeStates.put(3, "visiting");
-        steps.add(new ExecutionStep(5, 16, "isConnected[2][3] == 1. Invoke dfs(3)", List.of("dfs(2)", "dfs(3)"), new HashMap<>(nodeStates), List.of("2-3"), Map.of("provinces", "2"), "Stack", null));
-
-        nodeStates.put(3, "visited"); nodeStates.put(2, "visited");
-        steps.add(new ExecutionStep(6, 11, "All nodes processed. Total Provinces = 2", List.of(), new HashMap<>(nodeStates), List.of(), Map.of("provinces", "2"), "Stack", null));
-
-        return steps;
-    }
-
     private List<ExecutionStep> generateIslandsSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[][] grid = createIslandGrid();
@@ -648,17 +590,6 @@ public class GraphBfsDfsService implements ProblemProvider {
         return steps;
     }
 
-    private List<ExecutionStep> generateRottingOrangesSteps() {
-        int[][] grid = {
-            {2, 1, 1},
-            {1, 1, 0},
-            {0, 1, 1}
-        };
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new RottingOranges().solve(grid, recorder);
-        return recorder.toExecutionSteps();
-    }
-
     private List<ExecutionStep> generateFloodFillSteps() {
         List<ExecutionStep> steps = new ArrayList<>();
         int[][] grid = createFloodFillGrid();
@@ -669,80 +600,6 @@ public class GraphBfsDfsService implements ProblemProvider {
         grid[0][1] = 2; grid[1][0] = 2; grid[1][2] = 2; grid[2][1] = 2;
         steps.add(new ExecutionStep(3, 12, "Repaint connected color 1 pixels at (0,1), (1,0), (1,2), (2,1)", List.of("dfs(0,1)", "dfs(1,0)", "dfs(1,2)", "dfs(2,1)"), Map.of(), List.of(), Map.of("pixel", "connected"), "Matrix", copyGrid(grid)));
         steps.add(new ExecutionStep(4, 5, "Flood Fill algorithm completed successfully!", List.of(), Map.of(), List.of(), Map.of("Status", "Complete"), "Matrix", copyGrid(grid)));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateUndirectedCycleBfsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "queued");
-        steps.add(new ExecutionStep(1, 15, "Start BFS from 0. Queue pair (node=0, parent=-1)", List.of("(0, parent:-1)"), new HashMap<>(nodeStates), List.of(), Map.of("vis[0]", "true"), "Queue", null));
-
-        nodeStates.put(0, "visited"); nodeStates.put(1, "queued"); nodeStates.put(2, "queued");
-        steps.add(new ExecutionStep(2, 22, "Poll 0. Add neighbors 1 and 2 to Queue with parent=0", List.of("(1, parent:0)", "(2, parent:0)"), new HashMap<>(nodeStates), List.of("0-1", "0-2"), Map.of("node", "0"), "Queue", null));
-
-        nodeStates.put(1, "visited"); nodeStates.put(3, "queued");
-        steps.add(new ExecutionStep(3, 22, "Poll 1. Add neighbor 3 to Queue with parent=1", List.of("(2, parent:0)", "(3, parent:1)"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("node", "1"), "Queue", null));
-
-        nodeStates.put(2, "visiting"); nodeStates.put(3, "cycle");
-        steps.add(new ExecutionStep(4, 25, "Poll 2. Inspect adjacent node 3. vis[3] == true AND parent (0) != 3! CYCLE DETECTED!", List.of("(2, parent:0)"), new HashMap<>(nodeStates), List.of("2-3"), Map.of("Cycle Found", "TRUE"), "Queue", null));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateUndirectedCycleDfsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "visiting");
-        steps.add(new ExecutionStep(1, 13, "Start DFS(0, parent=-1)", List.of("dfs(0, -1)"), new HashMap<>(nodeStates), List.of(), Map.of("vis[0]", "true"), "Stack", null));
-
-        nodeStates.put(1, "visiting");
-        steps.add(new ExecutionStep(2, 16, "DFS(0) -> DFS(1, parent=0)", List.of("dfs(0, -1)", "dfs(1, 0)"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("vis[1]", "true"), "Stack", null));
-
-        nodeStates.put(3, "visiting");
-        steps.add(new ExecutionStep(3, 16, "DFS(1) -> DFS(3, parent=1)", List.of("dfs(0, -1)", "dfs(1, 0)", "dfs(3, 1)"), new HashMap<>(nodeStates), List.of("1-3"), Map.of("vis[3]", "true"), "Stack", null));
-
-        nodeStates.put(2, "cycle");
-        steps.add(new ExecutionStep(4, 18, "DFS(3) inspects neighbor 2. vis[2] == true AND adjacent (2) != parent (1)! CYCLE DETECTED!", List.of("dfs(0, -1)", "dfs(1, 0)", "dfs(3, 1)"), new HashMap<>(nodeStates), List.of("3-2", "2-0"), Map.of("Cycle Found", "TRUE"), "Stack", null));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateDirectedCycleDfsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = new HashMap<>();
-        for (int i = 0; i < 4; i++) nodeStates.put(i, "unvisited");
-
-        nodeStates.put(0, "visiting");
-        steps.add(new ExecutionStep(1, 16, "dfsCheck(0). Set vis[0]=true, pathVis[0]=true", List.of("dfs(0)"), new HashMap<>(nodeStates), List.of(), Map.of("pathVis", "[0]"), "Stack", null));
-
-        nodeStates.put(1, "visiting");
-        steps.add(new ExecutionStep(2, 19, "dfsCheck(0) -> dfsCheck(1). Set vis[1]=true, pathVis[1]=true", List.of("dfs(0)", "dfs(1)"), new HashMap<>(nodeStates), List.of("0-1"), Map.of("pathVis", "[0, 1]"), "Stack", null));
-
-        nodeStates.put(2, "visiting");
-        steps.add(new ExecutionStep(3, 19, "dfsCheck(1) -> dfsCheck(2). Set vis[2]=true, pathVis[2]=true", List.of("dfs(0)", "dfs(1)", "dfs(2)"), new HashMap<>(nodeStates), List.of("1-2"), Map.of("pathVis", "[0, 1, 2]"), "Stack", null));
-
-        nodeStates.put(0, "cycle");
-        steps.add(new ExecutionStep(4, 21, "dfsCheck(2) inspects directed edge 2 -> 0. vis[0] == true AND pathVis[0] == true! DIRECTED CYCLE DETECTED!", List.of("dfs(0)", "dfs(1)", "dfs(2)"), new HashMap<>(nodeStates), List.of("2-0"), Map.of("Cycle Detected", "TRUE"), "Stack", null));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateDistanceNearest1Steps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] distGrid = new int[][]{
-            {0, 1, 2},
-            {1, 0, 1},
-            {2, 1, 2}
-        };
-
-        steps.add(new ExecutionStep(1, 8, "Multi-source BFS: Insert all cells with value 1 into Queue at distance 0", List.of("(0,0,d=0)", "(1,1,d=0)"), Map.of(), List.of(), Map.of("queue_size", "2"), "Matrix", distGrid));
-        steps.add(new ExecutionStep(2, 22, "Multi-source BFS finished: computed shortest distance from nearest 1 for all grid cells", List.of(), Map.of(), List.of(), Map.of("Status", "Complete"), "Matrix", distGrid));
 
         return steps;
     }

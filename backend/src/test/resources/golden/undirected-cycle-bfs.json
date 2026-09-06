@@ -1,0 +1,747 @@
+{
+  "anchors" : {
+    "component" : 5,
+    "cycleDetected" : 27,
+    "enqueue" : 24,
+    "init" : 2,
+    "noCycle" : 10,
+    "poll" : 19,
+    "seed" : 14
+  },
+  "code" : "public boolean isCycle(int v, List<List<Integer>> adj) {\n    boolean[] vis = new boolean[v];\n    for (int i = 0; i < v; i++) {\n        if (!vis[i]) {\n            if (checkForCycle(i, adj, vis)) {\n                return true;\n            }\n        }\n    }\n    return false;\n}\n\nprivate boolean checkForCycle(int src, List<List<Integer>> adj, boolean[] vis) {\n    vis[src] = true;\n    Queue<int[]> queue = new LinkedList<>();\n    queue.add(new int[]{src, -1});\n\n    while (!queue.isEmpty()) {\n        int[] pair = queue.poll();\n        int node = pair[0], parent = pair[1];\n\n        for (int next : adj.get(node)) {\n            if (!vis[next]) {\n                vis[next] = true;\n                queue.add(new int[]{next, node});\n            } else if (next != parent) {\n                return true;\n            }\n        }\n    }\n    return false;\n}",
+  "problemId" : "undirected-cycle-bfs",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 1 ], [ 0, 2 ], [ 1, 3 ], [ 2, 3 ] ],
+      "vertices" : 4
+    }
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "4 vertices, 4 edges. BFS each unvisited component, remembering each node's parent.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "0 starts a new component. Seed the queue with (node=0, parent=-1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "src" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 14,
+    "description" : "Mark 0 seen; its parent is -1 (the root of this BFS).",
+    "queueOrStackState" : [ "(0,-1)" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 19,
+    "description" : "Dequeue 0 (parent -1).",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "0",
+      "parent" : "-1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 24,
+    "description" : "1 is new. Mark it seen and enqueue it with parent 0.",
+    "queueOrStackState" : [ "(1,0)" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "neighbour" : "1",
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 24,
+    "description" : "2 is new. Mark it seen and enqueue it with parent 0.",
+    "queueOrStackState" : [ "(1,0)", "(2,0)" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "neighbour" : "2",
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 19,
+    "description" : "Dequeue 1 (parent 0).",
+    "queueOrStackState" : [ "(2,0)" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "1",
+      "parent" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 24,
+    "description" : "3 is new. Mark it seen and enqueue it with parent 1.",
+    "queueOrStackState" : [ "(2,0)", "(3,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "queued"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "neighbour" : "3",
+      "node" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 19,
+    "description" : "Dequeue 2 (parent 0).",
+    "queueOrStackState" : [ "(3,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "queued"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "2",
+      "parent" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 27,
+    "description" : "3 is already visited and is NOT 2's parent (0) - a second path reaches it, so a cycle exists.",
+    "queueOrStackState" : [ "(3,1)" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "cycle"
+    },
+    "activeEdges" : [ "2-3" ],
+    "variables" : {
+      "neighbour" : "3",
+      "node" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}
