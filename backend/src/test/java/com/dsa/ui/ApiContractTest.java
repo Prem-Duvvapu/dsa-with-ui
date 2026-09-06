@@ -148,6 +148,8 @@ class ApiContractTest {
             "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
             "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
             "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
+            "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
+            "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
             "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
             "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors");
 
@@ -282,6 +284,13 @@ class ApiContractTest {
                 arguments("/api/graphs/advanced", "kruskals-mst"),
                 arguments("/api/graphs/advanced", "network-connected-ops"),
                 arguments("/api/graphs/advanced", "most-stones-removed"),
+                arguments("/api/graphs/advanced", "num-provinces"),
+                arguments("/api/graphs/advanced", "connected-matrix"),
+                arguments("/api/graphs/advanced", "rotten-oranges"),
+                arguments("/api/graphs/advanced", "flood-fill"),
+                arguments("/api/graphs/advanced", "nearest-cell-1"),
+                arguments("/api/graphs/advanced", "surrounded-regions"),
+                arguments("/api/graphs/advanced", "number-of-enclaves"),
                 arguments("/api/graphs/advanced", "cheapest-flights-k-stops"),
                 arguments("/api/graphs/advanced", "network-delay-time"),
                 arguments("/api/graphs/advanced", "number-of-ways-destination"),

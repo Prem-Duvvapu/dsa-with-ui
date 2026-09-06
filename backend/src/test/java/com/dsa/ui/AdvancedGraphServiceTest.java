@@ -52,6 +52,8 @@ class AdvancedGraphServiceTest {
                 "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
                 "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
                 "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
+                "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
+                "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
                 "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
                 "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors");
         List<ProblemDetail> problems = service.getAllProblems();
