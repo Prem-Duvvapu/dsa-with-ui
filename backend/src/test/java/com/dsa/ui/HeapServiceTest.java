@@ -37,7 +37,8 @@ public class HeapServiceTest {
     @Test
     public void testGenerateStepsForAllHeapProblems() {
         Set<String> retired = Set.of(
-                "kth-largest-element", "kth-smallest-element", "task-scheduler", "top-k-frequent-elements");
+                "kth-largest-element", "kth-smallest-element", "task-scheduler", "top-k-frequent-elements",
+                "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "merge-k-sorted-lists");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

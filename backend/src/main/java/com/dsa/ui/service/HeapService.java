@@ -34,20 +34,20 @@ public class HeapService implements ProblemProvider {
             case "kth-smallest-element":
             case "task-scheduler":
             case "top-k-frequent-elements":
+            case "hand-of-straights":
+            case "min-cost-connect-sticks":
+            case "median-data-stream":
+            case "merge-k-sorted-lists":
                 throw new LegacyTraceRetiredException(problemId);
-            case "merge-k-sorted-lists": return generateMergeKListsSteps();
             case "heaps-theory": return generateKthLargestSteps();
             case "implement-min-heap": return generateKthLargestSteps();
             case "check-min-heap": return generateKthLargestSteps();
             case "min-to-max-heap": return generateKthLargestSteps();
             case "sort-k-sorted-array": return generateKthLargestSteps();
             case "replace-rank-array": return generateKthLargestSteps();
-            case "hand-of-straights": return generateKthLargestSteps();
             case "design-twitter": return generateKthLargestSteps();
-            case "min-cost-connect-sticks": return generateKthLargestSteps();
             case "kth-largest-stream": return generateKthLargestSteps();
             case "maximum-sum-combination": return generateKthLargestSteps();
-            case "median-data-stream": return generateKthLargestSteps();
             default: return generateKthLargestSteps();
         }
     }
@@ -91,7 +91,7 @@ public class HeapService implements ProblemProvider {
             }
             """,
             null, null, null, null, createDefaultList(), null, null,
-            new ComplexityDetail("O(N log K)", "Time Complexity: N total nodes across K lists.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue memory for K heads.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "PriorityQueue"
+            new ComplexityDetail("O(N log K)", "Time Complexity: N total nodes across K lists.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue memory for K heads.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "LinkedList"
         ));
 
         // Bulk register remaining 15 Heap problems
@@ -117,9 +117,10 @@ public class HeapService implements ProblemProvider {
             {"top-k-frequent-elements", "Top K Frequent Elements", "Heaps - Hard", "Medium", "Find top K frequent elements using HashMap count + Min-Heap PriorityQueue."}
         };
 
-        // These three now have real tracers whose emitted structure is Array, not the
+        // These now have real tracers whose emitted structure is Array, not the
         // heap-as-tree default every other id in this bulk list still carries.
-        Set<String> arrayDsType = Set.of("kth-smallest-element", "task-scheduler", "top-k-frequent-elements");
+        Set<String> arrayDsType = Set.of("kth-smallest-element", "task-scheduler", "top-k-frequent-elements",
+                "hand-of-straights", "min-cost-connect-sticks", "median-data-stream");
 
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
@@ -139,15 +140,6 @@ public class HeapService implements ProblemProvider {
         ListTraceRecorder recorder = new ListTraceRecorder();
         new KthLargestElement().solve(nums, 2, recorder);
         return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateMergeKListsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> list = createDefaultList();
-        steps.add(new ExecutionStep(1, 4, "Merge K Sorted Lists: Add heads [1, 2, 3] to Min-Heap.", List.of(), Map.of(), List.of(), Map.of("pq", "[1, 2, 3]"), "LinkedList", null, null, list, null));
-        steps.add(new ExecutionStep(2, 14, "Extract minNode = 1 from Min-Heap. Append to merged list. Add minNode.next (val 4) to Min-Heap.", List.of(), Map.of(), List.of(), Map.of("extracted", "1"), "LinkedList", null, null, list, null));
-        steps.add(new ExecutionStep(3, 19, "Merge K Sorted Lists Complete! Merged Output: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> NULL.", List.of(), Map.of(), List.of(), Map.of("Merged", "1->2->3->4->5->6"), "LinkedList", null, null, list, null));
-        return steps;
     }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {

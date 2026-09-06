@@ -25,9 +25,16 @@ public class SlidingWindowService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
+            // These ids have real tracers (tracer/impl). Refuse rather than let default:
+            // serve another algorithm's steps under this id. The default: stays until
+            // PROMPT D; other ids in this service still rely on it.
+            case "fruit-into-baskets":
+            case "longest-repeating-character-replacement":
+            case "minimum-window-substring":
+            case "subarrays-k-different-integers":
+                throw new LegacyTraceRetiredException(problemId);
             case "longest-substring-without-repeating": return generateLongestSubstringSteps();
             case "max-consecutive-ones-3": return generateMaxConsecutiveOnesSteps();
-            case "minimum-window-substring": return generateMinWindowSubstringSteps();
             default: return generateLongestSubstringSteps();
         }
     }
@@ -75,13 +82,17 @@ public class SlidingWindowService implements ProblemProvider {
             {"minimum-window-subsequence", "Minimum Window Subsequence", "Sliding Window - Hard", "Hard", "Find minimum window subsequence matching S2 in S1."}
         };
 
+        // These two now have real tracers that trace a string window, not an int array.
+        Set<String> stringDsType = Set.of("longest-repeating-character-replacement", "minimum-window-substring");
+
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
+            String dsType = stringDsType.contains(id) ? "String" : "Array";
             problems.put(id, new ProblemDetail(
                 id, title, cat, "Sliding Window", diff, desc,
                 String.format("// Java Implementation for %s\npublic int solve() {\n    // Sliding Window Striver A2Z Implementation\n    return 0;\n}", title),
                 null, null, null, createArrayState(new int[]{1, 1, 0, 1, 1}, -1, -1), null, null, null,
-                new ComplexityDetail("O(N)", "Time Complexity: Two pointers left & right move linearly.", "Sliding Window", "O(1)", "Space Complexity: Character frequency map space.", "Memory", "Auxiliary Space: O(1)", "Memory"), "Array"
+                new ComplexityDetail("O(N)", "Time Complexity: Two pointers left & right move linearly.", "Sliding Window", "O(1)", "Space Complexity: Character frequency map space.", "Memory", "Auxiliary Space: O(1)", "Memory"), dsType
             ));
         }
     }
@@ -123,16 +134,6 @@ public class SlidingWindowService implements ProblemProvider {
         steps.add(createStep(stepNum++, 3, "Max Consecutive Ones III: nums = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], K = 2 (Flips allowed).", createRangeArrayState(nums, 0, 0), Map.of("K", "2", "zeroCount", "0")));
         steps.add(createStep(stepNum++, 6, "Expand window right -> 5: Zero count = 3 > K=2! Shrink left -> 3.", createRangeArrayState(nums, 3, 5), Map.of("left", "3", "right", "5", "zeroCount", "3")));
         steps.add(createStep(stepNum++, 9, "Expand window to index 9 [1, 1, 1, 1] with 2 zero flips! Max Consecutive Ones = 6.", createRangeArrayState(nums, 4, 9), Map.of("maxConsecutiveOnes", "6")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateMinWindowSubstringSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] vals = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Minimum Window Substring: s = \"ADOBECODEBANC\", t = \"ABC\".", createRangeArrayState(vals, 0, 0), Map.of("s", "ADOBECODEBANC", "t", "ABC")));
-        steps.add(createStep(stepNum++, 7, "First valid window found at [0..5] (\"ADOBEC\"). Min Len = 6.", createRangeArrayState(vals, 0, 5), Map.of("window", "ADOBEC", "minLen", "6")));
-        steps.add(createStep(stepNum++, 11, "Shrink and expand window to [9..12] (\"BANC\"). Contains all chars {A, B, C}! Min Len = 4.", createRangeArrayState(vals, 9, 12), Map.of("window", "BANC", "minLen", "4")));
         return steps;
     }
 
