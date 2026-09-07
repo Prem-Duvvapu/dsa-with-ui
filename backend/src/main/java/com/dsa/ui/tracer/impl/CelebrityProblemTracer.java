@@ -14,6 +14,13 @@ import java.util.Map;
  * <p>Two-pointer elimination: compare candidate A and B. If A knows B, A is not the
  * celebrity (eliminates A). If A does not know B, B is not the celebrity (eliminates B).
  * One candidate survives; verify it in a second pass.
+ *
+ * <p>Traced as {@link DsType#MATRIX}, because the knows-matrix is the only structure this
+ * implementation has: the two pointers are integers, and the classic stack-based elimination
+ * — push everyone, pop two, discard one — is a different algorithm from the two-pointer one
+ * written here. It declared {@code STACK} when it landed and never called
+ * {@code emit.stack(...)}, so the UI routed it to StackCanvas and drew an empty stack panel
+ * for the whole animation while the grid it does emit went unrendered.
  */
 @Component
 public class CelebrityProblemTracer implements AlgorithmTracer {
@@ -25,7 +32,7 @@ public class CelebrityProblemTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STACK;
+        return DsType.MATRIX;
     }
 
     @Override
