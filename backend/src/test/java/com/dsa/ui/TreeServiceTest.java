@@ -48,7 +48,9 @@ class TreeServiceTest {
                 "morris-inorder", "correct-bst-swap",
                 "bst-insert", "bst-delete", "bst-floor-ceil",
                 "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
-                "postorder-2-stacks", "postorder-1-stack", "morris-preorder");
+                "postorder-2-stacks", "postorder-1-stack", "morris-preorder",
+                "traversals-in-one-pass", "pre-post-in-one-traversal",
+                "top-view-bt", "bottom-view-bt", "right-left-view-bt", "boundary-traversal");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
