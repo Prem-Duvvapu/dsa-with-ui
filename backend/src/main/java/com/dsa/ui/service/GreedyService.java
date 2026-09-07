@@ -71,7 +71,7 @@ public class GreedyService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{1, 3, 0, 5, 8, 5}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N log N)", "Time Complexity: Sorting meetings by end time.", "Activity Selection", "O(N)", "Space Complexity: Meeting list space.", "Memory", "Auxiliary Space: O(N)", "Memory"), "Array"
+            new ComplexityDetail("O(N log N)", "Time Complexity: Sorting meetings by end time.", "Activity Selection", "O(N)", "Space Complexity: Meeting list space.", "Memory", "Auxiliary Space: O(N)", "Memory"), "Interval"
         ));
 
         // 2. Jump Game I
