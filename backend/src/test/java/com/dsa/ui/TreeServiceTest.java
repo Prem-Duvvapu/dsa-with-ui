@@ -57,7 +57,8 @@ class TreeServiceTest {
                 "construct-bt-pre-in", "construct-bt-post-in", "flatten-bt-to-ll",
                 "root-to-leaf-path", "nodes-distance-k",
                 "bst-intro", "bst-search", "bst-min-max", "bst-floor", "bst-lca",
-                "bst-validate");
+                "bst-validate", "bst-kth-smallest", "bst-inorder-successor", "two-sum-bst",
+                "construct-bst-preorder", "merge-two-bsts", "largest-bst-in-bt");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {
