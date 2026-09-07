@@ -61,6 +61,19 @@ public class TreeService implements ProblemProvider {
             case "bst-delete":
             case "bst-floor-ceil":
                 throw new LegacyTraceRetiredException(problemId);
+            // Traversal mechanics: tree-intro, tree-rep-java, the two explicit-stack
+            // traversals, both iterative postorders and Morris preorder have real tracers
+            // now. None had a case at all before - every one of them silently fell into
+            // default: and served the same canned four-node preorder demo under seven
+            // different names.
+            case "tree-intro":
+            case "tree-rep-java":
+            case "iterative-preorder":
+            case "iterative-inorder":
+            case "postorder-2-stacks":
+            case "postorder-1-stack":
+            case "morris-preorder":
+                throw new LegacyTraceRetiredException(problemId);
             case "tree-height": return generatePreorderSteps();
             case "tree-balanced": return generatePreorderSteps();
             case "tree-diameter": return generatePreorderSteps();
@@ -201,7 +214,10 @@ public class TreeService implements ProblemProvider {
                     // the catalogue entry has to agree or CatalogTracerMetadataTest fails.
                     // bst-validate/bst-kth-smallest/bst-lca stay on the STACK default below
                     // deliberately - see RCA.md - until they have real tracers too.
-                    "bst-insert", "bst-delete", "bst-floor-ceil" -> DsType.TREE;
+                    "bst-insert", "bst-delete", "bst-floor-ceil",
+                    // Traversal mechanics and views, all drawing a binary tree.
+                    "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
+                    "postorder-2-stacks", "postorder-1-stack", "morris-preorder" -> DsType.TREE;
             default -> DsType.STACK;
         };
     }

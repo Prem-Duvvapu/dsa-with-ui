@@ -1,0 +1,411 @@
+{
+  "anchors" : {
+    "done" : 28,
+    "emptySlot" : 11,
+    "linkLeft" : 23,
+    "linkRight" : 25,
+    "newRoot" : 14,
+    "orphan" : 19
+  },
+  "code" : "class TreeNode {\n    int val;\n    TreeNode left, right;\n    TreeNode(int val) { this.val = val; }\n}\n\npublic TreeNode build(Integer[] level) {\n    TreeNode[] nodes = new TreeNode[level.length];\n    for (int i = 0; i < level.length; i++) {\n        if (level[i] == null) {\n            continue;                    // that child pointer stays null\n        }\n        if (i == 0) {\n            nodes[0] = new TreeNode(level[0]);\n            continue;\n        }\n        int parent = (i - 1) / 2;\n        if (nodes[parent] == null) {\n            continue;                    // no parent object to hang it off\n        }\n        nodes[i] = new TreeNode(level[i]);\n        if (i % 2 == 1) {\n            nodes[parent].left = nodes[i];\n        } else {\n            nodes[parent].right = nodes[i];\n        }\n    }\n    return nodes.length == 0 ? null : nodes[0];\n}",
+  "problemId" : "tree-rep-java",
+  "resolvedInput" : {
+    "tree" : [ 1, 2, 3, null, 4, 5, 6 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 14,
+    "description" : "new TreeNode(1) at index 0. This one object is the whole tree so far - every other node has to be reachable from it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "nodesCreated" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 23,
+    "description" : "Index 1 is odd, so it is a LEFT child: new TreeNode(2), then node(1).left = it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "nodesCreated" : "2",
+      "parent" : "1",
+      "side" : "left"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 25,
+    "description" : "Index 2 is even, so it is a RIGHT child: new TreeNode(3), then node(1).right = it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "nodesCreated" : "3",
+      "parent" : "1",
+      "side" : "right"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "Index 3 holds null. No object is created, and whichever child pointer of node 2 would have referenced it simply stays null.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "nodesCreated" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 25,
+    "description" : "Index 4 is even, so it is a RIGHT child: new TreeNode(4), then node(2).right = it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "nodesCreated" : "4",
+      "parent" : "2",
+      "side" : "right"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 23,
+    "description" : "Index 5 is odd, so it is a LEFT child: new TreeNode(5), then node(3).left = it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "nodesCreated" : "5",
+      "parent" : "3",
+      "side" : "left"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "5",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 25,
+    "description" : "Index 6 is even, so it is a RIGHT child: new TreeNode(6), then node(3).right = it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "nodesCreated" : "6",
+      "parent" : "3",
+      "side" : "right"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "5",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 28,
+    "description" : "6 TreeNode objects linked. The array is gone from here on - the algorithms that follow only ever follow .left and .right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "nodesCreated" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "done"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 4,
+      "state" : "done"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "val" : "5",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    } ]
+  } ],
+  "truncated" : false
+}
