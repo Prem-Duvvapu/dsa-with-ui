@@ -1,0 +1,92 @@
+.header {
+  margin: var(--space-xs) var(--space-md) 0 var(--space-md);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-default);
+  flex-shrink: 0;
+  height: 46px;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hamburgerBtn {
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-violet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--accent-violet-glow);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+  margin: 0;
+}
+
+.proBadge {
+  font-size: 0.6rem;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent-violet-tint);
+  color: var(--accent-violet);
+  border: 1px solid var(--border-accent);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 0.67rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.libraryBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bench-fill);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  font-size: 0.72rem;
+}
+
+.libraryLabel {
+  color: var(--text-muted);
+}
+
+.libraryCount {
+  color: var(--text-primary);
+  font-weight: 700;
+}

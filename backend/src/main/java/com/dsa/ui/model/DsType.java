@@ -27,7 +27,8 @@ public enum DsType {
     HEAP("PriorityQueue"),
     TRIE("Trie"),
     RECURSION_TREE("RecursionTree"),
-    DSU("Dsu");
+    DSU("Dsu"),
+    INTERVAL("Interval");
 
     private final String wireValue;
 
