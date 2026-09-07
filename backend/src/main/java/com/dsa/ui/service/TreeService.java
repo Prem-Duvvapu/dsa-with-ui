@@ -83,9 +83,18 @@ public class TreeService implements ProblemProvider {
             case "right-left-view-bt":
             case "boundary-traversal":
                 throw new LegacyTraceRetiredException(problemId);
-            case "tree-height": return generatePreorderSteps();
-            case "tree-balanced": return generatePreorderSteps();
-            case "tree-diameter": return generatePreorderSteps();
+            // Structural properties. tree-height/tree-balanced/tree-diameter each had an
+            // explicit case delegating to generatePreorderSteps() - three named problems
+            // routed by hand to a fourth problem's canned demo. The other four had no case
+            // and reached the same generator through default:.
+            case "tree-height":
+            case "tree-balanced":
+            case "tree-diameter":
+            case "symmetric-tree":
+            case "identical-trees":
+            case "children-sum-property":
+            case "max-width-bt":
+                throw new LegacyTraceRetiredException(problemId);
             case "bst-search": return generatePreorderSteps();
             case "bst-validate": return generatePreorderSteps();
             case "bst-kth-smallest": return generatePreorderSteps();
@@ -229,7 +238,10 @@ public class TreeService implements ProblemProvider {
                     "postorder-2-stacks", "postorder-1-stack", "morris-preorder",
                     "traversals-in-one-pass", "pre-post-in-one-traversal",
                     "top-view-bt", "bottom-view-bt", "right-left-view-bt",
-                    "boundary-traversal" -> DsType.TREE;
+                    "boundary-traversal",
+                    // Structural properties, construction and paths.
+                    "tree-height", "tree-balanced", "tree-diameter", "symmetric-tree",
+                    "identical-trees", "children-sum-property", "max-width-bt" -> DsType.TREE;
             default -> DsType.STACK;
         };
     }

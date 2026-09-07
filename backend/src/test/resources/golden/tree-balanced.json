@@ -1,0 +1,975 @@
+{
+  "anchors" : {
+    "abandonAfterLeft" : 12,
+    "abandonAfterRight" : 16,
+    "balancedHere" : 21,
+    "done" : 3,
+    "emptyIsZero" : 8,
+    "imbalanceFound" : 19
+  },
+  "code" : "public boolean isBalanced(TreeNode root) {\n    boolean balanced = check(root) != -1;\n    return balanced;\n}\n\nprivate int check(TreeNode node) {\n    if (node == null) {\n        return 0;\n    }\n    int left = check(node.left);\n    if (left == -1) {\n        return -1;              // the right child is never visited\n    }\n    int right = check(node.right);\n    if (right == -1) {\n        return -1;\n    }\n    if (Math.abs(left - right) > 1) {\n        return -1;\n    }\n    return 1 + Math.max(left, right);\n}",
+  "problemId" : "tree-balanced",
+  "resolvedInput" : {
+    "tree" : [ 1, 2, 3, 4, 5, null, null, null, null, 6, null, null, null, null, null, null, null, null, null, 7 ]
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 8,
+    "description" : "4 has no left child, so that side is height 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "height" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "4 has no right child, so that side is height 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "height" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 21,
+    "description" : "4 is fine: 0 against 0 is a gap of 0. Report a real height, 1, so the parent can keep going.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftHeight" : "0",
+      "returned" : "1",
+      "rightHeight" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "7 has no left child, so that side is height 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(5)", "check(6)", "check(7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "height" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "7 has no right child, so that side is height 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(5)", "check(6)", "check(7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "height" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 21,
+    "description" : "7 is fine: 0 against 0 is a gap of 0. Report a real height, 1, so the parent can keep going.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(5)", "check(6)", "check(7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftHeight" : "0",
+      "returned" : "1",
+      "rightHeight" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "6 has no right child, so that side is height 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(5)", "check(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "height" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 21,
+    "description" : "6 is fine: 1 against 0 is a gap of 1. Report a real height, 2, so the parent can keep going.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(5)", "check(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftHeight" : "1",
+      "returned" : "2",
+      "rightHeight" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "5 has no right child, so that side is height 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "height" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "5 has height 2 on the left and 0 on the right - a gap of 2, more than one level. This is the violation; report -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)", "check(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftHeight" : "2",
+      "returned" : "-1",
+      "rightHeight" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 16,
+    "description" : "2's right side came back -1, so 2 reports -1 too. Its own heights no longer matter.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)", "check(2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "-1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 12,
+    "description" : "1's left side came back -1. The right subtree rooted at 3 is now never visited at all - that skipped work is what makes this O(n) instead of O(n^2).",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returned" : "-1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 3,
+    "description" : "A -1 reached the root, so the tree is NOT balanced.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "false"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 9,
+      "val" : "6",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : 19,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 19,
+      "val" : "7",
+      "x" : 180.0,
+      "y" : 336.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  } ],
+  "truncated" : false
+}

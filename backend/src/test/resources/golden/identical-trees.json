@@ -1,0 +1,1594 @@
+{
+  "anchors" : {
+    "bothEmpty" : 8,
+    "done" : 3,
+    "matchDescendLeft" : 16,
+    "matchDescendRight" : 17,
+    "shapesDiffer" : 11,
+    "valuesDiffer" : 14
+  },
+  "code" : "public boolean isSameTree(TreeNode p, TreeNode q) {\n    boolean same = same(p, q);\n    return same;\n}\n\nprivate boolean same(TreeNode a, TreeNode b) {\n    if (a == null && b == null) {\n        return true;\n    }\n    if (a == null || b == null) {\n        return false;\n    }\n    if (a.val != b.val) {\n        return false;\n    }\n    if (!same(a.left, b.left)) return false;\n    return same(a.right, b.right);\n}",
+  "problemId" : "identical-trees",
+  "resolvedInput" : {
+    "p" : [ 1, 2, 3, 4, 5 ],
+    "q" : [ 1, 2, 3, 4, 5, 6 ]
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 16,
+    "description" : "Both trees hold 1 here. Now compare p's LEFT with q's LEFT - straight down on both sides, never crossed over.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "unvisited"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 16,
+    "description" : "Both trees hold 2 here. Now compare p's LEFT with q's LEFT - straight down on both sides, never crossed over.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 16,
+    "description" : "Both trees hold 4 here. Now compare p's LEFT with q's LEFT - straight down on both sides, never crossed over.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(4, 4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "Both branches are empty at the same moment - they agree, so this pair is fine and the walk backs out.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(4, 4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "agree"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 17,
+    "description" : "The left sides below 4 agree. Compare p's RIGHT with q's RIGHT.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(4, 4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Both branches are empty at the same moment - they agree, so this pair is fine and the walk backs out.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(4, 4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "agree"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 17,
+    "description" : "The left sides below 2 agree. Compare p's RIGHT with q's RIGHT.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "Both trees hold 5 here. Now compare p's LEFT with q's LEFT - straight down on both sides, never crossed over.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(5, 5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "Both branches are empty at the same moment - they agree, so this pair is fine and the walk backs out.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(5, 5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "agree"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "The left sides below 5 agree. Compare p's RIGHT with q's RIGHT.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(5, 5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "Both branches are empty at the same moment - they agree, so this pair is fine and the walk backs out.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(2, 2)", "same(5, 5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "agree"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visiting"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 17,
+    "description" : "The left sides below 1 agree. Compare p's RIGHT with q's RIGHT.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 16,
+    "description" : "Both trees hold 3 here. Now compare p's LEFT with q's LEFT - straight down on both sides, never crossed over.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(3, 3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "match so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 11,
+    "description" : "One branch ran out and the other did not: q still has 6. The shapes differ, whatever the remaining values are.",
+    "queueOrStackState" : null,
+    "callStack" : [ "same(1, 1)", "same(3, 3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "verdict" : "shape mismatch"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 3,
+    "description" : "A pair disagreed, so the walk stopped there: the two trees are NOT identical.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "false"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "p:1",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "p:2",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "p:3",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "p:4",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "p:5",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "q:1",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visiting"
+    }, {
+      "id" : 1001,
+      "val" : "q:2",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : 1003,
+      "rightId" : 1004,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "q:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : 1005,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1003,
+      "val" : "q:4",
+      "x" : 380.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1004,
+      "val" : "q:5",
+      "x" : 460.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1005,
+      "val" : "q:6",
+      "x" : 540.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  } ],
+  "truncated" : false
+}
