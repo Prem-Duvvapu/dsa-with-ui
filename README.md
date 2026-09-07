@@ -6,10 +6,11 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 245 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 284 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
-[Coverage](#coverage-catalogued-vs-traced) below. All 30 **Stack & Queue** problems and all 12
-**Sliding Window** problems now have complete execution traces.
+[Coverage](#coverage-catalogued-vs-traced) below. All 30 **Stack & Queue** problems, all 12
+**Sliding Window** problems, and all 54 **Binary Trees & BST** problems now have complete
+execution traces.
 
 ---
 
@@ -217,6 +218,12 @@ them means moving problems between services.
 `cheapest-flights-k-stops`, `network-delay-time`, `number-of-ways-destination`, `min-multiplications-reach-end`, `floyd-warshall`, `city-smallest-neighbors`,
 `accounts-merge`, `number-of-islands-2`, `making-large-island`, `swim-in-rising-water`, `tarjan-bridges`, `articulation-points`, `word-ladder-2`,
 `balanced-parentheses`, `next-greater-element-1`, `stack-array-impl`, `queue-array-impl`, `stack-queue-impl`, `queue-stack-impl`, `stack-ll-impl`, `queue-ll-impl`,
+`tree-intro`, `tree-rep-java`, `iterative-preorder`, `iterative-inorder`, `postorder-2-stacks`, `postorder-1-stack`, `morris-preorder`,
+`traversals-in-one-pass`, `pre-post-in-one-traversal`, `top-view-bt`, `bottom-view-bt`, `right-left-view-bt`, `boundary-traversal`,
+`tree-height`, `tree-balanced`, `tree-diameter`, `symmetric-tree`, `identical-trees`, `children-sum-property`, `max-width-bt`,
+`unique-bt-requirements`, `count-complete-tree-nodes`, `construct-bt-pre-in`, `construct-bt-post-in`, `flatten-bt-to-ll`, `root-to-leaf-path`, `nodes-distance-k`,
+`bst-intro`, `bst-search`, `bst-min-max`, `bst-floor`, `bst-lca`, `bst-validate`,
+`bst-kth-smallest`, `bst-inorder-successor`, `two-sum-bst`, `construct-bst-preorder`, `merge-two-bsts`, `largest-bst-in-bt`,
 `z-function-algo`, and `zigzag-traversal`.
 
 Sixteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
