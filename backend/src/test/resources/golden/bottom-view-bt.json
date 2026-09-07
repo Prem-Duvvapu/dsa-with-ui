@@ -1,0 +1,1289 @@
+{
+  "anchors" : {
+    "dequeue" : 7,
+    "done" : 24,
+    "enqueueLeft" : 18,
+    "enqueueRight" : 21,
+    "firstInColumn" : 14,
+    "overwriteColumn" : 12,
+    "seed" : 4
+  },
+  "code" : "public List<Integer> bottomView(TreeNode root) {\n    Map<Integer, Integer> column = new TreeMap<>();\n    Queue<Object[]> queue = new ArrayDeque<>();\n    queue.add(new Object[]{root, 0});\n\n    while (!queue.isEmpty()) {\n        Object[] entry = queue.poll();\n        TreeNode node = (TreeNode) entry[0];\n        int hd = (int) entry[1];\n\n        if (column.containsKey(hd)) {\n            column.put(hd, node.val);   // deeper, so it wins\n        } else {\n            column.put(hd, node.val);\n        }\n\n        if (node.left != null) {\n            queue.add(new Object[]{node.left, hd - 1});\n        }\n        if (node.right != null) {\n            queue.add(new Object[]{node.right, hd + 1});\n        }\n    }\n    return new ArrayList<>(column.values());\n}",
+  "problemId" : "bottom-view-bt",
+  "resolvedInput" : {
+    "tree" : [ 20, 8, 22, 5, 3, null, 25 ]
+  },
+  "stepCount" : 19,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Seed the queue with the root 20 at column 0. Every column starts out owned by whoever writes to it, and keeps changing hands as the walk goes deeper.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "columns" : "{}"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "queued"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Dequeue 20, sitting in column 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{}",
+      "node" : "20"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "queued"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 14,
+    "description" : "Column 0 is empty, so 20 takes it - provisionally. Anything that later lands in column 0 will be deeper and will replace it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{0=20}",
+      "node" : "20"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "20's left child 8 goes one column further left, to -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-1",
+      "columns" : "{0=20}",
+      "queued" : "8"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 21,
+    "description" : "20's right child 22 goes one column further right, to 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "1",
+      "columns" : "{0=20}",
+      "queued" : "22"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Dequeue 8, sitting in column -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-1",
+      "columns" : "{0=20}",
+      "node" : "8"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 14,
+    "description" : "Column -1 is empty, so 8 takes it - provisionally. Anything that later lands in column -1 will be deeper and will replace it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-1",
+      "columns" : "{-1=8, 0=20}",
+      "node" : "8"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 18,
+    "description" : "8's left child 5 goes one column further left, to -2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-2",
+      "columns" : "{-1=8, 0=20}",
+      "queued" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 21,
+    "description" : "8's right child 3 goes one column further right, to 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-1=8, 0=20}",
+      "queued" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 7,
+    "description" : "Dequeue 22, sitting in column 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "1",
+      "columns" : "{-1=8, 0=20}",
+      "node" : "22"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 14,
+    "description" : "Column 1 is empty, so 22 takes it - provisionally. Anything that later lands in column 1 will be deeper and will replace it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "1",
+      "columns" : "{-1=8, 0=20, 1=22}",
+      "node" : "22"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 21,
+    "description" : "22's right child 25 goes one column further right, to 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "2",
+      "columns" : "{-1=8, 0=20, 1=22}",
+      "queued" : "25"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 7,
+    "description" : "Dequeue 5, sitting in column -2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-2",
+      "columns" : "{-1=8, 0=20, 1=22}",
+      "node" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Column -2 is empty, so 5 takes it - provisionally. Anything that later lands in column -2 will be deeper and will replace it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-2",
+      "columns" : "{-2=5, -1=8, 0=20, 1=22}",
+      "node" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 7,
+    "description" : "Dequeue 3, sitting in column 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-2=5, -1=8, 0=20, 1=22}",
+      "node" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 12,
+    "description" : "Column 0 was showing 20, but 3 was dequeued later and so lies deeper - it takes the column over.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-2=5, -1=8, 0=3, 1=22}",
+      "node" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 7,
+    "description" : "Dequeue 25, sitting in column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "2",
+      "columns" : "{-2=5, -1=8, 0=3, 1=22}",
+      "node" : "25"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 14,
+    "description" : "Column 2 is empty, so 25 takes it - provisionally. Anything that later lands in column 2 will be deeper and will replace it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "2",
+      "columns" : "{-2=5, -1=8, 0=3, 1=22, 2=25}",
+      "node" : "25"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 24,
+    "description" : "Nobody is left to overwrite anything. Reading the columns left to right gives the bottom view: [5, 8, 3, 22, 25].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bottomView" : "[5, 8, 3, 22, 25]",
+      "columns" : "{-2=5, -1=8, 0=3, 1=22, 2=25}"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "8",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "22",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "5",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "3",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 6,
+      "val" : "25",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  } ],
+  "truncated" : false
+}

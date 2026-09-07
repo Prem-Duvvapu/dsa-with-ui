@@ -1,0 +1,1765 @@
+{
+  "anchors" : {
+    "done" : 23,
+    "seed" : 6,
+    "state1" : 11,
+    "state2" : 15,
+    "state3" : 19
+  },
+  "code" : "public List<List<Integer>> allThree(TreeNode root) {\n    List<Integer> pre = new ArrayList<>();\n    List<Integer> in = new ArrayList<>();\n    List<Integer> post = new ArrayList<>();\n    Deque<Frame> stack = new ArrayDeque<>();\n    if (root != null) stack.push(new Frame(root, 1));\n\n    while (!stack.isEmpty()) {\n        Frame top = stack.peek();\n        if (top.state == 1) {\n            pre.add(top.node.val);\n            top.state = 2;\n            if (top.node.left != null) stack.push(new Frame(top.node.left, 1));\n        } else if (top.state == 2) {\n            in.add(top.node.val);\n            top.state = 3;\n            if (top.node.right != null) stack.push(new Frame(top.node.right, 1));\n        } else {\n            post.add(top.node.val);\n            stack.pop();\n        }\n    }\n    return List.of(pre, in, post);\n}",
+  "problemId" : "traversals-in-one-pass",
+  "resolvedInput" : {
+    "tree" : [ 1, 2, 3, 4, 5, 6, 7 ]
+  },
+  "stepCount" : 23,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "Push the root 1 with state 1. Every node enters at state 1 and leaves at state 3, contributing to one order at each stop.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[]",
+      "postorder" : "[]",
+      "preorder" : "[]",
+      "stack" : "[1:1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "queued"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "1 is at state 1 - first look. Its value joins PREORDER, its state becomes 2, and its left child 2 is pushed at state 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[]",
+      "postorder" : "[]",
+      "preorder" : "[1]",
+      "stack" : "[1:2, 2:1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "queued"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 11,
+    "description" : "2 is at state 1 - first look. Its value joins PREORDER, its state becomes 2, and its left child 4 is pushed at state 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[]",
+      "postorder" : "[]",
+      "preorder" : "[1, 2]",
+      "stack" : "[1:2, 2:2, 4:1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "4 is at state 1 - first look. Its value joins PREORDER and its state becomes 2. There is no left child to push, so the next look is at 4 again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[]",
+      "postorder" : "[]",
+      "preorder" : "[1, 2, 4]",
+      "stack" : "[1:2, 2:2, 4:2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 15,
+    "description" : "4 is back on top at state 2, so its left subtree is finished. Its value joins INORDER and its state becomes 3. No right child to push.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4]",
+      "postorder" : "[]",
+      "preorder" : "[1, 2, 4]",
+      "stack" : "[1:2, 2:2, 4:3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "4 reaches state 3 - both subtrees are done. Its value joins POSTORDER and it is finally popped, never to be looked at again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4]",
+      "postorder" : "[4]",
+      "preorder" : "[1, 2, 4]",
+      "stack" : "[1:2, 2:2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "2 is back on top at state 2, so its left subtree is finished. Its value joins INORDER, its state becomes 3, and its right child 5 is pushed.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2]",
+      "postorder" : "[4]",
+      "preorder" : "[1, 2, 4]",
+      "stack" : "[1:2, 2:3, 5:1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 11,
+    "description" : "5 is at state 1 - first look. Its value joins PREORDER and its state becomes 2. There is no left child to push, so the next look is at 5 again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2]",
+      "postorder" : "[4]",
+      "preorder" : "[1, 2, 4, 5]",
+      "stack" : "[1:2, 2:3, 5:2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 15,
+    "description" : "5 is back on top at state 2, so its left subtree is finished. Its value joins INORDER and its state becomes 3. No right child to push.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5]",
+      "postorder" : "[4]",
+      "preorder" : "[1, 2, 4, 5]",
+      "stack" : "[1:2, 2:3, 5:3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "5 reaches state 3 - both subtrees are done. Its value joins POSTORDER and it is finally popped, never to be looked at again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5]",
+      "postorder" : "[4, 5]",
+      "preorder" : "[1, 2, 4, 5]",
+      "stack" : "[1:2, 2:3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 19,
+    "description" : "2 reaches state 3 - both subtrees are done. Its value joins POSTORDER and it is finally popped, never to be looked at again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5]",
+      "postorder" : "[4, 5, 2]",
+      "preorder" : "[1, 2, 4, 5]",
+      "stack" : "[1:2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 15,
+    "description" : "1 is back on top at state 2, so its left subtree is finished. Its value joins INORDER, its state becomes 3, and its right child 3 is pushed.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1]",
+      "postorder" : "[4, 5, 2]",
+      "preorder" : "[1, 2, 4, 5]",
+      "stack" : "[1:3, 3:1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "3 is at state 1 - first look. Its value joins PREORDER, its state becomes 2, and its left child 6 is pushed at state 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1]",
+      "postorder" : "[4, 5, 2]",
+      "preorder" : "[1, 2, 4, 5, 3]",
+      "stack" : "[1:3, 3:2, 6:1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 11,
+    "description" : "6 is at state 1 - first look. Its value joins PREORDER and its state becomes 2. There is no left child to push, so the next look is at 6 again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1]",
+      "postorder" : "[4, 5, 2]",
+      "preorder" : "[1, 2, 4, 5, 3, 6]",
+      "stack" : "[1:3, 3:2, 6:2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "6 is back on top at state 2, so its left subtree is finished. Its value joins INORDER and its state becomes 3. No right child to push.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6]",
+      "postorder" : "[4, 5, 2]",
+      "preorder" : "[1, 2, 4, 5, 3, 6]",
+      "stack" : "[1:3, 3:2, 6:3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 19,
+    "description" : "6 reaches state 3 - both subtrees are done. Its value joins POSTORDER and it is finally popped, never to be looked at again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6]",
+      "postorder" : "[4, 5, 2, 6]",
+      "preorder" : "[1, 2, 4, 5, 3, 6]",
+      "stack" : "[1:3, 3:2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 15,
+    "description" : "3 is back on top at state 2, so its left subtree is finished. Its value joins INORDER, its state becomes 3, and its right child 7 is pushed.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6, 3]",
+      "postorder" : "[4, 5, 2, 6]",
+      "preorder" : "[1, 2, 4, 5, 3, 6]",
+      "stack" : "[1:3, 3:3, 7:1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 11,
+    "description" : "7 is at state 1 - first look. Its value joins PREORDER and its state becomes 2. There is no left child to push, so the next look is at 7 again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6, 3]",
+      "postorder" : "[4, 5, 2, 6]",
+      "preorder" : "[1, 2, 4, 5, 3, 6, 7]",
+      "stack" : "[1:3, 3:3, 7:2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 15,
+    "description" : "7 is back on top at state 2, so its left subtree is finished. Its value joins INORDER and its state becomes 3. No right child to push.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6, 3, 7]",
+      "postorder" : "[4, 5, 2, 6]",
+      "preorder" : "[1, 2, 4, 5, 3, 6, 7]",
+      "stack" : "[1:3, 3:3, 7:3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 19,
+    "description" : "7 reaches state 3 - both subtrees are done. Its value joins POSTORDER and it is finally popped, never to be looked at again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6, 3, 7]",
+      "postorder" : "[4, 5, 2, 6, 7]",
+      "preorder" : "[1, 2, 4, 5, 3, 6, 7]",
+      "stack" : "[1:3, 3:3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 19,
+    "description" : "3 reaches state 3 - both subtrees are done. Its value joins POSTORDER and it is finally popped, never to be looked at again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6, 3, 7]",
+      "postorder" : "[4, 5, 2, 6, 7, 3]",
+      "preorder" : "[1, 2, 4, 5, 3, 6, 7]",
+      "stack" : "[1:3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 19,
+    "description" : "1 reaches state 3 - both subtrees are done. Its value joins POSTORDER and it is finally popped, never to be looked at again.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6, 3, 7]",
+      "postorder" : "[4, 5, 2, 6, 7, 3, 1]",
+      "preorder" : "[1, 2, 4, 5, 3, 6, 7]",
+      "stack" : "[]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 23,
+    "description" : "One pass, one push and one pop per node: preorder [1, 2, 4, 5, 3, 6, 7], inorder [4, 2, 5, 1, 6, 3, 7], postorder [4, 5, 2, 6, 7, 3, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[4, 2, 5, 1, 6, 3, 7]",
+      "postorder" : "[4, 5, 2, 6, 7, 3, 1]",
+      "preorder" : "[1, 2, 4, 5, 3, 6, 7]",
+      "stack" : "[]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,1666 @@
+{
+  "anchors" : {
+    "claimColumn" : 12,
+    "columnTaken" : 14,
+    "dequeue" : 7,
+    "done" : 24,
+    "enqueueLeft" : 18,
+    "enqueueRight" : 21,
+    "seed" : 4
+  },
+  "code" : "public List<Integer> topView(TreeNode root) {\n    Map<Integer, Integer> column = new TreeMap<>();\n    Queue<Object[]> queue = new ArrayDeque<>();\n    queue.add(new Object[]{root, 0});\n\n    while (!queue.isEmpty()) {\n        Object[] entry = queue.poll();\n        TreeNode node = (TreeNode) entry[0];\n        int hd = (int) entry[1];\n\n        if (!column.containsKey(hd)) {\n            column.put(hd, node.val);\n        } else {\n            ;                       // a shallower node already owns it\n        }\n\n        if (node.left != null) {\n            queue.add(new Object[]{node.left, hd - 1});\n        }\n        if (node.right != null) {\n            queue.add(new Object[]{node.right, hd + 1});\n        }\n    }\n    return new ArrayList<>(column.values());\n}",
+  "problemId" : "top-view-bt",
+  "resolvedInput" : {
+    "tree" : [ 1, 2, 3, 4, 5, 6, 7 ]
+  },
+  "stepCount" : 22,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Seed the queue with the root 1 at column 0. BFS order is depth order, which is what makes \"first to arrive\" mean \"highest up\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "columns" : "{}"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "queued"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Dequeue 1, sitting in column 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{}",
+      "node" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "Column 0 is empty, and BFS guarantees nothing above 1 can still be waiting - 1 is visible from the top.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{0=1}",
+      "node" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "1's left child 2 goes one column further left, to -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-1",
+      "columns" : "{0=1}",
+      "queued" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "queued"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 21,
+    "description" : "1's right child 3 goes one column further right, to 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "1",
+      "columns" : "{0=1}",
+      "queued" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "queued"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 7,
+    "description" : "Dequeue 2, sitting in column -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-1",
+      "columns" : "{0=1}",
+      "node" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "Column -1 is empty, and BFS guarantees nothing above 2 can still be waiting - 2 is visible from the top.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-1",
+      "columns" : "{-1=2, 0=1}",
+      "node" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 18,
+    "description" : "2's left child 4 goes one column further left, to -2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-2",
+      "columns" : "{-1=2, 0=1}",
+      "queued" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 21,
+    "description" : "2's right child 5 goes one column further right, to 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-1=2, 0=1}",
+      "queued" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "queued"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 7,
+    "description" : "Dequeue 3, sitting in column 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "1",
+      "columns" : "{-1=2, 0=1}",
+      "node" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Column 1 is empty, and BFS guarantees nothing above 3 can still be waiting - 3 is visible from the top.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "1",
+      "columns" : "{-1=2, 0=1, 1=3}",
+      "node" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 18,
+    "description" : "3's left child 6 goes one column further left, to 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-1=2, 0=1, 1=3}",
+      "queued" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 21,
+    "description" : "3's right child 7 goes one column further right, to 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "2",
+      "columns" : "{-1=2, 0=1, 1=3}",
+      "queued" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "Dequeue 4, sitting in column -2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-2",
+      "columns" : "{-1=2, 0=1, 1=3}",
+      "node" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 12,
+    "description" : "Column -2 is empty, and BFS guarantees nothing above 4 can still be waiting - 4 is visible from the top.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "-2",
+      "columns" : "{-2=4, -1=2, 0=1, 1=3}",
+      "node" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 7,
+    "description" : "Dequeue 5, sitting in column 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-2=4, -1=2, 0=1, 1=3}",
+      "node" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 14,
+    "description" : "Column 0 already belongs to 1, which was dequeued earlier and so sits higher. 5 is hidden underneath it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-2=4, -1=2, 0=1, 1=3}",
+      "node" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 7,
+    "description" : "Dequeue 6, sitting in column 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-2=4, -1=2, 0=1, 1=3}",
+      "node" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 14,
+    "description" : "Column 0 already belongs to 1, which was dequeued earlier and so sits higher. 6 is hidden underneath it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "0",
+      "columns" : "{-2=4, -1=2, 0=1, 1=3}",
+      "node" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "queued"
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 7,
+    "description" : "Dequeue 7, sitting in column 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "2",
+      "columns" : "{-2=4, -1=2, 0=1, 1=3}",
+      "node" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 12,
+    "description" : "Column 2 is empty, and BFS guarantees nothing above 7 can still be waiting - 7 is visible from the top.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "column" : "2",
+      "columns" : "{-2=4, -1=2, 0=1, 1=3, 2=7}",
+      "node" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 24,
+    "description" : "Reading the claimed columns left to right gives the top view: [4, 2, 1, 3, 7].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "columns" : "{-2=4, -1=2, 0=1, 1=3, 2=7}",
+      "topView" : "[4, 2, 1, 3, 7]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "1",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  } ],
+  "truncated" : false
+}

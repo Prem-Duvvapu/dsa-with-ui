@@ -74,6 +74,15 @@ public class TreeService implements ProblemProvider {
             case "postorder-1-stack":
             case "morris-preorder":
                 throw new LegacyTraceRetiredException(problemId);
+            // Combined passes and the four view/outline problems. Same story: no case at
+            // all before, so every one of them animated the canned preorder demo.
+            case "traversals-in-one-pass":
+            case "pre-post-in-one-traversal":
+            case "top-view-bt":
+            case "bottom-view-bt":
+            case "right-left-view-bt":
+            case "boundary-traversal":
+                throw new LegacyTraceRetiredException(problemId);
             case "tree-height": return generatePreorderSteps();
             case "tree-balanced": return generatePreorderSteps();
             case "tree-diameter": return generatePreorderSteps();
@@ -217,7 +226,10 @@ public class TreeService implements ProblemProvider {
                     "bst-insert", "bst-delete", "bst-floor-ceil",
                     // Traversal mechanics and views, all drawing a binary tree.
                     "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
-                    "postorder-2-stacks", "postorder-1-stack", "morris-preorder" -> DsType.TREE;
+                    "postorder-2-stacks", "postorder-1-stack", "morris-preorder",
+                    "traversals-in-one-pass", "pre-post-in-one-traversal",
+                    "top-view-bt", "bottom-view-bt", "right-left-view-bt",
+                    "boundary-traversal" -> DsType.TREE;
             default -> DsType.STACK;
         };
     }

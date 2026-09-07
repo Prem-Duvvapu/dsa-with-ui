@@ -1,0 +1,960 @@
+{
+  "anchors" : {
+    "done" : 4,
+    "inHook" : 13,
+    "postHook" : 16,
+    "preHook" : 10
+  },
+  "code" : "public Orders allThree(TreeNode root) {\n    Orders orders = new Orders();\n    walk(root, orders);\n    return orders;\n}\n\nprivate void walk(TreeNode node, Orders o) {\n    if (node == null) return;\n\n    o.pre.add(node.val);     // on arrival, before either child\n    walk(node.left, o);\n\n    o.in.add(node.val);      // between the two children\n    walk(node.right, o);\n\n    o.post.add(node.val);    // on the way out, after both children\n}",
+  "problemId" : "pre-post-in-one-traversal",
+  "resolvedInput" : {
+    "tree" : [ 6, 2, 8, 1, 4 ]
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 10,
+    "description" : "Hook 1, the moment the call on 6 begins: append 6 to PREORDER, then descend left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[]",
+      "postorder" : "[]",
+      "preorder" : "[6]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 10,
+    "description" : "Hook 1, the moment the call on 2 begins: append 2 to PREORDER, then descend left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[]",
+      "postorder" : "[]",
+      "preorder" : "[6, 2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Hook 1, the moment the call on 1 begins: append 1 to PREORDER, then descend left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)", "walk(1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[]",
+      "postorder" : "[]",
+      "preorder" : "[6, 2, 1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 13,
+    "description" : "Hook 2, back inside 1's own frame with the left subtree finished and the right not started: append 1 to INORDER.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)", "walk(1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1]",
+      "postorder" : "[]",
+      "preorder" : "[6, 2, 1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 16,
+    "description" : "Hook 3, the last statement of 1's frame with both subtrees finished: append 1 to POSTORDER and return.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)", "walk(1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1]",
+      "postorder" : "[1]",
+      "preorder" : "[6, 2, 1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Hook 2, back inside 2's own frame with the left subtree finished and the right not started: append 2 to INORDER.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2]",
+      "postorder" : "[1]",
+      "preorder" : "[6, 2, 1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Hook 1, the moment the call on 4 begins: append 4 to PREORDER, then descend left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)", "walk(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2]",
+      "postorder" : "[1]",
+      "preorder" : "[6, 2, 1, 4]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "Hook 2, back inside 4's own frame with the left subtree finished and the right not started: append 4 to INORDER.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)", "walk(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4]",
+      "postorder" : "[1]",
+      "preorder" : "[6, 2, 1, 4]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 16,
+    "description" : "Hook 3, the last statement of 4's frame with both subtrees finished: append 4 to POSTORDER and return.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)", "walk(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4]",
+      "postorder" : "[1, 4]",
+      "preorder" : "[6, 2, 1, 4]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "Hook 3, the last statement of 2's frame with both subtrees finished: append 2 to POSTORDER and return.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4]",
+      "postorder" : "[1, 4, 2]",
+      "preorder" : "[6, 2, 1, 4]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "Hook 2, back inside 6's own frame with the left subtree finished and the right not started: append 6 to INORDER.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4, 6]",
+      "postorder" : "[1, 4, 2]",
+      "preorder" : "[6, 2, 1, 4]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 10,
+    "description" : "Hook 1, the moment the call on 8 begins: append 8 to PREORDER, then descend left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4, 6]",
+      "postorder" : "[1, 4, 2]",
+      "preorder" : "[6, 2, 1, 4, 8]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "Hook 2, back inside 8's own frame with the left subtree finished and the right not started: append 8 to INORDER.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4, 6, 8]",
+      "postorder" : "[1, 4, 2]",
+      "preorder" : "[6, 2, 1, 4, 8]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 16,
+    "description" : "Hook 3, the last statement of 8's frame with both subtrees finished: append 8 to POSTORDER and return.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)", "walk(8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4, 6, 8]",
+      "postorder" : "[1, 4, 2, 8]",
+      "preorder" : "[6, 2, 1, 4, 8]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 16,
+    "description" : "Hook 3, the last statement of 6's frame with both subtrees finished: append 6 to POSTORDER and return.",
+    "queueOrStackState" : null,
+    "callStack" : [ "walk(6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4, 6, 8]",
+      "postorder" : "[1, 4, 2, 8, 6]",
+      "preorder" : "[6, 2, 1, 4, 8]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 4,
+    "description" : "One descent, three hooks: preorder [6, 2, 1, 4, 8], inorder [1, 2, 4, 6, 8], postorder [1, 4, 2, 8, 6].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inorder" : "[1, 2, 4, 6, 8]",
+      "postorder" : "[1, 4, 2, 8, 6]",
+      "preorder" : "[6, 2, 1, 4, 8]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  } ],
+  "truncated" : false
+}
