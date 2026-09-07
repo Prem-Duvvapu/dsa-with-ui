@@ -1,0 +1,50 @@
+.sectionHeading {
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.memoryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bench-fill);
+  border: 1px solid var(--border-default);
+  font-size: 0.74rem;
+  font-family: var(--font-code);
+}
+
+.memoryText {
+  color: var(--text-primary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.marker {
+  color: var(--accent-violet);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sequenceContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sequenceList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
