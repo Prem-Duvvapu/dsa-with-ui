@@ -50,7 +50,9 @@ class TreeServiceTest {
                 "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
                 "postorder-2-stacks", "postorder-1-stack", "morris-preorder",
                 "traversals-in-one-pass", "pre-post-in-one-traversal",
-                "top-view-bt", "bottom-view-bt", "right-left-view-bt", "boundary-traversal");
+                "top-view-bt", "bottom-view-bt", "right-left-view-bt", "boundary-traversal",
+                "tree-height", "tree-balanced", "tree-diameter", "symmetric-tree",
+                "identical-trees", "children-sum-property", "max-width-bt");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

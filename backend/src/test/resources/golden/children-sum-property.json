@@ -1,0 +1,833 @@
+{
+  "anchors" : {
+    "done" : 3,
+    "leafIsAlreadyValid" : 9,
+    "raiseChildren" : 16,
+    "raiseParent" : 14,
+    "settleOnTheWayBack" : 23
+  },
+  "code" : "public TreeNode childrenSum(TreeNode root) {\n    changeTree(root);\n    return root;\n}\n\nprivate void changeTree(TreeNode node) {\n    if (node == null) return;\n    if (node.left == null && node.right == null) {\n        return;                       // a leaf has no children to sum\n    }\n\n    int childSum = value(node.left) + value(node.right);\n    if (childSum >= node.val) {\n        node.val = childSum;\n    } else {\n        if (node.left != null) node.left.val = node.val;\n        if (node.right != null) node.right.val = node.val;\n    }\n\n    changeTree(node.left);\n    changeTree(node.right);\n\n    node.val = value(node.left) + value(node.right);\n}",
+  "problemId" : "children-sum-property",
+  "resolvedInput" : {
+    "tree" : [ 20, 7, 2, 3, 5, 1, 30 ]
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 16,
+    "description" : "20's children only total 9, short of 20. Copy 20 down into every child - overshooting is safe because the way back up will pull each parent back to the real sum.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "childSum" : "9",
+      "node" : "20",
+      "tree" : "[20, 20, 20, 3, 5, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 16,
+    "description" : "20's children only total 8, short of 20. Copy 20 down into every child - overshooting is safe because the way back up will pull each parent back to the real sum.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "childSum" : "8",
+      "node" : "20",
+      "tree" : "[20, 20, 20, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "20 is a leaf. It has no children to sum, so it is left exactly as it is - leaves are the only values the algorithm never rewrites.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)", "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "20",
+      "tree" : "[20, 20, 20, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "20 is a leaf. It has no children to sum, so it is left exactly as it is - leaves are the only values the algorithm never rewrites.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)", "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "20",
+      "tree" : "[20, 20, 20, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 23,
+    "description" : "Both subtrees below this node are final now. Set it to what its children actually became: 20 + 20 = 40.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "40",
+      "tree" : "[20, 40, 20, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "40",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "20's children already total 31, which is not less than 20. Raise the parent to 31 - raising the children instead would mean lowering something later.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "childSum" : "31",
+      "node" : "31",
+      "tree" : "[20, 40, 31, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "40",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "31",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "1 is a leaf. It has no children to sum, so it is left exactly as it is - leaves are the only values the algorithm never rewrites.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)", "changeTree(1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "1",
+      "tree" : "[20, 40, 31, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "40",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "31",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 9,
+    "description" : "30 is a leaf. It has no children to sum, so it is left exactly as it is - leaves are the only values the algorithm never rewrites.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)", "changeTree(30)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "30",
+      "tree" : "[20, 40, 31, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "40",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "31",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visiting"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 23,
+    "description" : "Both subtrees below this node are final now. Set it to what its children actually became: 1 + 30 = 31.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)", "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "31",
+      "tree" : "[20, 40, 31, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "20",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "40",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "31",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 23,
+    "description" : "Both subtrees below this node are final now. Set it to what its children actually became: 40 + 31 = 71.",
+    "queueOrStackState" : null,
+    "callStack" : [ "changeTree(20)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "71",
+      "tree" : "[71, 40, 31, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "71",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "40",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "31",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 3,
+    "description" : "Every non-leaf node now holds the sum of its children, and no value was ever lowered along the way.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "tree" : "[71, 40, 31, 20, 20, 1, 30]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "71",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "done"
+    }, {
+      "id" : 1,
+      "val" : "40",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "done"
+    }, {
+      "id" : 2,
+      "val" : "31",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "done"
+    }, {
+      "id" : 3,
+      "val" : "20",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "val" : "20",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "val" : "1",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 6,
+      "val" : "30",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    } ]
+  } ],
+  "truncated" : false
+}
