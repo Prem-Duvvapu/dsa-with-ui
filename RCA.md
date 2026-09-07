@@ -379,7 +379,7 @@ phase; do not describe unfinished work as resolved.
 ## RCA-021 — `TracerContractTest`'s BINARY_TREE auto-grower never produces a valid BST
 
 - **Discovered:** 2026-09-06, tracing `bst-validate`, `bst-lca`, `bst-kth-smallest`
-- **Status:** Open — deferred, three tracers held out of `bst-*` batch scope until resolved
+- **Status:** Resolved 2026-09-07 by path (a); the three held-back tracers now ship
 - **Symptom and impact:** `stepCountGrowsWithInput`'s `growTree` helper builds its "larger"
   input as a level-order array `[1, 2, ..., target]` — a complete binary tree whose value at
   index `i` is always `i + 1`. This is provably **never a valid BST** for any `target >= 3`:
@@ -403,17 +403,44 @@ phase; do not describe unfinished work as resolved.
   just via `growTree`'s malformed input) threw a `NullPointerException` in real use.
   `bst-delete` itself passes `stepCountGrowsWithInput` cleanly once fixed, since a longer
   search path before hitting the (now-handled) "not found" case is itself more real work.
-- **Resolution required:** either (a) give `growTree` a BST-aware mode — sort the grown
-  values and place them via an actual BST-insert sequence rather than raw level-order, which
-  `InputField` would need to opt into per-tracer, since plain-binary-tree tracers must keep
-  today's shape-only growth; or (b) accept that a handful of BST algorithms have a
-  legitimate, provable early-exit on this specific synthetic input and give them a narrow,
-  named exemption. Not decided here — whoever picks this up should read this entry's
-  hand-simulation before choosing either path, not re-derive it.
-- **Regression guard:** none yet — `bst-validate`, `bst-lca`, `bst-kth-smallest` remain
-  untraced (still delegating to `generatePreorderSteps()`) specifically so
-  `stepCountGrowsWithInput` keeps skipping them via the "declares no growable field" path
-  rather than a tracer being merged that this test cannot pass.
+- **Resolution:** path (a). `InputField.Builder.bstOrdered()` sets a `bstOrdered` constraint
+  and `TracerContractTest.growBst` reads it: same complete shape as before, but the values
+  are handed out in INORDER position order, which is precisely the definition of a BST. No
+  BST-insert sequence was needed — a binary tree is a BST exactly when its values increase
+  in inorder, so one in-order walk over the complete shape assigning consecutive integers
+  produces a valid BST of any size. Plain-binary-tree tracers do not opt in and keep today's
+  shape-only growth unchanged.
+  Path (b) was rejected on two grounds. First, count: the ordering-sensitive BST ids are a
+  group, not a special case, so it would have meant a growing list of named exemptions where
+  one growth mode does. Second, there was no exemption mechanism in the test to extend — its
+  only skip path is the `assumeTrue` for "declares no growable field" — so (b) meant building
+  a new opt-out as well, and an opt-out reads as "this tracer is excused from proving it
+  reads its input", which is exactly the shape of hole this suite exists to close.
+  `bstOrdered()` is deliberately a GROWTH HINT rather than a validation rule: `InputValidator`
+  does not read it and a caller may still POST any tree. `bst-validate` declares it *because*
+  its job is to detect a non-BST — the flag says "the meaningful large input for this
+  algorithm is a real BST", not "reject anything else".
+- **Not every BST id was affected, and they were checked individually rather than as a
+  class:** `bst-min-max` walks one side following child pointers, so a deeper tree of ANY
+  shape already meant a longer walk — verified it passes both with and without the flag.
+  `construct-bst-preorder` takes a single preorder `INT_ARRAY`, so `growTree` never applies
+  to it. `merge-two-bsts` and `largest-bst-in-bt` traverse every node unconditionally.
+  `largest-bst-in-bt` in particular must NOT declare the flag: it searches for an embedded
+  valid BST inside a possibly-invalid general tree, so a tree that is not a BST is exactly
+  the input worth growing it with.
+- **Proved RED before the fix was accepted:** with `growBst` disabled and every other line of
+  the batch in place, `stepCountGrowsWithInput` fails on exactly three ids and passes on the
+  rest — `bst-validate` (8 steps on its defaults, 3 on the "larger" input), `bst-lca` (3 vs
+  2) and `bst-floor` (4 vs 4). Re-enabling it turns all three green. Three of the ids that
+  declare the flag do NOT need it — `bst-intro` never exits early, `bst-search`'s default
+  target is deliberately absent so the walk runs the full depth either way, and
+  `bst-min-max` only follows child pointers — they declare it because the flag states an
+  input contract, not because the test forced it.
+- **Regression guard:** `TracerContractTest.stepCountGrowsWithInput`, unchanged in intent and
+  now actually exercised by the ordering-sensitive tracers. `bst-validate` is the clearest
+  case: its default is deliberately LeetCode 98's invalid `[5,1,4,null,null,3,6]`, so the
+  early-exit path is still exactly what its golden file pins, while the grown input is a real
+  BST that has to be walked in full.
 
 ## RCA-022 — The per-step envelope constant was 50 bytes light on every step ever emitted
 

@@ -449,6 +449,10 @@ class TracerContractTest {
         int target = Math.min(Math.max(baseSize * 2, baseSize + 1), cap != null ? cap : baseSize * 2);
         assertTrue(target > baseSize, field.getName() + " cannot be grown within its own maxLength");
 
+        if (field.flag("bstOrdered")) {
+            return growBst(field, target);
+        }
+
         // A complete level-order tree, so no value lands under an absent parent.
         Integer maxValue = field.intConstraint("maxValue");
         List<Integer> grown = new ArrayList<>();
@@ -456,6 +460,44 @@ class TracerContractTest {
             grown.add(maxValue != null ? Math.min(i, maxValue) : i);
         }
         return grown;
+    }
+
+    /**
+     * The same complete shape as {@link #growTree}, with the values placed so the result is
+     * a genuinely valid BST.
+     *
+     * <p>Level-order {@code [1, 2, ..., n]} is never a valid BST for n >= 3: level order
+     * fills breadth-first, so depth and value increase together and the deepest-left leaf
+     * ends up LARGER than its ancestors, which is the opposite of what an inorder walk
+     * requires. An algorithm that exploits the ordering to skip work therefore terminates
+     * EARLY on that "larger" input and emits fewer steps than on its own defaults - the
+     * failure this method exists to prevent, and the reason RCA-021 held three tracers back.
+     *
+     * <p>The fix is one line of insight: a binary tree is a BST exactly when its values are
+     * increasing in INORDER position. So walk the complete shape in order and hand out
+     * consecutive values. Shape-only growth is unchanged for every tracer that does not opt
+     * in, because a plain binary-tree algorithm must keep being tested on a plain tree.
+     */
+    private List<Integer> growBst(InputField field, int target) {
+        Integer minValue = field.intConstraint("minValue");
+        Integer maxValue = field.intConstraint("maxValue");
+        int start = minValue == null || minValue < 1 ? 1 : minValue;
+        assertTrue(maxValue == null || start + target - 1 <= maxValue,
+                field.getName() + " cannot hold " + target + " strictly increasing values"
+                        + " within its declared value range");
+
+        Integer[] values = new Integer[target];
+        assignInorder(values, 0, new int[]{start});
+        return Arrays.asList(values);
+    }
+
+    private void assignInorder(Integer[] values, int index, int[] next) {
+        if (index >= values.length) {
+            return;
+        }
+        assignInorder(values, 2 * index + 1, next);
+        values[index] = next[0]++;
+        assignInorder(values, 2 * index + 2, next);
     }
 
     @SuppressWarnings("unchecked")
