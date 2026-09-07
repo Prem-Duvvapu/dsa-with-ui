@@ -2,7 +2,22 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import React from 'react';
 import '@testing-library/jest-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
+
+/**
+ * Renders App inside a MemoryRouter at the given path (default /problem/two-sum).
+ * Returns the same object as render() so callers can destructure { container }.
+ */
+function renderApp(path = '/problem/two-sum') {
+  return render(
+    <MemoryRouter initialEntries={[path]}>
+      <Routes>
+        <Route path="/problem/:id" element={<App />} />
+      </Routes>
+    </MemoryRouter>
+  );
+}
 
 /**
  * Integration tests for App's data layer.
@@ -115,18 +130,18 @@ afterEach(() => {
 
 describe('App catalogue loading', () => {
   it('renders without crashing and shows a problem before the network responds', () => {
-    render(<App />);
+    renderApp();
     // The cold-start fallback: something is on screen immediately, not a black page.
     expect(screen.getByText('DSA Visualizer')).toBeInTheDocument();
   });
 
   it('fetches the catalogue from the single v2 endpoint', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));
   });
 
   it('merges every category into the catalogue, including Maths and Basic Recursion', async () => {
-    render(<App />);
+    renderApp();
     // Header prints the merged count; 18 problems.
     await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
     expect(screen.getByText('Count Digits')).toBeInTheDocument();
@@ -144,7 +159,7 @@ describe('App catalogue loading', () => {
       return Promise.resolve(respondTo(url));
     }));
 
-    render(<App />);
+    renderApp();
     // The backend contract already de-duplicates, but a defensive client guard keeps a
     // malformed response from creating duplicate React keys or ambiguous selection.
     await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
@@ -154,7 +169,7 @@ describe('App catalogue loading', () => {
 
 describe('App problem selection', () => {
   it('issues exactly one detail and one execute request per selection', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('Valid Anagram')).toBeInTheDocument());
 
     calls.length = 0;
@@ -168,7 +183,7 @@ describe('App problem selection', () => {
   });
 
   it('renders the selected problem\'s steps', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('Min Stack')).toBeInTheDocument());
 
     fireEvent.click(screen.getByText('Min Stack'));
@@ -179,7 +194,7 @@ describe('App problem selection', () => {
   });
 
   it('discards a slow response that is superseded by a newer selection', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('Kth Largest')).toBeInTheDocument());
 
     // Hold the Heaps execute response open so it cannot land before the next click.
@@ -203,7 +218,7 @@ describe('App problem selection', () => {
 describe('App execution capture', () => {
   /** Select a problem and wait for its trace to arrive. */
   async function openValidAnagram() {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('Valid Anagram')).toBeInTheDocument());
     fireEvent.click(screen.getByText('Valid Anagram'));
     await waitFor(() =>
@@ -245,7 +260,7 @@ describe('App execution capture', () => {
       return Promise.resolve(respondTo(url));
     }));
 
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('Valid Anagram')).toBeInTheDocument());
     fireEvent.click(screen.getByText('Valid Anagram'));
     await waitFor(() => expect(screen.getByText('scalar only')).toBeInTheDocument());
@@ -288,7 +303,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    const { container } = render(<App />);
+    const { container } = renderApp();
 
     await waitFor(() =>
       expect(screen.getByRole('table', { name: 'Dynamic programming table' })).toBeInTheDocument()
@@ -326,7 +341,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('seed the queue')).toBeInTheDocument());
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
   });
@@ -350,7 +365,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('visit the root')).toBeInTheDocument());
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
   });
@@ -373,7 +388,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    render(<App />);
+    renderApp();
 
     await waitFor(() =>
       expect(screen.getByText('No visualization for Mystery')).toBeInTheDocument()
@@ -397,7 +412,7 @@ describe('App trace error surface', () => {
       return Promise.resolve(respondTo(url));
     }));
 
-    render(<App />);
+    renderApp();
 
     await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent(message));
     expect(screen.getByLabelText('Playback position')).toHaveTextContent('Step 0 of 0');
@@ -444,7 +459,7 @@ describe('App per-problem detail merge', () => {
   });
 
   it('merges the detail fetch into activeProblem instead of showing placeholder code', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByText('Merge Sort')).toBeInTheDocument());
     fireEvent.click(screen.getByText('Merge Sort'));
 
@@ -515,7 +530,7 @@ describe('App input panel', () => {
 
   /** two-sum is the app's default selection, so the panel is already open on mount. */
   async function openTwoSum() {
-    render(<App />);
+    renderApp();
     await waitFor(() =>
       expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
     );
@@ -562,7 +577,7 @@ describe('App catalogue error surface', () => {
   it('shows a visible error and a Retry when the catalogue fetch fails', async () => {
     vi.stubGlobal('fetch', vi.fn(() => Promise.reject(new Error('network down'))));
 
-    render(<App />);
+    renderApp();
 
     await waitFor(() =>
       expect(screen.getByRole('alert')).toHaveTextContent(/could not reach the backend/i)
@@ -578,7 +593,7 @@ describe('App catalogue error surface', () => {
       return Promise.resolve(respondTo(url));
     }));
 
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(screen.getByRole('alert')).toBeInTheDocument());
 
     shouldFail = false;
@@ -600,14 +615,14 @@ describe('App mobile drawer', () => {
   });
 
   it('starts closed on a narrow viewport', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));
     // The sidebar's search box is the drawer's own content; absent means closed.
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
   });
 
   it('opens with a backdrop that closes it again on click', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));
 
     fireEvent.click(screen.getByLabelText(/menu|sidebar|navigation/i));
@@ -622,7 +637,7 @@ describe('App mobile drawer', () => {
   });
 
   it('Escape closes the drawer even while the search box is focused', async () => {
-    render(<App />);
+    renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));
 
     fireEvent.click(screen.getByLabelText(/menu|sidebar|navigation/i));

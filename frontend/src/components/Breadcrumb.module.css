@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  padding: 2px var(--space-md);
+  height: 24px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.category {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.title {
+  color: var(--text-primary);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 380px;
+}
+
+.difficultyPill {
+  font-size: 0.64rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: var(--radius-full);
+  margin-left: 4px;
+}
+
+.diffEasy {
+  color: var(--diff-easy);
+  background: var(--diff-easy-bg);
+  border: 1px solid var(--diff-easy-border);
+}
+
+.diffMedium {
+  color: var(--diff-medium);
+  background: var(--diff-medium-bg);
+  border: 1px solid var(--diff-medium-border);
+}
+
+.diffHard {
+  color: var(--diff-hard);
+  background: var(--diff-hard-bg);
+  border: 1px solid var(--diff-hard-border);
+}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Play, Pause, SkipBack, SkipForward, RotateCcw, Sliders } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, RotateCcw } from 'lucide-react';
+import styles from './Controls.module.css';
 
 export default function Controls({
   isPlaying,
@@ -21,12 +22,12 @@ export default function Controls({
   const maxIndex = Math.max(0, stepCount - 1);
 
   return (
-    <div style={{ padding: '8px 16px', display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid var(--border-default)', background: 'rgba(15, 23, 42, 0.4)', flexShrink: 0 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+    <div className={styles.container}>
+      <div className={styles.row}>
         {/* Step Counter & Scrubber Slider */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: '1', minWidth: '200px' }}>
-          <span aria-label="Playback position" style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
-            Step <strong style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{hasSteps ? safeIndex + 1 : 0}</strong> of {stepCount}
+        <div className={styles.scrubberWrapper}>
+          <span aria-label="Playback position" className={styles.stepCounter}>
+            Step <strong>{hasSteps ? safeIndex + 1 : 0}</strong> of {stepCount}
           </span>
           <input
             type="range"
@@ -36,31 +37,48 @@ export default function Controls({
             disabled={!hasSteps}
             aria-label="Trace step"
             onChange={(e) => onStepSelect && onStepSelect(Number(e.target.value))}
-            className="step-scrubber-slider"
-            style={{ flex: 1, accentColor: 'var(--accent-violet)', cursor: hasSteps ? 'pointer' : 'not-allowed', opacity: hasSteps ? 1 : 0.4 }}
+            className={`step-scrubber-slider ${styles.slider}`}
+            style={{
+              cursor: hasSteps ? 'pointer' : 'not-allowed',
+              opacity: hasSteps ? 1 : 0.4
+            }}
           />
         </div>
 
         {/* Control Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div className={styles.buttonGroup}>
           <button className="btn btn-outline" onClick={onReset} disabled={!hasSteps} title="Reset (Shortcut: R)">
             <RotateCcw size={13} /> Reset
           </button>
 
-          <button className="btn btn-outline" onClick={onStepPrev} disabled={!hasSteps || safeIndex <= 0} style={{ opacity: !hasSteps || safeIndex <= 0 ? 0.4 : 1 }}>
+          <button
+            className="btn btn-outline"
+            onClick={onStepPrev}
+            disabled={!hasSteps || safeIndex <= 0}
+            style={{ opacity: !hasSteps || safeIndex <= 0 ? 0.4 : 1 }}
+          >
             <SkipBack size={13} /> Prev
           </button>
 
-          <button className="btn btn-primary" onClick={onPlayPause} disabled={!hasSteps} style={{ minWidth: '82px', justifyContent: 'center' }}>
+          <button
+            className={`btn btn-primary ${styles.playBtn}`}
+            onClick={onPlayPause}
+            disabled={!hasSteps}
+          >
             {isPlaying ? <><Pause size={14} /> Pause</> : <><Play size={14} /> Play</>}
           </button>
 
-          <button className="btn btn-outline" onClick={onStepNext} disabled={!hasSteps || safeIndex >= stepCount - 1} style={{ opacity: !hasSteps || safeIndex >= stepCount - 1 ? 0.4 : 1 }}>
+          <button
+            className="btn btn-outline"
+            onClick={onStepNext}
+            disabled={!hasSteps || safeIndex >= stepCount - 1}
+            style={{ opacity: !hasSteps || safeIndex >= stepCount - 1 ? 0.4 : 1 }}
+          >
             Next <SkipForward size={13} />
           </button>
 
           {/* Segmented Speed Control (Single Control Container) */}
-          <div className="mobile-hide" style={{ display: 'flex', alignItems: 'center', background: 'rgba(255, 255, 255, 0.04)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-default)', padding: '2px', marginLeft: '4px' }}>
+          <div className={`mobile-hide ${styles.speedContainer}`}>
             {[0.5, 1.0, 2.0, 4.0].map((spdVal) => {
               const ms = Math.round(1000 / spdVal);
               const isActive = Math.abs(speed - ms) < 50;
@@ -69,17 +87,10 @@ export default function Controls({
                   key={spdVal}
                   onClick={() => onSpeedChange(ms)}
                   disabled={!hasSteps}
+                  className={`${styles.speedBtn} ${isActive ? styles.speedBtnActive : ''}`}
                   style={{
-                    padding: '2px 7px',
-                    borderRadius: '4px',
-                    fontSize: '0.68rem',
-                    fontWeight: isActive ? '700' : '500',
-                    border: 'none',
-                    background: isActive ? 'var(--accent-violet)' : 'transparent',
-                    color: isActive ? 'var(--text-on-accent)' : 'var(--text-muted)',
                     cursor: hasSteps ? 'pointer' : 'not-allowed',
-                    opacity: hasSteps ? 1 : 0.4,
-                    transition: 'all 0.15s ease'
+                    opacity: hasSteps ? 1 : 0.4
                   }}
                 >
                   {spdVal}x
@@ -90,7 +101,7 @@ export default function Controls({
         </div>
 
         {/* Quiet Trailing Keyboard Shortcut Text */}
-        <span className="mobile-hide" style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>
+        <span className={`mobile-hide ${styles.shortcutHint}`}>
           space · ← · → · r
         </span>
       </div>

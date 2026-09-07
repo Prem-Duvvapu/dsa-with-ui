@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './LiveTraceTicker.module.css';
 
 export default function LiveTraceTicker({ stepDescription }) {
   const hasStep = typeof stepDescription === 'string' && stepDescription.trim().length > 0;
@@ -7,28 +8,15 @@ export default function LiveTraceTicker({ stepDescription }) {
     <div
       role="status"
       aria-live="polite"
-      style={{
-        width: '100%',
-        padding: '7px 14px',
-        borderRadius: 'var(--radius-sm)',
-        background: 'rgba(15, 23, 42, 0.6)',
-        border: '1px solid var(--border-default)',
-        borderLeft: '3px solid var(--accent-violet)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        fontSize: '0.74rem',
-        fontFamily: 'var(--font-code)',
-        flexShrink: 0
-      }}
+      className={styles.ticker}
     >
-      {hasStep && <div className="pulse-dot" style={{ flexShrink: 0 }} />}
+      {hasStep && <div className={`pulse-dot ${styles.pulseDot}`} />}
 
-      <span style={{ color: 'var(--text-primary)', fontWeight: '700', flexShrink: 0 }}>
+      <span className={styles.label}>
         {hasStep ? 'Live trace' : 'Trace status'}
       </span>
 
-      <span style={{ color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      <span className={styles.description}>
         {hasStep ? stepDescription : 'No trace steps available.'}
       </span>
     </div>

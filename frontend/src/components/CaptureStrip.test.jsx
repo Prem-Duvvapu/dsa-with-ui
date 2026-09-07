@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import CaptureStrip, { benchState } from './CaptureStrip';
 
 /**
@@ -193,5 +194,28 @@ describe('CaptureStrip', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Show execution capture' }));
     expect(container.querySelector('.cs-grid')).toBeTruthy();
+  });
+
+  it('extracts interval rows when dsType is Interval', () => {
+    const intervalSteps = [
+      {
+        stepNumber: 1,
+        activeLine: 1,
+        description: 'step 1',
+        resolvedInput: {
+          start: [1, 3],
+          end: [2, 6]
+        },
+        arrayState: [
+          { index: 0, state: 'probe' },
+          { index: 1, state: 'default' }
+        ]
+      }
+    ];
+
+    render(<CaptureStrip steps={intervalSteps} current={0} dsType="Interval" />);
+    expect(screen.getByText(/2 rows/)).toBeInTheDocument();
+    expect(screen.getByText('#1')).toBeInTheDocument();
+    expect(screen.getByText('#2')).toBeInTheDocument();
   });
 });

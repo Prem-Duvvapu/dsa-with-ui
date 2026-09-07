@@ -14,9 +14,23 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
  * into ArrayStrip / GraphStrip / TreeStrip, the design has been lost.
  */
 
-/** Rows come from whichever payload the step actually carries. */
-function rowStates(step) {
+/** Rows come from whichever payload the step actually carries, guided by dsType. */
+function rowStates(step, dsType) {
   if (!step) return [];
+  if (dsType === 'Interval') {
+    if (step.intervals?.length) return step.intervals.map((e) => e.state || 'default');
+    if (step.resolvedInput?.start) return step.resolvedInput.start.map((_, idx) => step.arrayState?.[idx]?.state || 'default');
+  }
+  if (dsType === 'Graph' && step.nodeStates && Object.keys(step.nodeStates).length) {
+    return Object.keys(step.nodeStates).sort((a, b) => Number(a) - Number(b)).map((k) => step.nodeStates[k]);
+  }
+  if (dsType === 'Tree' && step.treeNodes?.length) {
+    return step.treeNodes.map((n) => n.state);
+  }
+  if ((dsType === 'Stack' || dsType === 'Queue') && step.queueOrStackState?.length) {
+    return step.queueOrStackState.map(() => 'settled');
+  }
+  // Standard payload fallback
   if (step.arrayState?.length) return step.arrayState.map((e) => e.state);
   if (step.treeNodes?.length) return step.treeNodes.map((n) => n.state);
   if (step.listState?.length) return step.listState.map((n) => n.state);
@@ -29,8 +43,22 @@ function rowStates(step) {
   return [];
 }
 
-function rowLabels(step) {
+function rowLabels(step, dsType) {
   if (!step) return [];
+  if (dsType === 'Interval') {
+    if (step.intervals?.length) return step.intervals.map((inv, i) => Array.isArray(inv) ? `[${inv[0]},${inv[1]}]` : `#${i + 1}`);
+    if (step.resolvedInput?.start) return step.resolvedInput.start.map((_, i) => `#${i + 1}`);
+  }
+  if (dsType === 'Graph' && step.nodeStates && Object.keys(step.nodeStates).length) {
+    return Object.keys(step.nodeStates).sort((a, b) => Number(a) - Number(b)).map((k) => `v${k}`);
+  }
+  if (dsType === 'Tree' && step.treeNodes?.length) {
+    return step.treeNodes.map((n) => n.val);
+  }
+  if ((dsType === 'Stack' || dsType === 'Queue') && step.queueOrStackState?.length) {
+    return step.queueOrStackState.map((_, i) => `[${i}]`);
+  }
+  // Standard payload fallback
   if (step.arrayState?.length) return step.arrayState.map((e) => `[${e.index}]`);
   if (step.treeNodes?.length) return step.treeNodes.map((n) => n.val);
   if (step.listState?.length) return step.listState.map((n) => n.val);
@@ -41,15 +69,19 @@ function rowLabels(step) {
   return [];
 }
 
-function rowValues(step) {
+function rowValues(step, dsType) {
   if (!step) return [];
+  if (dsType === 'Interval') {
+    if (step.intervals?.length) return step.intervals.map((inv) => Array.isArray(inv) ? `[${inv[0]},${inv[1]}]` : `[${inv.start},${inv.end}]`);
+    if (step.resolvedInput?.start) return step.resolvedInput.start.map((s, i) => `[${s},${step.resolvedInput.end?.[i]}]`);
+  }
   if (step.arrayState?.length) return step.arrayState.map((e) => String(e.value));
   if (step.treeNodes?.length) return step.treeNodes.map((n) => String(n.val));
   if (step.listState?.length) return step.listState.map((n) => String(n.val));
   if (step.gridState?.length) {
     return step.gridState.map((row) => String(row.filter((c) => c !== 0).length));
   }
-  return rowStates(step).map(() => '');
+  return rowStates(step, dsType).map(() => '');
 }
 
 /** A grid row collapses to whichever single state best describes it. */
@@ -95,14 +127,14 @@ const CELL_CLASS = {
 const LABELLED_UP_TO = 40;
 const DOM_UP_TO = 400;
 
-export default function CaptureStrip({ steps = [], current = 0, onSeek }) {
+export default function CaptureStrip({ steps = [], current = 0, dsType, onSeek }) {
   const [isOpen, setIsOpen] = useState(true);
   const columns = steps.length;
   const mode = columns <= LABELLED_UP_TO ? 'labelled' : columns <= DOM_UP_TO ? 'dense' : 'band';
 
-  const grid = useMemo(() => steps.map(rowStates), [steps]);
-  const labels = useMemo(() => rowLabels(steps[0]), [steps]);
-  const values = useMemo(() => steps.map(rowValues), [steps]);
+  const grid = useMemo(() => steps.map((s) => rowStates(s, dsType)), [steps, dsType]);
+  const labels = useMemo(() => rowLabels(steps[0], dsType), [steps, dsType]);
+  const values = useMemo(() => steps.map((s) => rowValues(s, dsType)), [steps, dsType]);
   const rows = labels.length;
 
   if (!columns || !rows) return null;
