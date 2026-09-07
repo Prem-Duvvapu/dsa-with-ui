@@ -1,0 +1,31 @@
+.ticker {
+  width: 100%;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bench-recessed);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--accent-violet);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  font-family: var(--font-code);
+  flex-shrink: 0;
+}
+
+.pulseDot {
+  flex-shrink: 0;
+}
+
+.label {
+  color: var(--text-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.description {
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

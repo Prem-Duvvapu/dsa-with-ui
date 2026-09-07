@@ -487,3 +487,29 @@ phase; do not describe unfinished work as resolved.
   RED first: against the unfixed code it failed on exactly these two ids and passed on the
   other 140 it checks. dsTypes whose canvas has no single required field are skipped rather
   than passed, so the gap is visible in the Surefire report instead of looking like coverage.
+
+## RCA-024 — `CelebrityProblemTracer` startup crash: `ClassNotFoundException: Inputs`
+
+- **Discovered:** 2026-09-07
+- **Status:** Resolved
+- **Symptom and impact:** the Spring Boot application failed to start with
+  `BeanCreationException` for `celebrityProblemTracer`. The full chain was
+  `NoClassDefFoundError: Inputs` → `ClassNotFoundException: Inputs` (note: unqualified, not
+  `com.dsa.ui.tracer.Inputs`). Every backend endpoint was down.
+- **Root cause:** stale incremental compilation output. Maven's incremental compiler
+  (`maven-compiler-plugin` default) can leave a `.class` file from a previous compilation
+  round intact when its source hasn't changed but a dependency class *has*. The
+  `CelebrityProblemTracer` source is correct — it uses `import com.dsa.ui.tracer.*` which
+  covers `Inputs` — but its bytecode was compiled (or retained) from a build where
+  `Inputs.class` was not yet in the output directory. The JVM resolves `Inputs` lazily when
+  it first introspects `run(Inputs, StepEmitter)`, and at that point finds no class on the
+  classpath matching the unresolved constant-pool entry. This exact failure mode is specific
+  to incremental builds where the tracer package gained new classes (`Inputs.java` was added
+  in PR #7) and the downstream file wasn't recompiled.
+- **Resolution:** `mvn clean compile` — a full clean build recompiles all sources and
+  resolves the constant pool correctly. No source code change was needed.
+- **Regression guard:** this is a build-environment issue, not a code defect, so no new test
+  is appropriate. The operational guard is: always run `mvn clean test` (not `mvn test`)
+  after pulling a branch that added or renamed files in the `tracer` package. The CI workflow
+  already runs `mvn -B test` on a fresh checkout (no stale `target/`), so this failure cannot
+  reach `main`.

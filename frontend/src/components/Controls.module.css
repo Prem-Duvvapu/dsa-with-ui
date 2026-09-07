@@ -1,0 +1,84 @@
+.container {
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border-default);
+  background: rgba(15, 23, 42, 0.4);
+  flex-shrink: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.scrubberWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.stepCounter {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.stepCounter strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.slider {
+  flex: 1;
+  accent-color: var(--accent-violet);
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.playBtn {
+  min-width: 82px;
+  justify-content: center;
+}
+
+.speedContainer {
+  display: flex;
+  align-items: center;
+  background: var(--bench-fill);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  padding: 2px;
+  margin-left: 4px;
+}
+
+.speedBtn {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+}
+
+.speedBtnActive {
+  font-weight: 700;
+  background: var(--accent-violet);
+  color: var(--text-on-accent);
+}
+
+.shortcutHint {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+}

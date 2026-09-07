@@ -26,7 +26,7 @@ public class NMeetingsTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.INTERVAL;
     }
 
     @Override

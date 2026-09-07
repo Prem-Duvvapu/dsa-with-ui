@@ -1,0 +1,258 @@
+.rootLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--bg-page);
+}
+
+.catalogAlert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 12px;
+  padding: 6px 12px;
+  font-size: 0.74rem;
+  color: var(--probe);
+  background: rgba(255, 176, 0, 0.08);
+  border: 1px solid rgba(255, 176, 0, 0.3);
+  border-radius: var(--radius-sm);
+}
+
+.catalogAlertRetry {
+  padding: 2px 8px;
+  font-size: 0.7rem;
+}
+
+.workspace {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  padding: 0 12px 8px 12px;
+  gap: 12px;
+  position: relative;
+}
+
+.mobileBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+.sidebarDesktop {
+  position: relative;
+  z-index: 1;
+  height: auto;
+}
+
+.sidebarMobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  height: 100%;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+.sidebarCollapseBtn {
+  position: absolute;
+  top: 50%;
+  right: -13px;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--bg-panel, #1a1a24);
+  border: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  z-index: 2;
+}
+
+.sidebarExpandBtn {
+  align-self: flex-start;
+  margin-top: 8px;
+  width: 22px;
+  height: 56px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg-panel, #1a1a24);
+  border: 1px solid var(--border-default);
+  border-left: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.mainStage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.stagePanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.stageInner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.loadingCatalog {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-violet);
+  gap: 10px;
+}
+
+.loadingCatalogText {
+  font-weight: 700;
+}
+
+.loadingTrace {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bench-ink-dim);
+  gap: 8px;
+}
+
+.loadingTraceText {
+  font-family: var(--font-code);
+  font-size: 0.85rem;
+}
+
+.untracedNotice {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bench-ink-dim);
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  padding: 24px;
+  text-align: center;
+}
+
+.traceAlert {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--probe);
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  padding: 24px;
+  text-align: center;
+}
+
+.canvasEmpty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bench-ink-dim);
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  padding: 24px;
+  text-align: center;
+}
+
+.offlineStatus {
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-family: var(--font-code);
+  color: var(--probe);
+}
+
+.truncatedStatus {
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-family: var(--font-code);
+  color: var(--probe);
+}
+
+.tickerWrapper {
+  padding: 0 12px 10px 12px;
+}
+
+.bottomToggleBtn {
+  align-self: center;
+  padding: 2px 16px;
+  font-size: 0.68rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.bottomDesktopGrid {
+  height: 210px;
+  min-height: 210px;
+  display: grid;
+  gap: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.inputCard {
+  padding: 10px 12px;
+  overflow: hidden;
+}
+
+.bottomMobileCard {
+  height: 180px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mobileTabNav {
+  display: flex;
+  padding: 4px;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-default);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mobileTabBtn {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 0.74rem;
+  justify-content: center;
+}
+
+.mobileTabBody {
+  flex: 1;
+  overflow: hidden;
+}
+
+.mobileInputContainer {
+  padding: 10px 12px;
+  height: 100%;
+  overflow: hidden;
+}

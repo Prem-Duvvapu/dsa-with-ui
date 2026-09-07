@@ -4,6 +4,7 @@ import IntArrayField from './IntArrayField';
 import GridField from './GridField';
 import GraphField from './GraphField';
 import { randomizeInput, defaultInput } from '../input/randomizeInput';
+import styles from './InputPanel.module.css';
 
 /**
  * A form rendered generically from a problem's inputSpec, so a learner runs their own
@@ -26,7 +27,7 @@ export default function InputPanel({ problemId, inputSpec, fieldErrors, running,
 
   if (!inputSpec?.fields?.length) {
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '0.8rem', padding: '16px', textAlign: 'center' }}>
+      <div className={styles.emptyState}>
         No editable input for this problem.
       </div>
     );
@@ -35,8 +36,8 @@ export default function InputPanel({ problemId, inputSpec, fieldErrors, running,
   const setField = (name, next) => setValues((v) => ({ ...v, [name]: next }));
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
+    <div className={styles.panel}>
+      <div className={styles.actionBar}>
         <button
           type="button"
           className="btn btn-primary"
@@ -65,22 +66,22 @@ export default function InputPanel({ problemId, inputSpec, fieldErrors, running,
         </button>
       </div>
 
-      <div style={{ flex: 1, overflow: 'auto', display: 'flex', flexDirection: 'column', gap: '14px', paddingRight: '2px' }}>
+      <div className={styles.fieldsContainer}>
         {inputSpec.fields.map((field) => (
           <div key={field.name}>
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <div className={styles.fieldLabelRow}>
+              <label className={styles.fieldLabel}>
                 {field.label}
               </label>
             </div>
             {field.help && (
-              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', margin: '0 0 6px 0' }}>{field.help}</p>
+              <p className={styles.fieldHelp}>{field.help}</p>
             )}
 
             <FieldEditor field={field} value={values[field.name]} onChange={(v) => setField(field.name, v)} />
 
             {fieldErrors?.[field.name] && (
-              <p role="alert" style={{ fontSize: '0.72rem', color: '#f87171', margin: '4px 0 0 0' }}>
+              <p role="alert" className={styles.fieldError}>
                 {fieldErrors[field.name]}
               </p>
             )}

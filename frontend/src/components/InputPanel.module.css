@@ -1,0 +1,60 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.emptyState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 16px;
+  text-align: center;
+}
+
+.actionBar {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.fieldsContainer {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 2px;
+}
+
+.fieldLabelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.fieldLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.fieldHelp {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin: 0 0 6px 0;
+}
+
+.fieldError {
+  font-size: 0.72rem;
+  color: #f87171;
+  margin: 4px 0 0 0;
+}

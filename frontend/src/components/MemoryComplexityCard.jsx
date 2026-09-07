@@ -1,28 +1,6 @@
 import React, { useEffect, useId, useState } from 'react';
 import { Database, Zap, Cpu, HardDrive } from 'lucide-react';
-
-const SECTION_HEADING_STYLE = {
-  margin: 0,
-  color: 'var(--text-muted)',
-  fontFamily: 'var(--font-code)',
-  fontSize: '0.66rem',
-  fontWeight: 700,
-  letterSpacing: '0.06em',
-  textTransform: 'uppercase'
-};
-
-const MEMORY_ROW_STYLE = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: '8px',
-  padding: '6px 10px',
-  borderRadius: 'var(--radius-sm)',
-  background: 'var(--bench-fill)',
-  border: '1px solid var(--border-default)',
-  fontSize: '0.74rem',
-  fontFamily: 'var(--font-code)'
-};
+import styles from './MemoryComplexityCard.module.css';
 
 function displayValue(value) {
   if (typeof value === 'string') return value;
@@ -38,27 +16,27 @@ function displayValue(value) {
 }
 
 function SectionHeading({ children }) {
-  return <h3 style={SECTION_HEADING_STYLE}>{children}</h3>;
+  return <h3 className={styles.sectionHeading}>{children}</h3>;
 }
 
 function MemorySequence({ title, values, markerAt }) {
   return (
-    <section aria-label={title} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+    <section aria-label={title} className={styles.sequenceContainer}>
       <SectionHeading>{title}</SectionHeading>
-      <ol style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: 0, padding: 0, listStyle: 'none' }}>
+      <ol className={styles.sequenceList}>
         {values.map((value, index) => {
           const text = displayValue(value);
           const marker = markerAt(index, values.length);
           return (
-            <li key={`${index}-${text}`} style={MEMORY_ROW_STYLE}>
+            <li key={`${index}-${text}`} className={styles.memoryRow}>
               <span
                 aria-label={marker ? `${marker}: ${text}` : undefined}
-                style={{ color: 'var(--text-primary)', minWidth: 0, overflowWrap: 'anywhere' }}
+                className={styles.memoryText}
               >
                 {text}
               </span>
               {marker && (
-                <span aria-hidden="true" style={{ color: 'var(--accent-violet)', fontSize: '0.66rem', fontWeight: 700, textTransform: 'uppercase' }}>
+                <span aria-hidden="true" className={styles.marker}>
                   {marker}
                 </span>
               )}
@@ -215,7 +193,7 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
                 {variableEntries.map(([key, val]) => (
                   <div
                     key={key}
-                    style={MEMORY_ROW_STYLE}
+                    className={styles.memoryRow}
                   >
                     <span style={{ color: 'var(--text-secondary)' }}>{key}</span>
                     <span style={{ color: 'var(--text-primary)', fontWeight: '700', background: 'var(--accent-violet-tint)', padding: '1px 6px', borderRadius: '4px', border: '1px solid var(--border-accent)' }}>

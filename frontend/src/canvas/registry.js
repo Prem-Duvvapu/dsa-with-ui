@@ -9,6 +9,7 @@ import RecursionTreeCanvas from '../components/RecursionTreeCanvas';
 import StackCanvas from '../components/StackCanvas';
 import TreeCanvas from '../components/TreeCanvas';
 import TrieCanvas from '../components/TrieCanvas';
+import IntervalCanvas from '../components/IntervalCanvas';
 
 /**
  * The sole dsType-to-renderer routing table.
@@ -38,5 +39,6 @@ export const CANVAS_BY_DSTYPE = Object.freeze({
   PriorityQueue: ArrayCanvas,
   Trie: TrieCanvas,
   RecursionTree: RecursionTreeCanvas,
-  Dsu: DsuCanvas
+  Dsu: DsuCanvas,
+  Interval: IntervalCanvas
 });

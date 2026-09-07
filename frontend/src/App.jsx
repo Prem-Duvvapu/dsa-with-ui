@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
 import Sidebar from './components/Sidebar';
@@ -14,6 +15,7 @@ import useTrace from './hooks/useTrace';
 import { CANVAS_BY_DSTYPE } from './canvas/registry';
 import { getCompanions } from './canvas/companions';
 import { RefreshCw, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
+import styles from './App.module.css';
 
 const DEFAULT_FALLBACK_PROBLEMS = [
   {
@@ -138,9 +140,12 @@ function uniqueProblemsById(problems) {
 }
 
 export default function App() {
+  const { id: urlProblemId } = useParams();
+  const navigate = useNavigate();
+
   const [problems, setProblems] = useState(DEFAULT_FALLBACK_PROBLEMS);
   const [activeCategory, setActiveCategory] = useState(null);
-  const [activeProblemId, setActiveProblemId] = useState('two-sum');
+  const activeProblemId = urlProblemId || 'two-sum';
   const [catalogLoading, setCatalogLoading] = useState(false);
   const [catalogError, setCatalogError] = useState(null);
 
@@ -176,10 +181,16 @@ export default function App() {
         const uniqueProblems = uniqueProblemsById(data);
         if (uniqueProblems.length > 0) {
           setProblems(uniqueProblems);
-          const initialId = uniqueProblems.find(p => p.id === 'two-sum')?.id
-            || uniqueProblems[0].id;
-          setActiveProblemId(initialId);
           setCatalogError(null);
+
+          // If the URL points to a problem that doesn't exist in the catalogue,
+          // navigate to a sensible default instead of showing a blank canvas.
+          const urlIdExists = uniqueProblems.some(p => p.id === activeProblemId);
+          if (!urlIdExists) {
+            const fallbackId = uniqueProblems.find(p => p.id === 'two-sum')?.id
+              || uniqueProblems[0].id;
+            navigate(`/problem/${fallbackId}`, { replace: true });
+          }
         }
       }
     } catch (err) {
@@ -190,7 +201,7 @@ export default function App() {
     } finally {
       setCatalogLoading(false);
     }
-  }, []);
+  }, [activeProblemId, navigate]);
 
   useEffect(() => {
     fetchAllProblems();
@@ -214,6 +225,55 @@ export default function App() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const drawerRef = useRef(null);
+
+  // ── Mobile drawer focus trap ─────────────────────────────────────────────
+  useEffect(() => {
+    if (!isMobile || !isSidebarOpen) return;
+
+    const drawer = drawerRef.current;
+    if (!drawer) return;
+
+    const previouslyFocused = document.activeElement;
+    const focusables = drawer.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusables.length > 0) {
+      focusables[0].focus();
+    }
+
+    const handleTabKey = (e) => {
+      if (e.key !== 'Tab') return;
+      const currentFocusables = Array.from(drawer.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )).filter(el => !el.disabled && el.offsetParent !== null);
+      if (currentFocusables.length === 0) return;
+
+      const firstEl = currentFocusables[0];
+      const lastEl = currentFocusables[currentFocusables.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstEl) {
+          e.preventDefault();
+          lastEl.focus();
+        }
+      } else {
+        if (document.activeElement === lastEl) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleTabKey);
+    return () => {
+      window.removeEventListener('keydown', handleTabKey);
+      if (previouslyFocused && previouslyFocused.focus) {
+        previouslyFocused.focus();
+      }
+    };
+  }, [isMobile, isSidebarOpen]);
 
   // ── Global keyboard shortcuts ────────────────────────────────────────────
   useEffect(() => {
@@ -254,7 +314,7 @@ export default function App() {
   };
 
   const handleSelectProblem = (id) => {
-    setActiveProblemId(id);
+    navigate(`/problem/${id}`);
     if (viewportWidth <= 768) {
       setIsSidebarOpen(false);
     }
@@ -268,7 +328,16 @@ export default function App() {
 
   // ── Canvas selection by dsType ───────────────────────────────────────────
   const renderCanvas = () => {
-    if (!activeProblem) return null;
+    if (!activeProblem) {
+      return (
+        <div
+          role="status"
+          className={styles.canvasEmpty}
+        >
+          Select a problem to begin visualization
+        </div>
+      );
+    }
 
     const props = { currentStep, step: currentStep, problem: activeProblem };
 
@@ -277,11 +346,7 @@ export default function App() {
       return (
         <div
           role="status"
-          style={{
-            flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)',
-            fontSize: '0.9rem', padding: '24px', textAlign: 'center'
-          }}
+          className={styles.canvasEmpty}
         >
           No visualization for {activeDsType || 'unknown'}
         </div>
@@ -306,7 +371,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', overflow: 'hidden', background: 'var(--bg-page)' }}>
+    <div className={styles.rootLayout}>
       <Header 
         problem={activeProblem} 
         totalProblems={problems.length} 
@@ -319,40 +384,30 @@ export default function App() {
       {catalogError && (
         <div
           role="alert"
-          style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
-            margin: '0 12px', padding: '6px 12px', fontSize: '0.74rem',
-            color: 'var(--probe)', background: 'rgba(255, 176, 0, 0.08)',
-            border: '1px solid rgba(255, 176, 0, 0.3)', borderRadius: 'var(--radius-sm)'
-          }}
+          className={styles.catalogAlert}
         >
           <span>{catalogError}</span>
-          <button type="button" className="btn btn-outline" style={{ padding: '2px 8px', fontSize: '0.7rem' }} onClick={fetchAllProblems}>
+          <button type="button" className={`btn btn-outline ${styles.catalogAlertRetry}`} onClick={fetchAllProblems}>
             Retry
           </button>
         </div>
       )}
 
       {/* Main Workspace Container */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', padding: '0 12px 8px 12px', gap: '12px', position: 'relative' }}>
+      <div className={styles.workspace}>
         {/* Sidebar (Search & Explore Panel) */}
         {isSidebarOpen && isMobile && (
           <div
             onClick={() => setIsSidebarOpen(false)}
             aria-hidden="true"
-            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99 }}
+            className={styles.mobileBackdrop}
           />
         )}
         {isSidebarOpen && (
-          <div style={{
-            position: isMobile ? 'absolute' : 'relative',
-            top: isMobile ? 0 : 'auto',
-            left: isMobile ? 0 : 'auto',
-            bottom: isMobile ? 0 : 'auto',
-            zIndex: isMobile ? 100 : 1,
-            height: isMobile ? '100%' : 'auto',
-            boxShadow: isMobile ? '0 0 40px rgba(0,0,0,0.8)' : 'none'
-          }}>
+          <div
+            ref={drawerRef}
+            className={isMobile ? styles.sidebarMobile : styles.sidebarDesktop}
+          >
             <Sidebar
               problems={problems}
               activeProblemId={activeProblemId}
@@ -368,13 +423,7 @@ export default function App() {
               onClick={() => setIsSidebarOpen(false)}
               aria-label="Collapse the problem list"
               title="Collapse the problem list"
-              style={{
-                position: 'absolute', top: '50%', right: '-13px', transform: 'translateY(-50%)',
-                width: '26px', height: '44px', borderRadius: 'var(--radius-full)',
-                background: 'var(--bg-panel, #1a1a24)', border: '1px solid var(--border-default)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                cursor: 'pointer', color: 'var(--text-muted)', zIndex: 2
-              }}
+              className={styles.sidebarCollapseBtn}
             >
               <ChevronLeft size={14} />
             </button>
@@ -386,26 +435,20 @@ export default function App() {
             onClick={() => setIsSidebarOpen(true)}
             aria-label="Open the problem list"
             title="Open the problem list"
-            style={{
-              alignSelf: 'flex-start', marginTop: '8px', width: '22px', height: '56px',
-              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-              background: 'var(--bg-panel, #1a1a24)', border: '1px solid var(--border-default)',
-              borderLeft: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', color: 'var(--text-muted)', flexShrink: 0
-            }}
+            className={styles.sidebarExpandBtn}
           >
             <ChevronRight size={14} />
           </button>
         )}
 
-        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', overflow: 'hidden' }}>
+        <main className={styles.mainStage}>
           {/* Main Visualizer Stage + Controls + Live Trace Banner */}
-          <div className="glass-panel" style={{ flex: isMobile ? '1' : '1', display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+          <div className={`glass-panel ${styles.stagePanel}`}>
+            <div className={styles.stageInner}>
               {loading ? (
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-violet)', gap: '10px' }}>
+                <div className={styles.loadingCatalog}>
                   <RefreshCw size={24} className="spin" />
-                  <span style={{ fontWeight: '700' }}>Loading Algorithm Engine & Catalog...</span>
+                  <span className={styles.loadingCatalogText}>Loading Algorithm Engine & Catalog...</span>
                 </div>
               ) : activeProblem ? (
                 <CanvasShell
@@ -413,16 +456,16 @@ export default function App() {
                   meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null}
                 >
                   {traceLoading ? (
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', gap: '8px' }}>
+                    <div className={styles.loadingTrace}>
                       <RefreshCw size={18} className="spin" />
-                      <span style={{ fontFamily: 'var(--font-code)', fontSize: '0.85rem' }}>Loading trace…</span>
+                      <span className={styles.loadingTraceText}>Loading trace…</span>
                     </div>
                   ) : traceError === 'untraced' ? (
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)', fontSize: '0.9rem', padding: '24px', textAlign: 'center' }}>
+                    <div className={styles.untracedNotice}>
                       This problem is catalogued but not yet traced.
                     </div>
                   ) : traceErrorCopy && !showingOfflineTrace ? (
-                    <div role="alert" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--probe)', fontFamily: 'var(--font-code)', fontSize: '0.9rem', padding: '24px', textAlign: 'center' }}>
+                    <div role="alert" className={styles.traceAlert}>
                       {traceErrorCopy}
                     </div>
                   ) : (
@@ -439,13 +482,13 @@ export default function App() {
             </div>
 
             {showingOfflineTrace && (
-              <div role="status" style={{ padding: '4px 12px', fontSize: '0.72rem', fontFamily: 'var(--font-code)', color: 'var(--probe)' }}>
+              <div role="status" className={styles.offlineStatus}>
                 Live trace unavailable. Showing the checked-in offline sample.
               </div>
             )}
 
             {traceTruncated && (
-              <div style={{ padding: '4px 12px', fontSize: '0.72rem', fontFamily: 'var(--font-code)', color: 'var(--probe)' }}>
+              <div className={styles.truncatedStatus}>
                 This trace hit the step budget and was cut short — try a smaller input for the full run.
               </div>
             )}
@@ -459,6 +502,7 @@ export default function App() {
               <CaptureStrip
                 steps={steps}
                 current={currentStepIndex}
+                dsType={activeDsType}
                 onSeek={seek}
               />
             )}
@@ -478,7 +522,7 @@ export default function App() {
             />
 
             {/* Quiet Live Trace Banner */}
-            <div style={{ padding: '0 12px 10px 12px' }}>
+            <div className={styles.tickerWrapper}>
               <LiveTraceTicker stepDescription={currentStep?.description} />
             </div>
           </div>
@@ -491,11 +535,7 @@ export default function App() {
             aria-expanded={isBottomPanelOpen}
             aria-label={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
             title={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
-            className="btn btn-outline"
-            style={{
-              alignSelf: 'center', padding: '2px 16px', fontSize: '0.68rem',
-              display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0
-            }}
+            className={`btn btn-outline ${styles.bottomToggleBtn}`}
           >
             {isBottomPanelOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
             {isBottomPanelOpen ? 'Hide code & details' : 'Show code & details'}
@@ -503,14 +543,15 @@ export default function App() {
 
           {/* Desktop Bottom Section: Wide Java Code + Input Panel + Right Tabbed Memory/Complexity Card */}
           {!isBottomPanelOpen ? null : !isMobile ? (
-            <div style={{
-              height: '210px', minHeight: '210px', display: 'grid',
-              gridTemplateColumns: hasInputSpec ? '1.2fr 1fr 1fr' : '1.6fr 1fr',
-              gap: '12px', overflow: 'hidden', flexShrink: 0
-            }}>
+            <div
+              className={styles.bottomDesktopGrid}
+              style={{
+                gridTemplateColumns: hasInputSpec ? '1.2fr 1fr 1fr' : '1.6fr 1fr'
+              }}
+            >
               <CodeViewer problem={activeProblem} currentStep={currentStep} />
               {hasInputSpec && (
-                <div className="glass-panel" style={{ padding: '10px 12px', overflow: 'hidden' }}>
+                <div className={`glass-panel ${styles.inputCard}`}>
                   <InputPanel
                     problemId={activeProblemId}
                     inputSpec={activeProblem.inputSpec}
@@ -524,45 +565,41 @@ export default function App() {
             </div>
           ) : (
             /* Mobile Tab Bottom Card Section (Code / Input / Memory / Complexity) */
-            <div className="glass-panel" style={{ height: '180px', minHeight: '180px', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexShrink: 0 }}>
-              <div style={{ display: 'flex', padding: '4px', gap: '4px', borderBottom: '1px solid var(--border-default)', background: 'rgba(0,0,0,0.2)' }}>
+            <div className={`glass-panel ${styles.bottomMobileCard}`}>
+              <div className={styles.mobileTabNav}>
                 <button
                   onClick={() => setActiveTab('code')}
-                  className={`btn ${activeTab === 'code' ? 'btn-primary' : 'btn-outline'}`}
-                  style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
+                  className={`btn ${activeTab === 'code' ? 'btn-primary' : 'btn-outline'} ${styles.mobileTabBtn}`}
                 >
                   Code
                 </button>
                 {hasInputSpec && (
                   <button
                     onClick={() => setActiveTab('input')}
-                    className={`btn ${activeTab === 'input' ? 'btn-primary' : 'btn-outline'}`}
-                    style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
+                    className={`btn ${activeTab === 'input' ? 'btn-primary' : 'btn-outline'} ${styles.mobileTabBtn}`}
                   >
                     Input
                   </button>
                 )}
                 <button
                   onClick={() => setActiveTab('memory')}
-                  className={`btn ${activeTab === 'memory' ? 'btn-primary' : 'btn-outline'}`}
-                  style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
+                  className={`btn ${activeTab === 'memory' ? 'btn-primary' : 'btn-outline'} ${styles.mobileTabBtn}`}
                 >
                   Memory
                 </button>
                 <button
                   onClick={() => setActiveTab('complexity')}
-                  className={`btn ${activeTab === 'complexity' ? 'btn-primary' : 'btn-outline'}`}
-                  style={{ flex: 1, padding: '4px 8px', fontSize: '0.74rem', justifyContent: 'center' }}
+                  className={`btn ${activeTab === 'complexity' ? 'btn-primary' : 'btn-outline'} ${styles.mobileTabBtn}`}
                 >
                   Complexity
                 </button>
               </div>
 
-              <div style={{ flex: 1, overflow: 'hidden' }}>
+              <div className={styles.mobileTabBody}>
                 {activeTab === 'code' ? (
                   <CodeViewer problem={activeProblem} currentStep={currentStep} />
                 ) : activeTab === 'input' ? (
-                  <div style={{ padding: '10px 12px', height: '100%', overflow: 'hidden' }}>
+                  <div className={styles.mobileInputContainer}>
                     <InputPanel
                       problemId={activeProblemId}
                       inputSpec={activeProblem.inputSpec}
