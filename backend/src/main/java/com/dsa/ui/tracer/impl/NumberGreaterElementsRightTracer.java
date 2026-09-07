@@ -16,6 +16,14 @@ import java.util.Map;
  * <p>Brute-force O(N²) counting: for each index i, count how many elements in
  * i+1..n-1 are strictly greater than nums[i]. The trace shows both pointers
  * and the running count.
+ *
+ * <p>Traced as {@link DsType#ARRAY} despite the "Monotonic" sub-category, because there is
+ * no stack in it and this emits none. A monotonic stack answers "which is the FIRST element
+ * to the right that beats me" — the popping that makes it cheap discards exactly the
+ * information a COUNT has to keep, so counting is a rank query, not a nearest-neighbour one.
+ * The honest structure to draw is the array being swept. It declared {@code STACK} when it
+ * landed and never called {@code emit.stack(...)}, so the UI drew an empty stack panel for
+ * the whole animation while the array it does emit went unrendered.
  */
 @Component
 public class NumberGreaterElementsRightTracer implements AlgorithmTracer {
@@ -27,7 +35,7 @@ public class NumberGreaterElementsRightTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STACK;
+        return DsType.ARRAY;
     }
 
     @Override

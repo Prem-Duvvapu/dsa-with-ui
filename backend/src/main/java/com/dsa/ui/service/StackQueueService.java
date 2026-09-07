@@ -134,16 +134,27 @@ public class StackQueueService implements ProblemProvider {
      *       logical queue, emitted front-to-back with each element labelled by its home stack.</li>
      *   <li>stack-ll-impl and queue-ll-impl are chains of nodes; the pointer work is the
      *       lesson, and the array versions already cover the pile-of-slots picture.</li>
+     *   <li>celebrity-problem reads an N x N knows-matrix with two integer pointers. The
+     *       classic stack elimination is a DIFFERENT algorithm from the two-pointer one the
+     *       tracer implements, and the tracer emits a grid.</li>
+     *   <li>number-greater-elements-right counts rather than finds, which is a rank query a
+     *       monotonic stack cannot answer — the popping that makes it cheap discards exactly
+     *       what a count must keep. It sweeps the array, and emits one.</li>
      * </ul>
      *
      * <p>This must agree with each tracer's own {@code dsType()} —
      * {@code CatalogTracerMetadataTest} fails application-wide if the catalogue routes a
-     * traced problem to a canvas its tracer never emits.
+     * traced problem to a canvas its tracer never emits — and, since agreeing with the
+     * tracer is not the same as agreeing with the trace,
+     * {@code DsTypePayloadContractTest} checks the declared type against the payload the
+     * run actually produces.
      */
     private static DsType bulkDsType(String id) {
         return switch (id) {
             case "lru-cache", "lfu-cache", "stack-ll-impl", "queue-ll-impl" -> DsType.LINKED_LIST;
             case "queue-array-impl", "stack-queue-impl", "queue-stack-impl" -> DsType.QUEUE;
+            case "celebrity-problem" -> DsType.MATRIX;
+            case "number-greater-elements-right" -> DsType.ARRAY;
             default -> DsType.STACK;
         };
     }

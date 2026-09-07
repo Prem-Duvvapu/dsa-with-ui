@@ -447,3 +447,43 @@ phase; do not describe unfinished work as resolved.
   `queue-stack-impl`, `stack-array-impl`, `task-scheduler` — because they have no array
   payload whose own constant can absorb the error. Note the guard is a *ratio* band, so it
   cannot be satisfied by inflating the constant without limit either.
+
+## RCA-023 — Two tracers declared a dsType whose canvas reads a field they never emit
+
+- **Discovered:** 2026-09-06, reviewing the completed Stack & Queue category against the
+  live API — `celebrity-problem` and `number-greater-elements-right` both reported
+  `dsType: Stack` while their traces carried no `queueOrStackState` at all.
+- **Status:** Resolved
+- **Symptom and impact:** `dsType` decides which canvas renders a trace
+  (`frontend/src/canvas/registry.js`), and each canvas reads one particular field off the
+  step. Both tracers declared `STACK`, so the UI routed them to `StackCanvas` — which reads
+  `queueOrStackState` and renders its explicit "empty" state when that field is absent.
+  Neither tracer ever called `emit.stack(...)`: `celebrity-problem` emits only `gridState`
+  (the knows-matrix) and `number-greater-elements-right` only `arrayState`. So both problems
+  animated as a permanently empty stack panel beside narration describing an elimination or
+  a sweep the viewer could not see, while the structure each one *did* compute and put on
+  the wire was never drawn by anything. This is the failure `StackCanvas` was itself created
+  to fix ("the actual stack was computed but never drawn"), inverted: here the canvas is
+  right and the payload is missing.
+- **Root cause:** `CatalogTracerMetadataTest` checks that the CATALOGUE entry and the TRACER
+  agree on a dsType. That is one half of the contract, and on its own it is satisfied by two
+  files agreeing with each other while both are wrong about the trace — `bulkDsType()`
+  defaults every Stack & Queue id to `STACK`, and both tracers returned `STACK`, so the two
+  halves matched and every test passed. Nothing compared the declared type against the
+  payload the run actually produced. CLAUDE.md's rule ("emit the structure that `dsType()`
+  promises") was written down but not enforced.
+- **Resolution:** declared the dsType of the structure each one really emits rather than
+  inventing payload — `celebrity-problem` to `MATRIX` (it reads an N x N matrix with two
+  integer pointers; the classic stack elimination is a different algorithm from the
+  two-pointer one implemented) and `number-greater-elements-right` to `ARRAY` (counting is a
+  rank query, and the popping that makes a monotonic stack cheap discards exactly the
+  information a count has to keep). `bulkDsType()` updated to match both. The regenerated
+  golden files differ **only** in the `dsType` field — no description, variable or
+  highlighted line moved — which is the evidence that this changed routing and not
+  behaviour.
+- **Regression guard:** `DsTypePayloadContractTest.declaredDsTypeIsBackedByEmittedPayload`,
+  new, parameterized over every registered tracer. It maps each dsType to the field its
+  canvas reads (mirroring `canvas/registry.js`) and fails if no step populates it. Proven
+  RED first: against the unfixed code it failed on exactly these two ids and passed on the
+  other 140 it checks. dsTypes whose canvas has no single required field are skipped rather
+  than passed, so the gap is visible in the Surefire report instead of looking like coverage.
