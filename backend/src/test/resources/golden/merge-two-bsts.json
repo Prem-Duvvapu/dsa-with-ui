@@ -1,0 +1,1410 @@
+{
+  "anchors" : {
+    "collectInorder" : 28,
+    "done" : 22,
+    "drainFirst" : 17,
+    "drainSecond" : 20,
+    "takeFromFirst" : 11,
+    "takeFromSecond" : 13
+  },
+  "code" : "public List<Integer> merge(TreeNode a, TreeNode b) {\n    List<Integer> first = new ArrayList<>();\n    List<Integer> second = new ArrayList<>();\n    inorder(a, first);\n    inorder(b, second);\n\n    List<Integer> merged = new ArrayList<>();\n    int i = 0, j = 0;\n    while (i < first.size() && j < second.size()) {\n        if (first.get(i) <= second.get(j)) {\n            merged.add(first.get(i++));\n        } else {\n            merged.add(second.get(j++));\n        }\n    }\n    while (i < first.size()) {\n        merged.add(first.get(i++));\n    }\n    while (j < second.size()) {\n        merged.add(second.get(j++));\n    }\n    return merged;\n}\n\nprivate void inorder(TreeNode node, List<Integer> out) {\n    if (node == null) return;\n    inorder(node.left, out);\n    out.add(node.val);      // a BST's inorder is already sorted\n    inorder(node.right, out);\n}",
+  "problemId" : "merge-two-bsts",
+  "resolvedInput" : {
+    "first" : [ 5, 3, 6, 2, 4 ],
+    "second" : [ 2, 1, 3 ]
+  },
+  "stepCount" : 17,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 28,
+    "description" : "Inorder over the first tree reaches 2. The sequence so far is [2] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "first" : "[2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "unvisited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 28,
+    "description" : "Inorder over the first tree reaches 3. The sequence so far is [2, 3] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "first" : "[2, 3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "unvisited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 28,
+    "description" : "Inorder over the first tree reaches 4. The sequence so far is [2, 3, 4] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "first" : "[2, 3, 4]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "unvisited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 28,
+    "description" : "Inorder over the first tree reaches 5. The sequence so far is [2, 3, 4, 5] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "first" : "[2, 3, 4, 5]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "unvisited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 28,
+    "description" : "Inorder over the first tree reaches 6. The sequence so far is [2, 3, 4, 5, 6] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "first" : "[2, 3, 4, 5, 6]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "unvisited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 28,
+    "description" : "Inorder over the second tree reaches 1. The sequence so far is [1] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "second" : "[1]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "unvisited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 28,
+    "description" : "Inorder over the second tree reaches 2. The sequence so far is [1, 2] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "second" : "[1, 2]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 28,
+    "description" : "Inorder over the second tree reaches 3. The sequence so far is [1, 2, 3] - already sorted, with nothing sorted to make it so.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "second" : "[1, 2, 3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "1 from the second tree is smaller than 2 from the first, so it goes next instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[2, 3, 4, 5, 6]",
+      "merged" : "[1]",
+      "secondLeft" : "[2, 3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "2 from the first tree is not larger than 2 from the second, so it goes next. Only the first index advances.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[3, 4, 5, 6]",
+      "merged" : "[1, 2]",
+      "secondLeft" : "[2, 3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "2 from the second tree is smaller than 3 from the first, so it goes next instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[3, 4, 5, 6]",
+      "merged" : "[1, 2, 2]",
+      "secondLeft" : "[3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 11,
+    "description" : "3 from the first tree is not larger than 3 from the second, so it goes next. Only the first index advances.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[4, 5, 6]",
+      "merged" : "[1, 2, 2, 3]",
+      "secondLeft" : "[3]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "3 from the second tree is smaller than 4 from the first, so it goes next instead.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[4, 5, 6]",
+      "merged" : "[1, 2, 2, 3, 3]",
+      "secondLeft" : "[]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 17,
+    "description" : "The second sequence is used up, and everything left in the first is already sorted and already larger - append 4 as it stands.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[5, 6]",
+      "merged" : "[1, 2, 2, 3, 3, 4]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 17,
+    "description" : "The second sequence is used up, and everything left in the first is already sorted and already larger - append 5 as it stands.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[6]",
+      "merged" : "[1, 2, 2, 3, 3, 4, 5]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 17,
+    "description" : "The second sequence is used up, and everything left in the first is already sorted and already larger - append 6 as it stands.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "firstLeft" : "[]",
+      "merged" : "[1, 2, 2, 3, 3, 4, 5, 6]"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 22,
+    "description" : "Merged in one sweep: [1, 2, 2, 3, 3, 4, 5, 6]. No comparison was ever made twice, and nothing was sorted - both inputs arrived sorted by being BSTs.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "merged" : "[1, 2, 2, 3, 3, 4, 5, 6]",
+      "size" : "8"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "A:5",
+      "x" : 160.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "A:3",
+      "x" : 80.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "A:6",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "A:2",
+      "x" : 40.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "A:4",
+      "x" : 120.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1000,
+      "val" : "B:2",
+      "x" : 500.0,
+      "y" : 40.0,
+      "leftId" : 1001,
+      "rightId" : 1002,
+      "state" : "visited"
+    }, {
+      "id" : 1001,
+      "val" : "B:1",
+      "x" : 420.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 1002,
+      "val" : "B:3",
+      "x" : 580.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  } ],
+  "truncated" : false
+}

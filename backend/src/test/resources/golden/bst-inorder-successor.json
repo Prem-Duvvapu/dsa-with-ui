@@ -1,0 +1,567 @@
+{
+  "anchors" : {
+    "leftmostOfRight" : 12,
+    "locate" : 4,
+    "passUnderneath" : 24,
+    "rememberAncestor" : 21,
+    "successorAbove" : 27,
+    "successorBelow" : 14
+  },
+  "code" : "public TreeNode inorderSuccessor(TreeNode root, int target) {\n    TreeNode node = root;\n    while (node != null) {\n        if (node.val == target) break;\n        node = target < node.val ? node.left : node.right;\n    }\n    if (node == null) return null;\n\n    if (node.right != null) {\n        TreeNode curr = node.right;\n        while (curr.left != null) {\n            curr = curr.left;\n        }\n        return curr;\n    }\n\n    TreeNode successor = null;\n    TreeNode curr = root;\n    while (curr != null && curr.val != target) {\n        if (target < curr.val) {\n            successor = curr;      // a left turn passes a larger value\n            curr = curr.left;\n        } else {\n            curr = curr.right;     // a right turn passes a smaller one\n        }\n    }\n    return successor;\n}",
+  "problemId" : "bst-inorder-successor",
+  "resolvedInput" : {
+    "target" : 8,
+    "tree" : [ 8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15 ]
+  },
+  "stepCount" : 4,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Located 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "at" : "8"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "12",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "2",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : 7,
+      "rightId" : 8,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "6",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "10",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : 11,
+      "rightId" : 12,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "14",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "1",
+      "x" : 40.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "3",
+      "x" : 120.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "5",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "7",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "9",
+      "x" : 360.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "11",
+      "x" : 440.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "13",
+      "x" : 520.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "15",
+      "x" : 600.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 12,
+    "description" : "12 is inside 8's right subtree and so is larger than 8 - but 12 has a left child, 10, which is larger than 8 too and smaller than 12. Keep going left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "at" : "12"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "12",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "2",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : 7,
+      "rightId" : 8,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "6",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "10",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : 11,
+      "rightId" : 12,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "14",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "1",
+      "x" : 40.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "3",
+      "x" : 120.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "5",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "7",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "9",
+      "x" : 360.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "11",
+      "x" : 440.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "13",
+      "x" : 520.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "15",
+      "x" : 600.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "10 is inside 8's right subtree and so is larger than 8 - but 10 has a left child, 9, which is larger than 8 too and smaller than 10. Keep going left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "at" : "10"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "12",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "2",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : 7,
+      "rightId" : 8,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "6",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "10",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : 11,
+      "rightId" : 12,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "14",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "1",
+      "x" : 40.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "3",
+      "x" : 120.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "5",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "7",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "9",
+      "x" : 360.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 12,
+      "val" : "11",
+      "x" : 440.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "13",
+      "x" : 520.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "15",
+      "x" : 600.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 14,
+    "description" : "8 has a right subtree, so the successor is inside it: the leftmost node there, 9. Nothing between 8 and 9 exists in the tree.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "9"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "target"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "12",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "2",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : 7,
+      "rightId" : 8,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "6",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "10",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : 11,
+      "rightId" : 12,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "14",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "unvisited"
+    }, {
+      "id" : 7,
+      "val" : "1",
+      "x" : 40.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 8,
+      "val" : "3",
+      "x" : 120.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "5",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "7",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 11,
+      "val" : "9",
+      "x" : 360.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    }, {
+      "id" : 12,
+      "val" : "11",
+      "x" : 440.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 13,
+      "val" : "13",
+      "x" : 520.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 14,
+      "val" : "15",
+      "x" : 600.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  } ],
+  "truncated" : false
+}

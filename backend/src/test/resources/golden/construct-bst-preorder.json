@@ -1,0 +1,978 @@
+{
+  "anchors" : {
+    "buildLeft" : 14,
+    "buildRight" : 15,
+    "done" : 5,
+    "outOfBound" : 10,
+    "takeValue" : 12
+  },
+  "code" : "private int i = 0;\n\npublic TreeNode bstFromPreorder(int[] preorder) {\n    TreeNode root = build(preorder, Integer.MAX_VALUE);\n    return root;\n}\n\nprivate TreeNode build(int[] pre, int bound) {\n    if (i == pre.length || pre[i] > bound) {\n        return null;          // this subtree is finished\n    }\n    TreeNode node = new TreeNode(pre[i++]);\n\n    node.left = build(pre, node.val);   // must stay below this node\n    node.right = build(pre, bound);     // inherits the caller's bound\n    return node;\n}",
+  "problemId" : "construct-bst-preorder",
+  "resolvedInput" : {
+    "preorder" : [ 8, 5, 1, 7, 10, 12 ]
+  },
+  "stepCount" : 26,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 12,
+    "description" : "8 is within the bound +inf, so it is this subtree's root. The index moves on and never comes back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "+inf",
+      "index" : "1",
+      "node" : "8"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 14,
+    "description" : "Build 8's LEFT subtree with a tightened bound of 8: every value down there has to be smaller than 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "8",
+      "index" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "5 is within the bound 8, so it is this subtree's root. The index moves on and never comes back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "8",
+      "index" : "2",
+      "node" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 14,
+    "description" : "Build 5's LEFT subtree with a tightened bound of 5: every value down there has to be smaller than 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "5",
+      "index" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "1 is within the bound 5, so it is this subtree's root. The index moves on and never comes back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "5",
+      "index" : "3",
+      "node" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "Build 1's LEFT subtree with a tightened bound of 1: every value down there has to be smaller than 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "1",
+      "index" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "The next value is 7, which exceeds the bound 1 - so it cannot belong in this subtree at all. It belongs to an ancestor; this branch ends empty.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "1",
+      "index" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "Now 1's RIGHT subtree, which inherits the caller's bound 5 unchanged - values there must exceed 1 but are otherwise limited only by the ancestors above.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "5",
+      "index" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 10,
+    "description" : "The next value is 7, which exceeds the bound 5 - so it cannot belong in this subtree at all. It belongs to an ancestor; this branch ends empty.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "5",
+      "index" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 15,
+    "description" : "Now 5's RIGHT subtree, which inherits the caller's bound 8 unchanged - values there must exceed 5 but are otherwise limited only by the ancestors above.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "8",
+      "index" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "7 is within the bound 8, so it is this subtree's root. The index moves on and never comes back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "8",
+      "index" : "4",
+      "node" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 14,
+    "description" : "Build 7's LEFT subtree with a tightened bound of 7: every value down there has to be smaller than 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "7",
+      "index" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 10,
+    "description" : "The next value is 10, which exceeds the bound 7 - so it cannot belong in this subtree at all. It belongs to an ancestor; this branch ends empty.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "7",
+      "index" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "Now 7's RIGHT subtree, which inherits the caller's bound 8 unchanged - values there must exceed 7 but are otherwise limited only by the ancestors above.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "8",
+      "index" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 10,
+    "description" : "The next value is 10, which exceeds the bound 8 - so it cannot belong in this subtree at all. It belongs to an ancestor; this branch ends empty.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "8",
+      "index" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 15,
+    "description" : "Now 8's RIGHT subtree, which inherits the caller's bound +inf unchanged - values there must exceed 8 but are otherwise limited only by the ancestors above.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "+inf",
+      "index" : "4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 12,
+    "description" : "10 is within the bound +inf, so it is this subtree's root. The index moves on and never comes back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "+inf",
+      "index" : "5",
+      "node" : "10"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 14,
+    "description" : "Build 10's LEFT subtree with a tightened bound of 10: every value down there has to be smaller than 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "10",
+      "index" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 10,
+    "description" : "The next value is 12, which exceeds the bound 10 - so it cannot belong in this subtree at all. It belongs to an ancestor; this branch ends empty.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "10",
+      "index" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 15,
+    "description" : "Now 10's RIGHT subtree, which inherits the caller's bound +inf unchanged - values there must exceed 10 but are otherwise limited only by the ancestors above.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "+inf",
+      "index" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 12,
+    "description" : "12 is within the bound +inf, so it is this subtree's root. The index moves on and never comes back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "+inf",
+      "index" : "6",
+      "node" : "12"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 14,
+    "description" : "Build 12's LEFT subtree with a tightened bound of 12: every value down there has to be smaller than 12.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "12",
+      "index" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 10,
+    "description" : "Preorder is exhausted, so there is nothing left to place here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "12",
+      "index" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 15,
+    "description" : "Now 12's RIGHT subtree, which inherits the caller's bound +inf unchanged - values there must exceed 12 but are otherwise limited only by the ancestors above.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "+inf",
+      "index" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 10,
+    "description" : "Preorder is exhausted, so there is nothing left to place here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bound" : "+inf",
+      "index" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 560.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 240.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 5,
+    "description" : "All 6 values consumed, each exactly once. Preorder alone was enough because the BST property already told us the inorder.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "nodes" : "6"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "8",
+      "x" : 373.3333333333333,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 4,
+      "state" : "done"
+    }, {
+      "id" : 1,
+      "val" : "5",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "done"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 53.333333333333336,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 3,
+      "val" : "7",
+      "x" : 266.6666666666667,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "val" : "10",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 5,
+      "state" : "done"
+    }, {
+      "id" : 5,
+      "val" : "12",
+      "x" : 586.6666666666666,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    } ]
+  } ],
+  "truncated" : false
+}

@@ -115,7 +115,16 @@ public class TreeService implements ProblemProvider {
             case "bst-lca":
             case "bst-validate":
                 throw new LegacyTraceRetiredException(problemId);
-            case "bst-kth-smallest": return generatePreorderSteps();
+            // The last six BST ids. bst-kth-smallest had an explicit case delegating to
+            // generatePreorderSteps() and was the third id RCA-021 held back; the other
+            // five had no case at all. Every BST problem in this catalogue is traced now.
+            case "bst-kth-smallest":
+            case "bst-inorder-successor":
+            case "two-sum-bst":
+            case "construct-bst-preorder":
+            case "merge-two-bsts":
+            case "largest-bst-in-bt":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generatePreorderSteps();
         }
     }
@@ -252,7 +261,9 @@ public class TreeService implements ProblemProvider {
                     // that entry is resolved, so they join the list here.
                     "bst-insert", "bst-delete", "bst-floor-ceil",
                     "bst-intro", "bst-search", "bst-min-max", "bst-floor", "bst-lca",
-                    "bst-validate",
+                    "bst-validate", "bst-kth-smallest", "bst-inorder-successor",
+                    "two-sum-bst", "construct-bst-preorder", "merge-two-bsts",
+                    "largest-bst-in-bt",
                     // Traversal mechanics and views, all drawing a binary tree.
                     "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
                     "postorder-2-stacks", "postorder-1-stack", "morris-preorder",
