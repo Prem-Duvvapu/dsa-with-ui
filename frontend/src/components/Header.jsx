@@ -47,7 +47,7 @@ export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar }
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
-          background: 'rgba(255, 255, 255, 0.03)',
+          background: 'var(--bench-fill)',
           padding: '4px 10px',
           borderRadius: 'var(--radius-sm)',
           border: '1px solid var(--border-default)',
@@ -55,7 +55,7 @@ export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar }
         }}>
           <BookOpen size={13} color="var(--text-muted)" />
           <span style={{ color: 'var(--text-muted)' }}>Library: </span>
-          <strong style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{totalProblems || 426} algorithms</strong>
+          <strong style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{totalProblems || 0} algorithms</strong>
         </div>
       </div>
     </header>

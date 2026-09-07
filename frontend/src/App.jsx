@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
 import Sidebar from './components/Sidebar';
@@ -138,9 +139,12 @@ function uniqueProblemsById(problems) {
 }
 
 export default function App() {
+  const { id: urlProblemId } = useParams();
+  const navigate = useNavigate();
+
   const [problems, setProblems] = useState(DEFAULT_FALLBACK_PROBLEMS);
   const [activeCategory, setActiveCategory] = useState(null);
-  const [activeProblemId, setActiveProblemId] = useState('two-sum');
+  const activeProblemId = urlProblemId || 'two-sum';
   const [catalogLoading, setCatalogLoading] = useState(false);
   const [catalogError, setCatalogError] = useState(null);
 
@@ -176,10 +180,16 @@ export default function App() {
         const uniqueProblems = uniqueProblemsById(data);
         if (uniqueProblems.length > 0) {
           setProblems(uniqueProblems);
-          const initialId = uniqueProblems.find(p => p.id === 'two-sum')?.id
-            || uniqueProblems[0].id;
-          setActiveProblemId(initialId);
           setCatalogError(null);
+
+          // If the URL points to a problem that doesn't exist in the catalogue,
+          // navigate to a sensible default instead of showing a blank canvas.
+          const urlIdExists = uniqueProblems.some(p => p.id === activeProblemId);
+          if (!urlIdExists) {
+            const fallbackId = uniqueProblems.find(p => p.id === 'two-sum')?.id
+              || uniqueProblems[0].id;
+            navigate(`/problem/${fallbackId}`, { replace: true });
+          }
         }
       }
     } catch (err) {
@@ -190,7 +200,7 @@ export default function App() {
     } finally {
       setCatalogLoading(false);
     }
-  }, []);
+  }, [activeProblemId, navigate]);
 
   useEffect(() => {
     fetchAllProblems();
@@ -254,7 +264,7 @@ export default function App() {
   };
 
   const handleSelectProblem = (id) => {
-    setActiveProblemId(id);
+    navigate(`/problem/${id}`);
     if (viewportWidth <= 768) {
       setIsSidebarOpen(false);
     }

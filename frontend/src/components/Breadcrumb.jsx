@@ -41,14 +41,7 @@ export default function Breadcrumb({ problem }) {
       <ChevronRight size={13} color="var(--text-muted)" />
       
       <span 
-        style={{ 
-          color: 'var(--text-primary)', 
-          fontWeight: '700', 
-          whiteSpace: 'nowrap', 
-          overflow: 'hidden', 
-          textOverflow: 'ellipsis',
-          maxWidth: '380px'
-        }}
+        className="breadcrumb-title"
         title={title}
       >
         {title}
