@@ -95,6 +95,15 @@ public class TreeService implements ProblemProvider {
             case "children-sum-property":
             case "max-width-bt":
                 throw new LegacyTraceRetiredException(problemId);
+            // Construction and paths. None had a case; all seven fell into default:.
+            case "unique-bt-requirements":
+            case "count-complete-tree-nodes":
+            case "construct-bt-pre-in":
+            case "construct-bt-post-in":
+            case "flatten-bt-to-ll":
+            case "root-to-leaf-path":
+            case "nodes-distance-k":
+                throw new LegacyTraceRetiredException(problemId);
             case "bst-search": return generatePreorderSteps();
             case "bst-validate": return generatePreorderSteps();
             case "bst-kth-smallest": return generatePreorderSteps();
@@ -241,7 +250,10 @@ public class TreeService implements ProblemProvider {
                     "boundary-traversal",
                     // Structural properties, construction and paths.
                     "tree-height", "tree-balanced", "tree-diameter", "symmetric-tree",
-                    "identical-trees", "children-sum-property", "max-width-bt" -> DsType.TREE;
+                    "identical-trees", "children-sum-property", "max-width-bt",
+                    "unique-bt-requirements", "count-complete-tree-nodes",
+                    "construct-bt-pre-in", "construct-bt-post-in", "flatten-bt-to-ll",
+                    "root-to-leaf-path", "nodes-distance-k" -> DsType.TREE;
             default -> DsType.STACK;
         };
     }

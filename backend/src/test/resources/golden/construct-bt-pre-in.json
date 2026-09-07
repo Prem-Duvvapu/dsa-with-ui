@@ -1,0 +1,579 @@
+{
+  "anchors" : {
+    "done" : 6,
+    "emptyRange" : 13,
+    "inorderGivesTheSizes" : 19,
+    "rootIsFirstInPreorder" : 15
+  },
+  "code" : "public TreeNode buildTree(int[] preorder, int[] inorder) {\n    Map<Integer, Integer> where = new HashMap<>();\n    for (int i = 0; i < inorder.length; i++) where.put(inorder[i], i);\n    TreeNode root = build(preorder, 0, preorder.length - 1,\n                          inorder, 0, inorder.length - 1, where);\n    return root;\n}\n\nprivate TreeNode build(int[] pre, int preLo, int preHi,\n                       int[] in, int inLo, int inHi,\n                       Map<Integer, Integer> where) {\n    if (preLo > preHi) {\n        return null;\n    }\n    TreeNode node = new TreeNode(pre[preLo]);\n\n    int at = where.get(pre[preLo]);\n    int leftSize = at - inLo;\n    node.left = build(pre, preLo + 1, preLo + leftSize,\n                      in, inLo, at - 1, where);\n    node.right = build(pre, preLo + leftSize + 1, preHi,\n                       in, at + 1, inHi, where);\n    return node;\n}",
+  "problemId" : "construct-bt-pre-in",
+  "resolvedInput" : {
+    "inorder" : [ 9, 3, 15, 20, 7 ],
+    "preorder" : [ 3, 9, 20, 15, 7 ]
+  },
+  "stepCount" : 17,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 15,
+    "description" : "Preorder [3, 9, 20, 15, 7] starts with 3, so 3 is the root of this subtree - that is all preorder ever tells you, and it is enough.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[9, 3, 15, 20, 7]",
+      "preRange" : "[3, 9, 20, 15, 7]",
+      "root" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 19,
+    "description" : "3 sits at inorder position 1: 1 value on its left, 3 on its right. That splits preorder's remainder into exactly those two blocks.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[9]",
+      "leftSize" : "1",
+      "rightInorder" : "[15, 20, 7]",
+      "rightSize" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 15,
+    "description" : "Preorder [9] starts with 9, so 9 is the root of this subtree - that is all preorder ever tells you, and it is enough.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[9]",
+      "preRange" : "[9]",
+      "root" : "9"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 19,
+    "description" : "9 sits at inorder position 0: 0 values on its left, 0 on its right. That splits preorder's remainder into exactly those two blocks.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[]",
+      "leftSize" : "0",
+      "rightInorder" : "[]",
+      "rightSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 13,
+    "description" : "The preorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "preRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "The preorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "preRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Preorder [20, 15, 7] starts with 20, so 20 is the root of this subtree - that is all preorder ever tells you, and it is enough.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[15, 20, 7]",
+      "preRange" : "[20, 15, 7]",
+      "root" : "20"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 19,
+    "description" : "20 sits at inorder position 3: 1 value on its left, 1 on its right. That splits preorder's remainder into exactly those two blocks.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[15]",
+      "leftSize" : "1",
+      "rightInorder" : "[7]",
+      "rightSize" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 15,
+    "description" : "Preorder [15] starts with 15, so 15 is the root of this subtree - that is all preorder ever tells you, and it is enough.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[15]",
+      "preRange" : "[15]",
+      "root" : "15"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "15 sits at inorder position 2: 0 values on its left, 0 on its right. That splits preorder's remainder into exactly those two blocks.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[]",
+      "leftSize" : "0",
+      "rightInorder" : "[]",
+      "rightSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "The preorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "preRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "The preorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "preRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 15,
+    "description" : "Preorder [7] starts with 7, so 7 is the root of this subtree - that is all preorder ever tells you, and it is enough.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[7]",
+      "preRange" : "[7]",
+      "root" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 19,
+    "description" : "7 sits at inorder position 4: 0 values on its left, 0 on its right. That splits preorder's remainder into exactly those two blocks.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[]",
+      "leftSize" : "0",
+      "rightInorder" : "[]",
+      "rightSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 13,
+    "description" : "The preorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "preRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 13,
+    "description" : "The preorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "preRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 480.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 6,
+    "description" : "Every value in preorder has been placed. The tree is reconstructed.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "nodes" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 192.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "done"
+    }, {
+      "id" : 1,
+      "val" : "9",
+      "x" : 64.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 2,
+      "val" : "20",
+      "x" : 448.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "done"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 320.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "val" : "7",
+      "x" : 576.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    } ]
+  } ],
+  "truncated" : false
+}

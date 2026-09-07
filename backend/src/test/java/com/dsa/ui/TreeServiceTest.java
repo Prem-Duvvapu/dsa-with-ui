@@ -52,7 +52,10 @@ class TreeServiceTest {
                 "traversals-in-one-pass", "pre-post-in-one-traversal",
                 "top-view-bt", "bottom-view-bt", "right-left-view-bt", "boundary-traversal",
                 "tree-height", "tree-balanced", "tree-diameter", "symmetric-tree",
-                "identical-trees", "children-sum-property", "max-width-bt");
+                "identical-trees", "children-sum-property", "max-width-bt",
+                "unique-bt-requirements", "count-complete-tree-nodes",
+                "construct-bt-pre-in", "construct-bt-post-in", "flatten-bt-to-ll",
+                "root-to-leaf-path", "nodes-distance-k");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

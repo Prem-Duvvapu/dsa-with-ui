@@ -1,0 +1,779 @@
+{
+  "anchors" : {
+    "done" : 6,
+    "emptyRange" : 13,
+    "inorderGivesTheSizes" : 19,
+    "leftIsWhatRemains" : 21,
+    "rootIsLastInPostorder" : 15
+  },
+  "code" : "public TreeNode buildTree(int[] inorder, int[] postorder) {\n    Map<Integer, Integer> where = new HashMap<>();\n    for (int i = 0; i < inorder.length; i++) where.put(inorder[i], i);\n    TreeNode root = build(postorder, 0, postorder.length - 1,\n                          inorder, 0, inorder.length - 1, where);\n    return root;\n}\n\nprivate TreeNode build(int[] post, int postLo, int postHi,\n                       int[] in, int inLo, int inHi,\n                       Map<Integer, Integer> where) {\n    if (postLo > postHi) {\n        return null;\n    }\n    TreeNode node = new TreeNode(post[postHi]);\n\n    int at = where.get(post[postHi]);\n    int rightSize = inHi - at;\n    node.right = build(post, postHi - rightSize, postHi - 1,\n                       in, at + 1, inHi, where);\n    node.left = build(post, postLo, postHi - rightSize - 1,\n                      in, inLo, at - 1, where);\n    return node;\n}",
+  "problemId" : "construct-bt-post-in",
+  "resolvedInput" : {
+    "inorder" : [ 9, 3, 15, 20, 7 ],
+    "postorder" : [ 9, 15, 7, 20, 3 ]
+  },
+  "stepCount" : 22,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 15,
+    "description" : "Postorder [9, 15, 7, 20, 3] ENDS with 3, so 3 is this subtree's root. Preorder would have put it first; here the range is consumed from the right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[9, 3, 15, 20, 7]",
+      "postRange" : "[9, 15, 7, 20, 3]",
+      "root" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "target"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 19,
+    "description" : "3 sits at inorder position 1: 3 values on its right. In postorder those occupy the 3 slots immediately BEFORE the root, so the right subtree has to be built first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSize" : "1",
+      "rightInorder" : "[15, 20, 7]",
+      "rightPostorder" : "[15, 7, 20]",
+      "rightSize" : "3"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 15,
+    "description" : "Postorder [15, 7, 20] ENDS with 20, so 20 is this subtree's root. Preorder would have put it first; here the range is consumed from the right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[15, 20, 7]",
+      "postRange" : "[15, 7, 20]",
+      "root" : "20"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 19,
+    "description" : "20 sits at inorder position 3: 1 value on its right. In postorder those occupy the 1 slot immediately BEFORE the root, so the right subtree has to be built first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSize" : "1",
+      "rightInorder" : "[7]",
+      "rightPostorder" : "[7]",
+      "rightSize" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 15,
+    "description" : "Postorder [7] ENDS with 7, so 7 is this subtree's root. Preorder would have put it first; here the range is consumed from the right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[7]",
+      "postRange" : "[7]",
+      "root" : "7"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "7 sits at inorder position 4: 0 values on its right. In postorder those occupy the 0 slots immediately BEFORE the root, so the right subtree has to be built first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSize" : "0",
+      "rightInorder" : "[]",
+      "rightPostorder" : "[]",
+      "rightSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 13,
+    "description" : "The postorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "postRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 21,
+    "description" : "7's right subtree is placed. Everything still left in postorder, [], is its left subtree - only now is it safe to slice.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[]",
+      "leftPostorder" : "[]",
+      "leftSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "The postorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "postRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 21,
+    "description" : "20's right subtree is placed. Everything still left in postorder, [15], is its left subtree - only now is it safe to slice.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[15]",
+      "leftPostorder" : "[15]",
+      "leftSize" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 15,
+    "description" : "Postorder [15] ENDS with 15, so 15 is this subtree's root. Preorder would have put it first; here the range is consumed from the right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[15]",
+      "postRange" : "[15]",
+      "root" : "15"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 19,
+    "description" : "15 sits at inorder position 2: 0 values on its right. In postorder those occupy the 0 slots immediately BEFORE the root, so the right subtree has to be built first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSize" : "0",
+      "rightInorder" : "[]",
+      "rightPostorder" : "[]",
+      "rightSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "The postorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "postRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 21,
+    "description" : "15's right subtree is placed. Everything still left in postorder, [], is its left subtree - only now is it safe to slice.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[]",
+      "leftPostorder" : "[]",
+      "leftSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 13,
+    "description" : "The postorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "postRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 21,
+    "description" : "3's right subtree is placed. Everything still left in postorder, [9], is its left subtree - only now is it safe to slice.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[9]",
+      "leftPostorder" : "[9]",
+      "leftSize" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 80.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : 1,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 400.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 15,
+    "description" : "Postorder [9] ENDS with 9, so 9 is this subtree's root. Preorder would have put it first; here the range is consumed from the right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inRange" : "[9]",
+      "postRange" : "[9]",
+      "root" : "9"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 80.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : 1,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 400.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 19,
+    "description" : "9 sits at inorder position 0: 0 values on its right. In postorder those occupy the 0 slots immediately BEFORE the root, so the right subtree has to be built first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSize" : "0",
+      "rightInorder" : "[]",
+      "rightPostorder" : "[]",
+      "rightSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 80.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : 1,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 400.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 13,
+    "description" : "The postorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "postRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 80.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : 1,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 400.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 21,
+    "description" : "9's right subtree is placed. Everything still left in postorder, [], is its left subtree - only now is it safe to slice.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftInorder" : "[]",
+      "leftPostorder" : "[]",
+      "leftSize" : "0"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 80.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : 1,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 400.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 13,
+    "description" : "The postorder range is empty, so this branch has no node at all.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "postRange" : "empty"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 80.0,
+      "y" : 40.0,
+      "leftId" : null,
+      "rightId" : 1,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 400.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "7",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 6,
+    "description" : "Postorder has been consumed from its last element to its first, and the tree is reconstructed.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "nodes" : "5"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "3",
+      "x" : 192.0,
+      "y" : 40.0,
+      "leftId" : 4,
+      "rightId" : 1,
+      "state" : "done"
+    }, {
+      "id" : 4,
+      "val" : "9",
+      "x" : 64.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "x" : 448.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 2,
+      "state" : "done"
+    }, {
+      "id" : 3,
+      "val" : "15",
+      "x" : 320.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    }, {
+      "id" : 2,
+      "val" : "7",
+      "x" : 576.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "done"
+    } ]
+  } ],
+  "truncated" : false
+}
