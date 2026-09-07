@@ -104,8 +104,17 @@ public class TreeService implements ProblemProvider {
             case "root-to-leaf-path":
             case "nodes-distance-k":
                 throw new LegacyTraceRetiredException(problemId);
-            case "bst-search": return generatePreorderSteps();
-            case "bst-validate": return generatePreorderSteps();
+            // BST core. bst-search/bst-validate/bst-kth-smallest each had an explicit
+            // case delegating to generatePreorderSteps(). bst-validate and bst-lca were
+            // held back by RCA-021 (TracerContractTest's BINARY_TREE auto-grower never
+            // produced a valid BST); that is resolved now via InputField.bstOrdered().
+            case "bst-intro":
+            case "bst-search":
+            case "bst-min-max":
+            case "bst-floor":
+            case "bst-lca":
+            case "bst-validate":
+                throw new LegacyTraceRetiredException(problemId);
             case "bst-kth-smallest": return generatePreorderSteps();
             default: return generatePreorderSteps();
         }
@@ -235,13 +244,15 @@ public class TreeService implements ProblemProvider {
                     "serialize-deserialize-bt", "zigzag-traversal", "tree-lca",
                     "tree-burn-time", "vertical-order-traversal", "morris-inorder",
                     "correct-bst-swap",
-                    // These three BST ids fell through to the STACK default below with no
-                    // tracer to catch the mismatch - the same gap four Binary Trees ids
-                    // had earlier. Now that each has a real tracer declaring DsType.TREE,
-                    // the catalogue entry has to agree or CatalogTracerMetadataTest fails.
-                    // bst-validate/bst-kth-smallest/bst-lca stay on the STACK default below
-                    // deliberately - see RCA.md - until they have real tracers too.
+                    // These BST ids fell through to the STACK default below with no tracer
+                    // to catch the mismatch - the same gap four Binary Trees ids had
+                    // earlier. Now that each has a real tracer declaring DsType.TREE, the
+                    // catalogue entry has to agree or CatalogTracerMetadataTest fails.
+                    // bst-validate and bst-lca were the last two held back by RCA-021;
+                    // that entry is resolved, so they join the list here.
                     "bst-insert", "bst-delete", "bst-floor-ceil",
+                    "bst-intro", "bst-search", "bst-min-max", "bst-floor", "bst-lca",
+                    "bst-validate",
                     // Traversal mechanics and views, all drawing a binary tree.
                     "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
                     "postorder-2-stacks", "postorder-1-stack", "morris-preorder",

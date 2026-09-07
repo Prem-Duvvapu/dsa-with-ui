@@ -90,6 +90,26 @@ public final class InputField {
 
         public Builder sorted() { return constraint("requireSorted", true); }
         public Builder distinct() { return constraint("requireDistinct", true); }
+
+        /**
+         * Declares that this {@code BINARY_TREE} field's meaningful inputs are BST-ordered.
+         *
+         * <p>Unlike {@link #sorted()} and {@link #distinct()} this is a GROWTH HINT, not a
+         * validation rule: {@link InputValidator} does not read it, and a caller may still
+         * POST any tree at all. {@code bst-validate} declares it precisely because its job
+         * is to detect a tree that is NOT a BST.
+         *
+         * <p>What reads it is {@code TracerContractTest}'s auto-grower. Its default
+         * {@code BINARY_TREE} growth builds the level-order array {@code [1, 2, ..., n]},
+         * which is provably never a valid BST for n >= 3 - the deepest-left leaf always
+         * holds a larger value than its ancestors. Feeding that to an algorithm that
+         * exploits BST ordering to skip work makes it terminate EARLY on the larger input,
+         * so {@code stepCountGrowsWithInput} fails on a tracer that is perfectly correct.
+         * With this flag the grower keeps the same complete shape and assigns the values in
+         * inorder position order instead, which is exactly what "is a BST" means. See
+         * RCA-021.
+         */
+        public Builder bstOrdered() { return constraint("bstOrdered", true); }
         public Builder directed() { return constraint("directed", true); }
         public Builder weighted() { return constraint("weighted", true); }
 

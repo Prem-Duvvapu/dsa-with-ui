@@ -1,0 +1,288 @@
+{
+  "anchors" : {
+    "bothLargerGoRight" : 9,
+    "bothSmallerGoLeft" : 7,
+    "done" : 14,
+    "pathsSplit" : 11
+  },
+  "code" : "public TreeNode lowestCommonAncestor(TreeNode root, int p, int q) {\n    TreeNode curr = root;\n    TreeNode answer = null;\n\n    while (curr != null && answer == null) {\n        if (p < curr.val && q < curr.val) {\n            curr = curr.left;      // both are in the left subtree\n        } else if (p > curr.val && q > curr.val) {\n            curr = curr.right;     // both are in the right subtree\n        } else {\n            answer = curr;         // one each side, or curr IS one of them\n        }\n    }\n    return answer;\n}",
+  "problemId" : "bst-lca",
+  "resolvedInput" : {
+    "p" : 0,
+    "q" : 3,
+    "tree" : [ 6, 2, 8, 0, 4, 7, 9, null, null, 3, 5 ]
+  },
+  "stepCount" : 3,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 7,
+    "description" : "0 and 3 are both smaller than 6, so both must lie in its LEFT subtree - the right side cannot contain either and is never looked at.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "at" : "6",
+      "steps" : "1"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "0",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "3",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "5",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "At 2 the two targets stop agreeing: 0 and 3 are no longer on the same side. This is exactly where their two paths from the root separate, so 2 is the LCA.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "at" : "2",
+      "steps" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "0",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "3",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "5",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 14,
+    "description" : "Lowest common ancestor of 0 and 3 is 2, found in 2 comparisons down a single path - no subtree was ever explored and discarded.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2",
+      "steps" : "2"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "6",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 3,
+      "rightId" : 4,
+      "state" : "target"
+    }, {
+      "id" : 2,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "0",
+      "x" : 80.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "4",
+      "x" : 240.0,
+      "y" : 188.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "7",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 9,
+      "val" : "3",
+      "x" : 200.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 10,
+      "val" : "5",
+      "x" : 280.0,
+      "y" : 262.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  } ],
+  "truncated" : false
+}

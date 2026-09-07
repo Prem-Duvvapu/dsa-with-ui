@@ -1,0 +1,480 @@
+{
+  "anchors" : {
+    "done" : 3,
+    "emptyIsValid" : 8,
+    "narrowLeft" : 13,
+    "narrowRight" : 14,
+    "outOfRange" : 11
+  },
+  "code" : "public boolean isValidBST(TreeNode root) {\n    boolean valid = check(root, null, null);\n    return valid;\n}\n\nprivate boolean check(TreeNode node, Integer low, Integer high) {\n    if (node == null) {\n        return true;\n    }\n    if ((low != null && node.val <= low) || (high != null && node.val >= high)) {\n        return false;\n    }\n    if (!check(node.left, low, node.val)) return false;\n    return check(node.right, node.val, high);\n}",
+  "problemId" : "bst-validate",
+  "resolvedInput" : {
+    "tree" : [ 5, 1, 4, null, null, 3, 6 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 13,
+    "description" : "5 is inside (-inf, +inf), so it is legal here. Going LEFT tightens the upper bound to 5: everything down there must be smaller than 5 AND still satisfy every earlier bound.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(5, (-inf, +inf))" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "(-inf, 5)",
+      "verdict" : "ok so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "1 is inside (-inf, 5), so it is legal here. Going LEFT tightens the upper bound to 1: everything down there must be smaller than 1 AND still satisfy every earlier bound.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(5, (-inf, +inf))", "check(1, (-inf, 5))" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "(-inf, 1)",
+      "verdict" : "ok so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "An empty branch imposes nothing and breaks nothing, so it is valid for the range (-inf, 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(5, (-inf, +inf))", "check(1, (-inf, 5))" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "(-inf, 1)",
+      "verdict" : "valid"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 14,
+    "description" : "1's left side is clean. Going RIGHT tightens the lower bound to 1 instead, leaving (1, 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(5, (-inf, +inf))", "check(1, (-inf, 5))" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "(1, 5)",
+      "verdict" : "ok so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "An empty branch imposes nothing and breaks nothing, so it is valid for the range (1, 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(5, (-inf, +inf))", "check(1, (-inf, 5))" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "(1, 5)",
+      "verdict" : "valid"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visiting"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "5's left side is clean. Going RIGHT tightens the lower bound to 5 instead, leaving (5, +inf).",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(5, (-inf, +inf))" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "(5, +inf)",
+      "verdict" : "ok so far"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 11,
+    "description" : "4 must lie strictly inside (5, +inf) to be where it is - the turns taken from the root demand it - and it does not. This is the violation.",
+    "queueOrStackState" : null,
+    "callStack" : [ "check(5, (-inf, +inf))", "check(4, (5, +inf))" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "range" : "(5, +inf)",
+      "verdict" : "violation at 4"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 3,
+    "description" : "A node broke the range its ancestors imposed, so the tree is NOT a valid BST - and note that a parent-versus-children check would not have noticed.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "false"
+    },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "5",
+      "x" : 320.0,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 2,
+      "state" : "visiting"
+    }, {
+      "id" : 1,
+      "val" : "1",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 2,
+      "val" : "4",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "target"
+    }, {
+      "id" : 5,
+      "val" : "3",
+      "x" : 400.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "6",
+      "x" : 560.0,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  } ],
+  "truncated" : false
+}
