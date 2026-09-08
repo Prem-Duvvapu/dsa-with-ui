@@ -180,9 +180,9 @@ class ProblemsApiTest {
         // Arrays retired its last legacy id in the same batch that traced its remaining
         // problems, so /api/arrays/execute/{anyId} now answers 410 for everything - a real,
         // permanent state (Sorting was first; Arrays and Sliding Window followed). Exercise
-        // a category that has not fully migrated instead: bracket-reversals is one of
-        // AdvancedGraphService's still-legacy string lessons.
+        // a category that has not fully migrated instead. Bit Manipulation was explicitly
+        // deferred while Strings moved to the real tracer layer.
         mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isOk());
-        mockMvc.perform(get("/api/graphs/advanced/execute/bracket-reversals")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/bitmanipulation/execute/intro-bits-tricks")).andExpect(status().isOk());
     }
 }

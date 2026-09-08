@@ -1,0 +1,440 @@
+{
+  "anchors" : {
+    "done" : 7,
+    "scan" : 4
+  },
+  "code" : "public boolean isAnagram(String s, String t) {\n    int[] frequency = new int[26];\n    for (int i = 0; i < s.length(); i++) {\n        frequency[s.charAt(i) - 'a']++;\n        frequency[t.charAt(i) - 'a']--;\n    }\n    return s.length() == t.length() && allZero(frequency);\n}",
+  "problemId" : "valid-anagram",
+  "resolvedInput" : {
+    "s" : "anagram",
+    "t" : "nagaram"
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Index 0 adds 'a' from s and removes 'n' from t.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "frequencyDelta" : "[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "index" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "default",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "default",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Index 1 adds 'n' from s and removes 'a' from t.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "frequencyDelta" : "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "index" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "current",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "default",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Index 2 adds 'a' from s and removes 'g' from t.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "frequencyDelta" : "[1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "index" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "default",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "default",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Index 3 adds 'g' from s and removes 'a' from t.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "frequencyDelta" : "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "index" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "default",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "current",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "default",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "Index 4 adds 'r' from s and removes 'r' from t.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "frequencyDelta" : "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "index" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "default",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "current",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "default",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Index 5 adds 'a' from s and removes 'a' from t.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "frequencyDelta" : "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "index" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "default",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "default",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 4,
+    "description" : "Index 6 adds 'm' from s and removes 'm' from t.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "frequencyDelta" : "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "index" : "6"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "default",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "current",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 7,
+    "description" : "Both strings have equal length and every frequency delta is zero: they are anagrams.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "true",
+      "sLength" : "7",
+      "tLength" : "7"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 110,
+      "state" : "default",
+      "label" : "n"
+    }, {
+      "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    }, {
+      "index" : 4,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 109,
+      "state" : "default",
+      "label" : "m"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

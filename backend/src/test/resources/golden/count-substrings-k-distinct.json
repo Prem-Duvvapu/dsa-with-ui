@@ -1,0 +1,519 @@
+{
+  "anchors" : {
+    "done" : 4,
+    "window" : 2
+  },
+  "code" : "public long substringsWithKDistinct(String s, int k) {\n    long atMostK = atMost(s, k);\n    long atMostKMinusOne = atMost(s, k - 1);\n    return atMostK - atMostKMinusOne;\n}",
+  "problemId" : "count-substrings-k-distinct",
+  "resolvedInput" : {
+    "k" : 2,
+    "s" : "pqpqs"
+  },
+  "stepCount" : 11,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "k pass: window [0,0] has 1 distinct; add 1 suffixes (total 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "1",
+      "left" : "0",
+      "pass" : "k",
+      "right" : "0",
+      "total" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "k pass: window [0,1] has 2 distinct; add 2 suffixes (total 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "left" : "0",
+      "pass" : "k",
+      "right" : "1",
+      "total" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "target",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "k pass: window [0,2] has 2 distinct; add 3 suffixes (total 6).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "left" : "0",
+      "pass" : "k",
+      "right" : "2",
+      "total" : "6"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "target",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 2,
+    "description" : "k pass: window [0,3] has 2 distinct; add 4 suffixes (total 10).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "left" : "0",
+      "pass" : "k",
+      "right" : "3",
+      "total" : "10"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "target",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 2,
+    "description" : "k pass: window [3,4] has 2 distinct; add 2 suffixes (total 12).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "2",
+      "left" : "3",
+      "pass" : "k",
+      "right" : "4",
+      "total" : "12"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "target",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 2,
+    "description" : "k-1 pass: window [0,0] has 1 distinct; add 1 suffixes (total 1).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "1",
+      "left" : "0",
+      "pass" : "k-1",
+      "right" : "0",
+      "total" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 2,
+    "description" : "k-1 pass: window [1,1] has 1 distinct; add 1 suffixes (total 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "1",
+      "left" : "1",
+      "pass" : "k-1",
+      "right" : "1",
+      "total" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 2,
+    "description" : "k-1 pass: window [2,2] has 1 distinct; add 1 suffixes (total 3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "1",
+      "left" : "2",
+      "pass" : "k-1",
+      "right" : "2",
+      "total" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 2,
+    "description" : "k-1 pass: window [3,3] has 1 distinct; add 1 suffixes (total 4).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "1",
+      "left" : "3",
+      "pass" : "k-1",
+      "right" : "3",
+      "total" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 2,
+    "description" : "k-1 pass: window [4,4] has 1 distinct; add 1 suffixes (total 5).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "distinct" : "1",
+      "left" : "4",
+      "pass" : "k-1",
+      "right" : "4",
+      "total" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 4,
+    "description" : "Exactly 2 distinct = atMost(2) 12 − atMost(1) 5 = 7 substrings.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "7",
+      "atMostK" : "12",
+      "atMostKMinusOne" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

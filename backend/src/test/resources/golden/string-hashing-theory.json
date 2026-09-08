@@ -1,0 +1,211 @@
+{
+  "anchors" : {
+    "done" : 6,
+    "update" : 4
+  },
+  "code" : "public long polynomialHash(String text, int base, int modulus) {\n    long hash = 0;\n    for (char ch : text.toCharArray()) {\n        hash = (hash * base + (ch - 'a' + 1)) % modulus;\n    }\n    return hash;\n}",
+  "problemId" : "string-hashing-theory",
+  "resolvedInput" : {
+    "base" : 31,
+    "modulus" : 1000000007,
+    "text" : "hash"
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Index 0 maps 'h' to 8: (0 × 31 + 8) mod 1000000007 = 8.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "characterValue" : "8",
+      "hash" : "8",
+      "index" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 104,
+      "state" : "current",
+      "label" : "h"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Index 1 maps 'a' to 1: (8 × 31 + 1) mod 1000000007 = 249.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "characterValue" : "1",
+      "hash" : "249",
+      "index" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Index 2 maps 's' to 19: (249 × 31 + 19) mod 1000000007 = 7738.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "characterValue" : "19",
+      "hash" : "7738",
+      "index" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Index 3 maps 'h' to 8: (7738 × 31 + 8) mod 1000000007 = 239886.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "characterValue" : "8",
+      "hash" : "239886",
+      "index" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "current",
+      "label" : "h"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Polynomial rolling hash of \"hash\" is 239886.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "239886",
+      "base" : "31",
+      "modulus" : "1000000007"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
