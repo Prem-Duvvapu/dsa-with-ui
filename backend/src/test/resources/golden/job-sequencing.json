@@ -1,0 +1,794 @@
+{
+  "anchors" : {
+    "consider" : 7,
+    "done" : 16,
+    "place" : 9,
+    "probe" : 8,
+    "sort" : 2
+  },
+  "code" : "public int[] schedule(int[][] jobs) {\n    Arrays.sort(jobs, (a, b) -> b[1] - a[1]);\n    int[] slots = new int[maxDeadline + 1];\n    Arrays.fill(slots, -1);\n    int count = 0, profit = 0;\n    for (int job = 0; job < jobs.length; job++) {\n        for (int slot = jobs[job][0]; slot >= 1; slot--) {\n            if (slots[slot] == -1) {\n                slots[slot] = job;\n                count++;\n                profit += jobs[job][1];\n                break;\n            }\n        }\n    }\n    return new int[]{count, profit};\n}",
+  "problemId" : "job-sequencing",
+  "resolvedInput" : {
+    "jobs" : [ [ 2, 100 ], [ 1, 19 ], [ 2, 27 ], [ 1, 25 ], [ 3, 15 ] ]
+  },
+  "stepCount" : 18,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Sort jobs by profit descending: [J1(d2,p100), J3(d2,p27), J4(d1,p25), J2(d1,p19), J5(d3,p15)].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "slots" : "[-1, -1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Consider J1: profit 100, deadline 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "profit" : "0",
+      "slots" : "[-1, -1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "current",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Try latest legal slot 2: free.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "slot" : "2",
+      "slots" : "[-1, -1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "current",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Place J1 in slot 2. Total profit is now 100.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "profit" : "100",
+      "slots" : "[-1, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "current",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Consider J3: profit 27, deadline 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "profit" : "100",
+      "slots" : "[-1, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "current",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Try latest legal slot 2: occupied by J1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "slot" : "2",
+      "slots" : "[-1, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "current",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Try latest legal slot 1: free.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "slot" : "1",
+      "slots" : "[-1, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "current",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 9,
+    "description" : "Place J3 in slot 1. Total profit is now 127.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "profit" : "127",
+      "slots" : "[3, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "current",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Consider J4: profit 25, deadline 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "profit" : "127",
+      "slots" : "[3, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "current",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "Try latest legal slot 1: occupied by J3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "slot" : "1",
+      "slots" : "[3, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "current",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 7,
+    "description" : "No free slot before deadline 1; reject J4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "profit" : "127"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "current",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "Consider J2: profit 19, deadline 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "profit" : "127",
+      "slots" : "[3, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "current",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 8,
+    "description" : "Try latest legal slot 1: occupied by J3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "slot" : "1",
+      "slots" : "[3, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "current",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "No free slot before deadline 1; reject J2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "profit" : "127"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "current",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 7,
+    "description" : "Consider J5: profit 15, deadline 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "profit" : "127",
+      "slots" : "[3, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "current",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 8,
+    "description" : "Try latest legal slot 3: free.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "slot" : "3",
+      "slots" : "[3, 1, -1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "current",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 9,
+    "description" : "Place J5 in slot 3. Total profit is now 142.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "profit" : "142",
+      "slots" : "[3, 1, 5]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "current",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 16,
+    "description" : "Scheduled 3 job(s) for maximum profit 142. Slots: [3, 1, 5].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "profit" : "142",
+      "slots" : "[3, 1, 5]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 100,
+      "state" : "default",
+      "label" : "J1 d2 p100"
+    }, {
+      "index" : 1,
+      "value" : 27,
+      "state" : "default",
+      "label" : "J3 d2 p27"
+    }, {
+      "index" : 2,
+      "value" : 25,
+      "state" : "default",
+      "label" : "J4 d1 p25"
+    }, {
+      "index" : 3,
+      "value" : 19,
+      "state" : "default",
+      "label" : "J2 d1 p19"
+    }, {
+      "index" : 4,
+      "value" : 15,
+      "state" : "default",
+      "label" : "J5 d3 p15"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

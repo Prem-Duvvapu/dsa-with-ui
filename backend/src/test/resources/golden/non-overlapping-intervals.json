@@ -1,0 +1,397 @@
+{
+  "anchors" : {
+    "consider" : 5,
+    "done" : 11,
+    "keep" : 6,
+    "remove" : 8,
+    "sort" : 2
+  },
+  "code" : "public int eraseOverlapIntervals(int[][] intervals) {\n    Arrays.sort(intervals, Comparator.comparingInt(a -> a[1]));\n    int removals = 0, lastEnd = Integer.MIN_VALUE;\n    for (int[] interval : intervals) {\n        if (interval[0] >= lastEnd) {\n            lastEnd = interval[1];\n        } else {\n            removals++;\n        }\n    }\n    return removals;\n}",
+  "problemId" : "non-overlapping-intervals",
+  "resolvedInput" : {
+    "intervals" : [ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 1, 3 ] ]
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Sort by finishing time: [[1, 2], [2, 3], [1, 3], [3, 4]]. Earliest finish preserves the most room for later intervals.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "-∞",
+      "removals" : "0"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "default",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Consider [1,2] against last kept end -∞.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "-∞",
+      "removals" : "0"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "It does not overlap. Keep it and move lastEnd to 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "2",
+      "removals" : "0"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Consider [2,3] against last kept end 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "2",
+      "removals" : "0"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "It does not overlap. Keep it and move lastEnd to 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "3",
+      "removals" : "0"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "settled",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "Consider [1,3] against last kept end 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "3",
+      "removals" : "0"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "settled",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "It starts before 3, so remove it. The earlier-finishing kept interval still wins.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "3",
+      "removals" : "1"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "settled",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "rejected",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 5,
+    "description" : "Consider [3,4] against last kept end 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "3",
+      "removals" : "1"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "settled",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "rejected",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "It does not overlap. Keep it and move lastEnd to 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "4",
+      "removals" : "1"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "settled",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "rejected",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "settled",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "Remove 1 interval(s); the remainder is non-overlapping.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lastEnd" : "4",
+      "removals" : "1"
+    },
+    "dsType" : "Interval",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "settled",
+      "label" : "[1,2]"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "settled",
+      "label" : "[2,3]"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "rejected",
+      "label" : "[1,3]"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "settled",
+      "label" : "[3,4]"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,223 @@
+{
+  "anchors" : {
+    "done" : 8,
+    "run" : 5,
+    "sort" : 2
+  },
+  "code" : "public double averageWaitingTime(int[] bursts) {\n    Arrays.sort(bursts);\n    int elapsed = 0, totalWait = 0;\n    for (int burst : bursts) {\n        totalWait += elapsed;\n        elapsed += burst;\n    }\n    return (double) totalWait / bursts.length;\n}",
+  "problemId" : "shortest-job-first",
+  "resolvedInput" : {
+    "bursts" : [ 6, 8, 7, 3 ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Shortest-job-first order: [3, 6, 7, 8].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "elapsed" : "0",
+      "totalWait" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Task 0 waits 0, then runs for 3. Clock advances to 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "elapsed" : "3",
+      "totalWait" : "0",
+      "wait" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "Task 1 waits 3, then runs for 6. Clock advances to 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "elapsed" : "9",
+      "totalWait" : "3",
+      "wait" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Task 2 waits 9, then runs for 7. Clock advances to 16.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "elapsed" : "16",
+      "totalWait" : "12",
+      "wait" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "Task 3 waits 16, then runs for 8. Clock advances to 24.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "elapsed" : "24",
+      "totalWait" : "28",
+      "wait" : "16"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Total waiting time 28 across 4 tasks: average 7.00.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "average" : "7.00",
+      "totalWait" : "28"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

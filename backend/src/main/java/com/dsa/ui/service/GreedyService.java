@@ -36,16 +36,16 @@ public class GreedyService implements ProblemProvider {
             case "lemonade-change":
             case "minimum-platforms":
             case "insert-interval":
+            case "job-sequencing":
+            case "valid-parentheses-checker":
+            case "jump-game-2":
+            case "candy":
+            case "shortest-job-first":
+            case "lru-page-replacement":
+            case "merge-intervals":
+            case "non-overlapping-intervals":
                 throw new LegacyTraceRetiredException(problemId);
             case "jump-game-i": return generateJumpGameSteps();
-            case "job-sequencing": return generateJobSequencingSteps();
-            case "valid-parentheses-checker": return generateJumpGameSteps();
-            case "jump-game-2": return generateJumpGameSteps();
-            case "candy": return generateJumpGameSteps();
-            case "shortest-job-first": return generateJumpGameSteps();
-            case "lru-page-replacement": return generateJumpGameSteps();
-            case "merge-intervals": return generateJumpGameSteps();
-            case "non-overlapping-intervals": return generateJumpGameSteps();
             default: return generateMeetingsSteps();
         }
     }
@@ -144,9 +144,18 @@ public class GreedyService implements ProblemProvider {
                 id, title, cat, "Greedy Algorithms", diff, desc,
                 String.format("// Java Implementation for %s\npublic int solve() {\n    // Greedy Striver A2Z Implementation\n    return 0;\n}", title),
                 null, null, null, createArrayState(new int[]{1, 2, 3, 4}, -1, -1), null, null, null,
-                new ComplexityDetail("O(N log N)", "Time Complexity: Greedy sorting or linear pass.", "Greedy Strategy", "O(1)", "Space Complexity: Constant memory.", "Memory", "Auxiliary Space: O(1)", "Memory"), "Array"
+                new ComplexityDetail("O(N log N)", "Time Complexity: Greedy sorting or linear pass.", "Greedy Strategy", "O(1)", "Space Complexity: Constant memory.", "Memory", "Auxiliary Space: O(1)", "Memory"),
+                bulkDsType(id)
             ));
         }
+    }
+
+    private String bulkDsType(String id) {
+        return switch (id) {
+            case "valid-parentheses-checker" -> "String";
+            case "non-overlapping-intervals" -> "Interval";
+            default -> "Array";
+        };
     }
 
     // Step Generators
