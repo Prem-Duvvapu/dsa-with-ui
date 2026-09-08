@@ -1,6 +1,5 @@
 package com.dsa.ui;
 
-import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.TrieService;
@@ -37,9 +36,8 @@ public class TrieServiceTest {
 
     @Test
     public void testGenerateSteps() {
-        List<ExecutionStep> steps = service.generateSteps("longest-common-prefix");
-        assertNotNull(steps);
-        assertFalse(steps.isEmpty());
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> service.generateSteps("longest-common-prefix"));
     }
 
     /**
@@ -49,7 +47,7 @@ public class TrieServiceTest {
      */
     @Test
     public void testRetiredIdsRefuseTheLegacyGenerator() {
-        Set<String> retired = Set.of("implement-trie", "word-break-trie");
+        Set<String> retired = Set.of("implement-trie", "word-break-trie", "longest-common-prefix");
         for (String id : retired) {
             assertThrows(LegacyTraceRetiredException.class,
                     () -> service.generateSteps(id),

@@ -1,0 +1,189 @@
+{
+  "anchors" : {
+    "compare" : 4,
+    "done" : 6
+  },
+  "code" : "public boolean rotateString(String s, String goal) {\n    if (s.length() != goal.length()) return false;\n    for (int shift = 0; shift < s.length(); shift++) {\n        if ((s.substring(shift) + s.substring(0, shift)).equals(goal)) return true;\n    }\n    return false;\n}",
+  "problemId" : "rotate-string",
+  "resolvedInput" : {
+    "goal" : "cdeab",
+    "s" : "abcde"
+  },
+  "stepCount" : 4,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Left rotation by 0 gives \"abcde\": does not match goal \"cdeab\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "abcde",
+      "matches" : "false",
+      "shift" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Left rotation by 1 gives \"bcdea\": does not match goal \"cdeab\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "bcdea",
+      "matches" : "false",
+      "shift" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 1,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 2,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 4,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Left rotation by 2 gives \"cdeab\": matches goal \"cdeab\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "cdeab",
+      "matches" : "true",
+      "shift" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Rotation check result: true.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "true"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

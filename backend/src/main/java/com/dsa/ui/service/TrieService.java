@@ -33,7 +33,7 @@ public class TrieService implements ProblemProvider {
             case "implement-trie":
             case "word-break-trie":
                 throw new LegacyTraceRetiredException(problemId);
-            case "longest-common-prefix": return generateLcpSteps();
+            case "longest-common-prefix": throw new LegacyTraceRetiredException(problemId);
             default: return generateImplementTrieSteps();
         }
     }
@@ -136,7 +136,7 @@ public class TrieService implements ProblemProvider {
                 "Auxiliary Space: O(N x L)",
                 "Prefix Output: O(L)"
             ),
-            "Stack"
+            "String"
         ));
 
         // 3. Word Break Problem using Trie

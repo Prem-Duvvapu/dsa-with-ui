@@ -25,22 +25,23 @@ public class StringService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "longest-substring-without-repeating": return generateLongestSubstringSteps();
-            case "valid-anagram": return generateValidAnagramSteps();
-            case "remove-outermost-parentheses": return generateRemoveOutermostParenthesesSteps();
-            case "reverse-words-string": return generateReverseWordsStringSteps();
-            case "largest-odd-number-string": return generateLargestOddNumberStringSteps();
-            case "longest-common-prefix": return generateLongestCommonPrefixSteps();
-            case "isomorphic-strings": return generateIsomorphicStringsSteps();
-            case "rotate-string": return generateRotateStringSteps();
-            case "sort-characters-frequency": return generateSortCharactersFrequencySteps();
-            case "max-nesting-depth-parentheses": return generateMaxNestingDepthParenthesesSteps();
-            case "roman-to-integer": return generateRomanToIntegerSteps();
-            case "string-to-integer-atoi": return generateStringToIntegerAtoiSteps();
-            case "count-substrings-k-distinct": return generateCountSubstringsKDistinctSteps();
-            case "longest-palindromic-substring": return generateLongestPalindromicSubstringSteps();
-            case "sum-beauty-all-substrings": return generateSumBeautyAllSubstringsSteps();
-            case "reverse-every-word": return generateReverseEveryWordSteps();
+            case "longest-substring-without-repeating":
+            case "valid-anagram":
+            case "remove-outermost-parentheses":
+            case "reverse-words-string":
+            case "largest-odd-number-string":
+            case "longest-common-prefix":
+            case "isomorphic-strings":
+            case "rotate-string":
+            case "sort-characters-frequency":
+            case "max-nesting-depth-parentheses":
+            case "roman-to-integer":
+            case "string-to-integer-atoi":
+            case "count-substrings-k-distinct":
+            case "longest-palindromic-substring":
+            case "sum-beauty-all-substrings":
+            case "reverse-every-word":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generateLongestSubstringSteps();
         }
     }
@@ -66,7 +67,7 @@ public class StringService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{1, 2, 3, 1, 2, 3, 1, 1}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass iteration.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 ASCII characters.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass iteration.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 ASCII characters.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "String"
         ));
 
         // 2. Valid Anagram
@@ -86,7 +87,7 @@ public class StringService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{1, 1, 1, 0}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass frequency count.", "Frequency Array", "O(1)", "Space Complexity: 26 size alphabet array.", "Frequency Array", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass frequency count.", "Frequency Array", "O(1)", "Space Complexity: 26 size alphabet array.", "Frequency Array", "Auxiliary Space: O(1)", "Memory"), "String"
         ));
 
         // 3 to 16 bulk registration
@@ -117,7 +118,7 @@ public class StringService implements ProblemProvider {
                 id, title, cat, "Strings", diff, desc,
                 String.format("// Java Implementation for %s\npublic String solve(String s) {\n    return s;\n}", title),
                 null, null, null, createArrayState(new int[]{1, 2, 3}, -1, -1), null, null, null,
-                new ComplexityDetail("O(N)", "Time Complexity: Single pass linear time string iteration.", "String Scan", "O(1)", "Space Complexity: O(1) or O(N) string builder.", "Memory", "Auxiliary Space: O(1)", "Memory"), "Array"
+                new ComplexityDetail("O(N)", "Time Complexity: Single pass linear time string iteration.", "String Scan", "O(1)", "Space Complexity: O(1) or O(N) string builder.", "Memory", "Auxiliary Space: O(1)", "Memory"), "String"
             ));
         }
     }

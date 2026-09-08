@@ -48,6 +48,8 @@ class AdvancedGraphServiceTest {
                 "connected-components-intro", "bfs-dfs-intro",
                 "dijkstra-pq-theory", "mst-theory",
                 "shortest-palindrome", "longest-happy-prefix",
+                "bracket-reversals", "count-and-say", "string-hashing-theory",
+                "rabin-karp-algo", "count-palindromic-subsequences",
                 "bellman-ford", "kosaraju-scc",
                 "word-ladder-1", "alien-dictionary",
                 "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu",

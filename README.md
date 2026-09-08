@@ -6,12 +6,12 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 307 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 327 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below. Complete execution traces now cover all
 30 **Stack & Queue** problems, all 12 **Sliding Window** problems, all 54 **Binary Trees &
 BST** problems, all 53 **Advanced Graphs** problems, all 14 unique **Greedy** problems,
-and all 17 **Heaps & PriorityQueue** problems.
+all 17 **Heaps & PriorityQueue** problems, and all 24 **Strings** problems.
 
 ---
 
