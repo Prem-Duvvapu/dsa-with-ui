@@ -1,0 +1,375 @@
+{
+  "anchors" : {
+    "done" : 19,
+    "feed.pop" : 13,
+    "feed.push" : 16,
+    "feed.seed" : 11,
+    "follow" : 5,
+    "post" : 2,
+    "unfollow" : 8
+  },
+  "code" : "public void postTweet(int user, int tweet) {\n    tweets.get(user).add(new Tweet(tweet, clock++));\n}\npublic void follow(int user, int other) {\n    follows.get(user).add(other);\n}\npublic void unfollow(int user, int other) {\n    follows.get(user).remove(other);\n}\npublic List<Integer> getNewsFeed(int user) {\n    seedLatestTweets(user);\n    while (!heap.isEmpty() && feed.size() < 10) {\n        Cursor newest = heap.poll();\n        feed.add(newest.tweet.id);\n        if (newest.hasPrevious()) {\n            heap.offer(newest.previous());\n        }\n    }\n    return feed;\n}",
+  "problemId" : "design-twitter",
+  "resolvedInput" : {
+    "operations" : "post 1 101;post 2 201;post 2 202;follow 1 2;feed 1;unfollow 1 2;feed 1"
+  },
+  "stepCount" : 13,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "User 1 posts tweet 101 at timestamp 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "tweet" : "101",
+      "user" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "User 2 posts tweet 201 at timestamp 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "tweet" : "201",
+      "user" : "2"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 201,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "User 2 posts tweet 202 at timestamp 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "tweet" : "202",
+      "user" : "2"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 1,
+      "value" : 201,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "User 1 now follows user 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "follows" : "[2]",
+      "user" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 1,
+      "value" : 201,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 11,
+    "description" : "Seed user 1's feed heap with the newest tweet from each of 2 stream(s).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sources" : "[1, 2]",
+      "user" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "target",
+      "label" : "u2"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Take newest tweet 202 from user 2 into feed position 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "feed" : "[202]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 16,
+    "description" : "Push user 2's next older tweet 201 as a merge candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "feed" : "[202]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 201,
+      "state" : "target",
+      "label" : "u2"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 13,
+    "description" : "Take newest tweet 201 from user 2 into feed position 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "feed" : "[202, 201]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 201,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "Take newest tweet 101 from user 1 into feed position 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "feed" : "[202, 201, 101]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 201,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 8,
+    "description" : "User 1 unfollows user 2; their future feeds exclude that stream.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "follows" : "[]",
+      "user" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 1,
+      "value" : 201,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 11,
+    "description" : "Seed user 1's feed heap with the newest tweet from each of 1 stream(s).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sources" : "[1]",
+      "user" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "target",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "Take newest tweet 101 from user 1 into feed position 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "feed" : "[101]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 19,
+    "description" : "All operations complete. Most recent feed per requested user: {1=[101]}.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "feeds" : "{1=[101]}"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 202,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 1,
+      "value" : 201,
+      "state" : "default",
+      "label" : "u2"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "u1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

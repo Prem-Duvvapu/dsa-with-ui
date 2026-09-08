@@ -6,11 +6,12 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, 298 with real execution traces.** Those two numbers are
+**Status: 433 problems catalogued, 307 with real execution traces.** Those two numbers are
 different on purpose, and the API reports both — see
 [Coverage](#coverage-catalogued-vs-traced) below. Complete execution traces now cover all
 30 **Stack & Queue** problems, all 12 **Sliding Window** problems, all 54 **Binary Trees &
-BST** problems, all 53 **Advanced Graphs** problems, and all 14 unique **Greedy** problems.
+BST** problems, all 53 **Advanced Graphs** problems, all 14 unique **Greedy** problems,
+and all 17 **Heaps & PriorityQueue** problems.
 
 ---
 
@@ -226,6 +227,8 @@ them means moving problems between services.
 `bst-kth-smallest`, `bst-inorder-successor`, `two-sum-bst`, `construct-bst-preorder`, `merge-two-bsts`, `largest-bst-in-bt`,
 `graph-intro`, `graph-rep-cpp`, `graph-rep-java`, `connected-components-intro`, `bfs-dfs-intro`, `dijkstra-pq-theory`, `mst-theory`,
 `job-sequencing`, `valid-parentheses-checker`, `jump-game-2`, `candy`, `shortest-job-first`, `lru-page-replacement`, `non-overlapping-intervals`,
+`heaps-theory`, `implement-min-heap`, `check-min-heap`, `min-to-max-heap`,
+`sort-k-sorted-array`, `replace-rank-array`, `design-twitter`, `kth-largest-stream`, `maximum-sum-combination`,
 `z-function-algo`, and `zigzag-traversal`.
 
 Sixteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
