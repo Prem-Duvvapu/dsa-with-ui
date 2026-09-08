@@ -11,7 +11,10 @@ import App from './App';
  */
 function renderApp(path = '/problem/two-sum') {
   return render(
-    <MemoryRouter initialEntries={[path]}>
+    <MemoryRouter
+      initialEntries={[path]}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <Routes>
         <Route path="/problem/:id" element={<App />} />
       </Routes>
@@ -130,6 +133,10 @@ afterEach(() => {
 
 describe('App catalogue loading', () => {
   it('renders without crashing and shows a problem before the network responds', () => {
+    // Keep the catalogue request genuinely pending. If the default mock resolves
+    // immediately, this synchronous test unmounts while App's promise callbacks are
+    // still setting state and React reports misleading act(...) warnings.
+    deferred.set('/api/problems', null);
     renderApp();
     // The cold-start fallback: something is on screen immediately, not a black page.
     expect(screen.getByText('DSA Visualizer')).toBeInTheDocument();
