@@ -1,4 +1,5 @@
 import QueueCanvas from '../components/QueueCanvas';
+import { GridCompanion } from '../components/GridCanvas';
 
 /**
  * Companion panes for structures a step carries ALONGSIDE its hero dsType.
@@ -32,5 +33,42 @@ export function getCompanions(heroDsType, step, allSteps) {
     companions.push({ key: 'queue', Component: QueueCanvas, props: { step, title: 'Queue' } });
   }
 
+  const runHasGrid = Array.isArray(allSteps)
+    && allSteps.some((s) => s?.gridState?.length > 0);
+
+  // maximum-rectangles-binary-matrix is Stack-hero (the row's histogram is the active
+  // structure) but emits `.grid(matrix)` on some steps too — the LeetCode 85 board itself,
+  // otherwise never drawn. Not wired for Queue's own hero case: no Queue-dsType tracer
+  // emits a grid today (see the file-level doc on why an entry needs a real emitter first).
+  if (heroDsType === 'Stack' && runHasGrid) {
+    companions.push({
+      key: 'grid',
+      Component: GridCompanion,
+      props: { step: { ...step, gridState: lastKnownGrid(step, allSteps) }, title: 'Grid' }
+    });
+  }
+
   return companions;
+}
+
+/**
+ * The tracer only calls `.grid(matrix)` on the steps where the matrix is what changed
+ * (row start, row done) — every other step's `gridState` is simply absent, not "the
+ * matrix went empty". Unlike `queueOrStackState`, which genuinely IS empty between
+ * elements (a real algorithmic state this file's own doc already covers), a missing
+ * `gridState` here means "unchanged since the last step that set it", so the companion
+ * carries the most recent one forward instead of flashing an empty pane on every step
+ * that narrates the stack instead.
+ */
+function lastKnownGrid(step, allSteps) {
+  if (step?.gridState?.length) {
+    return step.gridState;
+  }
+  const idx = allSteps.indexOf(step);
+  for (let i = idx - 1; i >= 0; i--) {
+    if (allSteps[i]?.gridState?.length) {
+      return allSteps[i].gridState;
+    }
+  }
+  return step?.gridState;
 }
