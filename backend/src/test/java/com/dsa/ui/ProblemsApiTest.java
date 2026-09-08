@@ -180,8 +180,9 @@ class ProblemsApiTest {
         // Arrays retired its last legacy id in the same batch that traced its remaining
         // problems, so /api/arrays/execute/{anyId} now answers 410 for everything - a real,
         // permanent state (Sorting was first; Arrays and Sliding Window followed). Exercise
-        // a category that has not fully migrated instead: graph-intro has no tracer yet.
+        // a category that has not fully migrated instead: bracket-reversals is one of
+        // AdvancedGraphService's still-legacy string lessons.
         mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isOk());
-        mockMvc.perform(get("/api/graphs/advanced/execute/graph-intro")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/graphs/advanced/execute/bracket-reversals")).andExpect(status().isOk());
     }
 }

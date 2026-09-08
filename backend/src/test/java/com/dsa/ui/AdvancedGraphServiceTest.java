@@ -44,6 +44,9 @@ class AdvancedGraphServiceTest {
     @DisplayName("Should generate execution steps for all 62 Graph and String problems")
     void testGenerateSteps() {
         Set<String> retired = Set.of("z-function-algo", "kmp-lps-algo",
+                "graph-intro", "graph-rep-cpp", "graph-rep-java",
+                "connected-components-intro", "bfs-dfs-intro",
+                "dijkstra-pq-theory", "mst-theory",
                 "shortest-palindrome", "longest-happy-prefix",
                 "bellman-ford", "kosaraju-scc",
                 "word-ladder-1", "alien-dictionary",
