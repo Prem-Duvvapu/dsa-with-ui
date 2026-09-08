@@ -1,0 +1,3083 @@
+{
+  "anchors" : {
+    "bfsAdd" : 8,
+    "bfsInit" : 2,
+    "bfsVisit" : 5,
+    "dfsAdd" : 19,
+    "dfsInit" : 13,
+    "dfsVisit" : 16,
+    "done" : 23
+  },
+  "code" : "public void compareTraversals(List<List<Integer>> adj, int start) {\n    Queue<Integer> queue = new LinkedList<>();\n    queue.add(start);\n    while (!queue.isEmpty()) {\n        int node = queue.poll();\n        for (int next : adj.get(node)) {\n            if (!bfsSeen[next]) {\n                queue.add(next);\n            }\n        }\n    }\n\n    Deque<Integer> stack = new ArrayDeque<>();\n    stack.push(start);\n    while (!stack.isEmpty()) {\n        int node = stack.pop();\n        for (int next : reverse(adj.get(node))) {\n            if (!dfsSeen[next]) {\n                stack.push(next);\n            }\n        }\n    }\n}",
+  "problemId" : "bfs-dfs-intro",
+  "resolvedInput" : {
+    "graph" : {
+      "edges" : [ [ 0, 1 ], [ 0, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 5 ], [ 4, 6 ] ],
+      "vertices" : 7
+    },
+    "start" : 0
+  },
+  "stepCount" : 29,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "BFS uses FIFO: enqueue start vertex 0.",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "queued",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "BFS dequeues 0, so shallower discoveries leave first.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0]",
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Discover 1 from 0 and enqueue it at the back.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "Discover 2 from 0 and enqueue it at the back.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "BFS dequeues 1, so shallower discoveries leave first.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1]",
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Discover 3 from 1 and enqueue it at the back.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Discover 4 from 1 and enqueue it at the back.",
+    "queueOrStackState" : [ "2", "3", "4" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-4" ],
+    "variables" : {
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 5,
+    "description" : "BFS dequeues 2, so shallower discoveries leave first.",
+    "queueOrStackState" : [ "3", "4" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "queued",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 2]",
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "Discover 5 from 2 and enqueue it at the back.",
+    "queueOrStackState" : [ "3", "4", "5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "queued",
+      "4" : "queued",
+      "5" : "queued",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "2-5" ],
+    "variables" : {
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 5,
+    "description" : "BFS dequeues 3, so shallower discoveries leave first.",
+    "queueOrStackState" : [ "4", "5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "queued",
+      "5" : "queued",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 2, 3]",
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 5,
+    "description" : "BFS dequeues 4, so shallower discoveries leave first.",
+    "queueOrStackState" : [ "5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visiting",
+      "5" : "queued",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 2, 3, 4]",
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 8,
+    "description" : "Discover 6 from 4 and enqueue it at the back.",
+    "queueOrStackState" : [ "5", "6" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visiting",
+      "5" : "queued",
+      "6" : "queued"
+    },
+    "activeEdges" : [ "4-6" ],
+    "variables" : {
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 5,
+    "description" : "BFS dequeues 5, so shallower discoveries leave first.",
+    "queueOrStackState" : [ "6" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visiting",
+      "6" : "queued"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 2, 3, 4, 5]",
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 5,
+    "description" : "BFS dequeues 6, so shallower discoveries leave first.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 2, 3, 4, 5, 6]",
+      "phase" : "BFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 13,
+    "description" : "Reset. DFS uses LIFO: push start vertex 0.",
+    "queueOrStackState" : [ "0" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "unvisited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 16,
+    "description" : "DFS pops 0 and immediately follows its deepest pending branch.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0]",
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 19,
+    "description" : "Push 2 from 0. It is now above older branches.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "unvisited",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "0-2" ],
+    "variables" : {
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 19,
+    "description" : "Push 1 from 0. It is now above older branches.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "queued",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 16,
+    "description" : "DFS pops 1 and immediately follows its deepest pending branch.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "unvisited",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1]",
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 19,
+    "description" : "Push 4 from 1. It is now above older branches.",
+    "queueOrStackState" : [ "4", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "unvisited",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-4" ],
+    "variables" : {
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 19,
+    "description" : "Push 3 from 1. It is now above older branches.",
+    "queueOrStackState" : [ "3", "4", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visiting",
+      "2" : "queued",
+      "3" : "queued",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ "1-3" ],
+    "variables" : {
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 16,
+    "description" : "DFS pops 3 and immediately follows its deepest pending branch.",
+    "queueOrStackState" : [ "4", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued",
+      "3" : "visiting",
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 3]",
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 16,
+    "description" : "DFS pops 4 and immediately follows its deepest pending branch.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued",
+      "3" : "visited",
+      "4" : "visiting",
+      "5" : "unvisited",
+      "6" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 3, 4]",
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 19,
+    "description" : "Push 6 from 4. It is now above older branches.",
+    "queueOrStackState" : [ "6", "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued",
+      "3" : "visited",
+      "4" : "visiting",
+      "5" : "unvisited",
+      "6" : "queued"
+    },
+    "activeEdges" : [ "4-6" ],
+    "variables" : {
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 16,
+    "description" : "DFS pops 6 and immediately follows its deepest pending branch.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "queued",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "unvisited",
+      "6" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 3, 4, 6]",
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 16,
+    "description" : "DFS pops 2 and immediately follows its deepest pending branch.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "unvisited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 3, 4, 6, 2]",
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 19,
+    "description" : "Push 5 from 2. It is now above older branches.",
+    "queueOrStackState" : [ "5" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visiting",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "queued",
+      "6" : "visited"
+    },
+    "activeEdges" : [ "2-5" ],
+    "variables" : {
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 16,
+    "description" : "DFS pops 5 and immediately follows its deepest pending branch.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visiting",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "order" : "[0, 1, 3, 4, 6, 2, 5]",
+      "phase" : "DFS"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 23,
+    "description" : "Same start, different frontier rule. BFS: [0, 1, 2, 3, 4, 5, 6]. DFS: [0, 1, 3, 4, 6, 2, 5].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bfsOrder" : "[0, 1, 2, 3, 4, 5, 6]",
+      "dfsOrder" : "[0, 1, 3, 4, 6, 2, 5]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "5",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "6",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  } ],
+  "truncated" : false
+}

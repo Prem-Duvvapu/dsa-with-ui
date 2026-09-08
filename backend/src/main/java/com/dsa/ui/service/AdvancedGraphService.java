@@ -25,11 +25,11 @@ public class AdvancedGraphService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "graph-intro": return generateGraphIntroSteps();
-            case "graph-rep-cpp": return generateGraphRepCppSteps();
-            case "graph-rep-java": return generateGraphRepJavaSteps();
-            case "connected-components-intro": return generateConnectedComponentsIntroSteps();
-            case "bfs-dfs-intro": return generateBfsDfsIntroSteps();
+            case "graph-intro": throw new LegacyTraceRetiredException(problemId);
+            case "graph-rep-cpp": throw new LegacyTraceRetiredException(problemId);
+            case "graph-rep-java": throw new LegacyTraceRetiredException(problemId);
+            case "connected-components-intro": throw new LegacyTraceRetiredException(problemId);
+            case "bfs-dfs-intro": throw new LegacyTraceRetiredException(problemId);
             case "num-provinces": throw new LegacyTraceRetiredException(problemId);
             case "connected-matrix": throw new LegacyTraceRetiredException(problemId);
             case "rotten-oranges": throw new LegacyTraceRetiredException(problemId);
@@ -53,7 +53,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "alien-dictionary": throw new LegacyTraceRetiredException(problemId);
             case "shortest-path-undirected": throw new LegacyTraceRetiredException(problemId);
             case "shortest-path-dag": throw new LegacyTraceRetiredException(problemId);
-            case "dijkstra-pq-theory": return generateDijkstraPqTheorySteps();
+            case "dijkstra-pq-theory": throw new LegacyTraceRetiredException(problemId);
             case "shortest-path-binary-maze": throw new LegacyTraceRetiredException(problemId);
             case "path-min-effort": throw new LegacyTraceRetiredException(problemId);
             case "cheapest-flights-k-stops": throw new LegacyTraceRetiredException(problemId);
@@ -63,7 +63,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "bellman-ford": throw new LegacyTraceRetiredException(problemId);
             case "floyd-warshall": throw new LegacyTraceRetiredException(problemId);
             case "city-smallest-neighbors": throw new LegacyTraceRetiredException(problemId);
-            case "mst-theory": return generateMstTheorySteps();
+            case "mst-theory": throw new LegacyTraceRetiredException(problemId);
             case "prims-mst": throw new LegacyTraceRetiredException(problemId);
             case "disjoint-set-dsu": throw new LegacyTraceRetiredException(problemId);
             case "kruskals-mst": throw new LegacyTraceRetiredException(problemId);

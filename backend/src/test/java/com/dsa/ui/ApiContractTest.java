@@ -70,6 +70,8 @@ class ApiContractTest {
 
     /** Ids whose legacy trace is retired because a real tracer serves them on /api/problems. */
     private static final List<String> RETIRED_IDS = List.of(
+            "graph-intro", "graph-rep-cpp", "graph-rep-java",
+            "connected-components-intro", "bfs-dfs-intro", "dijkstra-pq-theory", "mst-theory",
             "tree-preorder", "tree-inorder", "tree-postorder", "tree-level-order",
             "search-rotated-sorted", "n-meetings-in-one-room",
             "climbing-stairs", "frog-jump", "frog-jump-k-distance",
@@ -282,6 +284,13 @@ class ApiContractTest {
                 arguments("/api/recursion-backtracking", "sudoku-solver"),
                 arguments("/api/graphs/advanced", "z-function-algo"),
                 arguments("/api/graphs/advanced", "kmp-lps-algo"),
+                arguments("/api/graphs/advanced", "graph-intro"),
+                arguments("/api/graphs/advanced", "graph-rep-cpp"),
+                arguments("/api/graphs/advanced", "graph-rep-java"),
+                arguments("/api/graphs/advanced", "connected-components-intro"),
+                arguments("/api/graphs/advanced", "bfs-dfs-intro"),
+                arguments("/api/graphs/advanced", "dijkstra-pq-theory"),
+                arguments("/api/graphs/advanced", "mst-theory"),
                 arguments("/api/recursion-backtracking", "subsets-i"),
                 arguments("/api/recursion-backtracking", "combination-sum-i"),
                 arguments("/api/graphs/advanced", "shortest-palindrome"),
