@@ -13,9 +13,11 @@ vi.mock('./App.jsx', () => ({
 }));
 
 describe('AppRouter', () => {
+  const routerFuture = { v7_startTransition: true, v7_relativeSplatPath: true };
+
   it('renders problem view when navigating to /problem/:id', () => {
     render(
-      <MemoryRouter initialEntries={['/problem/kadane-algo']}>
+      <MemoryRouter initialEntries={['/problem/kadane-algo']} future={routerFuture}>
         <AppRouter />
       </MemoryRouter>
     );
@@ -26,7 +28,7 @@ describe('AppRouter', () => {
 
   it('redirects root path / to /problem/two-sum', () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={['/']} future={routerFuture}>
         <AppRouter />
       </MemoryRouter>
     );
@@ -37,7 +39,7 @@ describe('AppRouter', () => {
 
   it('redirects unmatched wildcard route * to / then to /problem/two-sum', () => {
     render(
-      <MemoryRouter initialEntries={['/some/unknown/deep/path']}>
+      <MemoryRouter initialEntries={['/some/unknown/deep/path']} future={routerFuture}>
         <AppRouter />
       </MemoryRouter>
     );

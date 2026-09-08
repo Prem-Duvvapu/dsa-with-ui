@@ -40,12 +40,36 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
       end: Array.isArray(inv) ? inv[1] : (inv.end ?? 0),
       state: inv.state || 'default'
     }));
+  } else if (activeStep?.arrayState?.length
+      && activeStep.arrayState.every((cell) => /^\[\s*-?\d+\s*,\s*-?\d+\s*\]$/.test(cell.label || ''))) {
+    // Interval tracers sort or merge their working set, so the live array labels are
+    // more authoritative than resolvedInput's original order.
+    intervals = activeStep.arrayState.map((cell, idx) => {
+      const [, start, end] = cell.label.match(/^\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]$/);
+      return {
+        id: idx + 1,
+        label: `#${idx + 1}`,
+        start: Number(start),
+        end: Number(end),
+        state: cell.state || 'default'
+      };
+    });
   } else if (activeStep?.variables?.meetings) {
     const parsed = parseMeetingsVar(activeStep.variables.meetings);
     intervals = parsed.map((m, idx) => {
       const state = activeStep?.arrayState?.[idx]?.state || 'default';
       return { ...m, state };
     });
+  } else if (Array.isArray(activeStep?.resolvedInput?.intervals)) {
+    intervals = activeStep.resolvedInput.intervals
+      .filter((interval) => Array.isArray(interval) && interval.length >= 2)
+      .map((interval, idx) => ({
+        id: idx + 1,
+        label: `#${idx + 1}`,
+        start: interval[0],
+        end: interval[1],
+        state: activeStep?.arrayState?.[idx]?.state || 'default'
+      }));
   } else if (activeStep?.resolvedInput?.start && activeStep?.resolvedInput?.end) {
     const starts = activeStep.resolvedInput.start;
     const ends = activeStep.resolvedInput.end;
