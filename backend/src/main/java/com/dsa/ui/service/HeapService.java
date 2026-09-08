@@ -38,16 +38,16 @@ public class HeapService implements ProblemProvider {
             case "min-cost-connect-sticks":
             case "median-data-stream":
             case "merge-k-sorted-lists":
+            case "heaps-theory":
+            case "implement-min-heap":
+            case "check-min-heap":
+            case "min-to-max-heap":
+            case "sort-k-sorted-array":
+            case "replace-rank-array":
+            case "design-twitter":
+            case "kth-largest-stream":
+            case "maximum-sum-combination":
                 throw new LegacyTraceRetiredException(problemId);
-            case "heaps-theory": return generateKthLargestSteps();
-            case "implement-min-heap": return generateKthLargestSteps();
-            case "check-min-heap": return generateKthLargestSteps();
-            case "min-to-max-heap": return generateKthLargestSteps();
-            case "sort-k-sorted-array": return generateKthLargestSteps();
-            case "replace-rank-array": return generateKthLargestSteps();
-            case "design-twitter": return generateKthLargestSteps();
-            case "kth-largest-stream": return generateKthLargestSteps();
-            case "maximum-sum-combination": return generateKthLargestSteps();
             default: return generateKthLargestSteps();
         }
     }
@@ -120,11 +120,13 @@ public class HeapService implements ProblemProvider {
         // These now have real tracers whose emitted structure is Array, not the
         // heap-as-tree default every other id in this bulk list still carries.
         Set<String> arrayDsType = Set.of("kth-smallest-element", "task-scheduler", "top-k-frequent-elements",
-                "hand-of-straights", "min-cost-connect-sticks", "median-data-stream");
+                "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "replace-rank-array");
+        Set<String> treeDsType = Set.of("heaps-theory", "implement-min-heap", "check-min-heap", "min-to-max-heap");
 
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
-            String dsType = arrayDsType.contains(id) ? "Array" : "PriorityQueue";
+            String dsType = treeDsType.contains(id) ? "Tree"
+                    : arrayDsType.contains(id) ? "Array" : "PriorityQueue";
             problems.put(id, new ProblemDetail(
                 id, title, cat, "Heaps & PriorityQueue", diff, desc,
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Heap Striver A2Z Implementation\n}", title),

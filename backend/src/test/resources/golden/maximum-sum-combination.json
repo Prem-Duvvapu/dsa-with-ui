@@ -1,0 +1,652 @@
+{
+  "anchors" : {
+    "done" : 13,
+    "pop" : 5,
+    "push" : 9,
+    "seed" : 3,
+    "sort" : 2
+  },
+  "code" : "public List<Integer> maxSums(int[] a, int[] b, int count) {\n    Arrays.sort(a); Arrays.sort(b);\n    heap.offer(pair(a.length - 1, b.length - 1));\n    while (answer.size() < count) {\n        Pair best = heap.poll();\n        answer.add(best.sum);\n        for (Pair neighbour : neighbours(best)) {\n            if (seen.add(neighbour.indices())) {\n                heap.offer(neighbour);\n            }\n        }\n    }\n    return answer;\n}",
+  "problemId" : "maximum-sum-combination",
+  "resolvedInput" : {
+    "a" : [ 1, 4, 2, 3 ],
+    "b" : [ 2, 5, 1, 6 ],
+    "count" : 4
+  },
+  "stepCount" : 21,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Sorted A[0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "A",
+      "index" : "0"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "Sorted A[1] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "A",
+      "index" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "Sorted A[2] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "A",
+      "index" : "2"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 2,
+    "description" : "Sorted A[3] = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "A",
+      "index" : "3"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 2,
+    "description" : "Sorted B[0] = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "B",
+      "index" : "0"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 2,
+    "description" : "Sorted B[1] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "B",
+      "index" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 2,
+    "description" : "Sorted B[2] = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "B",
+      "index" : "2"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 2,
+    "description" : "Sorted B[3] = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "array" : "B",
+      "index" : "3"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 3,
+    "description" : "Largest elements seed pair (3,3) with sum 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sum" : "10"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "target",
+      "label" : "(3,3)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 5,
+    "description" : "Take next-largest unseen sum 10 from A[3] + B[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "rank" : "1",
+      "sum" : "10"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 9,
+    "description" : "Add unseen neighbour (2,3), sum 9, to the candidate heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "9"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "target",
+      "label" : "(2,3)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "Add unseen neighbour (3,2), sum 9, to the candidate heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "9"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "target",
+      "label" : "(2,3)"
+    }, {
+      "index" : 1,
+      "value" : 9,
+      "state" : "default",
+      "label" : "(3,2)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 5,
+    "description" : "Take next-largest unseen sum 9 from A[2] + B[3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "rank" : "2",
+      "sum" : "9"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "target",
+      "label" : "(3,2)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 9,
+    "description" : "Add unseen neighbour (1,3), sum 8, to the candidate heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "8"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "target",
+      "label" : "(3,2)"
+    }, {
+      "index" : 1,
+      "value" : 8,
+      "state" : "default",
+      "label" : "(1,3)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 9,
+    "description" : "Add unseen neighbour (2,2), sum 8, to the candidate heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "8"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "target",
+      "label" : "(3,2)"
+    }, {
+      "index" : 1,
+      "value" : 8,
+      "state" : "default",
+      "label" : "(1,3)"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "default",
+      "label" : "(2,2)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 5,
+    "description" : "Take next-largest unseen sum 9 from A[3] + B[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "rank" : "3",
+      "sum" : "9"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 8,
+      "state" : "target",
+      "label" : "(2,2)"
+    }, {
+      "index" : 1,
+      "value" : 8,
+      "state" : "default",
+      "label" : "(1,3)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 9,
+    "description" : "Add unseen neighbour (3,1), sum 6, to the candidate heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "6"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 8,
+      "state" : "target",
+      "label" : "(2,2)"
+    }, {
+      "index" : 1,
+      "value" : 8,
+      "state" : "default",
+      "label" : "(1,3)"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default",
+      "label" : "(3,1)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 5,
+    "description" : "Take next-largest unseen sum 8 from A[2] + B[2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "rank" : "4",
+      "sum" : "8"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 8,
+      "state" : "target",
+      "label" : "(1,3)"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "default",
+      "label" : "(3,1)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 9,
+    "description" : "Add unseen neighbour (1,2), sum 7, to the candidate heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "7"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 8,
+      "state" : "target",
+      "label" : "(1,3)"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default",
+      "label" : "(1,2)"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default",
+      "label" : "(3,1)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 9,
+    "description" : "Add unseen neighbour (2,1), sum 5, to the candidate heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 8,
+      "state" : "target",
+      "label" : "(1,3)"
+    }, {
+      "index" : 1,
+      "value" : 7,
+      "state" : "default",
+      "label" : "(1,2)"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "default",
+      "label" : "(3,1)"
+    }, {
+      "index" : 3,
+      "value" : 5,
+      "state" : "default",
+      "label" : "(2,1)"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 13,
+    "description" : "Top 4 pair sums: [10, 9, 9, 8].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[10, 9, 9, 8]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
