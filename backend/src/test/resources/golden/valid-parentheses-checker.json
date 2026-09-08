@@ -1,0 +1,408 @@
+{
+  "anchors" : {
+    "close" : 8,
+    "done" : 16,
+    "init" : 2,
+    "invalid" : 13,
+    "open" : 6,
+    "read" : 4,
+    "wildcard" : 10
+  },
+  "code" : "public boolean checkValidString(String s) {\n    int low = 0, high = 0;\n    for (int i = 0; i < s.length(); i++) {\n        char ch = s.charAt(i);\n        if (ch == '(') {\n            low++; high++;\n        } else if (ch == ')') {\n            low = Math.max(0, low - 1); high--;\n        } else {\n            low = Math.max(0, low - 1); high++;\n        }\n        if (high < 0) {\n            return false;\n        }\n    }\n    return low == 0;\n}",
+  "problemId" : "valid-parentheses-checker",
+  "resolvedInput" : {
+    "s" : "(*))"
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Open-count possibilities start at [0, 0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "low" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Read '(' at index 0 with possible opens [0, 0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "i" : "0",
+      "low" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "current",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "After '(', the feasible open-count range is [1, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "i" : "0",
+      "low" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "current",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Read '*' at index 1 with possible opens [1, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "i" : "1",
+      "low" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "After '*', the feasible open-count range is [0, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "i" : "1",
+      "low" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "current",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Read ')' at index 2 with possible opens [0, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "i" : "2",
+      "low" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "After ')', the feasible open-count range is [0, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "i" : "2",
+      "low" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "Read ')' at index 3 with possible opens [0, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "1",
+      "i" : "3",
+      "low" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "After ')', the feasible open-count range is [0, 0].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "i" : "3",
+      "low" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "current",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "Zero opens is still feasible, so the string is valid.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "low" : "0",
+      "valid" : "true"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 42,
+      "state" : "default",
+      "label" : "*"
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
