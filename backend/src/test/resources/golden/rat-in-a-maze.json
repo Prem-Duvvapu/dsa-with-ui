@@ -1,0 +1,1155 @@
+{
+  "anchors" : {
+    "backtrack" : 26,
+    "blocked" : 21,
+    "done" : 8,
+    "reachEnd" : 13,
+    "step" : 24
+  },
+  "code" : "public List<String> findPath(int[][] maze) {\n    int n = maze.length;\n    List<String> paths = new ArrayList<>();\n    if (maze[0][0] == 1) {\n        visited[0][0] = true;\n        explore(0, 0, maze, n, \"\", paths);\n    }\n    return paths;\n}\n\nprivate void explore(int r, int c, int[][] maze, int n, String path, List<String> paths) {\n    if (r == n - 1 && c == n - 1) {\n        paths.add(path);\n        return;\n    }\n    int[][] dirs = {{1,0,'D'}, {0,-1,'L'}, {0,1,'R'}, {-1,0,'U'}};\n    for (int[] d : dirs) {\n        int nr = r + d[0], nc = c + d[1];\n        if (nr < 0 || nr >= n || nc < 0 || nc >= n\n                || maze[nr][nc] == 0 || visited[nr][nc]) {\n            continue;\n        }\n        visited[nr][nc] = true;\n        explore(nr, nc, maze, n, path + (char) d[2], paths);\n        visited[nr][nc] = false;\n    }\n}",
+  "problemId" : "rat-in-a-maze",
+  "resolvedInput" : {
+    "maze" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ]
+  },
+  "stepCount" : 64,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 24,
+    "description" : "D from (0,0) reaches open cell (1,0) - recurse with path \"D\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "D",
+      "path" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 24,
+    "description" : "D from (1,0) reaches open cell (2,0) - recurse with path \"DD\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "D",
+      "path" : "DD"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 21,
+    "description" : "D from (2,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,0)",
+      "move" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 21,
+    "description" : "L from (2,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,0)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 24,
+    "description" : "R from (2,0) reaches open cell (2,1) - recurse with path \"DDR\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "R",
+      "path" : "DDR"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 24,
+    "description" : "D from (2,1) reaches open cell (3,1) - recurse with path \"DDRD\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "D",
+      "path" : "DDRD"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 21,
+    "description" : "D from (3,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,1)",
+      "move" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 21,
+    "description" : "L from (3,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,1)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 24,
+    "description" : "R from (3,1) reaches open cell (3,2) - recurse with path \"DDRDR\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "R",
+      "path" : "DDRDR"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 21,
+    "description" : "D from (3,2) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,2)",
+      "move" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 21,
+    "description" : "L from (3,2) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,2)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 24,
+    "description" : "R from (3,2) reaches open cell (3,3) - recurse with path \"DDRDRR\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "R",
+      "path" : "DDRDRR"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 13,
+    "description" : "Reached the bottom-right corner - path \"DDRDRR\" captured as solution #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)", "explore(3,2)", "explore(3,3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "path" : "DDRDRR",
+      "solutions" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 26,
+    "description" : "Unmark (3,3) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(3,3)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 21,
+    "description" : "U from (3,2) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,2)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 26,
+    "description" : "Unmark (3,2) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(3,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 21,
+    "description" : "U from (3,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,1)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 26,
+    "description" : "Unmark (3,1) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(3,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 21,
+    "description" : "L from (2,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,1)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 21,
+    "description" : "R from (2,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,1)",
+      "move" : "R"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 24,
+    "description" : "U from (2,1) reaches open cell (1,1) - recurse with path \"DDRU\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "U",
+      "path" : "DDRU"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 21,
+    "description" : "D from (1,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,1)",
+      "move" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 21,
+    "description" : "L from (1,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,1)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 21,
+    "description" : "R from (1,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,1)",
+      "move" : "R"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 21,
+    "description" : "U from (1,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,1)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 26,
+    "description" : "Unmark (1,1) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 26,
+    "description" : "Unmark (2,1) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(2,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 21,
+    "description" : "U from (2,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,0)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 26,
+    "description" : "Unmark (2,0) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(2,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 21,
+    "description" : "L from (1,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,0)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 24,
+    "description" : "R from (1,0) reaches open cell (1,1) - recurse with path \"DR\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "R",
+      "path" : "DR"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 24,
+    "description" : "D from (1,1) reaches open cell (2,1) - recurse with path \"DRD\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "D",
+      "path" : "DRD"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 24,
+    "description" : "D from (2,1) reaches open cell (3,1) - recurse with path \"DRDD\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "D",
+      "path" : "DRDD"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 21,
+    "description" : "D from (3,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,1)",
+      "move" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 21,
+    "description" : "L from (3,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,1)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 24,
+    "description" : "R from (3,1) reaches open cell (3,2) - recurse with path \"DRDDR\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "R",
+      "path" : "DRDDR"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 21,
+    "description" : "D from (3,2) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,2)",
+      "move" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 21,
+    "description" : "L from (3,2) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,2)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 24,
+    "description" : "R from (3,2) reaches open cell (3,3) - recurse with path \"DRDDRR\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "R",
+      "path" : "DRDDRR"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 13,
+    "description" : "Reached the bottom-right corner - path \"DRDDRR\" captured as solution #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)", "explore(3,2)", "explore(3,3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "path" : "DRDDRR",
+      "solutions" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 26,
+    "description" : "Unmark (3,3) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(3,3)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 21,
+    "description" : "U from (3,2) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)", "explore(3,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,2)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 26,
+    "description" : "Unmark (3,2) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(3,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 21,
+    "description" : "U from (3,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(3,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(3,1)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 45,
+    "activeLine" : 26,
+    "description" : "Unmark (3,1) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(3,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 46,
+    "activeLine" : 24,
+    "description" : "L from (2,1) reaches open cell (2,0) - recurse with path \"DRDL\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "move" : "L",
+      "path" : "DRDL"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 47,
+    "activeLine" : 21,
+    "description" : "D from (2,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,0)",
+      "move" : "D"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 48,
+    "activeLine" : 21,
+    "description" : "L from (2,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,0)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 49,
+    "activeLine" : 21,
+    "description" : "R from (2,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,0)",
+      "move" : "R"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 50,
+    "activeLine" : 21,
+    "description" : "U from (2,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)", "explore(2,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,0)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 51,
+    "activeLine" : 26,
+    "description" : "Unmark (2,0) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(2,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 52,
+    "activeLine" : 21,
+    "description" : "R from (2,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,1)",
+      "move" : "R"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 53,
+    "activeLine" : 21,
+    "description" : "U from (2,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)", "explore(2,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(2,1)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 54,
+    "activeLine" : 26,
+    "description" : "Unmark (2,1) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(2,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 55,
+    "activeLine" : 21,
+    "description" : "L from (1,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,1)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 56,
+    "activeLine" : 21,
+    "description" : "R from (1,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,1)",
+      "move" : "R"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 57,
+    "activeLine" : 21,
+    "description" : "U from (1,1) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)", "explore(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,1)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 58,
+    "activeLine" : 26,
+    "description" : "Unmark (1,1) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(1,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 59,
+    "activeLine" : 21,
+    "description" : "U from (1,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)", "explore(1,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(1,0)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 60,
+    "activeLine" : 26,
+    "description" : "Unmark (1,0) - it may still lie on a different path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "unmarked" : "(1,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 61,
+    "activeLine" : 21,
+    "description" : "L from (0,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(0,0)",
+      "move" : "L"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 62,
+    "activeLine" : 21,
+    "description" : "R from (0,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(0,0)",
+      "move" : "R"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 63,
+    "activeLine" : 21,
+    "description" : "U from (0,0) is out of bounds, blocked, or already on this path - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "explore(0,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "from" : "(0,0)",
+      "move" : "U"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 64,
+    "activeLine" : 8,
+    "description" : "Every direction from every reachable cell explored. 2 complete paths found.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "paths" : "[DDRDRR, DRDDRR]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 0, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 0, 0 ], [ 0, 1, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

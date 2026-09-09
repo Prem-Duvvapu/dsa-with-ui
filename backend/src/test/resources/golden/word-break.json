@@ -1,0 +1,588 @@
+{
+  "anchors" : {
+    "fullyBroken" : 7,
+    "matchAndRecurse" : 18,
+    "memoHit" : 10,
+    "noSegmentation" : 22,
+    "notAWord" : 15
+  },
+  "code" : "public boolean wordBreak(String s, Set<String> dict) {\n    return canBreak(0, s, dict, new HashMap<>());\n}\n\nprivate boolean canBreak(int start, String s, Set<String> dict, Map<Integer, Boolean> memo) {\n    if (start == s.length()) {\n        return true;\n    }\n    if (memo.containsKey(start)) {\n        return memo.get(start);\n    }\n    for (int end = start + 1; end <= s.length(); end++) {\n        String word = s.substring(start, end);\n        if (!dict.contains(word)) {\n            continue;\n        }\n        if (canBreak(end, s, dict, memo)) {\n            memo.put(start, true);\n            return true;\n        }\n    }\n    memo.put(start, false);\n    return false;\n}",
+  "problemId" : "word-break",
+  "resolvedInput" : {
+    "s" : "leetcode",
+    "wordDict" : "leet,code"
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 15,
+    "description" : "\"l\" (0..1) is not in the dictionary - try a longer or shorter cut.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "l"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "current",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 15,
+    "description" : "\"le\" (0..2) is not in the dictionary - try a longer or shorter cut.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "le"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "current",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 15,
+    "description" : "\"lee\" (0..3) is not in the dictionary - try a longer or shorter cut.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "lee"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "current",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 18,
+    "description" : "\"leet\" (0..4) is a dictionary word - check whether the rest, starting at index 4, can also break.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "word" : "leet"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "current",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "target",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 15,
+    "description" : "\"c\" (4..5) is not in the dictionary - try a longer or shorter cut.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)", "canBreak(start=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "c"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 15,
+    "description" : "\"co\" (4..6) is not in the dictionary - try a longer or shorter cut.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)", "canBreak(start=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "co"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "target",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "\"cod\" (4..7) is not in the dictionary - try a longer or shorter cut.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)", "canBreak(start=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "cod"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "target",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 18,
+    "description" : "\"code\" (4..8) is a dictionary word - check whether the rest, starting at index 8, can also break.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)", "canBreak(start=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "word" : "code"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "target",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Reached the end of \"leetcode\" - every character up to here was consumed by dictionary words.",
+    "queueOrStackState" : null,
+    "callStack" : [ "canBreak(start=0)", "canBreak(start=4)", "canBreak(start=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "start" : "8"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 7,
+    "description" : "Overall result: \"leetcode\" CAN be segmented using [code, leet].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "true"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 1,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 111,
+      "state" : "default",
+      "label" : "o"
+    }, {
+      "index" : 6,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 7,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

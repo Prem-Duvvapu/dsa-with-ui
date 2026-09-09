@@ -1,0 +1,1075 @@
+{
+  "anchors" : {
+    "addClose" : 16,
+    "addOpen" : 13,
+    "capture" : 9,
+    "done" : 4
+  },
+  "code" : "public List<String> generateParenthesis(int n) {\n    List<String> res = new ArrayList<>();\n    backtrack(n, 0, 0, \"\", res);\n    return res;\n}\n\nprivate void backtrack(int n, int open, int close, String cur, List<String> res) {\n    if (cur.length() == 2 * n) {\n        res.add(cur);\n        return;\n    }\n    if (open < n) {\n        backtrack(n, open + 1, close, cur + '(', res);\n    }\n    if (close < open) {\n        backtrack(n, open, close + 1, cur + ')', res);\n    }\n}",
+  "problemId" : "generate-parentheses",
+  "resolvedInput" : {
+    "n" : 3
+  },
+  "stepCount" : 27,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 13,
+    "description" : "0/3 opens placed - add '(' to \"\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "1/3 opens placed - add '(' to \"(\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "2/3 opens placed - add '(' to \"((\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "((("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 16,
+    "description" : "0 closes trail 3 opens - add ')' to \"(((\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=3,close=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "((()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 16,
+    "description" : "1 closes trail 3 opens - add ')' to \"((()\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=3,close=0)", "backtrack(open=3,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "((())"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 16,
+    "description" : "2 closes trail 3 opens - add ')' to \"((())\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=3,close=0)", "backtrack(open=3,close=1)", "backtrack(open=3,close=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "((()))"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "Length 6 reached - capture \"((()))\" as combination #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=3,close=0)", "backtrack(open=3,close=1)", "backtrack(open=3,close=2)", "backtrack(open=3,close=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "((()))",
+      "count" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "0 closes trail 2 opens - add ')' to \"((\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "2/3 opens placed - add '(' to \"(()\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(()("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "1 closes trail 3 opens - add ')' to \"(()(\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)", "backtrack(open=3,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(()()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 16,
+    "description" : "2 closes trail 3 opens - add ')' to \"(()()\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)", "backtrack(open=3,close=1)", "backtrack(open=3,close=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(()())"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 9,
+    "description" : "Length 6 reached - capture \"(()())\" as combination #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)", "backtrack(open=3,close=1)", "backtrack(open=3,close=2)", "backtrack(open=3,close=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "(()())",
+      "count" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 16,
+    "description" : "1 closes trail 2 opens - add ')' to \"(()\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(())"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 13,
+    "description" : "2/3 opens placed - add '(' to \"(())\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)", "backtrack(open=2,close=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(())("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 16,
+    "description" : "2 closes trail 3 opens - add ')' to \"(())(\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)", "backtrack(open=2,close=2)", "backtrack(open=3,close=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "(())()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 9,
+    "description" : "Length 6 reached - capture \"(())()\" as combination #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=2,close=0)", "backtrack(open=2,close=1)", "backtrack(open=2,close=2)", "backtrack(open=3,close=2)", "backtrack(open=3,close=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "(())()",
+      "count" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 2,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 16,
+    "description" : "0 closes trail 1 opens - add ')' to \"(\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 13,
+    "description" : "1/3 opens placed - add '(' to \"()\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 13,
+    "description" : "2/3 opens placed - add '(' to \"()(\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()(("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 16,
+    "description" : "1 closes trail 3 opens - add ')' to \"()((\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)", "backtrack(open=3,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()(()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 16,
+    "description" : "2 closes trail 3 opens - add ')' to \"()(()\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)", "backtrack(open=3,close=1)", "backtrack(open=3,close=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()(())"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 9,
+    "description" : "Length 6 reached - capture \"()(())\" as combination #4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)", "backtrack(open=3,close=1)", "backtrack(open=3,close=2)", "backtrack(open=3,close=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "()(())",
+      "count" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 4,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 16,
+    "description" : "1 closes trail 2 opens - add ')' to \"()(\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 13,
+    "description" : "2/3 opens placed - add '(' to \"()()\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)", "backtrack(open=2,close=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()()("
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 16,
+    "description" : "2 closes trail 3 opens - add ')' to \"()()(\" and recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)", "backtrack(open=2,close=2)", "backtrack(open=3,close=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "()()()"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 9,
+    "description" : "Length 6 reached - capture \"()()()\" as combination #5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(open=0,close=0)", "backtrack(open=1,close=0)", "backtrack(open=1,close=1)", "backtrack(open=2,close=1)", "backtrack(open=2,close=2)", "backtrack(open=3,close=2)", "backtrack(open=3,close=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "()()()",
+      "count" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 1,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 2,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 3,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    }, {
+      "index" : 4,
+      "value" : 40,
+      "state" : "default",
+      "label" : "("
+    }, {
+      "index" : 5,
+      "value" : 41,
+      "state" : "default",
+      "label" : ")"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 4,
+    "description" : "Every position filled at every leaf. 5 well-formed combinations of 3 pair(s) found.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,383 @@
+{
+  "anchors" : {
+    "exhausted" : 9,
+    "foundStart" : 5,
+    "mark" : 21,
+    "matched" : 14,
+    "mismatch" : 18,
+    "unmark" : 26
+  },
+  "code" : "public boolean exist(char[][] board, String word) {\n    for (int r = 0; r < board.length; r++) {\n        for (int c = 0; c < board[0].length; c++) {\n            if (dfs(board, r, c, word, 0)) {\n                return true;\n            }\n        }\n    }\n    return false;\n}\n\nprivate boolean dfs(char[][] board, int r, int c, String word, int i) {\n    if (i == word.length()) {\n        return true;\n    }\n    if (r < 0 || r >= board.length || c < 0 || c >= board[0].length\n            || visited[r][c] || board[r][c] != word.charAt(i)) {\n        return false;\n    }\n    visited[r][c] = true;\n    boolean found = dfs(board, r + 1, c, word, i + 1)\n            || dfs(board, r - 1, c, word, i + 1)\n            || dfs(board, r, c + 1, word, i + 1)\n            || dfs(board, r, c - 1, word, i + 1);\n    visited[r][c] = false;\n    return found;\n}",
+  "problemId" : "word-search",
+  "resolvedInput" : {
+    "board" : "ABCE,SFCS,ADEE",
+    "word" : "ABCCED"
+  },
+  "stepCount" : 21,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 21,
+    "description" : "(0,0) = 'A' matches word[0]. Mark it and try all four neighbours for index 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,0)",
+      "i" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 18,
+    "description" : "(1,0) at word index 1: letter does not match 'B'.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(1,0,i=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 18,
+    "description" : "(-1,0) at word index 1: out of bounds.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(-1,0,i=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 21,
+    "description" : "(0,1) = 'B' matches word[1]. Mark it and try all four neighbours for index 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,1)",
+      "i" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 18,
+    "description" : "(1,1) at word index 2: letter does not match 'C'.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(1,1,i=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 18,
+    "description" : "(-1,1) at word index 2: out of bounds.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(-1,1,i=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 21,
+    "description" : "(0,2) = 'C' matches word[2]. Mark it and try all four neighbours for index 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,2)",
+      "i" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 21,
+    "description" : "(1,2) = 'C' matches word[3]. Mark it and try all four neighbours for index 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,2)",
+      "i" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 21,
+    "description" : "(2,2) = 'E' matches word[4]. Mark it and try all four neighbours for index 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,2)",
+      "i" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 18,
+    "description" : "(3,2) at word index 5: out of bounds.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)", "dfs(3,2,i=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 18,
+    "description" : "(1,2) at word index 5: already used on this path.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)", "dfs(1,2,i=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 18,
+    "description" : "(2,3) at word index 5: letter does not match 'D'.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)", "dfs(2,3,i=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 21,
+    "description" : "(2,1) = 'D' matches word[5]. Mark it and try all four neighbours for index 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)", "dfs(2,1,i=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)",
+      "i" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Every character of \"ABCCED\" matched in sequence - path complete.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)", "dfs(2,1,i=5)", "dfs(3,1,i=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 26,
+    "description" : "Unmark (2,1) - a different path may still need to pass through it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)", "dfs(2,1,i=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 26,
+    "description" : "Unmark (2,2) - a different path may still need to pass through it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)", "dfs(2,2,i=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(2,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 26,
+    "description" : "Unmark (1,2) - a different path may still need to pass through it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)", "dfs(1,2,i=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(1,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 26,
+    "description" : "Unmark (0,2) - a different path may still need to pass through it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)", "dfs(0,2,i=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,2)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 26,
+    "description" : "Unmark (0,1) - a different path may still need to pass through it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)", "dfs(0,1,i=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,1)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 26,
+    "description" : "Unmark (0,0) - a different path may still need to pass through it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0,i=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cell" : "(0,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 5,
+    "description" : "Starting search from (0,0) succeeded - \"ABCCED\" is present on the board.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "true",
+      "start" : "(0,0)"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 65, 66, 67, 69 ], [ 83, 70, 67, 83 ], [ 65, 68, 69, 69 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

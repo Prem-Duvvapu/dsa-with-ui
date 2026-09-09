@@ -1,0 +1,430 @@
+{
+  "anchors" : {
+    "done" : 3,
+    "exclude" : 12,
+    "include" : 11,
+    "leaf" : 8
+  },
+  "code" : "public int countSubsequences(int[] nums, int k) {\n    int total = backtrack(0, nums, k, 0);\n    return total;\n}\n\nprivate int backtrack(int idx, int[] nums, int k, int sum) {\n    if (idx == nums.length) {\n        return sum == k ? 1 : 0;\n    }\n    int withCurrent = backtrack(idx + 1, nums, k, sum + nums[idx]);\n    int withoutCurrent = backtrack(idx + 1, nums, k, sum);\n    return withCurrent + withoutCurrent;\n}",
+  "problemId" : "count-subsequences-sum-k",
+  "resolvedInput" : {
+    "k" : 2,
+    "nums" : [ 1, 2, 1 ]
+  },
+  "stepCount" : 23,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 11,
+    "description" : "Include nums[0]=1 - sum becomes 1. Recurse into index 1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "Include nums[1]=2 - sum becomes 3. Recurse into index 2.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 11,
+    "description" : "Include nums[2]=1 - sum becomes 4. Recurse into index 3.",
+    "queueOrStackState" : [ "1", "2", "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [1, 2, 1] sums to 4, does not match 2 - contributes 0.",
+    "queueOrStackState" : [ "1", "2", "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)", "backtrack(idx=3,sum=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "0",
+      "sum" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 12,
+    "description" : "Exclude nums[2]=1 - sum stays 3. Recurse into index 3.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [1, 2] sums to 3, does not match 2 - contributes 0.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)", "backtrack(idx=3,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "0",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "Exclude nums[1]=2 - sum stays 1. Recurse into index 2.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 11,
+    "description" : "Include nums[2]=1 - sum becomes 2. Recurse into index 3.",
+    "queueOrStackState" : [ "1", "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [1, 1] sums to 2, matches 2 - contributes 1.",
+    "queueOrStackState" : [ "1", "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)", "backtrack(idx=3,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "1",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "Exclude nums[2]=1 - sum stays 1. Recurse into index 3.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [1] sums to 1, does not match 2 - contributes 0.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)", "backtrack(idx=3,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "0",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 12,
+    "description" : "Exclude nums[0]=1 - sum stays 0. Recurse into index 1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "Include nums[1]=2 - sum becomes 2. Recurse into index 2.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 11,
+    "description" : "Include nums[2]=1 - sum becomes 3. Recurse into index 3.",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [2, 1] sums to 3, does not match 2 - contributes 0.",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)", "backtrack(idx=3,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "0",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 12,
+    "description" : "Exclude nums[2]=1 - sum stays 2. Recurse into index 3.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [2] sums to 2, matches 2 - contributes 1.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)", "backtrack(idx=3,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "1",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 12,
+    "description" : "Exclude nums[1]=2 - sum stays 0. Recurse into index 2.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 11,
+    "description" : "Include nums[2]=1 - sum becomes 1. Recurse into index 3.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [1] sums to 1, does not match 2 - contributes 0.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)", "backtrack(idx=3,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "0",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 12,
+    "description" : "Exclude nums[2]=1 - sum stays 0. Recurse into index 3.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 8,
+    "description" : "Every index decided. Path [] sums to 0, does not match 2 - contributes 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)", "backtrack(idx=3,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contributes" : "0",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 3,
+    "description" : "Recursion fully unwound. 2 subsequences of [1, 2, 1] sum to 2.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

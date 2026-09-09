@@ -27,38 +27,34 @@ public class RecursionBacktrackingService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            // n-queens, sudoku-solver, subsets-i and combination-sum-i have real tracers
-            // now (tracer/impl). Their generators are gone; refusing loudly beats falling
-            // into default: (or, for the other three, the many unrelated ids below that
-            // already borrow their generator as a filler) and serving another problem's
-            // animation. generateSubsetsSteps()/generateCombinationSumSteps() stay - they
-            // are still every one of those other ids' filler until each is migrated too.
+            // Every id below now has a real tracer (tracer/impl). Refuse rather than let
+            // default: serve an unrelated legacy generator's steps under these ids.
             case "n-queens":
             case "sudoku-solver":
             case "subsets-i":
             case "combination-sum-i":
+            case "rat-in-a-maze":
+            case "m-coloring":
+            case "palindrome-partitioning":
+            case "permutations":
+            case "word-search":
+            case "atoi-recursive":
+            case "pow-x-n-recursive":
+            case "count-good-numbers":
+            case "sort-stack-recursion":
+            case "reverse-stack-recursion":
+            case "generate-binary-strings":
+            case "generate-parentheses":
+            case "power-set":
+            case "subsequences-patterns-theory":
+            case "count-subsequences-sum-k":
+            case "check-subsequence-sum-k":
+            case "combination-sum-2":
+            case "subsets-2":
+            case "combination-sum-3":
+            case "letter-combinations-phone":
+            case "word-break":
                 throw new LegacyTraceRetiredException(problemId);
-            case "rat-in-a-maze": return generateRatInMazeSteps();
-            case "m-coloring": return generateMColoringSteps();
-            case "palindrome-partitioning": return generatePalindromePartitioningSteps();
-            case "permutations": return generatePermutationsSteps();
-            case "word-search": return generateWordSearchSteps();
-            case "atoi-recursive": return generateNQueensSteps();
-            case "pow-x-n-recursive": return generateNQueensSteps();
-            case "count-good-numbers": return generateNQueensSteps();
-            case "sort-stack-recursion": return generateNQueensSteps();
-            case "reverse-stack-recursion": return generateNQueensSteps();
-            case "generate-binary-strings": return generateNQueensSteps();
-            case "generate-parentheses": return generateNQueensSteps();
-            case "power-set": return generateSubsetsSteps();
-            case "subsequences-patterns-theory": return generateSubsetsSteps();
-            case "count-subsequences-sum-k": return generateCombinationSumSteps();
-            case "check-subsequence-sum-k": return generateCombinationSumSteps();
-            case "combination-sum-2": return generateCombinationSumSteps();
-            case "subsets-2": return generateSubsetsSteps();
-            case "combination-sum-3": return generateCombinationSumSteps();
-            case "letter-combinations-phone": return generatePermutationsSteps();
-            case "word-break": return generateWordSearchSteps();
             default: return generateNQueensSteps();
         }
     }
@@ -121,7 +117,7 @@ public class RecursionBacktrackingService implements ProblemProvider {
             }
             """,
             null, null, createColoringTreeNodes(), null, null, null, null,
-            new ComplexityDetail("O(M^N)", "Time Complexity: M choices for each of N nodes.", "Backtracking", "O(N)", "Space Complexity: Color array and recursion stack.", "Memory", "Auxiliary Space: O(N)", "Memory"), "Stack"
+            new ComplexityDetail("O(M^N)", "Time Complexity: M choices for each of N nodes.", "Backtracking", "O(N)", "Space Complexity: Color array and recursion stack.", "Memory", "Auxiliary Space: O(N)", "Memory"), "Graph"
         ));
 
         // 5. Palindrome Partitioning
@@ -160,6 +156,24 @@ public class RecursionBacktrackingService implements ProblemProvider {
         populateRemainingRecursionProblems();
     }
 
+    /**
+     * The bulk-registered ids previously hardcoded {@code "Stack"} regardless of what each
+     * tracer actually emits — the same category of gap {@code BitManipulationService.bulkDsType}
+     * and {@code StringService.bulkDsType} had before their own batches fixed it. Ids not
+     * listed here keep reporting {@code Stack} unchanged, which matches their tracer's real
+     * include/exclude-path visualization.
+     */
+    private static DsType bulkDsType(String id) {
+        return switch (id) {
+            case "atoi-recursive", "generate-binary-strings", "generate-parentheses",
+                    "letter-combinations-phone", "word-break" -> DsType.STRING;
+            case "count-good-numbers", "pow-x-n-recursive" -> DsType.BITS;
+            case "permutations" -> DsType.ARRAY;
+            case "word-search" -> DsType.MATRIX;
+            default -> DsType.STACK;
+        };
+    }
+
     private void populateRemainingRecursionProblems() {
         String[][] list = new String[][]{
             {"combination-sum-i", "Combination Sum I", "Recursion - Subsequences", "Medium", "Find combinations reaching target sum with infinite element reuse."},
@@ -189,7 +203,7 @@ public class RecursionBacktrackingService implements ProblemProvider {
                 id, title, cat, "Recursion & Backtracking", diff, desc,
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Backtracking Striver A2Z Implementation\n}", title),
                 null, null, createSubsetsTreeNodes(), null, null, null, null,
-                new ComplexityDetail("O(2^N)", "Time Complexity: Exponential backtracking tree exploration.", "Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), "Stack"
+                new ComplexityDetail("O(2^N)", "Time Complexity: Exponential backtracking tree exploration.", "Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), bulkDsType(id).wireValue()
             ));
         }
     }
@@ -198,50 +212,6 @@ public class RecursionBacktrackingService implements ProblemProvider {
     private List<ExecutionStep> generateNQueensSteps() {
         ListTraceRecorder recorder = new ListTraceRecorder();
         new NQueens().solve(4, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateRatInMazeSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new RatInMaze().solve(createMazeGrid(), recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateMColoringSteps() {
-        int[][] g = {{0,1,1,1},{1,0,1,0},{1,1,0,1},{1,0,1,0}};
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new MColoring().solve(g, 3, 4, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generatePalindromePartitioningSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new PalindromePartitioning().solve("aab", recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateSubsetsSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new Subsets().solve(new int[]{1, 2, 3}, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateCombinationSumSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new CombinationSum().solve(new int[]{2, 3, 6, 7}, 7, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generatePermutationsSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new Permutations().solve(new int[]{1, 2, 3}, recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateWordSearchSteps() {
-        char[][] b = {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new WordSearch().solve(b, "ABCCED", recorder);
         return recorder.toExecutionSteps();
     }
 

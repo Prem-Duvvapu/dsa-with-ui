@@ -1,0 +1,274 @@
+{
+  "anchors" : {
+    "accept" : 18,
+    "capture" : 9,
+    "done" : 4,
+    "reject" : 15,
+    "undo" : 20
+  },
+  "code" : "public List<List<String>> partition(String s) {\n    List<List<String>> res = new ArrayList<>();\n    backtrack(0, s, new ArrayList<>(), res);\n    return res;\n}\n\nprivate void backtrack(int start, String s, List<String> path, List<List<String>> res) {\n    if (start == s.length()) {\n        res.add(new ArrayList<>(path));\n        return;\n    }\n    for (int end = start + 1; end <= s.length(); end++) {\n        String segment = s.substring(start, end);\n        if (!isPalindrome(segment)) {\n            continue;\n        }\n        path.add(segment);\n        backtrack(end, s, path, res);\n        path.remove(path.size() - 1);\n    }\n}",
+  "problemId" : "palindrome-partitioning",
+  "resolvedInput" : {
+    "s" : "aab"
+  },
+  "stepCount" : 15,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 18,
+    "description" : "\"a\" (0..1) is a palindrome - add it to the path and recurse from index 1.",
+    "queueOrStackState" : [ "a" ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "segment" : "a"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 18,
+    "description" : "\"a\" (1..2) is a palindrome - add it to the path and recurse from index 2.",
+    "queueOrStackState" : [ "a", "a" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "segment" : "a"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 18,
+    "description" : "\"b\" (2..3) is a palindrome - add it to the path and recurse from index 3.",
+    "queueOrStackState" : [ "a", "a", "b" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "segment" : "b"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Reached the end of \"aab\" with every piece a palindrome - capture [a, a, b] as partition #1.",
+    "queueOrStackState" : [ "a", "a", "b" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)", "backtrack(start=2)", "backtrack(start=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "partition" : "[a, a, b]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 20,
+    "description" : "Undo \"b\" - try a longer cut starting at index 2.",
+    "queueOrStackState" : [ "a", "a" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "b"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "Undo \"a\" - try a longer cut starting at index 1.",
+    "queueOrStackState" : [ "a" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "a"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "\"ab\" (1..3) is not a palindrome - skip this cut.",
+    "queueOrStackState" : [ "a" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "segment" : "ab"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 20,
+    "description" : "Undo \"a\" - try a longer cut starting at index 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "a"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 18,
+    "description" : "\"aa\" (0..2) is a palindrome - add it to the path and recurse from index 2.",
+    "queueOrStackState" : [ "aa" ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "segment" : "aa"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 18,
+    "description" : "\"b\" (2..3) is a palindrome - add it to the path and recurse from index 3.",
+    "queueOrStackState" : [ "aa", "b" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "segment" : "b"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 9,
+    "description" : "Reached the end of \"aab\" with every piece a palindrome - capture [aa, b] as partition #2.",
+    "queueOrStackState" : [ "aa", "b" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=2)", "backtrack(start=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "partition" : "[aa, b]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 20,
+    "description" : "Undo \"b\" - try a longer cut starting at index 2.",
+    "queueOrStackState" : [ "aa" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "b"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 20,
+    "description" : "Undo \"aa\" - try a longer cut starting at index 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "aa"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "\"aab\" (0..3) is not a palindrome - skip this cut.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "segment" : "aab"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 4,
+    "description" : "Every start position exhausted. 2 valid palindromic partitions found.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "partitions" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
