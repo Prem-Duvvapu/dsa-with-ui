@@ -4,7 +4,7 @@
 
 This document is the execution handoff for completing the project from the state of `main` after PRs #122, #126, #124, and #125. It is intended to be actionable by another coding agent without relying on prior chat context.
 
-The primary objective is to replace every remaining catalogue-only or legacy demonstration route with a real, caller-driven tracer while preserving API contracts, visualization fidelity, and regression coverage. Each algorithm topic must be completed in exactly one topic PR. Bit Manipulation was explicitly deferred by the user on 2026-09-08; continue through the later topics and return to it only when directed.
+The primary objective is to replace every remaining catalogue-only or legacy demonstration route with a real, caller-driven tracer while preserving API contracts, visualization fidelity, and regression coverage. Each algorithm topic must be completed in exactly one topic PR. Bit Manipulation was briefly deferred on 2026-09-08 and then completed in Topic PR 1 on 2026-09-09.
 
 ## Authoritative baseline
 
@@ -22,7 +22,7 @@ The values below were read from a live `GET /api/problems/stats` and `GET /api/p
 
 ### Progress after the baseline
 
-The Strings topic PR adds all 20 missing String tracers. Its expected post-merge state is 327/433 traced and 106 untraced. Bit Manipulation remains at 6/18 because it was deliberately skipped, not because its work was lost.
+The Strings topic PR added all 20 missing String tracers (327/433 traced, 106 untraced). Bit Manipulation Topic PR 1 then added its 12 remaining tracers on top of that, bringing the live state to 339/433 traced, 94 untraced.
 
 ### Topic status
 
@@ -40,14 +40,14 @@ The Strings topic PR adds all 20 missing String tracers. Its expected post-merge
 | — | Sorting Algorithms | 5 | 5 | 0 | Complete |
 | — | Stack & Queue | 30 | 30 | 0 | Complete |
 | — | Tries & Prefixes | 2 | 2 | 0 | Complete |
-| Deferred | Bit Manipulation | 6 | 18 | 12 | Skipped by user |
+| — | Bit Manipulation | 18 | 18 | 0 | Complete |
 | — | Strings | 24 | 24 | 0 | Complete |
 | 1 | Binary Search | 12 | 32 | 20 | Next |
 | 2 | Recursion & Backtracking | 4 | 25 | 21 | Pending |
 | 3 | Linked List | 5 | 31 | 26 | Pending |
 | 4 | Dynamic Programming | 28 | 55 | 27 | Pending |
 
-Strings was completed before Binary Search for the original 20-item tie. The active sequence is now Binary Search, Recursion & Backtracking, Linked List, then Dynamic Programming. Bit Manipulation remains deferred until the user resumes it.
+Bit Manipulation (previously deferred by the user) and Strings both landed independently and are now both complete. The active sequence is Binary Search, Recursion & Backtracking, Linked List, then Dynamic Programming.
 
 ## Recently completed work
 
@@ -57,7 +57,9 @@ Strings was completed before Binary Search for the original 20-item tie. The act
 - Heaps & PriorityQueue reached 17/17 real tracers in PR #125.
 - Strings reached 24/24 real tracers in the String topic completion PR.
 - The current backend suite passed 4,538 tests before the final Heap merge. The Heap-focused contract run passed 2,856 checks, and golden regeneration passed 308 tests. GitHub CI passed backend, frontend/build, and security checks on every merged PR.
-- Expected post-Strings catalogue integrity is 433 unique IDs, 327 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
+- Bit Manipulation reached 18/18 real tracers in Topic PR 1: all 12 remaining IDs (`power-set-bitwise`, `intro-bits-tricks`, `check-ith-bit-set`, `check-number-odd`, `set-unset-rightmost-bit`, `swap-two-numbers`, `divide-two-numbers-bitwise`, `min-bit-flips`, `print-prime-factors`, `divisors-of-number`, `count-primes-range-sieve`, `prime-factorisation-queries`) now have real `AlgorithmTracer`s. The full backend suite (4,832 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `intro-bits-tricks` to `bracket-reversals`, which both this PR and the independently landed Strings topic PR picked as the same still-untraced example.
+- Strings reached 24/24 real tracers in a separately landed topic PR, merged to `main` while Bit Manipulation Topic PR 1 was in flight.
+- Current catalogue integrity, after merging both topics, is 433 unique IDs, 339 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
 
 ## Non-negotiable delivery rules
 
@@ -105,11 +107,11 @@ Apply this checklist once for the entire topic, not as separate PRs:
 - Update frontend rendering or tests inside the topic PR if a new truthful `DsType` or payload shape requires it.
 - Include the full ID list, before/after count, test evidence, and known limitations in the PR description.
 
-## Topic PR 1 — Bit Manipulation, 12 remaining
+## Completed topic PR — Bit Manipulation, 12 added
 
-Branch suggestion: `feat/bit-manipulation-trace-completion`
+Branch: `feat/bit-manipulation-tracers`.
 
-Expected result after merge: 319/433 traced, 114 untraced.
+Result after merge (on top of the already-merged Strings topic): 339/433 traced, 94 untraced.
 
 | ID | Problem | Recommended input and trace focus |
 | --- | --- | --- |
@@ -137,7 +139,7 @@ Implementation notes:
 
 Branch suggestion: `feat/string-trace-completion`
 
-Expected result after merge: 327/433 traced, 106 untraced. This count reflects the user's decision to defer the 12 Bit Manipulation problems.
+Expected result after merge: 327/433 traced, 106 untraced. This count reflected the then-current decision to defer the 12 Bit Manipulation problems; Bit Manipulation was completed separately immediately afterward (see above), bringing the combined live state to 339/433.
 
 | ID | Problem | Recommended input and trace focus |
 | --- | --- | --- |
@@ -173,7 +175,7 @@ Implementation notes:
 
 Branch suggestion: `feat/binary-search-trace-completion`
 
-Expected result after merge: 347/433 traced, 86 untraced.
+Expected result after merge: 359/433 traced, 74 untraced.
 
 | ID | Problem | Recommended input and trace focus |
 | --- | --- | --- |

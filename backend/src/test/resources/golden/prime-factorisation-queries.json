@@ -1,0 +1,142 @@
+{
+  "anchors" : {
+    "done" : 10,
+    "init" : 3,
+    "lookup" : 7
+  },
+  "code" : "public List<Integer> primeFactorsViaSieve(int n) {\n    int[] spf = buildSmallestPrimeFactorSieve(MAX);\n    List<Integer> factors = new ArrayList<>();\n    int x = n;\n    while (x > 1) {\n        int factor = spf[x];\n        factors.add(factor);\n        x /= factor;\n    }\n    return factors;\n}",
+  "problemId" : "prime-factorisation-queries",
+  "resolvedInput" : {
+    "n" : 30
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Smallest-prime-factor table built once for every value up to 100000. Look up spf[30] repeatedly.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "spf[30] = 2. Divide it out: x = 30 / 2 = 15.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "factor" : "2",
+      "factors" : "[2]",
+      "x" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "spf[15] = 3. Divide it out: x = 15 / 3 = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "factor" : "3",
+      "factors" : "[2, 3]",
+      "x" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "spf[5] = 5. Divide it out: x = 5 / 5 = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "factor" : "5",
+      "factors" : "[2, 3, 5]",
+      "x" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "x reached 1. Prime factorisation of 30 = [2, 3, 5].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "factors" : "[2, 3, 5]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

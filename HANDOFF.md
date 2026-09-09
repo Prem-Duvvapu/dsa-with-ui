@@ -1,7 +1,7 @@
 # DSA Visualizer — handoff prompts for remaining work
 
-> **Current status — 2026-09-08.** The snapshots embedded in the original prompts below are
-> historical. The live system has 433 unique catalogue ids and 327 tracers; the frontend uses
+> **Current status — 2026-09-09.** The snapshots embedded in the original prompts below are
+> historical. The live system has 433 unique catalogue ids and 339 tracers; the frontend uses
 > the v2 `/api/problems` API. Prompt E Phase 0 (closed `DsType` registry) and Phase 1
 > (trace-owned tree/graph topology) are complete, and its Phase 2 wire contract is complete.
 > The three LIS tracers and `DpTableCanvas` are an intentional partial delivery of Phases 3/4.
