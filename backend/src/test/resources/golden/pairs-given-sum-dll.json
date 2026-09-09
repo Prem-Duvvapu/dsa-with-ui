@@ -1,0 +1,675 @@
+{
+  "anchors" : {
+    "compare" : 6,
+    "done" : 13,
+    "inspect" : 2
+  },
+  "code" : "public List<int[]> pairs(ListNode head, int target) {\n    ListNode left = head, right = tail(head);\n    List<int[]> result = new ArrayList<>();\n    while (left != right && left.prev != right) {\n        int sum = left.val + right.val;\n        if (sum == target) {\n            result.add(new int[]{left.val, right.val});\n            left = left.next;\n            right = right.prev;\n        } else if (sum < target) left = left.next;\n        else right = right.prev;\n    }\n    return result;\n}",
+  "problemId" : "pairs-given-sum-dll",
+  "resolvedInput" : {
+    "target" : 7,
+    "values" : [ 1, 2, 3, 4, 5, 6 ]
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Read sorted DLL node 0 with value 1 and preserve identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "Read sorted DLL node 1 with value 2 and preserve identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "Read sorted DLL node 2 with value 3 and preserve identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "value" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 2,
+    "description" : "Read sorted DLL node 3 with value 4 and preserve identity #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3",
+      "value" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 2,
+    "description" : "Read sorted DLL node 4 with value 5 and preserve identity #4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "4",
+      "value" : "5"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 2,
+    "description" : "Read sorted DLL node 5 with value 6 and preserve identity #5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "5",
+      "value" : "6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Compare 1 + 6 = 7 with target 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pairs" : "[]",
+      "sum" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "slow"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "fast"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "Compare 2 + 5 = 7 with target 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pairs" : "[[1, 6]]",
+      "sum" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "slow"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "fast"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "Compare 3 + 4 = 7 with target 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "pairs" : "[[1, 6], [2, 5]]",
+      "sum" : "7"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "slow"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "fast"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "The inward scan found 3 pairs.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[[1, 6], [2, 5], [3, 4]]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 4,
+      "prevId" : 2,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 4,
+      "val" : "5",
+      "nextId" : 5,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 5,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 4,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

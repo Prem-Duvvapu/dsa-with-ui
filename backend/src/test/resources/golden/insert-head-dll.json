@@ -1,0 +1,240 @@
+{
+  "anchors" : {
+    "done" : 6,
+    "insert" : 3,
+    "inspect" : 2
+  },
+  "code" : "public ListNode insertBeforeHead(ListNode head, int value) {\n    ListNode oldHead = head;\n    ListNode node = new ListNode(value);\n    node.next = oldHead;\n    oldHead.prev = node;\n    return node;\n}",
+  "problemId" : "insert-head-dll",
+  "resolvedInput" : {
+    "value" : 1,
+    "values" : [ 2, 4, 6 ]
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Read existing DLL node 0 with value 2 and preserve identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "Read existing DLL node 1 with value 4 and preserve identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "value" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "Read existing DLL node 2 with value 6 and preserve identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "value" : "6"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 3,
+    "description" : "Link new head #3 forward to #0 and link the old head back.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "newHead" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Both directions are consistent and the new head has no prev link.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 4, 6]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "2",
+      "nextId" : 1,
+      "prevId" : 3,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : 0,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "6",
+      "nextId" : null,
+      "prevId" : 1,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "1",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "result"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

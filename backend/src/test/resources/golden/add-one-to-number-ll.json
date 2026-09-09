@@ -1,0 +1,500 @@
+{
+  "anchors" : {
+    "add" : 8,
+    "done" : 13,
+    "grow" : 10,
+    "inspect" : 2,
+    "reverse" : 3
+  },
+  "code" : "public ListNode addOne(ListNode head) {\n    head = reverse(head);\n    int carry = 1;\n    for (ListNode p = head; p != null && carry > 0; p = p.next) {\n        int sum = p.val + carry;\n        p.val = sum % 10;\n        carry = sum / 10;\n    }\n    if (carry > 0) {\n        append(head, new ListNode(carry));\n    }\n    head = reverse(head);\n    return head;\n}",
+  "problemId" : "add-one-to-number-ll",
+  "resolvedInput" : {
+    "digits" : [ 1, 2, 9 ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Read digit list node 0 with value 1 and preserve identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "9",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "Read digit list node 1 with value 2 and preserve identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "9",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "Read digit list node 2 with value 9 and preserve identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "value" : "9"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "9",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 3,
+    "description" : "Reverse the link at digit identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "9",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 3,
+    "description" : "Reverse the link at digit identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "9",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "Reverse the link at digit identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "9",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Add the carry at identity #2: digit=0, next carry=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "carry" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 8,
+    "description" : "Add the carry at identity #1: digit=3, next carry=0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "carry" : "0"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 3,
+    "description" : "Reverse the link at digit identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 3,
+    "description" : "Reverse the link at digit identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 3,
+    "description" : "Reverse the link at digit identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 13,
+    "description" : "Restore most-significant-first order after adding one.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 3, 0]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "result"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "0",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

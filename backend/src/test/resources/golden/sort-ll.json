@@ -1,0 +1,782 @@
+{
+  "anchors" : {
+    "done" : 8,
+    "inspect" : 2,
+    "merge" : 6,
+    "split" : 4
+  },
+  "code" : "public ListNode mergeSort(ListNode head) {\n    if (head == null || head.next == null) return head;\n    ListNode middle = split(head);\n    ListNode left = mergeSort(head);\n    ListNode right = mergeSort(middle);\n    return merge(left, right);\n}\n// the merged chain is sorted\n",
+  "problemId" : "sort-ll",
+  "resolvedInput" : {
+    "values" : [ 4, 2, 1, 3 ]
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Read unsorted list node 0 with value 4 and preserve identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "value" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "Read unsorted list node 1 with value 2 and preserve identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "Read unsorted list node 2 with value 1 and preserve identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 2,
+    "description" : "Read unsorted list node 3 with value 3 and preserve identity #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3",
+      "value" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "Cut after identity #1 into two smaller chains.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Cut after identity #0 into two smaller chains.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)", "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "Append identity #1 (value 2), the smaller current head.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)", "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 6,
+    "description" : "Append the already-sorted remainder.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)", "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 4,
+    "description" : "Cut after identity #2 into two smaller chains.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)", "sort(#2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "Append identity #2 (value 1), the smaller current head.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)", "sort(#2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 6,
+    "description" : "Append the already-sorted remainder.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)", "sort(#2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "Append identity #2 (value 1), the smaller current head.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 6,
+    "description" : "Append identity #1 (value 2), the smaller current head.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 6,
+    "description" : "Append identity #3 (value 3), the smaller current head.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 6,
+    "description" : "Append the already-sorted remainder.",
+    "queueOrStackState" : null,
+    "callStack" : [ "sort(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 8,
+    "description" : "Merge sort returns the identities in nondecreasing value order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[1, 2, 3, 4]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "result"
+    }, {
+      "id" : 3,
+      "val" : "3",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

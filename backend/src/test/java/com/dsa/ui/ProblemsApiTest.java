@@ -69,7 +69,7 @@ class ProblemsApiTest {
         assertFalse(getJson("/api/problems/two-sum").path("inputSpec").isMissingNode());
         assertTrue(getJson("/api/problems/two-sum").path("traced").asBoolean());
 
-        JsonNode untraced = getJson("/api/problems/middle-linked-list");
+        JsonNode untraced = getJson("/api/problems/longest-common-subsequence");
         assertFalse(untraced.path("traced").asBoolean());
         assertTrue(untraced.path("inputSpec").isNull() || untraced.path("inputSpec").isMissingNode());
     }
@@ -151,7 +151,7 @@ class ProblemsApiTest {
 
         // Distinguishing these is the point: the UI can say "not yet traced" honestly
         // rather than animating an unrelated algorithm, which is what used to happen.
-        mockMvc.perform(get("/api/problems/middle-linked-list/execute"))
+        mockMvc.perform(get("/api/problems/longest-common-subsequence/execute"))
                 .andExpect(status().isNotImplemented());
     }
 
@@ -180,9 +180,9 @@ class ProblemsApiTest {
         // Arrays retired its last legacy id in the same batch that traced its remaining
         // problems, so /api/arrays/execute/{anyId} now answers 410 for everything - a real,
         // permanent state (Sorting, Arrays, Sliding Window, Bit Manipulation, Strings,
-        // Binary Search, and Recursion & Backtracking have all fully migrated in that
-        // order). Exercise a category that has not fully migrated instead.
+        // Binary Search, Recursion & Backtracking, and Linked List have all fully
+        // migrated). Exercise a category that has not fully migrated instead.
         mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isOk());
-        mockMvc.perform(get("/api/linkedlist/execute/middle-linked-list")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/dp/execute/longest-common-subsequence")).andExpect(status().isOk());
     }
 }

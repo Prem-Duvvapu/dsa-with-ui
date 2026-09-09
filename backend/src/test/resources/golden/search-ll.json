@@ -1,0 +1,415 @@
+{
+  "anchors" : {
+    "compare" : 4,
+    "done" : 8,
+    "inspect" : 2
+  },
+  "code" : "public int search(ListNode head, int target) {\n    int index = 0;\n    while (head != null) {\n        if (head.val == target) break;\n        head = head.next;\n        index++;\n    }\n    return head == null ? -1 : index;\n}",
+  "problemId" : "search-ll",
+  "resolvedInput" : {
+    "target" : 30,
+    "values" : [ 10, 20, 30, 40 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Read search list node 0 with value 10 and preserve identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "value" : "10"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "Read search list node 1 with value 20 and preserve identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "value" : "20"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "Read search list node 2 with value 30 and preserve identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "value" : "30"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 2,
+    "description" : "Read search list node 3 with value 40 and preserve identity #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3",
+      "value" : "40"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "Compare index 0 value 10 with target 30.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "target" : "30"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Compare index 1 value 20 with target 30.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "target" : "30"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 4,
+    "description" : "Compare index 2 value 30 with target 30.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "target" : "30"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 8,
+    "description" : "Target found at index 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "10",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "20",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "30",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "result"
+    }, {
+      "id" : 3,
+      "val" : "40",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

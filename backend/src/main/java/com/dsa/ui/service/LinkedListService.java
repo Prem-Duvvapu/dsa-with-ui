@@ -24,52 +24,10 @@ public class LinkedListService implements ProblemProvider {
     }
 
     public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            case "intro-singly-ll": return generateIntroSinglySteps();
-            case "insert-head-ll": return generateInsertHeadSteps();
-            case "delete-head-ll": return generateDeleteHeadSteps();
-            case "length-ll": return generateLengthLlSteps();
-            case "search-ll": return generateSearchLlSteps();
-            case "intro-doubly-ll": return generateIntroDoublySteps();
-            case "insert-head-dll": return generateInsertHeadDllSteps();
-            case "delete-head-dll": return generateDeleteHeadDllSteps();
-            case "reverse-dll": return generateReverseDllSteps();
-            case "middle-linked-list": return generateMiddleSteps();
-            // reverse-linked-list has a real tracer (tracer/impl) and has for a while -
-            // this case was never updated to refuse, so its legacy endpoint has been
-            // serving a real trace by coincidence rather than by guard. Fixed now.
-            case "reverse-linked-list":
-                throw new LegacyTraceRetiredException(problemId);
-            case "reverse-ll-recursive": return generateReverseRecursiveSteps();
-            case "detect-loop-linked-list": return generateDetectLoopSteps();
-            // find-starting-point-loop and reverse-ll-group-k have real tracers
-            // (tracer/impl) now. Refuse rather than let default: serve
-            // generateReverseSteps()'s unrelated steps under these ids.
-            case "find-starting-point-loop":
-            case "reverse-ll-group-k":
-                throw new LegacyTraceRetiredException(problemId);
-            case "length-of-loop-ll": return generateLengthOfLoopSteps();
-            case "palindrome-ll": return generatePalindromeLlSteps();
-            case "segregate-odd-even-ll": return generateSegregateOddEvenSteps();
-            case "remove-nth-from-back": return generateRemoveNthBackSteps();
-            case "delete-middle-node-ll": return generateDeleteMiddleNodeSteps();
-            case "sort-ll": return generateSortLlSteps();
-            case "sort-012-ll": return generateSort012LlSteps();
-            case "intersection-point-y-ll": return generateIntersectionPointYSteps();
-            case "add-one-to-number-ll": return generateAddOneToNumberSteps();
-            case "add-two-numbers-ll": return generateAddTwoNumbersSteps();
-            case "delete-occurrences-key-dll": return generateDeleteOccurrencesKeyDllSteps();
-            case "pairs-given-sum-dll": return generatePairsGivenSumDllSteps();
-            case "remove-duplicates-sorted-dll": return generateRemoveDuplicatesSortedDllSteps();
-            case "rotate-ll": return generateRotateLlSteps();
-            // flattening-ll and clone-ll-random-pointer have real tracers (tracer/impl)
-            // now. Refuse rather than let default: serve generateReverseSteps()'s
-            // unrelated steps under these ids.
-            case "flattening-ll":
-            case "clone-ll-random-pointer":
-                throw new LegacyTraceRetiredException(problemId);
-            default: return generateReverseSteps();
+        if (problems.containsKey(problemId)) {
+            throw new LegacyTraceRetiredException(problemId);
         }
+        throw new IllegalArgumentException("Unknown Linked List problem: " + problemId);
     }
 
     private void initProblems() {
@@ -157,51 +115,6 @@ public class LinkedListService implements ProblemProvider {
             ));
         }
     }
-
-    // Step Generators
-    private List<ExecutionStep> generateReverseSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> nodes = createDefaultList();
-        steps.add(new ExecutionStep(1, 4, "Reverse Linked List: Initialize prev = null, curr = head (val 1).", List.of(), Map.of(), List.of(), Map.of("prev", "null", "curr", "1"), "LinkedList", null, null, nodes, null));
-        steps.add(new ExecutionStep(2, 51, "Pointer Reversal: curr.next (1 -> 2) reversed to curr.next -> prev (null). Move prev = 1, curr = 2.", List.of(), Map.of(), List.of(), Map.of("prev", "1", "curr", "2"), "LinkedList", null, null, nodes, null));
-        steps.add(new ExecutionStep(3, 56, "Reverse Linked List Complete! Return new head (val 4). Reversed List: 4 -> 3 -> 2 -> 1.", List.of(), Map.of(), List.of(), Map.of("newHead", "4"), "LinkedList", null, null, nodes, null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateMiddleSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<ListNode> nodes = createDefaultList();
-        steps.add(new ExecutionStep(1, 4, "Tortoise-Hare Algorithm: Initialize slow = head (1), fast = head (1).", List.of(), Map.of(), List.of(), Map.of("slow", "1", "fast", "1"), "LinkedList", null, null, nodes, null));
-        steps.add(new ExecutionStep(2, 5, "Move slow 1 step -> 2, fast 2 steps -> 3.", List.of(), Map.of(), List.of(), Map.of("slow", "2", "fast", "3"), "LinkedList", null, null, nodes, null));
-        steps.add(new ExecutionStep(3, 7, "Middle Node Complete! Return slow pointer (node val 3).", List.of(), Map.of(), List.of(), Map.of("Middle Node", "3"), "LinkedList", null, null, nodes, null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateIntroSinglySteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateInsertHeadSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateDeleteHeadSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateLengthLlSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateSearchLlSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateIntroDoublySteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateInsertHeadDllSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateDeleteHeadDllSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateReverseDllSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateReverseRecursiveSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateDetectLoopSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateLengthOfLoopSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generatePalindromeLlSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateSegregateOddEvenSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateRemoveNthBackSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateDeleteMiddleNodeSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateSortLlSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateSort012LlSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateIntersectionPointYSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateAddOneToNumberSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateAddTwoNumbersSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateDeleteOccurrencesKeyDllSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generatePairsGivenSumDllSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateRemoveDuplicatesSortedDllSteps() { return generateReverseSteps(); }
-    private List<ExecutionStep> generateRotateLlSteps() { return generateReverseSteps(); }
 
     private List<ListNode> createDefaultList() {
         return List.of(

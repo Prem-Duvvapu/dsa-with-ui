@@ -1,0 +1,612 @@
+{
+  "anchors" : {
+    "base" : 3,
+    "done" : 10,
+    "inspect" : 2,
+    "recurse" : 5,
+    "rewire" : 6
+  },
+  "code" : "public ListNode reverse(ListNode head) {\n    if (head == null || head.next == null) {\n        return head;\n    }\n    ListNode newHead = reverse(head.next);\n    head.next.next = head;\n    head.next = null;\n    return newHead;\n}\n// return the tail as the new head\n",
+  "problemId" : "reverse-ll-recursive",
+  "resolvedInput" : {
+    "values" : [ 1, 2, 3, 4 ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Read list node 0 with value 1 and preserve identity #0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "0",
+      "value" : "1"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 2,
+    "description" : "Read list node 1 with value 2 and preserve identity #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "1",
+      "value" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 2,
+    "description" : "Read list node 2 with value 3 and preserve identity #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "2",
+      "value" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 2,
+    "description" : "Read list node 3 with value 4 and preserve identity #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "index" : "3",
+      "value" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 5,
+    "description" : "Recurse from identity #1 before changing identity #0's link.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverse(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "1",
+      "next" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 5,
+    "description" : "Recurse from identity #2 before changing identity #1's link.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverse(#0)", "reverse(#1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "2",
+      "next" : "3"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "Recurse from identity #3 before changing identity #2's link.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverse(#0)", "reverse(#1)", "reverse(#2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "3",
+      "next" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "next"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 3,
+    "description" : "Identity #3 is the tail, so it becomes the new head.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverse(#0)", "reverse(#1)", "reverse(#2)", "reverse(#3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "head" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "On unwind, point #3 back to #2 and clear #2.next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverse(#0)", "reverse(#1)", "reverse(#2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returnHead" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 6,
+    "description" : "On unwind, point #2 back to #1 and clear #1.next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverse(#0)", "reverse(#1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returnHead" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 6,
+    "description" : "On unwind, point #1 back to #0 and clear #0.next.",
+    "queueOrStackState" : null,
+    "callStack" : [ "reverse(#0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "returnHead" : "4"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "current"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "prev"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 10,
+    "description" : "Unwinding is complete; identity #3 is the new head.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "[4, 3, 2, 1]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "1",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 1,
+      "val" : "2",
+      "nextId" : 0,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 2,
+      "val" : "3",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "nextId" : 2,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "result"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
