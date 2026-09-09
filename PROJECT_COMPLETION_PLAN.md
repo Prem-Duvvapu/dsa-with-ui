@@ -36,8 +36,8 @@ The values below were read from a live `GET /api/problems/stats` and `GET /api/p
 | — | Sorting Algorithms | 5 | 5 | 0 | Complete |
 | — | Stack & Queue | 30 | 30 | 0 | Complete |
 | — | Tries & Prefixes | 2 | 2 | 0 | Complete |
-| 1 | Bit Manipulation | 6 | 18 | 12 | Next |
-| 2 | Strings | 4 | 24 | 20 | Pending |
+| — | Bit Manipulation | 18 | 18 | 0 | Complete |
+| 2 | Strings | 4 | 24 | 20 | Next |
 | 3 | Binary Search | 12 | 32 | 20 | Pending |
 | 4 | Recursion & Backtracking | 4 | 25 | 21 | Pending |
 | 5 | Linked List | 5 | 31 | 26 | Pending |
@@ -52,7 +52,8 @@ Strings precedes Binary Search for the 20-item tie. Do not reorder topics unless
 - Frontend routing tests and interval visualization reliability were fixed in PR #124.
 - Heaps & PriorityQueue reached 17/17 real tracers in PR #125.
 - The current backend suite passed 4,538 tests before the final Heap merge. The Heap-focused contract run passed 2,856 checks, and golden regeneration passed 308 tests. GitHub CI passed backend, frontend/build, and security checks on every merged PR.
-- Current catalogue integrity is 433 unique IDs, 307 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
+- Bit Manipulation reached 18/18 real tracers in Topic PR 1: all 12 remaining IDs (`power-set-bitwise`, `intro-bits-tricks`, `check-ith-bit-set`, `check-number-odd`, `set-unset-rightmost-bit`, `swap-two-numbers`, `divide-two-numbers-bitwise`, `min-bit-flips`, `print-prime-factors`, `divisors-of-number`, `count-primes-range-sieve`, `prime-factorisation-queries`) now have real `AlgorithmTracer`s. The full backend suite (4,832 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `intro-bits-tricks` to `bracket-reversals` (Strings, still untraced).
+- Current catalogue integrity is 433 unique IDs, 319 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
 
 ## Non-negotiable delivery rules
 

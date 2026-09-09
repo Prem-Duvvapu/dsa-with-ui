@@ -69,7 +69,7 @@ class ProblemsApiTest {
         assertFalse(getJson("/api/problems/two-sum").path("inputSpec").isMissingNode());
         assertTrue(getJson("/api/problems/two-sum").path("traced").asBoolean());
 
-        JsonNode untraced = getJson("/api/problems/intro-bits-tricks");
+        JsonNode untraced = getJson("/api/problems/bracket-reversals");
         assertFalse(untraced.path("traced").asBoolean());
         assertTrue(untraced.path("inputSpec").isNull() || untraced.path("inputSpec").isMissingNode());
     }
@@ -151,7 +151,7 @@ class ProblemsApiTest {
 
         // Distinguishing these is the point: the UI can say "not yet traced" honestly
         // rather than animating an unrelated algorithm, which is what used to happen.
-        mockMvc.perform(get("/api/problems/intro-bits-tricks/execute"))
+        mockMvc.perform(get("/api/problems/bracket-reversals/execute"))
                 .andExpect(status().isNotImplemented());
     }
 

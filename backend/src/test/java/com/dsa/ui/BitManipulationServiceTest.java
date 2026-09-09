@@ -37,7 +37,11 @@ public class BitManipulationServiceTest {
     @Test
     public void testGenerateStepsForAllBitMathProblems() {
         Set<String> retired = Set.of("single-number-1", "check-power-of-2", "count-set-bits",
-                "xor-numbers-in-range", "single-number-3", "pow-x-n-math");
+                "xor-numbers-in-range", "single-number-3", "pow-x-n-math",
+                "power-set-bitwise", "intro-bits-tricks", "check-ith-bit-set", "check-number-odd",
+                "set-unset-rightmost-bit", "swap-two-numbers", "divide-two-numbers-bitwise",
+                "min-bit-flips", "print-prime-factors", "divisors-of-number",
+                "count-primes-range-sieve", "prime-factorisation-queries");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

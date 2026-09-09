@@ -1,0 +1,121 @@
+{
+  "anchors" : {
+    "done" : 5,
+    "foldB" : 2,
+    "recoverA" : 3,
+    "recoverB" : 4
+  },
+  "code" : "public int[] swap(int a, int b) {\n    a = a ^ b;\n    b = a ^ b;\n    a = a ^ b;\n    return new int[]{a, b};\n}",
+  "problemId" : "swap-two-numbers",
+  "resolvedInput" : {
+    "a" : 5,
+    "b" : 9
+  },
+  "stepCount" : 4,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Start: a = 5, b = 9. a = a ^ b = 5 ^ 9 = 12 — both values are now folded into a.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "5",
+      "b" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 3,
+    "description" : "b = a ^ b = 12 ^ 9 = 5 — XORing the fold against the still-original b cancels b, leaving the original a.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "12",
+      "b" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 9,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "a = a ^ b = 12 ^ 5 = 9 — XORing the fold against the recovered original a cancels a, leaving the original b.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "12",
+      "b" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Swap complete, no third variable used: a = 9, b = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "a" : "9",
+      "b" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
