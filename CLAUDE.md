@@ -147,8 +147,8 @@ one source of truth: `frontend/src/canvas/registry.js`. It is keyed by the backe
 Nine canvases currently exist (`Array`, `Tree`, `Graph`, `LinkedList`, `RecursionTree`,
 `Grid`, `Dsu`, `Trie`, `DpTable`). Some registry values intentionally still reuse a generic
 renderer until visualization Phase 3 builds their dedicated canvas; this is explicit mapping,
-not an unknown-type fallback. Trie transport is wired, but its backend/canvas node-shape
-activation remains Phase 3 work; see `RCA.md`.
+not an unknown-type fallback. Trie transport and its canonical backend/canvas node shape are
+active and guarded by the Trie canvas tests; see resolved `RCA-012` in `RCA.md`.
 
 Styling is CSS custom properties in `index.css` plus inline styles; only a handful of CSS
 classes exist. `designTokens.test.js` is a static guard that fails the build on any `var()`

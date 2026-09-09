@@ -24,42 +24,10 @@ public class DpService implements ProblemProvider {
     }
 
     public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // These twenty-five have real tracers (tracer/impl). Refuse rather than let
-            // default: serve climbing-stairs' steps under these ids. The default:
-            // stays until PROMPT D; other ids in this service still rely on it.
-            case "matrix-chain-multiplication":
-            case "burst-balloons":
-            case "knapsack-01":
-            case "unbounded-knapsack":
-            case "climbing-stairs":
-            case "frog-jump":
-            case "frog-jump-k-distance":
-            case "max-sum-non-adjacent":
-            case "house-robber-2":
-            case "grid-unique-paths":
-            case "unique-paths-2":
-            case "minimum-falling-path-sum":
-            case "triangle-min-path-sum":
-            case "ninjas-training":
-            case "longest-increasing-subsequence":
-            case "print-lis":
-            case "lis-binary-search":
-            case "max-rectangle-area-all-ones":
-            case "count-square-submatrices":
-            case "subset-sum-equal-target":
-            case "partition-equal-subset-sum":
-            case "count-subsets-with-sum-k":
-            case "count-partitions-given-diff":
-            case "minimum-coins-dp":
-            case "coin-change-2":
-            case "edit-distance":
-            case "wildcard-matching":
-            case "ninja-and-his-friends":
-                throw new LegacyTraceRetiredException(problemId);
-            case "longest-common-subsequence": return generateLcsSteps();
-            default: return generateClimbingStairsSteps();
+        if (problems.containsKey(problemId)) {
+            throw new LegacyTraceRetiredException(problemId);
         }
+        throw new IllegalArgumentException("Unknown Dynamic Programming problem: " + problemId);
     }
 
     private void initProblems() {
@@ -160,7 +128,7 @@ public class DpService implements ProblemProvider {
             }
             """,
             null, null, null, null, null, null, createDefaultDpGrid(),
-            new ComplexityDetail("O(M * N)", "Time Complexity: Table size M x N.", "2D String DP", "O(M * N)", "Space Complexity: 2D DP matrix table.", "Matrix", "Auxiliary Space: O(M * N)", "Memory"), "Matrix"
+            new ComplexityDetail("O(M * N)", "Time Complexity: Table size M x N.", "2D String DP", "O(M * N)", "Space Complexity: 2D DP matrix table.", "Matrix", "Auxiliary Space: O(M * N)", "Memory"), "DpTable"
         ));
 
         // Bulk register remaining 50 DP problems
@@ -247,7 +215,7 @@ public class DpService implements ProblemProvider {
                     DsType.DP_TABLE;
             case "max-rectangle-area-all-ones", "count-square-submatrices" ->
                     DsType.MATRIX;
-            default -> DsType.ARRAY;
+            default -> DsType.DP_TABLE;
         };
     }
 
@@ -432,18 +400,6 @@ public class DpService implements ProblemProvider {
                     "Memory");
         };
     }
-
-    // Step Generators
-    private List<ExecutionStep> generateClimbingStairsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] dp = new int[]{1, 1, 2, 3, 5, 8};
-        steps.add(new ExecutionStep(1, 4, "Climbing Stairs N=5: Base cases dp[0] = 1, dp[1] = 1.", List.of(), Map.of(), List.of(), Map.of("dp[0]", "1", "dp[1]", "1"), "Array", null, createArrayState(dp, 0, 1), null, null));
-        steps.add(new ExecutionStep(2, 48, "State Transition Loop: dp[i] = dp[i-1] + dp[i-2]. dp[5] = 8 ways.", List.of(), Map.of(), List.of(), Map.of("ways", "8"), "Array", null, createArrayState(dp, 5, -1), null, null));
-        steps.add(new ExecutionStep(3, 52, "Climbing Stairs Complete! Total distinct ways to climb 5 stairs = 8.", List.of(), Map.of(), List.of(), Map.of("Result", "8"), "Array", null, createArrayState(dp, -1, -1), null, null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateLcsSteps() { return generateClimbingStairsSteps(); }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {
         List<ArrayElement> list = new ArrayList<>();

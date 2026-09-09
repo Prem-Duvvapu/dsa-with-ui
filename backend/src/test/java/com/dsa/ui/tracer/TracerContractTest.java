@@ -253,8 +253,8 @@ class TracerContractTest {
     void catalogReportsCoverage() {
         assertEquals(registry.size(), catalog.tracedCount(),
                 "every registered tracer should be marked traced in the catalogue");
-        assertTrue(catalog.size() > catalog.tracedCount(),
-                "coverage is not yet complete; this test flips when the migration finishes");
+        assertEquals(catalog.size(), catalog.tracedCount(),
+                "every catalogued problem should now have a tracer");
     }
 
     private Map<String, Object> alternate(String id) {

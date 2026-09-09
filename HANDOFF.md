@@ -1,13 +1,14 @@
 # DSA Visualizer — handoff prompts for remaining work
 
 > **Current status — 2026-09-09.** The snapshots embedded in the original prompts below are
-> historical. The live system has 433 unique catalogue ids and 406 tracers; the frontend uses
+> historical. The live system has 433 unique catalogue ids and 433 tracers; the frontend uses
 > the v2 `/api/problems` API. Prompt E Phase 0 (closed `DsType` registry) and Phase 1
 > (trace-owned tree/graph topology) are complete, and its Phase 2 wire contract is complete.
-> The three LIS tracers and `DpTableCanvas` are an intentional partial delivery of Phases 3/4.
-> Dedicated canvases/retagging for the other types, `CaptureStrip` Phase 5, and the remaining
-> tracer migration are still open. `RCA-012` (trie canvas/backend shape mismatch) is resolved
-> — Tries & Prefixes is fully traced (2/2), and Strings is fully traced (24/24). Read live counts from
+> `DpTableCanvas` and the complete 55-problem Dynamic Programming family are delivered.
+> Dedicated canvases/retagging for the other types and `CaptureStrip` Phase 5 remain open;
+> the original 433-entry tracer migration is complete. `RCA-012` is resolved
+> — the current Tries & Prefixes set is fully traced (2/2), and Strings is fully traced (24/24).
+> Five additional Trie-sheet topics are recorded in `PROJECT_COMPLETION_PLAN.md`. Read live counts from
 > `GET /api/problems/stats`; do not treat old counts below as current claims.
 
 > ## ⚠️ TEMPORARY — delete this file when the work is done

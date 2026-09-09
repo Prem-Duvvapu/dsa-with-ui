@@ -22,7 +22,8 @@ The values below were read from a live `GET /api/problems/stats` and `GET /api/p
 
 ### Progress after the baseline
 
-The Strings, Bit Manipulation, Binary Search, Recursion & Backtracking, and Linked List topic PRs have now landed. Linked List adds its final 26 tracers, bringing the current state to 406/433 traced and 27 untraced.
+The original tracer migration is complete in the Dynamic Programming topic branch: all 433
+catalogued problems now have caller-driven tracers and no catalogue entry remains untraced.
 
 ### Topic status
 
@@ -45,9 +46,10 @@ The Strings, Bit Manipulation, Binary Search, Recursion & Backtracking, and Link
 | — | Binary Search | 32 | 32 | 0 | Complete |
 | — | Recursion & Backtracking | 25 | 25 | 0 | Complete |
 | — | Linked List | 31 | 31 | 0 | Complete |
-| 1 | Dynamic Programming | 28 | 55 | 27 | Next |
+| — | Dynamic Programming | 55 | 55 | 0 | Complete in current topic branch |
 
-Bit Manipulation (previously deferred by the user), Strings, Binary Search, Recursion & Backtracking, and Linked List have all landed. Dynamic Programming is the final topic.
+All original algorithm topics are traced. The next algorithm expansion is a separate Trie-only
+PR for five requested sheet topics; it intentionally does not share the Dynamic Programming PR.
 
 ## Recently completed work
 
@@ -62,7 +64,11 @@ Bit Manipulation (previously deferred by the user), Strings, Binary Search, Recu
 - Binary Search reached 32/32 real tracers: all 20 remaining IDs (`search-insert-position`, `floor-ceil-sorted-array`, `first-last-occurrence`, `count-occurrences`, `search-rotated-sorted-2`, `count-rotations`, `find-peak-element`, `square-root-number`, `nth-root-number`, `min-days-bouquets`, `smallest-divisor`, `ship-packages-d-days`, `kth-missing-positive`, `painters-partition`, `minimize-max-distance-gas-station`, `row-max-ones`, `search-2d-matrix`, `search-2d-matrix-2`, `find-peak-element-2d`, `matrix-median`) now have real `AlgorithmTracer`s, including the first four `DsType.MATRIX` binary-search tracers in the codebase. The full backend suite (5,372 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `search-insert-position` to `rat-in-a-maze` (Recursion & Backtracking, still untraced). `matrix-median` dropped its odd-element-count validation in favor of a lower-median convention that also works for even counts, after the shared `TracerContractTest` growth harness's row/col-doubling made an even count unavoidable for a grown input.
 - Recursion & Backtracking reached 25/25 real tracers: all 21 remaining IDs (`rat-in-a-maze`, `m-coloring`, `palindrome-partitioning`, `permutations`, `word-search`, `atoi-recursive`, `pow-x-n-recursive`, `count-good-numbers`, `sort-stack-recursion`, `reverse-stack-recursion`, `generate-binary-strings`, `generate-parentheses`, `power-set`, `subsequences-patterns-theory`, `count-subsequences-sum-k`, `check-subsequence-sum-k`, `combination-sum-2`, `subsets-2`, `combination-sum-3`, `letter-combinations-phone`, `word-break`) now have real `AlgorithmTracer`s, using `emit.push()/pop()` call-stack frames throughout and spanning `STACK` (include/exclude path backtracking), `ARRAY`, `STRING`, `BITS`, `MATRIX`, and the codebase's first `GRAPH`-typed backtracking tracer (`m-coloring`). The full backend suite (5,666 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `rat-in-a-maze` to `middle-linked-list` (Linked List, still untraced). The 7 now-orphaned legacy `algorithm/backtracking` classes these ids used to borrow steps from (`RatInMaze`, `MColoring`, `PalindromePartitioning`, `Subsets`, `CombinationSum`, `Permutations`, `WordSearch`) were deleted along with `RecursionBacktrackingTracingTest`'s stale non-retirement assertions for them. `combination-sum-2`'s candidate value ceiling was lowered to match its target's scale after the shared `TracerContractTest` growth harness's default filler value (the field's own declared maximum) landed above every candidate's prune threshold and so never entered the search tree.
 - Linked List reached 31/31 real tracers: all 26 remaining IDs now use caller input and stable identity-preserving list snapshots, including reciprocal doubly-linked edges, explicit cycles, and shared intersection tails. Dedicated result/invariant coverage passed 28 tests; the focused tracer contract passed 3,273 checks; golden regeneration passed 407 tests.
-- Current catalogue integrity after the Linked List topic is 433 unique IDs, 406 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
+- Dynamic Programming reached 55/55 real tracers: the final 27 IDs cover core/subset,
+  string/reconstruction, stock-state, LIS, and interval/partition recurrences. The dedicated
+  result/table suite passes 27/27 and the targeted shared contract passes 1,760 checks.
+- Current catalogue integrity is 433 unique IDs, 433 tracer-backed IDs, zero untraced or
+  orphan tracer IDs, and seven recorded duplicate providers.
 
 ## Non-negotiable delivery rules
 
@@ -293,11 +299,12 @@ Implementation notes:
 - Pointer algorithms should expose named pointers such as `slow`, `fast`, `prev`, `current`, `next`, and dummy nodes.
 - Test empty lists, singleton lists, duplicate values, invalid positions, no-cycle/no-intersection cases, carry propagation, and all-node deletion.
 
-## Next topic PR 1 — Dynamic Programming, 27 remaining
+## Completed topic PR — Dynamic Programming, final 27
 
 Branch suggestion: `feat/dynamic-programming-trace-completion`
 
-Expected result after merge: 433/433 traced, 0 untraced. This is the final topic PR — replace every "known untraced" assertion in the test suite with an all-traced (`untraced == 0`, `traced == catalogued`) assertion in this PR.
+Result after merge: 433/433 traced, 0 untraced. Every former "known untraced" assertion is
+replaced with an all-traced (`untraced == 0`, `traced == catalogued`) assertion in this PR.
 
 | ID | Problem | DP family/state |
 | --- | --- | --- |
@@ -337,6 +344,25 @@ Implementation notes:
 - Use numeric types that cannot silently overflow within allowed constraints, especially counting problems and matrix-chain costs.
 - Add top-down stack frames only when the selected implementation is memoized recursion; do not show recursion for a tabulation implementation.
 - Keep the canonical untraced-route assertions pointed at Dynamic Programming until this final topic is completed, then replace them with all-traced assertions.
+
+## Next topic expansion PR — Tries, 5 additions
+
+Keep this separate from the completed Dynamic Programming topic. The existing Trie catalogue
+already covers `implement-trie` and `word-break-trie`; `longest-common-prefix` is also exposed
+through `TrieService` but is canonically owned by Strings and is one of the duplicate-provider
+records. Add these five requested sheet topics with real caller-driven tracers:
+
+| Requested topic | Proposed ID | Trace focus |
+| --- | --- | --- |
+| Longest Word with All Prefixes | `longest-word-all-prefixes` | terminal-prefix checks while selecting the longest lexicographic winner |
+| Number of Distinct Substrings | `number-distinct-substrings` | suffix insertion and new-node counting |
+| Bit Prerequisites for Trie Problems | `bit-trie-prerequisites` | fixed-width bit insertion/query mechanics |
+| Maximum XOR of Two Numbers | `maximum-xor-two-numbers` | opposite-bit greedy query against inserted values |
+| Maximum XOR With an Array Element | `maximum-xor-with-element` | offline limit-sorted queries and incremental bit-trie insertion |
+
+Expected catalogue after that expansion: 438 unique IDs and 438 tracers, assuming no ID
+collisions. Deliver all five in one Trie-only PR with result, contract, golden, frontend, and
+live-stat verification.
 
 ## Post-topic PR A — Catalogue integrity and legacy removal
 
@@ -464,9 +490,9 @@ For the next agent:
 1. Read this document, `HANDOFF.md`, `PROJECT_CONTEXT.md`, and the tracer contracts/tests before editing.
 2. Fetch and switch to `main`, then run `git pull --ff-only origin main`.
 3. Confirm the live stats still equal the baseline. If they differ, regenerate the per-topic inventory before implementation.
-4. Begin only the Dynamic Programming topic PR; it is the final algorithm topic.
-5. Use medium logical commits: shared support, tracer batches, contract/golden updates, then documentation/counts.
-6. Push the topic branch, open one PR, wait for every required check, review live stats, and merge it.
-7. Merge Dynamic Programming before beginning any post-topic cleanup PR.
-8. Complete the four post-topic PRs, then apply the final acceptance checklist.
+4. Finish and merge the in-flight Dynamic Programming topic PR if it is not already on `main`.
+5. Begin the five-item Trie expansion only after that merge, in one separate Trie-only PR.
+6. Use medium logical commits: catalogue/support, tracer batches, contract/golden updates, then documentation/counts.
+7. Merge the Trie expansion before beginning any post-topic cleanup PR.
+8. Complete the four post-topic cleanup PRs, then apply the final acceptance checklist.
 
