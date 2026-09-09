@@ -20,6 +20,16 @@ final class DpTraceSupport {
                 initialiseBaseCases();
                 // @a fill
                 evaluateTransitionCandidates();
+                // @a done
+                return extractAnswer();
+            }""";
+
+    static final String CODE_WITH_RECONSTRUCTION = """
+            public Object solve(Object input) {
+                // @a init
+                initialiseBaseCases();
+                // @a fill
+                evaluateTransitionCandidates();
                 // @a reconstruct
                 reconstructChosenSolution();
                 // @a done

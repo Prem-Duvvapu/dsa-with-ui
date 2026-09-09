@@ -63,7 +63,7 @@ class LongestCommonSubsequenceRemainingTracer extends RemainingDpTracer {
 class PartitionSetMinAbsDiffRemainingTracer extends RemainingDpTracer {
     @Override public String id() { return "partition-set-min-abs-diff"; }
     @Override public InputSpec inputSpec() {
-        return InputSpec.of(DpTraceSupport.intArray("nums", "Numbers", DpTraceSupport.list(1, 6, 11, 5), 1, 12, 0, 30));
+        return InputSpec.of(DpTraceSupport.intArray("nums", "Numbers", DpTraceSupport.list(1, 2), 1, 12, 0, 30));
     }
     @Override public Map<String, Object> alternateInput() { return Map.of("nums", List.of(3, 1, 4, 2, 2)); }
     @Override public void run(Inputs in, StepEmitter emit) {
@@ -104,13 +104,15 @@ class AssignCookiesDpRemainingTracer extends RemainingDpTracer {
         emit.at("init").say("After sorting, dp[i][j] is the most satisfied among the first i children using the first j cookies.")
                 .dpTable(DpTraceSupport.table(dp, known, null, Set.of(), false, "max(skip cookie, match if large enough)", "empty side = 0")).step();
         for (int i = 1; i <= greed.length; i++) for (int j = 1; j <= cookies.length; j++) {
-            long skip = dp[i][j - 1], match = cookies[j - 1] >= greed[i - 1] ? 1 + dp[i - 1][j - 1] : -1;
-            dp[i][j] = Math.max(skip, match); known[i][j] = true;
+            long skipCookie = dp[i][j - 1], skipChild = dp[i - 1][j];
+            long match = cookies[j - 1] >= greed[i - 1] ? 1 + dp[i - 1][j - 1] : -1;
+            dp[i][j] = Math.max(Math.max(skipCookie, skipChild), match); known[i][j] = true;
             emit.at("fill").say("Child greed %d, cookie %d: best satisfied count is %d.", greed[i - 1], cookies[j - 1], dp[i][j])
                     .var("i", i).var("j", j).var("value", dp[i][j])
                     .dpTable(DpTraceSupport.table(dp, known, new DpTraceSupport.Coord(i, j),
-                            Set.of(new DpTraceSupport.Coord(i, j - 1), new DpTraceSupport.Coord(i - 1, j - 1)), false,
-                            "max(skip, 1 + diagonal when cookie >= greed)", "max(" + skip + ", " + match + ") = " + dp[i][j])).step();
+                            Set.of(new DpTraceSupport.Coord(i, j - 1), new DpTraceSupport.Coord(i - 1, j),
+                                    new DpTraceSupport.Coord(i - 1, j - 1)), false,
+                            "max(skip cookie, skip child, match)", "max(" + skipCookie + ", " + skipChild + ", " + match + ") = " + dp[i][j])).step();
         }
         emit.at("done").say("Maximum satisfied children: %d.", dp[greed.length][cookies.length])
                 .var("answer", dp[greed.length][cookies.length]).dpTable(DpTraceSupport.table(dp, known, null, Set.of(), true,
@@ -122,8 +124,8 @@ class AssignCookiesDpRemainingTracer extends RemainingDpTracer {
 class TargetSumDpRemainingTracer extends RemainingDpTracer {
     @Override public String id() { return "target-sum-dp"; }
     @Override public InputSpec inputSpec() {
-        return InputSpec.of(DpTraceSupport.intArray("nums", "Numbers", DpTraceSupport.list(1, 1, 1, 1, 1), 1, 10, 0, 10),
-                InputField.of("target", FieldType.INT).label("Target").range(-30, 30).defaultValue(3).build());
+        return InputSpec.of(DpTraceSupport.intArray("nums", "Numbers", DpTraceSupport.list(1, 1), 1, 10, 0, 10),
+                InputField.of("target", FieldType.INT).label("Target").range(-30, 30).defaultValue(0).build());
     }
     @Override public Map<String, Object> alternateInput() { return Map.of("nums", List.of(1, 2, 1), "target", 0); }
     @Override public void run(Inputs in, StepEmitter emit) {

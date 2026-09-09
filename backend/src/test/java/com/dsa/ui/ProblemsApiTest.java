@@ -52,8 +52,8 @@ class ProblemsApiTest {
         int catalogued = stats.get("catalogued").asInt();
         int traced = stats.get("traced").asInt();
 
-        assertTrue(catalogued > traced, "coverage should not yet be complete");
-        assertEquals(catalogued - traced, stats.get("untraced").asInt());
+        assertEquals(catalogued, traced, "every catalogue entry should now have a tracer");
+        assertEquals(0, stats.get("untraced").asInt());
         assertTrue(stats.get("orphanedTracerIds").isEmpty(),
                 "a tracer with no catalogue entry is unreachable: " + stats.get("orphanedTracerIds"));
 
@@ -64,14 +64,14 @@ class ProblemsApiTest {
     }
 
     @Test
-    @DisplayName("A traced problem exposes an input spec; an untraced one does not")
+    @DisplayName("Completed catalogue entries expose input specs")
     void inputSpecPresentOnlyWhenTraced() throws Exception {
         assertFalse(getJson("/api/problems/two-sum").path("inputSpec").isMissingNode());
         assertTrue(getJson("/api/problems/two-sum").path("traced").asBoolean());
 
-        JsonNode untraced = getJson("/api/problems/longest-common-subsequence");
-        assertFalse(untraced.path("traced").asBoolean());
-        assertTrue(untraced.path("inputSpec").isNull() || untraced.path("inputSpec").isMissingNode());
+        JsonNode completed = getJson("/api/problems/longest-common-subsequence");
+        assertTrue(completed.path("traced").asBoolean());
+        assertFalse(completed.path("inputSpec").isMissingNode());
     }
 
     @Test
@@ -144,15 +144,10 @@ class ProblemsApiTest {
     }
 
     @Test
-    @DisplayName("An unknown problem is 404; a catalogued but untraced one is 501")
+    @DisplayName("An unknown problem is 404 after tracer coverage is complete")
     void missingVersusNotYetTraced() throws Exception {
         mockMvc.perform(get("/api/problems/no-such-problem-at-all/execute"))
                 .andExpect(status().isNotFound());
-
-        // Distinguishing these is the point: the UI can say "not yet traced" honestly
-        // rather than animating an unrelated algorithm, which is what used to happen.
-        mockMvc.perform(get("/api/problems/longest-common-subsequence/execute"))
-                .andExpect(status().isNotImplemented());
     }
 
     @Test
@@ -178,11 +173,10 @@ class ProblemsApiTest {
     @DisplayName("Legacy per-topic endpoints still work during the migration")
     void legacyEndpointsUnaffected() throws Exception {
         // Arrays retired its last legacy id in the same batch that traced its remaining
-        // problems, so /api/arrays/execute/{anyId} now answers 410 for everything - a real,
-        // permanent state (Sorting, Arrays, Sliding Window, Bit Manipulation, Strings,
-        // Binary Search, Recursion & Backtracking, and Linked List have all fully
-        // migrated). Exercise a category that has not fully migrated instead.
+        // problems, so /api/arrays/execute/{anyId} now answers 410 for everything. DP is
+        // now fully migrated too, and its legacy route must fail explicitly rather than
+        // serving a hardcoded animation.
         mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isOk());
-        mockMvc.perform(get("/api/dp/execute/longest-common-subsequence")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/dp/execute/longest-common-subsequence")).andExpect(status().isGone());
     }
 }

@@ -77,6 +77,7 @@ abstract class LcsFamilyRemainingTracer extends RemainingDpTracer {
 @Component
 class PrintLongestCommonSubsequenceRemainingTracer extends LcsFamilyRemainingTracer {
     @Override public String id() { return "print-longest-common-subsequence"; }
+    @Override public String annotatedCode() { return DpTraceSupport.CODE_WITH_RECONSTRUCTION; }
     @Override protected String firstDefault() { return "abcde"; }
     @Override protected String secondDefault() { return "bdgek"; }
     @Override protected void finish(String a, String b, long[][] dp, boolean[][] known, StepEmitter emit) {
@@ -130,8 +131,10 @@ class MinInsertionsDeletionsRemainingTracer extends LcsFamilyRemainingTracer {
 @Component
 class ShortestCommonSupersequenceRemainingTracer extends LcsFamilyRemainingTracer {
     @Override public String id() { return "shortest-common-supersequence"; }
+    @Override public String annotatedCode() { return DpTraceSupport.CODE_WITH_RECONSTRUCTION; }
     @Override protected String firstDefault() { return "abac"; }
     @Override protected String secondDefault() { return "cab"; }
+    @Override public Map<String, Object> alternateInput() { return Map.of("first", "geek", "second", "eke"); }
     @Override protected void finish(String a, String b, long[][] dp, boolean[][] known, StepEmitter emit) {
         StringBuilder reverse = new StringBuilder(); int i = a.length(), j = b.length();
         while (i > 0 && j > 0) {

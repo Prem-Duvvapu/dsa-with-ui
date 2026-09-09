@@ -34,6 +34,7 @@ abstract class LisRemainingTracer extends RemainingDpTracer {
 @Component
 class LongestStringChainRemainingTracer extends RemainingDpTracer {
     @Override public String id() { return "longest-string-chain"; }
+    @Override public String annotatedCode() { return DpTraceSupport.CODE_WITH_RECONSTRUCTION; }
     @Override public InputSpec inputSpec() {
         return InputSpec.of(InputField.of("words", FieldType.STRING).label("Comma-separated words")
                 .length(1, 100).constraint("pattern", "[a-z]+(,[a-z]+)*")
@@ -132,6 +133,7 @@ class NumberOfLisRemainingTracer extends LisRemainingTracer {
 @Component
 class LargestDivisibleSubsetRemainingTracer extends LisRemainingTracer {
     @Override public String id() { return "largest-divisible-subset"; }
+    @Override public String annotatedCode() { return DpTraceSupport.CODE_WITH_RECONSTRUCTION; }
     @Override protected List<Integer> defaults() { return List.of(1, 2, 4, 8); }
     @Override public Map<String, Object> alternateInput() { return Map.of("nums", List.of(1, 2, 3)); }
     @Override public void run(Inputs in, StepEmitter emit) {

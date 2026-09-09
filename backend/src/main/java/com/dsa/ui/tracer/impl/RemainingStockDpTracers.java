@@ -21,7 +21,7 @@ abstract class StockStateRemainingTracer extends RemainingDpTracer {
     protected boolean cooldown() { return false; }
 
     @Override public InputSpec inputSpec() {
-        return InputSpec.of(DpTraceSupport.intArray("prices", "Daily prices", defaults(), 1, 15, 1, 100));
+        return InputSpec.of(DpTraceSupport.intArray("prices", "Daily prices", defaults(), 1, 15, 0, 100));
     }
 
     @Override public Map<String, Object> alternateInput() { return Map.of("prices", List.of(7, 6, 4, 3, 1)); }
@@ -114,7 +114,7 @@ class BestTimeStockFourRemainingTracer extends StockStateRemainingTracer {
     @Override public String id() { return "best-time-stock-4"; }
     @Override protected List<Integer> defaults() { return List.of(3, 2, 6, 5, 0, 3); }
     @Override public InputSpec inputSpec() { return InputSpec.of(
-            DpTraceSupport.intArray("prices", "Daily prices", defaults(), 1, 15, 1, 100),
+            DpTraceSupport.intArray("prices", "Daily prices", defaults(), 1, 15, 0, 100),
             InputField.of("k", FieldType.INT).label("Maximum transactions").range(1, 5).defaultValue(2).build()); }
     @Override public Map<String, Object> alternateInput() { return Map.of("prices", List.of(2, 4, 1, 7), "k", 1); }
     @Override protected int transactionCap(Inputs in) { return in.getInt("k"); }
@@ -132,7 +132,7 @@ class StockTransactionFeeRemainingTracer extends StockStateRemainingTracer {
     @Override public String id() { return "stock-transaction-fee"; }
     @Override protected List<Integer> defaults() { return List.of(1, 3, 2, 8, 4, 9); }
     @Override public InputSpec inputSpec() { return InputSpec.of(
-            DpTraceSupport.intArray("prices", "Daily prices", defaults(), 1, 15, 1, 100),
+            DpTraceSupport.intArray("prices", "Daily prices", defaults(), 1, 15, 0, 100),
             InputField.of("fee", FieldType.INT).label("Transaction fee").range(0, 30).defaultValue(2).build()); }
     @Override public Map<String, Object> alternateInput() { return Map.of("prices", List.of(1, 3, 7, 5, 10, 3), "fee", 3); }
     @Override protected int fee(Inputs in) { return in.getInt("fee"); }
