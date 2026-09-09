@@ -1,0 +1,385 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "feasible" : 6,
+    "infeasible" : 9,
+    "init" : 2,
+    "mid" : 4
+  },
+  "code" : "public int floorSqrt(int n) {\n    long low = 0, high = n, ans = 0;\n    while (low <= high) {\n        long mid = (low + high) / 2;\n        if (mid * mid <= n) {\n            ans = mid;\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    return (int) ans;\n}",
+  "problemId" : "square-root-number",
+  "resolvedInput" : {
+    "n" : 28
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Binary search the answer: the largest x with x*x <= 28. Range starts at [0, 28].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "0",
+      "high" : "28",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 28,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Test x = 14: 14*14 = 196.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "28",
+      "low" : "0",
+      "mid" : "14",
+      "mid*mid" : "196"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 14,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 28,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "196 > 28 — 14 overshoots. Try smaller.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "13"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 14,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 13,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Test x = 6: 6*6 = 36.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "13",
+      "low" : "0",
+      "mid" : "6",
+      "mid*mid" : "36"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 13,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "36 > 28 — 6 overshoots. Try smaller.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Test x = 2: 2*2 = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5",
+      "low" : "0",
+      "mid" : "2",
+      "mid*mid" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "4 <= 28 — 2 is a valid square root candidate. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "2",
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "Test x = 4: 4*4 = 16.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5",
+      "low" : "3",
+      "mid" : "4",
+      "mid*mid" : "16"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "16 <= 28 — 4 is a valid square root candidate. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "4",
+      "low" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 4,
+    "description" : "Test x = 5: 5*5 = 25.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "5",
+      "low" : "5",
+      "mid" : "5",
+      "mid*mid" : "25"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 6,
+    "description" : "25 <= 28 — 5 is a valid square root candidate. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "5",
+      "low" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 12,
+    "description" : "low passed high. floor(sqrt(28)) = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,325 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "init" : 2,
+    "mid" : 4,
+    "tooFew" : 7,
+    "tooMany" : 9
+  },
+  "code" : "public int findKthPositive(int[] arr, int k) {\n    int low = 0, high = arr.length - 1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        int missing = arr[mid] - (mid + 1);\n        if (missing < k) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    return low + k;\n}",
+  "problemId" : "kth-missing-positive",
+  "resolvedInput" : {
+    "arr" : [ 2, 3, 4, 7, 11 ],
+    "k" : 5
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Find the 5-th missing positive integer. arr[i] - (i+1) counts how many are missing up to index i.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "k" : "5",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Probe [0..4]: arr[2]=4, so 1 positives are missing up to here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "0",
+      "mid" : "2",
+      "missing" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 7,
+    "description" : "1 < 5 — not enough missing yet, look right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Probe [3..4]: arr[3]=7, so 3 positives are missing up to here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3",
+      "missing" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "3 < 5 — not enough missing yet, look right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Probe [4..4]: arr[4]=11, so 6 positives are missing up to here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "4",
+      "mid" : "4",
+      "missing" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "6 >= 5 — already enough missing, look left for an earlier crossing.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "low passed high at 4. The 5-th missing positive integer is 9.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 4,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 7,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 11,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

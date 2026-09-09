@@ -1,0 +1,223 @@
+{
+  "anchors" : {
+    "done" : 12,
+    "init" : 2,
+    "mid" : 4,
+    "reject" : 9,
+    "take" : 6
+  },
+  "code" : "public int searchInsert(int[] nums, int target) {\n    int low = 0, high = nums.length - 1, ans = nums.length;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (nums[mid] >= target) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}",
+  "problemId" : "search-insert-position",
+  "resolvedInput" : {
+    "nums" : [ 1, 3, 5, 6 ],
+    "target" : 5
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Find where 5 belongs in the sorted array — its index if present, otherwise the index it would be inserted at.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "0",
+      "target" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Range [0, 3]. nums[1] = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "0",
+      "mid" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "3 < 5, so index 1 is too small — the answer is to the right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Range [2, 3]. nums[2] = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "2",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "5 >= 5, so index 2 is not too small — record it and look left for an even earlier fit.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "2",
+      "high" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "done"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "5 found at index 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "done"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

@@ -1,0 +1,220 @@
+{
+  "anchors" : {
+    "ascend" : 8,
+    "descend" : 6,
+    "done" : 11,
+    "init" : 2,
+    "mid" : 4
+  },
+  "code" : "public int findPeakElement(int[] nums) {\n    int low = 0, high = nums.length - 1;\n    while (low < high) {\n        int mid = (low + high) / 2;\n        if (nums[mid] > nums[mid + 1]) {\n            high = mid;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return low;\n}",
+  "problemId" : "find-peak-element",
+  "resolvedInput" : {
+    "nums" : [ 1, 2, 3, 1 ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Treat both ends as -infinity, so a peak always exists. Search [0..3].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Range [0..3]. Compare nums[1]=2 to its right neighbor nums[2]=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "0",
+      "mid" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "2 <= 3 — a rising edge. The peak must be to the right of mid.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Range [2..3]. Compare nums[2]=3 to its right neighbor nums[3]=1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "3",
+      "low" : "2",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "3 > 1 — a falling edge. A peak lies at or before mid, so mid stays in play.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "low caught up to high at index 2 (value 3) — a confirmed peak.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 1,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

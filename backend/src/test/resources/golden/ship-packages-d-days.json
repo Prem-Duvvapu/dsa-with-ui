@@ -1,0 +1,3624 @@
+{
+  "anchors" : {
+    "addToDay" : 22,
+    "done" : 12,
+    "feasible" : 6,
+    "infeasible" : 9,
+    "init" : 3,
+    "mid" : 4,
+    "newDay" : 19
+  },
+  "code" : "public int shipWithinDays(int[] weights, int days) {\n    int low = max(weights), high = sum(weights), ans = high;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (daysNeeded(weights, mid) <= days) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}\n\nprivate int daysNeeded(int[] weights, int capacity) {\n    int days = 1, load = 0;\n    for (int w : weights) {\n        if (load + w > capacity) {\n            days++;\n            load = w;\n        } else {\n            load += w;\n        }\n    }\n    return days;\n}",
+  "problemId" : "ship-packages-d-days",
+  "resolvedInput" : {
+    "days" : 5,
+    "weights" : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+  },
+  "stepCount" : 62,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Binary search the daily capacity: cannot be below the heaviest single package (10) or above shipping everything in one day (55).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "55",
+      "low" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Test capacity 32 packages per day. Can it ship within 5 days?",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "55",
+      "low" : "10",
+      "mid" : "32"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 22,
+    "description" : "Package 0 (1) still fits today's load (1 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "load" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 22,
+    "description" : "Package 1 (2) still fits today's load (3 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "load" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 22,
+    "description" : "Package 2 (3) still fits today's load (6 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "load" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 22,
+    "description" : "Package 3 (4) still fits today's load (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "load" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 22,
+    "description" : "Package 4 (5) still fits today's load (15 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "load" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 22,
+    "description" : "Package 5 (6) still fits today's load (21 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "load" : "21"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 22,
+    "description" : "Package 6 (7) still fits today's load (28 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "load" : "28"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "Package 7 (8) would overflow capacity 32 — start day 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "2",
+      "i" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 22,
+    "description" : "Package 8 (9) still fits today's load (17 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "8",
+      "load" : "17"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 22,
+    "description" : "Package 9 (10) still fits today's load (27 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "9",
+      "load" : "27"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 6,
+    "description" : "2 days needed (allowed 5) — capacity 32 works. Try smaller.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "32",
+      "days" : "2",
+      "high" : "31"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 4,
+    "description" : "Test capacity 20 packages per day. Can it ship within 5 days?",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "31",
+      "low" : "10",
+      "mid" : "20"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 22,
+    "description" : "Package 0 (1) still fits today's load (1 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "load" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 22,
+    "description" : "Package 1 (2) still fits today's load (3 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "load" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 22,
+    "description" : "Package 2 (3) still fits today's load (6 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "load" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 22,
+    "description" : "Package 3 (4) still fits today's load (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "load" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 22,
+    "description" : "Package 4 (5) still fits today's load (15 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "load" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 19,
+    "description" : "Package 5 (6) would overflow capacity 20 — start day 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "2",
+      "i" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 22,
+    "description" : "Package 6 (7) still fits today's load (13 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "load" : "13"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 19,
+    "description" : "Package 7 (8) would overflow capacity 20 — start day 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "3",
+      "i" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 22,
+    "description" : "Package 8 (9) still fits today's load (17 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "8",
+      "load" : "17"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 19,
+    "description" : "Package 9 (10) would overflow capacity 20 — start day 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "4",
+      "i" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 6,
+    "description" : "4 days needed (allowed 5) — capacity 20 works. Try smaller.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "20",
+      "days" : "4",
+      "high" : "19"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 4,
+    "description" : "Test capacity 14 packages per day. Can it ship within 5 days?",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "19",
+      "low" : "10",
+      "mid" : "14"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 22,
+    "description" : "Package 0 (1) still fits today's load (1 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "load" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 22,
+    "description" : "Package 1 (2) still fits today's load (3 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "load" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 22,
+    "description" : "Package 2 (3) still fits today's load (6 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "load" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 22,
+    "description" : "Package 3 (4) still fits today's load (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "load" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 19,
+    "description" : "Package 4 (5) would overflow capacity 14 — start day 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "2",
+      "i" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 22,
+    "description" : "Package 5 (6) still fits today's load (11 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "load" : "11"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 19,
+    "description" : "Package 6 (7) would overflow capacity 14 — start day 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "3",
+      "i" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 19,
+    "description" : "Package 7 (8) would overflow capacity 14 — start day 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "4",
+      "i" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 19,
+    "description" : "Package 8 (9) would overflow capacity 14 — start day 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "5",
+      "i" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 19,
+    "description" : "Package 9 (10) would overflow capacity 14 — start day 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "6",
+      "i" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 9,
+    "description" : "6 days needed (allowed 5) — capacity 14 is too small. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "6",
+      "low" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 4,
+    "description" : "Test capacity 17 packages per day. Can it ship within 5 days?",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "19",
+      "low" : "15",
+      "mid" : "17"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 22,
+    "description" : "Package 0 (1) still fits today's load (1 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "load" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 22,
+    "description" : "Package 1 (2) still fits today's load (3 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "load" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 22,
+    "description" : "Package 2 (3) still fits today's load (6 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "load" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 22,
+    "description" : "Package 3 (4) still fits today's load (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "load" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 22,
+    "description" : "Package 4 (5) still fits today's load (15 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "load" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 19,
+    "description" : "Package 5 (6) would overflow capacity 17 — start day 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "2",
+      "i" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 45,
+    "activeLine" : 22,
+    "description" : "Package 6 (7) still fits today's load (13 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "load" : "13"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 46,
+    "activeLine" : 19,
+    "description" : "Package 7 (8) would overflow capacity 17 — start day 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "3",
+      "i" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 47,
+    "activeLine" : 22,
+    "description" : "Package 8 (9) still fits today's load (17 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "8",
+      "load" : "17"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 48,
+    "activeLine" : 19,
+    "description" : "Package 9 (10) would overflow capacity 17 — start day 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "4",
+      "i" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 49,
+    "activeLine" : 6,
+    "description" : "4 days needed (allowed 5) — capacity 17 works. Try smaller.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "17",
+      "days" : "4",
+      "high" : "16"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 50,
+    "activeLine" : 4,
+    "description" : "Test capacity 15 packages per day. Can it ship within 5 days?",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "16",
+      "low" : "15",
+      "mid" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 51,
+    "activeLine" : 22,
+    "description" : "Package 0 (1) still fits today's load (1 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "load" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 52,
+    "activeLine" : 22,
+    "description" : "Package 1 (2) still fits today's load (3 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "load" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 53,
+    "activeLine" : 22,
+    "description" : "Package 2 (3) still fits today's load (6 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "load" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 54,
+    "activeLine" : 22,
+    "description" : "Package 3 (4) still fits today's load (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "load" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 55,
+    "activeLine" : 22,
+    "description" : "Package 4 (5) still fits today's load (15 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "load" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 56,
+    "activeLine" : 19,
+    "description" : "Package 5 (6) would overflow capacity 15 — start day 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "2",
+      "i" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 57,
+    "activeLine" : 22,
+    "description" : "Package 6 (7) still fits today's load (13 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "load" : "13"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 58,
+    "activeLine" : 19,
+    "description" : "Package 7 (8) would overflow capacity 15 — start day 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "3",
+      "i" : "7"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "current"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 59,
+    "activeLine" : 19,
+    "description" : "Package 8 (9) would overflow capacity 15 — start day 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "4",
+      "i" : "8"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "current"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 60,
+    "activeLine" : 19,
+    "description" : "Package 9 (10) would overflow capacity 15 — start day 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "days" : "5",
+      "i" : "9"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 61,
+    "activeLine" : 6,
+    "description" : "5 days needed (allowed 5) — capacity 15 works. Try smaller.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "15",
+      "days" : "5",
+      "high" : "14"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 62,
+    "activeLine" : 12,
+    "description" : "low passed high. The smallest workable capacity is 15.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "15"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "sorted"
+    }, {
+      "index" : 4,
+      "value" : 5,
+      "state" : "sorted"
+    }, {
+      "index" : 5,
+      "value" : 6,
+      "state" : "sorted"
+    }, {
+      "index" : 6,
+      "value" : 7,
+      "state" : "sorted"
+    }, {
+      "index" : 7,
+      "value" : 8,
+      "state" : "sorted"
+    }, {
+      "index" : 8,
+      "value" : 9,
+      "state" : "sorted"
+    }, {
+      "index" : 9,
+      "value" : 10,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

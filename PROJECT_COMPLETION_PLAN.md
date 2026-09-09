@@ -42,12 +42,12 @@ The Strings topic PR added all 20 missing String tracers (327/433 traced, 106 un
 | — | Tries & Prefixes | 2 | 2 | 0 | Complete |
 | — | Bit Manipulation | 18 | 18 | 0 | Complete |
 | — | Strings | 24 | 24 | 0 | Complete |
-| 1 | Binary Search | 12 | 32 | 20 | Next |
-| 2 | Recursion & Backtracking | 4 | 25 | 21 | Pending |
-| 3 | Linked List | 5 | 31 | 26 | Pending |
-| 4 | Dynamic Programming | 28 | 55 | 27 | Pending |
+| — | Binary Search | 32 | 32 | 0 | Complete |
+| 1 | Recursion & Backtracking | 4 | 25 | 21 | Next |
+| 2 | Linked List | 5 | 31 | 26 | Pending |
+| 3 | Dynamic Programming | 28 | 55 | 27 | Pending |
 
-Bit Manipulation (previously deferred by the user) and Strings both landed independently and are now both complete. The active sequence is Binary Search, Recursion & Backtracking, Linked List, then Dynamic Programming.
+Bit Manipulation (previously deferred by the user), Strings, and Binary Search have all landed. The active sequence is Recursion & Backtracking, Linked List, then Dynamic Programming.
 
 ## Recently completed work
 
@@ -59,7 +59,8 @@ Bit Manipulation (previously deferred by the user) and Strings both landed indep
 - The current backend suite passed 4,538 tests before the final Heap merge. The Heap-focused contract run passed 2,856 checks, and golden regeneration passed 308 tests. GitHub CI passed backend, frontend/build, and security checks on every merged PR.
 - Bit Manipulation reached 18/18 real tracers in Topic PR 1: all 12 remaining IDs (`power-set-bitwise`, `intro-bits-tricks`, `check-ith-bit-set`, `check-number-odd`, `set-unset-rightmost-bit`, `swap-two-numbers`, `divide-two-numbers-bitwise`, `min-bit-flips`, `print-prime-factors`, `divisors-of-number`, `count-primes-range-sieve`, `prime-factorisation-queries`) now have real `AlgorithmTracer`s. The full backend suite (4,832 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `intro-bits-tricks` to `bracket-reversals`, which both this PR and the independently landed Strings topic PR picked as the same still-untraced example.
 - Strings reached 24/24 real tracers in a separately landed topic PR, merged to `main` while Bit Manipulation Topic PR 1 was in flight.
-- Current catalogue integrity, after merging both topics, is 433 unique IDs, 339 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
+- Binary Search reached 32/32 real tracers: all 20 remaining IDs (`search-insert-position`, `floor-ceil-sorted-array`, `first-last-occurrence`, `count-occurrences`, `search-rotated-sorted-2`, `count-rotations`, `find-peak-element`, `square-root-number`, `nth-root-number`, `min-days-bouquets`, `smallest-divisor`, `ship-packages-d-days`, `kth-missing-positive`, `painters-partition`, `minimize-max-distance-gas-station`, `row-max-ones`, `search-2d-matrix`, `search-2d-matrix-2`, `find-peak-element-2d`, `matrix-median`) now have real `AlgorithmTracer`s, including the first four `DsType.MATRIX` binary-search tracers in the codebase. The full backend suite (5,372 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `search-insert-position` to `rat-in-a-maze` (Recursion & Backtracking, still untraced). `matrix-median` dropped its odd-element-count validation in favor of a lower-median convention that also works for even counts, after the shared `TracerContractTest` growth harness's row/col-doubling made an even count unavoidable for a grown input.
+- Current catalogue integrity, after merging all three topics, is 433 unique IDs, 359 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
 
 ## Non-negotiable delivery rules
 
@@ -171,11 +172,11 @@ Implementation notes:
 - `longest-common-prefix` is currently a duplicate catalogue ID; implement against the canonical record returned by `/api/problems/{id}` and resolve provider duplication in the later catalogue-integrity PR.
 - Preserve the four existing string tracers and add alternate-input cases for Unicode policy, empty strings, whitespace, and malformed constrained alphabets.
 
-## Next topic PR 1 — Binary Search, 20 remaining
+## Completed topic PR — Binary Search, 20 added
 
-Branch suggestion: `feat/binary-search-trace-completion`
+Branch: `feat/binary-search-tracers`.
 
-Expected result after merge: 359/433 traced, 74 untraced.
+Result after merge: 359/433 traced, 74 untraced.
 
 | ID | Problem | Recommended input and trace focus |
 | --- | --- | --- |
@@ -207,11 +208,11 @@ Implementation notes:
 - Emit matrices for 2D problems and arrays for 1D/answer-space problems; always expose low, mid, high, predicate result, and current answer.
 - Test duplicates, empty/one-element inputs, impossible allocation, and numeric precision boundaries.
 
-## Next topic PR 2 — Recursion & Backtracking, 21 remaining
+## Next topic PR 1 — Recursion & Backtracking, 21 remaining
 
 Branch suggestion: `feat/recursion-backtracking-trace-completion`
 
-Expected result after merge: 368/433 traced, 65 untraced.
+Expected result after merge: 380/433 traced, 53 untraced.
 
 | ID | Problem | Core trace |
 | --- | --- | --- |
@@ -245,7 +246,7 @@ Implementation notes:
 - Use `Matrix`/`Graph` for maze, board, or coloring state and `Stack` only when it truthfully represents the active recursion/choice stack.
 - Test zero-solution, one-solution, multiple-solution, duplicate-value, and pruning cases.
 
-## Next topic PR 3 — Linked List, 26 remaining
+## Next topic PR 2 — Linked List, 26 remaining
 
 Branch suggestion: `feat/linked-list-trace-completion`
 
@@ -290,7 +291,7 @@ Implementation notes:
 - Pointer algorithms should expose named pointers such as `slow`, `fast`, `prev`, `current`, `next`, and dummy nodes.
 - Test empty lists, singleton lists, duplicate values, invalid positions, no-cycle/no-intersection cases, carry propagation, and all-node deletion.
 
-## Next topic PR 4 — Dynamic Programming, 27 remaining
+## Next topic PR 3 — Dynamic Programming, 27 remaining
 
 Branch suggestion: `feat/dynamic-programming-trace-completion`
 

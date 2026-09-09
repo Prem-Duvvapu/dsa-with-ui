@@ -34,53 +34,38 @@ public class BinarySearchService implements ProblemProvider {
             // serve binary-search-1d's steps under this id.
             case "upper-bound":
                 throw new LegacyTraceRetiredException(problemId);
-            case "search-insert-position": return generateSearchInsertSteps();
-            case "floor-ceil-sorted-array": return generateFloorCeilSteps();
-            case "first-last-occurrence": return generateFirstLastOccurrenceSteps();
-            case "count-occurrences": return generateCountOccurrencesSteps();
-            // search-rotated-sorted has a real tracer (tracer/impl). Refuse rather than
-            // let default: serve binary-search-1d's steps under this id.
+            // Every id below now has a real tracer (tracer/impl). Refuse rather than let
+            // default: serve binary-search-1d's unrelated steps under these ids.
+            case "search-insert-position":
+            case "floor-ceil-sorted-array":
+            case "first-last-occurrence":
+            case "count-occurrences":
             case "search-rotated-sorted":
-                throw new LegacyTraceRetiredException(problemId);
-            case "search-rotated-sorted-2": return generateSearchRotated2Steps();
-            // find-min-rotated-sorted and single-element-sorted have real tracers
-            // (tracer/impl). Refuse rather than let default: serve binary-search-1d's
-            // steps under these ids.
+            case "search-rotated-sorted-2":
             case "find-min-rotated-sorted":
             case "single-element-sorted":
-                throw new LegacyTraceRetiredException(problemId);
-            case "count-rotations": return generateCountRotationsSteps();
-            case "find-peak-element": return generateFindPeakSteps();
-            case "square-root-number": return generateSquareRootSteps();
-            case "nth-root-number": return generateNthRootSteps();
-            // koko-eating-bananas and split-array-largest-sum have real tracers
-            // (tracer/impl) now. Refuse rather than let default: serve
-            // binary-search-1d's unrelated value-lookup steps under these ids.
+            case "count-rotations":
+            case "find-peak-element":
+            case "square-root-number":
+            case "nth-root-number":
             case "koko-eating-bananas":
             case "split-array-largest-sum":
-                throw new LegacyTraceRetiredException(problemId);
-            case "min-days-bouquets": return generateMinDaysBouquetsSteps();
-            case "smallest-divisor": return generateSmallestDivisorSteps();
-            case "ship-packages-d-days": return generateShipPackagesSteps();
-            case "kth-missing-positive": return generateKthMissingPositiveSteps();
-            // aggressive-cows and book-allocation have real tracers (tracer/impl). Refuse
-            // rather than let default: serve binary-search-1d's steps under these ids.
+            case "min-days-bouquets":
+            case "smallest-divisor":
+            case "ship-packages-d-days":
+            case "kth-missing-positive":
             case "aggressive-cows":
             case "book-allocation":
-                throw new LegacyTraceRetiredException(problemId);
-            case "painters-partition": return generatePaintersPartitionSteps();
-            case "minimize-max-distance-gas-station": return generateGasStationSteps();
-            // median-2-sorted-arrays and kth-element-2-sorted-arrays have real tracers
-            // (tracer/impl) now. Refuse rather than let default: serve
-            // binary-search-1d's unrelated value-lookup steps under these ids.
+            case "painters-partition":
+            case "minimize-max-distance-gas-station":
             case "median-2-sorted-arrays":
             case "kth-element-2-sorted-arrays":
+            case "row-max-ones":
+            case "search-2d-matrix":
+            case "search-2d-matrix-2":
+            case "find-peak-element-2d":
+            case "matrix-median":
                 throw new LegacyTraceRetiredException(problemId);
-            case "row-max-ones": return generateRowMaxOnesSteps();
-            case "search-2d-matrix": return generateSearch2dMatrixSteps();
-            case "search-2d-matrix-2": return generateSearch2dMatrix2Steps();
-            case "find-peak-element-2d": return generateFindPeakElement2dSteps();
-            case "matrix-median": return generateMatrixMedianSteps();
             default: return generateBs1dSteps();
         }
     }
@@ -446,27 +431,6 @@ public class BinarySearchService implements ProblemProvider {
         steps.add(new ExecutionStep(stepNum++, 12, "Target 7 not found in sorted array. Return -1.", List.of(), Map.of(), List.of(), Map.of("result", "-1"), "Array", null, createBsArrayState(nums, -1, -1, -1, false), null, null));
         return steps;
     }
-
-    private List<ExecutionStep> generateSearchInsertSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateFloorCeilSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateFirstLastOccurrenceSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateCountOccurrencesSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSearchRotated2Steps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateCountRotationsSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateFindPeakSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSquareRootSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateNthRootSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateMinDaysBouquetsSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSmallestDivisorSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateShipPackagesSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateKthMissingPositiveSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generatePaintersPartitionSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateGasStationSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateRowMaxOnesSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSearch2dMatrixSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateSearch2dMatrix2Steps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateFindPeakElement2dSteps() { return generateBs1dSteps(); }
-    private List<ExecutionStep> generateMatrixMedianSteps() { return generateBs1dSteps(); }
 
     // Helpers
     private List<ArrayElement> createSortedArray() { return createBsArrayState(new int[]{1, 3, 5, 7, 9, 11, 13}, -1, -1, -1, false); }
