@@ -243,6 +243,11 @@ For each pattern, I list representative problems to build first. The first probl
 | 1 | Implement Trie | Medium | Node creation, character traversal |
 | 2 | Word Break (Trie-based) | Medium | Prefix matching, DP memoization |
 | 3 | Longest Common Prefix | Easy | Character-by-character comparison |
+| 4 | Longest Word with All Prefixes *(planned)* | Medium | Verify every prefix is terminal |
+| 5 | Number of Distinct Substrings *(planned)* | Medium | Insert every suffix and count new nodes |
+| 6 | Bit Prerequisites for Trie Problems *(planned)* | Easy | Bitwise trie representation and traversal |
+| 7 | Maximum XOR of Two Numbers *(planned)* | Hard | Prefer the opposite bit at each level |
+| 8 | Maximum XOR With an Array Element *(planned)* | Hard | Offline limit sorting plus bitwise queries |
 
 ### 2.13 Greedy
 | # | Problem | Difficulty | Key Operation to Trace |
