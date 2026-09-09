@@ -344,17 +344,19 @@ class ReverseDoublyLinkedListTracer extends LinkedListTopicTracer {
         return """
                public ListNode reverse(ListNode head) {
                    // @a inspect
-                   ListNode current = head, newHead = null;
+                   ListNode current = head, reversedHead = null;
                    while (current != null) {
                        ListNode oldNext = current.next;
                        // @a swap
-                       current.next = current.prev;
-                       current.prev = oldNext;
-                       newHead = current;
+                       if (oldNext != null) oldNext.prev = null;
+                       current.prev = null;
+                       current.next = reversedHead;
+                       if (reversedHead != null) reversedHead.prev = current;
+                       reversedHead = current;
                        current = oldNext;
                    }
                    // @a done
-                   return newHead;
+                   return reversedHead;
                }""";
     }
     public void run(Inputs in, StepEmitter emit) {
@@ -364,10 +366,12 @@ class ReverseDoublyLinkedListTracer extends LinkedListTopicTracer {
         TraceListNode current = nodes[0], newHead = null;
         while (current != null) {
             TraceListNode oldNext = current.next;
-            current.next = current.prev;
-            current.prev = oldNext;
+            if (oldNext != null) oldNext.prev = null;
+            current.prev = null;
+            current.next = newHead;
+            if (newHead != null) newHead.prev = current;
             newHead = current;
-            emit.at("swap").say("Swap next and prev on identity #%d; continue through its old next link.", current.id)
+            emit.at("swap").say("Detach identity #%d and prepend it to the reversed DLL prefix.", current.id)
                     .var("current", current.value).var("newHead", newHead.value)
                     .list(snapshot(all, states(current, "current"))).step();
             current = oldNext;
