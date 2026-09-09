@@ -1,0 +1,199 @@
+{
+  "anchors" : {
+    "hit" : 6,
+    "init" : 2,
+    "miss" : 13,
+    "moveDown" : 10,
+    "moveLeft" : 8,
+    "probe" : 4
+  },
+  "code" : "public boolean searchMatrix(int[][] matrix, int target) {\n    int row = 0, col = matrix[0].length - 1;\n    while (row < matrix.length && col >= 0) {\n        int val = matrix[row][col];\n        if (val == target) {\n            return true;\n        } else if (val > target) {\n            col--;\n        } else {\n            row++;\n        }\n    }\n    return false;\n}",
+  "problemId" : "search-2d-matrix-2",
+  "resolvedInput" : {
+    "matrix" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "target" : 0
+  },
+  "stepCount" : 10,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Start at the top-right corner (row 0, col 3) — the one cell where 'too big' and 'too small' each rule out a whole line.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "0",
+      "target" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "(row 0, col 3) = 11.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "3",
+      "row" : "0",
+      "value" : "11"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "11 > 0 — everything below in this column is even bigger. Step left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "(row 0, col 2) = 7.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "2",
+      "row" : "0",
+      "value" : "7"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "7 > 0 — everything below in this column is even bigger. Step left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "(row 0, col 1) = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "1",
+      "row" : "0",
+      "value" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "4 > 0 — everything below in this column is even bigger. Step left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "(row 0, col 0) = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "0",
+      "row" : "0",
+      "value" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 8,
+    "description" : "1 > 0 — everything below in this column is even bigger. Step left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "col" : "-1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "Walked off the matrix without ever landing on 0 — it is absent.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "false"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 4, 7, 11 ], [ 2, 5, 8, 12 ], [ 3, 6, 9, 16 ], [ 10, 13, 14, 17 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

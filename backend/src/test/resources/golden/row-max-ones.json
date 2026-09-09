@@ -1,0 +1,122 @@
+{
+  "anchors" : {
+    "done" : 11,
+    "newBest" : 7,
+    "rowSearch" : 4
+  },
+  "code" : "public int rowWithMax1s(int[][] matrix) {\n    int bestRow = -1, bestCount = -1;\n    for (int r = 0; r < matrix.length; r++) {\n        int firstOne = lowerBoundOfOne(matrix[r]);\n        int count = matrix[r].length - firstOne;\n        if (count > bestCount) {\n            bestCount = count;\n            bestRow = r;\n        }\n    }\n    return bestRow;\n}\n\nprivate int lowerBoundOfOne(int[] row) {\n    int low = 0, high = row.length;\n    while (low < high) {\n        int mid = (low + high) / 2;\n        if (row[mid] == 1) high = mid; else low = mid + 1;\n    }\n    return low;\n}",
+  "problemId" : "row-max-ones",
+  "resolvedInput" : {
+    "matrix" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ]
+  },
+  "stepCount" : 6,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Row 0: first 1 at index 3 -> 1 ones.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "row" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 7,
+    "description" : "Row 0's 1 ones beats the previous best (none) — new best row.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestCount" : "1",
+      "bestRow" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Row 1: first 1 at index 1 -> 3 ones.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "row" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 7,
+    "description" : "Row 1's 3 ones beats the previous best (1) — new best row.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "bestCount" : "3",
+      "bestRow" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 4,
+    "description" : "Row 2: first 1 at index 2 -> 2 ones.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "row" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "Row 1 has the most 1s (3).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

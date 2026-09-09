@@ -1,0 +1,109 @@
+{
+  "anchors" : {
+    "found" : 17,
+    "init" : 3,
+    "mid" : 5,
+    "moveLeft" : 13,
+    "moveRight" : 15
+  },
+  "code" : "public int[] findPeakGrid(int[][] matrix) {\n    int rows = matrix.length, cols = matrix[0].length;\n    int low = 0, high = cols - 1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        int maxRow = 0;\n        for (int r = 1; r < rows; r++) {\n            if (matrix[r][mid] > matrix[maxRow][mid]) maxRow = r;\n        }\n        int left = mid > 0 ? matrix[maxRow][mid - 1] : -1;\n        int right = mid < cols - 1 ? matrix[maxRow][mid + 1] : -1;\n        if (matrix[maxRow][mid] < left) {\n            high = mid - 1;\n        } else if (matrix[maxRow][mid] < right) {\n            low = mid + 1;\n        } else {\n            return new int[]{maxRow, mid};\n        }\n    }\n    return null;\n}",
+  "problemId" : "find-peak-element-2d",
+  "resolvedInput" : {
+    "matrix" : [ [ 9, -22, -17 ], [ 47, -13, -37 ] ]
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Binary search columns [0..2]. Each column's own row-max already beats its row neighbors — only its column neighbors can still beat it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 9, -22, -17 ], [ 47, -13, -37 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Column 1's max is -13 at row 1. Left neighbor = 47, right neighbor = -37.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "0",
+      "maxRow" : "1",
+      "mid" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 9, -22, -17 ], [ 47, -13, -37 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "The left neighbor (47) is bigger — a peak provably exists to the left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 9, -22, -17 ], [ 47, -13, -37 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Column 0's max is 47 at row 1. Left neighbor = none, right neighbor = -13.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "low" : "0",
+      "maxRow" : "1",
+      "mid" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 9, -22, -17 ], [ 47, -13, -37 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 17,
+    "description" : "47 beats both column neighbors (and its own row) — a confirmed 2D peak at (1, 0).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "[1, 0]"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 9, -22, -17 ], [ 47, -13, -37 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

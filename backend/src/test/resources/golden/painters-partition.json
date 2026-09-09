@@ -1,0 +1,1320 @@
+{
+  "anchors" : {
+    "addToCurrent" : 22,
+    "done" : 12,
+    "feasible" : 6,
+    "infeasible" : 9,
+    "init" : 3,
+    "mid" : 4,
+    "newPainter" : 19
+  },
+  "code" : "public int findLargestMinDistance(int[] boards, int painters) {\n    int low = max(boards), high = sum(boards), ans = high;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (paintersNeeded(boards, mid) <= painters) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}\n\nprivate int paintersNeeded(int[] boards, int cap) {\n    int painters = 1, time = 0;\n    for (int b : boards) {\n        if (time + b > cap) {\n            painters++;\n            time = b;\n        } else {\n            time += b;\n        }\n    }\n    return painters;\n}",
+  "problemId" : "painters-partition",
+  "resolvedInput" : {
+    "boards" : [ 10, 20, 30, 40 ],
+    "painters" : 2
+  },
+  "stepCount" : 38,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Binary search the smallest possible cap on any one painter's total board length. Cannot be below the single longest board (40) or above one painter doing everything (100).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "100",
+      "low" : "40"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 70 needs at most 2 painters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "100",
+      "low" : "40",
+      "mid" : "70"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 22,
+    "description" : "Board 0 (10) still fits this painter's queue (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "time" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 22,
+    "description" : "Board 1 (20) still fits this painter's queue (30 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "time" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 22,
+    "description" : "Board 2 (30) still fits this painter's queue (60 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "time" : "60"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 19,
+    "description" : "Board 3 (40) would exceed cap 70 — painter #2 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 6,
+    "description" : "2 painters suffice (have 2) at cap 70. Try a smaller cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "70",
+      "high" : "69",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 54 needs at most 2 painters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "69",
+      "low" : "40",
+      "mid" : "54"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 22,
+    "description" : "Board 0 (10) still fits this painter's queue (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "time" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 22,
+    "description" : "Board 1 (20) still fits this painter's queue (30 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "time" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 19,
+    "description" : "Board 2 (30) would exceed cap 54 — painter #2 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 19,
+    "description" : "Board 3 (40) would exceed cap 54 — painter #3 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "painters" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 9,
+    "description" : "3 painters are needed (have 2) at cap 54 — too tight. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "55",
+      "painters" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 62 needs at most 2 painters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "69",
+      "low" : "55",
+      "mid" : "62"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 22,
+    "description" : "Board 0 (10) still fits this painter's queue (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "time" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 22,
+    "description" : "Board 1 (20) still fits this painter's queue (30 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "time" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 22,
+    "description" : "Board 2 (30) still fits this painter's queue (60 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "time" : "60"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 19,
+    "description" : "Board 3 (40) would exceed cap 62 — painter #2 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 6,
+    "description" : "2 painters suffice (have 2) at cap 62. Try a smaller cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "62",
+      "high" : "61",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 58 needs at most 2 painters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "61",
+      "low" : "55",
+      "mid" : "58"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 22,
+    "description" : "Board 0 (10) still fits this painter's queue (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "time" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 22,
+    "description" : "Board 1 (20) still fits this painter's queue (30 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "time" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 19,
+    "description" : "Board 2 (30) would exceed cap 58 — painter #2 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 19,
+    "description" : "Board 3 (40) would exceed cap 58 — painter #3 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "painters" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 9,
+    "description" : "3 painters are needed (have 2) at cap 58 — too tight. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "59",
+      "painters" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 60 needs at most 2 painters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "61",
+      "low" : "59",
+      "mid" : "60"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 22,
+    "description" : "Board 0 (10) still fits this painter's queue (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "time" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 22,
+    "description" : "Board 1 (20) still fits this painter's queue (30 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "time" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 22,
+    "description" : "Board 2 (30) still fits this painter's queue (60 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "time" : "60"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 19,
+    "description" : "Board 3 (40) would exceed cap 60 — painter #2 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 6,
+    "description" : "2 painters suffice (have 2) at cap 60. Try a smaller cap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "60",
+      "high" : "59",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 4,
+    "description" : "Test whether a cap of 59 needs at most 2 painters.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "59",
+      "low" : "59",
+      "mid" : "59"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 22,
+    "description" : "Board 0 (10) still fits this painter's queue (10 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "time" : "10"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 22,
+    "description" : "Board 1 (20) still fits this painter's queue (30 so far).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "time" : "30"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 19,
+    "description" : "Board 2 (30) would exceed cap 59 — painter #2 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "painters" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 19,
+    "description" : "Board 3 (40) would exceed cap 59 — painter #3 starts here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "painters" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 9,
+    "description" : "3 painters are needed (have 2) at cap 59 — too tight. Try larger.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "60",
+      "painters" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 12,
+    "description" : "low passed high. The smallest workable cap is 60.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "60"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 10,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 20,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 30,
+      "state" : "sorted"
+    }, {
+      "index" : 3,
+      "value" : 40,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

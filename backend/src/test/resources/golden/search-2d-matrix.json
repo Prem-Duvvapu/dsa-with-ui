@@ -1,0 +1,112 @@
+{
+  "anchors" : {
+    "greater" : 13,
+    "hit" : 9,
+    "init" : 3,
+    "less" : 11,
+    "mid" : 5,
+    "miss" : 16
+  },
+  "code" : "public boolean searchMatrix(int[][] matrix, int target) {\n    int rows = matrix.length, cols = matrix[0].length;\n    int low = 0, high = rows * cols - 1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        int r = mid / cols, c = mid % cols;\n        int val = matrix[r][c];\n        if (val == target) {\n            return true;\n        } else if (val < target) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    return false;\n}",
+  "problemId" : "search-2d-matrix",
+  "resolvedInput" : {
+    "matrix" : [ [ 1, 3, 5, 7 ], [ 10, 11, 16, 20 ], [ 23, 30, 34, 60 ] ],
+    "target" : 5
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Treat the matrix as one flat sorted list of 12 elements. Find 5 in [0..11].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "11",
+      "low" : "0",
+      "target" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 3, 5, 7 ], [ 10, 11, 16, 20 ], [ 23, 30, 34, 60 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Flat index 5 = (row 1, col 1) = 11.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "11",
+      "low" : "0",
+      "mid" : "5",
+      "value" : "11"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 3, 5, 7 ], [ 10, 11, 16, 20 ], [ 23, 30, 34, 60 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "11 > 5 — search the lower half of the flat index.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 3, 5, 7 ], [ 10, 11, 16, 20 ], [ 23, 30, 34, 60 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Flat index 2 = (row 0, col 2) = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "0",
+      "mid" : "2",
+      "value" : "5"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 3, 5, 7 ], [ 10, 11, 16, 20 ], [ 23, 30, 34, 60 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "5 found at (row 0, col 2).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "true"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 1, 3, 5, 7 ], [ 10, 11, 16, 20 ], [ 23, 30, 34, 60 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

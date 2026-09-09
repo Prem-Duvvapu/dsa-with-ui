@@ -1,0 +1,335 @@
+{
+  "anchors" : {
+    "absent" : 4,
+    "done" : 7,
+    "lowerMid" : 13,
+    "upperMid" : 23
+  },
+  "code" : "public int count(int[] arr, int x) {\n    int lb = lowerBound(arr, x);\n    if (lb == arr.length || arr[lb] != x) {\n        return 0;\n    }\n    int ub = upperBound(arr, x);\n    return ub - lb;\n}\n\nprivate int lowerBound(int[] arr, int x) {\n    int low = 0, high = arr.length - 1, ans = arr.length;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (arr[mid] >= x) { ans = mid; high = mid - 1; }\n        else low = mid + 1;\n    }\n    return ans;\n}\n\nprivate int upperBound(int[] arr, int x) {\n    int low = 0, high = arr.length - 1, ans = arr.length;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (arr[mid] > x) { ans = mid; high = mid - 1; }\n        else low = mid + 1;\n    }\n    return ans;\n}",
+  "problemId" : "count-occurrences",
+  "resolvedInput" : {
+    "nums" : [ 1, 2, 2, 2, 2, 3, 4 ],
+    "target" : 2
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 13,
+    "description" : "nums[3]=2 >= 2 — candidate span start, keep looking left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "lb" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 13,
+    "description" : "nums[1]=2 >= 2 — candidate span start, keep looking left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "0",
+      "lb" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "nums[0]=1 < 2 — too small, look right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 23,
+    "description" : "nums[3]=2 <= 2 — still in span, look right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 23,
+    "description" : "nums[5]=3 > 2 — candidate span end, keep looking left.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "ub" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 23,
+    "description" : "nums[4]=2 <= 2 — still in span, look right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "low" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 7,
+    "description" : "Span [1, 5) holds 4 occurrences of 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 3,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 4,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

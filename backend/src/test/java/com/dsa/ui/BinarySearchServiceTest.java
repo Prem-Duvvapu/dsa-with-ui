@@ -40,7 +40,14 @@ public class BinarySearchServiceTest {
                 "aggressive-cows", "book-allocation",
                 "find-min-rotated-sorted", "single-element-sorted",
                 "koko-eating-bananas", "split-array-largest-sum",
-                "median-2-sorted-arrays", "kth-element-2-sorted-arrays");
+                "median-2-sorted-arrays", "kth-element-2-sorted-arrays",
+                "search-insert-position", "floor-ceil-sorted-array", "first-last-occurrence",
+                "count-occurrences", "search-rotated-sorted-2", "count-rotations",
+                "find-peak-element", "square-root-number", "nth-root-number",
+                "min-days-bouquets", "smallest-divisor", "ship-packages-d-days",
+                "kth-missing-positive", "painters-partition", "minimize-max-distance-gas-station",
+                "row-max-ones", "search-2d-matrix", "search-2d-matrix-2",
+                "find-peak-element-2d", "matrix-median");
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
             if (retired.contains(p.getId())) {

@@ -1,0 +1,343 @@
+{
+  "anchors" : {
+    "hit" : 5,
+    "init" : 2,
+    "leftSorted" : 9,
+    "mid" : 4,
+    "miss" : 17,
+    "rightSorted" : 13,
+    "shrink" : 7
+  },
+  "code" : "public boolean search(int[] nums, int target) {\n    int low = 0, high = nums.length - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        if (nums[mid] == target) return true;\n        if (nums[low] == nums[mid] && nums[mid] == nums[high]) {\n            low++; high--; continue;\n        }\n        if (nums[low] <= nums[mid]) {\n            if (nums[low] <= target && target < nums[mid]) high = mid - 1;\n            else low = mid + 1;\n        } else {\n            if (nums[mid] < target && target <= nums[high]) low = mid + 1;\n            else high = mid - 1;\n        }\n    }\n    return false;\n}",
+  "problemId" : "search-rotated-sorted-2",
+  "resolvedInput" : {
+    "nums" : [ 2, 5, 6, 0, 0, 1, 2 ],
+    "target" : 6
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "A sorted array with duplicates was rotated. Find 6 in [0..6].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "6",
+      "low" : "0",
+      "target" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Probe the middle of [0..6]: nums[3] = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "6",
+      "low" : "0",
+      "mid" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "current"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 13,
+    "description" : "Right half [3..6] is sorted (0…2). Target is outside it — search the left half.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "rightSorted" : "true"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Probe the middle of [0..2]: nums[1] = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "0",
+      "mid" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Left half [0..1] is sorted (2…5). Target is outside it — search the right half.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "leftSorted" : "true"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 4,
+    "description" : "Probe the middle of [2..2]: nums[2] = 6.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "2",
+      "low" : "2",
+      "mid" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 5,
+    "description" : "nums[2] = 6 is the target.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "true"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "visited"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "visited"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "visited"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "visited"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "visited"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
