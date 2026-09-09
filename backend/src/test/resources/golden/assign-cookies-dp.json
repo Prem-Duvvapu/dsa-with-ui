@@ -1,0 +1,506 @@
+{
+  "anchors" : {
+    "done" : 4,
+    "fill" : 3,
+    "init" : 2
+  },
+  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "problemId" : "assign-cookies-dp",
+  "resolvedInput" : {
+    "cookies" : [ 1, 1 ],
+    "greed" : [ 1, 2, 3 ]
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "After sorting, dp[i][j] is the most satisfied among the first i children using the first j cookies.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : "max(skip cookie, match if large enough)",
+      "substitution" : "empty side = 0"
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 3,
+    "description" : "Child greed 1, cookie 1: best satisfied count is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "1",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : "max(skip cookie, skip child, match)",
+      "substitution" : "max(0, 0, 1) = 1"
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 3,
+    "description" : "Child greed 1, cookie 1: best satisfied count is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "2",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : "max(skip cookie, skip child, match)",
+      "substitution" : "max(1, 0, 1) = 1"
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 3,
+    "description" : "Child greed 2, cookie 1: best satisfied count is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "1",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : "max(skip cookie, skip child, match)",
+      "substitution" : "max(0, 1, -1) = 1"
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 3,
+    "description" : "Child greed 2, cookie 1: best satisfied count is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "2",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : "max(skip cookie, skip child, match)",
+      "substitution" : "max(1, 1, -1) = 1"
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "Child greed 3, cookie 1: best satisfied count is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "1",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ] ],
+      "formula" : "max(skip cookie, skip child, match)",
+      "substitution" : "max(0, 1, -1) = 1"
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 3,
+    "description" : "Child greed 3, cookie 1: best satisfied count is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "2",
+      "value" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ] ],
+      "formula" : "max(skip cookie, skip child, match)",
+      "substitution" : "max(1, 1, -1) = 1"
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 4,
+    "description" : "Maximum satisfied children: 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "1"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "i0", "i1", "i2", "i3" ],
+      "colLabels" : [ "j0", "j1", "j2" ],
+      "cells" : [ [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      } ] ],
+      "formula" : "answer = dp[n][m]",
+      "substitution" : "answer = 1"
+    }
+  } ],
+  "truncated" : false
+}

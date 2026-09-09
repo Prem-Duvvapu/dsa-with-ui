@@ -1,0 +1,825 @@
+{
+  "anchors" : {
+    "done" : 4,
+    "fill" : 3,
+    "init" : 2
+  },
+  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "problemId" : "stock-cooldown",
+  "resolvedInput" : {
+    "prices" : [ 1, 2, 3, 0, 2 ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "dp[day][buy/sell] stores maximum future profit; terminal days contribute 0 and selling skips the next day.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, trade)",
+      "substitution" : "terminal = 0"
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 3,
+    "description" : "Day 4 buy state: skip=0, buy=-2, choose 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "4",
+      "profit" : "0",
+      "state" : "buy"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, -price + sellNext)",
+      "substitution" : "max(0, -2) = 0"
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 3,
+    "description" : "Day 4 sell state: skip=0, sell=2, choose 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "4",
+      "profit" : "2",
+      "state" : "sell"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, price - fee + buyNext)",
+      "substitution" : "max(0, 2) = 2"
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 3,
+    "description" : "Day 3 buy state: skip=0, buy=2, choose 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "3",
+      "profit" : "2",
+      "state" : "buy"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, -price + sellNext)",
+      "substitution" : "max(0, 2) = 2"
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 3,
+    "description" : "Day 3 sell state: skip=2, sell=0, choose 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "3",
+      "profit" : "2",
+      "state" : "sell"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, price - fee + buyNext)",
+      "substitution" : "max(2, 0) = 2"
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "Day 2 buy state: skip=2, buy=-1, choose 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "2",
+      "profit" : "2",
+      "state" : "buy"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, -price + sellNext)",
+      "substitution" : "max(2, -1) = 2"
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 3,
+    "description" : "Day 2 sell state: skip=2, sell=3, choose 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "2",
+      "profit" : "3",
+      "state" : "sell"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      } ], [ {
+        "value" : "0",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, price - fee + buyNext)",
+      "substitution" : "max(2, 3) = 3"
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 3,
+    "description" : "Day 1 buy state: skip=2, buy=1, choose 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "1",
+      "profit" : "2",
+      "state" : "buy"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, -price + sellNext)",
+      "substitution" : "max(2, 1) = 2"
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 3,
+    "description" : "Day 1 sell state: skip=3, sell=4, choose 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "1",
+      "profit" : "4",
+      "state" : "sell"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "·",
+        "state" : "void"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, price - fee + buyNext)",
+      "substitution" : "max(3, 4) = 4"
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 3,
+    "description" : "Day 0 buy state: skip=2, buy=3, choose 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "0",
+      "profit" : "3",
+      "state" : "buy"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "·",
+        "state" : "void"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, -price + sellNext)",
+      "substitution" : "max(2, 3) = 3"
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 3,
+    "description" : "Day 0 sell state: skip=4, sell=3, choose 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "day" : "0",
+      "profit" : "4",
+      "state" : "sell"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "read"
+      } ], [ {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ], [ {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ], [ {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      } ] ],
+      "formula" : "max(skip, price - fee + buyNext)",
+      "substitution" : "max(4, 3) = 4"
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 4,
+    "description" : "Maximum profit is 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "3"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "day0", "day1", "day2", "day3", "day4", "day5", "day6" ],
+      "colLabels" : [ "buy", "sell" ],
+      "cells" : [ [ {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      } ] ],
+      "formula" : "answer = dp[0][buy]",
+      "substitution" : "answer = 3"
+    }
+  } ],
+  "truncated" : false
+}

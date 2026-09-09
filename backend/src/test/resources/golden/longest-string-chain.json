@@ -1,0 +1,1110 @@
+{
+  "anchors" : {
+    "done" : 5,
+    "fill" : 3,
+    "init" : 2,
+    "reconstruct" : 4
+  },
+  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    reconstructChosenSolution();\n    return extractAnswer();\n}",
+  "problemId" : "longest-string-chain",
+  "resolvedInput" : {
+    "words" : "a,b,ba,bca,bda,bdca"
+  },
+  "stepCount" : 18,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 2,
+    "description" : "Sort by length; chain[i] starts at 1 and parent[i] starts unset.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "chain[i] = 1 + max(chain[j]) for predecessors",
+      "substitution" : "all lengths = 1"
+    }
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 3,
+    "description" : "Compare \"a\" -> \"b\": not a predecessor; chain length at 1 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "b"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 3,
+    "description" : "Compare \"a\" -> \"ba\": valid predecessor; chain length at 2 is 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "2",
+      "word" : "ba"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 2"
+    }
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 3,
+    "description" : "Compare \"b\" -> \"ba\": valid predecessor; chain length at 2 is 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "2",
+      "word" : "ba"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 2"
+    }
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 3,
+    "description" : "Compare \"a\" -> \"bca\": not a predecessor; chain length at 3 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "bca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "Compare \"b\" -> \"bca\": not a predecessor; chain length at 3 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "bca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 3,
+    "description" : "Compare \"ba\" -> \"bca\": valid predecessor; chain length at 3 is 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "3",
+      "word" : "bca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 3"
+    }
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 3,
+    "description" : "Compare \"a\" -> \"bda\": not a predecessor; chain length at 4 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "bda"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 3,
+    "description" : "Compare \"b\" -> \"bda\": not a predecessor; chain length at 4 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "bda"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 3,
+    "description" : "Compare \"ba\" -> \"bda\": valid predecessor; chain length at 4 is 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "3",
+      "word" : "bda"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 3"
+    }
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 3,
+    "description" : "Compare \"bca\" -> \"bda\": not a predecessor; chain length at 4 is 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "3",
+      "word" : "bda"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "probe"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 3"
+    }
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 3,
+    "description" : "Compare \"a\" -> \"bdca\": not a predecessor; chain length at 5 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "bdca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 3,
+    "description" : "Compare \"b\" -> \"bdca\": not a predecessor; chain length at 5 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "bdca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "read"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 3,
+    "description" : "Compare \"ba\" -> \"bdca\": not a predecessor; chain length at 5 is 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "1",
+      "word" : "bdca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 1"
+    }
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 3,
+    "description" : "Compare \"bca\" -> \"bdca\": valid predecessor; chain length at 5 is 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "4",
+      "word" : "bdca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 4"
+    }
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 3,
+    "description" : "Compare \"bda\" -> \"bdca\": valid predecessor; chain length at 5 is 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "length" : "4",
+      "word" : "bdca"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "read"
+      }, {
+        "value" : "4",
+        "state" : "probe"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ],
+      "formula" : "predecessor ? max(current, 1 + prior)",
+      "substitution" : "length = 4"
+    }
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 4,
+    "description" : "Follow parent links to reconstruct [a, ba, bca, bdca].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "chain" : "[a, ba, bca, bdca]"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "1",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      }, {
+        "value" : "4",
+        "state" : "known"
+      } ], [ {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "-1",
+        "state" : "known"
+      }, {
+        "value" : "0",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "2",
+        "state" : "known"
+      }, {
+        "value" : "3",
+        "state" : "known"
+      } ] ],
+      "formula" : "follow parent",
+      "substitution" : "[a, ba, bca, bdca]"
+    }
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 5,
+    "description" : "Longest string-chain length is 4: [a, ba, bca, bdca].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4",
+      "chain" : "[a, ba, bca, bdca]"
+    },
+    "dsType" : "DpTable",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "dpTable" : {
+      "rowLabels" : [ "length", "parent" ],
+      "colLabels" : [ "i0", "i1", "i2", "i3", "i4", "i5" ],
+      "cells" : [ [ {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "1",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      }, {
+        "value" : "4",
+        "state" : "resolved"
+      } ], [ {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "-1",
+        "state" : "resolved"
+      }, {
+        "value" : "0",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "2",
+        "state" : "resolved"
+      }, {
+        "value" : "3",
+        "state" : "resolved"
+      } ] ],
+      "formula" : "maximum chain length",
+      "substitution" : "answer = 4"
+    }
+  } ],
+  "truncated" : false
+}
