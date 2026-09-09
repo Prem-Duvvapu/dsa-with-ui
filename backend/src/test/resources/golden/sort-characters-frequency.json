@@ -1,0 +1,321 @@
+{
+  "anchors" : {
+    "append" : 10,
+    "count" : 4,
+    "done" : 12
+  },
+  "code" : "public String frequencySort(String s) {\n    Map<Character, Integer> counts = new HashMap<>();\n    for (char ch : s.toCharArray()) {\n        counts.merge(ch, 1, Integer::sum);\n    }\n    List<Character> order = new ArrayList<>(counts.keySet());\n    order.sort((a, b) -> counts.get(b) - counts.get(a));\n    StringBuilder answer = new StringBuilder();\n    for (char ch : order) {\n        answer.append(String.valueOf(ch).repeat(counts.get(ch)));\n    }\n    return answer.toString();\n}",
+  "problemId" : "sort-characters-frequency",
+  "resolvedInput" : {
+    "s" : "tree"
+  },
+  "stepCount" : 8,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Count 't' at index 0; frequency is now 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "counts" : "{t=1}",
+      "index" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "current",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 4,
+    "description" : "Count 'r' at index 1; frequency is now 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "counts" : "{t=1, r=1}",
+      "index" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "current",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 4,
+    "description" : "Count 'e' at index 2; frequency is now 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "counts" : "{t=1, r=1, e=1}",
+      "index" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 4,
+    "description" : "Count 'e' at index 3; frequency is now 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "counts" : "{t=1, r=1, e=2}",
+      "index" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Append 'e' 2 time(s); output is now \"ee\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "character" : "e",
+      "frequency" : "2",
+      "output" : "ee"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 10,
+    "description" : "Append 'r' 1 time(s); output is now \"eer\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "character" : "r",
+      "frequency" : "1",
+      "output" : "eer"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Append 't' 1 time(s); output is now \"eert\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "character" : "t",
+      "frequency" : "1",
+      "output" : "eert"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "Characters sorted by descending frequency: \"eert\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "eert"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 1,
+      "value" : 114,
+      "state" : "default",
+      "label" : "r"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

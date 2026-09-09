@@ -5,7 +5,7 @@
 
 The platform is designed to pair step-by-step execution with:
 - **Interview-oriented Java solutions** whose displayed code is tied to named trace anchors.
-- **Synchronized execution tracing** for the 34 problems that currently have real tracers;
+- **Synchronized execution tracing** for the 339 problems that currently have real tracers;
   the remaining catalogue entries say “not yet traced” instead of replaying other work.
 - **Pedagogical structure views** where implemented, including arrays, trees, graphs,
   matrices, linked lists, recursion trees, DSU, tries, and labelled LIS DP tables.
@@ -40,7 +40,7 @@ The platform is designed to pair step-by-step execution with:
 > hand-built step generators. It is kept as a record of intent, not as a coverage claim:
 > a tick means the problem is catalogued, not that it has a real execution trace.
 > `GET /api/problems/stats` is the authoritative number — currently **433 catalogued,
-> 319 traced**. See the README for why those differ.
+> 339 traced**. See the README for why those differ.
 
 ### 1. **Graphs - BFS & DFS Problems**
 - [x] BFS Traversal of Graph
@@ -128,7 +128,7 @@ The platform is designed to pair step-by-step execution with:
 - [x] Jump Game I
 - [x] Job Sequencing Problem
 
-### 12. **Strings**
+### 12. **Strings (All 24 Traced)**
 - [x] Longest Substring Without Repeating Characters
 - [x] Valid Anagram
 

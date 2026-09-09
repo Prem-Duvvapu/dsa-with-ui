@@ -76,10 +76,10 @@ public class AdvancedGraphService implements ProblemProvider {
             case "tarjan-bridges": throw new LegacyTraceRetiredException(problemId);
             case "articulation-points": throw new LegacyTraceRetiredException(problemId);
             case "kosaraju-scc": throw new LegacyTraceRetiredException(problemId);
-            case "bracket-reversals": return generateBracketReversalsSteps();
-            case "count-and-say": return generateCountAndSaySteps();
-            case "string-hashing-theory": return generateStringHashingTheorySteps();
-            case "rabin-karp-algo": return generateRabinKarpSteps();
+            case "bracket-reversals":
+            case "count-and-say":
+            case "string-hashing-theory":
+            case "rabin-karp-algo":
             // z-function-algo, kmp-lps-algo, shortest-palindrome and
             // longest-happy-prefix have real tracers now (tracer/impl). Their
             // generators are gone; refusing loudly beats serving this service's
@@ -89,7 +89,8 @@ public class AdvancedGraphService implements ProblemProvider {
             case "shortest-palindrome":
             case "longest-happy-prefix":
                 throw new LegacyTraceRetiredException(problemId);
-            case "count-palindromic-subsequences": return generateCountPalindromicSubsequencesSteps();
+            case "count-palindromic-subsequences":
+                throw new LegacyTraceRetiredException(problemId);
             default: return generateGraphIntroSteps();
         }
     }
@@ -389,6 +390,9 @@ public class AdvancedGraphService implements ProblemProvider {
     }
 
     private static DsType bulkDsType(String id, String category) {
+        if (id.equals("count-palindromic-subsequences")) {
+            return DsType.DP_TABLE;
+        }
         if (category.startsWith("Strings")) {
             return DsType.STRING;
         }

@@ -1,7 +1,7 @@
 package com.dsa.ui;
 
-import com.dsa.ui.model.ExecutionStep;
 import com.dsa.ui.model.ProblemDetail;
+import com.dsa.ui.service.LegacyTraceRetiredException;
 import com.dsa.ui.service.StringService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,9 +36,9 @@ public class StringServiceTest {
     public void testGenerateStepsForAllStringProblems() {
         List<ProblemDetail> problems = service.getAllProblems();
         for (ProblemDetail p : problems) {
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps list should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

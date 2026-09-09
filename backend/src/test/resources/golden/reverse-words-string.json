@@ -1,0 +1,582 @@
+{
+  "anchors" : {
+    "append" : 5,
+    "done" : 8
+  },
+  "code" : "public String reverseWords(String s) {\n    String[] words = s.trim().split(\"\\s+\");\n    StringBuilder answer = new StringBuilder();\n    for (int i = words.length - 1; i >= 0; i--) {\n        if (!answer.isEmpty()) answer.append(' ');\n        answer.append(words[i]);\n    }\n    return answer.toString();\n}",
+  "problemId" : "reverse-words-string",
+  "resolvedInput" : {
+    "s" : "  the sky is blue  "
+  },
+  "stepCount" : 5,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 5,
+    "description" : "Take word 3, \"blue\", from the right; result is now \"blue\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "blue",
+      "word" : "blue",
+      "wordIndex" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 2,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 6,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 7,
+      "value" : 107,
+      "state" : "default",
+      "label" : "k"
+    }, {
+      "index" : 8,
+      "value" : 121,
+      "state" : "default",
+      "label" : "y"
+    }, {
+      "index" : 9,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 10,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    }, {
+      "index" : 11,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 12,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 13,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 14,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 15,
+      "value" : 117,
+      "state" : "default",
+      "label" : "u"
+    }, {
+      "index" : 16,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 17,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 18,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Take word 2, \"is\", from the right; result is now \"blue is\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "blue is",
+      "word" : "is",
+      "wordIndex" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 2,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 6,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 7,
+      "value" : 107,
+      "state" : "default",
+      "label" : "k"
+    }, {
+      "index" : 8,
+      "value" : 121,
+      "state" : "default",
+      "label" : "y"
+    }, {
+      "index" : 9,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 10,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    }, {
+      "index" : 11,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 12,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 13,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 14,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 15,
+      "value" : 117,
+      "state" : "default",
+      "label" : "u"
+    }, {
+      "index" : 16,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 17,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 18,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 5,
+    "description" : "Take word 1, \"sky\", from the right; result is now \"blue is sky\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "blue is sky",
+      "word" : "sky",
+      "wordIndex" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 2,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 6,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 7,
+      "value" : 107,
+      "state" : "default",
+      "label" : "k"
+    }, {
+      "index" : 8,
+      "value" : 121,
+      "state" : "default",
+      "label" : "y"
+    }, {
+      "index" : 9,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 10,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    }, {
+      "index" : 11,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 12,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 13,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 14,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 15,
+      "value" : 117,
+      "state" : "default",
+      "label" : "u"
+    }, {
+      "index" : 16,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 17,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 18,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 5,
+    "description" : "Take word 0, \"the\", from the right; result is now \"blue is sky the\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "blue is sky the",
+      "word" : "the",
+      "wordIndex" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 2,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 6,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 7,
+      "value" : 107,
+      "state" : "default",
+      "label" : "k"
+    }, {
+      "index" : 8,
+      "value" : 121,
+      "state" : "default",
+      "label" : "y"
+    }, {
+      "index" : 9,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 10,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    }, {
+      "index" : 11,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 12,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 13,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 14,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 15,
+      "value" : 117,
+      "state" : "default",
+      "label" : "u"
+    }, {
+      "index" : 16,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 17,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 18,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 8,
+    "description" : "Words reversed and whitespace normalized: \"blue is sky the\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "blue is sky the"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 2,
+      "value" : 116,
+      "state" : "default",
+      "label" : "t"
+    }, {
+      "index" : 3,
+      "value" : 104,
+      "state" : "default",
+      "label" : "h"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 6,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 7,
+      "value" : 107,
+      "state" : "default",
+      "label" : "k"
+    }, {
+      "index" : 8,
+      "value" : 121,
+      "state" : "default",
+      "label" : "y"
+    }, {
+      "index" : 9,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 10,
+      "value" : 105,
+      "state" : "default",
+      "label" : "i"
+    }, {
+      "index" : 11,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    }, {
+      "index" : 12,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 13,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 14,
+      "value" : 108,
+      "state" : "default",
+      "label" : "l"
+    }, {
+      "index" : 15,
+      "value" : 117,
+      "state" : "default",
+      "label" : "u"
+    }, {
+      "index" : 16,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 17,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 18,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

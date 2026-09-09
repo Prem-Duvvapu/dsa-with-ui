@@ -4,7 +4,7 @@
 
 This document is the execution handoff for completing the project from the state of `main` after PRs #122, #126, #124, and #125. It is intended to be actionable by another coding agent without relying on prior chat context.
 
-The primary objective is to replace every remaining catalogue-only or legacy demonstration route with a real, caller-driven tracer while preserving API contracts, visualization fidelity, and regression coverage. Each algorithm topic must be completed in exactly one topic PR, in ascending order of remaining problem count.
+The primary objective is to replace every remaining catalogue-only or legacy demonstration route with a real, caller-driven tracer while preserving API contracts, visualization fidelity, and regression coverage. Each algorithm topic must be completed in exactly one topic PR. Bit Manipulation was briefly deferred on 2026-09-08 and then completed in Topic PR 1 on 2026-09-09.
 
 ## Authoritative baseline
 
@@ -19,6 +19,10 @@ The values below were read from a live `GET /api/problems/stats` and `GET /api/p
 | Untraced problems | 126 | 0 |
 | Duplicate catalogue IDs | 7 | 0 |
 | Orphaned tracer IDs | 0 | 0 |
+
+### Progress after the baseline
+
+The Strings topic PR added all 20 missing String tracers (327/433 traced, 106 untraced). Bit Manipulation Topic PR 1 then added its 12 remaining tracers on top of that, bringing the live state to 339/433 traced, 94 untraced.
 
 ### Topic status
 
@@ -37,13 +41,13 @@ The values below were read from a live `GET /api/problems/stats` and `GET /api/p
 | — | Stack & Queue | 30 | 30 | 0 | Complete |
 | — | Tries & Prefixes | 2 | 2 | 0 | Complete |
 | — | Bit Manipulation | 18 | 18 | 0 | Complete |
-| 2 | Strings | 4 | 24 | 20 | Next |
-| 3 | Binary Search | 12 | 32 | 20 | Pending |
-| 4 | Recursion & Backtracking | 4 | 25 | 21 | Pending |
-| 5 | Linked List | 5 | 31 | 26 | Pending |
-| 6 | Dynamic Programming | 28 | 55 | 27 | Pending |
+| — | Strings | 24 | 24 | 0 | Complete |
+| 1 | Binary Search | 12 | 32 | 20 | Next |
+| 2 | Recursion & Backtracking | 4 | 25 | 21 | Pending |
+| 3 | Linked List | 5 | 31 | 26 | Pending |
+| 4 | Dynamic Programming | 28 | 55 | 27 | Pending |
 
-Strings precedes Binary Search for the 20-item tie. Do not reorder topics unless the backlog is re-audited and the user explicitly changes the rule.
+Bit Manipulation (previously deferred by the user) and Strings both landed independently and are now both complete. The active sequence is Binary Search, Recursion & Backtracking, Linked List, then Dynamic Programming.
 
 ## Recently completed work
 
@@ -51,9 +55,11 @@ Strings precedes Binary Search for the 20-item tie. Do not reorder topics unless
 - Greedy Algorithms reached 14/14 real tracers in PR #126. PR #123 was automatically closed when its stacked base branch was deleted and was superseded by #126.
 - Frontend routing tests and interval visualization reliability were fixed in PR #124.
 - Heaps & PriorityQueue reached 17/17 real tracers in PR #125.
+- Strings reached 24/24 real tracers in the String topic completion PR.
 - The current backend suite passed 4,538 tests before the final Heap merge. The Heap-focused contract run passed 2,856 checks, and golden regeneration passed 308 tests. GitHub CI passed backend, frontend/build, and security checks on every merged PR.
-- Bit Manipulation reached 18/18 real tracers in Topic PR 1: all 12 remaining IDs (`power-set-bitwise`, `intro-bits-tricks`, `check-ith-bit-set`, `check-number-odd`, `set-unset-rightmost-bit`, `swap-two-numbers`, `divide-two-numbers-bitwise`, `min-bit-flips`, `print-prime-factors`, `divisors-of-number`, `count-primes-range-sieve`, `prime-factorisation-queries`) now have real `AlgorithmTracer`s. The full backend suite (4,832 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `intro-bits-tricks` to `bracket-reversals` (Strings, still untraced).
-- Current catalogue integrity is 433 unique IDs, 319 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
+- Bit Manipulation reached 18/18 real tracers in Topic PR 1: all 12 remaining IDs (`power-set-bitwise`, `intro-bits-tricks`, `check-ith-bit-set`, `check-number-odd`, `set-unset-rightmost-bit`, `swap-two-numbers`, `divide-two-numbers-bitwise`, `min-bit-flips`, `print-prime-factors`, `divisors-of-number`, `count-primes-range-sieve`, `prime-factorisation-queries`) now have real `AlgorithmTracer`s. The full backend suite (4,832 tests) and frontend suite (220 tests) plus `vite build` passed. `ProblemsApiTest`'s canonical untraced example moved from `intro-bits-tricks` to `bracket-reversals`, which both this PR and the independently landed Strings topic PR picked as the same still-untraced example.
+- Strings reached 24/24 real tracers in a separately landed topic PR, merged to `main` while Bit Manipulation Topic PR 1 was in flight.
+- Current catalogue integrity, after merging both topics, is 433 unique IDs, 339 tracer-backed IDs, no orphan tracers, and seven recorded duplicate providers.
 
 ## Non-negotiable delivery rules
 
@@ -101,11 +107,11 @@ Apply this checklist once for the entire topic, not as separate PRs:
 - Update frontend rendering or tests inside the topic PR if a new truthful `DsType` or payload shape requires it.
 - Include the full ID list, before/after count, test evidence, and known limitations in the PR description.
 
-## Topic PR 1 — Bit Manipulation, 12 remaining
+## Completed topic PR — Bit Manipulation, 12 added
 
-Branch suggestion: `feat/bit-manipulation-trace-completion`
+Branch: `feat/bit-manipulation-tracers`.
 
-Expected result after merge: 319/433 traced, 114 untraced.
+Result after merge (on top of the already-merged Strings topic): 339/433 traced, 94 untraced.
 
 | ID | Problem | Recommended input and trace focus |
 | --- | --- | --- |
@@ -129,11 +135,11 @@ Implementation notes:
 - Retire every legacy case above; the current legacy methods are fixed-data demonstrations and are not acceptable fallbacks.
 - Confirm that `single-number-1`, `check-power-of-2`, `count-set-bits`, `xor-numbers-in-range`, `single-number-3`, and `pow-x-n-math` remain green.
 
-## Topic PR 2 — Strings, 20 remaining
+## Completed topic PR — Strings, 20 added
 
 Branch suggestion: `feat/string-trace-completion`
 
-Expected result after merge: 339/433 traced, 94 untraced.
+Expected result after merge: 327/433 traced, 106 untraced. This count reflected the then-current decision to defer the 12 Bit Manipulation problems; Bit Manipulation was completed separately immediately afterward (see above), bringing the combined live state to 339/433.
 
 | ID | Problem | Recommended input and trace focus |
 | --- | --- | --- |
@@ -165,7 +171,7 @@ Implementation notes:
 - `longest-common-prefix` is currently a duplicate catalogue ID; implement against the canonical record returned by `/api/problems/{id}` and resolve provider duplication in the later catalogue-integrity PR.
 - Preserve the four existing string tracers and add alternate-input cases for Unicode policy, empty strings, whitespace, and malformed constrained alphabets.
 
-## Topic PR 3 — Binary Search, 20 remaining
+## Next topic PR 1 — Binary Search, 20 remaining
 
 Branch suggestion: `feat/binary-search-trace-completion`
 
@@ -201,11 +207,11 @@ Implementation notes:
 - Emit matrices for 2D problems and arrays for 1D/answer-space problems; always expose low, mid, high, predicate result, and current answer.
 - Test duplicates, empty/one-element inputs, impossible allocation, and numeric precision boundaries.
 
-## Topic PR 4 — Recursion & Backtracking, 21 remaining
+## Next topic PR 2 — Recursion & Backtracking, 21 remaining
 
 Branch suggestion: `feat/recursion-backtracking-trace-completion`
 
-Expected result after merge: 380/433 traced, 53 untraced.
+Expected result after merge: 368/433 traced, 65 untraced.
 
 | ID | Problem | Core trace |
 | --- | --- | --- |
@@ -239,11 +245,11 @@ Implementation notes:
 - Use `Matrix`/`Graph` for maze, board, or coloring state and `Stack` only when it truthfully represents the active recursion/choice stack.
 - Test zero-solution, one-solution, multiple-solution, duplicate-value, and pruning cases.
 
-## Topic PR 5 — Linked List, 26 remaining
+## Next topic PR 3 — Linked List, 26 remaining
 
 Branch suggestion: `feat/linked-list-trace-completion`
 
-Expected result after merge: 406/433 traced, 27 untraced.
+Expected result after merge: 394/433 traced, 39 untraced.
 
 | ID | Problem |
 | --- | --- |
@@ -284,11 +290,11 @@ Implementation notes:
 - Pointer algorithms should expose named pointers such as `slow`, `fast`, `prev`, `current`, `next`, and dummy nodes.
 - Test empty lists, singleton lists, duplicate values, invalid positions, no-cycle/no-intersection cases, carry propagation, and all-node deletion.
 
-## Topic PR 6 — Dynamic Programming, 27 remaining
+## Next topic PR 4 — Dynamic Programming, 27 remaining
 
 Branch suggestion: `feat/dynamic-programming-trace-completion`
 
-Expected result after merge: 433/433 traced, 0 untraced.
+Expected result after merge: 421/433 traced, 12 untraced. The deferred Bit Manipulation topic must still be completed before final project acceptance.
 
 | ID | Problem | DP family/state |
 | --- | --- | --- |
@@ -327,7 +333,7 @@ Implementation notes:
 - Keep defaults small enough that each cell update is legible. Set strict dimension/string-length constraints.
 - Use numeric types that cannot silently overflow within allowed constraints, especially counting problems and matrix-chain costs.
 - Add top-down stack frames only when the selected implementation is memoized recursion; do not show recursion for a tabulation implementation.
-- In this final topic PR, change catalogue/API contracts from “known untraced route” assertions to `untraced == 0` and `traced == catalogued`.
+- Keep the canonical untraced-route assertions pointed at Bit Manipulation until that deferred topic is resumed and completed.
 
 ## Post-topic PR A — Catalogue integrity and legacy removal
 
@@ -455,7 +461,7 @@ For the next agent:
 1. Read this document, `HANDOFF.md`, `PROJECT_CONTEXT.md`, and the tracer contracts/tests before editing.
 2. Fetch and switch to `main`, then run `git pull --ff-only origin main`.
 3. Confirm the live stats still equal the baseline. If they differ, regenerate the per-topic inventory before implementation.
-4. Begin only Topic PR 1 (Bit Manipulation). Do not start Strings in the same branch or PR.
+4. Begin only the Binary Search topic PR. Bit Manipulation remains deferred by explicit user direction.
 5. Use medium logical commits: shared support, tracer batches, contract/golden updates, then documentation/counts.
 6. Push the topic branch, open one PR, wait for every required check, review live stats, and merge it.
 7. Repeat in the exact topic order above.

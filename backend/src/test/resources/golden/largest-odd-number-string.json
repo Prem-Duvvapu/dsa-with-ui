@@ -1,0 +1,99 @@
+{
+  "anchors" : {
+    "done" : 5,
+    "inspect" : 3
+  },
+  "code" : "public String largestOddNumber(String number) {\n    for (int i = number.length() - 1; i >= 0; i--) {\n        if ((number.charAt(i) - '0') % 2 == 1) return number.substring(0, i + 1);\n    }\n    return \"\";\n}",
+  "problemId" : "largest-odd-number-string",
+  "resolvedInput" : {
+    "number" : "35427"
+  },
+  "stepCount" : 2,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 3,
+    "description" : "Digit 7 at index 4 is odd, so this prefix is the largest possible odd number.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "digit" : "7",
+      "index" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 1,
+      "value" : 53,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 2,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 55,
+      "state" : "current",
+      "label" : "7"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 5,
+    "description" : "Largest odd-valued prefix is \"35427\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "35427"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 51,
+      "state" : "default",
+      "label" : "3"
+    }, {
+      "index" : 1,
+      "value" : 53,
+      "state" : "default",
+      "label" : "5"
+    }, {
+      "index" : 2,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 3,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 4,
+      "value" : 55,
+      "state" : "default",
+      "label" : "7"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
