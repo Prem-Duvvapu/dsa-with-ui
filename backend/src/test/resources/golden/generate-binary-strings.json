@@ -1,0 +1,483 @@
+{
+  "anchors" : {
+    "appendOne" : 14,
+    "appendZero" : 12,
+    "capture" : 9,
+    "done" : 4
+  },
+  "code" : "public List<String> generate(int n) {\n    List<String> res = new ArrayList<>();\n    backtrack(n, '0', \"\", res);\n    return res;\n}\n\nprivate void backtrack(int remaining, char last, String cur, List<String> res) {\n    if (remaining == 0) {\n        res.add(cur);\n        return;\n    }\n    backtrack(remaining - 1, '0', cur + '0', res);\n    if (last != '1') {\n        backtrack(remaining - 1, '1', cur + '1', res);\n    }\n}",
+  "problemId" : "generate-binary-strings",
+  "resolvedInput" : {
+    "n" : 3
+  },
+  "stepCount" : 16,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 12,
+    "description" : "Append '0' to \"\" - always legal, recurse with 2 position(s) left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 12,
+    "description" : "Append '0' to \"0\" - always legal, recurse with 1 position(s) left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "00"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 12,
+    "description" : "Append '0' to \"00\" - always legal, recurse with 0 position(s) left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "000"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Length reached - capture \"000\" as string #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)", "backtrack(remaining=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "string" : "000"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Last character was not '1', so appending '1' to \"00\" is legal too - recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "001"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "Length reached - capture \"001\" as string #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)", "backtrack(remaining=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "string" : "001"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 14,
+    "description" : "Last character was not '1', so appending '1' to \"0\" is legal too - recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "01"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "Append '0' to \"01\" - always legal, recurse with 0 position(s) left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "010"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 9,
+    "description" : "Length reached - capture \"010\" as string #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)", "backtrack(remaining=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "string" : "010"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 1,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 14,
+    "description" : "Last character was not '1', so appending '1' to \"\" is legal too - recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Append '0' to \"1\" - always legal, recurse with 1 position(s) left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "10"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 12,
+    "description" : "Append '0' to \"10\" - always legal, recurse with 0 position(s) left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "100"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 9,
+    "description" : "Length reached - capture \"100\" as string #4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)", "backtrack(remaining=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "string" : "100"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Last character was not '1', so appending '1' to \"10\" is legal too - recurse.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "prefix" : "101"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 9,
+    "description" : "Length reached - capture \"101\" as string #5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)", "backtrack(remaining=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5",
+      "string" : "101"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 2,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 4,
+    "description" : "Every position filled at every leaf. 5 strings of length 3 generated with no two consecutive 1s.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

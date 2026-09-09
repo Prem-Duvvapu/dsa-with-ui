@@ -1,0 +1,797 @@
+{
+  "anchors" : {
+    "capture" : 10,
+    "choose" : 21,
+    "done" : 5,
+    "pruneRest" : 18,
+    "skipDuplicate" : 15,
+    "undo" : 23
+  },
+  "code" : "public List<List<Integer>> combinationSum2(int[] candidates, int target) {\n    Arrays.sort(candidates);\n    List<List<Integer>> res = new ArrayList<>();\n    backtrack(0, candidates, target, new ArrayList<>(), res);\n    return res;\n}\n\nprivate void backtrack(int start, int[] c, int remaining, List<Integer> path, List<List<Integer>> res) {\n    if (remaining == 0) {\n        res.add(new ArrayList<>(path));\n        return;\n    }\n    for (int i = start; i < c.length; i++) {\n        if (i > start && c[i] == c[i - 1]) {\n            continue;\n        }\n        if (c[i] > remaining) {\n            break;\n        }\n        path.add(c[i]);\n        backtrack(i + 1, c, remaining - c[i], path, res);\n        path.remove(path.size() - 1);\n    }\n}",
+  "problemId" : "combination-sum-2",
+  "resolvedInput" : {
+    "candidates" : [ 2, 5, 2, 1, 2, 7 ],
+    "target" : 8
+  },
+  "stepCount" : 44,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 21,
+    "description" : "Choose c[0]=1 - remaining drops from 8 to 7. Recurse from index 1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "remaining" : "7"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 21,
+    "description" : "Choose c[1]=2 - remaining drops from 7 to 5. Recurse from index 2.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "remaining" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 21,
+    "description" : "Choose c[2]=2 - remaining drops from 5 to 3. Recurse from index 3.",
+    "queueOrStackState" : [ "1", "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "remaining" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 21,
+    "description" : "Choose c[3]=2 - remaining drops from 3 to 1. Recurse from index 4.",
+    "queueOrStackState" : [ "1", "2", "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)", "backtrack(start=3,remaining=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "remaining" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 18,
+    "description" : "c[4]=5 exceeds the remaining 1 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "1", "2", "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)", "backtrack(start=3,remaining=3)", "backtrack(start=4,remaining=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[3]=2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1", "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)", "backtrack(start=3,remaining=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 18,
+    "description" : "c[4]=5 exceeds the remaining 3 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "1", "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)", "backtrack(start=3,remaining=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[2]=2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 15,
+    "description" : "c[3]=2 equals the previous candidate already tried at this depth - skip to avoid a duplicate combination.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 21,
+    "description" : "Choose c[4]=5 - remaining drops from 5 to 0. Recurse from index 5.",
+    "queueOrStackState" : [ "1", "2", "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "remaining" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 10,
+    "description" : "Remaining reached exactly 0 - capture [1, 2, 5] as combination #1.",
+    "queueOrStackState" : [ "1", "2", "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)", "backtrack(start=5,remaining=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "[1, 2, 5]",
+      "count" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[4]=5 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 18,
+    "description" : "c[5]=7 exceeds the remaining 5 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=2,remaining=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "7",
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[1]=2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 15,
+    "description" : "c[2]=2 equals the previous candidate already tried at this depth - skip to avoid a duplicate combination.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 15,
+    "description" : "c[3]=2 equals the previous candidate already tried at this depth - skip to avoid a duplicate combination.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 21,
+    "description" : "Choose c[4]=5 - remaining drops from 7 to 2. Recurse from index 5.",
+    "queueOrStackState" : [ "1", "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "remaining" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 18,
+    "description" : "c[5]=7 exceeds the remaining 2 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "1", "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=5,remaining=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "7",
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[4]=5 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 21,
+    "description" : "Choose c[5]=7 - remaining drops from 7 to 0. Recurse from index 6.",
+    "queueOrStackState" : [ "1", "7" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "remaining" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 10,
+    "description" : "Remaining reached exactly 0 - capture [1, 7] as combination #2.",
+    "queueOrStackState" : [ "1", "7" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)", "backtrack(start=6,remaining=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combination" : "[1, 7]",
+      "count" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[5]=7 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=1,remaining=7)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[0]=1 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 21,
+    "description" : "Choose c[1]=2 - remaining drops from 8 to 6. Recurse from index 2.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "remaining" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 21,
+    "description" : "Choose c[2]=2 - remaining drops from 6 to 4. Recurse from index 3.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "remaining" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 21,
+    "description" : "Choose c[3]=2 - remaining drops from 4 to 2. Recurse from index 4.",
+    "queueOrStackState" : [ "2", "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)", "backtrack(start=3,remaining=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "remaining" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 18,
+    "description" : "c[4]=5 exceeds the remaining 2 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "2", "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)", "backtrack(start=3,remaining=4)", "backtrack(start=4,remaining=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[3]=2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)", "backtrack(start=3,remaining=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 18,
+    "description" : "c[4]=5 exceeds the remaining 4 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)", "backtrack(start=3,remaining=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "5",
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[2]=2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 15,
+    "description" : "c[3]=2 equals the previous candidate already tried at this depth - skip to avoid a duplicate combination.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 21,
+    "description" : "Choose c[4]=5 - remaining drops from 6 to 1. Recurse from index 5.",
+    "queueOrStackState" : [ "2", "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "remaining" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 18,
+    "description" : "c[5]=7 exceeds the remaining 1 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "2", "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)", "backtrack(start=5,remaining=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "7",
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[4]=5 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 18,
+    "description" : "c[5]=7 exceeds the remaining 6 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=2,remaining=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "7",
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[1]=2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 15,
+    "description" : "c[2]=2 equals the previous candidate already tried at this depth - skip to avoid a duplicate combination.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 38,
+    "activeLine" : 15,
+    "description" : "c[3]=2 equals the previous candidate already tried at this depth - skip to avoid a duplicate combination.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 39,
+    "activeLine" : 21,
+    "description" : "Choose c[4]=5 - remaining drops from 8 to 3. Recurse from index 5.",
+    "queueOrStackState" : [ "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "remaining" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 40,
+    "activeLine" : 18,
+    "description" : "c[5]=7 exceeds the remaining 3 - since the array is sorted, every later candidate is bigger still. Stop this loop.",
+    "queueOrStackState" : [ "5" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)", "backtrack(start=5,remaining=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "candidate" : "7",
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 41,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[4]=5 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 42,
+    "activeLine" : 21,
+    "description" : "Choose c[5]=7 - remaining drops from 8 to 1. Recurse from index 6.",
+    "queueOrStackState" : [ "7" ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "remaining" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 43,
+    "activeLine" : 23,
+    "description" : "Undo choosing c[5]=7 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0,remaining=8)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 44,
+    "activeLine" : 5,
+    "description" : "Search tree fully explored. 2 unique combinations of [1, 2, 2, 2, 5, 7] summing to 8 found.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "combinations" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

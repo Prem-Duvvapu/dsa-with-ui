@@ -1,0 +1,411 @@
+{
+  "anchors" : {
+    "baseEmpty" : 3,
+    "makeRoom" : 16,
+    "place" : 12,
+    "popTop" : 6,
+    "restore" : 18
+  },
+  "code" : "public void reverse(Deque<Integer> stack) {\n    if (stack.isEmpty()) {\n        return;\n    }\n    int top = stack.pop();\n    reverse(stack);\n    insertAtBottom(stack, top);\n}\n\nprivate void insertAtBottom(Deque<Integer> stack, int val) {\n    if (stack.isEmpty()) {\n        stack.push(val);\n        return;\n    }\n    int top = stack.pop();\n    insertAtBottom(stack, val);\n    stack.push(top);\n}",
+  "problemId" : "reverse-stack-recursion",
+  "resolvedInput" : {
+    "stack" : [ 1, 2, 3, 4 ]
+  },
+  "stepCount" : 22,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "Pop 4 off the top. Reverse the remaining 3 element(s) first, then insert 4 at the bottom.",
+    "queueOrStackState" : [ "1", "2", "3" ],
+    "callStack" : [ "reverse(size=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "4",
+      "stack" : "[1, 2, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Pop 3 off the top. Reverse the remaining 2 element(s) first, then insert 3 at the bottom.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "3",
+      "stack" : "[1, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Pop 2 off the top. Reverse the remaining 1 element(s) first, then insert 2 at the bottom.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "2",
+      "stack" : "[1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Pop 1 off the top. Reverse the remaining 0 element(s) first, then insert 1 at the bottom.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)", "reverse(size=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "1",
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 3,
+    "description" : "Stack is empty - nothing left to reverse at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)", "reverse(size=1)", "reverse(size=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 12,
+    "description" : "Stack is empty - 1 becomes the new bottom.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)", "reverse(size=1)", "insertAtBottom(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "1",
+      "stack" : "[1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 16,
+    "description" : "Pop 1 aside so 2 can go in underneath it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)", "insertAtBottom(val=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "1",
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 12,
+    "description" : "Stack is empty - 2 becomes the new bottom.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)", "insertAtBottom(val=2)", "insertAtBottom(val=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "2",
+      "stack" : "[2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 18,
+    "description" : "Push 1 back on top, now that 2 sits below it.",
+    "queueOrStackState" : [ "2", "1" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)", "insertAtBottom(val=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "1",
+      "stack" : "[2, 1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "Pop 1 aside so 3 can go in underneath it.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "insertAtBottom(val=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "1",
+      "stack" : "[2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 16,
+    "description" : "Pop 2 aside so 3 can go in underneath it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "insertAtBottom(val=3)", "insertAtBottom(val=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "2",
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 12,
+    "description" : "Stack is empty - 3 becomes the new bottom.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "insertAtBottom(val=3)", "insertAtBottom(val=3)", "insertAtBottom(val=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "3",
+      "stack" : "[3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 18,
+    "description" : "Push 2 back on top, now that 3 sits below it.",
+    "queueOrStackState" : [ "3", "2" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "insertAtBottom(val=3)", "insertAtBottom(val=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "2",
+      "stack" : "[3, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 18,
+    "description" : "Push 1 back on top, now that 3 sits below it.",
+    "queueOrStackState" : [ "3", "2", "1" ],
+    "callStack" : [ "reverse(size=4)", "reverse(size=3)", "insertAtBottom(val=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "1",
+      "stack" : "[3, 2, 1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 16,
+    "description" : "Pop 1 aside so 4 can go in underneath it.",
+    "queueOrStackState" : [ "3", "2" ],
+    "callStack" : [ "reverse(size=4)", "insertAtBottom(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "1",
+      "stack" : "[3, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 16,
+    "description" : "Pop 2 aside so 4 can go in underneath it.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "reverse(size=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "2",
+      "stack" : "[3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 16,
+    "description" : "Pop 3 aside so 4 can go in underneath it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "reverse(size=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "3",
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 12,
+    "description" : "Stack is empty - 4 becomes the new bottom.",
+    "queueOrStackState" : [ "4" ],
+    "callStack" : [ "reverse(size=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "4",
+      "stack" : "[4]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 18,
+    "description" : "Push 3 back on top, now that 4 sits below it.",
+    "queueOrStackState" : [ "4", "3" ],
+    "callStack" : [ "reverse(size=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "3",
+      "stack" : "[4, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 18,
+    "description" : "Push 2 back on top, now that 4 sits below it.",
+    "queueOrStackState" : [ "4", "3", "2" ],
+    "callStack" : [ "reverse(size=4)", "insertAtBottom(val=4)", "insertAtBottom(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "2",
+      "stack" : "[4, 3, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 18,
+    "description" : "Push 1 back on top, now that 4 sits below it.",
+    "queueOrStackState" : [ "4", "3", "2", "1" ],
+    "callStack" : [ "reverse(size=4)", "insertAtBottom(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "1",
+      "stack" : "[4, 3, 2, 1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 3,
+    "description" : "Every element popped and reinserted at the bottom. Final order (bottom to top): [4, 3, 2, 1].",
+    "queueOrStackState" : [ "4", "3", "2", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "stack" : "[4, 3, 2, 1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

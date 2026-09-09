@@ -1,0 +1,1125 @@
+{
+  "anchors" : {
+    "capture" : 9,
+    "done" : 4,
+    "swap" : 14,
+    "swapBack" : 16
+  },
+  "code" : "public List<List<Integer>> permute(int[] nums) {\n    List<List<Integer>> res = new ArrayList<>();\n    backtrack(nums, 0, res);\n    return res;\n}\n\nprivate void backtrack(int[] nums, int idx, List<List<Integer>> res) {\n    if (idx == nums.length) {\n        res.add(box(nums));\n        return;\n    }\n    for (int i = idx; i < nums.length; i++) {\n        swap(nums, idx, i);\n        backtrack(nums, idx + 1, res);\n        swap(nums, idx, i);\n    }\n}",
+  "problemId" : "permutations",
+  "resolvedInput" : {
+    "nums" : [ 1, 2, 3 ]
+  },
+  "stepCount" : 37,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 14,
+    "description" : "Swap positions 0 and 0 to bring 1 into position 0 - recurse into position 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "idx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 14,
+    "description" : "Swap positions 1 and 1 to bring 2 into position 1 - recurse into position 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 14,
+    "description" : "Swap positions 2 and 2 to bring 3 into position 2 - recurse into position 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "Every position 0..2 fixed - capture [1, 2, 3] as permutation #1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)", "backtrack(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "permutation" : "[1, 2, 3]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 16,
+    "description" : "Swap positions 2 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 16,
+    "description" : "Swap positions 1 and 1 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 14,
+    "description" : "Swap positions 1 and 2 to bring 3 into position 1 - recurse into position 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "Swap positions 2 and 2 to bring 2 into position 2 - recurse into position 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 9,
+    "description" : "Every position 0..2 fixed - capture [1, 3, 2] as permutation #2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)", "backtrack(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "permutation" : "[1, 3, 2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "Swap positions 2 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 16,
+    "description" : "Swap positions 1 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 16,
+    "description" : "Swap positions 0 and 0 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "0",
+      "idx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 14,
+    "description" : "Swap positions 0 and 1 to bring 2 into position 0 - recurse into position 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "Swap positions 1 and 1 to bring 1 into position 1 - recurse into position 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 14,
+    "description" : "Swap positions 2 and 2 to bring 3 into position 2 - recurse into position 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 9,
+    "description" : "Every position 0..2 fixed - capture [2, 1, 3] as permutation #3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)", "backtrack(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "permutation" : "[2, 1, 3]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 16,
+    "description" : "Swap positions 2 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 16,
+    "description" : "Swap positions 1 and 1 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 14,
+    "description" : "Swap positions 1 and 2 to bring 3 into position 1 - recurse into position 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 14,
+    "description" : "Swap positions 2 and 2 to bring 1 into position 2 - recurse into position 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 9,
+    "description" : "Every position 0..2 fixed - capture [2, 3, 1] as permutation #4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)", "backtrack(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "permutation" : "[2, 3, 1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 16,
+    "description" : "Swap positions 2 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 16,
+    "description" : "Swap positions 1 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 16,
+    "description" : "Swap positions 0 and 1 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 14,
+    "description" : "Swap positions 0 and 2 to bring 3 into position 0 - recurse into position 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 14,
+    "description" : "Swap positions 1 and 1 to bring 2 into position 1 - recurse into position 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 14,
+    "description" : "Swap positions 2 and 2 to bring 1 into position 2 - recurse into position 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 9,
+    "description" : "Every position 0..2 fixed - capture [3, 2, 1] as permutation #5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)", "backtrack(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5",
+      "permutation" : "[3, 2, 1]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 16,
+    "description" : "Swap positions 2 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 16,
+    "description" : "Swap positions 1 and 1 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 14,
+    "description" : "Swap positions 1 and 2 to bring 1 into position 1 - recurse into position 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 14,
+    "description" : "Swap positions 2 and 2 to bring 2 into position 2 - recurse into position 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 9,
+    "description" : "Every position 0..2 fixed - capture [3, 1, 2] as permutation #6.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)", "backtrack(idx=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "6",
+      "permutation" : "[3, 1, 2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 16,
+    "description" : "Swap positions 2 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 35,
+    "activeLine" : 16,
+    "description" : "Swap positions 1 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 36,
+    "activeLine" : 16,
+    "description" : "Swap positions 0 and 2 back - restore the order before trying the next candidate.",
+    "queueOrStackState" : null,
+    "callStack" : [ "backtrack(idx=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "idx" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 37,
+    "activeLine" : 4,
+    "description" : "Every position fixed at every leaf. 6 permutations generated (3!).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "permutations" : "6"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "sorted"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "sorted"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "sorted"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

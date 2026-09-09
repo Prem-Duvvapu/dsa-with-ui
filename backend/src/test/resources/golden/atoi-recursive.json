@@ -1,0 +1,317 @@
+{
+  "anchors" : {
+    "clamp" : 10,
+    "digit" : 20,
+    "readSign" : 6,
+    "skipWhitespace" : 4,
+    "stop" : 18
+  },
+  "code" : "public int myAtoi(String s) {\n    int i = 0;\n    while (i < s.length() && s.charAt(i) == ' ') i++;\n    int sign = 1;\n    if (i < s.length() && (s.charAt(i) == '+' || s.charAt(i) == '-')) {\n        sign = s.charAt(i) == '-' ? -1 : 1;\n        i++;\n    }\n    long value = accumulate(s, i, 0L);\n    long signed = sign * value;\n    if (signed > Integer.MAX_VALUE) return Integer.MAX_VALUE;\n    if (signed < Integer.MIN_VALUE) return Integer.MIN_VALUE;\n    return (int) signed;\n}\n\nprivate long accumulate(String s, int i, long acc) {\n    if (i >= s.length() || !Character.isDigit(s.charAt(i))) {\n        return acc;\n    }\n    return accumulate(s, i + 1, acc * 10 + (s.charAt(i) - '0'));\n}",
+  "problemId" : "atoi-recursive",
+  "resolvedInput" : {
+    "s" : " -042"
+  },
+  "stepCount" : 7,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 4,
+    "description" : "Skip leading whitespace - digits start at index 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 3,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "'-' at index 1 sets sign = -1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sign" : "-1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "current",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 3,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 20,
+    "description" : "'0' at index 2 folds in: acc = 0 * 10 + 0 = 0. Recurse into index 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "accumulate(i=2,acc=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "acc" : "0",
+      "i" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "current",
+      "label" : "0"
+    }, {
+      "index" : 3,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 20,
+    "description" : "'4' at index 3 folds in: acc = 0 * 10 + 4 = 4. Recurse into index 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "accumulate(i=2,acc=0)", "accumulate(i=3,acc=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "acc" : "4",
+      "i" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 3,
+      "value" : 52,
+      "state" : "current",
+      "label" : "4"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 20,
+    "description" : "'2' at index 4 folds in: acc = 4 * 10 + 2 = 42. Recurse into index 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "accumulate(i=2,acc=0)", "accumulate(i=3,acc=0)", "accumulate(i=4,acc=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "acc" : "42",
+      "i" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 3,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "current",
+      "label" : "2"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 18,
+    "description" : "Reached the end of the string - accumulated value = 42.",
+    "queueOrStackState" : null,
+    "callStack" : [ "accumulate(i=2,acc=0)", "accumulate(i=3,acc=0)", "accumulate(i=4,acc=4)", "accumulate(i=5,acc=42)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "acc" : "42",
+      "i" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 3,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Apply sign: -1 * 42 = -42. Within range, no clamping needed. Final result: -42.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "-42",
+      "signed" : "-42",
+      "value" : "42"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 32,
+      "state" : "default",
+      "label" : " "
+    }, {
+      "index" : 1,
+      "value" : 45,
+      "state" : "default",
+      "label" : "-"
+    }, {
+      "index" : 2,
+      "value" : 48,
+      "state" : "default",
+      "label" : "0"
+    }, {
+      "index" : 3,
+      "value" : 52,
+      "state" : "default",
+      "label" : "4"
+    }, {
+      "index" : 4,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

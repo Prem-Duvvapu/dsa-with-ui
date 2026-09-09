@@ -1,0 +1,339 @@
+{
+  "anchors" : {
+    "baseEmpty" : 3,
+    "makeRoom" : 16,
+    "place" : 12,
+    "popTop" : 6,
+    "restore" : 18
+  },
+  "code" : "public void sortStack(Deque<Integer> stack) {\n    if (stack.isEmpty()) {\n        return;\n    }\n    int top = stack.pop();\n    sortStack(stack);\n    insertSorted(stack, top);\n}\n\nprivate void insertSorted(Deque<Integer> stack, int val) {\n    if (stack.isEmpty() || stack.peek() <= val) {\n        stack.push(val);\n        return;\n    }\n    int top = stack.pop();\n    insertSorted(stack, val);\n    stack.push(top);\n}",
+  "problemId" : "sort-stack-recursion",
+  "resolvedInput" : {
+    "stack" : [ 3, 1, 4, 1, 5 ]
+  },
+  "stepCount" : 18,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 6,
+    "description" : "Pop 5 off the top. Recursively sort the remaining 4 element(s) before reinserting it.",
+    "queueOrStackState" : [ "3", "1", "4", "1" ],
+    "callStack" : [ "sortStack(size=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "5",
+      "stack" : "[3, 1, 4, 1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 6,
+    "description" : "Pop 1 off the top. Recursively sort the remaining 3 element(s) before reinserting it.",
+    "queueOrStackState" : [ "3", "1", "4" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "1",
+      "stack" : "[3, 1, 4]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 6,
+    "description" : "Pop 4 off the top. Recursively sort the remaining 2 element(s) before reinserting it.",
+    "queueOrStackState" : [ "3", "1" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "4",
+      "stack" : "[3, 1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Pop 1 off the top. Recursively sort the remaining 1 element(s) before reinserting it.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "1",
+      "stack" : "[3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Pop 3 off the top. Recursively sort the remaining 0 element(s) before reinserting it.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)", "sortStack(size=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "popped" : "3",
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 3,
+    "description" : "Stack is empty - nothing left to sort at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)", "sortStack(size=1)", "sortStack(size=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
+    "description" : "Stack is empty - push 3 directly.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)", "sortStack(size=1)", "insertSorted(val=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "3",
+      "stack" : "[3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "Top (3) is bigger than 1 - pop it aside and keep looking deeper for 1's spot.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "3",
+      "stack" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 12,
+    "description" : "Stack is empty - push 1 directly.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)", "insertSorted(val=1)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "1",
+      "stack" : "[1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 18,
+    "description" : "Push 3 back on top, now that 1 has been inserted below it.",
+    "queueOrStackState" : [ "1", "3" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "3",
+      "stack" : "[1, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Top (3) is <= 4 - push 4 here, it belongs on top.",
+    "queueOrStackState" : [ "1", "3", "4" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "insertSorted(val=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "4",
+      "stack" : "[1, 3, 4]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 16,
+    "description" : "Top (4) is bigger than 1 - pop it aside and keep looking deeper for 1's spot.",
+    "queueOrStackState" : [ "1", "3" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "4",
+      "stack" : "[1, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 16,
+    "description" : "Top (3) is bigger than 1 - pop it aside and keep looking deeper for 1's spot.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "insertSorted(val=1)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "displaced" : "3",
+      "stack" : "[1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 12,
+    "description" : "Top (1) is <= 1 - push 1 here, it belongs on top.",
+    "queueOrStackState" : [ "1", "1" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "insertSorted(val=1)", "insertSorted(val=1)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "1",
+      "stack" : "[1, 1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 18,
+    "description" : "Push 3 back on top, now that 1 has been inserted below it.",
+    "queueOrStackState" : [ "1", "1", "3" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "insertSorted(val=1)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "3",
+      "stack" : "[1, 1, 3]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 18,
+    "description" : "Push 4 back on top, now that 1 has been inserted below it.",
+    "queueOrStackState" : [ "1", "1", "3", "4" ],
+    "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "insertSorted(val=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "restored" : "4",
+      "stack" : "[1, 1, 3, 4]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 12,
+    "description" : "Top (4) is <= 5 - push 5 here, it belongs on top.",
+    "queueOrStackState" : [ "1", "1", "3", "4", "5" ],
+    "callStack" : [ "sortStack(size=5)", "insertSorted(val=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "inserted" : "5",
+      "stack" : "[1, 1, 3, 4, 5]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 3,
+    "description" : "Every element has been popped, sorted, and reinserted. Final order (bottom to top): [1, 1, 3, 4, 5].",
+    "queueOrStackState" : [ "1", "1", "3", "4", "5" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "stack" : "[1, 1, 3, 4, 5]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

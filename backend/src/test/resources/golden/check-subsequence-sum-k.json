@@ -1,0 +1,221 @@
+{
+  "anchors" : {
+    "earlySuccess" : 7,
+    "exclude" : 15,
+    "exhausted" : 10,
+    "include" : 13
+  },
+  "code" : "public boolean checkSubsequenceSum(int[] nums, int k) {\n    return backtrack(0, nums, k, 0);\n}\n\nprivate boolean backtrack(int idx, int[] nums, int k, int sum) {\n    if (sum == k) {\n        return true;\n    }\n    if (idx == nums.length) {\n        return false;\n    }\n    if (backtrack(idx + 1, nums, k, sum + nums[idx])) {\n        return true;\n    }\n    return backtrack(idx + 1, nums, k, sum);\n}",
+  "problemId" : "check-subsequence-sum-k",
+  "resolvedInput" : {
+    "k" : 5,
+    "nums" : [ 1, 2, 3 ]
+  },
+  "stepCount" : 12,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 10,
+    "description" : "Every index decided and sum 6 never reached 5 along this path.",
+    "queueOrStackState" : [ "1", "2", "3" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)", "backtrack(idx=3,sum=6)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sum" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 15,
+    "description" : "Including nums[2]=3 found no witness - try excluding it instead.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 10,
+    "description" : "Every index decided and sum 3 never reached 5 along this path.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)", "backtrack(idx=3,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 15,
+    "description" : "Including nums[1]=2 found no witness - try excluding it instead.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Every index decided and sum 4 never reached 5 along this path.",
+    "queueOrStackState" : [ "1", "3" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)", "backtrack(idx=3,sum=4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sum" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 15,
+    "description" : "Including nums[2]=3 found no witness - try excluding it instead.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 10,
+    "description" : "Every index decided and sum 1 never reached 5 along this path.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)", "backtrack(idx=3,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "Including nums[0]=1 found no witness - try excluding it instead.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Path [2, 3] already sums to 5 - a witness found. Excluding every remaining index still gives a valid subsequence, so stop here without deciding index 3 onward.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)", "backtrack(idx=3,sum=5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "sum" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 13,
+    "description" : "Including nums[2]=3 found a witness deeper in the tree - propagate true upward.",
+    "queueOrStackState" : [ "2", "3" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 13,
+    "description" : "Including nums[1]=2 found a witness deeper in the tree - propagate true upward.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 7,
+    "description" : "Overall result: true.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "result" : "true"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

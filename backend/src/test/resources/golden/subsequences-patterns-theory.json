@@ -1,0 +1,364 @@
+{
+  "anchors" : {
+    "capture" : 7,
+    "earlyExit" : 15,
+    "exclude" : 16,
+    "include" : 12
+  },
+  "code" : "public void explore(int[] nums, int limit) {\n    backtrack(0, nums, limit, new ArrayList<>(), 0);\n}\n\nprivate void backtrack(int idx, int[] nums, int limit, List<Integer> path, int sum) {\n    if (idx == nums.length) {\n        System.out.println(path + \" sum=\" + sum);\n        return;\n    }\n    if (sum + nums[idx] <= limit) {\n        path.add(nums[idx]);\n        backtrack(idx + 1, nums, limit, path, sum + nums[idx]);\n        path.remove(path.size() - 1);\n    } else {\n    }\n    backtrack(idx + 1, nums, limit, path, sum);\n}",
+  "problemId" : "subsequences-patterns-theory",
+  "resolvedInput" : {
+    "limit" : 3,
+    "nums" : [ 1, 2, 3 ]
+  },
+  "stepCount" : 19,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 12,
+    "description" : "Including nums[0]=1 keeps the sum at 1, within the limit of 3 - recurse.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 12,
+    "description" : "Including nums[1]=2 keeps the sum at 3, within the limit of 3 - recurse.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 15,
+    "description" : "Including nums[2]=3 would push the sum to 6, past the limit of 3 - the include branch is skipped entirely rather than explored and discarded.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "wouldBeSum" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 16,
+    "description" : "Leave nums[2]=3 out and recurse with the sum unchanged at 3.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 7,
+    "description" : "Every index decided - subsequence [1, 2] (sum=3) is #1.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=3)", "backtrack(idx=3,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "subsequence" : "[1, 2]",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 16,
+    "description" : "Leave nums[1]=2 out and recurse with the sum unchanged at 1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Including nums[2]=3 would push the sum to 4, past the limit of 3 - the include branch is skipped entirely rather than explored and discarded.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "wouldBeSum" : "4"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 16,
+    "description" : "Leave nums[2]=3 out and recurse with the sum unchanged at 1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 7,
+    "description" : "Every index decided - subsequence [1] (sum=1) is #2.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=1)", "backtrack(idx=2,sum=1)", "backtrack(idx=3,sum=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "subsequence" : "[1]",
+      "sum" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 16,
+    "description" : "Leave nums[0]=1 out and recurse with the sum unchanged at 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "0",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 12,
+    "description" : "Including nums[1]=2 keeps the sum at 2, within the limit of 3 - recurse.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 15,
+    "description" : "Including nums[2]=3 would push the sum to 5, past the limit of 3 - the include branch is skipped entirely rather than explored and discarded.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "wouldBeSum" : "5"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 16,
+    "description" : "Leave nums[2]=3 out and recurse with the sum unchanged at 2.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 7,
+    "description" : "Every index decided - subsequence [2] (sum=2) is #3.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=2)", "backtrack(idx=3,sum=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "subsequence" : "[2]",
+      "sum" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 16,
+    "description" : "Leave nums[1]=2 out and recurse with the sum unchanged at 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "1",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 12,
+    "description" : "Including nums[2]=3 keeps the sum at 3, within the limit of 3 - recurse.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 7,
+    "description" : "Every index decided - subsequence [3] (sum=3) is #4.",
+    "queueOrStackState" : [ "3" ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)", "backtrack(idx=3,sum=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "subsequence" : "[3]",
+      "sum" : "3"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 16,
+    "description" : "Leave nums[2]=3 out and recurse with the sum unchanged at 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "idx" : "2",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 7,
+    "description" : "Every index decided - subsequence [] (sum=0) is #5.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(idx=0,sum=0)", "backtrack(idx=1,sum=0)", "backtrack(idx=2,sum=0)", "backtrack(idx=3,sum=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5",
+      "subsequence" : "[]",
+      "sum" : "0"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}

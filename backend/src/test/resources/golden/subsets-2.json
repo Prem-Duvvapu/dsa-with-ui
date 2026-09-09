@@ -1,0 +1,347 @@
+{
+  "anchors" : {
+    "capture" : 9,
+    "extend" : 15,
+    "skipDuplicate" : 12,
+    "undo" : 17
+  },
+  "code" : "public List<List<Integer>> subsetsWithDup(int[] nums) {\n    Arrays.sort(nums);\n    List<List<Integer>> res = new ArrayList<>();\n    backtrack(0, nums, new ArrayList<>(), res);\n    return res;\n}\n\nprivate void backtrack(int start, int[] nums, List<Integer> path, List<List<Integer>> res) {\n    res.add(new ArrayList<>(path));\n    for (int i = start; i < nums.length; i++) {\n        if (i > start && nums[i] == nums[i - 1]) {\n            continue;\n        }\n        path.add(nums[i]);\n        backtrack(i + 1, nums, path, res);\n        path.remove(path.size() - 1);\n    }\n}",
+  "problemId" : "subsets-2",
+  "resolvedInput" : {
+    "nums" : [ 1, 2, 2 ]
+  },
+  "stepCount" : 19,
+  "steps" : [ {
+    "stepNumber" : 1,
+    "activeLine" : 9,
+    "description" : "Capture the current path [] as subset #1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "1",
+      "subset" : "[]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 15,
+    "description" : "Extend with nums[0]=1, then recurse from index 1.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 9,
+    "description" : "Capture the current path [1] as subset #2.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "subset" : "[1]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 15,
+    "description" : "Extend with nums[1]=2, then recurse from index 2.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "Capture the current path [1, 2] as subset #3.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "3",
+      "subset" : "[1, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 15,
+    "description" : "Extend with nums[2]=2, then recurse from index 3.",
+    "queueOrStackState" : [ "1", "2", "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "Capture the current path [1, 2, 2] as subset #4.",
+    "queueOrStackState" : [ "1", "2", "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)", "backtrack(start=2)", "backtrack(start=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "4",
+      "subset" : "[1, 2, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 17,
+    "description" : "Remove 2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1", "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 17,
+    "description" : "Remove 2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "nums[2]=2 equals the previous candidate already tried at this depth - skip it to avoid capturing the same subset twice.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 17,
+    "description" : "Remove 1 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "1"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 15,
+    "description" : "Extend with nums[1]=2, then recurse from index 2.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 9,
+    "description" : "Capture the current path [2] as subset #5.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "5",
+      "subset" : "[2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "Extend with nums[2]=2, then recurse from index 3.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "added" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 9,
+    "description" : "Capture the current path [2, 2] as subset #6.",
+    "queueOrStackState" : [ "2", "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=2)", "backtrack(start=3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "6",
+      "subset" : "[2, 2]"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 17,
+    "description" : "Remove 2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ "2" ],
+    "callStack" : [ "backtrack(start=0)", "backtrack(start=2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 17,
+    "description" : "Remove 2 - try the next distinct candidate at this depth.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "removed" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 12,
+    "description" : "nums[2]=2 equals the previous candidate already tried at this depth - skip it to avoid capturing the same subset twice.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ "backtrack(start=0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "skipped" : "2"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 15,
+    "description" : "Search tree fully explored. 6 unique subsets of [1, 2, 2] captured.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "subsets" : "6"
+    },
+    "dsType" : "Stack",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  } ],
+  "truncated" : false
+}
