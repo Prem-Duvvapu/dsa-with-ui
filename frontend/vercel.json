@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://dsa-backend.onrender.com/api/:path*" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
