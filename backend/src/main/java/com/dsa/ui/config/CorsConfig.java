@@ -17,6 +17,9 @@ public class CorsConfig {
                         .allowedOrigins(
                                 "http://localhost:5180", "http://127.0.0.1:5180",
                                 "http://localhost:5174", "http://127.0.0.1:5174")
+                        // Vercel gives every deploy (prod + PR previews) its own *.vercel.app subdomain,
+                        // so a pattern is needed here rather than one fixed origin.
+                        .allowedOriginPatterns("https://*.vercel.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }
