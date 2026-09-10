@@ -546,7 +546,7 @@ export default function App() {
             <div
               className={styles.bottomDesktopGrid}
               style={{
-                gridTemplateColumns: hasInputSpec ? '1.2fr 1fr 1fr' : '1.6fr 1fr'
+                gridTemplateColumns: hasInputSpec ? '1.6fr 1fr 1fr' : '2fr 1fr'
               }}
             >
               <CodeViewer problem={activeProblem} currentStep={currentStep} />
