@@ -36,7 +36,7 @@ public class BasicRecursionService implements ProblemProvider {
             case "palindrome-string-recursion":
             case "fibonacci-recursion":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generatePrint1ToNSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

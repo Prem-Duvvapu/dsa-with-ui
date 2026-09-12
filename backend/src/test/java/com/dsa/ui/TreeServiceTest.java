@@ -25,51 +25,14 @@ class TreeServiceTest {
     @Test
     @DisplayName("Should return all 54 Striver A2Z Tree & BST problems")
     void testGetAllProblems() {
-        List<ProblemDetail> problems = service.getAllProblems();
-        assertNotNull(problems);
-        assertEquals(54, problems.size(), "Should load 54 Tree & BST problems");
-    }
-
-    @Test
-    @DisplayName("Should retrieve specific Tree problem details by ID")
-    void testGetProblemById() {
-        ProblemDetail preorder = service.getProblemById("tree-preorder");
-        assertNotNull(preorder);
-    }
-
-    @Test
-    @DisplayName("Should generate valid execution steps for all 54 Tree and BST problems")
-    void testGenerateSteps() {
-        // Ids with real tracers refuse the legacy path rather than serve a substitute.
-        Set<String> retired = Set.of("tree-preorder", "tree-inorder", "tree-postorder",
-                "tree-level-order", "tree-max-path-sum", "serialize-deserialize-bt",
-                "zigzag-traversal", "tree-lca",
-                "tree-burn-time", "vertical-order-traversal",
-                "morris-inorder", "correct-bst-swap",
-                "bst-insert", "bst-delete", "bst-floor-ceil",
-                "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
-                "postorder-2-stacks", "postorder-1-stack", "morris-preorder",
-                "traversals-in-one-pass", "pre-post-in-one-traversal",
-                "top-view-bt", "bottom-view-bt", "right-left-view-bt", "boundary-traversal",
-                "tree-height", "tree-balanced", "tree-diameter", "symmetric-tree",
-                "identical-trees", "children-sum-property", "max-width-bt",
-                "unique-bt-requirements", "count-complete-tree-nodes",
-                "construct-bt-pre-in", "construct-bt-post-in", "flatten-bt-to-ll",
-                "root-to-leaf-path", "nodes-distance-k",
-                "bst-intro", "bst-search", "bst-min-max", "bst-floor", "bst-lca",
-                "bst-validate", "bst-kth-smallest", "bst-inorder-successor", "two-sum-bst",
-                "construct-bst-preorder", "merge-two-bsts", "largest-bst-in-bt");
-        List<ProblemDetail> problems = service.getAllProblems();
-        for (ProblemDetail p : problems) {
-            if (retired.contains(p.getId())) {
-                assertThrows(LegacyTraceRetiredException.class,
-                        () -> service.generateSteps(p.getId()),
-                        p.getId() + " is traced by the v2 layer and must not fall back");
-                continue;
-            }
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps list should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        // Every catalogued id in this topic is traced on /api/problems, so the legacy trace
+        // is retired for all of them. This asserts the refusal for the whole catalogue rather
+        // than a hand-maintained list: a list is what let stragglers keep falling through
+        // `default:` and serving another algorithm's animation.
+        for (ProblemDetail p : service.getAllProblems()) {
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

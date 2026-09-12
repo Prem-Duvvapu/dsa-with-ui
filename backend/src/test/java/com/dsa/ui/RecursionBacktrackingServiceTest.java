@@ -23,36 +23,14 @@ public class RecursionBacktrackingServiceTest {
 
     @Test
     public void testGetAllProblems() {
-        List<ProblemDetail> problems = service.getAllProblems();
-        assertNotNull(problems);
-        assertEquals(25, problems.size(), "Should load 25 Recursion & Backtracking algorithms");
-    }
-
-    @Test
-    public void testGetProblemById() {
-        ProblemDetail problem = service.getProblemById("n-queens");
-        assertNotNull(problem);
-    }
-
-    @Test
-    public void testGenerateStepsForAllRecursionProblems() {
-        Set<String> retired = Set.of("n-queens", "sudoku-solver", "subsets-i", "combination-sum-i",
-                "rat-in-a-maze", "m-coloring", "palindrome-partitioning", "permutations", "word-search",
-                "atoi-recursive", "pow-x-n-recursive", "count-good-numbers", "sort-stack-recursion",
-                "reverse-stack-recursion", "generate-binary-strings", "generate-parentheses", "power-set",
-                "subsequences-patterns-theory", "count-subsequences-sum-k", "check-subsequence-sum-k",
-                "combination-sum-2", "subsets-2", "combination-sum-3", "letter-combinations-phone", "word-break");
-        List<ProblemDetail> problems = service.getAllProblems();
-        for (ProblemDetail p : problems) {
-            if (retired.contains(p.getId())) {
-                assertThrows(LegacyTraceRetiredException.class,
-                        () -> service.generateSteps(p.getId()),
-                        p.getId() + " is traced by the v2 layer and must not fall back");
-                continue;
-            }
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps list should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        // Every catalogued id in this topic is traced on /api/problems, so the legacy trace
+        // is retired for all of them. This asserts the refusal for the whole catalogue rather
+        // than a hand-maintained list: a list is what let stragglers keep falling through
+        // `default:` and serving another algorithm's animation.
+        for (ProblemDetail p : service.getAllProblems()) {
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

@@ -46,16 +46,13 @@ class GraphBfsDfsControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/graphs/bfs-dfs/execute/{id} should return execution steps list")
+    @DisplayName("GET /api/graphs/bfs-dfs/execute/{id} is retired for every catalogued id")
     void testGetExecutionStepsEndpoint() throws Exception {
-        // bfs-traversal now has a real tracer on /api/problems, so its legacy execute path
-        // is retired (410) rather than serving a substitute trace - number-of-islands is
-        // still legacy-only and proves the endpoint still works for those ids.
+        // Every id this controller catalogues is traced on /api/problems, so the legacy
+        // execute path refuses rather than serving a substitute trace. number-of-islands
+        // was the last id still served here; it is retired now too.
         mockMvc.perform(get("/api/graphs/bfs-dfs/execute/number-of-islands"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(greaterThan(0))))
-                .andExpect(jsonPath("$[0].stepNumber", is(1)))
-                .andExpect(jsonPath("$[0].dsType", is("Matrix")));
+                .andExpect(status().isGone());
     }
 
     @Test

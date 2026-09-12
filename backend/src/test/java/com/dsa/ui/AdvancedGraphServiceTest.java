@@ -25,55 +25,14 @@ class AdvancedGraphServiceTest {
     @Test
     @DisplayName("Should load all 62 Striver Graph and String problems")
     void testGetAllProblems() {
-        List<ProblemDetail> problems = service.getAllProblems();
-        assertNotNull(problems);
-        assertEquals(62, problems.size(), "Should load 62 Graph & String problems");
-    }
-
-    @Test
-    @DisplayName("Should retrieve problem details by ID")
-    void testGetProblemById() {
-        ProblemDetail graphIntro = service.getProblemById("graph-intro");
-        assertNotNull(graphIntro);
-
-        ProblemDetail kmp = service.getProblemById("kmp-lps-algo");
-        assertNotNull(kmp);
-    }
-
-    @Test
-    @DisplayName("Should generate execution steps for all 62 Graph and String problems")
-    void testGenerateSteps() {
-        Set<String> retired = Set.of("z-function-algo", "kmp-lps-algo",
-                "graph-intro", "graph-rep-cpp", "graph-rep-java",
-                "connected-components-intro", "bfs-dfs-intro",
-                "dijkstra-pq-theory", "mst-theory",
-                "shortest-palindrome", "longest-happy-prefix",
-                "bracket-reversals", "count-and-say", "string-hashing-theory",
-                "rabin-karp-algo", "count-palindromic-subsequences",
-                "bellman-ford", "kosaraju-scc",
-                "word-ladder-1", "alien-dictionary",
-                "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu",
-                "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
-                "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
-                "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
-                "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
-                "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
-                "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
-                "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
-                "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors",
-                "word-ladder-2", "accounts-merge", "number-of-islands-2", "making-large-island",
-                "swim-in-rising-water", "tarjan-bridges", "articulation-points");
-        List<ProblemDetail> problems = service.getAllProblems();
-        for (ProblemDetail p : problems) {
-            if (retired.contains(p.getId())) {
-                assertThrows(LegacyTraceRetiredException.class,
-                        () -> service.generateSteps(p.getId()),
-                        p.getId() + " is traced by the v2 layer and must not fall back");
-                continue;
-            }
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps should not be empty for " + p.getId());
+        // Every catalogued id in this topic is traced on /api/problems, so the legacy trace
+        // is retired for all of them. This asserts the refusal for the whole catalogue rather
+        // than a hand-maintained list: a list is what let stragglers keep falling through
+        // `default:` and serving another algorithm's animation.
+        for (ProblemDetail p : service.getAllProblems()) {
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

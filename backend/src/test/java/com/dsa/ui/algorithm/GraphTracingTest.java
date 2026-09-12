@@ -44,8 +44,10 @@ public class GraphTracingTest {
 
     @Test
     void testDijkstraTracing() {
-        List<ExecutionStep> steps = advancedGraphService.generateSteps("dijkstra-min-heap");
-        assertNotNull(steps);
-        assertTrue(steps.size() >= 2, "Dijkstra should have >=2 steps, actual: " + steps.size());
+        // dijkstra-min-heap is traced by the v2 layer, so the legacy generator is retired.
+        // It previously fell through AdvancedGraphService's default: and returned the
+        // graph-intro animation, which this assertion could not tell apart from Dijkstra.
+        assertThrows(LegacyTraceRetiredException.class,
+                () -> advancedGraphService.generateSteps("dijkstra-min-heap"));
     }
 }

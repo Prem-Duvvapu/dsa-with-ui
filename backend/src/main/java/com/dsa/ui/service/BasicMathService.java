@@ -36,7 +36,7 @@ public class BasicMathService implements ProblemProvider {
             case "print-divisors":
             case "check-prime":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateCountDigitsSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

@@ -68,179 +68,6 @@ class ApiContractTest {
         return MAPPER.readTree(result.getResponse().getContentAsByteArray());
     }
 
-    /** Ids whose legacy trace is retired because a real tracer serves them on /api/problems. */
-    private static final List<String> RETIRED_IDS = List.of(
-            "graph-intro", "graph-rep-cpp", "graph-rep-java",
-            "connected-components-intro", "bfs-dfs-intro", "dijkstra-pq-theory", "mst-theory",
-            "tree-preorder", "tree-inorder", "tree-postorder", "tree-level-order",
-            "search-rotated-sorted", "n-meetings-in-one-room",
-            "climbing-stairs", "frog-jump", "frog-jump-k-distance",
-            "max-sum-non-adjacent", "house-robber-2",
-            "grid-unique-paths", "unique-paths-2",
-            "minimum-falling-path-sum", "triangle-min-path-sum", "ninjas-training",
-            "longest-increasing-subsequence", "print-lis", "lis-binary-search",
-            "max-rectangle-area-all-ones", "count-square-submatrices",
-            "subset-sum-equal-target", "partition-equal-subset-sum",
-            "count-subsets-with-sum-k", "count-partitions-given-diff",
-            "largest-element", "max-consecutive-ones", "move-zeros-end",
-            "find-missing-number", "stock-buy-sell",
-            "second-largest-element", "check-sorted-ii", "remove-duplicates-sorted",
-            "left-rotate-one", "linear-search",
-            "left-rotate-k", "single-number", "majority-element",
-            "leaders-in-array", "longest-subarray-sum-k-positives",
-            "two-sum", "kadane-algo",
-            "union-sorted-arrays", "longest-subarray-sum-k",
-            "print-max-subarray", "rearrange-by-sign", "longest-consecutive-sequence",
-            "set-matrix-zeroes", "rotate-matrix-90", "spiral-matrix",
-            "count-subarrays-given-sum", "pascals-triangle", "majority-element-ii",
-            "largest-subarray-sum-0", "count-subarrays-xor-k", "merge-intervals", "max-product-subarray",
-            "minimum-coins-dp", "coin-change-2",
-            "lower-bound", "upper-bound",
-            "count-inversions", "reverse-pairs",
-            "sort-0-1-2", "next-permutation",
-            "aggressive-cows", "book-allocation",
-            "find-min-rotated-sorted", "single-element-sorted",
-            "koko-eating-bananas", "split-array-largest-sum",
-            "median-2-sorted-arrays", "kth-element-2-sorted-arrays",
-            "search-insert-position", "floor-ceil-sorted-array", "first-last-occurrence",
-            "count-occurrences", "search-rotated-sorted-2", "count-rotations",
-            "find-peak-element", "square-root-number", "nth-root-number",
-            "min-days-bouquets", "smallest-divisor", "ship-packages-d-days",
-            "kth-missing-positive", "painters-partition", "minimize-max-distance-gas-station",
-            "row-max-ones", "search-2d-matrix", "search-2d-matrix-2",
-            "find-peak-element-2d", "matrix-median",
-            "sliding-window-maximum", "min-stack", "sum-subarray-minimums",
-            "reverse-linked-list", "find-starting-point-loop", "reverse-ll-group-k",
-            "flattening-ll", "clone-ll-random-pointer",
-            "middle-linked-list", "intro-singly-ll", "insert-head-ll", "delete-head-ll",
-            "length-ll", "search-ll", "intro-doubly-ll", "insert-head-dll", "delete-head-dll",
-            "reverse-dll", "reverse-ll-recursive", "detect-loop-linked-list", "length-of-loop-ll",
-            "palindrome-ll", "segregate-odd-even-ll", "remove-nth-from-back",
-            "delete-middle-node-ll", "sort-ll", "sort-012-ll", "intersection-point-y-ll",
-            "add-one-to-number-ll", "add-two-numbers-ll", "delete-occurrences-key-dll",
-            "pairs-given-sum-dll", "remove-duplicates-sorted-dll", "rotate-ll",
-            "tree-burn-time", "vertical-order-traversal",
-            "morris-inorder", "correct-bst-swap",
-            "bst-insert", "bst-delete", "bst-floor-ceil",
-            "tree-intro", "tree-rep-java", "iterative-preorder", "iterative-inorder",
-            "postorder-2-stacks", "postorder-1-stack", "morris-preorder",
-            "traversals-in-one-pass", "pre-post-in-one-traversal",
-            "top-view-bt", "bottom-view-bt", "right-left-view-bt", "boundary-traversal",
-            "tree-height", "tree-balanced", "tree-diameter", "symmetric-tree",
-            "identical-trees", "children-sum-property", "max-width-bt",
-            "unique-bt-requirements", "count-complete-tree-nodes",
-            "construct-bt-pre-in", "construct-bt-post-in", "flatten-bt-to-ll",
-            "root-to-leaf-path", "nodes-distance-k",
-            "bst-intro", "bst-search", "bst-min-max", "bst-floor", "bst-lca", "bst-validate",
-            "bst-kth-smallest", "bst-inorder-successor", "two-sum-bst",
-            "construct-bst-preorder", "merge-two-bsts", "largest-bst-in-bt",
-            "trapping-rainwater", "largest-rectangle-histogram",
-            "next-greater-element-2", "asteroid-collision",
-            "balanced-parentheses", "next-greater-element-1",
-            "stack-array-impl", "queue-array-impl", "stack-queue-impl", "queue-stack-impl",
-            "stack-ll-impl", "queue-ll-impl",
-            "infix-to-postfix", "prefix-to-infix", "prefix-to-postfix",
-            "postfix-to-prefix", "postfix-to-infix", "infix-to-prefix",
-            "next-smaller-element", "number-greater-elements-right",
-            "sum-subarray-ranges", "remove-k-digits",
-            "maximum-rectangles-binary-matrix", "stock-span-problem",
-            "celebrity-problem", "lfu-cache",
-            "matrix-chain-multiplication", "burst-balloons",
-            "knapsack-01", "unbounded-knapsack",
-            "tree-max-path-sum", "serialize-deserialize-bt",
-            "zigzag-traversal", "tree-lca",
-            "n-queens", "sudoku-solver",
-            "subsets-i", "combination-sum-i",
-            "rat-in-a-maze", "m-coloring", "palindrome-partitioning", "permutations", "word-search",
-            "atoi-recursive", "pow-x-n-recursive", "count-good-numbers", "sort-stack-recursion",
-            "reverse-stack-recursion", "generate-binary-strings", "generate-parentheses", "power-set",
-            "subsequences-patterns-theory", "count-subsequences-sum-k", "check-subsequence-sum-k",
-            "combination-sum-2", "subsets-2", "combination-sum-3", "letter-combinations-phone", "word-break",
-            "z-function-algo", "kmp-lps-algo",
-            "shortest-palindrome", "longest-happy-prefix",
-            "repeating-missing-number", "merge-two-sorted-arrays",
-            "three-sum", "four-sum",
-            "bellman-ford", "kosaraju-scc",
-            "edit-distance", "wildcard-matching",
-            "word-ladder-1", "alien-dictionary",
-            "lru-cache", "ninja-and-his-friends",
-            "longest-common-subsequence", "partition-set-min-abs-diff",
-            "assign-cookies-dp", "target-sum-dp", "rod-cutting-problem",
-            "print-longest-common-subsequence", "longest-common-substring",
-            "longest-palindromic-subsequence", "min-insertions-palindrome",
-            "min-insertions-deletions-a-b", "shortest-common-supersequence",
-            "distinct-subsequences", "best-time-stock-1", "best-time-stock-2",
-            "best-time-stock-3", "best-time-stock-4", "stock-cooldown",
-            "stock-transaction-fee", "longest-string-chain",
-            "longest-bitonic-subsequence", "number-of-lis",
-            "largest-divisible-subset", "mcm-cost-eval",
-            "evaluate-boolean-expression", "palindrome-partitioning-2",
-            "partition-array-max-sum", "matrix-chain-multiplication-theory",
-            "implement-trie", "word-break-trie",
-            "bfs-traversal", "dfs-traversal", "number-of-provinces", "rotting-oranges",
-            "undirected-cycle-bfs", "undirected-cycle-dfs", "directed-cycle-dfs",
-            "distance-nearest-1",
-            "jump-game-1", "assign-cookies", "fractional-knapsack",
-            "lemonade-change", "minimum-platforms", "insert-interval",
-            "job-sequencing", "valid-parentheses-checker", "jump-game-2", "candy",
-            "shortest-job-first", "lru-page-replacement", "non-overlapping-intervals",
-            "selection-sort", "bubble-sort", "insertion-sort", "merge-sort", "quick-sort",
-            "single-number-1", "check-power-of-2", "count-set-bits",
-            "xor-numbers-in-range", "single-number-3", "pow-x-n-math",
-            "power-set-bitwise", "intro-bits-tricks", "check-ith-bit-set", "check-number-odd",
-            "set-unset-rightmost-bit", "swap-two-numbers", "divide-two-numbers-bitwise",
-            "min-bit-flips", "print-prime-factors", "divisors-of-number",
-            "count-primes-range-sieve", "prime-factorisation-queries",
-            "kth-largest-element", "kth-smallest-element", "task-scheduler", "top-k-frequent-elements",
-            "heaps-theory", "implement-min-heap", "check-min-heap", "min-to-max-heap",
-            "sort-k-sorted-array", "replace-rank-array", "design-twitter",
-            "kth-largest-stream", "maximum-sum-combination",
-            "print-1-to-n", "print-n-to-1", "sum-first-n", "factorial-number",
-            "reverse-array-recursion", "palindrome-string-recursion", "fibonacci-recursion",
-            "count-digits", "reverse-number", "palindrome-number", "gcd-two-numbers",
-            "armstrong-check", "print-divisors", "check-prime",
-            "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "merge-k-sorted-lists",
-            "fruit-into-baskets", "longest-repeating-character-replacement",
-            "minimum-window-substring", "subarrays-k-different-integers",
-            "longest-substring-without-repeating", "max-consecutive-ones-3",
-            "binary-subarrays-with-sum", "count-nice-subarrays",
-            "number-substrings-all-three-chars", "maximum-points-cards",
-            "longest-substring-k-distinct", "minimum-window-subsequence",
-            "bracket-reversals", "count-and-say", "string-hashing-theory", "rabin-karp-algo",
-            "count-palindromic-subsequences", "valid-anagram", "remove-outermost-parentheses",
-            "reverse-words-string", "largest-odd-number-string", "longest-common-prefix",
-            "isomorphic-strings", "rotate-string", "sort-characters-frequency",
-            "max-nesting-depth-parentheses", "roman-to-integer", "string-to-integer-atoi",
-            "count-substrings-k-distinct", "longest-palindromic-substring",
-            "sum-beauty-all-substrings", "reverse-every-word",
-            "kahn-algo-bfs", "cycle-directed-bfs", "disjoint-set-dsu",
-            "cycle-undirected-bfs", "cycle-undirected-dfs", "bipartite-graph-dfs", "cycle-directed-dfs",
-            "topo-sort-dfs", "course-schedule-1", "course-schedule-2", "find-eventual-safe-states",
-            "shortest-path-undirected", "shortest-path-dag", "shortest-path-binary-maze", "path-min-effort",
-            "prims-mst", "kruskals-mst", "network-connected-ops", "most-stones-removed",
-            "num-provinces", "connected-matrix", "rotten-oranges", "flood-fill",
-            "nearest-cell-1", "surrounded-regions", "number-of-enclaves",
-            "cheapest-flights-k-stops", "network-delay-time", "number-of-ways-destination",
-            "min-multiplications-reach-end", "floyd-warshall", "city-smallest-neighbors",
-            "word-ladder-2", "accounts-merge", "number-of-islands-2", "making-large-island",
-            "swim-in-rising-water", "tarjan-bridges", "articulation-points");
-
-    /**
-     * Returns empty when every catalogued id for this base is retired - Sorting is the
-     * first controller to fully migrate, so {@code /api/sorting} has no legacy id left to
-     * exercise. That is a real, permanent state for a fully-migrated controller, not a bug.
-     */
-    private java.util.Optional<String> firstProblemId(String base) throws Exception {
-        JsonNode catalog = getJson(base + "/problems");
-        for (JsonNode problem : catalog) {
-            String id = problem.get("id").asText();
-            if (!RETIRED_IDS.contains(id)) {
-                return java.util.Optional.of(id);   // a retired id answers 410, so it cannot prove the execute path
-            }
-        }
-        return java.util.Optional.empty();
-    }
-
     @ParameterizedTest(name = "{0}/problems returns a non-empty catalog")
     @MethodSource("basePaths")
     @DisplayName("Every controller serves a non-empty catalog with the required fields")
@@ -265,10 +92,10 @@ class ApiContractTest {
     @MethodSource("basePaths")
     @DisplayName("A valid id returns that same problem")
     void detailReturnsTheRequestedProblem(String base) throws Exception {
-        java.util.Optional<String> maybeId = firstProblemId(base);
-        org.junit.jupiter.api.Assumptions.assumeTrue(maybeId.isPresent(),
-                base + " has no non-retired problem left - every catalogued id is fully migrated");
-        String id = maybeId.get();
+        // The detail endpoint is unaffected by legacy execute retirement, so any catalogued
+        // id proves the round-trip. It used to need a non-retired id, which is now the empty
+        // set: every catalogued problem is traced and every legacy execute route refuses.
+        String id = getJson(base + "/problems").get(0).get("id").asText();
         JsonNode problem = getJson(base + "/problems/" + id);
         assertEquals(id, problem.get("id").asText(),
                 base + "/problems/" + id + " returned a different problem");
@@ -280,28 +107,6 @@ class ApiContractTest {
     void detailRejectsUnknownId(String base) throws Exception {
         mockMvc.perform(get(base + "/problems/definitely-not-a-real-problem-id"))
                 .andExpect(status().isNotFound());
-    }
-
-    @ParameterizedTest(name = "{0}/execute/'{'id'}' returns a well-formed trace")
-    @MethodSource("basePaths")
-    @DisplayName("Execution steps are non-empty and sequentially numbered from 1")
-    void executeReturnsWellFormedSteps(String base) throws Exception {
-        java.util.Optional<String> maybeId = firstProblemId(base);
-        org.junit.jupiter.api.Assumptions.assumeTrue(maybeId.isPresent(),
-                base + " has no non-retired problem left - every catalogued id is fully migrated");
-        String id = maybeId.get();
-        JsonNode steps = getJson(base + "/execute/" + id);
-
-        assertTrue(steps.isArray(), base + "/execute/" + id + " must return a JSON array");
-        assertTrue(steps.size() > 0, base + "/execute/" + id + " returned no steps");
-
-        for (int i = 0; i < steps.size(); i++) {
-            JsonNode step = steps.get(i);
-            assertEquals(i + 1, step.path("stepNumber").asInt(),
-                    base + "/execute/" + id + " step " + i + " is not sequentially numbered");
-            assertFalse(step.path("description").asText("").isBlank(),
-                    base + "/execute/" + id + " step " + (i + 1) + " has no description");
-        }
     }
 
     /**
@@ -676,5 +481,29 @@ class ApiContractTest {
         catalog.forEach(problem -> ids.add(problem.path("id").asText()));
         assertEquals(ids.size(), ids.stream().distinct().count(),
                 base + " lists duplicate problem ids");
+    }
+
+    @ParameterizedTest(name = "{0}/execute/'{'id'}' is retired for every catalogued id")
+    @MethodSource("basePaths")
+    @DisplayName("Every legacy execute route refuses: no catalogued id may still be served steps")
+    void everyLegacyExecuteRouteIsRetired(String base) throws Exception {
+        // All 433 catalogued problems are traced on /api/problems, so no legacy route has a
+        // legitimate consumer left. A `default:` that still returns steps serves whatever
+        // algorithm that branch happens to hold - the exact defect the tracer layer exists
+        // to make impossible. This asserts the refusal for every id the controller claims,
+        // so a future id cannot quietly fall through.
+        JsonNode catalog = getJson(base + "/problems");
+        List<String> stillServed = new ArrayList<>();
+        for (JsonNode problem : catalog) {
+            String id = problem.get("id").asText();
+            int code = mockMvc.perform(get(base + "/execute/" + id))
+                    .andReturn().getResponse().getStatus();
+            if (code == 200) {
+                stillServed.add(id);
+            }
+        }
+        assertTrue(stillServed.isEmpty(),
+                base + "/execute still returns 200 - and therefore some other algorithm's"
+                        + " steps - for: " + stillServed);
     }
 }

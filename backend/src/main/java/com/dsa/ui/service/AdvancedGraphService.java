@@ -41,7 +41,7 @@ public class AdvancedGraphService implements ProblemProvider {
             case "number-of-enclaves": throw new LegacyTraceRetiredException(problemId);
             case "word-ladder-1": throw new LegacyTraceRetiredException(problemId);
             case "word-ladder-2": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-islands": return generateNumberOfIslandsSteps();
+            case "number-of-islands": throw new LegacyTraceRetiredException(problemId);
             case "bipartite-graph-dfs": throw new LegacyTraceRetiredException(problemId);
             case "cycle-directed-dfs": throw new LegacyTraceRetiredException(problemId);
             case "topo-sort-dfs": throw new LegacyTraceRetiredException(problemId);
@@ -91,7 +91,7 @@ public class AdvancedGraphService implements ProblemProvider {
                 throw new LegacyTraceRetiredException(problemId);
             case "count-palindromic-subsequences":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateGraphIntroSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

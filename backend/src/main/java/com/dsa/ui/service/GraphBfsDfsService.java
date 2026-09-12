@@ -28,15 +28,15 @@ public class GraphBfsDfsService implements ProblemProvider {
             case "bfs-traversal": throw new LegacyTraceRetiredException(problemId);
             case "dfs-traversal": throw new LegacyTraceRetiredException(problemId);
             case "number-of-provinces": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-islands": return generateIslandsSteps();
+            case "number-of-islands": throw new LegacyTraceRetiredException(problemId);
             case "rotting-oranges": throw new LegacyTraceRetiredException(problemId);
-            case "flood-fill": return generateFloodFillSteps();
+            case "flood-fill": throw new LegacyTraceRetiredException(problemId);
             case "undirected-cycle-bfs": throw new LegacyTraceRetiredException(problemId);
             case "undirected-cycle-dfs": throw new LegacyTraceRetiredException(problemId);
             case "directed-cycle-dfs": throw new LegacyTraceRetiredException(problemId);
             case "distance-nearest-1": throw new LegacyTraceRetiredException(problemId);
-            case "surrounded-regions": return generateSurroundedRegionsSteps();
-            default: return generateIslandsSteps();
+            case "surrounded-regions": throw new LegacyTraceRetiredException(problemId);
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

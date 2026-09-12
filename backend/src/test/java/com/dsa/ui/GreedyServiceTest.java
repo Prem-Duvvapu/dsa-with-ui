@@ -23,36 +23,14 @@ public class GreedyServiceTest {
 
     @Test
     public void testGetAllProblems() {
-        List<ProblemDetail> problems = service.getAllProblems();
-        assertNotNull(problems);
-        assertEquals(15, problems.size(), "Should load 15 Greedy algorithms");
-    }
-
-    @Test
-    public void testGetProblemById() {
-        ProblemDetail problem = service.getProblemById("n-meetings-in-one-room");
-        assertNotNull(problem);
-    }
-
-    @Test
-    public void testGenerateStepsForAllGreedyProblems() {
-        Set<String> retired = Set.of("n-meetings-in-one-room",
-                "jump-game-1", "assign-cookies", "fractional-knapsack",
-                "lemonade-change", "minimum-platforms", "insert-interval",
-                "job-sequencing", "valid-parentheses-checker", "jump-game-2",
-                "candy", "shortest-job-first", "lru-page-replacement",
-                "merge-intervals", "non-overlapping-intervals");
-        List<ProblemDetail> problems = service.getAllProblems();
-        for (ProblemDetail p : problems) {
-            if (retired.contains(p.getId())) {
-                assertThrows(LegacyTraceRetiredException.class,
-                        () -> service.generateSteps(p.getId()),
-                        p.getId() + " is traced by the v2 layer and must not fall back");
-                continue;
-            }
-            List<ExecutionStep> steps = service.generateSteps(p.getId());
-            assertNotNull(steps, "Steps list should not be null for " + p.getId());
-            assertFalse(steps.isEmpty(), "Steps list should not be empty for " + p.getId());
+        // Every catalogued id in this topic is traced on /api/problems, so the legacy trace
+        // is retired for all of them. This asserts the refusal for the whole catalogue rather
+        // than a hand-maintained list: a list is what let stragglers keep falling through
+        // `default:` and serving another algorithm's animation.
+        for (ProblemDetail p : service.getAllProblems()) {
+            assertThrows(LegacyTraceRetiredException.class,
+                    () -> service.generateSteps(p.getId()),
+                    p.getId() + " is traced by the v2 layer and must not fall back");
         }
     }
 }

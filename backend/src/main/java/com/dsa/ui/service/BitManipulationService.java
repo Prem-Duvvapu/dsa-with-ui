@@ -49,7 +49,7 @@ public class BitManipulationService implements ProblemProvider {
             case "count-primes-range-sieve":
             case "prime-factorisation-queries":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateCheckNumberOddSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

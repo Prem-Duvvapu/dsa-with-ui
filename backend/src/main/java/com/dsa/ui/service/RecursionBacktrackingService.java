@@ -55,7 +55,7 @@ public class RecursionBacktrackingService implements ProblemProvider {
             case "letter-combinations-phone":
             case "word-break":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateNQueensSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

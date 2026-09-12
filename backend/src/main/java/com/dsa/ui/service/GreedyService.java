@@ -45,8 +45,8 @@ public class GreedyService implements ProblemProvider {
             case "merge-intervals":
             case "non-overlapping-intervals":
                 throw new LegacyTraceRetiredException(problemId);
-            case "jump-game-i": return generateJumpGameSteps();
-            default: return generateMeetingsSteps();
+            case "jump-game-i": throw new LegacyTraceRetiredException(problemId);
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

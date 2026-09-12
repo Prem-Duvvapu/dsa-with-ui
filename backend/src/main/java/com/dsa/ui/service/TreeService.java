@@ -125,7 +125,7 @@ public class TreeService implements ProblemProvider {
             case "merge-two-bsts":
             case "largest-bst-in-bt":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generatePreorderSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

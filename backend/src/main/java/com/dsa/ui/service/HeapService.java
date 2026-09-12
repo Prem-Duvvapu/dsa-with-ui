@@ -48,7 +48,7 @@ public class HeapService implements ProblemProvider {
             case "kth-largest-stream":
             case "maximum-sum-combination":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateKthLargestSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

@@ -42,7 +42,7 @@ public class StringService implements ProblemProvider {
             case "sum-beauty-all-substrings":
             case "reverse-every-word":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateLongestSubstringSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

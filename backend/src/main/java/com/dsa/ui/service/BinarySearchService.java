@@ -25,7 +25,7 @@ public class BinarySearchService implements ProblemProvider {
 
     public List<ExecutionStep> generateSteps(String problemId) {
         switch (problemId) {
-            case "binary-search-1d": return generateBs1dSteps();
+            case "binary-search-1d": throw new LegacyTraceRetiredException(problemId);
             // lower-bound has a real tracer (tracer/impl). Refuse rather than let default:
             // serve binary-search-1d's steps under this id.
             case "lower-bound":
@@ -66,7 +66,7 @@ public class BinarySearchService implements ProblemProvider {
             case "find-peak-element-2d":
             case "matrix-median":
                 throw new LegacyTraceRetiredException(problemId);
-            default: return generateBs1dSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 

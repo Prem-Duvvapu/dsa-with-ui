@@ -34,7 +34,7 @@ public class TrieService implements ProblemProvider {
             case "word-break-trie":
                 throw new LegacyTraceRetiredException(problemId);
             case "longest-common-prefix": throw new LegacyTraceRetiredException(problemId);
-            default: return generateImplementTrieSteps();
+            default: throw new LegacyTraceRetiredException(problemId);
         }
     }
 
