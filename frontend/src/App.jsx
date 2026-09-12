@@ -9,6 +9,8 @@ import WelcomeGuide from './components/WelcomeGuide';
 import TourGuide from './components/TourGuide';
 import StepStateSummary from './components/StepStateSummary';
 import usePersistentState from './hooks/usePersistentState';
+import useLayoutPreferences from './hooks/useLayoutPreferences';
+import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 import useTheme from './hooks/useTheme';
 import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
@@ -224,17 +226,14 @@ export default function App() {
   // View preferences survive a reload. The selected problem deliberately does not - the
   // URL owns that, and persisting it would fight deep links.
   const isBool = (v) => typeof v === 'boolean';
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-  const isMobile = viewportWidth <= 768;
-
-  // Only the DESKTOP sidebar preference is persisted. On a narrow viewport the sidebar is
-  // a modal drawer over the canvas, and it must always start closed there - restoring
-  // "open" from a desktop session would greet a phone user with the drawer covering the
-  // thing they came to watch.
-  const [desktopSidebarOpen, setDesktopSidebarOpen] = usePersistentState('sidebarOpen', true, isBool);
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const isSidebarOpen = isMobile ? mobileSidebarOpen : desktopSidebarOpen;
-  const setIsSidebarOpen = isMobile ? setMobileSidebarOpen : setDesktopSidebarOpen;
+  const {
+    viewportWidth, isMobile,
+    isSidebarOpen, setIsSidebarOpen,
+    isBottomPanelOpen, setIsBottomPanelOpen,
+    isInputEditorOpen, setIsInputEditorOpen,
+    isComplexityOpen, setIsComplexityOpen,
+    isStatementOpen, setIsStatementOpen
+  } = useLayoutPreferences();
 
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const { theme, cycleTheme } = useTheme();
@@ -242,27 +241,7 @@ export default function App() {
   // preferences: someone who only ever changed the theme has still never been introduced.
   const [hasSeenWelcome, setHasSeenWelcome] = usePersistentState('seenWelcome', false, isBool);
   const [isTourOpen, setIsTourOpen] = useState(false);
-  // Collapsing this row frees up vertical space for the canvas while a trace is playing.
-  const [isBottomPanelOpen, setIsBottomPanelOpen] = usePersistentState('bottomPanelOpen', true, isBool);
-  // The input editor and the complexity card are setup furniture: useful before a run,
-  // noise during one. They are opened on demand instead of holding a fixed share of the
-  // 340px bottom row, and what you actually want from the editor while watching - the
-  // input being animated - is stated by InputSummary in a single line.
-  const [isInputEditorOpen, setIsInputEditorOpen] = usePersistentState('inputEditorOpen', false, isBool);
-  const [isComplexityOpen, setIsComplexityOpen] = usePersistentState('complexityOpen', false, isBool);
-  const [isStatementOpen, setIsStatementOpen] = usePersistentState('statementOpen', true, isBool);
   const [activeTab, setActiveTab] = useState('code');
-
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportWidth(window.innerWidth);
-      if (window.innerWidth > 768) {
-        setIsSidebarOpen(true);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const drawerRef = useRef(null);
 
@@ -331,112 +310,12 @@ export default function App() {
     changeSpeed(SPEED_PRESETS[next]);
   }, [SPEED_PRESETS, speed, changeSpeed]);
 
-  // ── Global keyboard shortcuts ────────────────────────────────────────────
-  // This is a media player, so it uses a media player's keys: J/K/L and ,/. alongside the
-  // arrows. The list lives in ShortcutHelp, opened with `?` - the shortcuts worked before
-  // but were written down only in two button tooltips, which is not discoverable.
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-
-      const active = document.activeElement;
-      const tag = active?.tagName;
-      const isTyping = ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag) || active?.isContentEditable;
-
-      // Escape works even while typing - someone in the search field is exactly who needs
-      // it - and closes the topmost thing first.
-      if (e.code === 'Escape') {
-        if (!hasSeenWelcome) {
-          e.preventDefault();
-          setHasSeenWelcome(true);
-          return;
-        }
-        if (isHelpOpen) {
-          e.preventDefault();
-          setIsHelpOpen(false);
-          return;
-        }
-        if (isMobile && isSidebarOpen) {
-          e.preventDefault();
-          setIsSidebarOpen(false);
-          return;
-        }
-        if (isTyping) active.blur();
-        return;
-      }
-
-      if (isTyping) return;
-
-      // `/` focuses search, matching every other search-first UI.
-      if (e.key === '/') {
-        e.preventDefault();
-        setIsSidebarOpen(true);
-        document.querySelector('[data-search-input]')?.focus();
-        return;
-      }
-
-      if (e.key === '?') {
-        e.preventDefault();
-        setIsHelpOpen(prev => !prev);
-        return;
-      }
-
-      // A focused button activates on Space/Enter natively. Letting Space through here too
-      // would toggle playback twice; blocking every key while a button has focus - which is
-      // what this used to do - meant one click on Play killed the keyboard for good.
-      const onButton = tag === 'BUTTON';
-
-      switch (e.code) {
-        case 'Space':
-          if (onButton) return;
-          e.preventDefault();
-          togglePlay();
-          return;
-        case 'KeyK':
-          e.preventDefault();
-          togglePlay();
-          return;
-        case 'ArrowRight':
-        case 'KeyL':
-        case 'Period':
-          e.preventDefault();
-          stepNext();
-          return;
-        case 'ArrowLeft':
-        case 'KeyJ':
-        case 'Comma':
-          e.preventDefault();
-          stepPrev();
-          return;
-        case 'Home':
-          e.preventDefault();
-          seek(0);
-          return;
-        case 'End':
-          e.preventDefault();
-          if (steps.length > 0) seek(steps.length - 1);
-          return;
-        case 'KeyR':
-          e.preventDefault();
-          reset();
-          return;
-        case 'BracketLeft':
-          e.preventDefault();
-          nudgeSpeed(-1);
-          return;
-        case 'BracketRight':
-          e.preventDefault();
-          nudgeSpeed(1);
-          return;
-        default:
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [togglePlay, stepNext, stepPrev, reset, seek, steps.length, nudgeSpeed,
-      isMobile, isSidebarOpen, isHelpOpen, setIsSidebarOpen,
-      hasSeenWelcome, setHasSeenWelcome]);
+  useKeyboardShortcuts({
+    togglePlay, stepNext, stepPrev, reset, seek, stepCount: steps.length, nudgeSpeed,
+    isMobile, isSidebarOpen, setIsSidebarOpen,
+    isHelpOpen, setIsHelpOpen,
+    hasSeenWelcome, setHasSeenWelcome
+  });
 
   const handleSelectCategory = (cat) => {
     setActiveCategory(cat);
