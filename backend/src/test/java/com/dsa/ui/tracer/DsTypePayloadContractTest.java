@@ -67,6 +67,28 @@ class DsTypePayloadContractTest {
         REQUIRED.put(DsType.DP_TABLE, new Requirement("dpTable", s -> s.getDpTable() != null));
         REQUIRED.put(DsType.TRIE, new Requirement("trieState",
                 s -> s.getTrieState() != null && !s.getTrieState().isEmpty()));
+
+        // Everything routed to ArrayCanvas by canvas/registry.js reads arrayState. Without
+        // these entries the test skipped 170 of 433 problems: an ARRAY-tagged tracer that
+        // never calls .array(...) passed every check and rendered an empty canvas.
+        Requirement arrayState = new Requirement("arrayState",
+                s -> s.getArrayState() != null && !s.getArrayState().isEmpty());
+        REQUIRED.put(DsType.ARRAY, arrayState);
+        REQUIRED.put(DsType.BITS, arrayState);
+        REQUIRED.put(DsType.STRING, arrayState);
+        REQUIRED.put(DsType.WINDOW, arrayState);
+        REQUIRED.put(DsType.SEARCH_SPACE, arrayState);
+        REQUIRED.put(DsType.HEAP, arrayState);
+        // IntervalCanvas reads arrayState too, falling back to `intervals` when present.
+        REQUIRED.put(DsType.INTERVAL, arrayState);
+        // RecursionTreeCanvas draws from treeNodes; callStack only feeds the frame sidebar.
+        REQUIRED.put(DsType.RECURSION_TREE, new Requirement("treeNodes",
+                s -> s.getTreeNodes() != null && !s.getTreeNodes().isEmpty()));
+        // DSU has no structural field: DsuCanvas reconstructs parent[]/rank[] by parsing
+        // these exact variable keys. That makes the key names a wire contract, so pin them
+        // here - a rename would otherwise leave the canvas silently drawing its own default.
+        REQUIRED.put(DsType.DSU, new Requirement("variables['parent[]']",
+                s -> s.getVariables() != null && s.getVariables().containsKey("parent[]")));
     }
 
     Stream<String> tracerIds() {

@@ -14,10 +14,32 @@ export default function DsuCanvas({ problem, currentStep, step }) {
   const activeStep = currentStep || step;
   const variables = activeStep?.variables || {};
 
-  const parentStr = variables['parent[]'] || '[0, 1, 2, 3, 4, 5, 6, 7]';
-  const rankStr = variables['rank[]'] || '[0, 0, 0, 0, 0, 0, 0, 0]';
-  const dsuSetsStr = variables['Disjoint Sets'] || '{1}, {2}, {3}, {4}, {5}, {6}, {7}';
-  const dsuOpStr = variables['Operation'] || 'Initialize DSU(7)';
+  // DSU state arrives as strings under these exact keys (DsTypePayloadContractTest pins
+  // them). It used to default to a hardcoded 7-element DSU when a key was missing, which
+  // drew a plausible, entirely fabricated structure instead of failing - the no-fallback
+  // rule leaking into the render path. Say so instead.
+  const parentStr = variables['parent[]'];
+  const rankStr = variables['rank[]'];
+  if (!parentStr || !rankStr) {
+    return (
+      <div
+        data-testid="dsu-state-unavailable"
+        style={{
+          flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '24px', textAlign: 'center', color: 'var(--text-muted)',
+          fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)'
+        }}
+      >
+        DSU state unavailable for this step — the trace did not emit
+        <code style={{ fontFamily: 'var(--font-code)', margin: '0 4px' }}>parent[]</code>
+        and
+        <code style={{ fontFamily: 'var(--font-code)', margin: '0 4px' }}>rank[]</code>.
+      </div>
+    );
+  }
+
+  const dsuSetsStr = variables['Disjoint Sets'] || '';
+  const dsuOpStr = variables['Operation'] || '';
 
   const parentArr = parentStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
   const rankArr = rankStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
