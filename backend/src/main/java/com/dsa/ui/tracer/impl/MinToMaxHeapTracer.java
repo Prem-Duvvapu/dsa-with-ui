@@ -11,7 +11,7 @@ import java.util.*;
 @Component
 public class MinToMaxHeapTracer implements AlgorithmTracer {
     @Override public String id() { return "min-to-max-heap"; }
-    @Override public DsType dsType() { return DsType.TREE; }
+    @Override public DsType dsType() { return DsType.HEAP; }
 
     @Override public InputSpec inputSpec() {
         return InputSpec.of(InputField.of("values", FieldType.INT_ARRAY).label("Min-heap array")

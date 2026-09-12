@@ -12,6 +12,7 @@ import TrieCanvas from '../components/TrieCanvas';
 import IntervalCanvas from '../components/IntervalCanvas';
 import WindowCanvas from '../components/WindowCanvas';
 import SearchSpaceCanvas from '../components/SearchSpaceCanvas';
+import HeapCanvas from '../components/HeapCanvas';
 
 /**
  * The sole dsType-to-renderer routing table.
@@ -43,7 +44,7 @@ export const CANVAS_BY_DSTYPE = Object.freeze({
   LinkedList: LinkedListCanvas,
   Stack: StackCanvas,
   Queue: QueueHeroCanvas,
-  PriorityQueue: ArrayCanvas,
+  PriorityQueue: HeapCanvas,
   Trie: TrieCanvas,
   RecursionTree: RecursionTreeCanvas,
   Dsu: DsuCanvas,

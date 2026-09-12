@@ -1,0 +1,124 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+  font-size: var(--text-sm);
+}
+
+.edge {
+  stroke: var(--canvas-edge);
+  stroke-width: 1.5;
+}
+
+.node {
+  stroke-width: 1.5;
+  transition: fill var(--motion-fast) var(--ease-standard);
+}
+
+.settledSlot {
+  fill: var(--canvas-node-fill-2);
+  stroke: var(--canvas-edge);
+  background: var(--canvas-node-fill-2);
+  border: 1px solid var(--canvas-edge);
+  color: var(--text-primary);
+}
+
+.live {
+  fill: var(--probe);
+  stroke: var(--probe);
+  background: var(--probe);
+  border: 1px solid var(--probe);
+  color: var(--probe-on);
+}
+
+.nodeValue {
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+  font-weight: 700;
+  fill: var(--text-primary);
+  pointer-events: none;
+}
+
+g[data-state='current'] .nodeValue,
+g[data-state='probe'] .nodeValue,
+g[data-state='target'] .nodeValue {
+  fill: var(--probe-on);
+}
+
+.nodeIndex {
+  font-family: var(--font-code);
+  font-size: 0.54rem;
+  fill: var(--text-muted);
+  pointer-events: none;
+}
+
+.arrayBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.arrayLabel {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.slots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-code);
+  flex-shrink: 0;
+}
+
+.slotValue {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.slotIndex {
+  font-size: 0.54rem;
+  opacity: 0.75;
+}
+
+/* The arithmetic spelled out, because it is the only thing joining the two pictures. */
+.rule {
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+.rule code {
+  color: var(--text-secondary);
+}

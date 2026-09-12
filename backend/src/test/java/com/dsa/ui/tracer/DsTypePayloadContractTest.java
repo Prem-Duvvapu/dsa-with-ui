@@ -78,7 +78,13 @@ class DsTypePayloadContractTest {
         REQUIRED.put(DsType.STRING, arrayState);
         REQUIRED.put(DsType.WINDOW, arrayState);
         REQUIRED.put(DsType.SEARCH_SPACE, arrayState);
-        REQUIRED.put(DsType.HEAP, arrayState);
+        // HeapCanvas draws BOTH views and derives whichever one the tracer did not emit,
+        // because a heap's tree and its array are the same structure - children of i live
+        // at 2i+1 and 2i+2, with no pointer anywhere. Tracers modelling heap mechanics emit
+        // treeNodes; those using a heap as a tool emit arrayState. Either is enough.
+        REQUIRED.put(DsType.HEAP, new Requirement("treeNodes or arrayState",
+                s -> (s.getTreeNodes() != null && !s.getTreeNodes().isEmpty())
+                        || (s.getArrayState() != null && !s.getArrayState().isEmpty())));
         // IntervalCanvas reads arrayState too, falling back to `intervals` when present.
         REQUIRED.put(DsType.INTERVAL, arrayState);
         // RecursionTreeCanvas draws from EITHER source, and both are legitimate. A tracer

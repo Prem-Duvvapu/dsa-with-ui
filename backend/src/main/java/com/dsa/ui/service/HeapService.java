@@ -40,7 +40,7 @@ public class HeapService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{3, 2, 1, 5, 6, 4}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N log K)", "Time Complexity: Min-Heap size K.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue bounded by K.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "Tree"
+            new ComplexityDetail("O(N log K)", "Time Complexity: Min-Heap size K.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue bounded by K.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "PriorityQueue"
         ));
 
         // 2. Merge K Sorted Lists
@@ -88,16 +88,16 @@ public class HeapService implements ProblemProvider {
             {"top-k-frequent-elements", "Top K Frequent Elements", "Heaps - Hard", "Medium", "Find top K frequent elements using HashMap count + Min-Heap PriorityQueue."}
         };
 
-        // These now have real tracers whose emitted structure is Array, not the
-        // heap-as-tree default every other id in this bulk list still carries.
-        Set<String> arrayDsType = Set.of("kth-smallest-element", "task-scheduler", "top-k-frequent-elements",
-                "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "replace-rank-array");
-        Set<String> treeDsType = Set.of("heaps-theory", "implement-min-heap", "check-min-heap", "min-to-max-heap");
-
+        // One type for all of them. This used to be a three-way split - Tree for the ones
+        // modelling heap mechanics, Array for the ones using a heap as a tool, and
+        // PriorityQueue for the remainder - and the split bought nothing: Array and
+        // PriorityQueue both routed to the same bar chart, and Tree showed the shape while
+        // hiding the array it is actually stored in. A heap IS both views at once, and
+        // HeapCanvas derives whichever one the tracer did not emit, since the mapping is
+        // arithmetic: children of i at 2i+1 and 2i+2.
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
-            String dsType = treeDsType.contains(id) ? "Tree"
-                    : arrayDsType.contains(id) ? "Array" : "PriorityQueue";
+            String dsType = "PriorityQueue";
             problems.put(id, new ProblemDetail(
                 id, title, cat, "Heaps & PriorityQueue", diff, desc,
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Heap Striver A2Z Implementation\n}", title),

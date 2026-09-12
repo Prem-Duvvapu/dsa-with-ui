@@ -24,7 +24,7 @@ public class MinCostConnectSticksTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.HEAP;
     }
 
     @Override

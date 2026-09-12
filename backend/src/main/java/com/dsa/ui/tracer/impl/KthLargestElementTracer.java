@@ -26,7 +26,7 @@ public class KthLargestElementTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.TREE;
+        return DsType.HEAP;
     }
 
     @Override
