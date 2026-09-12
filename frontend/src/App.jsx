@@ -353,7 +353,9 @@ export default function App() {
       );
     }
 
-    const props = { currentStep, step: currentStep, problem: activeProblem };
+    // resolvedInput is the trace's, not a step's. IntervalCanvas needs it to draw the
+    // intervals the run actually used rather than the inputSpec defaults.
+    const props = { currentStep, step: currentStep, problem: activeProblem, resolvedInput };
 
     const Canvas = CANVAS_BY_DSTYPE[activeDsType];
     if (!Canvas) {

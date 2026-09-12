@@ -26,8 +26,14 @@ function parseMeetingsVar(str) {
   }));
 }
 
-export default function IntervalCanvas({ problem, currentStep, step }) {
+export default function IntervalCanvas({ problem, currentStep, step, resolvedInput }) {
   const activeStep = currentStep || step;
+  // What the server actually ran, echoed back on the trace. This used to be read off the
+  // STEP - `activeStep.resolvedInput` - which nothing ever sets, so those branches had
+  // never executed and the chain fell through to the inputSpec defaults instead. For
+  // n-meetings-in-one-room that is 15 of its 16 steps, so a custom run drew the default
+  // meetings while the narration described the caller's.
+  const ranOn = resolvedInput ?? activeStep?.resolvedInput ?? null;
 
   // Extract intervals from available step metadata
   let intervals = [];
@@ -60,8 +66,8 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
       const state = activeStep?.arrayState?.[idx]?.state || 'default';
       return { ...m, state };
     });
-  } else if (Array.isArray(activeStep?.resolvedInput?.intervals)) {
-    intervals = activeStep.resolvedInput.intervals
+  } else if (Array.isArray(ranOn?.intervals)) {
+    intervals = ranOn.intervals
       .filter((interval) => Array.isArray(interval) && interval.length >= 2)
       .map((interval, idx) => ({
         id: idx + 1,
@@ -70,9 +76,9 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
         end: interval[1],
         state: activeStep?.arrayState?.[idx]?.state || 'default'
       }));
-  } else if (activeStep?.resolvedInput?.start && activeStep?.resolvedInput?.end) {
-    const starts = activeStep.resolvedInput.start;
-    const ends = activeStep.resolvedInput.end;
+  } else if (ranOn?.start && ranOn?.end) {
+    const starts = ranOn.start;
+    const ends = ranOn.end;
     intervals = starts.map((s, idx) => ({
       id: idx + 1,
       label: `#${idx + 1}`,
@@ -81,7 +87,8 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
       state: activeStep?.arrayState?.[idx]?.state || 'default'
     }));
   } else if (problem?.inputSpec) {
-    // Try to extract from default inputs
+    // Last resort, and only honest before a run has happened: the defaults are what a run
+    // WOULD use. Once one has, `ranOn` above is the truth and this must not be reached.
     const startField = problem.inputSpec.fields?.find((f) => f.name === 'start');
     const endField = problem.inputSpec.fields?.find((f) => f.name === 'end');
     if (startField?.defaultValue && endField?.defaultValue) {
