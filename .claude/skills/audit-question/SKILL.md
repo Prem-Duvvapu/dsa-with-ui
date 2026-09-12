@@ -5,7 +5,7 @@ description: >
   catalogue `dsType` agreeing with its tracer's, an `InputSpec` that actually drives
   `run()` rather than a fixture, a materially different `alternateInput()`, every declared
   `// @a` anchor reachable, a payload the promised canvas can render, a golden file that
-  was read, a legacy endpoint that answers 410, and budget headroom. Run it before
+  was read, a call stack that drains before the trace ends, and budget headroom. Run it before
   claiming a single problem is finished, and on every id a review flags. Use
   `review-trace-simulation` for the narration quality pass; use `audit-topic` to sweep a
   whole category.
@@ -245,47 +245,25 @@ regeneration also guarantees. So the audit question is not "does it pass" but **
 final answer in it correct?"** Compute the expected result independently and compare.
 Regenerating a golden without reading the diff records a bug as expected.
 
-## 8. The legacy path refuses rather than substitutes
+## 8. The legacy path — deleted, nothing to check
 
-Find the id's legacy base path from its category:
+**Historical.** This step used to probe `/api/<base>/execute/$ID` and require 410, because
+a 200 meant the id still fell through a service `switch`'s `default:` and served another
+algorithm's steps under its own name. That was the original defect of this codebase.
 
-| category | legacy base path |
-| --- | --- |
-| Arrays | `/api/arrays` |
-| Graphs — BFS/DFS | `/api/graphs/bfs-dfs` |
-| Advanced Graphs | `/api/graphs/advanced` |
-| Binary Trees / BST | `/api/trees` |
-| Tries | `/api/tries` |
-| Sorting | `/api/sorting` |
-| Binary Search | `/api/binarysearch` |
-| Dynamic Programming | `/api/dp` |
-| Greedy | `/api/greedy` |
-| Heaps | `/api/heaps` |
-| Linked List | `/api/linkedlist` |
-| Recursion & Backtracking | `/api/recursion-backtracking` |
-| Sliding Window | `/api/slidingwindow` |
-| Stack & Queue | `/api/stackqueue` |
-| Strings | `/api/strings` |
-| Bit Manipulation | `/api/bitmanipulation` |
-| Maths | `/api/maths` |
-| Learn the Basics | `/api/basic-recursion` |
+The layer is gone. The eighteen legacy controllers are deleted, every `/api/{topic}/...`
+route 404s, and `LegacyTraceRetiredException` no longer exists. There is one API:
+`/api/problems`. **Skip this step.**
 
-```bash
-curl -s -o /dev/null -w '%{http_code}\n' "http://localhost:8923/api/<base>/execute/$ID"
-```
+`ProblemsApiTest.legacyRoutesNoLongerExist` keeps the routes deleted, so a reintroduced
+legacy controller is a test failure rather than a quiet regression.
 
-- **410** — correct for a traced id. Its case in the service `switch` throws
-  `LegacyTraceRetiredException`, and `ApiExceptionHandler` maps that to 410 Gone pointing
-  callers at `/api/problems/{id}/execute`.
-- **200** — the id still falls through to `default:`, which returns *another algorithm's*
-  steps under this id's name. This is the original defect, alive. The tracer being correct
-  does not excuse it: two endpoints now disagree about what this problem is.
-- **404** — correct only for an id this controller never claimed.
-
-Then confirm a test pins it, so the next refactor cannot quietly restore the fallback:
-the topic's service test (`BitManipulationServiceTest`, `RecursionBacktrackingTracingTest`,
-…) should assert `LegacyTraceRetiredException` for this id, and `ApiContractTest` — which
-is parameterized over all 18 base paths — should carry its route case.
+One habit from this step is worth carrying forward. The refusals used to be pinned by
+hand-maintained lists of retired ids — one in `ApiContractTest`, one in each of eighteen
+copy-pasted `*ServiceTest` classes. Those lists drifted, and the drift is precisely what
+let stragglers keep serving the wrong animation long after the topic was called done. When
+a test needs to know "which ids are in state X", derive it from the registry or the
+catalogue; never type the list.
 
 ## 9. Budget headroom on the alternate too
 

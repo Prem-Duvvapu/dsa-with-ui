@@ -3,11 +3,11 @@ name: add-a-problem
 description: >
   Add or trace a DSA problem in the dsa-with-ui repo, given a LeetCode URL, a GeeksforGeeks
   URL, or just a problem name ("add Dijkstra", "trace merge intervals", "make climbing
-  stairs actually animate"). Covers finding whether the id is already catalogued (425 of
-  433 are catalogued but untraced — that is the usual case), registering a genuinely new
-  ProblemDetail in the right service, writing the AlgorithmTracer with `// @a` anchored
-  code and an InputSpec, implementing the alternateInput() the interface requires, deleting
-  the legacy delegate, and the verification runs.
+  stairs actually animate"). Covers finding whether the id is already catalogued (all 433
+  catalogued problems are traced, so a request is usually a genuinely new problem or a
+  rework of an existing tracer), registering a new ProblemDetail in the right service,
+  writing the AlgorithmTracer with `// @a` anchored code and an InputSpec, implementing
+  the alternateInput() the interface requires, and the verification runs.
 ---
 
 # Adding a problem
@@ -275,12 +275,12 @@ has landed, implement the method instead and this step is moot.)
 
 Per HANDOFF PROMPT C, once a problem is traced:
 
-- Delete its `case "<id>": return generate…Steps();` from the service's `generateSteps`
-  switch, and delete the generator if nothing else calls it — otherwise the two paths
-  diverge.
-- **Keep** the `initProblems()` metadata. That still feeds `ProblemCatalog` until PROMPT D.
-- Do **not** delete the switch's `default:` branch yet; other ids in that service still
-  rely on it, and `ApiContractTest` exercises it. Removing it is PROMPT D.
+- **Nothing to delete.** PROMPT D is done: the legacy layer is gone. Services have no
+  `generateSteps`, no `switch (problemId)`, and no `default:` branch — there is no second
+  path for a new tracer to diverge from.
+- **Keep** the `initProblems()` metadata. That is now the service's *only* job: it feeds
+  `ProblemCatalog`, and it is where a genuinely new problem's `ProblemDetail` is
+  registered. Deleting a service deletes its topic's catalogue.
 
 ---
 

@@ -2,12 +2,10 @@
 name: audit-topic
 description: >
   Audit a whole catalogue category against this repo's definition of done — every id
-  either traced or honestly untraced, no id still falling through a service `switch`'s
-  `default:` to another algorithm's steps, no dead legacy generators left behind, the
-  topic's catalogue `dsType`s not a blanket bulk value, no two tracers in the topic
-  emitting near-identical traces, the `ProblemsApiTest` canonical-untraced-example chain
-  still pointing at a genuinely untraced id, and every coverage number in the docs
-  reconciled against the live stats endpoint. Run it before declaring a topic complete,
+  either traced or honestly untraced, nothing orphaned in `algorithm/`, the topic's
+  catalogue `dsType`s not a blanket bulk value, no two tracers in the topic
+  emitting near-identical traces, every recursion trace draining its call stack, and every
+  coverage number in the docs reconciled against the live stats endpoint. Run it before declaring a topic complete,
   and after any batch PR that traces more than one id.
 ---
 
@@ -107,10 +105,9 @@ Everything the sweep flags is a finding; everything it does not flag still needs
 The sweep's footer gives `traced/total` for the topic. There are only two acceptable
 states, and "mostly done" is not one of them:
 
-- **Complete** — every id traced. Then §3's legacy sweep must show 410 for *all* of them,
-  and the topic's controller answers 410 for everything it claims. Arrays, Sorting,
-  Sliding Window, Bit Manipulation and Strings are already in this state; it is real and
-  permanent, and `ApiContractTest` documents it.
+- **Complete** — every id traced. **All 18 topics are in this state** and have been since
+  the catalogue finished migrating; it is real and permanent. Nothing about the legacy
+  layer needs checking any more (§3).
 - **Partial** — some ids untraced. Then each untraced id must answer **501** from
   `/api/problems/{id}/execute` (catalogued, not yet traced) and must have **no**
   `inputSpec`. `traced` is an honesty flag, not a feature flag: the UI says "not yet
@@ -120,30 +117,27 @@ The state that is never acceptable is an id the sweep marks `410 but no tracer` 
 legacy generator was retired without a tracer replacing it, so the problem is unreachable
 from both APIs.
 
-## 3. Every traced id's legacy path refuses
+## 3. The legacy layer is gone — nothing to check here
 
-The sweep already probed this; confirm it is *pinned by a test*, which the sweep cannot
-see. Open the topic's service and its test:
+**Historical.** This step used to verify that every traced id's `/api/{topic}/execute/{id}`
+refused rather than serving another algorithm's steps, and that a test pinned the refusal.
 
-```bash
-grep -n 'case "' backend/src/main/java/com/dsa/ui/service/<Topic>Service.java | head -40
-grep -n "LegacyTraceRetiredException" backend/src/test/java/com/dsa/ui/**/<Topic>*Test.java
-```
+That layer no longer exists. The eighteen legacy controllers are deleted, `/api/{topic}/...`
+404s, and no service has a `generateSteps` or a `switch (problemId)` at all. The services
+survive only as `ProblemProvider`s owning `ProblemDetail` metadata.
 
-Three things must agree, and drift between them is the classic straggler:
+So: **skip this step**, ignore the sweep's `legacy` column (it reads 404 for everything
+now), and do not go looking for `LegacyTraceRetiredException` — it is deleted too. What
+replaced the checks:
 
-1. Every traced id in the topic has a `case` in the `switch` falling into
-   `throw new LegacyTraceRetiredException(problemId)`.
-2. The service test asserts `LegacyTraceRetiredException` for those ids — the whole set,
-   not a sample. `RecursionBacktrackingTracingTest` is the shape to copy: every test in it
-   is an `assertThrows` with a message saying why.
-3. `ApiContractTest`, parameterized over all 18 base paths, carries the topic's route
-   cases.
+- `ProblemsApiTest.legacyRoutesNoLongerExist` asserts the routes stay gone.
+- `ProblemProviderContractTest` covers all eighteen providers' catalogue contract.
 
-Read what `default:` still returns. In a partially traced topic it legitimately serves the
-remaining untraced ids' legacy steps. In a **fully** traced topic a `default:` that returns
-steps is a live fallback waiting for the next id someone forgets to add — the tracer layer
-exists to make that impossible, so it should throw.
+The lesson worth keeping is why the straggler class existed: the refusals were pinned by
+*hand-maintained lists* of retired ids, in `ApiContractTest` and in eighteen copy-pasted
+`*ServiceTest` classes. Drift in those lists is what let ids keep falling through
+`default:`. Wherever you are tempted to write a per-id list in a test, parameterize over
+the live registry or catalogue instead.
 
 ## 4. The catalogue `dsType`s are per-problem, not blanket
 
@@ -176,29 +170,33 @@ draws. And remember `ARRAY` and `BITS` have no payload requirement in
 `DsTypePayloadContractTest` — an `ARRAY`-tagged tracer in this topic that never calls
 `.array(...)` or `.arrayState(...)` passes every test and renders nothing.
 
-## 5. No dead legacy generators left behind
+## 5. Nothing orphaned in `algorithm/`
 
-Retiring an id means deleting the generator it used to call, not just refusing to call it.
+**Mostly historical.** This step used to hunt unreachable `generate*Steps()` methods in the
+topic's service. Those are all deleted along with the legacy layer — no service has one.
 
-```bash
-grep -n "private .* generate.*Steps()" backend/src/main/java/com/dsa/ui/service/<Topic>Service.java
-```
-
-Every method still present must be reachable — from a surviving `case`, from `default:`,
-or from another generator. Anything else is dead code that keeps a wrong animation alive
-in the repository, ready to be wired back in. The Bit Manipulation retirement deleted 11
-such methods and deliberately kept one, `generateCheckNumberOddSteps()`, because
-`default:` still calls it; that reasoning belongs in the diff, not in the reader's head.
-
-The same applies to the standalone algorithm classes some topics carry:
+What still applies is the standalone helper classes:
 
 ```bash
-ls backend/src/main/java/com/dsa/ui/algorithm/<area>/
+ls backend/src/main/java/com/dsa/ui/algorithm/
 ```
 
-The Recursion & Backtracking retirement deleted seven orphaned classes there and kept
-`NQueens.java` and `SudokuSolver.java` because the surviving tracers use them. An
-unreferenced class in that package is the legacy layer's residue.
+That package is down to `trie/ImplementTrie.java`, kept because `ImplementTrieTracer` uses
+it, plus `trace/TraceEvent` and `trace/TraceRecorder` which it needs. Eleven other classes
+were the legacy layer's residue and are gone. An unreferenced class there is dead code;
+check reachability transitively, since deleting one caller can orphan its callees:
+
+```bash
+python3 - <<'EOF'
+import os,re,glob
+os.chdir('backend/src/main/java/com/dsa/ui')
+srcs={p:open(p).read() for p in glob.glob('**/*.java',recursive=True)}
+for t in sorted(p for p in srcs if p.startswith(('algorithm/','trace/'))):
+    cls=os.path.basename(t)[:-5]
+    if not [p for p,s in srcs.items() if p!=t and re.search(r'\b'+cls+r'\b',s)]:
+        print('ORPHAN', t)
+EOF
+```
 
 ## 6. No two tracers in the topic tell the same story
 
@@ -244,7 +242,7 @@ the same commit.
 
 ```bash
 cd backend && mvn test -Djacoco.skip=true \
-  -Dtest=TracerContractTest,DsTypePayloadContractTest,CatalogTracerMetadataTest,ApiContractTest,ProblemsApiTest
+  -Dtest=TracerContractTest,DsTypePayloadContractTest,CatalogTracerMetadataTest,ProblemProviderContractTest,ProblemsApiTest
 cd backend && mvn test                                     # the whole suite, green
 cd frontend && npx vitest run && npx vite build
 ```

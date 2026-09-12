@@ -3,11 +3,11 @@ name: dsa-review
 description: >
   Project-invariant review for the dsa-with-ui repo — run it on a branch, a diff, or a PR
   before merging. Checks the things this codebase has actually broken before: a
-  reintroduced `default:` fallback that makes one problem play another's animation, a
-  dead or dangling `// @a` anchor, an `alternateInput()` copied from the spec defaults, a
-  new npm dependency, a `var()` or className that `index.css` does not define, a legacy
-  controller that lost its 404 guard, a moved pinned number (433 problems / 7 duplicates),
-  or work committed on `main`. Use alongside — not instead of — the built-in /code-review.
+  reintroduced legacy controller or `generateSteps` fallback that makes one problem play
+  another's animation, a dead or dangling `// @a` anchor, an `alternateInput()` copied from
+  the spec defaults, a new npm dependency, a `var()` or className that `index.css` does not
+  define, a recursion trace that ends mid-unwind, a moved pinned number (433 problems /
+  7 duplicates), or work committed on `main`. Use alongside — not instead of — the built-in /code-review.
 ---
 
 # dsa-review
@@ -88,20 +88,24 @@ grep -rhoP 'private List<ExecutionStep> \w+\(\) \{ return \K\w+' \
 
 ---
 
-## 2. The legacy 404 guard is intact on all 18 controllers
+## 2. No legacy controller has been reintroduced
 
-Eight of the eighteen controllers once dropped this, so an unknown id returned 200 with
-whatever the service's `default:` produced. `ApiContractTest` is parameterized over all 18
-to keep that from recurring — check nobody weakened it.
+The eighteen legacy `/api/{topic}/...` controllers are deleted. Eight of them had once
+dropped their 404 guard, so an unknown id returned 200 with whatever the service's
+`default:` produced — that whole surface is gone, along with every `generateSteps`.
+
+What a diff must not do is bring any of it back:
 
 ```bash
-# Expect: 2 for every *Controller.java except ProblemsController (0 — it raises
-# ResponseStatusException instead). A legacy controller showing 0 or 1 lost a guard.
-grep -c "notFound()" backend/src/main/java/com/dsa/ui/controller/*Controller.java
+# Expect exactly two: ProblemsController and ApiExceptionHandler.
+ls backend/src/main/java/com/dsa/ui/controller/
+
+# Expect no hits. A service is a ProblemProvider now - catalogue metadata only.
+grep -rn "generateSteps\|LegacyTraceRetiredException" backend/src/main/java/com/dsa/ui/service/
 ```
 
 ```bash
-cd backend && mvn test -Dtest=ApiContractTest
+cd backend && mvn test -Dtest=ProblemsApiTest,ProblemProviderContractTest
 ```
 
 ---

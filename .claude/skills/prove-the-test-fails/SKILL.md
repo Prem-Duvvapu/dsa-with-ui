@@ -136,8 +136,9 @@ Recognise these — each is a version of the mistake that hid the 303 stubs.
   across the whole registry.
 - `TracerContractTest.stepBudgetTruncates` — builds an intentionally runaway tracer inline
   and asserts it is capped at 25 steps.
-- `ApiContractTest` — parameterized over all 18 base paths, because testing one controller
-  by hand is exactly how eight of them silently lost their 404 guard.
+- `ProblemProviderContractTest` — parameterized over all 18 catalogue providers, because
+  testing one by hand is exactly how eight legacy controllers silently lost their 404
+  guard, and how eighteen copy-pasted service tests drifted into pinning nothing.
 - `designTokens.test.js` — a static guard over `index.css`, because CSS silently drops a
   declaration whose `var()` cannot resolve and no runtime test can see it.
 
