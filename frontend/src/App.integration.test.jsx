@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import React from 'react';
 import '@testing-library/jest-dom';
@@ -553,6 +553,59 @@ describe('App input panel', () => {
     fireEvent.click(screen.getByRole('button', { name: /Edit/i }));
     await screen.findByLabelText('Target sum');
   }
+
+  it('opens the shortcut list with ? and closes it with Escape', async () => {
+    // The shortcuts worked before this; they were written down only in two button
+    // tooltips, so nobody could find them.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    fireEvent.keyDown(window, { key: '?' });
+    expect(await screen.findByRole('dialog', { name: 'Keyboard shortcuts' })).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { code: 'Escape' });
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Keyboard shortcuts' })).not.toBeInTheDocument()
+    );
+  });
+
+  it('keeps stepping with J and L after a control button has been clicked', async () => {
+    // The old handler ignored every key while a BUTTON had focus, so one click on Play
+    // killed the keyboard until you clicked elsewhere.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    const reset = screen.getByRole('button', { name: /Reset/i });
+    reset.focus();
+    expect(document.activeElement).toBe(reset);
+
+    fireEvent.keyDown(window, { code: 'KeyL' });
+    fireEvent.keyDown(window, { code: 'KeyJ' });
+    // Still responsive: the shortcut list still opens from the same focused-button state.
+    fireEvent.keyDown(window, { key: '?' });
+    expect(await screen.findByRole('dialog', { name: 'Keyboard shortcuts' })).toBeInTheDocument();
+  });
+
+  it('remembers the playback speed across a reload', async () => {
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    fireEvent.click(screen.getByRole('button', { name: '4x' }));
+    expect(window.localStorage.getItem('dsa-ui:speed')).toBe('250');
+
+    cleanup();
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    // The 4.0x preset is still the active one rather than silently resetting to 1.0x.
+    expect(screen.getByRole('button', { name: '4x' }).className).toMatch(/Active/);
+  });
 
   it('keeps the input editor and complexity card off screen until asked for', async () => {
     // The point of the change: while a trace plays, the row holds the code panel alone.

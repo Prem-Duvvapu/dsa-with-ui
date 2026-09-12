@@ -146,6 +146,8 @@ export default function SearchBox({
           <input
             ref={inputRef}
             className="sb-input"
+            /* App's `/` shortcut focuses this by attribute, so the two stay decoupled. */
+            data-search-input=""
             role="combobox"
             aria-expanded={isSearching}
             aria-controls="problem-results"

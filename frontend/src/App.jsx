@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
 import ProblemStatement from './components/ProblemStatement';
 import InputSummary from './components/InputSummary';
+import ShortcutHelp from './components/ShortcutHelp';
+import usePersistentState from './hooks/usePersistentState';
 import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -154,6 +156,11 @@ export default function App() {
   // The catalogue entry — summary fields only (id, title, category, dsType, traced).
   const catalogEntry = problems.find(p => p.id === activeProblemId) || problems[0] || null;
 
+  // Only the four presets Controls can render. A speed persisted by an older build would
+  // otherwise highlight no button and could not be changed back by clicking one.
+  const [persistedSpeed, setPersistedSpeed] = usePersistentState(
+    'speed', 1000, (v) => [2000, 1000, 500, 250].includes(v));
+
   // All playback state lives in useTrace.
   const {
     steps, currentStep, currentStepIndex,
@@ -164,7 +171,7 @@ export default function App() {
     fieldErrors,
     detail,
     togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput, resolvedInput
-  } = useTrace(activeProblemId, catalogEntry);
+  } = useTrace(activeProblemId, catalogEntry, { initialSpeed: persistedSpeed });
 
   // Merge in the per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
   // it isn't in the catalogue summary, so CodeViewer/MemoryComplexityCard/canvases
@@ -210,18 +217,31 @@ export default function App() {
   }, [fetchAllProblems]);
 
   // ── Layout state ─────────────────────────────────────────────────────────
-  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
+  // View preferences survive a reload. The selected problem deliberately does not - the
+  // URL owns that, and persisting it would fight deep links.
+  const isBool = (v) => typeof v === 'boolean';
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const isMobile = viewportWidth <= 768;
+
+  // Only the DESKTOP sidebar preference is persisted. On a narrow viewport the sidebar is
+  // a modal drawer over the canvas, and it must always start closed there - restoring
+  // "open" from a desktop session would greet a phone user with the drawer covering the
+  // thing they came to watch.
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = usePersistentState('sidebarOpen', true, isBool);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const isSidebarOpen = isMobile ? mobileSidebarOpen : desktopSidebarOpen;
+  const setIsSidebarOpen = isMobile ? setMobileSidebarOpen : setDesktopSidebarOpen;
+
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   // Collapsing this row frees up vertical space for the canvas while a trace is playing.
-  const [isBottomPanelOpen, setIsBottomPanelOpen] = useState(true);
+  const [isBottomPanelOpen, setIsBottomPanelOpen] = usePersistentState('bottomPanelOpen', true, isBool);
   // The input editor and the complexity card are setup furniture: useful before a run,
   // noise during one. They are opened on demand instead of holding a fixed share of the
   // 340px bottom row, and what you actually want from the editor while watching - the
   // input being animated - is stated by InputSummary in a single line.
-  const [isInputEditorOpen, setIsInputEditorOpen] = useState(false);
-  const [isComplexityOpen, setIsComplexityOpen] = useState(false);
+  const [isInputEditorOpen, setIsInputEditorOpen] = usePersistentState('inputEditorOpen', false, isBool);
+  const [isComplexityOpen, setIsComplexityOpen] = usePersistentState('complexityOpen', false, isBool);
   const [activeTab, setActiveTab] = useState('code');
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-  const isMobile = viewportWidth <= 768;
 
   useEffect(() => {
     const handleResize = () => {
@@ -283,39 +303,124 @@ export default function App() {
     };
   }, [isMobile, isSidebarOpen]);
 
+  // A speed change is both playback state and a saved preference, so it goes through one
+  // handler rather than leaving the two to drift.
+  const changeSpeed = useCallback((ms) => {
+    setSpeed(ms);
+    setPersistedSpeed(ms);
+  }, [setSpeed, setPersistedSpeed]);
+
+  const SPEED_PRESETS = useMemo(() => [2000, 1000, 500, 250], []);
+
+  const nudgeSpeed = useCallback((direction) => {
+    // Presets run slow -> fast, so "faster" moves right. Clamped rather than wrapping:
+    // holding the key should settle at 4x, not jump back to 0.5x.
+    const at = SPEED_PRESETS.indexOf(speed);
+    const from = at === -1 ? 1 : at;
+    const next = Math.min(SPEED_PRESETS.length - 1, Math.max(0, from + direction));
+    changeSpeed(SPEED_PRESETS[next]);
+  }, [SPEED_PRESETS, speed, changeSpeed]);
+
   // ── Global keyboard shortcuts ────────────────────────────────────────────
+  // This is a media player, so it uses a media player's keys: J/K/L and ,/. alongside the
+  // arrows. The list lives in ShortcutHelp, opened with `?` - the shortcuts worked before
+  // but were written down only in two button tooltips, which is not discoverable.
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Escape closes the mobile drawer regardless of what's focused — a learner typing
-      // in the search field is exactly who needs Escape to work.
-      if (e.code === 'Escape' && isMobile && isSidebarOpen) {
-        e.preventDefault();
-        setIsSidebarOpen(false);
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      const active = document.activeElement;
+      const tag = active?.tagName;
+      const isTyping = ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag) || active?.isContentEditable;
+
+      // Escape works even while typing - someone in the search field is exactly who needs
+      // it - and closes the topmost thing first.
+      if (e.code === 'Escape') {
+        if (isHelpOpen) {
+          e.preventDefault();
+          setIsHelpOpen(false);
+          return;
+        }
+        if (isMobile && isSidebarOpen) {
+          e.preventDefault();
+          setIsSidebarOpen(false);
+          return;
+        }
+        if (isTyping) active.blur();
         return;
       }
 
-      const tag = document.activeElement?.tagName;
-      if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(tag)
-          || document.activeElement?.isContentEditable) return;
+      if (isTyping) return;
 
-      if (e.code === 'Space') {
+      // `/` focuses search, matching every other search-first UI.
+      if (e.key === '/') {
         e.preventDefault();
-        togglePlay();
-      } else if (e.code === 'ArrowRight') {
+        setIsSidebarOpen(true);
+        document.querySelector('[data-search-input]')?.focus();
+        return;
+      }
+
+      if (e.key === '?') {
         e.preventDefault();
-        stepNext();
-      } else if (e.code === 'ArrowLeft') {
-        e.preventDefault();
-        stepPrev();
-      } else if (e.code === 'KeyR') {
-        e.preventDefault();
-        reset();
+        setIsHelpOpen(prev => !prev);
+        return;
+      }
+
+      // A focused button activates on Space/Enter natively. Letting Space through here too
+      // would toggle playback twice; blocking every key while a button has focus - which is
+      // what this used to do - meant one click on Play killed the keyboard for good.
+      const onButton = tag === 'BUTTON';
+
+      switch (e.code) {
+        case 'Space':
+          if (onButton) return;
+          e.preventDefault();
+          togglePlay();
+          return;
+        case 'KeyK':
+          e.preventDefault();
+          togglePlay();
+          return;
+        case 'ArrowRight':
+        case 'KeyL':
+        case 'Period':
+          e.preventDefault();
+          stepNext();
+          return;
+        case 'ArrowLeft':
+        case 'KeyJ':
+        case 'Comma':
+          e.preventDefault();
+          stepPrev();
+          return;
+        case 'Home':
+          e.preventDefault();
+          seek(0);
+          return;
+        case 'End':
+          e.preventDefault();
+          if (steps.length > 0) seek(steps.length - 1);
+          return;
+        case 'KeyR':
+          e.preventDefault();
+          reset();
+          return;
+        case 'BracketLeft':
+          e.preventDefault();
+          nudgeSpeed(-1);
+          return;
+        case 'BracketRight':
+          e.preventDefault();
+          nudgeSpeed(1);
+          return;
+        default:
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [togglePlay, stepNext, stepPrev, reset, isMobile, isSidebarOpen]);
+  }, [togglePlay, stepNext, stepPrev, reset, seek, steps.length, nudgeSpeed,
+      isMobile, isSidebarOpen, isHelpOpen, setIsSidebarOpen]);
 
   const handleSelectCategory = (cat) => {
     setActiveCategory(cat);
@@ -400,6 +505,8 @@ export default function App() {
       <Breadcrumb problem={activeProblem} />
 
       <ProblemStatement problem={activeProblem} />
+
+      <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
 
       {catalogError && (
         <div
@@ -538,7 +645,7 @@ export default function App() {
               onStepPrev={stepPrev}
               onStepSelect={seek}
               onReset={reset}
-              onSpeedChange={setSpeed}
+              onSpeedChange={changeSpeed}
             />
 
             {/* Quiet Live Trace Banner */}
@@ -592,6 +699,15 @@ export default function App() {
                   title={isComplexityOpen ? 'Hide memory and complexity' : 'Show memory and complexity'}
                 >
                   {isComplexityOpen ? 'Hide' : 'Show'} memory &amp; complexity
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsHelpOpen(true)}
+                  className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                  title="Keyboard shortcuts (?)"
+                  aria-label="Show keyboard shortcuts"
+                >
+                  ?
                 </button>
               </div>
             )}

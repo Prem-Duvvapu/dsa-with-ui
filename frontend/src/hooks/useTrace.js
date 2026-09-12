@@ -41,16 +41,18 @@ function classifyExecValue(execValue) {
 /**
  * @param {string|null} problemId  the currently selected problem id
  * @param {object|null} problem    the catalogue entry (for checked-in offline steps)
+ * @param {{initialSpeed?: number}} [options]  persisted preferences to start from
  * @returns playback state + controls
  */
-export default function useTrace(problemId, problem) {
+export default function useTrace(problemId, problem, options = {}) {
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   // 1000ms is the "1.0x" preset in Controls — the only default that lands on a real
   // button. 800ms matched none of the 2000/1000/500/250 presets, so nothing was ever
-  // highlighted at startup.
-  const [speed, setSpeed] = useState(1000);
+  // highlighted at startup. App passes the persisted preference in as initialSpeed so a
+  // reload does not silently reset someone who prefers 4x.
+  const [speed, setSpeed] = useState(options.initialSpeed ?? 1000);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   /** true when the last successful run hit the server's step budget. */
