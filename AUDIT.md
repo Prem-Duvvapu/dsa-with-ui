@@ -34,7 +34,7 @@ unexercised branch, or a legacy `default:` that is once again serving substitute
 | # | Finding | Severity | Scope |
 |---|---|---|---|
 | [F1](#f1-live-fallbacks-in-12-legacy-services) | 12 legacy services still return another algorithm's steps from `default:` | **High** | 12 services, 5 live ids |
-| [F2](#f2-93-problems-declare-anchors-that-never-highlight) | 93 problems declare `// @a` anchors that never highlight | **Medium** | 93 problems, 125 anchors |
+| [F2](#f2-93-problems-never-highlight-some-of-their-code-on-the-default-input) | 93 problems never highlight some code on the *default* input (contract holds) | Low | 93 problems |
 | [F3](#f3-64-dead-legacy-generators) | 64 unreachable legacy generator methods | **Medium** | 8 services |
 | [F4](#f4-nine-recursion-traces-freeze-mid-unwind) | 9 recursion traces end with a non-empty call stack | **Medium** | 9 problems |
 | [F5](#f5-nine-of-seventeen-dstypes-have-no-payload-check) | 9 of 17 `DsType`s have no payload contract check | **Medium** | 170 problems unchecked |
@@ -149,18 +149,24 @@ code before applying the fix.
 
 ---
 
-### F2. 93 problems declare anchors that never highlight
+### F2. 93 problems never highlight some of their code on the default input
 
-**Severity: Medium.** 125 dead anchors across 93 problems — 21.5% of the catalogue.
+**Severity: Low** — corrected down from Medium after verification; see the correction note.
 
-`CLAUDE.md` states `anchorsAreAllReachable` "fails on a marker nothing highlights". That
-test evidently does not cover these, so the defect is invisible to CI. A dead anchor means
-the code panel shows a line the animation never reaches: either the tracer's default input
-never exercises that branch, or the anchor is vestigial.
+> **Correction.** An earlier draft of this finding called these "dead anchors" and implied a
+> broken contract. That was wrong. `TracerContractTest.anchorsAreAllReachable` checks
+> reachability across the **default *or* the alternate** input, and it passes for all 433
+> problems — so **no anchor is unreachable**, and nothing is invisible to CI. Verified by
+> re-running that test restricted to the default input: it fails on exactly 93 problems,
+> matching the sweep, and passes for all 433 when the alternate is included.
+>
+> What is real: on the **default** input — the only thing a learner sees before touching the
+> input panel — those 93 problems show code lines the animation never highlights. That is a
+> question about *default choice*, not a contract violation.
 
 Per topic:
 
-| Topic | Problems with dead anchors |
+| Topic | Problems with code unhighlighted on defaults |
 |---|---:|
 | Advanced Graphs | 20 / 53 |
 | Stack & Queue | 15 / 30 |
@@ -194,15 +200,22 @@ succeeds, so "not found" / "unreachable" / "no cycle" never runs:
 `queue-stack-impl` (`peekEmpty`). One bug written six times: no default input ever pops an
 empty container.
 
-**Fix, in priority order.** For each dead anchor decide, explicitly:
-1. **The branch is pedagogically important** (failure cases, empty-container guards — most
-   of the 34 above) → extend the default input so `run()` reaches it, or emit a terminal
-   step that narrates the branch not taken. Regenerate the golden and **read the diff**.
-2. **The anchor is vestigial** → delete the `// @a` marker.
+**Fix — needs an owner decision before any code changes; see
+[§7 Q2](#7-open-questions-for-the-owner).** Every option here is a pedagogical trade-off,
+not a bug fix:
 
-Then close the hole in the test: `anchorsAreAllReachable` must fail on these 125 today.
-Verify that claim first — if it passes, the test is checking anchor *resolution*, not
-*reachability*, and needs the reachability assertion added.
+1. **Leave them.** Defaults should show the algorithm working; the alternate input already
+   demonstrates the other branch, and the input panel is how a learner reaches it. Under
+   this reading F2 is closed as working-as-intended.
+2. **Change the defaults** for the subset where the unexercised branch *is* the lesson —
+   cycle detection that never finds a cycle, a stack implementation that never underflows.
+   Costs a golden regeneration each, and risks making the first impression worse.
+3. **Surface it in the UI** — mark lines the current run never reaches. This is the only
+   option that fixes all 93 without compromising any default, and it is a feature, not a
+   repair.
+
+No change has been made. Deciding this per-problem across 93 problems without a stated
+principle would just be 93 guesses.
 
 Full per-problem list: [Appendix A](#appendix-a--every-problem-by-topic).
 
@@ -442,6 +455,40 @@ Worth recording, because the audit was looking for these and did not find them:
 
 ---
 
+## 4b. Status — what has been fixed
+
+All on branch `audit/full-project-sweep`, one commit per finding, each proven RED first
+where a new assertion was involved.
+
+| Finding | State | Commit |
+|---|---|---|
+| F1 — legacy fallbacks | **Fixed.** All 18 services throw; 7 live id/route pairs closed. Guarded by `everyLegacyExecuteRouteIsRetired` over each controller's own catalogue. | `07d4053` |
+| F3 — dead generators | **Fixed.** All 80 deleted (1667 lines). | `8d212cd` |
+| F6 — stale docs | **Fixed.** `CLAUDE.md` + `HANDOFF.md` corrected. | `8959eff` |
+| F5 — payload contract | **Fixed.** 9 missing `REQUIRED` entries added; skipped 170 → 0. | `0082292` |
+| F7 — DsuCanvas fallback | **Fixed.** Renders an explicit unavailable state; 3 RED-first guards. | `0082292` |
+| F4 — mid-unwind recursion | **Fixed.** New `traceEndsWithAnEmptyCallStack` contract test caught **12**, not 9 — the per-topic sweep missed `cycle-directed-dfs`, `directed-cycle-dfs`, `dfs-traversal`. All 12 closed, goldens read. | `8c3ff36` |
+| F8 — near-identical pair | **Fixed.** Similarity 0.983 → 0.247 by changing what each narrates. | `8dff996` |
+| F9 — 1-step trace | **Fixed.** Now 3 steps showing the carry/borrow mechanism. | `8dff996` |
+| F2 — defaults | **Open — needs a decision.** Reclassified to Low; no contract violation. See F2 and §7 Q2. | — |
+| F10 — duplicate ids | **Open — needs a decision.** Moves a pinned number. | — |
+
+Three additional defects were found *by the fixes*, not by the original sweep:
+
+- **`traceEndsWithAnEmptyCallStack` found 3 more mid-unwind traces** than the topic sweep,
+  because the sweep is per-topic and these were graph traversals nobody classed as recursion.
+- **`cycle-directed-dfs` and `directed-cycle-dfs` are near-duplicate tracers** — identical
+  `run()` bodies differing only in default graph size. The topic sweep compares within a
+  topic, so a cross-topic pair like this is invisible to it. Not yet addressed; it is the
+  same class as F8.
+- **Three stale hand-maintained retirement lists** (a 430-entry `RETIRED_IDS` and per-topic
+  `retired` sets in 8 service tests) were what let F1's stragglers hide. Replaced with
+  assertions over the whole catalogue.
+
+Suites after all fixes: backend **6851 pass / 0 fail**, frontend **224 pass / 29 files**.
+
+---
+
 ## 5. Recommended fix sequence
 
 Small PRs, landed one at a time, each green before the next — per `CLAUDE.md` branch
@@ -491,10 +538,12 @@ Two of these are recurring classes, which is the bar `RCA.md` sets:
    that deletes F1 and F3 entirely (12 services, 64 dead methods) instead of repairing
    them. That is the single highest-leverage decision available here, and it makes PRs 1–3
    unnecessary.
-2. **Should failure branches be traced at all?** F2's Cause A assumes yes — that a learner
-   should see "target not found". If the project's position is that defaults should always
-   show the successful path, then ~23 of those anchors should be deleted instead, and the
-   decision belongs in `PROJECT_CONTEXT.md` as a pedagogical principle.
+2. **Should a default input demonstrate the failure branch?** This is F2, and it is the one
+   finding that is purely a judgement call — the contract is satisfied either way. Options
+   are listed under F2; the cheapest is to close it as working-as-intended, the best is
+   probably the UI marking unreached lines. Whichever you pick belongs in
+   `PROJECT_CONTEXT.md` as a stated pedagogical principle, so the next 93-problem sweep
+   does not re-litigate it.
 3. **Do the 7 duplicate ids represent real dual-category problems?** That determines
    whether F10 is a cleanup or a permanent, documented state.
 
