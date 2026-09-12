@@ -73,7 +73,9 @@ public class PrefixToPostfixTracer implements AlgorithmTracer {
         Deque<String> stack = new ArrayDeque<>();
 
         emit.at("init")
-                .say("Convert prefix \"%s\" to postfix. Scan right to left.", s)
+                .say("Convert prefix \"%s\" to postfix. Prefix puts the operator first, so its"
+                        + " operands trail behind it - scanning RIGHT to LEFT is what lets both"
+                        + " operands be finished before their operator arrives.", s)
                 .var("expression", s)
                 .chars(s, -1).stack(stack).step();
 
@@ -83,7 +85,8 @@ public class PrefixToPostfixTracer implements AlgorithmTracer {
             if (Character.isLetter(c)) {
                 stack.push(String.valueOf(c));
                 emit.at("pushOperand")
-                        .say("s[%d] = '%c' is an operand — push \"%c\".", i, c, c)
+                        .say("s[%d] = '%c' is an operand, met before its operator. Park it until"
+                                + " the operator to its left claims it.", i, c)
                         .var("i", i).var("pushed", c)
                         .chars(s, i).stack(stack).step();
             } else {
@@ -92,8 +95,11 @@ public class PrefixToPostfixTracer implements AlgorithmTracer {
                 String combined = op1 + op2 + c;
                 stack.push(combined);
                 emit.at("combine")
-                        .say("s[%d] = '%c' is an operator — pop \"%s\" and \"%s\", push \"%s\".",
-                                i, c, op1, op2, combined)
+                        .say("s[%d] = '%c' claims the last two. Scanning right to left, the most"
+                                + " recent push \"%s\" is the LEFT operand and \"%s\" the right -"
+                                + " the mirror of the postfix pass. Postfix puts the operator LAST:"
+                                + " \"%s\" + \"%s\" + '%c' = \"%s\".",
+                                i, c, op1, op2, op1, op2, c, combined)
                         .var("i", i).var("op1", op1).var("op2", op2).var("combined", combined)
                         .chars(s, i).stack(stack).step();
             }

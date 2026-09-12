@@ -14,7 +14,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 2,
-    "description" : "Convert prefix \"+A*BC\" to postfix. Scan right to left.",
+    "description" : "Convert prefix \"+A*BC\" to postfix. Prefix puts the operator first, so its operands trail behind it - scanning RIGHT to LEFT is what lets both operands be finished before their operator arrives.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -56,7 +56,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 6,
-    "description" : "s[4] = 'C' is an operand — push \"C\".",
+    "description" : "s[4] = 'C' is an operand, met before its operator. Park it until the operator to its left claims it.",
     "queueOrStackState" : [ "C" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -99,7 +99,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 6,
-    "description" : "s[3] = 'B' is an operand — push \"B\".",
+    "description" : "s[3] = 'B' is an operand, met before its operator. Park it until the operator to its left claims it.",
     "queueOrStackState" : [ "B", "C" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -142,7 +142,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 10,
-    "description" : "s[2] = '*' is an operator — pop \"B\" and \"C\", push \"BC*\".",
+    "description" : "s[2] = '*' claims the last two. Scanning right to left, the most recent push \"B\" is the LEFT operand and \"C\" the right - the mirror of the postfix pass. Postfix puts the operator LAST: \"B\" + \"C\" + '*' = \"BC*\".",
     "queueOrStackState" : [ "BC*" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -187,7 +187,7 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 6,
-    "description" : "s[1] = 'A' is an operand — push \"A\".",
+    "description" : "s[1] = 'A' is an operand, met before its operator. Park it until the operator to its left claims it.",
     "queueOrStackState" : [ "A", "BC*" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -230,7 +230,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 10,
-    "description" : "s[0] = '+' is an operator — pop \"A\" and \"BC*\", push \"ABC*+\".",
+    "description" : "s[0] = '+' claims the last two. Scanning right to left, the most recent push \"A\" is the LEFT operand and \"BC*\" the right - the mirror of the postfix pass. Postfix puts the operator LAST: \"A\" + \"BC*\" + '+' = \"ABC*+\".",
     "queueOrStackState" : [ "ABC*+" ],
     "callStack" : [ ],
     "nodeStates" : { },
