@@ -55,6 +55,13 @@ export default function useTrace(problemId, problem) {
   const [error, setError] = useState(null);
   /** true when the last successful run hit the server's step budget. */
   const [truncated, setTruncated] = useState(false);
+  /**
+   * The input the server actually ran, echoed back on the execute response. Needed so the
+   * UI can state what is being animated without keeping the input editor on screen. It has
+   * been on the wire all along and was never read - IntervalCanvas reads
+   * `step.resolvedInput`, which is always undefined, because nothing put it there.
+   */
+  const [resolvedInput, setResolvedInput] = useState(null);
   /** Per-field messages from the last rejected POST /execute. Cleared on any success. */
   const [fieldErrors, setFieldErrors] = useState({});
   /** The full per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
@@ -85,6 +92,7 @@ export default function useTrace(problemId, problem) {
     setLoading(true);
     setDetail(null);
     setSteps([]);
+    setResolvedInput(null);
     setTruncated(false);
 
     (async () => {
@@ -152,6 +160,9 @@ export default function useTrace(problemId, problem) {
         }
 
         setSteps(classified.steps);
+        setResolvedInput(Array.isArray(execOutcome.value)
+          ? null
+          : execOutcome.value?.resolvedInput ?? null);
         setTruncated(!Array.isArray(execOutcome.value)
           && execOutcome.value?.truncated === true);
         setCurrentStepIndex(0);
@@ -328,6 +339,7 @@ export default function useTrace(problemId, problem) {
     loading,
     error,
     truncated,
+    resolvedInput,
     fieldErrors,
     detail,
     play,

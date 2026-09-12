@@ -256,3 +256,20 @@
   height: 100%;
   overflow: hidden;
 }
+
+/* --- Bottom bar: collapse handle, the running-input echo, and the on-demand panels. --- */
+.bottomBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.bottomBarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-left: auto;
+  flex-shrink: 0;
+}

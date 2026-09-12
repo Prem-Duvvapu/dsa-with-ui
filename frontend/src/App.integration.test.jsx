@@ -502,6 +502,10 @@ describe('App input panel', () => {
     return {
       encoding: 'delta',
       truncated: false,
+      // The real /execute echoes back what it ran - verified against the running backend,
+      // which returns {"target": 9, "nums": [2, 7, 11, 15]} for this problem. InputSummary
+      // reads it, so a mock without it would test a shape the server does not send.
+      resolvedInput: { nums, target },
       steps: [{
         stepNumber: 1, activeLine: 1, keyframe: true, dsType: 'Array', variables: {},
         description: `custom run nums=${JSON.stringify(nums)} target=${target}`,
@@ -535,13 +539,43 @@ describe('App input panel', () => {
     }));
   });
 
-  /** two-sum is the app's default selection, so the panel is already open on mount. */
+  /**
+   * two-sum is the app's default selection, so its trace runs on mount. The input EDITOR
+   * is not open though: it is setup furniture, and while a trace plays the running input
+   * is stated by InputSummary instead. Tests that drive the editor open it the way a user
+   * does, from that summary's Edit button.
+   */
   async function openTwoSum() {
     renderApp();
     await waitFor(() =>
       expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
     );
+    fireEvent.click(screen.getByRole('button', { name: /Edit/i }));
+    await screen.findByLabelText('Target sum');
   }
+
+  it('keeps the input editor and complexity card off screen until asked for', async () => {
+    // The point of the change: while a trace plays, the row holds the code panel alone.
+    // The editor and the complexity card are setup furniture, opened on demand.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    expect(screen.queryByLabelText('Target sum')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Edit input/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /memory & complexity/i })).toBeInTheDocument();
+  });
+
+  it('still says which input the animation is running on', async () => {
+    // Hiding the editor must not hide what is being animated - that was the whole
+    // requirement. The echo comes from the server's resolvedInput, not the form state.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    expect(screen.getByTestId('input-summary')).toBeInTheDocument();
+  });
 
   it('renders an editor from inputSpec and runs a custom input through POST /execute', async () => {
     await openTwoSum();

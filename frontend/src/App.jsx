@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
 import ProblemStatement from './components/ProblemStatement';
+import InputSummary from './components/InputSummary';
 import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -162,7 +163,7 @@ export default function App() {
     truncated: traceTruncated,
     fieldErrors,
     detail,
-    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput
+    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput, resolvedInput
   } = useTrace(activeProblemId, catalogEntry);
 
   // Merge in the per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
@@ -212,6 +213,12 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
   // Collapsing this row frees up vertical space for the canvas while a trace is playing.
   const [isBottomPanelOpen, setIsBottomPanelOpen] = useState(true);
+  // The input editor and the complexity card are setup furniture: useful before a run,
+  // noise during one. They are opened on demand instead of holding a fixed share of the
+  // 340px bottom row, and what you actually want from the editor while watching - the
+  // input being animated - is stated by InputSummary in a single line.
+  const [isInputEditorOpen, setIsInputEditorOpen] = useState(false);
+  const [isComplexityOpen, setIsComplexityOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('code');
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const isMobile = viewportWidth <= 768;
@@ -323,6 +330,16 @@ export default function App() {
 
   const loading = catalogLoading;
   const hasInputSpec = Boolean(activeProblem?.inputSpec?.fields?.length);
+
+  // The row is code-only until something is opened, so collapsing a panel gives its space
+  // back to the code rather than leaving a gap.
+  const bottomGridColumns = (() => {
+    const showInput = hasInputSpec && isInputEditorOpen;
+    if (showInput && isComplexityOpen) return '1.6fr 1fr 1fr';
+    if (showInput) return '2fr 1fr';
+    if (isComplexityOpen) return '2fr 1fr';
+    return '1fr';
+  })();
   const activeDsType = currentStep?.dsType || activeProblem?.dsType || '';
   const traceErrorCopy = TRACE_ERROR_COPY[traceError];
   const showingOfflineTrace = traceError === 'fetch' && steps.length > 0;
@@ -532,28 +549,64 @@ export default function App() {
 
           {/* Collapse handle for the whole bottom section, so the canvas can take the
               full height while a trace is playing. Always visible so it can be reopened. */}
-          <button
-            type="button"
-            onClick={() => setIsBottomPanelOpen(prev => !prev)}
-            aria-expanded={isBottomPanelOpen}
-            aria-label={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
-            title={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
-            className={`btn btn-outline ${styles.bottomToggleBtn}`}
-          >
-            {isBottomPanelOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
-            {isBottomPanelOpen ? 'Hide code & details' : 'Show code & details'}
-          </button>
+          <div className={styles.bottomBar}>
+            <button
+              type="button"
+              onClick={() => setIsBottomPanelOpen(prev => !prev)}
+              aria-expanded={isBottomPanelOpen}
+              aria-label={isBottomPanelOpen ? 'Collapse the code panel' : 'Expand the code panel'}
+              title={isBottomPanelOpen ? 'Collapse the code panel' : 'Expand the code panel'}
+              className={`btn btn-outline ${styles.bottomToggleBtn}`}
+            >
+              {isBottomPanelOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+              {isBottomPanelOpen ? 'Hide code' : 'Show code'}
+            </button>
 
-          {/* Desktop Bottom Section: Wide Java Code + Input Panel + Right Tabbed Memory/Complexity Card */}
+            {/* What the animation is running on, without the editor that sets it. */}
+            {!isMobile && !isInputEditorOpen && <InputSummary resolvedInput={resolvedInput} />}
+
+            {!isMobile && (
+              <div className={styles.bottomBarActions}>
+                {hasInputSpec && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsInputEditorOpen(prev => !prev);
+                      setIsBottomPanelOpen(true);
+                    }}
+                    aria-expanded={isInputEditorOpen}
+                    className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                    title={isInputEditorOpen ? 'Close the input editor' : 'Change the input'}
+                  >
+                    {isInputEditorOpen ? 'Done editing' : 'Edit input'}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsComplexityOpen(prev => !prev);
+                    setIsBottomPanelOpen(true);
+                  }}
+                  aria-expanded={isComplexityOpen}
+                  className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                  title={isComplexityOpen ? 'Hide memory and complexity' : 'Show memory and complexity'}
+                >
+                  {isComplexityOpen ? 'Hide' : 'Show'} memory &amp; complexity
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Bottom Section. The code panel is the one thing here that belongs
+              on screen while a trace plays - its highlighted line tracks the animation -
+              so it gets the row unless the input editor or complexity card is opened. */}
           {!isBottomPanelOpen ? null : !isMobile ? (
             <div
               className={styles.bottomDesktopGrid}
-              style={{
-                gridTemplateColumns: hasInputSpec ? '1.6fr 1fr 1fr' : '2fr 1fr'
-              }}
+              style={{ gridTemplateColumns: bottomGridColumns }}
             >
               <CodeViewer problem={activeProblem} currentStep={currentStep} />
-              {hasInputSpec && (
+              {hasInputSpec && isInputEditorOpen && (
                 <div className={`glass-panel ${styles.inputCard}`}>
                   <InputPanel
                     problemId={activeProblemId}
@@ -564,7 +617,9 @@ export default function App() {
                   />
                 </div>
               )}
-              <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} />
+              {isComplexityOpen && (
+                <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} />
+              )}
             </div>
           ) : (
             /* Mobile Tab Bottom Card Section (Code / Input / Memory / Complexity) */
