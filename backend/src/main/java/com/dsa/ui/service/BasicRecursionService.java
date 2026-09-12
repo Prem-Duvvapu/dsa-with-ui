@@ -23,23 +23,6 @@ public class BasicRecursionService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // These ids have real tracers (tracer/impl). Refuse rather than let default:
-            // serve another algorithm's steps under this id. The default: stays until
-            // PROMPT D; no other ids remain in this service.
-            case "print-1-to-n":
-            case "print-n-to-1":
-            case "sum-first-n":
-            case "factorial-number":
-            case "reverse-array-recursion":
-            case "palindrome-string-recursion":
-            case "fibonacci-recursion":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Print 1 to N using Recursion
         problems.put("print-1-to-n", new ProblemDetail(

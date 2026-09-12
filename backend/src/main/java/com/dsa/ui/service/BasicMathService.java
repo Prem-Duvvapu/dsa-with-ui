@@ -23,23 +23,6 @@ public class BasicMathService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // These ids have real tracers (tracer/impl). Refuse rather than let default:
-            // serve another algorithm's steps under this id. The default: stays until
-            // PROMPT D; no other ids remain in this service.
-            case "count-digits":
-            case "reverse-number":
-            case "palindrome-number":
-            case "gcd-two-numbers":
-            case "armstrong-check":
-            case "print-divisors":
-            case "check-prime":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Count Digits
         problems.put("count-digits", new ProblemDetail(

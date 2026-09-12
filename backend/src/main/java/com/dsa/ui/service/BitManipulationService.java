@@ -23,36 +23,6 @@ public class BitManipulationService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // All 18 Bit Manipulation / Advanced Maths ids now have real tracers
-            // (tracer/impl). Refuse rather than let default: serve an unrelated
-            // legacy generator's steps under these ids.
-            case "single-number":
-            case "single-number-1":
-            case "check-power-of-2":
-            case "count-set-bits":
-            case "xor-numbers-in-range":
-            case "single-number-3":
-            case "pow-x-n-math":
-            case "subsets-bitmasking":
-            case "power-set-bitwise":
-            case "intro-bits-tricks":
-            case "check-ith-bit-set":
-            case "check-number-odd":
-            case "set-unset-rightmost-bit":
-            case "swap-two-numbers":
-            case "divide-two-numbers-bitwise":
-            case "min-bit-flips":
-            case "print-prime-factors":
-            case "divisors-of-number":
-            case "count-primes-range-sieve":
-            case "prime-factorisation-queries":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Single Number
         problems.put("single-number-1", new ProblemDetail(

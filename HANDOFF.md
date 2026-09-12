@@ -8,10 +8,11 @@
 > Dedicated canvases/retagging for the other types and `CaptureStrip` Phase 5 remain open;
 > the original 433-entry tracer migration is complete. `RCA-012` is resolved.
 > **All 18 topics are fully traced (433/433); no topic is partial.** Prompt C (migrate the
-> catalogue) is therefore done, and so is Prompt D's trace half: every legacy
-> `/execute/{id}` answers 410 and the 80 legacy step generators are deleted, leaving the
-> services as catalogue providers only. What remains of Prompt D is deleting those shells.
-> See `AUDIT.md` for the open per-problem defects (dead anchors, mid-unwind recursions).
+> catalogue) is done, and **Prompt D is done**: the eighteen legacy controllers are
+> deleted and those routes 404, the 80 legacy step generators are gone, and the eighteen
+> services survive as catalogue providers only (they own every ProblemDetail, so they are
+> not dead code). Prompts A and B remain. See `AUDIT.md` for the two open per-problem
+> decisions.
 > Five additional Trie-sheet topics are recorded in `PROJECT_COMPLETION_PLAN.md`. Read live counts from
 > `GET /api/problems/stats`; do not treat old counts below as current claims.
 

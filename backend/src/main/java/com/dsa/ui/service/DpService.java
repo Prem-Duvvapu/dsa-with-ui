@@ -23,13 +23,6 @@ public class DpService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        if (problems.containsKey(problemId)) {
-            throw new LegacyTraceRetiredException(problemId);
-        }
-        throw new IllegalArgumentException("Unknown Dynamic Programming problem: " + problemId);
-    }
-
     private void initProblems() {
         // 1. Climbing Stairs
         problems.put("climbing-stairs", new ProblemDetail(

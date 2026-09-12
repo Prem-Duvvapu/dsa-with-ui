@@ -23,13 +23,6 @@ public class LinkedListService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        if (problems.containsKey(problemId)) {
-            throw new LegacyTraceRetiredException(problemId);
-        }
-        throw new IllegalArgumentException("Unknown Linked List problem: " + problemId);
-    }
-
     private void initProblems() {
         // 1. Reverse Linked List
         problems.put("reverse-linked-list", new ProblemDetail(

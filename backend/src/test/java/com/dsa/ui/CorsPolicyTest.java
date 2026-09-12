@@ -29,17 +29,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class CorsPolicyTest {
 
-    /** The controllers that previously declared @CrossOrigin(origins = "*"). */
+    /**
+     * Every route the application still serves. This used to list the eight legacy
+     * controllers that declared {@code @CrossOrigin(origins = "*")}; those controllers are
+     * deleted, so the policy that replaced their wildcard is now exercised against the API
+     * that survived them.
+     */
     static Stream<String> formerlyWildcardPaths() {
         return Stream.of(
-                "/api/bitmanipulation/problems",
-                "/api/greedy/problems",
-                "/api/heaps/problems",
-                "/api/recursion-backtracking/problems",
-                "/api/slidingwindow/problems",
-                "/api/stackqueue/problems",
-                "/api/strings/problems",
-                "/api/tries/problems"
+                "/api/problems",
+                "/api/problems/stats",
+                "/api/problems/kadane-algo",
+                "/api/problems/kadane-algo/input-spec"
         );
     }
 
@@ -55,7 +56,7 @@ class CorsPolicyTest {
     })
     @DisplayName("The ports this project actually runs on are allowed")
     void allowsRealFrontendOrigins(String origin) throws Exception {
-        mockMvc.perform(get("/api/arrays/problems").header("Origin", origin))
+        mockMvc.perform(get("/api/problems").header("Origin", origin))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Access-Control-Allow-Origin", origin));
     }
@@ -67,7 +68,7 @@ class CorsPolicyTest {
     })
     @DisplayName("The origins that were configured but never used are no longer allowed")
     void refusesStaleConfiguredOrigins(String origin) throws Exception {
-        mockMvc.perform(get("/api/arrays/problems").header("Origin", origin))
+        mockMvc.perform(get("/api/problems").header("Origin", origin))
                 .andExpect(status().isForbidden());
     }
 

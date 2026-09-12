@@ -23,27 +23,6 @@ public class SlidingWindowService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // All 12 sliding window problems now have real tracers (tracer/impl).
-            case "fruit-into-baskets":
-            case "longest-repeating-character-replacement":
-            case "minimum-window-substring":
-            case "subarrays-k-different-integers":
-            case "longest-substring-without-repeating":
-            case "max-consecutive-ones-3":
-            case "binary-subarrays-with-sum":
-            case "count-nice-subarrays":
-            case "number-substrings-all-three-chars":
-            case "maximum-points-cards":
-            case "longest-substring-k-distinct":
-            case "minimum-window-subsequence":
-                throw new LegacyTraceRetiredException(problemId);
-            default:
-                throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Longest Substring Without Repeating
         problems.put("longest-substring-without-repeating", new ProblemDetail(

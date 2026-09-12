@@ -23,53 +23,6 @@ public class BinarySearchService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            case "binary-search-1d": throw new LegacyTraceRetiredException(problemId);
-            // lower-bound has a real tracer (tracer/impl). Refuse rather than let default:
-            // serve binary-search-1d's steps under this id.
-            case "lower-bound":
-                throw new LegacyTraceRetiredException(problemId);
-            // upper-bound has a real tracer (tracer/impl). Refuse rather than let default:
-            // serve binary-search-1d's steps under this id.
-            case "upper-bound":
-                throw new LegacyTraceRetiredException(problemId);
-            // Every id below now has a real tracer (tracer/impl). Refuse rather than let
-            // default: serve binary-search-1d's unrelated steps under these ids.
-            case "search-insert-position":
-            case "floor-ceil-sorted-array":
-            case "first-last-occurrence":
-            case "count-occurrences":
-            case "search-rotated-sorted":
-            case "search-rotated-sorted-2":
-            case "find-min-rotated-sorted":
-            case "single-element-sorted":
-            case "count-rotations":
-            case "find-peak-element":
-            case "square-root-number":
-            case "nth-root-number":
-            case "koko-eating-bananas":
-            case "split-array-largest-sum":
-            case "min-days-bouquets":
-            case "smallest-divisor":
-            case "ship-packages-d-days":
-            case "kth-missing-positive":
-            case "aggressive-cows":
-            case "book-allocation":
-            case "painters-partition":
-            case "minimize-max-distance-gas-station":
-            case "median-2-sorted-arrays":
-            case "kth-element-2-sorted-arrays":
-            case "row-max-ones":
-            case "search-2d-matrix":
-            case "search-2d-matrix-2":
-            case "find-peak-element-2d":
-            case "matrix-median":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Binary Search 1D
         problems.put("binary-search-1d", new ProblemDetail(

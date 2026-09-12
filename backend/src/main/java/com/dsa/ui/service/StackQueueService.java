@@ -23,11 +23,6 @@ public class StackQueueService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        // All 30 Stack & Queue problems now have real tracers (tracer/impl).
-        throw new LegacyTraceRetiredException(problemId);
-    }
-
     private void initProblems() {
         // 1. Balanced Parentheses
         problems.put("balanced-parentheses", new ProblemDetail(

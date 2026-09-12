@@ -170,13 +170,16 @@ class ProblemsApiTest {
     }
 
     @Test
-    @DisplayName("Legacy per-topic endpoints still work during the migration")
-    void legacyEndpointsUnaffected() throws Exception {
-        // Arrays retired its last legacy id in the same batch that traced its remaining
-        // problems, so /api/arrays/execute/{anyId} now answers 410 for everything. DP is
-        // now fully migrated too, and its legacy route must fail explicitly rather than
-        // serving a hardcoded animation.
-        mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isOk());
-        mockMvc.perform(get("/api/dp/execute/longest-common-subsequence")).andExpect(status().isGone());
+    @DisplayName("The legacy per-topic routes are gone, not merely retired")
+    void legacyRoutesNoLongerExist() throws Exception {
+        // The eighteen legacy controllers are deleted. They answered 410 for a while after
+        // every id was traced; now the routes themselves do not exist, so Spring 404s. This
+        // asserts the deletion rather than leaving the migration's last step untested - if a
+        // legacy controller were ever reintroduced, this is what would catch it.
+        mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/dp/execute/longest-common-subsequence"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/graphs/bfs-dfs/execute/number-of-islands"))
+                .andExpect(status().isNotFound());
     }
 }

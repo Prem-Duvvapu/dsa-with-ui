@@ -127,8 +127,13 @@ every step. Hitting either ceiling returns `truncated: true` with a `truncationR
 which one stopped the run.
 
 The eighteen legacy per-topic endpoints (`/api/arrays/...`, `/api/trees/...`, and so on)
-remain compatibility-tested while migration continues. The frontend itself uses the unified
-v2 `/api/problems` endpoints.
+are **gone**. They were compatibility endpoints during the migration; with all 433 problems
+traced there was nothing left for them to serve, and their controllers have been deleted —
+those routes now 404. `/api/problems` is the only API.
+
+The eighteen `service/*Service` classes survive as **catalogue providers**: they own the
+`ProblemDetail` metadata `ProblemCatalog` merges, and nothing else. Their step generation
+is deleted.
 
 ---
 
@@ -343,9 +348,11 @@ The suite is built to catch fake work, not just crashes:
 - **`anchorsAreAllReachable`** fails on a `// @a` marker no step ever highlights. It used
   to assert only that *something* was emitted, and six of the eight tracers failed the
   moment it started checking what it claimed to.
-- **`ApiContractTest`** is parameterized over all eighteen legacy controllers rather than
-  testing one by hand — hand-testing one is what let three copy-pasted variants diverge,
-  with eight of them silently dropping their 404 guard.
+- **`ProblemProviderContractTest`** is parameterized over all eighteen catalogue providers
+  rather than testing one by hand — hand-testing one is what let three copy-pasted
+  controller variants diverge, with eight silently dropping their 404 guard. It replaced
+  eighteen copy-pasted `*ServiceTest` classes, each of which carried a hand-maintained list
+  of retired ids; drift in those lists is what hid the last live fallbacks.
 - **`designTokens.test.js`** fails the build on any unresolvable CSS `var()`. Fifteen
   custom properties were once deleted while five components still referenced them, and
   nothing noticed.

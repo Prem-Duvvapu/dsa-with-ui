@@ -1,9 +1,7 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.backtracking.*;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,40 +21,6 @@ public class RecursionBacktrackingService implements ProblemProvider {
 
     public ProblemDetail getProblemById(String id) {
         return problems.get(id);
-    }
-
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // Every id below now has a real tracer (tracer/impl). Refuse rather than let
-            // default: serve an unrelated legacy generator's steps under these ids.
-            case "n-queens":
-            case "sudoku-solver":
-            case "subsets-i":
-            case "combination-sum-i":
-            case "rat-in-a-maze":
-            case "m-coloring":
-            case "palindrome-partitioning":
-            case "permutations":
-            case "word-search":
-            case "atoi-recursive":
-            case "pow-x-n-recursive":
-            case "count-good-numbers":
-            case "sort-stack-recursion":
-            case "reverse-stack-recursion":
-            case "generate-binary-strings":
-            case "generate-parentheses":
-            case "power-set":
-            case "subsequences-patterns-theory":
-            case "count-subsequences-sum-k":
-            case "check-subsequence-sum-k":
-            case "combination-sum-2":
-            case "subsets-2":
-            case "combination-sum-3":
-            case "letter-combinations-phone":
-            case "word-break":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
     }
 
     private void initProblems() {

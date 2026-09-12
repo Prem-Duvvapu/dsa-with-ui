@@ -3,7 +3,6 @@ package com.dsa.ui.service;
 import com.dsa.ui.algorithm.trie.*;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,19 +22,6 @@ public class TrieService implements ProblemProvider {
 
     public ProblemDetail getProblemById(String id) {
         return problems.get(id);
-    }
-
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // implement-trie and word-break-trie are traced by the v2 tracer layer
-            // (tracer/impl/ImplementTrieTracer, tracer/impl/WordBreakTrieTracer); serving
-            // their legacy narration here would substitute a canned trace for the real one.
-            case "implement-trie":
-            case "word-break-trie":
-                throw new LegacyTraceRetiredException(problemId);
-            case "longest-common-prefix": throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
     }
 
     private void initProblems() {

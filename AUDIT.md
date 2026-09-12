@@ -485,7 +485,26 @@ Three additional defects were found *by the fixes*, not by the original sweep:
   `retired` sets in 8 service tests) were what let F1's stragglers hide. Replaced with
   assertions over the whole catalogue.
 
-Suites after all fixes: backend **6851 pass / 0 fail**, frontend **224 pass / 29 files**.
+**The legacy layer has since been deleted outright** (§7 Q1, answered: yes). That removes
+F1's and F3's subject matter entirely rather than maintaining the repairs:
+
+- 18 legacy controllers deleted — `/api/{topic}/...` routes now **404**, asserted by
+  `ProblemsApiTest.legacyRoutesNoLongerExist`.
+- `generateSteps` stripped from all 18 services; `LegacyTraceRetiredException` and its
+  handler deleted.
+- 11 orphaned `algorithm/` classes and 2 `trace/` classes deleted. `algorithm/trie/
+  ImplementTrie` survives — `ImplementTrieTracer` uses it.
+- 18 copy-pasted `*ServiceTest` classes and `ApiContractTest` replaced by one
+  `ProblemProviderContractTest` (72 cases) over the providers Spring actually registers.
+
+**Scope correction:** the 18 `service/*Service` classes could *not* be deleted. They are
+the catalogue — every one of the 433 `ProblemDetail`s lives in their `initProblems()`, and
+`ProblemCatalog` merges them via `ProblemProvider`. They survive as catalogue providers
+with no step generation. Deleting one deletes that topic's catalogue.
+
+Suites after all fixes: backend **6402 pass / 0 fail**, frontend **224 pass / 29 files**,
+`vite build` clean. Live check: `/api/problems/stats` still reports 433/433/0, a trace
+still renders, and every legacy route 404s.
 
 ---
 

@@ -23,29 +23,6 @@ public class StringService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            case "longest-substring-without-repeating":
-            case "valid-anagram":
-            case "remove-outermost-parentheses":
-            case "reverse-words-string":
-            case "largest-odd-number-string":
-            case "longest-common-prefix":
-            case "isomorphic-strings":
-            case "rotate-string":
-            case "sort-characters-frequency":
-            case "max-nesting-depth-parentheses":
-            case "roman-to-integer":
-            case "string-to-integer-atoi":
-            case "count-substrings-k-distinct":
-            case "longest-palindromic-substring":
-            case "sum-beauty-all-substrings":
-            case "reverse-every-word":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Longest Substring Without Repeating
         problems.put("longest-substring-without-repeating", new ProblemDetail(

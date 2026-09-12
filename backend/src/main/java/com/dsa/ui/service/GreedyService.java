@@ -2,7 +2,6 @@ package com.dsa.ui.service;
 
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,32 +21,6 @@ public class GreedyService implements ProblemProvider {
 
     public ProblemDetail getProblemById(String id) {
         return problems.get(id);
-    }
-
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // These ids have real tracers (tracer/impl). Refuse rather than let default:
-            // serve another algorithm's steps under this id. The default: stays until
-            // PROMPT D; other ids in this service still rely on it.
-            case "n-meetings-in-one-room":
-            case "jump-game-1":
-            case "assign-cookies":
-            case "fractional-knapsack":
-            case "lemonade-change":
-            case "minimum-platforms":
-            case "insert-interval":
-            case "job-sequencing":
-            case "valid-parentheses-checker":
-            case "jump-game-2":
-            case "candy":
-            case "shortest-job-first":
-            case "lru-page-replacement":
-            case "merge-intervals":
-            case "non-overlapping-intervals":
-                throw new LegacyTraceRetiredException(problemId);
-            case "jump-game-i": throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
     }
 
     private void initProblems() {

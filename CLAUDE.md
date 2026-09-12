@@ -12,7 +12,7 @@ already inside WSL, call `mvn`/`npm` directly as below.
 # Backend (Java 17, Maven)
 cd backend && mvn test                                  # full backend suite
 cd backend && mvn test -Dtest=TracerContractTest         # one test class
-cd backend && mvn test -Dtest=ApiContractTest#executeRejectsUnknownIdInsteadOfFallingBack
+cd backend && mvn test -Dtest=ProblemsApiTest#missingVersusNotYetTraced
 cd backend && mvn spring-boot:run                        # http://localhost:8923
 
 # Frontend (React 18 + Vite)
@@ -64,22 +64,28 @@ green, since CI gates every merge.
 
 ## Architecture
 
-### Two layers coexist, deliberately
+### One layer. The migration is finished.
 
-The migration is complete on the trace side: all 433 problems are served by the tracer
-layer, and the legacy services no longer generate steps at all. Both layers are still
-deployed and tested; do not delete one without reading `HANDOFF.md`.
+**The legacy layer is gone.** There is exactly one API — `/api/problems`, served by
+`ProblemsController` over `tracer/` and `catalog/`. The eighteen `/api/{topic}/...`
+controllers are deleted and those routes now 404;
+`ProblemsApiTest.legacyRoutesNoLongerExist` asserts that, so reintroducing one is a test
+failure rather than a quiet regression.
 
-**Legacy layer (18 controllers + 18 services).** `controller/ArrayController` →
-`service/ArrayService`. Paths are `/api/{topic}/problems` and `/api/{topic}/execute/{id}`.
-The services are now **catalogue providers only** — each implements
-`catalog/ProblemProvider` and supplies `ProblemDetail`s, and every `generateSteps(id)`
-throws `LegacyTraceRetiredException` (410). The 80 step generators and the step-returning
-`default:` branches were deleted; `/problems` still answers 200, `/execute/{id}` always
-answers 410. The frontend uses the v2 API.
+**What survives, and why it looks legacy.** The eighteen `service/*Service` classes are
+still there and still named after topics, but they are **catalogue providers only**: each
+implements `catalog/ProblemProvider` and owns the `ProblemDetail` metadata for its topic,
+which `ProblemCatalog` merges into one id-keyed view. All 433 problems' titles,
+descriptions, categories, default structures and `dsType`s live in their `initProblems()`.
+They have no `generateSteps`, no `switch (problemId)`, and no `ExecutionStep` import — that
+half was the legacy trace layer and it is deleted. `ProblemProviderContractTest` is
+parameterized over all eighteen and replaces the eighteen copy-pasted `*ServiceTest`
+classes.
 
-**Tracer layer (`tracer/`, `catalog/`, `ProblemsController`).** The replacement, served at
-`/api/problems`. This is where new work goes.
+Deleting a service therefore deletes that topic's catalogue. It is not dead code.
+
+**Tracer layer (`tracer/`, `catalog/`, `ProblemsController`).** Everything. This is where
+all work goes.
 
 ### Why the tracer layer exists
 
@@ -94,12 +100,9 @@ Three rules follow from that, and they are the point of the design:
 1. **No fallback, anywhere.** `TracerRegistry` returns `Optional.empty()` for an unknown id.
    `ProblemsController` answers **404** (no such problem) or **501** (catalogued but not yet
    traced). Never substitute a different problem's steps. An unknown `dsType` likewise
-   renders an explicit unsupported state, never `ArrayCanvas`. The legacy controllers were
-   patched to restore the same 404 guard; `ApiContractTest` is parameterized over all 18 to
-   keep it that way. Every legacy `/execute/{id}` route now answers **410** for every id it
-   catalogues — no service has a step-returning `default:` left, and
-   `ApiContractTest.everyLegacyExecuteRouteIsRetired` walks each controller's own catalogue
-   to keep a straggler from reappearing.
+   renders an explicit unsupported state, never `ArrayCanvas`. The fallback that caused the
+   original incident cannot recur, because the layer that held it no longer exists — the
+   eighteen legacy controllers and all 80 of their step generators are deleted.
 2. **`traced` is an honesty flag, not a feature flag.** `GET /api/problems/stats` reports
    `catalogued` vs `traced` vs `untraced`. The UI says "not yet traced" rather than animate
    the wrong thing. **All 433 of 433 are traced**, so `untraced` is currently 0 — the flag
@@ -194,10 +197,11 @@ tripwires — if a change moves them, update the assertions deliberately and upd
 ## Documentation map
 
 - `plan.md` — the v2 tracing architecture. Accurate; the source of the current design.
-- `HANDOFF.md` — **temporary.** Remaining-work prompts (A: scale the harness, B: frontend
-  redesign, C: migrate ~425 problems, D: retire the legacy layer). The owner rejected the
-  current UI outright; Prompt B leads with that design brief. Delete this file when the
-  migration completes.
+- `HANDOFF.md` — **temporary.** Remaining-work prompts. C (migrate ~425 problems) and
+  D (retire the legacy layer) are **done**; A (scale the harness) and B (frontend redesign)
+  remain. The owner rejected the current UI outright; Prompt B leads with that design brief.
+- `AUDIT.md` — full per-problem audit of all 433 problems across 18 topics, with the
+  findings fixed so far and the two left open for an owner decision.
 - `references.md` — UI/UX research and design tokens. `PROJECT_CONTEXT.md` — pedagogical
   principles.
 - `RCA.md` — recurring-incident ledger. Consult it before changing an affected subsystem;

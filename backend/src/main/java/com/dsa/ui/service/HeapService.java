@@ -1,9 +1,7 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.heap.*;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,33 +21,6 @@ public class HeapService implements ProblemProvider {
 
     public ProblemDetail getProblemById(String id) {
         return problems.get(id);
-    }
-
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // These ids have real tracers (tracer/impl). Refuse rather than let default:
-            // serve another algorithm's steps under this id. The default: stays until
-            // PROMPT D; other ids in this service still rely on it.
-            case "kth-largest-element":
-            case "kth-smallest-element":
-            case "task-scheduler":
-            case "top-k-frequent-elements":
-            case "hand-of-straights":
-            case "min-cost-connect-sticks":
-            case "median-data-stream":
-            case "merge-k-sorted-lists":
-            case "heaps-theory":
-            case "implement-min-heap":
-            case "check-min-heap":
-            case "min-to-max-heap":
-            case "sort-k-sorted-array":
-            case "replace-rank-array":
-            case "design-twitter":
-            case "kth-largest-stream":
-            case "maximum-sum-combination":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
     }
 
     private void initProblems() {
