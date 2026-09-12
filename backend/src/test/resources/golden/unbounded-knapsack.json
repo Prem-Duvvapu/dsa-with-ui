@@ -167,8 +167,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 1 does not fit, so dp[1][0] = dp[0][0] = 0"
     }
   }, {
     "stepNumber" : 2,
@@ -325,8 +325,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 1 does not fit, so dp[1][1] = dp[0][1] = 0"
     }
   }, {
     "stepNumber" : 3,
@@ -483,8 +483,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][2] = max(dp[0][2], val + dp[1][0]) = 5"
     }
   }, {
     "stepNumber" : 4,
@@ -641,8 +641,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][3] = max(dp[0][3], val + dp[1][1]) = 5"
     }
   }, {
     "stepNumber" : 5,
@@ -799,8 +799,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][4] = max(dp[0][4], val + dp[1][2]) = 10"
     }
   }, {
     "stepNumber" : 6,
@@ -957,8 +957,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][5] = max(dp[0][5], val + dp[1][3]) = 10"
     }
   }, {
     "stepNumber" : 7,
@@ -1115,8 +1115,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][6] = max(dp[0][6], val + dp[1][4]) = 15"
     }
   }, {
     "stepNumber" : 8,
@@ -1273,8 +1273,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][7] = max(dp[0][7], val + dp[1][5]) = 15"
     }
   }, {
     "stepNumber" : 9,
@@ -1431,8 +1431,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][8] = max(dp[0][8], val + dp[1][6]) = 20"
     }
   }, {
     "stepNumber" : 10,
@@ -1589,8 +1589,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][9] = max(dp[0][9], val + dp[1][7]) = 20"
     }
   }, {
     "stepNumber" : 11,
@@ -1747,8 +1747,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[1][10] = max(dp[0][10], val + dp[1][8]) = 25"
     }
   }, {
     "stepNumber" : 12,
@@ -1905,8 +1905,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 2 does not fit, so dp[2][0] = dp[1][0] = 0"
     }
   }, {
     "stepNumber" : 13,
@@ -2063,8 +2063,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 2 does not fit, so dp[2][1] = dp[1][1] = 0"
     }
   }, {
     "stepNumber" : 14,
@@ -2221,8 +2221,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 2 does not fit, so dp[2][2] = dp[1][2] = 5"
     }
   }, {
     "stepNumber" : 15,
@@ -2379,8 +2379,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 2 does not fit, so dp[2][3] = dp[1][3] = 5"
     }
   }, {
     "stepNumber" : 16,
@@ -2537,8 +2537,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[2][4] = max(dp[1][4], val + dp[2][0]) = 11"
     }
   }, {
     "stepNumber" : 17,
@@ -2695,8 +2695,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[2][5] = max(dp[1][5], val + dp[2][1]) = 11"
     }
   }, {
     "stepNumber" : 18,
@@ -2853,8 +2853,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[2][6] = max(dp[1][6], val + dp[2][2]) = 16"
     }
   }, {
     "stepNumber" : 19,
@@ -3011,8 +3011,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[2][7] = max(dp[1][7], val + dp[2][3]) = 16"
     }
   }, {
     "stepNumber" : 20,
@@ -3169,8 +3169,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[2][8] = max(dp[1][8], val + dp[2][4]) = 22"
     }
   }, {
     "stepNumber" : 21,
@@ -3327,8 +3327,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[2][9] = max(dp[1][9], val + dp[2][5]) = 22"
     }
   }, {
     "stepNumber" : 22,
@@ -3485,8 +3485,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[2][10] = max(dp[1][10], val + dp[2][6]) = 27"
     }
   }, {
     "stepNumber" : 23,
@@ -3643,8 +3643,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 3 does not fit, so dp[3][0] = dp[2][0] = 0"
     }
   }, {
     "stepNumber" : 24,
@@ -3801,8 +3801,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 3 does not fit, so dp[3][1] = dp[2][1] = 0"
     }
   }, {
     "stepNumber" : 25,
@@ -3959,8 +3959,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 3 does not fit, so dp[3][2] = dp[2][2] = 5"
     }
   }, {
     "stepNumber" : 26,
@@ -4117,8 +4117,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 3 does not fit, so dp[3][3] = dp[2][3] = 5"
     }
   }, {
     "stepNumber" : 27,
@@ -4275,8 +4275,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 3 does not fit, so dp[3][4] = dp[2][4] = 11"
     }
   }, {
     "stepNumber" : 28,
@@ -4433,8 +4433,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "item 3 does not fit, so dp[3][5] = dp[2][5] = 11"
     }
   }, {
     "stepNumber" : 29,
@@ -4591,8 +4591,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[3][6] = max(dp[2][6], val + dp[3][0]) = 16"
     }
   }, {
     "stepNumber" : 30,
@@ -4749,8 +4749,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[3][7] = max(dp[2][7], val + dp[3][1]) = 16"
     }
   }, {
     "stepNumber" : 31,
@@ -4907,8 +4907,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[3][8] = max(dp[2][8], val + dp[3][2]) = 22"
     }
   }, {
     "stepNumber" : 32,
@@ -5065,8 +5065,8 @@
         "value" : "0",
         "state" : "known"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[3][9] = max(dp[2][9], val + dp[3][3]) = 22"
     }
   }, {
     "stepNumber" : 33,
@@ -5223,8 +5223,8 @@
         "value" : "27",
         "state" : "probe"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]",
+      "substitution" : "dp[3][10] = max(dp[2][10], val + dp[3][4]) = 27"
     }
   }, {
     "stepNumber" : 34,

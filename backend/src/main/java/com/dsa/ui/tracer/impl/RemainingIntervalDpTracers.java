@@ -82,10 +82,17 @@ class EvaluateBooleanExpressionRemainingTracer extends RemainingDpTracer {
                 if (op == '&') { t += lt * rt; f += lt * rf + lf * rt + lf * rf; }
                 else if (op == '|') { t += lt * rt + lt * rf + lf * rt; f += lf * rf; }
                 else { t += lt * rf + lf * rt; f += lt * rt + lf * rf; }
+                // Four reads, not none: each split combines the TRUE and FALSE counts of
+                // both sides. Rows 0..n-1 hold the true counts and n..2n-1 the false ones,
+                // so the dependency is two cells per side and the arrows say which.
                 emit.at("fill").say("Interval [%d,%d], operator '%c' at %d: true=%d, false=%d so far.", i, j, op, k, t, f)
                         .var("trueWays", t).var("falseWays", f)
-                        .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(i, j), Set.of(), rows,
-                                DpTraceSupport.labels("end", n), false, "operator truth-count combination", "T=" + t + ", F=" + f)).step();
+                        .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(i, j),
+                                Set.of(new DpTraceSupport.Coord(i, k), new DpTraceSupport.Coord(n + i, k),
+                                        new DpTraceSupport.Coord(k + 1, j), new DpTraceSupport.Coord(n + k + 1, j)),
+                                rows, DpTraceSupport.labels("end", n), false,
+                                "T[i][j] += f(op, T[i][k], F[i][k], T[k+1][j], F[k+1][j])",
+                                String.format("split at %d with '%c': T=%d, F=%d", k, op, t, f))).step();
             }
             state[i][j] = t; state[n + i][j] = f; known[i][j] = true; known[n + i][j] = true;
         }
@@ -109,18 +116,46 @@ class PalindromePartitioningTwoRemainingTracer extends RemainingDpTracer {
         for (int gap = 0; gap < n; gap++) for (int i = 0; i + gap < n; i++) {
             int j = i + gap; boolean palindrome = text.charAt(i) == text.charAt(j) && (gap < 2 || state[i + 1][j - 1] == 1);
             state[i][j] = palindrome ? 1 : 0; known[i][j] = true;
+            // The inner substring is a genuine dependency for anything longer than two
+            // characters; a one or two character span is decided by its ends alone.
+            Set<DpTraceSupport.Coord> palReads = gap < 2
+                    ? Set.of()
+                    : Set.of(new DpTraceSupport.Coord(i + 1, j - 1));
             emit.at("fill").say("Substring [%d,%d] \"%s\" is %sa palindrome.", i, j, text.substring(i, j + 1), palindrome ? "" : "not ")
-                    .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(i, j), Set.of(), rows,
-                            DpTraceSupport.labels("end", n), false, "equal ends && inner palindrome", palindrome ? "1" : "0")).step();
+                    .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(i, j), palReads, rows,
+                            DpTraceSupport.labels("end", n), false,
+                            "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
+                            String.format("[%d,%d] -> %s", i, j, palindrome ? "palindrome" : "not")))
+                    .step();
         }
         for (int end = 0; end < n; end++) {
             long best = end;
-            if (state[0][end] == 1) best = 0;
-            else for (int start = 1; start <= end; start++) if (state[start][end] == 1) best = Math.min(best, state[n][start - 1] + 1);
+            // Remember WHICH split won, so the arrow points at the cell the answer came
+            // from rather than at nothing.
+            int bestStart = -1;
+            if (state[0][end] == 1) {
+                best = 0;
+            } else {
+                for (int start = 1; start <= end; start++) {
+                    if (state[start][end] == 1 && state[n][start - 1] + 1 < best) {
+                        best = state[n][start - 1] + 1;
+                        bestStart = start;
+                    }
+                }
+            }
             state[n][end] = best; known[n][end] = true;
+            Set<DpTraceSupport.Coord> cutReads = bestStart < 0
+                    ? Set.of(new DpTraceSupport.Coord(0, end))
+                    : Set.of(new DpTraceSupport.Coord(bestStart, end),
+                            new DpTraceSupport.Coord(n, bestStart - 1));
             emit.at("fill").say("Minimum cuts for prefix ending at %d: %d.", end, best).var("end", end).var("cuts", best)
-                    .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(n, end), Set.of(), rows,
-                            DpTraceSupport.labels("end", n), false, "min(previous cuts + 1 for palindromic suffix)", "cuts = " + best)).step();
+                    .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(n, end), cutReads, rows,
+                            DpTraceSupport.labels("end", n), false,
+                            "cuts[j] = min over palindromic suffix [i..j] of cuts[i-1] + 1",
+                            bestStart < 0
+                                    ? String.format("[0,%d] is itself a palindrome, so 0 cuts", end)
+                                    : String.format("cut before %d: cuts[%d] + 1 = %d", bestStart, bestStart - 1, best)))
+                    .step();
         }
         emit.at("done").say("Minimum palindrome-partition cuts: %d.", state[n][n - 1]).var("answer", state[n][n - 1])
                 .dpTable(DpTraceSupport.table(state, known, null, Set.of(), rows, DpTraceSupport.labels("end", n), true,

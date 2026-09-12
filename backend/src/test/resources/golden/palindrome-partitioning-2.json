@@ -123,8 +123,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "equal ends && inner palindrome",
-      "substitution" : "1"
+      "formula" : "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
+      "substitution" : "[0,0] -> palindrome"
     }
   }, {
     "stepNumber" : 3,
@@ -181,8 +181,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "equal ends && inner palindrome",
-      "substitution" : "1"
+      "formula" : "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
+      "substitution" : "[1,1] -> palindrome"
     }
   }, {
     "stepNumber" : 4,
@@ -239,8 +239,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "equal ends && inner palindrome",
-      "substitution" : "1"
+      "formula" : "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
+      "substitution" : "[2,2] -> palindrome"
     }
   }, {
     "stepNumber" : 5,
@@ -297,8 +297,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "equal ends && inner palindrome",
-      "substitution" : "1"
+      "formula" : "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
+      "substitution" : "[0,1] -> palindrome"
     }
   }, {
     "stepNumber" : 6,
@@ -355,8 +355,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "equal ends && inner palindrome",
-      "substitution" : "0"
+      "formula" : "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
+      "substitution" : "[1,2] -> not"
     }
   }, {
     "stepNumber" : 7,
@@ -390,7 +390,7 @@
         "state" : "void"
       }, {
         "value" : "1",
-        "state" : "known"
+        "state" : "read"
       }, {
         "value" : "0",
         "state" : "known"
@@ -413,8 +413,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "equal ends && inner palindrome",
-      "substitution" : "0"
+      "formula" : "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
+      "substitution" : "[0,2] -> not"
     }
   }, {
     "stepNumber" : 8,
@@ -439,7 +439,7 @@
       "colLabels" : [ "end0", "end1", "end2" ],
       "cells" : [ [ {
         "value" : "1",
-        "state" : "known"
+        "state" : "read"
       }, {
         "value" : "1",
         "state" : "known"
@@ -474,8 +474,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "min(previous cuts + 1 for palindromic suffix)",
-      "substitution" : "cuts = 0"
+      "formula" : "cuts[j] = min over palindromic suffix [i..j] of cuts[i-1] + 1",
+      "substitution" : "[0,0] is itself a palindrome, so 0 cuts"
     }
   }, {
     "stepNumber" : 9,
@@ -503,7 +503,7 @@
         "state" : "known"
       }, {
         "value" : "1",
-        "state" : "known"
+        "state" : "read"
       }, {
         "value" : "0",
         "state" : "known"
@@ -535,8 +535,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : "min(previous cuts + 1 for palindromic suffix)",
-      "substitution" : "cuts = 0"
+      "formula" : "cuts[j] = min over palindromic suffix [i..j] of cuts[i-1] + 1",
+      "substitution" : "[0,1] is itself a palindrome, so 0 cuts"
     }
   }, {
     "stepNumber" : 10,
@@ -585,19 +585,19 @@
         "state" : "void"
       }, {
         "value" : "1",
-        "state" : "known"
+        "state" : "read"
       } ], [ {
         "value" : "0",
         "state" : "known"
       }, {
         "value" : "0",
-        "state" : "known"
+        "state" : "read"
       }, {
         "value" : "1",
         "state" : "probe"
       } ] ],
-      "formula" : "min(previous cuts + 1 for palindromic suffix)",
-      "substitution" : "cuts = 1"
+      "formula" : "cuts[j] = min over palindromic suffix [i..j] of cuts[i-1] + 1",
+      "substitution" : "cut before 2: cuts[1] + 1 = 1"
     }
   }, {
     "stepNumber" : 11,

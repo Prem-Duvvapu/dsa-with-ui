@@ -27,6 +27,10 @@ import java.util.Map;
 @Component
 public class NinjaAndHisFriendsTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[c1][c2] = grid[r][c1] + grid[r][c2] + max over the nine moves of dp'[c1±1][c2±1]";
+
+
     @Override
     public String id() {
         return "ninja-and-his-friends";
@@ -158,13 +162,20 @@ public class NinjaAndHisFriendsTracer implements AlgorithmTracer {
             for (int c1 = 0; c1 < cols; c1++) {
                 for (int c2 = 0; c2 < cols; c2++) {
                     int best = 0;
+                    // Remember which of the nine moves won, so the substitution can name it.
+                    int bestN1 = -1;
+                    int bestN2 = -1;
                     for (int d1 = -1; d1 <= 1; d1++) {
                         int n1 = c1 + d1;
                         if (n1 < 0 || n1 >= cols) continue;
                         for (int d2 = -1; d2 <= 1; d2++) {
                             int n2 = c2 + d2;
                             if (n2 < 0 || n2 >= cols) continue;
-                            best = Math.max(best, dp[n1][n2]);
+                            if (bestN1 < 0 || dp[n1][n2] > best) {
+                                best = dp[n1][n2];
+                                bestN1 = n1;
+                                bestN2 = n2;
+                            }
                         }
                     }
                     int collected = grid[row][c1] + (c1 == c2 ? 0 : grid[row][c2]);
@@ -177,7 +188,15 @@ public class NinjaAndHisFriendsTracer implements AlgorithmTracer {
                                     row, c1, c2, collected, best, row + 1, collected, best, value)
                             .var("row", row).var("col1", c1).var("col2", c2)
                             .var("collected", collected).var("bestBelow", best).var("value", value)
-                            .dpTable(table(next, nextFilled, cols, c1, c2, String.valueOf(value), false))
+                            // No read arrows here, deliberately. This is a rolling two-layer
+                            // DP: the nine candidates live in the PREVIOUS row's table while
+                            // the table on screen is the next one, so an arrow drawn inside
+                            // it would point at a cell that was never read. The recurrence
+                            // and the winning move are stated instead, which is true.
+                            .dpTable(table(next, nextFilled, cols, c1, c2, String.valueOf(value), false)
+                                    .withFormula(FORMULA, String.format(
+                                            "dp[%d][%d] = %d + best(row %d) = %d + dp[%d][%d](=%d) = %d",
+                                            c1, c2, collected, row + 1, collected, bestN1, bestN2, best, value)))
                             .step();
 
                     next[c1][c2] = value;
