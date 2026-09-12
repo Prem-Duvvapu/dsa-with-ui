@@ -197,15 +197,13 @@ describe('CaptureStrip', () => {
   });
 
   it('extracts interval rows when dsType is Interval', () => {
+    // resolvedInput is the TRACE's and arrives as a prop. This used to hang it on the step,
+    // a shape the server has never sent, so it covered a branch that could not run.
     const intervalSteps = [
       {
         stepNumber: 1,
         activeLine: 1,
         description: 'step 1',
-        resolvedInput: {
-          start: [1, 3],
-          end: [2, 6]
-        },
         arrayState: [
           { index: 0, state: 'probe' },
           { index: 1, state: 'default' }
@@ -213,7 +211,14 @@ describe('CaptureStrip', () => {
       }
     ];
 
-    render(<CaptureStrip steps={intervalSteps} current={0} dsType="Interval" />);
+    render(
+      <CaptureStrip
+        steps={intervalSteps}
+        current={0}
+        dsType="Interval"
+        resolvedInput={{ start: [1, 3], end: [2, 6] }}
+      />
+    );
     expect(screen.getByText(/2 rows/)).toBeInTheDocument();
     expect(screen.getByText('#1')).toBeInTheDocument();
     expect(screen.getByText('#2')).toBeInTheDocument();

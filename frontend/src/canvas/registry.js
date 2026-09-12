@@ -10,6 +10,7 @@ import StackCanvas from '../components/StackCanvas';
 import TreeCanvas from '../components/TreeCanvas';
 import TrieCanvas from '../components/TrieCanvas';
 import IntervalCanvas from '../components/IntervalCanvas';
+import WindowCanvas from '../components/WindowCanvas';
 
 /**
  * The sole dsType-to-renderer routing table.
@@ -22,10 +23,14 @@ import IntervalCanvas from '../components/IntervalCanvas';
  * variant of QueueCanvas, which widens the pane the companion usage keeps narrow.
  * bfs-traversal is `Graph`-hero with a queue companion pane instead (see
  * canvas/companions.js) because its graph topology is the point.
+ *
+ * `Window` had been one of those placeholders, routed to ArrayCanvas. Bars show the values
+ * but not the window, which is the one thing the technique is named after - you could not
+ * see the bounds move, expand or contract. WindowCanvas draws that instead.
  */
 export const CANVAS_BY_DSTYPE = Object.freeze({
   Array: ArrayCanvas,
-  Window: ArrayCanvas,
+  Window: WindowCanvas,
   SearchSpace: ArrayCanvas,
   Matrix: GridCanvas,
   DpTable: DpTableCanvas,

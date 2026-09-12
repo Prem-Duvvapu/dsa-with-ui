@@ -36,6 +36,14 @@ export const TOUR_STEPS = [
         + 'and [ and ] change the pace without touching the mouse.'
   },
   {
+    target: 'capture-strip',
+    body: 'Every step of the run at once — one column per step, one row per tracked slot. '
+        + 'It shows the shape of the execution before you watch any single frame: how long '
+        + 'the run is, and where the interesting part sits. Click any column to jump there. '
+        + 'Some problems hide it, because for a graph the diagram already says it better.',
+    title: 'The whole run, at a glance'
+  },
+  {
     target: 'code-panel',
     title: 'The code keeps pace',
     body: 'The highlighted line is the one executing in the step you are looking at. '

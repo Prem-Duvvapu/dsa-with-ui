@@ -44,7 +44,7 @@ public class SlidingWindowService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{1, 2, 3, 1, 2, 3, 1, 1}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass with two pointers left & right.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 character map.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "String"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass with two pointers left & right.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 character map.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "Window"
         ));
 
         // Bulk register remaining 11 Sliding Window problems
@@ -66,15 +66,14 @@ public class SlidingWindowService implements ProblemProvider {
             {"minimum-window-subsequence", "Minimum Window Subsequence", "Sliding Window - Hard", "Hard", "Find minimum window subsequence matching S2 in S1."}
         };
 
-        // These now have real tracers that trace a string window, not an int array.
-        Set<String> stringDsType = Set.of(
-                "longest-repeating-character-replacement", "minimum-window-substring",
-                "number-substrings-all-three-chars", "longest-substring-k-distinct",
-                "minimum-window-subsequence");
-
+        // Every problem in this topic is a WINDOW, whether its cells hold characters or
+        // ints. They were tagged String or Array, which routed all twelve to a bar chart -
+        // a picture that shows the values and not the window, which is the one thing the
+        // technique is named after. The cells carry their own labels, so one canvas serves
+        // both: WindowCanvas draws the bounds moving over whatever the cells hold.
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
-            String dsType = stringDsType.contains(id) ? "String" : "Array";
+            String dsType = "Window";
             problems.put(id, new ProblemDetail(
                 id, title, cat, "Sliding Window", diff, desc,
                 String.format("// Java Implementation for %s\npublic int solve() {\n    // Sliding Window Striver A2Z Implementation\n    return 0;\n}", title),

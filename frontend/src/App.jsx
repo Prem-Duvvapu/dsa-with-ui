@@ -355,7 +355,13 @@ export default function App() {
 
     // resolvedInput is the trace's, not a step's. IntervalCanvas needs it to draw the
     // intervals the run actually used rather than the inputSpec defaults.
-    const props = { currentStep, step: currentStep, problem: activeProblem, resolvedInput };
+    // steps + index let a canvas look back for the last step that carried structure.
+    // WindowCanvas needs it: tracers interleave commentary steps with no arrayState, and
+    // dropping the frame on those would make the window flicker out every other step.
+    const props = {
+      currentStep, step: currentStep, problem: activeProblem, resolvedInput,
+      steps, currentStepIndex
+    };
 
     const Canvas = CANVAS_BY_DSTYPE[activeDsType];
     if (!Canvas) {
@@ -569,12 +575,15 @@ export default function App() {
                 change state in motion, and the strip's row-per-vertex grid conveys that
                 traversal order less directly than the diagram already does. */}
             {!CAPTURE_STRIP_REDUNDANT_FOR.has(activeDsType) && (
-              <CaptureStrip
-                steps={steps}
-                current={currentStepIndex}
-                dsType={activeDsType}
-                onSeek={seek}
-              />
+              <div data-tour="capture-strip">
+                <CaptureStrip
+                  steps={steps}
+                  current={currentStepIndex}
+                  dsType={activeDsType}
+                  onSeek={seek}
+                  resolvedInput={resolvedInput}
+                />
+              </div>
             )}
 
             {/* Integrated Playback Controls */}

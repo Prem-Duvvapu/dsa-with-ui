@@ -26,7 +26,7 @@ public class MaximumPointsCardsTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.WINDOW;
     }
 
     @Override

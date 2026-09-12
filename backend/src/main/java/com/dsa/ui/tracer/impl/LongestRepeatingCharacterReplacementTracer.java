@@ -26,7 +26,7 @@ public class LongestRepeatingCharacterReplacementTracer implements AlgorithmTrac
 
     @Override
     public DsType dsType() {
-        return DsType.STRING;
+        return DsType.WINDOW;
     }
 
     @Override
