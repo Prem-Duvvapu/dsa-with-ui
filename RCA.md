@@ -729,3 +729,27 @@ phase; do not describe unfinished work as resolved.
 - **The general lesson:** a guard that passes on its first run has not been shown to work.
   For anything theme-dependent, assert both themes in the same test — checking one is a
   coin flip that looks like diligence.
+
+## RCA-034 — A structure that persists between steps rendered as empty on the steps that did not restate it
+
+- **Discovered:** 2026-09-13, by the Stack & Queue topic audit
+- **Status:** Resolved
+- **Symptom and impact:** `StackCanvas` and `QueueCanvas` read
+  `activeStep?.queueOrStackState || []`, which collapses "the stack is empty" and "this step
+  did not mention the stack" into the same render. Tracers restate a structure only on the
+  steps that change it and narrate in between, so the stack **blinked empty between every
+  push**. Measured: **60 steps across 21 of the 24** Stack & Queue problems displayed an
+  empty stack while it held items. `stock-span-problem` did it on every other step — push,
+  empty, push, empty — which destroys the only thing a monotonic-stack problem teaches.
+- **Root cause:** `|| []` treats absence as a value. The payload is genuinely optional per
+  step by design; the canvas simply had no way to say "unchanged".
+- **Resolution:** `trace/lastPayload.js` returns the most recent stated value, looking back
+  no further than the step being shown. An explicit `[]` is a real value and still renders
+  empty; only absence looks back.
+- **Regression guard:** cases in `StackCanvas.test.jsx` and `QueueCanvas.test.jsx` asserting
+  both halves — that a silent step keeps the contents, and that an explicit empty array
+  still reads empty. Proven RED against the old expression.
+- **Related:** the same shape as RCA-025 and RCA-031 — a missing payload rendered as a
+  confident wrong answer. Three canvases have now made this mistake in three different ways.
+  Before writing a canvas, decide explicitly what "the trace did not say" should look like,
+  and make sure it is distinguishable from a real value.

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layers } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
 /**
  * Hero canvas for a step's own stack (`queueOrStackState`, via StepEmitter.stack()) —
@@ -24,9 +25,13 @@ import { Layers } from 'lucide-react';
  * anchor is the tempting fix and it is wrong — it puts the bottom of the stack on top and
  * the "top" badge on the floor.
  */
-export default function StackCanvas({ step, currentStep, title = 'Stack' }) {
+export default function StackCanvas({ step, currentStep, title = 'Stack', steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const items = activeStep?.queueOrStackState || [];
+  // Absence is not emptiness. Tracers restate the stack only on the steps that change it
+  // and narrate in between, so `|| []` made it blink empty between every push - measured
+  // at 60 steps across 21 of 24 Stack & Queue problems. An explicit [] still renders empty,
+  // because that is a real value.
+  const items = lastPayload(steps, currentStepIndex, 'queueOrStackState', activeStep) || [];
 
   return (
     <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
