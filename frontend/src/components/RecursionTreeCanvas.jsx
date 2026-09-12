@@ -14,20 +14,20 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
     switch (state) {
       case 'active':
       case 'calling':
-        return { fill: '#3b82f6', stroke: '#60a5fa', glow: '0 0 20px rgba(59, 130, 246, 0.8)', label: 'Calling' };
+        return { fill: 'var(--role-current)', stroke: 'var(--role-current-edge)', glow: '0 0 20px color-mix(in srgb, var(--role-current) 80%, transparent)', label: 'Calling' };
       case 'merging':
       case 'comparing':
-        return { fill: '#f59e0b', stroke: '#fbbf24', glow: '0 0 18px rgba(245, 158, 11, 0.7)', label: 'Merging' };
+        return { fill: 'var(--role-secondary)', stroke: 'var(--role-secondary-edge)', glow: '0 0 18px color-mix(in srgb, var(--role-secondary) 70%, transparent)', label: 'Merging' };
       case 'memo_hit':
       case 'cache_hit':
-        return { fill: '#eab308', stroke: '#fde047', glow: 'var(--glow-gold)', label: 'Cache Hit' };
+        return { fill: 'var(--role-cached)', stroke: 'var(--role-cached-edge)', glow: 'var(--glow-gold)', label: 'Cache Hit' };
       case 'pruned':
       case 'backtrack':
-        return { fill: '#ef4444', stroke: '#f87171', glow: 'var(--glow-rose)', label: 'Backtracked' };
+        return { fill: 'var(--role-pruned)', stroke: 'var(--role-pruned-edge)', glow: 'var(--glow-rose)', label: 'Backtracked' };
       case 'visited':
       case 'merged':
       case 'sorted':
-        return { fill: '#10b981', stroke: '#34d399', glow: '0 0 14px rgba(16, 185, 129, 0.5)', label: 'Sorted' };
+        return { fill: 'var(--role-done)', stroke: 'var(--role-done-edge)', glow: '0 0 14px color-mix(in srgb, var(--role-done) 50%, transparent)', label: 'Sorted' };
       default:
         return { fill: 'var(--canvas-node-fill)', stroke: 'var(--canvas-edge)', glow: 'none', label: 'Pending' };
     }
@@ -51,16 +51,16 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
             <span style={{ color: 'var(--text-secondary)' }}>Pending</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3b82f6' }}></span>
-            <span style={{ color: '#60a5fa' }}>Splitting / Calling</span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--role-current)' }}></span>
+            <span style={{ color: 'var(--role-current-edge)' }}>Splitting / Calling</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }}></span>
-            <span style={{ color: '#fbbf24' }}>Merging</span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--role-secondary)' }}></span>
+            <span style={{ color: 'var(--role-secondary-edge)' }}>Merging</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
-            <span style={{ color: '#34d399' }}>Sorted</span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--role-done)' }}></span>
+            <span style={{ color: 'var(--role-done-edge)' }}>Sorted</span>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
                       y1={node.y}
                       x2={leftChild.x}
                       y2={leftChild.y}
-                      stroke={nodeStates[leftChild.id] === 'pruned' ? '#ef4444' : 'var(--canvas-edge)'}
+                      stroke={nodeStates[leftChild.id] === 'pruned' ? 'var(--role-pruned)' : 'var(--canvas-edge)'}
                       strokeWidth="2"
                       strokeDasharray={nodeStates[leftChild.id] ? 'none' : '4 4'}
                     />
@@ -93,7 +93,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
                       y1={node.y}
                       x2={rightChild.x}
                       y2={rightChild.y}
-                      stroke={nodeStates[rightChild.id] === 'pruned' ? '#ef4444' : 'var(--canvas-edge)'}
+                      stroke={nodeStates[rightChild.id] === 'pruned' ? 'var(--role-pruned)' : 'var(--canvas-edge)'}
                       strokeWidth="2"
                       strokeDasharray={nodeStates[rightChild.id] ? 'none' : '4 4'}
                     />
@@ -131,7 +131,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
                   <text
                     textAnchor="middle"
                     dy=".3em"
-                    fill="#ffffff"
+                    fill="var(--role-ink)"
                     fontSize="10"
                     fontWeight="800"
                     letterSpacing="0.2px"
@@ -157,7 +157,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           {arrayState.map((el, idx) => (
             <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: '800', color: el.state === 'sorted' || el.state === 'visited' ? '#34d399' : '#ffffff' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: '800', color: el.state === 'sorted' || el.state === 'visited' ? 'var(--role-done-edge)' : 'var(--role-ink)' }}>
                 {el.value}
               </span>
               <div
@@ -165,8 +165,8 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
                   width: '28px',
                   height: '14px',
                   borderRadius: '4px',
-                  background: el.state === 'sorted' || el.state === 'visited' ? '#10b981' : (el.state === 'active' || el.state === 'comparing' ? '#f59e0b' : 'var(--canvas-node-fill-2)'),
-                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                  background: el.state === 'sorted' || el.state === 'visited' ? 'var(--role-done)' : (el.state === 'active' || el.state === 'comparing' ? 'var(--role-secondary)' : 'var(--canvas-node-fill-2)'),
+                  border: '1px solid var(--border-strong)'
                 }}
               />
               <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>[{idx}]</span>

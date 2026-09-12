@@ -66,7 +66,7 @@ export default function StackCanvas({ step, currentStep, title = 'Stack' }) {
                 gap: '12px', width: '160px', padding: '8px 14px',
                 borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-code)',
                 fontSize: '0.85rem', fontWeight: 600,
-                background: idx === 0 ? 'linear-gradient(180deg, var(--state-current), #d97706)' : 'linear-gradient(180deg, var(--canvas-node-fill-2), var(--canvas-node-fill))',
+                background: idx === 0 ? 'linear-gradient(180deg, var(--state-current), var(--state-current-deep))' : 'linear-gradient(180deg, var(--canvas-node-fill-2), var(--canvas-node-fill))',
                 border: idx === 0 ? '1.5px solid var(--state-current)' : '1px solid var(--border-default)',
                 boxShadow: idx === 0 ? 'var(--state-current-glow)' : 'none',
                 color: 'var(--text-primary)'

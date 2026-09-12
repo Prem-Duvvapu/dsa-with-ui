@@ -21,18 +21,18 @@ export default function TreeCanvas({ problem, currentStep, step }) {
       case 'visiting':
       case 'current':
       case 'queued':
-        return { fill: 'var(--state-current)', stroke: '#fbbf24', glow: 'var(--state-current-glow)' };
+        return { fill: 'var(--state-current)', stroke: 'var(--role-secondary-edge)', glow: 'var(--state-current-glow)' };
       case 'target':
       case 'root':
       case 'found':
-        return { fill: 'var(--state-target)', stroke: '#a78bfa', glow: 'var(--state-target-glow)' };
+        return { fill: 'var(--state-target)', stroke: 'var(--state-target-edge)', glow: 'var(--state-target-glow)' };
       case 'visited':
       case 'processed':
         return { fill: 'var(--state-visited-bg)', stroke: 'var(--state-visited)', glow: 'none' };
       case 'done':
       case 'completed':
       case 'sorted':
-        return { fill: 'var(--state-done)', stroke: '#2dd4bf', glow: 'var(--state-done-glow)' };
+        return { fill: 'var(--state-done)', stroke: 'var(--state-done-edge)', glow: 'var(--state-done-glow)' };
       default:
         return { fill: 'var(--canvas-node-fill)', stroke: 'var(--border-default)', glow: 'none' };
     }
@@ -125,7 +125,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
                 <text
                   textAnchor="middle"
                   dy=".3em"
-                  fill="#ffffff"
+                  fill="var(--role-ink)"
                   fontSize="13"
                   fontWeight="700"
                 >

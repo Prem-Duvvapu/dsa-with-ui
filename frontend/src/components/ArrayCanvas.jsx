@@ -24,16 +24,16 @@ export default function ArrayCanvas({ problem, currentStep, step }) {
       case 'pivot':
       case 'max':
       case 'target':
-        return { bg: 'linear-gradient(180deg, var(--state-target), #5b46e0)', border: 'var(--state-target)', glow: 'var(--state-target-glow)' };
+        return { bg: 'linear-gradient(180deg, var(--state-target), var(--state-target-deep))', border: 'var(--state-target)', glow: 'var(--state-target-glow)' };
       case 'comparing':
       case 'active':
       case 'current':
-        return { bg: 'linear-gradient(180deg, var(--state-current), #d97706)', border: 'var(--state-current)', glow: 'var(--state-current-glow)' };
+        return { bg: 'linear-gradient(180deg, var(--state-current), var(--state-current-deep))', border: 'var(--state-current)', glow: 'var(--state-current-glow)' };
       case 'swapping':
-        return { bg: 'linear-gradient(180deg, #f43f5e, #dc2626)', border: '#f43f5e', glow: '0 0 14px rgba(244, 63, 94, 0.5)' };
+        return { bg: 'linear-gradient(180deg, var(--role-pruned), var(--role-pruned-edge))', border: 'var(--role-pruned)', glow: '0 0 14px color-mix(in srgb, var(--role-pruned) 50%, transparent)' };
       case 'sorted':
       case 'done':
-        return { bg: 'linear-gradient(180deg, var(--state-done), #0d9488)', border: 'var(--state-done)', glow: 'var(--state-done-glow)' };
+        return { bg: 'linear-gradient(180deg, var(--state-done), var(--state-done-deep))', border: 'var(--state-done)', glow: 'var(--state-done-glow)' };
       case 'visited':
       case 'eliminated':
       default:

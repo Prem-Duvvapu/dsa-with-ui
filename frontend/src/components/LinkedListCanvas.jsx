@@ -22,13 +22,13 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
     switch (state) {
       case 'active':
       case 'curr':
-        return { fill: '#3b82f6', stroke: '#60a5fa', glow: '0 0 18px rgba(59,130,246,0.8)' };
+        return { fill: 'var(--role-current)', stroke: 'var(--role-current-edge)', glow: '0 0 18px color-mix(in srgb, var(--role-current) 80%, transparent)' };
       case 'slow':
-        return { fill: '#f59e0b', stroke: '#fbbf24', glow: '0 0 16px rgba(245,158,11,0.7)' };
+        return { fill: 'var(--role-secondary)', stroke: 'var(--role-secondary-edge)', glow: '0 0 16px color-mix(in srgb, var(--role-secondary) 70%, transparent)' };
       case 'fast':
-        return { fill: '#ec4899', stroke: '#f472b6', glow: '0 0 18px rgba(236,72,153,0.8)' };
+        return { fill: 'var(--role-alternate)', stroke: 'var(--role-alternate-edge)', glow: '0 0 18px color-mix(in srgb, var(--role-alternate) 80%, transparent)' };
       case 'visited':
-        return { fill: '#10b981', stroke: '#34d399', glow: '0 0 14px rgba(16,185,129,0.5)' };
+        return { fill: 'var(--role-done)', stroke: 'var(--role-done-edge)', glow: '0 0 14px color-mix(in srgb, var(--role-done) 50%, transparent)' };
       default:
         return { fill: 'var(--canvas-node-fill)', stroke: 'var(--canvas-edge)', glow: 'none' };
     }
@@ -104,16 +104,16 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
           </span>
         </div>
         {(edges.child.length > 0 || edges.random.length > 0) && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.68rem', color: '#94a3b8' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.68rem', color: 'var(--text-secondary)' }}>
             {edges.child.length > 0 && (
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#a855f7" strokeWidth="2" strokeDasharray="4,3" /></svg>
+                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-child)" strokeWidth="2" strokeDasharray="4,3" /></svg>
                 child
               </span>
             )}
             {edges.random.length > 0 && (
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#f97316" strokeWidth="2" strokeDasharray="1,3" strokeLinecap="round" /></svg>
+                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-random)" strokeWidth="2" strokeDasharray="1,3" strokeLinecap="round" /></svg>
                 random
               </span>
             )}
@@ -130,10 +130,10 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
         >
           <defs>
             <marker id="llc-child-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 Z" fill="#a855f7" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="var(--role-link-child)" />
             </marker>
             <marker id="llc-random-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 Z" fill="#f97316" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="var(--role-link-random)" />
             </marker>
           </defs>
           {edges.child.map((e) => (
@@ -141,7 +141,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
               key={`child-${e.key}`}
               d={`M ${e.x1} ${e.y1} Q ${(e.x1 + e.x2) / 2} ${e.midY} ${e.x2} ${e.y2}`}
               fill="none"
-              stroke="#a855f7"
+              stroke="var(--role-link-child)"
               strokeWidth="2"
               strokeDasharray="6,4"
               markerEnd="url(#llc-child-arrow)"
@@ -152,7 +152,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
               key={`random-${e.key}`}
               d={`M ${e.x1} ${e.y1} Q ${(e.x1 + e.x2) / 2} ${e.midY} ${e.x2} ${e.y2}`}
               fill="none"
-              stroke="#f97316"
+              stroke="var(--role-link-random)"
               strokeWidth="2"
               strokeDasharray="1,4"
               strokeLinecap="round"
@@ -191,11 +191,11 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
                   zIndex: 1,
                 }}
               >
-                <div style={{ fontSize: '1rem', fontWeight: '800', color: '#ffffff' }}>
+                <div style={{ fontSize: '1rem', fontWeight: '800', color: 'var(--role-ink)' }}>
                   {node.val}
                 </div>
-                <div style={{ width: '1px', height: '24px', background: 'rgba(255, 255, 255, 0.2)' }} />
-                <div style={{ fontSize: '0.72rem', color: '#cbd5e1', fontWeight: '600' }}>
+                <div style={{ width: '1px', height: '24px', background: 'var(--border-strong)' }} />
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-primary)', fontWeight: '600' }}>
                   {node.nextId !== null ? `next -> [${node.nextId}]` : 'next -> NULL'}
                 </div>
               </div>
@@ -203,7 +203,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
               {/* Arrow Connection */}
               {idx < listState.length - 1 && (
                 adjacentIsNext
-                  ? <ArrowRight size={22} color="#64748b" style={{ flexShrink: 0, position: 'relative', zIndex: 1 }} />
+                  ? <ArrowRight size={22} color="var(--text-muted)" style={{ flexShrink: 0, position: 'relative', zIndex: 1 }} />
                   : <div style={{ width: '22px', flexShrink: 0 }} />
               )}
             </React.Fragment>

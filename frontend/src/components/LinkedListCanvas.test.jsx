@@ -4,6 +4,9 @@ import '@testing-library/jest-dom';
 import { describe, expect, it } from 'vitest';
 import LinkedListCanvas from './LinkedListCanvas';
 
+// Edge kinds are identified by their stroke. That used to be a literal hex here and in the
+// component, which meant the two had to be edited in lockstep; both now name the role token,
+// so the colour can change per theme without touching either.
 describe('LinkedListCanvas', () => {
   it('draws the inline next arrow between every pair, exactly as before, when nextId always matches the adjacent box (every pre-existing tracer)', () => {
     const listState = [
@@ -15,8 +18,8 @@ describe('LinkedListCanvas', () => {
 
     // Two adjacent pairs, so two inline arrows and no suppressed-arrow gaps.
     expect(container.querySelectorAll('.lucide-arrow-right')).toHaveLength(2);
-    expect(container.querySelectorAll('path[stroke="#a855f7"]')).toHaveLength(0);
-    expect(container.querySelectorAll('path[stroke="#f97316"]')).toHaveLength(0);
+    expect(container.querySelectorAll('path[stroke="var(--role-link-child)"]')).toHaveLength(0);
+    expect(container.querySelectorAll('path[stroke="var(--role-link-random)"]')).toHaveLength(0);
   });
 
   it('suppresses the inline next arrow between an adjacent pair whose nextId does not actually match', () => {
@@ -38,7 +41,7 @@ describe('LinkedListCanvas', () => {
     const { container, getByText } = render(<LinkedListCanvas step={{ listState }} />);
 
     expect(container.querySelectorAll('.lucide-arrow-right')).toHaveLength(1);
-    expect(container.querySelectorAll('path[stroke="#a855f7"]')).toHaveLength(1);
+    expect(container.querySelectorAll('path[stroke="var(--role-link-child)"]')).toHaveLength(1);
     expect(getByText('child')).toBeInTheDocument();
   });
 
@@ -50,8 +53,8 @@ describe('LinkedListCanvas', () => {
     ];
     const { container, getByText } = render(<LinkedListCanvas step={{ listState }} />);
 
-    expect(container.querySelectorAll('path[stroke="#f97316"]')).toHaveLength(2);
-    expect(container.querySelectorAll('path[stroke="#a855f7"]')).toHaveLength(0);
+    expect(container.querySelectorAll('path[stroke="var(--role-link-random)"]')).toHaveLength(2);
+    expect(container.querySelectorAll('path[stroke="var(--role-link-child)"]')).toHaveLength(0);
     expect(getByText('random')).toBeInTheDocument();
   });
 

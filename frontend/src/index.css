@@ -148,6 +148,44 @@
   --canvas-edge: #475569;
   --canvas-wash: rgba(255, 255, 255, 0.035);
 
+  /* Algorithm roles. What a node MEANS during a run, as opposed to what surface it sits on.
+     These were literal hexes in seven canvases - #3b82f6 for the cursor, #10b981 for done,
+     #ef4444 for a pruned branch - repeated with slightly different values per file, so the
+     same state read differently depending which problem you opened.
+
+     Each role has a fill, an edge (its lighter rim) and, where it needs one, a deeper stop
+     for a gradient. The fills stay dark enough in BOTH themes to carry white labels, which
+     is why the light values are darker rather than lighter: the ground inverts, the label
+     does not. --role-ink is white in both for exactly that reason. */
+  --role-current: #3b82f6;
+  --role-current-edge: #60a5fa;
+  --role-secondary: #f59e0b;
+  --role-secondary-edge: #fbbf24;
+  --role-alternate: #ec4899;
+  --role-alternate-edge: #f472b6;
+  --role-done: #10b981;
+  --role-done-edge: #34d399;
+  --role-pruned: #ef4444;
+  --role-pruned-edge: #f87171;
+  --role-cached: #eab308;
+  --role-cached-edge: #fde047;
+  --role-link-child: #a855f7;
+  --role-link-random: #f97316;
+  /* The label on a filled node, and it FLIPS with the theme exactly as --probe-on does.
+     Dark mode keeps bright fills that pop against the dark ground, so the label must be
+     near-black to be readable on them - white on #3b82f6 is 3.68:1 and fails. Light mode
+     darkens the fills instead, so the label goes white. Same rule as Bench: the mark and
+     its ground move together, and neither is assumed. */
+  --role-ink: #0a0e13;
+
+  /* Deeper stops, used as the far end of a node's gradient. */
+  --state-target-deep: #5b46e0;
+  --state-target-edge: #a78bfa;
+  --state-current-deep: #d97706;
+  --state-current-edge: #fbbf24;
+  --state-done-deep: #0d9488;
+  --state-done-edge: #2dd4bf;
+
   /* Type scale. One ratio, no ad-hoc sizes. */
   --text-2xs: 0.625rem;
   --text-md: 0.9375rem;
@@ -221,6 +259,30 @@
     --canvas-node-fill-2: #cbd5e1;
     --canvas-edge: #94a3b8;
     --canvas-wash: rgba(16, 22, 28, 0.04);
+
+  --role-current: #1d4ed8;
+  --role-current-edge: #3b82f6;
+  --role-secondary: #b45309;
+  --role-secondary-edge: #d97706;
+  --role-alternate: #be185d;
+  --role-alternate-edge: #db2777;
+  --role-done: #047857;
+  --role-done-edge: #059669;
+  --role-pruned: #b91c1c;
+  --role-pruned-edge: #dc2626;
+  --role-cached: #a16207;
+  --role-cached-edge: #ca8a04;
+  --role-link-child: #7e22ce;
+  --role-link-random: #c2410c;
+  --role-ink: #ffffff;
+
+  --state-target-deep: #4c1d95;
+  --state-target-edge: #7c3aed;
+  --state-current-deep: #92400e;
+  --state-current-edge: #d97706;
+  --state-done-deep: #065f46;
+  --state-done-edge: #059669;
+
     --elevation-raised: 0 1px 0 rgba(16, 22, 28, 0.04);
     --elevation-panel: 0 2px 12px rgba(16, 22, 28, 0.08);
     --elevation-overlay: 0 8px 32px rgba(16, 22, 28, 0.14);
@@ -228,6 +290,28 @@
 }
 
 :root[data-theme="light"] {
+  --role-current: #1d4ed8;
+  --role-current-edge: #3b82f6;
+  --role-secondary: #b45309;
+  --role-secondary-edge: #d97706;
+  --role-alternate: #be185d;
+  --role-alternate-edge: #db2777;
+  --role-done: #047857;
+  --role-done-edge: #059669;
+  --role-pruned: #b91c1c;
+  --role-pruned-edge: #dc2626;
+  --role-cached: #a16207;
+  --role-cached-edge: #ca8a04;
+  --role-link-child: #7e22ce;
+  --role-link-random: #c2410c;
+  --role-ink: #ffffff;
+
+  --state-target-deep: #4c1d95;
+  --state-target-edge: #7c3aed;
+  --state-current-deep: #92400e;
+  --state-current-edge: #d97706;
+  --state-done-deep: #065f46;
+  --state-done-edge: #059669;
   --bench-ground: #eef1f4;
   --bench-recessed: #ffffff;
   --bench-panel: #f7f9fb;
