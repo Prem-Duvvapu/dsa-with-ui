@@ -708,6 +708,16 @@ describe('App mobile drawer', () => {
     Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: ORIGINAL_WIDTH });
   });
 
+  it('still offers the code, input and complexity tabs on mobile', async () => {
+    // Moving the code beside the canvas is a DESKTOP change. Mobile keeps the stacked tab
+    // card, and an early version of that refactor made this branch unreachable - the phone
+    // layout silently lost the code panel, the input editor and the complexity card at
+    // once, with every test still green.
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(screen.getByRole('button', { name: 'Code' })).toBeInTheDocument();
+  });
+
   it('starts closed on a narrow viewport', async () => {
     renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));

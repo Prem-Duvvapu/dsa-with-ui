@@ -49,3 +49,36 @@
   padding: 1px 7px;
   white-space: nowrap;
 }
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.collapsedRow {
+  display: flex;
+  padding: 0 var(--space-md) 4px;
+  flex-shrink: 0;
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 1px 7px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.toggleBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}

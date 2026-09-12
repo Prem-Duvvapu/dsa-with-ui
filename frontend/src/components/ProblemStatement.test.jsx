@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import ProblemStatement from './ProblemStatement';
 
 describe('ProblemStatement', () => {
@@ -37,5 +37,23 @@ describe('ProblemStatement', () => {
   it('survives a missing problem while the catalogue is still loading', () => {
     const { container } = render(<ProblemStatement problem={null} />);
     expect(container).toBeEmptyDOMElement();
+  });
+
+  it('collapses to a one-line affordance rather than vanishing', () => {
+    // Hidden must still be reachable. A statement that disappears with no control leaves
+    // no way back to what the problem asks.
+    const onToggle = vi.fn();
+    render(<ProblemStatement problem={{ description: 'Find it.' }} open={false} onToggle={onToggle} />);
+    expect(screen.queryByText('Find it.')).not.toBeInTheDocument();
+    const show = screen.getByRole('button', { name: /Problem/i });
+    fireEvent.click(show);
+    expect(onToggle).toHaveBeenCalled();
+  });
+
+  it('offers a hide control while open', () => {
+    const onToggle = vi.fn();
+    render(<ProblemStatement problem={{ description: 'Find it.' }} open onToggle={onToggle} />);
+    fireEvent.click(screen.getByRole('button', { name: /Hide/i }));
+    expect(onToggle).toHaveBeenCalled();
   });
 });

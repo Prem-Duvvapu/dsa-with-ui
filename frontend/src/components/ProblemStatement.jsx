@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import styles from './ProblemStatement.module.css';
 
 /**
@@ -14,16 +15,50 @@ import styles from './ProblemStatement.module.css';
  * They are labelled "Problem constraints" for exactly that reason. Both are true; they
  * differ by orders of magnitude. Absent constraints render nothing at all rather than a
  * plausible-looking invention.
+ *
+ * Collapsible for the same reason the input editor and complexity card are: once you know
+ * what the problem asks, restating it every step is vertical space the canvas wants. The
+ * collapsed state keeps a one-line affordance rather than vanishing, so the statement is
+ * always one click away and never silently absent.
  */
-export default function ProblemStatement({ problem }) {
+export default function ProblemStatement({ problem, open = true, onToggle }) {
   const description = problem?.description?.trim();
   const constraints = problem?.constraints ?? [];
 
   if (!description && constraints.length === 0) return null;
 
+  if (!open) {
+    return (
+      <div className={styles.collapsedRow}>
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={false}
+          className={styles.toggleBtn}
+          title="Show the problem statement"
+        >
+          <ChevronRight size={12} /> Problem
+        </button>
+      </div>
+    );
+  }
+
   return (
     <section className={styles.container} aria-label="Problem statement">
-      {description && <p className={styles.description}>{description}</p>}
+      <div className={styles.headerRow}>
+        {description && <p className={styles.description}>{description}</p>}
+        {onToggle && (
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-expanded
+            className={styles.toggleBtn}
+            title="Hide the problem statement"
+          >
+            <ChevronDown size={12} /> Hide
+          </button>
+        )}
+      </div>
 
       {constraints.length > 0 && (
         <div className={styles.constraints}>

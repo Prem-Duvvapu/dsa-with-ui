@@ -241,6 +241,7 @@ export default function App() {
   // input being animated - is stated by InputSummary in a single line.
   const [isInputEditorOpen, setIsInputEditorOpen] = usePersistentState('inputEditorOpen', false, isBool);
   const [isComplexityOpen, setIsComplexityOpen] = usePersistentState('complexityOpen', false, isBool);
+  const [isStatementOpen, setIsStatementOpen] = usePersistentState('statementOpen', true, isBool);
   const [activeTab, setActiveTab] = useState('code');
 
   useEffect(() => {
@@ -436,15 +437,11 @@ export default function App() {
   const loading = catalogLoading;
   const hasInputSpec = Boolean(activeProblem?.inputSpec?.fields?.length);
 
-  // The row is code-only until something is opened, so collapsing a panel gives its space
-  // back to the code rather than leaving a gap.
-  const bottomGridColumns = (() => {
-    const showInput = hasInputSpec && isInputEditorOpen;
-    if (showInput && isComplexityOpen) return '1.6fr 1fr 1fr';
-    if (showInput) return '2fr 1fr';
-    if (isComplexityOpen) return '2fr 1fr';
-    return '1fr';
-  })();
+  // With the code beside the canvas, the bottom row exists only for the on-demand panels
+  // and disappears entirely when neither is open - no empty reserved strip.
+  const showInputEditor = hasInputSpec && isInputEditorOpen;
+  const showBottomRow = showInputEditor || isComplexityOpen;
+  const bottomGridColumns = showInputEditor && isComplexityOpen ? '1fr 1fr' : '1fr';
   const activeDsType = currentStep?.dsType || activeProblem?.dsType || '';
   const traceErrorCopy = TRACE_ERROR_COPY[traceError];
   const showingOfflineTrace = traceError === 'fetch' && steps.length > 0;
@@ -504,7 +501,11 @@ export default function App() {
 
       <Breadcrumb problem={activeProblem} />
 
-      <ProblemStatement problem={activeProblem} />
+      <ProblemStatement
+        problem={activeProblem}
+        open={isStatementOpen}
+        onToggle={() => setIsStatementOpen(prev => !prev)}
+      />
 
       <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
 
@@ -569,7 +570,19 @@ export default function App() {
         )}
 
         <main className={styles.mainStage}>
+          {/* Desktop puts the code beside the canvas rather than beneath it. Vertical space
+              is the scarcer axis on a laptop, and a stacked layout spends it on the one
+              panel that reads fine in a tall narrow column while squeezing the graphs and
+              trees that need width. Mobile stays stacked, where that is the right shape. */}
+          <div className={isMobile ? styles.stageStack : styles.stageSplit}>
+            {!isMobile && isBottomPanelOpen && (
+              <div className={styles.codeColumn}>
+                <CodeViewer problem={activeProblem} currentStep={currentStep} />
+              </div>
+            )}
+
           {/* Main Visualizer Stage + Controls + Live Trace Banner */}
+          <div className={styles.stageColumn}>
           <div className={`glass-panel ${styles.stagePanel}`}>
             <div className={styles.stageInner}>
               {loading ? (
@@ -653,6 +666,8 @@ export default function App() {
               <LiveTraceTicker stepDescription={currentStep?.description} />
             </div>
           </div>
+          </div>
+          </div>
 
           {/* Collapse handle for the whole bottom section, so the canvas can take the
               full height while a trace is playing. Always visible so it can be reopened. */}
@@ -713,15 +728,14 @@ export default function App() {
             )}
           </div>
 
-          {/* Desktop Bottom Section. The code panel is the one thing here that belongs
-              on screen while a trace plays - its highlighted line tracks the animation -
-              so it gets the row unless the input editor or complexity card is opened. */}
-          {!isBottomPanelOpen ? null : !isMobile ? (
+          {/* Bottom section. On desktop the code now lives beside the canvas, so this row
+              carries only the on-demand panels and disappears when neither is open. Mobile
+              keeps its stacked tab card, which is the right shape on a narrow screen. */}
+          {!isMobile ? (showBottomRow ? (
             <div
               className={styles.bottomDesktopGrid}
               style={{ gridTemplateColumns: bottomGridColumns }}
             >
-              <CodeViewer problem={activeProblem} currentStep={currentStep} />
               {hasInputSpec && isInputEditorOpen && (
                 <div className={`glass-panel ${styles.inputCard}`}>
                   <InputPanel
@@ -737,7 +751,7 @@ export default function App() {
                 <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} />
               )}
             </div>
-          ) : (
+          ) : null) : (isBottomPanelOpen ? (
             /* Mobile Tab Bottom Card Section (Code / Input / Memory / Complexity) */
             <div className={`glass-panel ${styles.bottomMobileCard}`}>
               <div className={styles.mobileTabNav}>
@@ -787,7 +801,7 @@ export default function App() {
                 )}
               </div>
             </div>
-          )}
+          ) : null)}
         </main>
       </div>
     </div>
