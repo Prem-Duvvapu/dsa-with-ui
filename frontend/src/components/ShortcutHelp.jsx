@@ -23,7 +23,7 @@ export const SHORTCUTS = [
   { keys: ['Esc'], label: 'Close this list or the sidebar' }
 ];
 
-export default function ShortcutHelp({ open, onClose }) {
+export default function ShortcutHelp({ open, onClose, onReplayWelcome }) {
   const closeRef = useRef(null);
 
   // Focus the dialog's own control on open, so Escape and Tab act on the dialog rather
@@ -74,6 +74,12 @@ export default function ShortcutHelp({ open, onClose }) {
         <p className={styles.note}>
           Shortcuts pause while you are typing in an input.
         </p>
+
+        {onReplayWelcome && (
+          <button type="button" onClick={onReplayWelcome} className={styles.replayBtn}>
+            Show the introduction again
+          </button>
+        )}
       </div>
     </div>
   );

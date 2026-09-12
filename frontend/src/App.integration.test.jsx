@@ -554,6 +554,33 @@ describe('App input panel', () => {
     await screen.findByLabelText('Target sum');
   }
 
+  it('greets a genuine first visitor, once', async () => {
+    // setupTests marks the guide seen by default, so this opts back into a real first load.
+    window.localStorage.removeItem('dsa-ui:seenWelcome');
+    renderApp();
+
+    expect(await screen.findByTestId('welcome-guide')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /Start exploring/i }));
+    await waitFor(() => expect(screen.queryByTestId('welcome-guide')).not.toBeInTheDocument());
+
+    // Second visit: introduced already, so it stays out of the way.
+    cleanup();
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(screen.queryByTestId('welcome-guide')).not.toBeInTheDocument();
+  });
+
+  it('is reachable again from the shortcut panel after being dismissed', async () => {
+    // A first-run screen nobody can get back to punishes a misclick.
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(screen.queryByTestId('welcome-guide')).not.toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: '?' });
+    fireEvent.click(await screen.findByRole('button', { name: /Show the introduction again/i }));
+    expect(await screen.findByTestId('welcome-guide')).toBeInTheDocument();
+  });
+
   it('opens the shortcut list with ? and closes it with Escape', async () => {
     // The shortcuts worked before this; they were written down only in two button
     // tooltips, so nobody could find them.

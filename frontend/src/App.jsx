@@ -5,6 +5,7 @@ import Breadcrumb from './components/Breadcrumb';
 import ProblemStatement from './components/ProblemStatement';
 import InputSummary from './components/InputSummary';
 import ShortcutHelp from './components/ShortcutHelp';
+import WelcomeGuide from './components/WelcomeGuide';
 import usePersistentState from './hooks/usePersistentState';
 import useTheme from './hooks/useTheme';
 import Sidebar from './components/Sidebar';
@@ -235,6 +236,9 @@ export default function App() {
 
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const { theme, cycleTheme } = useTheme();
+  // Shown once, on a genuine first visit. Tracked rather than inferred from other
+  // preferences: someone who only ever changed the theme has still never been introduced.
+  const [hasSeenWelcome, setHasSeenWelcome] = usePersistentState('seenWelcome', false, isBool);
   // Collapsing this row frees up vertical space for the canvas while a trace is playing.
   const [isBottomPanelOpen, setIsBottomPanelOpen] = usePersistentState('bottomPanelOpen', true, isBool);
   // The input editor and the complexity card are setup furniture: useful before a run,
@@ -339,6 +343,11 @@ export default function App() {
       // Escape works even while typing - someone in the search field is exactly who needs
       // it - and closes the topmost thing first.
       if (e.code === 'Escape') {
+        if (!hasSeenWelcome) {
+          e.preventDefault();
+          setHasSeenWelcome(true);
+          return;
+        }
         if (isHelpOpen) {
           e.preventDefault();
           setIsHelpOpen(false);
@@ -423,7 +432,8 @@ export default function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [togglePlay, stepNext, stepPrev, reset, seek, steps.length, nudgeSpeed,
-      isMobile, isSidebarOpen, isHelpOpen, setIsSidebarOpen]);
+      isMobile, isSidebarOpen, isHelpOpen, setIsSidebarOpen,
+      hasSeenWelcome, setHasSeenWelcome]);
 
   const handleSelectCategory = (cat) => {
     setActiveCategory(cat);
@@ -511,7 +521,23 @@ export default function App() {
         onToggle={() => setIsStatementOpen(prev => !prev)}
       />
 
-      <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
+      <ShortcutHelp
+        open={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        onReplayWelcome={() => {
+          setIsHelpOpen(false);
+          setHasSeenWelcome(false);
+        }}
+      />
+
+      <WelcomeGuide
+        open={!hasSeenWelcome && !loading && !catalogError}
+        onDismiss={() => setHasSeenWelcome(true)}
+        onShowShortcuts={() => {
+          setHasSeenWelcome(true);
+          setIsHelpOpen(true);
+        }}
+      />
 
       {catalogError && (
         <div
