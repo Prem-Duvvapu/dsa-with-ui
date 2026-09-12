@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
+import ProblemStatement from './components/ProblemStatement';
 import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -380,6 +381,8 @@ export default function App() {
       />
 
       <Breadcrumb problem={activeProblem} />
+
+      <ProblemStatement problem={activeProblem} />
 
       {catalogError && (
         <div

@@ -69,20 +69,20 @@ public class BitManipulationService implements ProblemProvider {
 
     private void populateRemainingBitMathProblems() {
         String[][] list = new String[][]{
-            {"intro-bits-tricks", "Introduction to Bits and Tricks", "Bit Manipulation - Easy", "Easy", "Bitwise operators &, |, ^, ~, <<, >>."},
-            {"check-ith-bit-set", "Check if i-th Bit is Set or Not", "Bit Manipulation - Easy", "Easy", "Check (N & (1 << i)) != 0."},
-            {"check-number-odd", "Check if Number is Odd or Not", "Bit Manipulation - Easy", "Easy", "Check (N & 1) == 1."},
-            {"check-power-of-2", "Check if Number is Power of 2", "Bit Manipulation - Easy", "Easy", "Check (N & (N - 1)) == 0."},
+            {"intro-bits-tricks", "Introduction to Bits and Tricks", "Bit Manipulation - Easy", "Easy", "Learn what each bitwise operator does to the bits of a number."},
+            {"check-ith-bit-set", "Check if i-th Bit is Set or Not", "Bit Manipulation - Easy", "Easy", "Decide whether the bit at position i of N is a 1 or a 0."},
+            {"check-number-odd", "Check if Number is Odd or Not", "Bit Manipulation - Easy", "Easy", "Decide whether N is odd or even."},
+            {"check-power-of-2", "Check if Number is Power of 2", "Bit Manipulation - Easy", "Easy", "Decide whether N is an exact power of two."},
             {"count-set-bits", "Count Number of Set Bits", "Bit Manipulation - Easy", "Easy", "Brian Kernighan's Algorithm N & (N - 1)."},
-            {"set-unset-rightmost-bit", "Set / Unset Rightmost Unset Bit", "Bit Manipulation - Easy", "Easy", "Bitwise bit toggling tricks."},
+            {"set-unset-rightmost-bit", "Set / Unset Rightmost Unset Bit", "Bit Manipulation - Easy", "Easy", "Set the rightmost 0 bit of N, or clear its rightmost 1 bit."},
             {"swap-two-numbers", "Swap Two Numbers Using XOR", "Bit Manipulation - Easy", "Easy", "Swap a and b without third variable using XOR."},
-            {"divide-two-numbers-bitwise", "Divide Two Numbers Without *, /", "Bit Manipulation - Medium", "Medium", "Bitwise shift quotient calculation."},
-            {"min-bit-flips", "Minimum Bit Flips to Convert Number", "Bit Manipulation - Medium", "Easy", "Count set bits of (start ^ goal)."},
-            {"xor-numbers-in-range", "XOR of Numbers in Range [L..R]", "Bit Manipulation - Medium", "Medium", "Range XOR pattern property (N % 4)."},
+            {"divide-two-numbers-bitwise", "Divide Two Numbers Without *, /", "Bit Manipulation - Medium", "Medium", "Divide two integers without using multiplication, division or modulo."},
+            {"min-bit-flips", "Minimum Bit Flips to Convert Number", "Bit Manipulation - Medium", "Easy", "Find the fewest single-bit flips that turn start into goal."},
+            {"xor-numbers-in-range", "XOR of Numbers in Range [L..R]", "Bit Manipulation - Medium", "Medium", "Find the XOR of every integer from 1 to N."},
             {"single-number-3", "Single Number III (Two Unique Numbers)", "Bit Manipulation - Medium", "Medium", "Find two numbers appearing once using rightmost set bit bucket partition."},
-            {"print-prime-factors", "Print Prime Factors of a Number", "Advanced Maths", "Medium", "Find prime factors up to sqrt(N)."},
-            {"divisors-of-number", "Print All Divisors of a Number", "Advanced Maths", "Easy", "Print all divisors in O(sqrt(N)) time."},
-            {"count-primes-range-sieve", "Count Primes (Sieve of Eratosthenes)", "Advanced Maths", "Medium", "Sieve of Eratosthenes O(N log log N)."},
+            {"print-prime-factors", "Print Prime Factors of a Number", "Advanced Maths", "Medium", "Find every prime factor of N."},
+            {"divisors-of-number", "Print All Divisors of a Number", "Advanced Maths", "Easy", "Find every divisor of N."},
+            {"count-primes-range-sieve", "Count Primes (Sieve of Eratosthenes)", "Advanced Maths", "Medium", "Count how many prime numbers are strictly less than N."},
             {"prime-factorisation-queries", "Prime Factorisation of a Number", "Advanced Maths", "Medium", "Smallest Prime Factor (SPF) array factorisation."},
             {"pow-x-n-math", "Pow(x, n) Binary Exponentiation", "Advanced Maths", "Medium", "Binary Exponentiation O(log N) power computation."}
         };

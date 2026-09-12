@@ -71,6 +71,9 @@ public class ProblemsController {
 
         Map<String, Object> out = new LinkedHashMap<>(summarize(entry));
         out.put("description", p.getDescription());
+        // The SOURCE problem's constraints. Distinct from the inputSpec field constraints
+        // below, which are this visualiser's own caps; the UI labels them apart.
+        out.put("constraints", p.getConstraints());
         out.put("complexity", p.getComplexity());
         out.put("defaultArray", p.getDefaultArray());
         out.put("defaultGrid", p.getDefaultGrid());

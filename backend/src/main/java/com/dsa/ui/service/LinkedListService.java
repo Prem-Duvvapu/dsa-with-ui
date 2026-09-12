@@ -69,7 +69,7 @@ public class LinkedListService implements ProblemProvider {
         String[][] list = new String[][]{
             {"intro-singly-ll", "Introduction to Singly LinkedList", "Linked List - Easy", "Easy", "Node structure with data and next pointer."},
             {"insert-head-ll", "Insertion at Head of Linked List", "Linked List - Easy", "Easy", "Insert a new node before current head pointer."},
-            {"delete-head-ll", "Deletion of Head of Linked List", "Linked List - Easy", "Easy", "Move head pointer to head.next."},
+            {"delete-head-ll", "Deletion of Head of Linked List", "Linked List - Easy", "Easy", "Remove the first node of a singly linked list."},
             {"length-ll", "Length of Linked List", "Linked List - Easy", "Easy", "Traverse linked list counting total nodes."},
             {"search-ll", "Search in Linked List", "Linked List - Easy", "Easy", "Search for target value X in singly linked list."},
             {"intro-doubly-ll", "Introduction to Doubly LinkedList", "Linked List - Easy", "Easy", "Node structure with prev, data, and next pointers."},

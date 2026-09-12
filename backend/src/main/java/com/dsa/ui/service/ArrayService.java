@@ -968,7 +968,7 @@ public class ArrayService implements ProblemProvider {
         // 17. 3 Sum
         problems.put("three-sum", new ProblemDetail(
             "three-sum", "3 Sum (Triplets with Sum 0)", "Arrays - Hard", "Arrays", "Medium",
-            "Find all unique triplets in an array that add up to zero in O(N^2) time using Sorting and Two Pointers.",
+            "Find every unique triplet in an array that sums to zero.",
             """
             // Java 3Sum (LeetCode 15)
             public List<List<Integer>> threeSum(int[] nums) {
@@ -1011,7 +1011,7 @@ public class ArrayService implements ProblemProvider {
         // 18. 4 Sum
         problems.put("four-sum", new ProblemDetail(
             "four-sum", "4 Sum (Quadruplets with Target Sum)", "Arrays - Hard", "Arrays", "Medium",
-            "Find all unique quadruplets in an array that add up to a target sum in O(N^3) time.",
+            "Find every unique quadruplet in an array that sums to a target.",
             """
             // Java 4Sum (LeetCode 18)
             public List<List<Integer>> fourSum(int[] nums, int target) {

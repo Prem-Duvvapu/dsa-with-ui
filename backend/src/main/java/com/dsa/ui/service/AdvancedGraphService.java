@@ -277,7 +277,7 @@ public class AdvancedGraphService implements ProblemProvider {
             {"floyd-warshall", "39. Floyd Warshall Algorithm", "Graphs - Shortest Path", "Medium", "All-Pairs Shortest Path dynamic programming algorithm O(V^3)."},
             {"city-smallest-neighbors", "40. City With Smallest Neighbors", "Graphs - Shortest Path", "Medium", "City with smallest reachable neighbors at threshold distance using Floyd-Warshall."},
             {"mst-theory", "41. Minimum Spanning Tree Theory", "Graphs - MST & DSU", "Easy", "MST connects all vertices with minimum total edge weight."},
-            {"prims-mst", "42. Prim's Algorithm for MST", "Graphs - MST & DSU", "Medium", "Greedy MST algorithm using Min-Heap."},
+            {"prims-mst", "42. Prim's Algorithm for MST", "Graphs - MST & DSU", "Medium", "Find a minimum spanning tree: connect every vertex at the lowest total edge weight."},
             {"disjoint-set-dsu", "43. Disjoint Set (DSU Implementation)", "Graphs - MST & DSU", "Medium", "DSU with Path Compression and Union by Rank / Size."},
             {"kruskals-mst", "44. Find MST Weight (Kruskal's)", "Graphs - MST & DSU", "Medium", "Sort edges + DSU union for Minimum Spanning Tree weight."},
             {"network-connected-ops", "45. Operations to Make Network Connected", "Graphs - MST & DSU", "Medium", "Min cables to connect all computers using DSU components."},

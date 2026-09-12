@@ -18,6 +18,17 @@ public class ProblemDetail {
     private List<TrieNodeModel> defaultTrie;
     private int[][] defaultGrid;
     private ComplexityDetail complexity;
+    /**
+     * The ORIGINAL problem's constraints, as the source (LeetCode/GFG) states them -
+     * e.g. "1 <= nums.length <= 10^5". Deliberately NOT the visualiser's own input limits,
+     * which live in InputSpec's field constraints and exist to protect the step budget.
+     * The two differ by orders of magnitude, so they are kept apart and labelled apart.
+     *
+     * <p>Null or empty means "not recorded yet", and the UI omits the section rather than
+     * inventing a plausible bound - the same honesty rule the catalogue applies to missing
+     * complexity analysis. A wrong constraint is worse than an absent one.
+     */
+    private List<String> constraints;
     private DsType dsType;
 
     public ProblemDetail() {}
@@ -96,6 +107,9 @@ public class ProblemDetail {
 
     public ComplexityDetail getComplexity() { return complexity; }
     public void setComplexity(ComplexityDetail complexity) { this.complexity = complexity; }
+
+    public List<String> getConstraints() { return constraints; }
+    public void setConstraints(List<String> constraints) { this.constraints = constraints; }
 
     public DsType getDsType() { return dsType; }
     public void setDsType(DsType dsType) { this.dsType = dsType; }
