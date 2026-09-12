@@ -70,4 +70,36 @@ describe('LinkedListCanvas', () => {
     render(<LinkedListCanvas problem={{ defaultList: [{ id: 1, val: 99, next: null }] }} steps={steps} currentStepIndex={1} currentStep={steps[1]} />);
     expect(screen.getByText('7')).toBeInTheDocument(); expect(screen.queryByText('99')).not.toBeInTheDocument();
   });
+
+  describe('doubly linked lists', () => {
+    // Seven problems emit prevId - intro-doubly-ll, reverse-dll, insert-head-dll and the
+    // rest - and the canvas showed only `next`. Reversing a DLL means swapping next AND
+    // prev on every node, so half the operation was invisible.
+    const dll = [
+      { id: 0, val: '1', nextId: 1, prevId: null, state: 'default' },
+      { id: 1, val: '2', nextId: 2, prevId: 0, state: 'current' },
+      { id: 2, val: '3', nextId: null, prevId: 1, state: 'default' }
+    ];
+
+    it('shows each node\'s prev pointer, not only its next', () => {
+      render(<LinkedListCanvas currentStep={{ listState: dll }} />);
+      expect(screen.getByText('prev -> [0]')).toBeInTheDocument();
+      expect(screen.getByText('next -> [1]')).toBeInTheDocument();
+    });
+
+    it('names the null ends of the chain', () => {
+      render(<LinkedListCanvas currentStep={{ listState: dll }} />);
+      expect(screen.getByText('prev -> NULL')).toBeInTheDocument();
+      expect(screen.getByText('next -> NULL')).toBeInTheDocument();
+    });
+
+    it('leaves a singly linked list unchanged', () => {
+      // No prevId anywhere means no prev row - a singly linked list should not grow a
+      // column of NULLs it never had.
+      const sll = [{ id: 0, val: '1', nextId: 1, state: 'default' },
+                   { id: 1, val: '2', nextId: null, state: 'default' }];
+      render(<LinkedListCanvas currentStep={{ listState: sll }} />);
+      expect(screen.queryByText(/^prev ->/)).not.toBeInTheDocument();
+    });
+  });
 });

@@ -20,6 +20,11 @@ export default function LinkedListCanvas({ problem, currentStep, step, steps, cu
   const listState = lastPayload(steps, currentStepIndex, 'listState', activeStep)
     || problem?.defaultList || [];
 
+  // Seven problems emit prevId, and for a doubly linked list the backward pointer is half
+  // the structure: reversing one means swapping next AND prev on every node, which was
+  // invisible while only next was drawn.
+  const isDoubly = listState.some((n) => n.prevId !== null && n.prevId !== undefined);
+
   const containerRef = useRef(null);
   const nodeRefs = useRef(new Map());
   const [edges, setEdges] = useState({ child: [], random: [] });
@@ -201,8 +206,21 @@ export default function LinkedListCanvas({ problem, currentStep, step, steps, cu
                   {node.val}
                 </div>
                 <div style={{ width: '1px', height: '24px', background: 'var(--border-strong)' }} />
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-primary)', fontWeight: '600' }}>
-                  {node.nextId !== null ? `next -> [${node.nextId}]` : 'next -> NULL'}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  {/* Only doubly linked lists get a prev row. A singly linked list should
+                      not grow a column of NULLs it never had. */}
+                  {isDoubly && (
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                      {node.prevId !== null && node.prevId !== undefined
+                        ? `prev -> [${node.prevId}]`
+                        : 'prev -> NULL'}
+                    </div>
+                  )}
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                    {node.nextId !== null && node.nextId !== undefined
+                      ? `next -> [${node.nextId}]`
+                      : 'next -> NULL'}
+                  </div>
                 </div>
               </div>
 
