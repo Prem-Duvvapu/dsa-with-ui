@@ -781,27 +781,6 @@ mark {
 
 .sb-empty-primary:hover { background: var(--accent-violet-hover); border-color: var(--accent-violet-hover); }
 
-/* --- Keyboard legend. Teaches the contract that is the best part of this panel. --- */
-.sb-legend {
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-sm) 2px 0;
-  margin-top: auto;
-  font-family: var(--font-code);
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  background: linear-gradient(0deg,
-              var(--bg-elevated) 0%,
-              var(--bg-elevated) 60%,
-              rgba(15, 23, 42, 0) 100%);
-}
-
-.sb-legend-item { display: inline-flex; align-items: center; gap: var(--space-xs); }
-.sb-legend-key { color: var(--text-secondary); font-weight: 600; }
-
 /* --- Sidebar structure --- */
 .sidebar-panel {
   width: 320px;

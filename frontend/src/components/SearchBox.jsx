@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, X, CornerDownLeft, ArrowUpDown } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useProblemSearch } from '../search/useProblemSearch';
 import { matchRanges } from '../search/scoreProblem';
 import { normalizeCategory } from '../search/normalizeCategory';
@@ -314,20 +314,6 @@ export default function SearchBox({
         )}
       </div>
 
-      {/* The keyboard contract is the best thing about this panel and was invisible. */}
-      {problems.length > 0 && (
-        <div className="sb-legend">
-          <span className="sb-legend-item">
-            <ArrowUpDown size={11} /> <span className="sb-legend-key">browse</span>
-          </span>
-          <span className="sb-legend-item">
-            <CornerDownLeft size={11} /> <span className="sb-legend-key">open</span>
-          </span>
-          <span className="sb-legend-item">
-            <span className="sb-legend-key">esc</span> clear
-          </span>
-        </div>
-      )}
     </div>
   );
 }
