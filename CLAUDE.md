@@ -66,13 +66,17 @@ green, since CI gates every merge.
 
 ### Two layers coexist, deliberately
 
-The backend is mid-migration. Both layers are live and both are tested; do not delete one
-without reading `HANDOFF.md`.
+The migration is complete on the trace side: all 433 problems are served by the tracer
+layer, and the legacy services no longer generate steps at all. Both layers are still
+deployed and tested; do not delete one without reading `HANDOFF.md`.
 
 **Legacy layer (18 controllers + 18 services).** `controller/ArrayController` →
-`service/ArrayService` → a giant `switch (problemId)` returning `List<ExecutionStep>`.
-Paths are `/api/{topic}/problems` and `/api/{topic}/execute/{id}`. They remain compatibility
-endpoints and are still contract-tested, but the frontend uses the v2 API.
+`service/ArrayService`. Paths are `/api/{topic}/problems` and `/api/{topic}/execute/{id}`.
+The services are now **catalogue providers only** — each implements
+`catalog/ProblemProvider` and supplies `ProblemDetail`s, and every `generateSteps(id)`
+throws `LegacyTraceRetiredException` (410). The 80 step generators and the step-returning
+`default:` branches were deleted; `/problems` still answers 200, `/execute/{id}` always
+answers 410. The frontend uses the v2 API.
 
 **Tracer layer (`tracer/`, `catalog/`, `ProblemsController`).** The replacement, served at
 `/api/problems`. This is where new work goes.
@@ -92,10 +96,16 @@ Three rules follow from that, and they are the point of the design:
    traced). Never substitute a different problem's steps. An unknown `dsType` likewise
    renders an explicit unsupported state, never `ArrayCanvas`. The legacy controllers were
    patched to restore the same 404 guard; `ApiContractTest` is parameterized over all 18 to
-   keep it that way.
+   keep it that way. Every legacy `/execute/{id}` route now answers **410** for every id it
+   catalogues — no service has a step-returning `default:` left, and
+   `ApiContractTest.everyLegacyExecuteRouteIsRetired` walks each controller's own catalogue
+   to keep a straggler from reappearing.
 2. **`traced` is an honesty flag, not a feature flag.** `GET /api/problems/stats` reports
-   `catalogued` vs `traced` vs `untraced`. The UI is meant to say "not yet traced" rather
-   than animate the wrong thing. Currently **44 of 433** are traced.
+   `catalogued` vs `traced` vs `untraced`. The UI says "not yet traced" rather than animate
+   the wrong thing. **All 433 of 433 are traced**, so `untraced` is currently 0 — the flag
+   stays because it is what makes a regression visible, not because work is outstanding.
+   Never quote that number from this file: run
+   `curl -s localhost:8923/api/problems/stats`.
 3. **Tests must detect fake work, not just crashes.** `TracerContractTest.traceRespondsToItsInput`
    runs each tracer on two materially different inputs and fails if the traces are identical
    — a canned narration cannot survive it. When you fix something, prove the new test fails
