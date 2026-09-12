@@ -97,7 +97,7 @@ public class RecursionBacktrackingService implements ProblemProvider {
             }
             """,
             null, null, createPalindromeTreeNodes(), null, null, null, null,
-            new ComplexityDetail("O(2^N * N)", "Time Complexity: 2^(N-1) partition cuts * O(N) palindrome check.", "Backtracking", "O(N)", "Space Complexity: Call stack depth.", "Memory", "Auxiliary Space: O(N)", "Memory"), "Stack"
+            new ComplexityDetail("O(2^N * N)", "Time Complexity: 2^(N-1) partition cuts * O(N) palindrome check.", "Backtracking", "O(N)", "Space Complexity: Call stack depth.", "Memory", "Auxiliary Space: O(N)", "Memory"), "RecursionTree"
         ));
 
         // 6. Subsets
@@ -113,7 +113,7 @@ public class RecursionBacktrackingService implements ProblemProvider {
             }
             """,
             null, null, createSubsetsTreeNodes(), null, null, null, null,
-            new ComplexityDetail("O(2^N)", "Time Complexity: 2 choices per element (Pick / Non-Pick).", "Binary Tree Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), "Stack"
+            new ComplexityDetail("O(2^N)", "Time Complexity: 2 choices per element (Pick / Non-Pick).", "Binary Tree Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), "RecursionTree"
         ));
 
         // Bulk register remaining 19 recursion algorithms
@@ -129,10 +129,20 @@ public class RecursionBacktrackingService implements ProblemProvider {
      */
     private static DsType bulkDsType(String id) {
         return switch (id) {
-            case "atoi-recursive", "generate-binary-strings", "generate-parentheses",
-                    "letter-combinations-phone", "word-break" -> DsType.STRING;
+            // The exploration tree IS the subject for these: you try a branch, abandon it,
+            // and take the next one, which a stack cannot show. RecursionTreeCanvas rebuilds
+            // that tree from the call stacks they already emit.
+            case "subsets-i", "subsets-2", "power-set", "subsequences-patterns-theory",
+                    "count-subsequences-sum-k", "check-subsequence-sum-k",
+                    "combination-sum-i", "combination-sum-2", "combination-sum-3",
+                    "palindrome-partitioning", "permutations",
+                    "generate-binary-strings", "generate-parentheses",
+                    "letter-combinations-phone", "word-break" -> DsType.RECURSION_TREE;
+            case "atoi-recursive" -> DsType.STRING;
             case "count-good-numbers", "pow-x-n-recursive" -> DsType.BITS;
-            case "permutations" -> DsType.ARRAY;
+            // A board, a maze and a graph are each the right picture for their own problem;
+            // the tree is secondary there. n-queens and sudoku-solver emit no call stack at
+            // all, so there would be nothing to rebuild even if it were not.
             case "word-search" -> DsType.MATRIX;
             default -> DsType.STACK;
         };

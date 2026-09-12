@@ -24,7 +24,7 @@ public class GenerateParenthesesTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STRING;
+        return DsType.RECURSION_TREE;
     }
 
     @Override

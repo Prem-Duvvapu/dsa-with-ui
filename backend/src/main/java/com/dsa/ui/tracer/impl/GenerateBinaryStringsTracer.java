@@ -23,7 +23,7 @@ public class GenerateBinaryStringsTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STRING;
+        return DsType.RECURSION_TREE;
     }
 
     @Override

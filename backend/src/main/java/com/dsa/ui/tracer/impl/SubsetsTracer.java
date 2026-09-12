@@ -23,7 +23,7 @@ public class SubsetsTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STACK;
+        return DsType.RECURSION_TREE;
     }
 
     @Override

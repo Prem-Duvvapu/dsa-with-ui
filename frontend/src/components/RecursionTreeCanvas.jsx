@@ -1,12 +1,74 @@
 import React from 'react';
 import { GitBranch, Layers, ArrowDown } from 'lucide-react';
 
-export default function RecursionTreeCanvas({ problem, currentStep, step }) {
+import { buildRecursionTree, layoutRecursionTree } from '../trace/recursionTree';
+import derived from './DerivedRecursionTree.module.css';
+
+const NODE_W = 74;
+const NODE_H = 26;
+const ROW_H = 62;
+
+/**
+ * The tree a backtracking run explored, rebuilt from the call stacks it emitted.
+ *
+ * None of the twenty-five Recursion & Backtracking tracers emits `treeNodes`, so this
+ * canvas had nothing to draw for them and they were routed to a stack or an array instead.
+ * A stack shows how deep you are; it cannot show that you tried a branch, abandoned it, and
+ * took the next one - which is the whole of backtracking.
+ */
+function DerivedRecursionTree({ steps, currentStepIndex }) {
+  const { nodes, truncated } = buildRecursionTree(steps, currentStepIndex);
+  if (!nodes.length) return null;
+
+  const { positions, width, depth } = layoutRecursionTree(nodes);
+  const svgW = Math.max(width * NODE_W + NODE_W, 240);
+  const svgH = depth * ROW_H + NODE_H;
+  const x = (id) => positions.get(id) * NODE_W + NODE_W / 2;
+  const y = (d) => d * ROW_H + NODE_H / 2;
+
+  return (
+    <div className={derived.wrap} data-testid="derived-recursion-tree">
+      <svg width={svgW} height={svgH} role="img" aria-label={`Recursion tree, ${nodes.length} calls explored`}>
+        {nodes.filter((n) => n.parentId !== null).map((n) => {
+          const parent = nodes[n.parentId];
+          return (
+            <line
+              key={`e${n.id}`}
+              x1={x(parent.id)} y1={y(parent.depth) + NODE_H / 2}
+              x2={x(n.id)} y2={y(n.depth) - NODE_H / 2}
+              className={`${derived.edge} ${derived[`edge_${n.state}`] || ''}`}
+            />
+          );
+        })}
+        {nodes.map((n) => (
+          <g key={n.id} data-state={n.state} transform={`translate(${x(n.id) - NODE_W / 2}, ${y(n.depth) - NODE_H / 2})`}>
+            <rect
+              width={NODE_W} height={NODE_H} rx="6"
+              className={`${derived.node} ${derived[`node_${n.state}`] || ''}`}
+            />
+            <text x={NODE_W / 2} y={NODE_H / 2 + 4} textAnchor="middle" className={derived.label}>
+              {n.label.length > 11 ? `${n.label.slice(0, 10)}…` : n.label}
+            </text>
+          </g>
+        ))}
+      </svg>
+      {truncated && (
+        <p className={derived.note}>
+          Showing the first {nodes.length} calls. The run explores more than fits here.
+        </p>
+      )}
+    </div>
+  );
+}
+
+export default function RecursionTreeCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
   const treeNodes = (activeStep?.treeNodes && activeStep.treeNodes.length > 0)
     ? activeStep.treeNodes
     : (problem?.defaultTreeNodes || []);
   const nodeStates = activeStep?.nodeStates || {};
+  // Tracers that emit their own tree keep it; the rest have theirs rebuilt from callStack.
+  const hasOwnTree = Boolean(activeStep?.treeNodes?.length);
   const arrayState = activeStep?.arrayState || problem?.defaultArray || [];
 
   const getNodeColor = (nodeId, explicitState) => {
@@ -67,7 +129,9 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
 
       {/* Main SVG Recursion Tree Canvas */}
       <div style={{ flex: 1, width: '100%', minHeight: '260px', background: 'var(--canvas-well)', borderRadius: '12px', overflow: 'auto', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {treeNodes.length > 0 ? (
+        {!hasOwnTree ? (
+          <DerivedRecursionTree steps={steps} currentStepIndex={currentStepIndex} />
+        ) : treeNodes.length > 0 ? (
           <svg width="100%" height="250" viewBox="0 0 380 250" style={{ overflow: 'visible' }}>
             {/* Connecting Call Branch Lines */}
             {treeNodes.map((node) => {

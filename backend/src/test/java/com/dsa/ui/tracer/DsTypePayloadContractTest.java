@@ -81,9 +81,13 @@ class DsTypePayloadContractTest {
         REQUIRED.put(DsType.HEAP, arrayState);
         // IntervalCanvas reads arrayState too, falling back to `intervals` when present.
         REQUIRED.put(DsType.INTERVAL, arrayState);
-        // RecursionTreeCanvas draws from treeNodes; callStack only feeds the frame sidebar.
-        REQUIRED.put(DsType.RECURSION_TREE, new Requirement("treeNodes",
-                s -> s.getTreeNodes() != null && !s.getTreeNodes().isEmpty()));
+        // RecursionTreeCanvas draws from EITHER source, and both are legitimate. A tracer
+        // that builds its own tree emits treeNodes; a backtracking tracer emits the call
+        // stack and the canvas rebuilds the tree from it, because the sequence of stacks IS
+        // the tree. What is not acceptable is neither - that renders an empty canvas.
+        REQUIRED.put(DsType.RECURSION_TREE, new Requirement("treeNodes or callStack",
+                s -> (s.getTreeNodes() != null && !s.getTreeNodes().isEmpty())
+                        || (s.getCallStack() != null && !s.getCallStack().isEmpty())));
         // DSU has no structural field: DsuCanvas reconstructs parent[]/rank[] by parsing
         // these exact variable keys. That makes the key names a wire contract, so pin them
         // here - a rename would otherwise leave the canvas silently drawing its own default.

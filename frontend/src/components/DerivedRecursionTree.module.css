@@ -1,0 +1,76 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: min-content;
+}
+
+.edge {
+  stroke: var(--canvas-edge);
+  stroke-width: 1.5;
+  transition: stroke var(--motion-fast) var(--ease-standard);
+}
+
+/* The live path is drawn heavier: at any moment one root-to-leaf line is where the
+   algorithm actually is, and everything else is where it has been. */
+.edge_active,
+.edge_current {
+  stroke: var(--probe);
+  stroke-width: 2.5;
+}
+
+.edge_done {
+  stroke: var(--canvas-edge);
+  opacity: 0.45;
+}
+
+.node {
+  fill: var(--canvas-node-fill);
+  stroke: var(--canvas-edge);
+  stroke-width: 1;
+  transition: fill var(--motion-fast) var(--ease-standard);
+}
+
+/* Explored and left behind. Dimmed rather than dropped: the branches already abandoned
+   are what make the tree a record of the search rather than a snapshot of one path. */
+.node_done {
+  fill: var(--canvas-node-fill);
+  stroke: var(--canvas-edge);
+  opacity: 0.45;
+}
+
+.node_active {
+  fill: var(--canvas-node-fill-2);
+  stroke: var(--probe);
+}
+
+.node_current {
+  fill: var(--probe);
+  stroke: var(--probe);
+}
+
+.label {
+  font-family: var(--font-code);
+  font-size: 0.6rem;
+  font-weight: 600;
+  fill: var(--text-secondary);
+  pointer-events: none;
+}
+
+.node_current + .label,
+g[data-state='current'] .label {
+  fill: var(--probe-on);
+  font-weight: 800;
+}
+
+g[data-state='done'] .label {
+  fill: var(--text-muted);
+}
+
+.note {
+  margin: 0;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  font-family: var(--font-code);
+}
