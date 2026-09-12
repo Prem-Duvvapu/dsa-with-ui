@@ -64,6 +64,12 @@ export default function useTrace(problemId, problem, options = {}) {
    * `step.resolvedInput`, which is always undefined, because nothing put it there.
    */
   const [resolvedInput, setResolvedInput] = useState(null);
+  /**
+   * The tracer's `// @a` anchors, name -> line. Every anchor marks a line the algorithm can
+   * reach; comparing them against the lines this run actually visited is what lets the code
+   * panel say "this input never took that branch" instead of leaving it silently unmarked.
+   */
+  const [anchors, setAnchors] = useState(null);
   /** Per-field messages from the last rejected POST /execute. Cleared on any success. */
   const [fieldErrors, setFieldErrors] = useState({});
   /** The full per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
@@ -95,6 +101,7 @@ export default function useTrace(problemId, problem, options = {}) {
     setDetail(null);
     setSteps([]);
     setResolvedInput(null);
+    setAnchors(null);
     setTruncated(false);
 
     (async () => {
@@ -165,6 +172,9 @@ export default function useTrace(problemId, problem, options = {}) {
         setResolvedInput(Array.isArray(execOutcome.value)
           ? null
           : execOutcome.value?.resolvedInput ?? null);
+        setAnchors(Array.isArray(execOutcome.value)
+          ? null
+          : execOutcome.value?.anchors ?? null);
         setTruncated(!Array.isArray(execOutcome.value)
           && execOutcome.value?.truncated === true);
         setCurrentStepIndex(0);
@@ -342,6 +352,7 @@ export default function useTrace(problemId, problem, options = {}) {
     error,
     truncated,
     resolvedInput,
+    anchors,
     fieldErrors,
     detail,
     play,

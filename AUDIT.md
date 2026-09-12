@@ -34,7 +34,7 @@ unexercised branch, or a legacy `default:` that is once again serving substitute
 | # | Finding | Severity | Scope |
 |---|---|---|---|
 | [F1](#f1-live-fallbacks-in-12-legacy-services) | 12 legacy services still return another algorithm's steps from `default:` | **High** | 12 services, 5 live ids |
-| [F2](#f2-93-problems-never-highlight-some-of-their-code-on-the-default-input) | 93 problems never highlight some code on the *default* input (contract holds) | Low | 93 problems |
+| [F2](#f2-93-problems-never-highlight-some-of-their-code-on-the-default-input) | 93 problems never highlight some code on the *default* input (contract holds) | Low — **fixed** | 93 problems |
 | [F3](#f3-64-dead-legacy-generators) | 64 unreachable legacy generator methods | **Medium** | 8 services |
 | [F4](#f4-nine-recursion-traces-freeze-mid-unwind) | 9 recursion traces end with a non-empty call stack | **Medium** | 9 problems |
 | [F5](#f5-nine-of-seventeen-dstypes-have-no-payload-check) | 9 of 17 `DsType`s have no payload contract check | **Medium** | 170 problems unchecked |
@@ -200,22 +200,30 @@ succeeds, so "not found" / "unreachable" / "no cycle" never runs:
 `queue-stack-impl` (`peekEmpty`). One bug written six times: no default input ever pops an
 empty container.
 
-**Fix — needs an owner decision before any code changes; see
-[§7 Q2](#7-open-questions-for-the-owner).** Every option here is a pedagogical trade-off,
-not a bug fix:
+**Fixed, by option 3 below.** Three options were on the table, all pedagogical trade-offs
+rather than bug fixes:
 
-1. **Leave them.** Defaults should show the algorithm working; the alternate input already
-   demonstrates the other branch, and the input panel is how a learner reaches it. Under
-   this reading F2 is closed as working-as-intended.
-2. **Change the defaults** for the subset where the unexercised branch *is* the lesson —
-   cycle detection that never finds a cycle, a stack implementation that never underflows.
-   Costs a golden regeneration each, and risks making the first impression worse.
-3. **Surface it in the UI** — mark lines the current run never reaches. This is the only
-   option that fixes all 93 without compromising any default, and it is a feature, not a
-   repair.
+1. **Leave them.** The alternate input already demonstrates the other branch, and the input
+   panel is how a learner reaches it. Closes F2 as working-as-intended.
+2. **Change the defaults** for the subset where the unexercised branch *is* the lesson.
+   Costs a golden regeneration each, risks a worse first impression, and requires 93
+   per-problem judgements that nobody had a stated principle for.
+3. **Surface it in the UI.** Fixes all 93 without compromising a single default.
 
-No change has been made. Deciding this per-problem across 93 problems without a stated
-principle would just be 93 guesses.
+Option 3 shipped. The code panel now marks any `// @a` anchored line the current run never
+visited — a dotted rule, a `◦` gutter glyph, dimmed text, and a header count reading
+"N branches not taken". The data was already on the wire: the trace carries its anchors,
+and nothing had ever read them.
+
+The point is the reframing. An unhighlighted branch left unmarked reads as if the animation
+skipped something. Marked, it says the true thing — **this branch exists and your input did
+not take it** — which turns the gap into the lesson, since which branches run is a property
+of the data rather than of the visualiser. It also points at the input editor, so the
+learner has somewhere to go.
+
+Verified against the real problems this finding named: `two-sum` marks `none`,
+`stack-array-impl` marks `underflow` and `peekEmpty`, `undirected-cycle-dfs` marks
+`cycleDetected`.
 
 Full per-problem list: [Appendix A](#appendix-a--every-problem-by-topic).
 
@@ -470,8 +478,8 @@ where a new assertion was involved.
 | F4 — mid-unwind recursion | **Fixed.** New `traceEndsWithAnEmptyCallStack` contract test caught **12**, not 9 — the per-topic sweep missed `cycle-directed-dfs`, `directed-cycle-dfs`, `dfs-traversal`. All 12 closed, goldens read. | `8c3ff36` |
 | F8 — near-identical pair | **Fixed.** Similarity 0.983 → 0.247 by changing what each narrates. | `8dff996` |
 | F9 — 1-step trace | **Fixed.** Now 3 steps showing the carry/borrow mechanism. | `8dff996` |
-| F2 — defaults | **Open — needs a decision.** Reclassified to Low; no contract violation. See F2 and §7 Q2. | — |
-| F10 — duplicate ids | **Open — needs a decision.** Moves a pinned number. | — |
+| F2 — defaults | **Fixed.** The code panel marks branches the current input never took, rather than changing 93 defaults. | `codeviewer` |
+| F10 — duplicate ids | **Fixed.** All 11 duplicated problems resolved and the two graph topics merged; 433 → 431, duplicates 7 → 0. | `210f3ac` |
 
 Three additional defects were found *by the fixes*, not by the original sweep:
 
@@ -557,12 +565,11 @@ Two of these are recurring classes, which is the bar `RCA.md` sets:
    that deletes F1 and F3 entirely (12 services, 64 dead methods) instead of repairing
    them. That is the single highest-leverage decision available here, and it makes PRs 1–3
    unnecessary.
-2. **Should a default input demonstrate the failure branch?** This is F2, and it is the one
-   finding that is purely a judgement call — the contract is satisfied either way. Options
-   are listed under F2; the cheapest is to close it as working-as-intended, the best is
-   probably the UI marking unreached lines. Whichever you pick belongs in
-   `PROJECT_CONTEXT.md` as a stated pedagogical principle, so the next 93-problem sweep
-   does not re-litigate it.
+2. ~~**Should a default input demonstrate the failure branch?**~~ **Answered.** The UI now
+   marks branches the current input never took, so no default had to change and all 93
+   problems are covered. The principle worth stating, and now stated in F2: *which branches
+   run is a property of the data, so say so rather than hiding the gap or engineering it
+   away.*
 3. **Do the 7 duplicate ids represent real dual-category problems?** That determines
    whether F10 is a cleanup or a permanent, documented state.
 

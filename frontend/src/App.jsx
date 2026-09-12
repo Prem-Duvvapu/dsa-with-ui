@@ -176,7 +176,7 @@ export default function App() {
     truncated: traceTruncated,
     fieldErrors,
     detail,
-    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput, resolvedInput
+    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput, resolvedInput, anchors
   } = useTrace(activeProblemId, catalogEntry, { initialSpeed: persistedSpeed });
 
   // Merge in the per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
@@ -502,7 +502,7 @@ export default function App() {
           <div className={isMobile ? styles.stageStack : styles.stageSplit}>
             {!isMobile && isBottomPanelOpen && (
               <div data-tour="code-panel" className={styles.codeColumn}>
-                <CodeViewer problem={activeProblem} currentStep={currentStep} />
+                <CodeViewer problem={activeProblem} currentStep={currentStep} anchors={anchors} steps={steps} />
               </div>
             )}
 
@@ -719,7 +719,7 @@ export default function App() {
 
               <div className={styles.mobileTabBody}>
                 {activeTab === 'code' ? (
-                  <CodeViewer problem={activeProblem} currentStep={currentStep} />
+                  <CodeViewer problem={activeProblem} currentStep={currentStep} anchors={anchors} steps={steps} />
                 ) : activeTab === 'input' ? (
                   <div className={styles.mobileInputContainer}>
                     <InputPanel

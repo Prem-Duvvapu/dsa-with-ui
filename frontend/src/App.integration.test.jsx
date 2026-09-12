@@ -507,6 +507,10 @@ describe('App input panel', () => {
       // which returns {"target": 9, "nums": [2, 7, 11, 15]} for this problem. InputSummary
       // reads it, so a mock without it would test a shape the server does not send.
       resolvedInput: { nums, target },
+      // Line 6 is the "found" branch and line 10 the "no pair exists" one. The mock run
+      // finds a pair, so line 10 is a branch this input never took - the real two-sum
+      // trace behaves identically, which is what F2 in AUDIT.md was about.
+      anchors: { init: 2, complement: 4, found: 6, remember: 8, none: 10 },
       steps: [{
         stepNumber: 1, activeLine: 1, keyframe: true, dsType: 'Array', variables: {},
         description: `custom run nums=${JSON.stringify(nums)} target=${target}`,
@@ -554,6 +558,17 @@ describe('App input panel', () => {
     fireEvent.click(screen.getByRole('button', { name: /Edit/i }));
     await screen.findByLabelText('Target sum');
   }
+
+  it('says which branches the current input never took', async () => {
+    // F2: 93 problems have a line the default input never reaches. Left unmarked it reads
+    // as if the animation skipped something; marked, it says the true thing - the branch
+    // exists and this input did not take it.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    expect(screen.getByTestId('unreached-note').textContent).toMatch(/branch(es)? not taken/);
+  });
 
   it('gives the canvas state a text alternative', async () => {
     // A screen-reader user gets the narration from LiveTraceTicker and the code from the
