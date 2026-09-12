@@ -540,3 +540,192 @@ phase; do not describe unfinished work as resolved.
   after pulling a branch that added or renamed files in the `tracer` package. The CI workflow
   already runs `mvn -B test` on a fresh checkout (no stale `target/`), so this failure cannot
   reach `main`.
+
+## RCA-025 — `resolvedInput` read off a step, which never carries it
+
+- **Discovered:** 2026-09-12, during the canvas audit
+- **Status:** Resolved
+- **Symptom and impact:** five branches across two canvases had never executed, and the
+  failure was not merely dead code — it drew the **wrong data**. `IntervalCanvas` resolves
+  its intervals through a chain of fallbacks; with the `resolvedInput` rungs dead it fell
+  through to the `inputSpec` **defaults**. For `n-meetings-in-one-room` that is 15 of 16
+  steps, so running your own meetings drew `[1,3,0]/[2,4,6]` while the narration described
+  yours. Measured before and after on a real custom run: 7 of 8 steps showed the defaults.
+- **Root cause:** `resolvedInput` is a property of the **trace** — `ExecutionTrace` carries
+  it once and `TraceResponse` serialises it at the top level — but four call sites read
+  `step.resolvedInput`, and nothing has ever placed it on a step. The mistake survived
+  because it is invisible at the point of use: `activeStep?.resolvedInput` is valid
+  JavaScript that silently yields `undefined`.
+- **Resolution:** `useTrace` captures `resolvedInput` from the execute response and clears it
+  at request start so a stale echo cannot outlive its trace; `App` passes it to the canvases;
+  `IntervalCanvas` and `CaptureStrip` take it as a prop. `CaptureStrip`'s `useMemo`
+  dependencies gained it too — without that it would have kept a previous run's intervals
+  after a re-run.
+- **Regression guard:** `IntervalCanvas.test.jsx` asserts a run's own intervals appear **and**
+  that the spec defaults do not; written RED first, where the failure rendered
+  `#1[1, 2]#2[3, 4]#3[0, 6]` — the defaults, exactly as a user saw them.
+- **The general lesson:** before adding a canvas, check where the field you are reading
+  actually lives. Trace-level data (`resolvedInput`, `anchors`, `code`) is not on a step, and
+  optional chaining will not tell you.
+
+## RCA-026 — Tests asserted payload shapes the server has never sent
+
+- **Discovered:** 2026-09-12
+- **Status:** Resolved
+- **Symptom and impact:** dead code reported itself as covered. Three separate cases:
+  `IntervalCanvas.test.jsx` and `CaptureStrip.test.jsx` hung `resolvedInput` on a step, so
+  they exercised the branches of RCA-025 that cannot run in production; and a test for the
+  new `constraints` field asserted against the **in-memory catalogue** while
+  `/api/problems/{id}` silently dropped the field, so the feature shipped populated
+  correctly and serving nothing, green throughout.
+- **Root cause:** a hand-written fixture is only as true as its author's model of the wire.
+  Nothing compared the fixture to a real response, and `/api/problems/{id}` builds its map
+  field by field, so a model field is not served until someone names it there.
+- **Resolution:** the fixtures now carry what the running backend actually returns, verified
+  against it rather than assumed. `DetailResponseContractTest` walks `ProblemDetail` by
+  reflection and fails on any field the wire does not carry, with an `INTENTIONALLY_ABSENT`
+  set so an omission stays a decision.
+- **Regression guard:** `DetailResponseContractTest`, proven RED by deleting the
+  `constraints` line again — the failure names the field.
+- **The general lesson:** assert over the wire, not over the object. A fixture invented at
+  the keyboard can validate code that can never execute.
+
+## RCA-027 — Retagging a `dsType` misses the entries registered outside the bulk helper
+
+- **Discovered:** 2026-09-12 and 2026-09-13, three times in a row
+- **Status:** Resolved (recurring; the guard is what catches it)
+- **Symptom and impact:** every batch retag left catalogue entries behind, because the same
+  topic registers problems in two ways — a bulk table driven by a `bulkDsType`-style helper,
+  and individual `problems.put(...)` calls with their own literal. Sliding Window left one
+  (`longest-substring-without-repeating`), Binary Search left fourteen, Recursion &
+  Backtracking left two. Untouched, those render through the wrong canvas.
+- **Root cause:** there is no single place a topic's `dsType` is decided, so "change the
+  topic's type" has no single edit.
+- **Resolution:** none needed beyond finishing each retag — but the workflow now assumes a
+  second pass. Run `CatalogTracerMetadataTest` after changing any tracer's `dsType`; it names
+  the stragglers by id.
+- **Regression guard:** `CatalogTracerMetadataTest.catalogueDsTypesMatchEveryRegisteredTracer`,
+  which caught all three batches and reported the ids verbatim.
+- **The general lesson:** a retag is not done when the tracers compile. Grep the service for
+  the literal as well as the helper, and let the cross-tier test decide.
+
+## RCA-028 — A payload contract written narrower than the canvas it describes
+
+- **Discovered:** 2026-09-13
+- **Status:** Resolved
+- **Symptom and impact:** `DsTypePayloadContractTest` failed on correct tracers. Its
+  `RECURSION_TREE` rule required `treeNodes`, and its `HEAP` rule required `arrayState`, but
+  both canvases read **either** source: `RecursionTreeCanvas` rebuilds the tree from
+  `callStack` when a tracer emits no `treeNodes`, and `HeapCanvas` derives whichever of the
+  tree or the array was not emitted, since the mapping is arithmetic. The failures named
+  `generate-binary-strings`, `heaps-theory` and `implement-min-heap` as broken when they
+  were not.
+- **Root cause:** the requirement was written from one tracer's habit rather than from what
+  the canvas reads, and the two drifted the moment a canvas learned a second source.
+- **Resolution:** both rules accept either field, with the reason recorded beside them.
+  Neither present is still a failure — that renders an empty canvas, which is the thing the
+  test exists to prevent.
+- **Regression guard:** the test itself; it is doing its job correctly in both directions.
+  What changed is the rule, not the enforcement.
+- **The general lesson:** this contract describes the **canvas**, not the tracer. When a
+  canvas gains a fallback source, the rule has to gain it in the same commit, or the test
+  starts reporting healthy tracers as broken.
+
+## RCA-029 — Truncating a label from the front removed the only part that varied
+
+- **Discovered:** 2026-09-13, reported against the permutations visualizer
+- **Status:** Resolved
+- **Symptom and impact:** every node in a derived recursion tree read `backtrack(` and the
+  tree was unreadable — 16 identical boxes where the whole point is that they differ.
+- **Root cause:** the node label was truncated to its first 11 characters. In a recursion
+  tree every node calls the *same* function, so the name is the one part carrying no
+  information, repeated once per node, while the arguments are the only thing distinguishing
+  siblings. Truncating from the front kept exactly the wrong half.
+- **Resolution:** nodes show what is inside the parentheses — `idx=0`, `open=1,close=0` —
+  with the whole frame kept in a `<title>` for hover, and the node widened to suit.
+- **Regression guard:** `RecursionTreeCanvas.derived.test.jsx` asserts two sibling frames
+  render distinguishably and that the bare function name is not what appears.
+- **The general lesson:** when truncating for display, keep the part that varies. A cap
+  chosen for layout can silently destroy the information the element exists to convey, and
+  no test catches it unless one asserts that two different inputs look different.
+
+## RCA-030 — A retired topic left its `switch` `default:` returning steps
+
+- **Discovered:** 2026-09-12, by the full-catalogue audit in `AUDIT.md` (F1)
+- **Status:** Resolved, permanently — the layer that held it is deleted
+- **Symptom and impact:** twelve of the eighteen legacy services still ended their
+  `switch (problemId)` in a `default:` that **returned** steps. With every catalogued id
+  traced on `/api/problems`, those branches had no legitimate consumer left and existed only
+  to serve a wrong animation to whatever id nobody had explicitly retired. Seven id/route
+  pairs were live: `/api/graphs/advanced/execute/dijkstra-min-heap` answered 200 with the
+  graph-intro animation.
+- **Root cause:** retiring a topic was done id by id, and `default:` was treated as the
+  holding pen for "the ones not done yet". Nothing marked the moment the holding pen should
+  have become a throw. Worse, the refusals were pinned by **hand-maintained lists** of
+  retired ids — a 430-entry `RETIRED_IDS` in `ApiContractTest` and a per-topic `retired` set
+  in eight service tests — and drift in those lists is what kept the stragglers invisible
+  through four rounds of cleanup.
+- **Resolution:** all eighteen services were made to throw, then the legacy layer was deleted
+  outright: eighteen controllers, all eighty step generators, and twenty-six test classes.
+  The services survive as `ProblemProvider`s owning catalogue metadata only.
+- **Regression guard:** `ProblemsApiTest.legacyRoutesNoLongerExist` asserts the routes are
+  gone, so reintroducing one fails a test. `ProblemProviderContractTest` is parameterized
+  over the providers Spring actually registers rather than over a typed list.
+- **The general lesson:** never write a per-id list in a test to express "which ids are in
+  state X". Derive it from the registry or the catalogue. A list is a second source of truth
+  that drifts silently and hides exactly the cases it was meant to pin.
+
+## RCA-031 — A canvas invented a plausible structure when its state was missing
+
+- **Discovered:** 2026-09-12 (`AUDIT.md` F7)
+- **Status:** Resolved
+- **Symptom and impact:** `DsuCanvas` read four magic string keys out of `step.variables` and
+  defaulted each to a hardcoded literal, so a renamed key or a step without them drew a
+  **fabricated seven-element DSU** that looked entirely plausible. Nothing failed; the user
+  was shown a lie. This is RCA-001's defect moved into the render path.
+- **Root cause:** the DSU has no structural payload field — its state is smuggled through
+  `variables` as human-readable strings and re-parsed with a regex in the browser — so the
+  canvas had no way to distinguish "absent" from "not yet set" and chose to look complete.
+- **Resolution:** missing state renders an explicit "DSU state unavailable" panel.
+  `DsTypePayloadContractTest` pins the `parent[]` key, making the variable names a wire
+  contract rather than a convention.
+- **Regression guard:** three `DsuCanvas.test.jsx` cases, proven RED against the old
+  component with "Unable to find `[data-testid=dsu-state-unavailable]`".
+- **Still open:** the transport itself. DSU state is still string round-tripping through
+  `variables`, which is the most fragile payload path left in the app.
+
+## RCA-032 — A layout refactor removed three panels from mobile with every test green
+
+- **Discovered:** 2026-09-12, while reading a diff — not by a failure
+- **Status:** Resolved
+- **Symptom and impact:** moving the code panel beside the canvas restructured a ternary and
+  made the mobile branch unreachable. The phone layout silently lost the code panel, the
+  input editor and the complexity card **at once**, and all 245 tests stayed green.
+- **Root cause:** the desktop and mobile layouts share one conditional expression, and
+  rewriting its condition changed which branch mobile reaches. No test rendered the app at a
+  narrow viewport and asserted the mobile-only affordances exist.
+- **Resolution:** the branches were rewritten so each viewport has its own explicit arm.
+- **Regression guard:** a mobile-viewport test asserting the tab card's Code control is
+  present, proven RED by disabling the branch.
+- **The general lesson:** this codebase catches fake work inside a unit very well and wrong
+  wiring between units very poorly. A structural change needs a smoke test per breakpoint,
+  because "the component still renders" is not the same as "the user can still reach it".
+
+## RCA-033 — Contrast verified in one theme, failing in the other
+
+- **Discovered:** 2026-09-13, while tokenising the canvas role colours
+- **Symptom and impact:** every algorithm role fill failed 4.5:1 against its white label in
+  the **dark** theme — `#3b82f6` at 3.68:1, `#10b981` at 2.54:1, `#f59e0b` at 2.15:1 — and
+  had done so for as long as those values existed as literals in five canvases.
+- **Status:** Resolved
+- **Root cause:** two compounding. The colours were hardcoded, so the token system's measured
+  4.5:1 standard never applied to them. And the first guard written for them checked only the
+  light theme — it passed on the first run, which was the tell.
+- **Resolution:** `--role-ink` now flips with the theme exactly as `--probe-on` does: dark
+  mode keeps bright fills that read against the dark ground and takes near-black ink, light
+  mode darkens the fills and goes white. Every role clears 4.5:1 on both sides, measured.
+- **Regression guard:** `designTokens.test.js` checks both themes, proven RED by lightening
+  `--role-current` for light mode the way anyone adapting a colour naturally would: 1.80:1.
+- **The general lesson:** a guard that passes on its first run has not been shown to work.
+  For anything theme-dependent, assert both themes in the same test — checking one is a
+  coin flip that looks like diligence.
