@@ -1,8 +1,16 @@
 import React from 'react';
-import { Layers, Menu, X, BookOpen } from 'lucide-react';
+import { Layers, Menu, X, BookOpen, Sun, Moon, Monitor } from 'lucide-react';
 import styles from './Header.module.css';
 
-export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar }) {
+/** Three states, matching index.css: "system" leaves the media query in charge. */
+const THEME_LABEL = {
+  system: 'Theme: following your system. Click for light.',
+  light: 'Theme: light. Click for dark.',
+  dark: 'Theme: dark. Click to follow your system.'
+};
+const THEME_TEXT = { system: 'System', light: 'Light', dark: 'Dark' };
+
+export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar, theme = 'system', onCycleTheme }) {
   return (
     <header className={`glass-panel ${styles.header}`}>
       <div className={styles.leftSection}>
@@ -16,7 +24,7 @@ export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar }
         </button>
 
         <div className={styles.logoIcon}>
-          <Layers size={16} color="#ffffff" />
+          <Layers size={16} color="var(--text-on-accent)" />
         </div>
         <div>
           <div className={styles.titleRow}>
@@ -34,6 +42,17 @@ export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar }
       </div>
 
       <div className={styles.rightSection}>
+        <button
+          type="button"
+          onClick={onCycleTheme}
+          className={styles.themeBtn}
+          title={THEME_LABEL[theme]}
+          aria-label={THEME_LABEL[theme]}
+        >
+          {theme === 'light' ? <Sun size={13} /> : theme === 'dark' ? <Moon size={13} /> : <Monitor size={13} />}
+          <span className={styles.themeLabel}>{THEME_TEXT[theme]}</span>
+        </button>
+
         <div className={styles.libraryBadge}>
           <BookOpen size={13} color="var(--text-muted)" />
           <span className={styles.libraryLabel}>Library: </span>

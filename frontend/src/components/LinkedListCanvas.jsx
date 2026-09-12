@@ -30,7 +30,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
       case 'visited':
         return { fill: '#10b981', stroke: '#34d399', glow: '0 0 14px rgba(16,185,129,0.5)' };
       default:
-        return { fill: '#1e293b', stroke: '#475569', glow: 'none' };
+        return { fill: 'var(--canvas-node-fill)', stroke: 'var(--canvas-edge)', glow: 'none' };
     }
   };
 
@@ -123,7 +123,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
 
       <div
         ref={containerRef}
-        style={{ flex: 1, width: '100%', minHeight: '280px', position: 'relative', display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflow: 'auto' }}
+        style={{ flex: 1, width: '100%', minHeight: '280px', position: 'relative', display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', background: 'var(--canvas-well)', borderRadius: '12px', overflow: 'auto' }}
       >
         <svg
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible', pointerEvents: 'none' }}

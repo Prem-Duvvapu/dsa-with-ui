@@ -55,8 +55,8 @@ export default function DsuCanvas({ problem, currentStep, step }) {
         <div style={{
           display: 'flex', alignItems: 'center', gap: '10px',
           padding: '8px 16px',
-          background: 'rgba(255, 176, 0, 0.1)',
-          border: '1px solid rgba(255, 176, 0, 0.3)',
+          background: 'color-mix(in srgb, var(--probe) 10%, transparent)',
+          border: '1px solid color-mix(in srgb, var(--probe) 30%, transparent)',
           borderRadius: '10px',
           fontFamily: 'var(--font-code)'
         }}>
@@ -118,9 +118,9 @@ export default function DsuCanvas({ problem, currentStep, step }) {
                   key={idx}
                   style={{
                     padding: '8px 4px',
-                    background: isRoot ? 'rgba(255, 176, 0, 0.15)' : 'var(--bench-ground)',
+                    background: isRoot ? 'color-mix(in srgb, var(--probe) 15%, transparent)' : 'var(--bench-ground)',
                     border: isRoot ? '1px solid var(--probe)' : '1px solid var(--bench-rule)',
-                    boxShadow: isRoot ? '0 0 12px rgba(255, 176, 0, 0.3)' : 'none',
+                    boxShadow: isRoot ? '0 0 12px color-mix(in srgb, var(--probe) 30%, transparent)' : 'none',
                     borderRadius: '8px',
                     fontSize: '0.88rem', fontWeight: '800',
                     color: isRoot ? 'var(--probe)' : 'var(--bench-ink)',
@@ -142,8 +142,8 @@ export default function DsuCanvas({ problem, currentStep, step }) {
               return (
                 <div key={idx} style={{
                   padding: '6px 4px',
-                  background: 'rgba(61, 220, 151, 0.1)',
-                  border: '1px solid rgba(61, 220, 151, 0.3)',
+                  background: 'color-mix(in srgb, var(--settled) 10%, transparent)',
+                  border: '1px solid color-mix(in srgb, var(--settled) 30%, transparent)',
                   borderRadius: '8px',
                   fontSize: '0.82rem', fontWeight: '800',
                   color: 'var(--settled)',

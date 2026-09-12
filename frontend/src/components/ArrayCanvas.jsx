@@ -37,7 +37,7 @@ export default function ArrayCanvas({ problem, currentStep, step }) {
       case 'visited':
       case 'eliminated':
       default:
-        return { bg: 'linear-gradient(180deg, #334155, #1e293b)', border: 'var(--border-default)', glow: 'none' };
+        return { bg: 'linear-gradient(180deg, var(--canvas-node-fill-2), var(--canvas-node-fill))', border: 'var(--border-default)', glow: 'none' };
     }
   };
 
@@ -89,7 +89,7 @@ export default function ArrayCanvas({ problem, currentStep, step }) {
           justifyContent: 'center', 
           gap: '24px', 
           padding: '20px', 
-          background: 'radial-gradient(ellipse at center, rgba(15, 23, 42, 0.6), rgba(9, 13, 22, 0.9)), repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255, 255, 255, 0.035) 35px, rgba(255, 255, 255, 0.035) 36px)', 
+          background: 'radial-gradient(ellipse at center, var(--canvas-ground-inner), var(--canvas-ground-outer)), repeating-linear-gradient(0deg, transparent, transparent 35px, var(--canvas-wash) 35px, var(--canvas-wash) 36px)', 
           borderRadius: 'var(--radius-md)', 
           border: '1px solid var(--border-default)', 
           borderBottom: '2px solid var(--border-strong)', 

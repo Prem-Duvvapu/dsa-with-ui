@@ -58,6 +58,17 @@ const BENCH_TOKENS = [
   '--bench-ink', '--probe', '--probe-on', '--probe-wash', '--settled', '--settled-on'
 ];
 
+/**
+ * Canvas role tokens. The canvases used to draw with literal hexes, which meant they
+ * stayed dark in the light theme - dark nodes on paper. Like the Bench tokens, these must
+ * exist in the base block AND in both light declarations, or a canvas silently keeps one
+ * theme's ground under the other theme's ink.
+ */
+const CANVAS_TOKENS = [
+  '--canvas-ground-inner', '--canvas-ground-outer', '--canvas-well',
+  '--canvas-node-fill', '--canvas-node-fill-2', '--canvas-edge', '--canvas-wash'
+];
+
 /** Declarations inside one CSS block, as { token: rawValue }. */
 function rawTokens(block) {
   const out = {};
@@ -195,6 +206,24 @@ describe('design tokens', () => {
     const base = resolveTheme(baseBlock());
     const missing = BENCH_TOKENS.filter((t) => !base[t]);
     expect(missing, 'these resolve to nothing when the viewer has made no theme choice').toEqual([]);
+  });
+
+  it('defines every canvas role token in the base and in both light declarations', () => {
+    const base = baseBlock();
+    const media = rawTokens(lightMediaBlock());
+    const stamped = rawTokens(lightStampedBlock());
+
+    expect(CANVAS_TOKENS.filter((t) => !base[t]),
+      'missing from :root, so they resolve to nothing in the dark theme').toEqual([]);
+    expect(CANVAS_TOKENS.filter((t) => !media[t]),
+      'missing from the prefers-color-scheme block, so a light OS gets dark canvases').toEqual([]);
+    expect(CANVAS_TOKENS.filter((t) => !stamped[t]),
+      'missing from [data-theme="light"], so the explicit light choice gets dark canvases').toEqual([]);
+
+    for (const key of CANVAS_TOKENS) {
+      expect(media[key], `${key} differs between the two light declarations`).toBe(stamped[key]);
+      expect(base[key], `${key} does not change with the theme`).not.toBe(stamped[key]);
+    }
   });
 
   it('redefines the same Bench tokens in both light declarations', () => {

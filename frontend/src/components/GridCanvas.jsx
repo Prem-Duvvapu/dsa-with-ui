@@ -105,7 +105,7 @@ function renderQueenCell(rIdx, cIdx, val) {
         minWidth: '44px',
         minHeight: '44px',
         borderRadius: 'var(--radius-xs, 4px)',
-        background: val === 1 ? 'rgba(61, 220, 151, 0.25)' : isLightSquare ? 'var(--bench-rule-strong)' : 'var(--bench-fill)',
+        background: val === 1 ? 'color-mix(in srgb, var(--settled) 25%, transparent)' : isLightSquare ? 'var(--bench-rule-strong)' : 'var(--bench-fill)',
         border: val === 1 ? '2px solid var(--settled)' : '1px solid var(--bench-rule)',
         display: 'flex',
         flexDirection: 'column',
@@ -113,7 +113,7 @@ function renderQueenCell(rIdx, cIdx, val) {
         justifyContent: 'center',
         position: 'relative',
         transition: 'all var(--motion-normal, 300ms) var(--ease-standard, ease)',
-        boxShadow: val === 1 ? '0 0 14px rgba(61, 220, 151, 0.4)' : 'none'
+        boxShadow: val === 1 ? '0 0 14px color-mix(in srgb, var(--settled) 40%, transparent)' : 'none'
       }}
     >
       {val === 1 ? (
@@ -137,7 +137,7 @@ function renderSudokuCell(rIdx, cIdx, val) {
         aspectRatio: '1',
         minWidth: '24px',
         minHeight: '24px',
-        background: val !== 0 ? 'rgba(61, 220, 151, 0.15)' : 'var(--bench-fill)',
+        background: val !== 0 ? 'color-mix(in srgb, var(--settled) 15%, transparent)' : 'var(--bench-fill)',
         borderRight,
         borderBottom,
         color: val !== 0 ? 'var(--bench-ink)' : 'var(--bench-ink-dim)',
@@ -163,9 +163,9 @@ function renderMatrixCell(rIdx, cIdx, val, cellSize) {
         width: compact ? `${cellSize}px` : '55px',
         height: compact ? `${cellSize}px` : '55px',
         borderRadius: compact ? '4px' : '8px',
-        background: val === 2 ? 'rgba(61, 220, 151, 0.25)' : val === 1 || val === 99 ? 'rgba(255, 176, 0, 0.15)' : 'var(--bench-fill)',
+        background: val === 2 ? 'color-mix(in srgb, var(--settled) 25%, transparent)' : val === 1 || val === 99 ? 'color-mix(in srgb, var(--probe) 15%, transparent)' : 'var(--bench-fill)',
         border: val === 2 ? '1px solid var(--settled)' : val === 1 || val === 99 ? '1px solid var(--probe)' : '1px solid var(--bench-rule)',
-        boxShadow: compact ? 'none' : val === 2 ? '0 0 14px rgba(61, 220, 151, 0.4)' : val === 1 || val === 99 ? '0 0 14px rgba(255, 176, 0, 0.4)' : 'none',
+        boxShadow: compact ? 'none' : val === 2 ? '0 0 14px color-mix(in srgb, var(--settled) 40%, transparent)' : val === 1 || val === 99 ? '0 0 14px color-mix(in srgb, var(--probe) 40%, transparent)' : 'none',
         color: val !== 0 ? 'var(--bench-ink)' : 'var(--bench-ink-dim)',
         display: 'flex',
         flexDirection: 'column',

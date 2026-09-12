@@ -6,6 +6,7 @@ import ProblemStatement from './components/ProblemStatement';
 import InputSummary from './components/InputSummary';
 import ShortcutHelp from './components/ShortcutHelp';
 import usePersistentState from './hooks/usePersistentState';
+import useTheme from './hooks/useTheme';
 import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -233,6 +234,7 @@ export default function App() {
   const setIsSidebarOpen = isMobile ? setMobileSidebarOpen : setDesktopSidebarOpen;
 
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const { theme, cycleTheme } = useTheme();
   // Collapsing this row frees up vertical space for the canvas while a trace is playing.
   const [isBottomPanelOpen, setIsBottomPanelOpen] = usePersistentState('bottomPanelOpen', true, isBool);
   // The input editor and the complexity card are setup furniture: useful before a run,
@@ -497,6 +499,8 @@ export default function App() {
         totalProblems={problems.length} 
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
+        theme={theme}
+        onCycleTheme={cycleTheme}
       />
 
       <Breadcrumb problem={activeProblem} />

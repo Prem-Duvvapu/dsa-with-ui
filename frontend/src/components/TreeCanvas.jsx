@@ -34,7 +34,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
       case 'sorted':
         return { fill: 'var(--state-done)', stroke: '#2dd4bf', glow: 'var(--state-done-glow)' };
       default:
-        return { fill: '#1e293b', stroke: 'var(--border-default)', glow: 'none' };
+        return { fill: 'var(--canvas-node-fill)', stroke: 'var(--border-default)', glow: 'none' };
     }
   };
 
@@ -69,7 +69,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
         </div>
       </div>
 
-      <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '260px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.25)', borderRadius: 'var(--radius-md)', overflow: 'hidden', padding: 'var(--space-md)' }}>
+      <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '260px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--canvas-well)', borderRadius: 'var(--radius-md)', overflow: 'hidden', padding: 'var(--space-md)' }}>
         <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible', maxHeight: '100%' }}>
           {/* Render Parent-Child Connecting Lines */}
           {treeNodes.map((node) => {
@@ -84,7 +84,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
                     y1={node.y}
                     x2={leftChild.x}
                     y2={leftChild.y}
-                    stroke="#475569"
+                    stroke="var(--canvas-edge)"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                   />
@@ -95,7 +95,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
                     y1={node.y}
                     x2={rightChild.x}
                     y2={rightChild.y}
-                    stroke="#475569"
+                    stroke="var(--canvas-edge)"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                   />

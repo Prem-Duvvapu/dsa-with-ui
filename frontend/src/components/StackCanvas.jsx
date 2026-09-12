@@ -47,7 +47,7 @@ export default function StackCanvas({ step, currentStep, title = 'Stack' }) {
           flex: 1, width: '100%', display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: items.length ? 'flex-end' : 'center',
           gap: '8px', padding: '20px', overflowY: 'auto',
-          background: 'radial-gradient(ellipse at center, rgba(15, 23, 42, 0.6), rgba(9, 13, 22, 0.9))',
+          background: 'radial-gradient(ellipse at center, var(--canvas-ground-inner), var(--canvas-ground-outer))',
           borderRadius: 'var(--radius-md)', border: '1px solid var(--border-default)',
           borderBottom: '2px solid var(--border-strong)'
         }}
@@ -66,7 +66,7 @@ export default function StackCanvas({ step, currentStep, title = 'Stack' }) {
                 gap: '12px', width: '160px', padding: '8px 14px',
                 borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-code)',
                 fontSize: '0.85rem', fontWeight: 600,
-                background: idx === 0 ? 'linear-gradient(180deg, var(--state-current), #d97706)' : 'linear-gradient(180deg, #334155, #1e293b)',
+                background: idx === 0 ? 'linear-gradient(180deg, var(--state-current), #d97706)' : 'linear-gradient(180deg, var(--canvas-node-fill-2), var(--canvas-node-fill))',
                 border: idx === 0 ? '1.5px solid var(--state-current)' : '1px solid var(--border-default)',
                 boxShadow: idx === 0 ? 'var(--state-current-glow)' : 'none',
                 color: 'var(--text-primary)'

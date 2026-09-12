@@ -29,7 +29,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
       case 'sorted':
         return { fill: '#10b981', stroke: '#34d399', glow: '0 0 14px rgba(16, 185, 129, 0.5)', label: 'Sorted' };
       default:
-        return { fill: '#1e293b', stroke: '#475569', glow: 'none', label: 'Pending' };
+        return { fill: 'var(--canvas-node-fill)', stroke: 'var(--canvas-edge)', glow: 'none', label: 'Pending' };
     }
   };
 
@@ -47,7 +47,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
         {/* Legend Badges */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#475569' }}></span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--canvas-edge)' }}></span>
             <span style={{ color: 'var(--text-secondary)' }}>Pending</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -66,7 +66,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
       </div>
 
       {/* Main SVG Recursion Tree Canvas */}
-      <div style={{ flex: 1, width: '100%', minHeight: '260px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflow: 'auto', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ flex: 1, width: '100%', minHeight: '260px', background: 'var(--canvas-well)', borderRadius: '12px', overflow: 'auto', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {treeNodes.length > 0 ? (
           <svg width="100%" height="250" viewBox="0 0 380 250" style={{ overflow: 'visible' }}>
             {/* Connecting Call Branch Lines */}
@@ -82,7 +82,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
                       y1={node.y}
                       x2={leftChild.x}
                       y2={leftChild.y}
-                      stroke={nodeStates[leftChild.id] === 'pruned' ? '#ef4444' : '#475569'}
+                      stroke={nodeStates[leftChild.id] === 'pruned' ? '#ef4444' : 'var(--canvas-edge)'}
                       strokeWidth="2"
                       strokeDasharray={nodeStates[leftChild.id] ? 'none' : '4 4'}
                     />
@@ -93,7 +93,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
                       y1={node.y}
                       x2={rightChild.x}
                       y2={rightChild.y}
-                      stroke={nodeStates[rightChild.id] === 'pruned' ? '#ef4444' : '#475569'}
+                      stroke={nodeStates[rightChild.id] === 'pruned' ? '#ef4444' : 'var(--canvas-edge)'}
                       strokeWidth="2"
                       strokeDasharray={nodeStates[rightChild.id] ? 'none' : '4 4'}
                     />
@@ -165,7 +165,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step }) {
                   width: '28px',
                   height: '14px',
                   borderRadius: '4px',
-                  background: el.state === 'sorted' || el.state === 'visited' ? '#10b981' : (el.state === 'active' || el.state === 'comparing' ? '#f59e0b' : '#334155'),
+                  background: el.state === 'sorted' || el.state === 'visited' ? '#10b981' : (el.state === 'active' || el.state === 'comparing' ? '#f59e0b' : 'var(--canvas-node-fill-2)'),
                   border: '1px solid rgba(255, 255, 255, 0.2)'
                 }}
               />
