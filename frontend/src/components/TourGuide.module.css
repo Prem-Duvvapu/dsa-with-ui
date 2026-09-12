@@ -1,0 +1,106 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+
+/* Four shades around the target instead of one huge box-shadow: the cutout edge stays
+   crisp at any size, and each panel blocks pointer events over the area it dims. */
+.shade {
+  position: fixed;
+  background: rgba(2, 6, 23, 0.66);
+}
+
+.spotlight {
+  position: fixed;
+  border: 2px solid var(--probe);
+  border-radius: var(--radius-md);
+  box-shadow: var(--state-current-glow);
+  pointer-events: none;
+}
+
+.tip {
+  position: fixed;
+  width: min(330px, calc(100vw - 24px));
+  padding: var(--space-md);
+  z-index: 81;
+}
+
+.tipHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xs);
+}
+
+.progress {
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.closeBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.tipTitle {
+  margin: 0 0 4px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tipBody {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+
+.tipActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.tipNav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.navBtn {
+  font-size: var(--text-xs);
+  padding: 3px 12px;
+}
+
+.skipBtn {
+  padding: 0;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.skipBtn:hover {
+  color: var(--text-primary);
+}

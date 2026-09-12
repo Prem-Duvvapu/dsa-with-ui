@@ -6,6 +6,7 @@ import ProblemStatement from './components/ProblemStatement';
 import InputSummary from './components/InputSummary';
 import ShortcutHelp from './components/ShortcutHelp';
 import WelcomeGuide from './components/WelcomeGuide';
+import TourGuide from './components/TourGuide';
 import usePersistentState from './hooks/usePersistentState';
 import useTheme from './hooks/useTheme';
 import Sidebar from './components/Sidebar';
@@ -239,6 +240,7 @@ export default function App() {
   // Shown once, on a genuine first visit. Tracked rather than inferred from other
   // preferences: someone who only ever changed the theme has still never been introduced.
   const [hasSeenWelcome, setHasSeenWelcome] = usePersistentState('seenWelcome', false, isBool);
+  const [isTourOpen, setIsTourOpen] = useState(false);
   // Collapsing this row frees up vertical space for the canvas while a trace is playing.
   const [isBottomPanelOpen, setIsBottomPanelOpen] = usePersistentState('bottomPanelOpen', true, isBool);
   // The input editor and the complexity card are setup furniture: useful before a run,
@@ -511,6 +513,12 @@ export default function App() {
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
         theme={theme}
         onCycleTheme={cycleTheme}
+        onStartTour={isMobile ? null : () => {
+          // Dismiss the first-run screen first: the tour highlights the UI behind it.
+          setHasSeenWelcome(true);
+          setIsHelpOpen(false);
+          setIsTourOpen(true);
+        }}
       />
 
       <Breadcrumb problem={activeProblem} />
@@ -531,13 +539,19 @@ export default function App() {
       />
 
       <WelcomeGuide
-        open={!hasSeenWelcome && !loading && !catalogError}
+        open={!hasSeenWelcome && !loading && !catalogError && !isTourOpen}
         onDismiss={() => setHasSeenWelcome(true)}
         onShowShortcuts={() => {
           setHasSeenWelcome(true);
           setIsHelpOpen(true);
         }}
+        onStartTour={isMobile ? null : () => {
+          setHasSeenWelcome(true);
+          setIsTourOpen(true);
+        }}
       />
+
+      <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} />
 
       {catalogError && (
         <div
@@ -564,6 +578,7 @@ export default function App() {
         {isSidebarOpen && (
           <div
             ref={drawerRef}
+            data-tour="problem-list"
             className={isMobile ? styles.sidebarMobile : styles.sidebarDesktop}
           >
             <Sidebar
@@ -606,14 +621,14 @@ export default function App() {
               trees that need width. Mobile stays stacked, where that is the right shape. */}
           <div className={isMobile ? styles.stageStack : styles.stageSplit}>
             {!isMobile && isBottomPanelOpen && (
-              <div className={styles.codeColumn}>
+              <div data-tour="code-panel" className={styles.codeColumn}>
                 <CodeViewer problem={activeProblem} currentStep={currentStep} />
               </div>
             )}
 
           {/* Main Visualizer Stage + Controls + Live Trace Banner */}
           <div className={styles.stageColumn}>
-          <div className={`glass-panel ${styles.stagePanel}`}>
+          <div data-tour="canvas" className={`glass-panel ${styles.stagePanel}`}>
             <div className={styles.stageInner}>
               {loading ? (
                 <div className={styles.loadingCatalog}>
@@ -678,6 +693,7 @@ export default function App() {
             )}
 
             {/* Integrated Playback Controls */}
+            <div data-tour="controls">
             <Controls
               isPlaying={isPlaying}
               currentStepIndex={currentStepIndex}
@@ -690,6 +706,7 @@ export default function App() {
               onReset={reset}
               onSpeedChange={changeSpeed}
             />
+            </div>
 
             {/* Quiet Live Trace Banner */}
             <div className={styles.tickerWrapper}>
@@ -715,10 +732,14 @@ export default function App() {
             </button>
 
             {/* What the animation is running on, without the editor that sets it. */}
-            {!isMobile && !isInputEditorOpen && <InputSummary resolvedInput={resolvedInput} />}
+            {!isMobile && !isInputEditorOpen && (
+              <div data-tour="input-summary">
+                <InputSummary resolvedInput={resolvedInput} />
+              </div>
+            )}
 
             {!isMobile && (
-              <div className={styles.bottomBarActions}>
+              <div data-tour="panel-toggles" className={styles.bottomBarActions}>
                 {hasInputSpec && (
                   <button
                     type="button"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, Menu, X, BookOpen, Sun, Moon, Monitor } from 'lucide-react';
+import { Layers, Menu, X, BookOpen, Sun, Moon, Monitor, Compass } from 'lucide-react';
 import styles from './Header.module.css';
 
 /** Three states, matching index.css: "system" leaves the media query in charge. */
@@ -10,7 +10,7 @@ const THEME_LABEL = {
 };
 const THEME_TEXT = { system: 'System', light: 'Light', dark: 'Dark' };
 
-export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar, theme = 'system', onCycleTheme }) {
+export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar, theme = 'system', onCycleTheme, onStartTour }) {
   return (
     <header className={`glass-panel ${styles.header}`}>
       <div className={styles.leftSection}>
@@ -42,9 +42,21 @@ export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar, 
       </div>
 
       <div className={styles.rightSection}>
+        {onStartTour && (
+          <button
+            type="button"
+            onClick={onStartTour}
+            className={styles.themeBtn}
+            title="Take a guided tour of the interface"
+          >
+            <Compass size={13} />
+            <span className={styles.themeLabel}>Tour</span>
+          </button>
+        )}
         <button
           type="button"
           onClick={onCycleTheme}
+          data-tour="theme"
           className={styles.themeBtn}
           title={THEME_LABEL[theme]}
           aria-label={THEME_LABEL[theme]}

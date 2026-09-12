@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { List, Play, Code2, Keyboard } from 'lucide-react';
+import { List, Play, Code2, Keyboard, Compass } from 'lucide-react';
 import styles from './WelcomeGuide.module.css';
 
 /**
@@ -34,7 +34,7 @@ const STEPS = [
   }
 ];
 
-export default function WelcomeGuide({ open, onDismiss, onShowShortcuts }) {
+export default function WelcomeGuide({ open, onDismiss, onShowShortcuts, onStartTour }) {
   const dismissRef = useRef(null);
 
   useEffect(() => {
@@ -76,6 +76,17 @@ export default function WelcomeGuide({ open, onDismiss, onShowShortcuts }) {
           >
             <Keyboard size={13} /> See all shortcuts
           </button>
+          {/* Offered here because this is the moment someone is most willing to be shown
+              around. Absent on mobile, where several of the tour's targets do not exist. */}
+          {onStartTour && (
+            <button
+              type="button"
+              onClick={onStartTour}
+              className={`btn btn-outline ${styles.secondaryBtn}`}
+            >
+              <Compass size={13} /> Take the tour
+            </button>
+          )}
           <button
             ref={dismissRef}
             type="button"

@@ -1,6 +1,7 @@
-import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, cleanup, within } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import React from 'react';
+import { TOUR_STEPS } from './components/TourGuide';
 import '@testing-library/jest-dom';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
@@ -553,6 +554,43 @@ describe('App input panel', () => {
     fireEvent.click(screen.getByRole('button', { name: /Edit/i }));
     await screen.findByLabelText('Target sum');
   }
+
+  it('anchors every tour step to an element the app actually renders', async () => {
+    // The contract that keeps the tour honest. Steps point at data-tour attributes rather
+    // than classes or coordinates precisely so a refactor has to break them deliberately -
+    // and this is what makes "deliberately" mean "a red test". The code panel moved from
+    // below the canvas to beside it in this same branch, which is exactly the kind of
+    // change that silently leaves a tour highlighting empty space.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    const missing = TOUR_STEPS
+      .map((s) => s.target)
+      .filter((t) => document.querySelector(`[data-tour="${t}"]`) === null);
+
+    expect(missing, 'tour steps pointing at anchors no longer in the DOM').toEqual([]);
+  });
+
+  it('opens the tour from the header and walks through it', async () => {
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Tour/i }));
+    expect(await screen.findByTestId('tour-guide')).toBeInTheDocument();
+    expect(screen.getByText('Every problem, one list')).toBeInTheDocument();
+
+    // Scoped to the tour's own dialog: the playback controls have their own "Next".
+    const tour = within(screen.getByRole('dialog', { name: /Every problem, one list/i }));
+    fireEvent.click(tour.getByRole('button', { name: 'Next' }));
+    expect(screen.getByText('The algorithm actually runs')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Skip' }));
+    await waitFor(() => expect(screen.queryByTestId('tour-guide')).not.toBeInTheDocument());
+  });
 
   it('greets a genuine first visitor, once', async () => {
     // setupTests marks the guide seen by default, so this opts back into a real first load.
