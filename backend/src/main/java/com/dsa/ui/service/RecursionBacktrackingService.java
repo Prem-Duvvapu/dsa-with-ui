@@ -208,13 +208,6 @@ public class RecursionBacktrackingService implements ProblemProvider {
         }
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateNQueensSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new NQueens().solve(4, recorder);
-        return recorder.toExecutionSteps();
-    }
-
     // Helper Recursion Tree Nodes
     private List<TreeNode> createNQueensTreeNodes() {
         return List.of(

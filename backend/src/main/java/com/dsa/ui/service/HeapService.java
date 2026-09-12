@@ -136,14 +136,6 @@ public class HeapService implements ProblemProvider {
         }
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateKthLargestSteps() {
-        int[] nums = {3, 2, 1, 5, 6, 4};
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new KthLargestElement().solve(nums, 2, recorder);
-        return recorder.toExecutionSteps();
-    }
-
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {
         List<ArrayElement> list = new ArrayList<>();
         for (int i = 0; i < vals.length; i++) {

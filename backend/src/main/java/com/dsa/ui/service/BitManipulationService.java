@@ -154,18 +154,6 @@ public class BitManipulationService implements ProblemProvider {
         );
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateCheckNumberOddSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int n = 13;
-        int[] bits = new int[]{1, 1, 0, 1};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Check if N = 13 is Odd using Bitwise AND (N & 1).", createArrayState(bits, 3, -1), Map.of("N", "13")));
-        boolean isOdd = (n & 1) == 1;
-        steps.add(createStep(stepNum++, 5, "13 & 1 = 1 (LSB is 1). Result: 13 is ODD!", createArrayState(bits, 3, -1), Map.of("isOdd", String.valueOf(isOdd))));
-        return steps;
-    }
-
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {
         List<ArrayElement> list = new ArrayList<>();
         for (int i = 0; i < vals.length; i++) {

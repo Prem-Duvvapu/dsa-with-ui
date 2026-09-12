@@ -404,34 +404,6 @@ public class BinarySearchService implements ProblemProvider {
         }
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateBs1dSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 3, 5, 7, 9, 11, 13};
-        int target = 7, low = 0, high = nums.length - 1;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(stepNum++, 4, "Binary Search: Search target X = 7 in sorted array [1, 3, 5, 7, 9, 11, 13]. Initialize low = 0 (val 1), high = 6 (val 13).", List.of(), Map.of(0, "low", 6, "high"), List.of(), Map.of("low", "0", "high", "6", "target", "7"), "Array", null, createBsArrayState(nums, low, high, -1, false), null, null));
-
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            steps.add(new ExecutionStep(stepNum++, 6, String.format("Calculate mid = (%d + %d) / 2 = %d (nums[mid] = %d). Compare with target 7.", low, high, mid, nums[mid]), List.of(), Map.of(low, "low", high, "high", mid, "mid"), List.of(), Map.of("low", String.valueOf(low), "high", String.valueOf(high), "mid", String.valueOf(mid), "nums[mid]", String.valueOf(nums[mid]), "target", "7"), "Array", null, createBsArrayState(nums, low, high, mid, false), null, null));
-
-            if (nums[mid] == target) {
-                steps.add(new ExecutionStep(stepNum++, 8, String.format("nums[mid=%d] (%d) == target (7)! Target 7 MATCH FOUND at index %d!", mid, nums[mid], mid), List.of(), Map.of(mid, "mid"), List.of(), Map.of("Found Index", String.valueOf(mid), "target", "7"), "Array", null, createBsArrayState(nums, low, high, mid, true), null, null));
-                return steps;
-            } else if (nums[mid] < target) {
-                steps.add(new ExecutionStep(stepNum++, 9, String.format("nums[mid=%d] (%d) < target (7). Eliminate left search range [0..%d]. Move low = mid + 1 -> %d.", mid, nums[mid], mid, mid + 1), List.of(), Map.of(mid + 1, "low", high, "high"), List.of(), Map.of("low", String.valueOf(mid + 1), "high", String.valueOf(high), "target", "7"), "Array", null, createBsArrayState(nums, mid + 1, high, mid, false), null, null));
-                low = mid + 1;
-            } else {
-                steps.add(new ExecutionStep(stepNum++, 10, String.format("nums[mid=%d] (%d) > target (7). Eliminate right search range [%d..%d]. Move high = mid - 1 -> %d.", mid, nums[mid], mid, high, mid - 1), List.of(), Map.of(low, "low", mid - 1, "high"), List.of(), Map.of("low", String.valueOf(low), "high", String.valueOf(mid - 1), "target", "7"), "Array", null, createBsArrayState(nums, low, mid - 1, mid, false), null, null));
-                high = mid - 1;
-            }
-        }
-        steps.add(new ExecutionStep(stepNum++, 12, "Target 7 not found in sorted array. Return -1.", List.of(), Map.of(), List.of(), Map.of("result", "-1"), "Array", null, createBsArrayState(nums, -1, -1, -1, false), null, null));
-        return steps;
-    }
-
     // Helpers
     private List<ArrayElement> createSortedArray() { return createBsArrayState(new int[]{1, 3, 5, 7, 9, 11, 13}, -1, -1, -1, false); }
     private List<ArrayElement> createDuplicateSortedArray() { return createBsArrayState(new int[]{1, 2, 2, 2, 3, 4, 5}, -1, -1, -1, false); }

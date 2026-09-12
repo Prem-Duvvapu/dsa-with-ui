@@ -568,59 +568,6 @@ public class GraphBfsDfsService implements ProblemProvider {
         ));
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateIslandsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] grid = createIslandGrid();
-
-        steps.add(new ExecutionStep(1, 7, "Start grid traversal. Scan cell (0,0)", List.of(), Map.of(), List.of(), Map.of("count", "0"), "Matrix", copyGrid(grid)));
-        grid[0][0] = 3;
-        steps.add(new ExecutionStep(2, 9, "Found land at (0,0) & unvisited. Found Island 1! Launch BFS(0,0)", List.of("(0,0)"), Map.of(), List.of(), Map.of("count", "1"), "Matrix", copyGrid(grid)));
-        grid[0][1] = 3; grid[1][0] = 3;
-        steps.add(new ExecutionStep(3, 21, "BFS expands: mark connected land cells (0,1) and (1,0)", List.of("(0,1)", "(1,0)"), Map.of(), List.of(), Map.of("count", "1"), "Matrix", copyGrid(grid)));
-        grid[0][0] = 4; grid[0][1] = 4; grid[1][0] = 4;
-        steps.add(new ExecutionStep(4, 11, "Completed BFS for Island 1. Continue grid search...", List.of(), Map.of(), List.of(), Map.of("count", "1"), "Matrix", copyGrid(grid)));
-        grid[2][2] = 3;
-        steps.add(new ExecutionStep(5, 9, "Found land at (2,2). Found Island 2! Launch BFS(2,2)", List.of("(2,2)"), Map.of(), List.of(), Map.of("count", "2"), "Matrix", copyGrid(grid)));
-        grid[2][3] = 3;
-        steps.add(new ExecutionStep(6, 21, "BFS expands: mark connected land cell (2,3)", List.of("(2,3)"), Map.of(), List.of(), Map.of("count", "2"), "Matrix", copyGrid(grid)));
-        grid[2][2] = 4; grid[2][3] = 4;
-        steps.add(new ExecutionStep(7, 13, "Grid scan finished. Total Islands = 2", List.of(), Map.of(), List.of(), Map.of("Total Islands", "2"), "Matrix", copyGrid(grid)));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateFloodFillSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] grid = createFloodFillGrid();
-
-        steps.add(new ExecutionStep(1, 3, "Start Flood Fill at (1,1) with newColor = 2. Initial color = 1", List.of("dfs(1,1)"), Map.of(), List.of(), Map.of("iniColor", "1", "newColor", "2"), "Matrix", copyGrid(grid)));
-        grid[1][1] = 2;
-        steps.add(new ExecutionStep(2, 11, "Repaint (1,1) -> 2. Recurse 4 directions...", List.of("dfs(1,1)"), Map.of(), List.of(), Map.of("pixel", "(1,1)"), "Matrix", copyGrid(grid)));
-        grid[0][1] = 2; grid[1][0] = 2; grid[1][2] = 2; grid[2][1] = 2;
-        steps.add(new ExecutionStep(3, 12, "Repaint connected color 1 pixels at (0,1), (1,0), (1,2), (2,1)", List.of("dfs(0,1)", "dfs(1,0)", "dfs(1,2)", "dfs(2,1)"), Map.of(), List.of(), Map.of("pixel", "connected"), "Matrix", copyGrid(grid)));
-        steps.add(new ExecutionStep(4, 5, "Flood Fill algorithm completed successfully!", List.of(), Map.of(), List.of(), Map.of("Status", "Complete"), "Matrix", copyGrid(grid)));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateSurroundedRegionsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] grid = new int[][]{
-            {1, 1, 1, 1},
-            {1, 0, 0, 1},
-            {1, 1, 0, 1},
-            {1, 0, 1, 1}
-        };
-
-        steps.add(new ExecutionStep(1, 6, "Traverse boundary cells looking for 'O's...", List.of(), Map.of(), List.of(), Map.of("phase", "Boundary Search"), "Matrix", copyGrid(grid)));
-        grid[3][1] = 2;
-        steps.add(new ExecutionStep(2, 9, "Found boundary 'O' at (3,1). DFS marks it and its connected 'O's as un-capturable safe 'O's", List.of("dfs(3,1)"), Map.of(), List.of(), Map.of("safe", "(3,1)"), "Matrix", copyGrid(grid)));
-        steps.add(new ExecutionStep(3, 16, "Flip remaining unvisited interior 'O's to 'X's. Surrounded regions captured!", List.of(), Map.of(), List.of(), Map.of("status", "Complete"), "Matrix", copyGrid(grid)));
-
-        return steps;
-    }
-
     // Helper builders
     private List<GraphNode> createDefaultNodes() {
         return List.of(

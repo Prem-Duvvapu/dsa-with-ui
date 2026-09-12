@@ -167,53 +167,6 @@ public class GreedyService implements ProblemProvider {
         );
     }
 
-    private List<ExecutionStep> generateMeetingsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] start = new int[]{1, 3, 0, 5, 8, 5};
-        int[] end = new int[]{2, 4, 6, 7, 9, 9};
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 4, "N Meetings: Start = [1,3,0,5,8,5], End = [2,4,6,7,9,9]. Sort by end time.", createArrayState(end, -1, -1), Map.of("count", "0")));
-        steps.add(createStep(stepNum++, 8, "Select Meeting 1: [1..2]. End time limit = 2. Total meetings = 1.", createArrayState(end, 0, -1), Map.of("count", "1", "limit", "2")));
-        steps.add(createStep(stepNum++, 11, "Select Meeting 2: [3..4] (3 > 2). End time limit = 4. Total meetings = 2.", createArrayState(end, 1, -1), Map.of("count", "2", "limit", "4")));
-        steps.add(createStep(stepNum++, 11, "Select Meeting 4: [5..7] (5 > 4). End time limit = 7. Total meetings = 3.", createArrayState(end, 3, -1), Map.of("count", "3", "limit", "7")));
-        steps.add(createStep(stepNum++, 11, "Select Meeting 5: [8..9] (8 > 7). End time limit = 9. Total meetings = 4.", createArrayState(end, 4, -1), Map.of("count", "4", "limit", "9")));
-        steps.add(createStep(stepNum++, 15, "N Meetings Complete! Maximum non-overlapping meetings = 4.", createArrayState(end, -1, -1), Map.of("maxMeetings", "4")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateJumpGameSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{2, 3, 1, 1, 4};
-        int maxReach = 0;
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 3, "Jump Game I: nums = [2, 3, 1, 1, 4]. Initialize maxReach = 0.", createArrayState(nums, -1, -1), Map.of("maxReach", "0")));
-
-        for (int i = 0; i < nums.length; i++) {
-            maxReach = Math.max(maxReach, i + nums[i]);
-            steps.add(createStep(stepNum++, 6, "i=" + i + " (val " + nums[i] + "): Update maxReach = max(" + maxReach + ", " + i + "+" + nums[i] + ") = " + maxReach, createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "maxReach", String.valueOf(maxReach))));
-            if (maxReach >= nums.length - 1) {
-                steps.add(createStep(stepNum++, 8, "maxReach (" + maxReach + ") >= last index (" + (nums.length - 1) + ")! Can reach target!", createArrayState(nums, i, nums.length - 1), Map.of("canJump", "true")));
-                return steps;
-            }
-        }
-        steps.add(createStep(stepNum++, 10, "Jump Game Complete! Return TRUE.", createArrayState(nums, -1, -1), Map.of("canJump", "true")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateJobSequencingSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] profit = new int[]{100, 50, 40, 20};
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 4, "Job Sequencing: Profits = [100, 50, 40, 20]. Sort jobs by profit descending.", createArrayState(profit, -1, -1), Map.of("totalProfit", "0")));
-        steps.add(createStep(stepNum++, 8, "Schedule Job 1 (Profit 100) at deadline slot 2 -> Total Profit = 100", createArrayState(profit, 0, -1), Map.of("totalProfit", "100")));
-        steps.add(createStep(stepNum++, 11, "Schedule Job 2 (Profit 50) at deadline slot 1 -> Total Profit = 150", createArrayState(profit, 1, -1), Map.of("totalProfit", "150")));
-        steps.add(createStep(stepNum++, 14, "Job Sequencing Complete! Max Profit = 150 across 2 scheduled jobs.", createArrayState(profit, -1, -1), Map.of("maxProfit", "150")));
-        return steps;
-    }
-
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {
         List<ArrayElement> list = new ArrayList<>();
         for (int i = 0; i < vals.length; i++) {

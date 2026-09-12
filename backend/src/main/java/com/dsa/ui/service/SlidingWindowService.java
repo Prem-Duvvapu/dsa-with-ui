@@ -122,29 +122,6 @@ public class SlidingWindowService implements ProblemProvider {
         return list;
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateLongestSubstringSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] vals = new int[]{1, 2, 3, 1, 2, 3, 1, 1};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 4, "Sliding Window: Input s = \"abcabcbb\". Initialize left = 0, right = 0, maxLen = 0.", createRangeArrayState(vals, 0, 0), Map.of("left", "0", "right", "0", "maxLen", "0")));
-        steps.add(createStep(stepNum++, 8, "Expand window right -> 2 (\"abc\"). All characters unique! maxLen = 3.", createRangeArrayState(vals, 0, 2), Map.of("left", "0", "right", "2", "maxLen", "3")));
-        steps.add(createStep(stepNum++, 10, "Duplicate 'a' found at right=3. Shrink window left -> 1 (\"bca\"). maxLen remains 3.", createRangeArrayState(vals, 1, 3), Map.of("left", "1", "right", "3", "maxLen", "3")));
-        steps.add(createStep(stepNum++, 12, "Sliding Window Complete! maxLen = 3 (Substring \"abc\").", createRangeArrayState(vals, 0, 2), Map.of("maxLen", "3")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateMaxConsecutiveOnesSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0};
-        int k = 2;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Max Consecutive Ones III: nums = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], K = 2 (Flips allowed).", createRangeArrayState(nums, 0, 0), Map.of("K", "2", "zeroCount", "0")));
-        steps.add(createStep(stepNum++, 6, "Expand window right -> 5: Zero count = 3 > K=2! Shrink left -> 3.", createRangeArrayState(nums, 3, 5), Map.of("left", "3", "right", "5", "zeroCount", "3")));
-        steps.add(createStep(stepNum++, 9, "Expand window to index 9 [1, 1, 1, 1] with 2 zero flips! Max Consecutive Ones = 6.", createRangeArrayState(nums, 4, 9), Map.of("maxConsecutiveOnes", "6")));
-        return steps;
-    }
-
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {
         List<ArrayElement> list = new ArrayList<>();
         for (int i = 0; i < vals.length; i++) {

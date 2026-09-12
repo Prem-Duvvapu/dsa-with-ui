@@ -281,15 +281,6 @@ public class TreeService implements ProblemProvider {
     }
 
     // Step Generators
-    private List<ExecutionStep> generatePreorderSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<TreeNode> nodes = createDefaultTreeNodes();
-        steps.add(new ExecutionStep(1, 4, "Preorder Traversal (Root -> Left -> Right): Visit Root (1).", List.of("1"), Map.of(), List.of(), Map.of("visited", "1"), "Stack", null, null, null, null, nodes));
-        steps.add(new ExecutionStep(2, 62, "Traverse Left Subtree of 1 -> Node 2. Visit Node 2.", List.of("1", "2"), Map.of(), List.of(), Map.of("visited", "1, 2"), "Stack", null, null, null, null, nodes));
-        steps.add(new ExecutionStep(3, 63, "Preorder Traversal Complete! Result: [1, 2, 4, 5, 3].", List.of(), Map.of(), List.of(), Map.of("Result", "[1, 2, 4, 5, 3]"), "Stack", null, null, null, null, nodes));
-        return steps;
-    }
-
     private List<TreeNode> createDefaultTreeNodes() {
         return List.of(
             new TreeNode(1, "1", 190, 40, 2, 3, "unvisited"),

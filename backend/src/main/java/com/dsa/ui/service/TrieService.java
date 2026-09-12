@@ -181,22 +181,6 @@ public class TrieService implements ProblemProvider {
         ));
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateImplementTrieSteps() {
-        ImplementTrie.Node root = new ImplementTrie.Node();
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new ImplementTrie().insert(root, "apple", recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateLcpSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 4, "Longest Common Prefix: Insert strings [\"flower\", \"flow\", \"flight\"] into Trie.", List.of("LCP"), Map.of(), List.of(), Map.of("Input", "[\"flower\", \"flow\", \"flight\"]"), "Stack", null));
-        steps.add(new ExecutionStep(2, 9, "Traverse Trie from root: Node 'f' has 1 child ('l'). Node 'l' has 1 child ('o' and 'i' split at node 'l'!).", List.of("LCP traversal"), Map.of(), List.of(), Map.of("Common Prefix", "\"fl\""), "Stack", null));
-        steps.add(new ExecutionStep(3, 13, "Longest Common Prefix Complete! Result = \"fl\".", List.of(), Map.of(), List.of(), Map.of("LCP", "\"fl\""), "Stack", null));
-        return steps;
-    }
-
     // Helper tree nodes
     private List<TreeNode> createTrieTreeNodes() {
         return List.of(

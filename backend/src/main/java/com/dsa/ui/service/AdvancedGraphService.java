@@ -407,30 +407,6 @@ public class AdvancedGraphService implements ProblemProvider {
         };
     }
 
-    // Step Generators
-    private List<ExecutionStep> generateGraphIntroSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = Map.of(0, "visited", 1, "visiting", 2, "unvisited", 3, "unvisited");
-        List<String> activeEdges = List.of("0-1", "0-2");
-
-        steps.add(new ExecutionStep(1, 1, "Graph Intro: A Graph consists of V vertices and E edges.", List.of(), nodeStates, activeEdges, Map.of("V", "4", "E", "3"), "Graph", null));
-        steps.add(new ExecutionStep(2, 4, "Graph Intro Complete! All nodes initialized.", List.of(), nodeStates, activeEdges, Map.of("Status", "INITIALIZED"), "Graph", null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateGraphRepCppSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateGraphRepJavaSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateConnectedComponentsIntroSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateBfsDfsIntroSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateBracketReversalsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCountAndSaySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateStringHashingTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateRabinKarpSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCountPalindromicSubsequencesSteps() { return generateGraphIntroSteps(); }
-
     // Graph helper builders
     private List<GraphNode> createBasicGraphNodes() {
         return List.of(
