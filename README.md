@@ -77,6 +77,8 @@ Open **http://localhost:5174**.
 
 ```bash
 ./start.sh                            # installs frontend deps if needed; Ctrl+C stops both
+                                     # Linux/WSL use setsid; macOS falls back to perl setpgrp,
+                                     # so each service still leads its own process group
 
 # Or run the tiers separately:
 cd backend && mvn spring-boot:run     # http://localhost:8923

@@ -24,7 +24,7 @@ cd frontend && npm run dev                               # http://localhost:5180
 cd frontend && npx vite build                            # what CI builds
 
 # Both tiers
-./start.sh                                               # backend 8923 + frontend 5180; Ctrl+C stops both
+./start.sh                                               # backend 8923 + frontend 5180; Ctrl+C stops both (Linux/WSL/macOS)
 docker-compose up --build                                # frontend on http://localhost:5174
 ```
 
