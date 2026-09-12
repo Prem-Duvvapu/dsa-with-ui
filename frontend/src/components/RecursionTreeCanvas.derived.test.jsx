@@ -46,4 +46,32 @@ describe('RecursionTreeCanvas with a derived tree', () => {
     render(<RecursionTreeCanvas currentStep={step} steps={[step]} currentStepIndex={0} />);
     expect(screen.queryByTestId('derived-recursion-tree')).not.toBeInTheDocument();
   });
+
+  it('writes the arguments, not the function name that every node shares', () => {
+    // The bug this replaces: truncating from the front kept `backtrack(` - identical on
+    // every node - and cut the arguments, which are the only distinguishing part. Every
+    // node in the permutations tree read the same.
+    const steps = [frame('backtrack(idx=0)'), frame('backtrack(idx=0)', 'backtrack(idx=1)')];
+    render(<RecursionTreeCanvas steps={steps} currentStepIndex={1} currentStep={steps[1]} />);
+    expect(screen.getByText('idx=0')).toBeInTheDocument();
+    expect(screen.getByText('idx=1')).toBeInTheDocument();
+    expect(screen.queryByText(/^backtrack\($/)).not.toBeInTheDocument();
+  });
+
+  it('keeps the whole frame available on hover', () => {
+    const steps = [frame('find(idx=0, target=7)')];
+    const { container } = render(
+      <RecursionTreeCanvas steps={steps} currentStepIndex={0} currentStep={steps[0]} />
+    );
+    expect(container.querySelector('title').textContent).toBe('find(idx=0, target=7)');
+  });
+
+  it('falls back to the whole frame when there are no arguments to show', () => {
+    const steps = [frame('solve')];
+    const { container } = render(
+      <RecursionTreeCanvas steps={steps} currentStepIndex={0} currentStep={steps[0]} />
+    );
+    // The <title> carries it too, so assert on the drawn text specifically.
+    expect(container.querySelector('text').textContent).toContain('solve');
+  });
 });

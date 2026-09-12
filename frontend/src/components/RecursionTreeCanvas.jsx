@@ -4,9 +4,27 @@ import { GitBranch, Layers, ArrowDown } from 'lucide-react';
 import { buildRecursionTree, layoutRecursionTree } from '../trace/recursionTree';
 import derived from './DerivedRecursionTree.module.css';
 
-const NODE_W = 74;
+const NODE_W = 88;
 const NODE_H = 26;
 const ROW_H = 62;
+const LABEL_CHARS = 13;
+
+/**
+ * What to write in a node.
+ *
+ * The ARGUMENTS, not the function name. Every node in a recursion tree calls the same
+ * function, so the name is the one part carrying no information - repeated once per node -
+ * while the arguments are the only thing telling two nodes apart. Truncating from the front
+ * got this exactly backwards: `backtrack(idx=0)` became `backtrack(…` and every node in the
+ * permutations tree read identically.
+ */
+function nodeLabel(frame) {
+  const open = frame.indexOf('(');
+  const close = frame.lastIndexOf(')');
+  const inner = open >= 0 && close > open ? frame.slice(open + 1, close).trim() : frame;
+  const text = inner.length > 0 ? inner : frame;
+  return text.length > LABEL_CHARS ? `${text.slice(0, LABEL_CHARS - 1)}…` : text;
+}
 
 /**
  * The tree a backtracking run explored, rebuilt from the call stacks it emitted.
@@ -47,7 +65,9 @@ function DerivedRecursionTree({ steps, currentStepIndex }) {
               className={`${derived.node} ${derived[`node_${n.state}`] || ''}`}
             />
             <text x={NODE_W / 2} y={NODE_H / 2 + 4} textAnchor="middle" className={derived.label}>
-              {n.label.length > 11 ? `${n.label.slice(0, 10)}…` : n.label}
+              {nodeLabel(n.label)}
+              {/* The full frame, function name included, on hover. */}
+              <title>{n.label}</title>
             </text>
           </g>
         ))}
