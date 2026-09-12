@@ -139,6 +139,14 @@ is deleted.
 
 ---
 
+## Architecture
+
+See **[`ARCHITECTURE.md`](ARCHITECTURE.md)** for the system in diagrams — the request path
+and its guards, the tracer contract, how a `dsType` selects a canvas, and where the
+cross-tier contracts sit. It also answers the two questions that come up most: there is no
+database and none is needed, and the scaling bottleneck is CPU on `/execute` rather than
+storage.
+
 ## Coverage: catalogued vs traced
 
 The catalogue lists every problem the project intends to cover. A problem is **traced**

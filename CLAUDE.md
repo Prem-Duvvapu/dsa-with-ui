@@ -201,6 +201,8 @@ differing only in word order (`rotten-oranges` / `rotting-oranges`).
 
 ## Documentation map
 
+- `ARCHITECTURE.md` — **start here.** The system as it stands, with diagrams: the request
+  path, the tracer contract, dsType→canvas routing, and where the guards sit.
 - `plan.md` — the v2 tracing architecture. Accurate; the source of the current design.
 - `HANDOFF.md` — **temporary.** Remaining-work prompts. C (migrate ~425 problems) and
   D (retire the legacy layer) are **done**; A (scale the harness) and B (frontend redesign)

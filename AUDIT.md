@@ -1,9 +1,34 @@
-# Full-project audit — 433 problems, 18 topics
+# Full-project audit — 433 problems, 18 topics *(as of 2026-09-12)*
 
 **Date:** 2026-09-12   **Branch:** `audit/full-project-sweep`   **Baseline commit:** `6faea6f`
 
 Every number below was read from the running backend or from the source, never from another
 document. Reproduce with the commands in [§9](#9-how-to-reproduce).
+
+> ### Read this first — the catalogue has changed since this audit
+>
+> This is a **record of one moment**, and its figures are deliberately left as they were
+> measured. The catalogue has moved since:
+>
+> | | At audit (2026-09-12) | Now (2026-09-13) |
+> |---|---|---|
+> | Problems | 433 | **431** |
+> | Topics | 18 | **17** |
+> | Duplicate ids | 7 | **0** |
+>
+> Eleven problems were catalogued twice — seven under identical ids and four more under
+> word-order variants (`rotten-oranges` / `rotting-oranges`) that `duplicateIds` could not
+> see. All eleven came from `AdvancedGraphService` and `GraphBfsDfsService` overlapping, so
+> those two topics were merged into one **Graphs** topic, which removed the cause rather
+> than the symptom. Two of the four near-duplicate pairs survive on purpose, teaching the
+> same problem two standard ways; see [F10](#4b-status--what-has-been-fixed).
+>
+> Wherever this document says "Advanced Graphs" or "Graph BFS/DFS", read **Graphs**. The
+> per-topic tables in [§2](#2-coverage--confirmed-complete) and [F2](#f2-93-problems-never-highlight-some-of-their-code-on-the-default-input)
+> are the audit-time split and are kept for the record.
+>
+> **Never quote a coverage number from this file.** Run
+> `curl -s localhost:8923/api/problems/stats`.
 
 ---
 
@@ -510,9 +535,28 @@ the catalogue — every one of the 433 `ProblemDetail`s lives in their `initProb
 `ProblemCatalog` merges them via `ProblemProvider`. They survive as catalogue providers
 with no step generation. Deleting one deletes that topic's catalogue.
 
-Suites after all fixes: backend **6402 pass / 0 fail**, frontend **224 pass / 29 files**,
-`vite build` clean. Live check: `/api/problems/stats` still reports 433/433/0, a trace
-still renders, and every legacy route 404s.
+### Work that followed the audit
+
+The findings above are all closed. What came after them, in order, each with its own commit:
+
+| Area | Change |
+|---|---|
+| Docs & process | `REVIEW.md` — six review gates; `RCA-025`…`RCA-033` recorded in `RCA.md`; this file reframed as a record |
+| Problem statement | Descriptions and source constraints surfaced; 17 descriptions that stated the *technique* rewritten to state the *question* |
+| Workspace | Code moved beside the canvas; input editor, complexity card and statement made collapsible and persisted |
+| Player | Media-player keyboard with a discoverable `?` overlay; view preferences persist |
+| Theme | Light/dark/system control; 94 canvas literals tokenised, fixing a real contrast defect in the dark theme |
+| Onboarding | First-run welcome; a guided tour anchored to `data-tour` attributes with a test asserting every step targets something real |
+| Engineering | `aria-live` data summary + top-level error boundary; gzip + weak ETag + cached projection (236 KB → 31 KB); skip-erosion and wire-contract guards; `App.jsx` split; `/execute` rate limited |
+| Catalogue | 11 duplicated problems resolved; the two graph topics merged into one |
+| Canvases | `WindowCanvas`, `SearchSpaceCanvas`, `HeapCanvas` built; recursion trees derived from call stacks; DP dependencies and recurrences completed |
+| Portability | `start.sh` fixed for macOS — no `setsid`, and bash 3.2 has no `wait -n` |
+
+Suites at the end of that work: backend **6415 pass / 0 fail**, frontend **333 pass /
+44 files**, `vite build` clean. Live: `/api/problems/stats` reports **431/431/0** with no
+duplicate ids, every legacy route 404s, and traces render.
+
+See `ARCHITECTURE.md` for the system as it now stands.
 
 ---
 
