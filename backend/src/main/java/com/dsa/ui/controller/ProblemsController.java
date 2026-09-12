@@ -9,11 +9,16 @@ import com.dsa.ui.tracer.wire.TraceResponse;
 import com.dsa.ui.tracer.InputSpec;
 import com.dsa.ui.tracer.TraceRunner;
 import com.dsa.ui.tracer.TracerRegistry;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.MessageDigest;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,10 +47,84 @@ public class ProblemsController {
         this.runner = runner;
     }
 
-    /** The whole catalogue as lightweight summaries — full detail is one request away. */
+    /**
+     * The whole catalogue as lightweight summaries — full detail is one request away.
+     *
+     * <p>Computed once. The catalogue is assembled at startup from eighteen providers and
+     * never changes afterwards, so re-projecting 433 maps on every request was work with no
+     * possible different answer. Held in a volatile field rather than synchronized: two
+     * threads racing on first call both build the same immutable list, and the loser's copy
+     * is simply discarded.
+     */
+    private volatile List<Map<String, Object>> cachedSummaries;
+
+    /**
+     * The ETag for that projection, computed once with it.
+     *
+     * <p>Spring's {@code ShallowEtagHeaderFilter} was the obvious way to do this and it is
+     * the wrong one here: it buffers the response and sets Content-Length itself, which
+     * stops Tomcat compressing at all. Measured - the catalogue came back 236 KB with the
+     * filter in place no matter what Accept-Encoding asked for. Hashing the immutable
+     * projection once and answering If-None-Match here keeps compression working on the
+     * 200s, and is cheaper besides: the filter re-hashed the body on every request.
+     */
+    private volatile String cachedEtag;
+
     @GetMapping
-    public List<Map<String, Object>> list() {
-        return catalog.all().stream().map(ProblemsController::summarize).toList();
+    public ResponseEntity<List<Map<String, Object>>> list(
+            @RequestHeader(value = HttpHeaders.IF_NONE_MATCH, required = false) String ifNoneMatch) {
+        List<Map<String, Object>> summaries = cachedSummaries;
+        if (summaries == null) {
+            // Unmodifiable because this list is now shared across every request. summarize()
+            // hands back a mutable LinkedHashMap, and one caller mutating an entry would
+            // corrupt the catalogue for everyone afterwards. Collections.unmodifiableMap
+            // rather than Map.copyOf: a summary legitimately holds nulls (inputSpec is null
+            // for an untraced problem) and Map.copyOf rejects them.
+            summaries = catalog.all().stream()
+                    .map(ProblemsController::summarize)
+                    .map(Collections::unmodifiableMap)
+                    .toList();
+            cachedSummaries = summaries;
+            cachedEtag = etagFor(summaries);
+        }
+        String etag = cachedEtag;
+
+        if (etag != null && etag.equals(ifNoneMatch)) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).eTag(etag).build();
+        }
+        return ResponseEntity.ok()
+                // no-cache + must-revalidate, not a max-age: the catalogue changes only on
+                // deploy, but when it does a client holding a stale copy must find out at
+                // once rather than after an arbitrary window.
+                .cacheControl(CacheControl.noCache().mustRevalidate())
+                .eTag(etag)
+                .body(summaries);
+    }
+
+    /**
+     * A stable hash of the rendered catalogue, so a deploy that changes it changes this.
+     *
+     * <p><strong>Weak</strong> (the {@code W/} prefix), and that is load-bearing rather than
+     * stylistic. Tomcat refuses to compress a response carrying a STRONG ETag, because a
+     * strong tag identifies an exact byte sequence and gzip changes those bytes. With a
+     * strong tag this endpoint came back 236 KB uncompressed while every other endpoint
+     * compressed normally - the one response that most needed it was the only one excluded.
+     * A weak tag says "semantically the same catalogue", which is all revalidation needs
+     * and which permits the transformation.
+     */
+    private static String etagFor(List<Map<String, Object>> summaries) {
+        try {
+            byte[] digest = MessageDigest.getInstance("SHA-256")
+                    .digest(new ObjectMapper().writeValueAsBytes(summaries));
+            StringBuilder hex = new StringBuilder(32);
+            for (int i = 0; i < 16; i++) {
+                hex.append(String.format("%02x", digest[i]));
+            }
+            return "W/\"" + hex + "\"";
+        } catch (Exception e) {
+            // No ETag is correctness-preserving: the client simply re-downloads.
+            return null;
+        }
     }
 
     /**
