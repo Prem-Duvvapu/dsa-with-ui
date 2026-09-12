@@ -23,7 +23,7 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.SEARCH_SPACE;
     }
 
     @Override

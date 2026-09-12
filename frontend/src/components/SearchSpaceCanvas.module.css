@@ -1,0 +1,163 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+  font-size: var(--text-sm);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.rangeBadge,
+.midBadge {
+  font-family: var(--font-code);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  padding: 2px 10px;
+}
+
+.rangeBadge {
+  color: var(--settled);
+  background: var(--canvas-node-fill);
+  border: 1px solid var(--settled);
+}
+
+.midBadge {
+  color: var(--probe-on);
+  background: var(--probe);
+  border: 1px solid var(--probe);
+}
+
+/* The whole original range stays on screen. Halving only reads as halving when what was
+   discarded is still visible beside what survived. */
+.ruler {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: min(560px, 100%);
+  flex-shrink: 0;
+}
+
+.rulerEnd {
+  font-family: var(--font-code);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.rulerTrack {
+  position: relative;
+  flex: 1;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--canvas-well);
+  border: 1px solid var(--border-default);
+  overflow: hidden;
+}
+
+.rulerLive {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--settled) 34%, transparent);
+  border-left: 2px solid var(--settled);
+  border-right: 2px solid var(--settled);
+  transition: left var(--motion-normal) var(--ease-standard),
+              width var(--motion-normal) var(--ease-standard);
+}
+
+.rulerMid {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--probe);
+  box-shadow: var(--state-current-glow);
+  transition: left var(--motion-normal) var(--ease-standard);
+}
+
+.cells {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-code);
+  flex-shrink: 0;
+  transition: opacity var(--motion-fast) var(--ease-standard);
+}
+
+.cellAlive {
+  color: var(--text-primary);
+  background: var(--canvas-node-fill-2);
+  border: 1px solid var(--settled);
+}
+
+/* Discarded, not deleted: seeing the half that was thrown away is the whole lesson. */
+.cellGone {
+  color: var(--text-muted);
+  background: var(--canvas-node-fill);
+  border: 1px dashed var(--border-default);
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.cellMid {
+  color: var(--probe-on);
+  background: var(--probe);
+  border: 1px solid var(--probe);
+}
+
+.cellValue {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.cellIndex {
+  font-size: 0.56rem;
+  opacity: 0.75;
+}
+
+.inputRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.inputLabel {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}

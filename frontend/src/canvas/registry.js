@@ -11,6 +11,7 @@ import TreeCanvas from '../components/TreeCanvas';
 import TrieCanvas from '../components/TrieCanvas';
 import IntervalCanvas from '../components/IntervalCanvas';
 import WindowCanvas from '../components/WindowCanvas';
+import SearchSpaceCanvas from '../components/SearchSpaceCanvas';
 
 /**
  * The sole dsType-to-renderer routing table.
@@ -24,14 +25,15 @@ import WindowCanvas from '../components/WindowCanvas';
  * bfs-traversal is `Graph`-hero with a queue companion pane instead (see
  * canvas/companions.js) because its graph topology is the point.
  *
- * `Window` had been one of those placeholders, routed to ArrayCanvas. Bars show the values
- * but not the window, which is the one thing the technique is named after - you could not
- * see the bounds move, expand or contract. WindowCanvas draws that instead.
+ * `Window` and `SearchSpace` had both been placeholders routed to ArrayCanvas. Bars show
+ * the values but not the thing being taught: for a window, the bounds moving and
+ * stretching; for a binary search, the space halving. Each now has the canvas its own
+ * question needs.
  */
 export const CANVAS_BY_DSTYPE = Object.freeze({
   Array: ArrayCanvas,
   Window: WindowCanvas,
-  SearchSpace: ArrayCanvas,
+  SearchSpace: SearchSpaceCanvas,
   Matrix: GridCanvas,
   DpTable: DpTableCanvas,
   String: ArrayCanvas,
