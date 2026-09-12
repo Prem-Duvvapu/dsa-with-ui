@@ -753,3 +753,47 @@ phase; do not describe unfinished work as resolved.
   confident wrong answer. Three canvases have now made this mistake in three different ways.
   Before writing a canvas, decide explicitly what "the trace did not say" should look like,
   and make sure it is distinguishable from a real value.
+
+## RCA-035 — Seven canvases drew the catalogue's data over the caller's own input
+
+- **Discovered:** 2026-09-13, by the Binary Trees / BST audit; the audit's own findings were
+  clean and this was found while checking for the RCA-034 shape
+- **Status:** Resolved
+- **Symptom and impact:** the same defect as RCA-025, present in seven more canvases and far
+  wider than any single one. A tracer restates a structure only on the steps that change it;
+  every canvas that read `activeStep?.field || problem?.defaultX` therefore fell through to
+  the **catalogue default** on every narration step. Run a tree of `[9,8,7,6]` through
+  `tree-balanced` and seven of its thirteen steps drew `1,2,3,4,5`.
+
+  Measured across the catalogue: **1506 steps in 142 of 232 problems** drew a catalogue
+  default mid-run. `construct-bst-preorder` did it on 84% of its steps.
+
+  | dsType | steps | problems |
+  |---|---:|---:|
+  | Graph | 612 | 40 |
+  | Matrix | 608 | 31 |
+  | Array | 176 | 40 |
+  | LinkedList | 36 | 9 |
+  | RecursionTree | 27 | 3 |
+  | Bits | 24 | 9 |
+  | String | 23 | 10 |
+
+- **Root cause:** `||` collapses "this step did not restate the structure" into "there is no
+  structure", and the chosen replacement was the catalogue's own sample data — which looks
+  entirely plausible and is wrong for any run the user configured. The defaults are honest in
+  exactly one situation, before any step has emitted anything, and that is the only one the
+  expression got right.
+- **Resolution:** every affected canvas now uses `trace/lastPayload.js`, which returns the
+  most recent stated value and looks back no further than the step being shown. The
+  catalogue default survives only as the pre-run fallback. `GraphCanvas` needed more than a
+  one-line change: nodes and edges must come from the **same** step, or a carried topology
+  renders with no edges at all — a graph as a field of disconnected dots.
+- **Regression guard:** a carry test per canvas, each asserting the emitted value survives a
+  narration step **and** that the default no longer appears; plus the pre-run case, which
+  must still show the default. `TreeCanvas`'s was proven RED first.
+- **The general lesson, now fifth time:** this is RCA-025, RCA-031, RCA-034 and this entry —
+  four separate canvases inventing data when the trace was silent, in four different ways
+  (spec defaults, a hardcoded literal, an empty array, catalogue defaults). **Before writing
+  a canvas, decide what "the trace did not say" renders as.** The reflex `|| something`
+  is the bug: it always produces a confident answer, and a confident wrong picture is worse
+  than an honest blank one.

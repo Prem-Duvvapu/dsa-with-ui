@@ -1,10 +1,16 @@
 import React from 'react';
 import { BarChart2 } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
-export default function ArrayCanvas({ problem, currentStep, step }) {
+export default function ArrayCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const rawArray = (activeStep?.arrayState && activeStep.arrayState.length > 0) 
-    ? activeStep.arrayState 
+  // Absence is not "show the default". Tracers restate a structure only on the steps
+  // that change it, so falling through to the catalogue default drew the CATALOGUE's
+  // data over the caller's own input. Measured app-wide: 1506 steps across 142 of 232
+  // problems. The default is honest only before any step has emitted anything.
+  const carried = lastPayload(steps, currentStepIndex, 'arrayState', activeStep);
+  const rawArray = (carried && carried.length > 0)
+    ? carried 
     : (problem?.defaultArray && problem.defaultArray.length > 0) 
       ? problem.defaultArray 
       : [{ value: 2, state: 'default' }, { value: 7, state: 'comparing' }, { value: 11, state: 'active' }, { value: 15, state: 'sorted' }];

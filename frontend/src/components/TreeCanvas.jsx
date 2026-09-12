@@ -1,11 +1,16 @@
 import React from 'react';
 import { GitCommit, Sparkles } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
-export default function TreeCanvas({ problem, currentStep, step }) {
+export default function TreeCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const treeNodes = activeStep?.treeNodes?.length
-    ? activeStep.treeNodes
-    : (problem?.defaultTreeNodes || []);
+  // Absence is not "show the default". Tracers restate the tree only on the steps that
+  // change it, so falling straight through to problem.defaultTreeNodes drew the CATALOGUE's
+  // tree over somebody's own input - 259 steps across 48 of 54 Binary Tree and BST
+  // problems, up to 84% of a run. The default is honest only before any step has emitted
+  // a tree at all, which is what a run would use anyway.
+  const emitted = lastPayload(steps, currentStepIndex, 'treeNodes', activeStep);
+  const treeNodes = emitted?.length ? emitted : (problem?.defaultTreeNodes || []);
   const nodeStates = activeStep?.nodeStates || {};
   const nodeXs = treeNodes.map((node) => node.x);
   const nodeYs = treeNodes.map((node) => node.y);

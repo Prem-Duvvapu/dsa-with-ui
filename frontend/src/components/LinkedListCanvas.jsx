@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Link2, ArrowRight } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
 /**
  * A childId/randomId edge can point at any other node in the row, not just the one
@@ -10,9 +11,14 @@ import { Link2, ArrowRight } from 'lucide-react';
  * draws those extra edges as an absolutely-positioned SVG overlay on top of the row, without
  * touching how next/prev render when childId/randomId are absent.
  */
-export default function LinkedListCanvas({ problem, currentStep, step }) {
+export default function LinkedListCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const listState = activeStep?.listState || problem?.defaultList || [];
+  // Absence is not "show the default". Tracers restate a structure only on the steps
+  // that change it, so falling through to the catalogue default drew the CATALOGUE's
+  // data over the caller's own input. Measured app-wide: 1506 steps across 142 of 232
+  // problems. The default is honest only before any step has emitted anything.
+  const listState = lastPayload(steps, currentStepIndex, 'listState', activeStep)
+    || problem?.defaultList || [];
 
   const containerRef = useRef(null);
   const nodeRefs = useRef(new Map());

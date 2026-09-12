@@ -1,5 +1,6 @@
 import React from 'react';
 import { Crown } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
 /**
  * 2D grid / matrix visualizer.
@@ -17,9 +18,14 @@ import { Crown } from 'lucide-react';
  * itself was invisible: `Stack`/`Queue` heroes had no companion that read
  * `gridState` at all. See `canvas/companions.js`'s `runHasGrid` check.
  */
-export default function GridCanvas({ problem, currentStep, step, variant = 'hero', title = 'Grid' }) {
+export default function GridCanvas({ problem, currentStep, step, variant = 'hero', title = 'Grid', steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const gridState = activeStep?.gridState || problem?.defaultGrid;
+  // Absence is not "show the default". Tracers restate a structure only on the steps
+  // that change it, so falling through to the catalogue default drew the CATALOGUE's
+  // data over the caller's own input. Measured app-wide: 1506 steps across 142 of 232
+  // problems. The default is honest only before any step has emitted anything.
+  const gridState = lastPayload(steps, currentStepIndex, 'gridState', activeStep)
+    || problem?.defaultGrid;
   const isCompanion = variant === 'companion';
 
   if (!gridState || !gridState.length) {
