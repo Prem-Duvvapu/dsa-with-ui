@@ -555,6 +555,17 @@ describe('App input panel', () => {
     await screen.findByLabelText('Target sum');
   }
 
+  it('gives the canvas state a text alternative', async () => {
+    // A screen-reader user gets the narration from LiveTraceTicker and the code from the
+    // code panel, but the DATA the canvas draws had no text form at all.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    expect(screen.getByTestId('step-state-summary').textContent)
+      .toContain('Array of 4: 2, 7, 11, 15.');
+  });
+
   it('anchors every tour step to an element the app actually renders', async () => {
     // The contract that keeps the tour honest. Steps point at data-tour attributes rather
     // than classes or coordinates precisely so a refactor has to break them deliberately -

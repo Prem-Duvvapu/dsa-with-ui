@@ -7,6 +7,7 @@ import InputSummary from './components/InputSummary';
 import ShortcutHelp from './components/ShortcutHelp';
 import WelcomeGuide from './components/WelcomeGuide';
 import TourGuide from './components/TourGuide';
+import StepStateSummary from './components/StepStateSummary';
 import usePersistentState from './hooks/usePersistentState';
 import useTheme from './hooks/useTheme';
 import Sidebar from './components/Sidebar';
@@ -629,6 +630,9 @@ export default function App() {
           {/* Main Visualizer Stage + Controls + Live Trace Banner */}
           <div className={styles.stageColumn}>
           <div data-tour="canvas" className={`glass-panel ${styles.stagePanel}`}>
+            {/* The canvas draws the state; this says it. Inside the canvas region so it
+                reads as part of the visualization rather than as stray page text. */}
+            <StepStateSummary step={currentStep} dsType={activeDsType} />
             <div className={styles.stageInner}>
               {loading ? (
                 <div className={styles.loadingCatalog}>
