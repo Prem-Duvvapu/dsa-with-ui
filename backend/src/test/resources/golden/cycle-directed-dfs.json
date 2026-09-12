@@ -16,7 +16,7 @@
       "vertices" : 4
     }
   },
-  "stepCount" : 10,
+  "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 2,
@@ -683,6 +683,76 @@
       "neighbour" : "0",
       "node" : "3"
     },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 23,
+    "description" : "The recursion returned true all the way to the top. A directed cycle exists, so the search stops here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "cycle",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : { },
     "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,

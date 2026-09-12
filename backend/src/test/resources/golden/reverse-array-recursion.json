@@ -9,7 +9,7 @@
   "resolvedInput" : {
     "nums" : [ 1, 2, 3, 4, 5 ]
   },
-  "stepCount" : 5,
+  "stepCount" : 6,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 6,
@@ -312,6 +312,69 @@
       "index" : 4,
       "value" : 1,
       "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "reverseArray(#1)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "reverseArray(#2)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "reverseArray(#3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 8,
+    "description" : "Every frame has returned. The array is fully reversed: [5, 4, 3, 2, 1].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
     } ],
     "listState" : null,
     "trieState" : null,

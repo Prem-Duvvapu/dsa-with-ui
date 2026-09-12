@@ -9,7 +9,7 @@
   "resolvedInput" : {
     "n" : 5
   },
-  "stepCount" : 11,
+  "stepCount" : 12,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 5,
@@ -736,6 +736,78 @@
     "description" : "printNTo1(n=5) returns now that its recursive call has finished.",
     "queueOrStackState" : null,
     "callStack" : [ "printNTo1(n=5)" ],
+    "nodeStates" : {
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "printNTo1(5)",
+      "x" : 200.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "printNTo1(4)",
+      "x" : 200.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "printNTo1(3)",
+      "x" : 200.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "printNTo1(2)",
+      "x" : 200.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "val" : "printNTo1(1)",
+      "x" : 200.0,
+      "y" : 260.0,
+      "leftId" : 6,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "val" : "printNTo1(0)",
+      "x" : 200.0,
+      "y" : 315.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "Every frame has returned. The call stack is empty and 5..1 were printed in order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : {
       "1" : "visited",
       "2" : "visited",

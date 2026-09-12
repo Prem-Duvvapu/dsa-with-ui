@@ -97,6 +97,14 @@ public class DfsTraversalTracer implements AlgorithmTracer {
         }
 
         walk(start, true, graph, adj, seen, states, order, emit);
+
+        // Emitted after the outermost frame pops, so the trace ends at depth 0 rather than
+        // freezing the sidebar on dfs(start)'s own frame.
+        emit.at("backtrack")
+                .say("Every frame has returned. DFS from %d visited %d vertex/vertices in order: %s.",
+                        start, order.size(), order)
+                .var("order", order)
+                .graph(graph).nodes(states).step();
     }
 
     private void walk(int node, boolean isRoot, Inputs.GraphInput graph,

@@ -73,6 +73,13 @@ public class ReverseArrayRecursionTracer implements AlgorithmTracer {
         }
 
         recurse(0, arr.length - 1, arr, 0, nodes, states, emit);
+
+        // Emitted after the outermost frame pops, so the trace ends at depth 0.
+        emit.at("recurse")
+                .say("Every frame has returned. The array is fully reversed: %s.",
+                        java.util.Arrays.toString(arr))
+                .array(arr)
+                .tree(nodes).nodes(states).step();
     }
 
     private void recurse(int l, int r, int[] arr, int depth, List<TreeNode> nodes, Map<Integer, String> states,

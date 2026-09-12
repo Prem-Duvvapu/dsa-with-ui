@@ -515,4 +515,23 @@ class TracerContractTest {
         }
         return sb.toString();
     }
+
+    @ParameterizedTest(name = "{0} unwinds its call stack before the trace ends")
+    @MethodSource("tracerIds")
+    @DisplayName("A trace that pushes call frames must drain them before its last step")
+    void traceEndsWithAnEmptyCallStack(String id) {
+        AlgorithmTracer tracer = registry.find(id).orElseThrow();
+        List<ExecutionStep> steps = runner.runDefaults(tracer).getSteps();
+        boolean usesCallStack = steps.stream()
+                .anyMatch(s -> s.getCallStack() != null && !s.getCallStack().isEmpty());
+        assumeTrue(usesCallStack, id + " does not model a call stack");
+
+        List<String> last = steps.get(steps.size() - 1).getCallStack();
+        assertTrue(last == null || last.isEmpty(),
+                id + " ends with " + (last == null ? 0 : last.size()) + " frame(s) still on the"
+                        + " call stack: " + last + ". The pushes and pops balance, but the final"
+                        + " step is emitted from inside the recursion, so the sidebar freezes"
+                        + " showing frames the viewer never watches drain. Emit a closing step"
+                        + " from run() after the recursion returns.");
+    }
 }

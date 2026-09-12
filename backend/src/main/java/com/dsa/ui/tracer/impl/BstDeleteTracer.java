@@ -97,14 +97,23 @@ public class BstDeleteTracer implements AlgorithmTracer {
         Map<MutableBst.Node, String> states = new LinkedHashMap<>();
 
         MutableBst.Node result = delete(root, root, key, bst, states, emit);
+
+        // Always closes the trace from here, after every frame has popped. delete()'s own
+        // last step is emitted before its pop, so ending there froze the sidebar showing
+        // deleteNode(root) still on the stack.
+        String message;
         if (result != root) {
             // The root itself was the match and had fewer than two children, so it was
             // relinked away entirely rather than falling through to its own returnRoot line.
-            String message = result == null
+            message = result == null
                     ? String.format("%d was the root with no children - the tree is now empty.", key)
                     : String.format("%d was the root with one child - %d becomes the new root.", key, result.val);
-            emit.at("returnRoot").say(message).tree(bst.render(result, states)).step();
+        } else {
+            message = String.format(
+                    "Every frame has returned and %d is the root again - the tree below is the"
+                            + " result of deleting %d.", root.val, key);
         }
+        emit.at("returnRoot").say(message).tree(bst.render(result, states)).step();
     }
 
     private MutableBst.Node delete(MutableBst.Node overallRoot, MutableBst.Node node, int key,
