@@ -8,29 +8,41 @@ import {
 import SearchBox from './SearchBox';
 import { normalizeCategory } from '../search/normalizeCategory';
 
+/**
+ * The category grid, exported so contracts/categories.json can be asserted against it.
+ * CategoryContractTest asserts the backend matches the same file, so neither side can
+ * drift alone - and drift here is not cosmetic, it makes a whole topic unbrowsable.
+ */
+export const CATEGORIES = [
+  // Every id here must be a category the backend actually serves. It is not a display
+  // choice: a mismatch makes those problems unreachable from the grid entirely. The
+  // backend called a category "BST" while this said "Binary Search Trees", and sixteen
+  // problems were invisible here for as long as that lasted. contracts/categories.json
+  // is the shared truth, asserted from both sides.
+  { id: 'Arrays', label: 'Arrays', fullLabel: 'Arrays', icon: Binary },
+  { id: 'BST', label: 'BST', fullLabel: 'Binary Search Trees', icon: GitBranch },
+  { id: 'Binary Search', label: 'Binary Search', fullLabel: 'Binary Search', icon: Search },
+  { id: 'Binary Trees', label: 'Binary Trees', fullLabel: 'Binary Trees', icon: FolderTree },
+  { id: 'Bit Manipulation', label: 'Bit Logic', fullLabel: 'Bit Manipulation', icon: BitIcon },
+  { id: 'Dynamic Programming', label: 'Dynamic Prog', fullLabel: 'Dynamic Programming', icon: Brain },
+  { id: 'Graphs', label: 'Graphs', fullLabel: 'Graphs', icon: Network },
+  { id: 'Greedy Algorithms', label: 'Greedy', fullLabel: 'Greedy Algorithms', icon: Zap },
+  { id: 'Heaps & PriorityQueue', label: 'Heaps & PQ', fullLabel: 'Heaps & PriorityQueue', icon: Layers3 },
+  { id: 'Learn the Basics', label: 'Basics', fullLabel: 'Learn the Basics', icon: Cpu },
+  { id: 'Linked List', label: 'Linked Lists', fullLabel: 'Linked Lists', icon: Link2 },
+  { id: 'Recursion & Backtracking', label: 'Backtracking', fullLabel: 'Recursion & Backtracking', icon: RefreshCcw },
+  { id: 'Sliding Window', label: 'Sliding Window', fullLabel: 'Sliding Window', icon: Filter },
+  { id: 'Sorting Algorithms', label: 'Sorting', fullLabel: 'Sorting Algorithms', icon: BarChart3 },
+  { id: 'Stack & Queue', label: 'Stack & Queue', fullLabel: 'Stack & Queue', icon: Layers },
+  { id: 'Strings', label: 'Strings', fullLabel: 'Strings', icon: Type },
+  { id: 'Tries & Prefixes', label: 'Tries', fullLabel: 'Tries & Prefixes', icon: Hash }
+];
+
 export default function Sidebar({ problems = [], activeProblemId, activeCategory, onSelectCategory, onSelectProblem, onRetry }) {
   const [showCategoryGrid, setShowCategoryGrid] = useState(true);
 
   // Alphabetically sorted (A-Z) Category definitions
-  const categories = useMemo(() => [
-    { id: 'Advanced Graphs', label: 'Adv Graphs', fullLabel: 'Advanced Graphs', icon: Cpu },
-    { id: 'Arrays', label: 'Arrays', fullLabel: 'Arrays', icon: Binary },
-    { id: 'Binary Search', label: 'Binary Search', fullLabel: 'Binary Search', icon: Search },
-    { id: 'Binary Search Trees', label: 'BST', fullLabel: 'Binary Search Trees', icon: GitBranch },
-    { id: 'Binary Trees', label: 'Binary Trees', fullLabel: 'Binary Trees', icon: FolderTree },
-    { id: 'Bit Manipulation', label: 'Bit Logic', fullLabel: 'Bit Manipulation', icon: BitIcon },
-    { id: 'Dynamic Programming', label: 'Dynamic Prog', fullLabel: 'Dynamic Programming', icon: Brain },
-    { id: 'Graph BFS/DFS', label: 'Graph BFS/DFS', fullLabel: 'Graph BFS & DFS', icon: Network },
-    { id: 'Greedy Algorithms', label: 'Greedy', fullLabel: 'Greedy Algorithms', icon: Zap },
-    { id: 'Heaps & PriorityQueue', label: 'Heaps & PQ', fullLabel: 'Heaps & PriorityQueue', icon: Layers3 },
-    { id: 'Linked List', label: 'Linked Lists', fullLabel: 'Linked Lists', icon: Link2 },
-    { id: 'Recursion & Backtracking', label: 'Backtracking', fullLabel: 'Recursion & Backtracking', icon: RefreshCcw },
-    { id: 'Sliding Window', label: 'Sliding Window', fullLabel: 'Sliding Window', icon: Filter },
-    { id: 'Sorting Algorithms', label: 'Sorting', fullLabel: 'Sorting Algorithms', icon: BarChart3 },
-    { id: 'Stack & Queue', label: 'Stack & Queue', fullLabel: 'Stack & Queue', icon: Layers },
-    { id: 'Strings', label: 'Strings', fullLabel: 'Strings', icon: Type },
-    { id: 'Tries & Prefixes', label: 'Tries', fullLabel: 'Tries & Prefixes', icon: Hash }
-  ], []);
+  const categories = useMemo(() => CATEGORIES, []);
 
 
   // Category problem count map

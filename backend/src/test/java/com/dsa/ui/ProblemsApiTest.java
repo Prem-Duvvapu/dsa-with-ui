@@ -38,7 +38,7 @@ class ProblemsApiTest {
         JsonNode all = getJson("/api/problems");
         // 440 registrations across 18 services, 7 of which are ids claimed by two
         // services with different content. Pinned so accidental catalogue loss is caught.
-        assertEquals(433, all.size(), "catalogue size changed");
+        assertEquals(431, all.size(), "catalogue size changed");
         for (JsonNode entry : all) {
             assertTrue(entry.has("traced"), entry.path("id").asText() + " has no traced flag");
             assertFalse(entry.path("id").asText().isBlank());
@@ -59,8 +59,12 @@ class ProblemsApiTest {
 
         // Cross-service id collisions are surfaced rather than hidden; resolving them
         // means moving problems between services, which is Phase 4 work.
-        assertEquals(7, stats.get("duplicateIds").size(),
-                "duplicate id count changed: " + stats.get("duplicateIds"));
+        // Zero, and it must stay zero. Seven ids were registered twice and four more problems
+        // were registered under word-order variants of the same name; all eleven came from
+        // AdvancedGraphService and GraphBfsDfsService cataloguing the same problems. Both
+        // now live in one "Graphs" topic, which removes the cause rather than the symptom.
+        assertEquals(0, stats.get("duplicateIds").size(),
+                "a problem is registered twice again: " + stats.get("duplicateIds"));
     }
 
     @Test

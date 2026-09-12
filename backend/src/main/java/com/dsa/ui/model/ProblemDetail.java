@@ -6,7 +6,7 @@ public class ProblemDetail {
     private String id;
     private String title;
     private String striverSheetSection;
-    private String category; // "Graph BFS/DFS", "Advanced Graphs", "Binary Trees", "Binary Search Trees", "Sorting Algorithms", "Arrays", "Linked List", "Binary Search", "Dynamic Programming", "Tries"
+    private String category; // "Graphs", "Binary Trees", "BST", "Sorting Algorithms", "Arrays", "Linked List", "Binary Search", "Dynamic Programming", "Tries & Prefixes", ...
     private String difficulty; // "Easy", "Medium", "Hard"
     private String description;
     private String javaCode;

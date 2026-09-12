@@ -16,14 +16,14 @@ describe('Frontend Component Tests', () => {
 
   it('renders Sidebar with list of graph problems', () => {
     const mockProblems = [
-      { id: 'bfs-traversal', title: 'BFS Traversal of Graph', category: 'Graph BFS/DFS', difficulty: 'Easy', dsType: 'Queue' },
-      { id: 'dfs-traversal', title: 'DFS Traversal of Graph', category: 'Graph BFS/DFS', difficulty: 'Easy', dsType: 'Stack' }
+      { id: 'bfs-traversal', title: 'BFS Traversal of Graph', category: 'Graphs', difficulty: 'Easy', dsType: 'Queue' },
+      { id: 'dfs-traversal', title: 'DFS Traversal of Graph', category: 'Graphs', difficulty: 'Easy', dsType: 'Stack' }
     ];
     render(
       <Sidebar
         problems={mockProblems}
         activeProblemId="bfs-traversal"
-        activeCategory="Graph BFS/DFS"
+        activeCategory="Graphs"
         onSelectCategory={() => {}}
         onSelectProblem={() => {}}
       />

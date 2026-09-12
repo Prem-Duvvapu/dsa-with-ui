@@ -50,8 +50,8 @@ function problem(id, title, category, dsType = 'Array') {
 
 /** The full catalogue served by GET /api/problems. */
 const CATALOG = [
-  problem('bfs-traversal', 'BFS Traversal', 'Graph BFS/DFS', 'Graph'),
-  problem('dijkstra', 'Dijkstra', 'Advanced Graphs', 'Graph'),
+  problem('bfs-traversal', 'BFS Traversal', 'Graphs', 'Graph'),
+  problem('dijkstra', 'Dijkstra', 'Graphs', 'Graph'),
   problem('tree-preorder', 'Preorder Traversal', 'Binary Trees', 'Tree'),
   problem('n-queens', 'N Queens', 'Recursion & Backtracking', 'RecursionTree'),
   problem('merge-sort', 'Merge Sort', 'Sorting Algorithms', 'Array'),
@@ -326,7 +326,7 @@ describe('App execution capture', () => {
     // A graph traversal is already fully legible from watching nodes change state in
     // motion; a row-per-vertex strip beneath it conveys the same traversal order less
     // directly than the diagram itself. See RCA-016 / PROMPT-F-visual-fidelity.md.
-    const bfs = problem('bfs-traversal', 'BFS Traversal', 'Graph BFS/DFS', 'Graph');
+    const bfs = problem('bfs-traversal', 'BFS Traversal', 'Graphs', 'Graph');
 
     vi.stubGlobal('fetch', vi.fn((url) => {
       if (url === '/api/problems') return Promise.resolve(ok([bfs]));

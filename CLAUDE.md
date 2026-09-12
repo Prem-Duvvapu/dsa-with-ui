@@ -75,7 +75,7 @@ failure rather than a quiet regression.
 **What survives, and why it looks legacy.** The eighteen `service/*Service` classes are
 still there and still named after topics, but they are **catalogue providers only**: each
 implements `catalog/ProblemProvider` and owns the `ProblemDetail` metadata for its topic,
-which `ProblemCatalog` merges into one id-keyed view. All 433 problems' titles,
+which `ProblemCatalog` merges into one id-keyed view. All 431 problems' titles,
 descriptions, categories, default structures and `dsType`s live in their `initProblems()`.
 They have no `generateSteps`, no `switch (problemId)`, and no `ExecutionStep` import — that
 half was the legacy trace layer and it is deleted. `ProblemProviderContractTest` is
@@ -105,7 +105,7 @@ Three rules follow from that, and they are the point of the design:
    eighteen legacy controllers and all 80 of their step generators are deleted.
 2. **`traced` is an honesty flag, not a feature flag.** `GET /api/problems/stats` reports
    `catalogued` vs `traced` vs `untraced`. The UI says "not yet traced" rather than animate
-   the wrong thing. **All 433 of 433 are traced**, so `untraced` is currently 0 — the flag
+   the wrong thing. **All 431 of 431 are traced**, so `untraced` is currently 0 — the flag
    stays because it is what makes a regression visible, not because work is outstanding.
    Never quote that number from this file: run
    `curl -s localhost:8923/api/problems/stats`.
@@ -190,9 +190,14 @@ tokens while 5 components still used them, and CSS silently drops unresolvable d
 
 ## Pinned numbers
 
-`ProblemsApiTest` asserts `433` unique ids and `7` duplicates. These are intentional
+`ProblemsApiTest` asserts `431` unique ids and `0` duplicates. These are intentional
 tripwires — if a change moves them, update the assertions deliberately and update the
 `README.md` coverage table in the same commit.
+
+The duplicate count is **zero and must stay zero**. It was 7 for a long time: two graph
+services catalogued the same problems, and four more pairs escaped that count entirely by
+differing only in word order (`rotten-oranges` / `rotting-oranges`).
+`DuplicateProblemTest` now fails on both shapes.
 
 ## Documentation map
 
@@ -200,7 +205,7 @@ tripwires — if a change moves them, update the assertions deliberately and upd
 - `HANDOFF.md` — **temporary.** Remaining-work prompts. C (migrate ~425 problems) and
   D (retire the legacy layer) are **done**; A (scale the harness) and B (frontend redesign)
   remain. The owner rejected the current UI outright; Prompt B leads with that design brief.
-- `AUDIT.md` — full per-problem audit of all 433 problems across 18 topics, with the
+- `AUDIT.md` — full per-problem audit of the catalogue across its topics, with the
   findings fixed so far and the two left open for an owner decision.
 - `references.md` — UI/UX research and design tokens. `PROJECT_CONTEXT.md` — pedagogical
   principles.

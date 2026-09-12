@@ -107,7 +107,6 @@ public class GreedyService implements ProblemProvider {
             {"shortest-job-first", "Shortest Job First (SJF) Scheduling", "Greedy - Scheduling", "Medium", "Calculate average waiting time for CPU tasks using SJF scheduling."},
             {"lru-page-replacement", "LRU Page Replacement Algorithm", "Greedy - Cache", "Easy", "Calculate total page faults using LRU page replacement."},
             {"insert-interval", "Insert Interval", "Greedy - Intervals", "Medium", "Insert newInterval into sorted non-overlapping intervals array."},
-            {"merge-intervals", "Merge Overlapping Intervals", "Greedy - Intervals", "Medium", "Merge all overlapping intervals into non-overlapping range list."},
             {"non-overlapping-intervals", "Non-overlapping Intervals", "Greedy - Intervals", "Medium", "Find minimum number of intervals to remove to make remaining non-overlapping."}
         };
 

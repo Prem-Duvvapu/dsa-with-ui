@@ -25,28 +25,6 @@ public class StringService implements ProblemProvider {
 
     private void initProblems() {
         // 1. Longest Substring Without Repeating
-        problems.put("longest-substring-without-repeating", new ProblemDetail(
-            "longest-substring-without-repeating", "Longest Substring Without Repeating Characters", "Strings - Sliding Window", "Strings", "Medium",
-            "Given a string s, find the length of the longest substring without repeating characters using Sliding Window + HashMap.",
-            """
-            // Java Sliding Window (LeetCode 3)
-            public int lengthOfLongestSubstring(String s) {
-                HashMap<Character, Integer> map = new HashMap<>();
-                int left = 0, right = 0, maxLen = 0;
-                while (right < s.length()) {
-                    char ch = s.charAt(right);
-                    if (map.containsKey(ch)) left = Math.max(left, map.get(ch) + 1);
-                    map.put(ch, right);
-                    maxLen = Math.max(maxLen, right - left + 1);
-                    right++;
-                }
-                return maxLen;
-            }
-            """,
-            null, null, null, createArrayState(new int[]{1, 2, 3, 1, 2, 3, 1, 1}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass iteration.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 ASCII characters.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "String"
-        ));
-
         // 2. Valid Anagram
         problems.put("valid-anagram", new ProblemDetail(
             "valid-anagram", "Valid Anagram", "Strings - Easy", "Strings", "Easy",

@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-**Status: 433 problems catalogued, all 433 with real execution traces.** The API still
+**Status: 431 problems catalogued, all 431 with real execution traces.** The API still
 reports catalogued, traced, and untraced counts independently — see
 [Coverage](#coverage-catalogued-vs-traced) below. Complete execution traces now cover all
 30 **Stack & Queue** problems, all 12 **Sliding Window** problems, all 54 **Binary Trees &
@@ -129,7 +129,7 @@ every step. Hitting either ceiling returns `truncated: true` with a `truncationR
 which one stopped the run.
 
 The eighteen legacy per-topic endpoints (`/api/arrays/...`, `/api/trees/...`, and so on)
-are **gone**. They were compatibility endpoints during the migration; with all 433 problems
+are **gone**. They were compatibility endpoints during the migration; with all 431 problems
 traced there was nothing left for them to serve, and their controllers have been deleted —
 those routes now 404. `/api/problems` is the only API.
 
@@ -173,14 +173,23 @@ hand-maintained coverage data.
 | Basic Recursion | 7 |
 | Sorting | 5 |
 | Tries | 3 |
-| **Total registrations** | **440** |
-| **Unique ids** | **433** |
+| **Total registrations** | **431** |
+| **Unique ids** | **431** |
 
-Seven ids are claimed by two services with different content: `dfs-traversal`,
-`flood-fill`, `longest-common-prefix`, `longest-substring-without-repeating`,
-`merge-intervals`, `number-of-islands` and `surrounded-regions`.
-The catalogue surfaces these in `stats.duplicateIds` rather than hiding them; resolving
-them means moving problems between services.
+**No id is registered twice.** Seven were, for a long time — `dfs-traversal`, `flood-fill`,
+`longest-common-prefix`, `longest-substring-without-repeating`, `merge-intervals`,
+`number-of-islands` and `surrounded-regions` — and four further problems escaped that count
+entirely by differing only in word order or tense (`rotten-oranges` / `rotting-oranges`,
+`cycle-undirected-bfs` / `undirected-cycle-bfs`, and the two DFS cycle pairs).
+
+All eleven came from one cause: `AdvancedGraphService` and `GraphBfsDfsService` catalogued
+the same problems. They are now a single **Graphs** topic, and `DuplicateProblemTest` fails
+on either shape — an id claimed twice, or two ids that are the same words rearranged.
+
+Two of those pairs survive on purpose, because they teach the same problem two standard
+ways and their titles say which: directed cycle detection by CLRS edge classification
+against the two-boolean recursion path, and undirected cycle detection that reconstructs
+the cycle against one that only answers whether it exists.
 
 ### Traced so far
 

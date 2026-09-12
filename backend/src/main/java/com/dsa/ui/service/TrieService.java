@@ -91,40 +91,6 @@ public class TrieService implements ProblemProvider {
         ));
 
         // 2. Longest Common Prefix
-        problems.put("longest-common-prefix", new ProblemDetail(
-            "longest-common-prefix", "Longest Common Prefix", "Tries - Applications", "Tries & Prefixes", "Easy",
-            "Find the longest common prefix string amongst an array of strings using Trie.",
-            """
-            // Java Longest Common Prefix via Trie (LeetCode 14)
-            public String longestCommonPrefix(String[] strs) {
-                if (strs == null || strs.length == 0) return "";
-                Trie trie = new Trie();
-                for (String word : strs) trie.insert(word);
-
-                StringBuilder prefix = new StringBuilder();
-                Node curr = trie.root;
-                while (curr != null && countChildren(curr) == 1 && !curr.isEnd()) {
-                    int childIdx = getOnlyChild(curr);
-                    prefix.append((char)('a' + childIdx));
-                    curr = curr.links[childIdx];
-                }
-                return prefix.toString();
-            }
-            """,
-            null, null, createLcpTreeNodes(), null, null, null, null,
-            new ComplexityDetail(
-                "O(N x L)",
-                "Time Complexity: O(N x L) to build Trie + O(L) to traverse single-child branch.",
-                "Why Trie for LCP? Single-child branches in the Trie directly represent the shared prefix of all inserted strings.",
-                "O(N x L)",
-                "Space Complexity: Trie storage space for string array.",
-                "Why O(N x L)? Trie nodes store character links for all strings.",
-                "Auxiliary Space: O(N x L)",
-                "Prefix Output: O(L)"
-            ),
-            "String"
-        ));
-
         // 3. Word Break Problem using Trie
         problems.put("word-break-trie", new ProblemDetail(
             "word-break-trie", "Word Break Problem", "Tries - Hard", "Tries & Prefixes", "Medium",
