@@ -63,7 +63,8 @@ public class GraphRepJavaTracer implements AlgorithmTracer {
         for (int node = 0; node < graph.vertices(); node++) {
             adjacency.add(new ArrayList<>());
             states.put(node, "visited");
-            emit.at("bucket").say("Add bucket adj[%d]. The outer list now has %d entries.", node, adjacency.size())
+            emit.at("bucket").say("Add bucket adj[%d]. The outer list now has %d %s.", node, adjacency.size(),
+                        Narration.plural(adjacency.size(), "entry", "entries"))
                     .var("bucketCount", adjacency.size()).var("adj", adjacency)
                     .graph(graph).nodes(states).step();
         }

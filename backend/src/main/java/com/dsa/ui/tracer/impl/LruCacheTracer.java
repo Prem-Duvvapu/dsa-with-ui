@@ -116,6 +116,7 @@ public class LruCacheTracer implements AlgorithmTracer {
                        cache.put(key, value);
                        order.addFirst(key);
                    }
+               // @a done
                }""";
     }
 
@@ -182,6 +183,19 @@ public class LruCacheTracer implements AlgorithmTracer {
                 }
             }
         }
+
+        // Closing on whatever the last operation was left the run with no statement of what
+        // the cache ended up holding - and for a cache, the final contents and their recency
+        // order ARE the result.
+        StringBuilder chain = new StringBuilder();
+        for (int key : order) {
+            chain.append(chain.length() == 0 ? "" : " -> ").append(key).append("=").append(cache.get(key));
+        }
+        emit.at("done")
+                .say("Every operation processed. Most recently used first, the cache holds %s.",
+                        chain.length() == 0 ? "nothing" : chain.toString())
+                .var("cache", cache.toString()).var("order", order.toString())
+                .list(render(order, cache, -1)).step();
     }
 
     /** {@code order} rendered MRU-first as the chain the cache's own recency list is. */

@@ -120,8 +120,9 @@ public class BinarySubarraysWithSumTracer implements AlgorithmTracer {
 
             total += right - left + 1;
             emit.at("countWindows")
-                    .say("[Pass sum ≤ %d] Window [%d,%d] adds %d subarrays ending at index %d. Running total: %d.",
-                            limit, left, right, right - left + 1, right, total)
+                    .say("[Pass sum ≤ %d] Window [%d,%d] adds %d subarray%s ending at index %d. Running total: %d.",
+                            limit, left, right, right - left + 1, Narration.s(right - left + 1),
+                            right, total)
                     .var("pass", "atMost(" + passLabel + ")").var("added", right - left + 1).var("total", total)
                     .arrayState(windowState(nums, left, right))
                     .step();

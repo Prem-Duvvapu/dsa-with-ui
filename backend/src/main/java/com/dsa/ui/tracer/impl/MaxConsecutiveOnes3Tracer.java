@@ -102,8 +102,9 @@ public class MaxConsecutiveOnes3Tracer implements AlgorithmTracer {
 
             maxLen = Math.max(maxLen, right - left + 1);
             emit.at("windowComplete")
-                    .say("Window [%d,%d] is valid with %d zeroes. Current length: %d (max: %d).",
-                            left, right, zeroes, right - left + 1, maxLen)
+                    .say("Window [%d,%d] is valid with %d %s. Current length: %d (max: %d).",
+                            left, right, zeroes, Narration.plural(zeroes, "zero", "zeroes"),
+                            right - left + 1, maxLen)
                     .var("left", left).var("right", right).var("windowLen", right - left + 1).var("maxLen", maxLen)
                     .arrayState(windowState(nums, left, right))
                     .step();

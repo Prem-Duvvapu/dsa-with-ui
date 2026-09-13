@@ -153,8 +153,8 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
 
         emit.at("init").say(
                         "%d cities, %d flights. dist[%d] = 0 and every other city is unreachable. "
-                                + "At most %d stops means at most %d flights, so the relaxation gets exactly %d rounds.",
-                        n, graph.edges().length, src, k, k + 1, k + 1)
+                                + "At most %d stop%s means at most %d flights, so the relaxation gets exactly %d rounds.",
+                        n, graph.edges().length, src, k, Narration.s(k), k + 1, k + 1)
                 .var("src", src).var("dst", dst).var("k", k).var("dist", priceString(dist))
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
 

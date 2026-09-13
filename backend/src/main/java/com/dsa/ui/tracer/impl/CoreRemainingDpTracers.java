@@ -79,7 +79,8 @@ class PartitionSetMinAbsDiffRemainingTracer extends RemainingDpTracer {
             Set<DpTraceSupport.Coord> reads = s >= nums[i - 1]
                     ? Set.of(new DpTraceSupport.Coord(i - 1, s), new DpTraceSupport.Coord(i - 1, s - nums[i - 1]))
                     : Set.of(new DpTraceSupport.Coord(i - 1, s));
-            emit.at("fill").say("Using %d values, sum %d is %s.", i, s, reachable ? "reachable" : "unreachable")
+            emit.at("fill").say("Using %d value%s, sum %d is %s.", i, Narration.s(i), s,
+                            reachable ? "reachable" : "unreachable")
                     .var("i", i).var("sum", s).dpTable(DpTraceSupport.table(dp, known,
                             new DpTraceSupport.Coord(i, s), reads, false, "skip OR take", reachable ? "1" : "0")).step();
         }

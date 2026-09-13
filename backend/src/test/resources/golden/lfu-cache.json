@@ -1,5 +1,6 @@
 {
   "anchors" : {
+    "done" : 44,
     "evict" : 28,
     "freqUp" : 42,
     "hit" : 17,
@@ -14,7 +15,7 @@
     "capacity" : 2,
     "operations" : "put 1 1;put 2 2;get 1;put 3 3;get 2;get 3"
   },
-  "stepCount" : 10,
+  "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 6,
@@ -309,6 +310,40 @@
     "activeEdges" : [ ],
     "variables" : {
       "key" : "3",
+      "minFreq" : "2"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 0,
+      "val" : "k1:v1(f2)",
+      "nextId" : 1,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    }, {
+      "id" : 1,
+      "val" : "k3:v3(f2)",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "active"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 44,
+    "description" : "All 6 operations processed. The cache holds 1=1 (seen 2x), 3=3 (seen 2x), and minFreq is 2 - the frequency the next eviction would look at first.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "contents" : "1=1 (seen 2x), 3=3 (seen 2x)",
       "minFreq" : "2"
     },
     "dsType" : "LinkedList",

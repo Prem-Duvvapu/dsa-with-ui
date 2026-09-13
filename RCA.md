@@ -1295,3 +1295,47 @@ class, and the reason is worth stating rather than rediscovering.
   until the similarity score drops. It is to change what each trace *narrates* — as
   `power-set` (captures at every node) and `subsets-i` (captures at the pick/non-pick leaves)
   already do for the same output set.
+
+## RCA-051 — What reading all 431 golden files found, and what it says about checking
+
+- **Discovered:** 2026-09-13, reading every golden trace end to end for the first time
+- **Status:** Resolved
+- **What was found:** seven defects in four classes. Two are mechanical and repetitive, two
+  are not:
+
+  | class | scale |
+  |---|---|
+  | "1 <plural>" — "at most 1 replacements", "only 1 nodes remain", "1 transactions are allowed" | 33 steps, 14 problems |
+  | "%d-th" — "the 2-th largest", "the 3-th root", "the 5-th missing positive integer" | 12 steps, 7 problems |
+  | a trace ending without stating its result — `left-rotate-k`, `lfu-cache`, `lru-cache` | 3 problems |
+  | narration contradicting the picture on the same step — `left-rotate-k`'s swap | 1 problem |
+  | a claim of uniqueness where there was a tie — `city-smallest-neighbors` | 1 problem |
+
+- **The swap is the one worth describing.** `left-rotate-k` emitted its step *after*
+  mutating, and printed both cells' **old** contents: "Swap nums[0]=1 and nums[1]=2" beside
+  a picture already showing 2 at index 0. Words and cells disagreed on the same step, in
+  the same frame, and every test passed. It now says where the values landed.
+- **Three traces simply stopped.** `left-rotate-k` ended on the last swap of its third
+  reversal; `lfu-cache` ended on "Key 3 frequency bumped. minFreq = 2"; `lru-cache` on
+  whatever its final operation happened to be. For a cache, the contents and their recency
+  order *are* the result. All three now close with one.
+- **What this says about writing checkers.** The first draft of the checker reported **283
+  hits and every one was an artifact**: `2^2 - 1 = 3` parsed as `2 - 1 = 3`, a four-term sum
+  parsed as its last two terms, and "1 beats" parsed as a plural noun. A checker that cries
+  wolf is worse than no checker, because the next person stops reading its output. Three
+  rounds of tightening brought it to 33 real hits and a handful of understood false
+  positives — and even then, of the four problems flagged for a value claim, three were
+  cases where `arrayState` legitimately holds a *different* array from the one the sentence
+  names.
+- **What reading found that no checker could.** All stated arithmetic was correct — every
+  sum, product, modulus and shift, including `4095 × 65 mod 100000 = 66175` and
+  `4^2 * 5^2 = 400`. Every stated inequality held. The defects that mattered were structural:
+  a missing ending, a tense mismatch between sentence and payload, a tie presented as a
+  win. **Regexes find repetition; only reading finds a sentence that is true of the wrong
+  moment.**
+- **Regression guard:** `NarrationContractTest` over every tracer's default trace — 862
+  assertions covering the two repetitive classes, proven RED first with 21 failures. The
+  other three were one-offs and are pinned by their goldens.
+- **Left deliberately:** `"1 step(s)"` and `"6 vertex/vertices"`, a parenthesised-plural
+  dodge used in about 45 places. Clumsy rather than false, and now a one-call fix whenever
+  someone wants it.

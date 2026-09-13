@@ -118,8 +118,9 @@ public class SumSubarrayRangesTracer implements AlgorithmTracer {
                 long contribution = (long) nums[mid] * (mid - left) * (i - mid);
                 sumMin += contribution;
                 emit.at("popMin")
-                        .say("Min-phase: pop index %d (value %d). It is the minimum for %d subarrays, contributing %d. sumMin = %d.",
-                                mid, nums[mid], (mid - left) * (i - mid), contribution, sumMin)
+                        .say("Min-phase: pop index %d (value %d). It is the minimum for %d subarray%s, contributing %d. sumMin = %d.",
+                                mid, nums[mid], (mid - left) * (i - mid),
+                                Narration.s((long) (mid - left) * (i - mid)), contribution, sumMin)
                         .var("mid", mid).var("contribution", contribution).var("sumMin", sumMin)
                         .arrayState(state(nums, i < n ? i : -1, stack)).stack(stack).step();
             }
@@ -146,8 +147,9 @@ public class SumSubarrayRangesTracer implements AlgorithmTracer {
                 long contribution = (long) nums[mid] * (mid - left) * (i - mid);
                 sumMax += contribution;
                 emit.at("popMax")
-                        .say("Max-phase: pop index %d (value %d). It is the maximum for %d subarrays, contributing %d. sumMax = %d.",
-                                mid, nums[mid], (mid - left) * (i - mid), contribution, sumMax)
+                        .say("Max-phase: pop index %d (value %d). It is the maximum for %d subarray%s, contributing %d. sumMax = %d.",
+                                mid, nums[mid], (mid - left) * (i - mid),
+                                Narration.s((long) (mid - left) * (i - mid)), contribution, sumMax)
                         .var("mid", mid).var("contribution", contribution).var("sumMax", sumMax)
                         .arrayState(state(nums, i < n ? i : -1, stack)).stack(stack).step();
             }

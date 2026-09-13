@@ -152,7 +152,7 @@ public class KthElementTwoSortedArraysTracer implements AlgorithmTracer {
                 int answer = Math.max(l1, l2);
                 emit.at("found")
                         .say("Every left element is <= every right element in both arrays - "
-                                + "valid partition. The %d-th element is %d.", k, answer)
+                                + "valid partition. The %s element is %d.", Narration.ordinal(k), answer)
                         .var("answer", answer)
                         .var("low", low).var("high", high)
                         .arrayState(PartitionCutView.withCuts(nums1, nums2, a, cut1, cut2)).step();

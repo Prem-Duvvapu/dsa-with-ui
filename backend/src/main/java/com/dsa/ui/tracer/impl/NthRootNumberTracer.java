@@ -135,8 +135,8 @@ public class NthRootNumberTracer implements AlgorithmTracer {
 
         emit.at("done")
                 .say(ans == -1
-                        ? String.format("low passed high with no exact match — %d has no integer %d-th root.", n, m)
-                        : String.format("The %d-th root of %d is %d.", m, n, ans))
+                        ? String.format("low passed high with no exact match — %d has no integer %s root.", n, Narration.ordinal(m))
+                        : String.format("The %s root of %d is %d.", Narration.ordinal(m), n, ans))
                 .var("answer", ans)
                 .array(window(ans, ans, ans), 0, -1).step();
     }

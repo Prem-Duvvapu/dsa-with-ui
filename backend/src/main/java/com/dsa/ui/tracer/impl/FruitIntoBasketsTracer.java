@@ -103,8 +103,8 @@ public class FruitIntoBasketsTracer implements AlgorithmTracer {
 
             maxLen = Math.max(maxLen, right - left + 1);
             emit.at("windowComplete")
-                    .say("Window [%d,%d] holds %d trees with at most 2 types. Best so far: %d.",
-                            left, right, right - left + 1, maxLen)
+                    .say("Window [%d,%d] holds %d tree%s with at most 2 types. Best so far: %d.",
+                            left, right, right - left + 1, Narration.s(right - left + 1), maxLen)
                     .var("windowLen", right - left + 1).var("maxLen", maxLen)
                     .arrayState(windowState(fruits, left, right)).step();
         }

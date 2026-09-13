@@ -129,8 +129,8 @@ public class KthSmallestElementTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Every value processed. The heap's root, %d, is the %d-th smallest.",
-                        heap.get(0), k)
+                .say("Every value processed. The heap's root, %d, is the %s smallest.",
+                        heap.get(0), Narration.ordinal(k))
                 .var("answer", heap.get(0))
                 .array(toArray(heap), 0).step();
     }

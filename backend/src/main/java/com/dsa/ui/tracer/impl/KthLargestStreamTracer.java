@@ -58,7 +58,8 @@ public class KthLargestStreamTracer implements AlgorithmTracer {
         for (int value : additions) {
             add(value, k, heap, emit, true);
             answers.add(heap.peek());
-            emit.at("report").say("After adding %d, the %d-th largest stream value is %d.", value, k, heap.peek())
+            emit.at("report").say("After adding %d, the %s largest stream value is %d.",
+                    value, Narration.ordinal(k), heap.peek())
                     .var("added", value).var("answer", heap.peek()).arrayState(render(heap)).step();
         }
         emit.at("done").say("Kth-largest answers for all additions: %s.", answers)
