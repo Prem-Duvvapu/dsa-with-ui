@@ -558,6 +558,44 @@ duplicate ids, every legacy route 404s, and traces render.
 
 See `ARCHITECTURE.md` for the system as it now stands.
 
+### Per-topic sweeps
+
+The findings above came from a repo-wide pass. A second pass walks one topic at a time with
+`.claude/skills/audit-topic`, which looks for what a per-problem check cannot see. Each
+topic below has been swept; what it found is listed, and the appendix tables are the
+original snapshot rather than the current state.
+
+| Topic | What the sweep found |
+|---|---|
+| Arrays | `next-permutation`'s default was the *last* permutation, so the algorithm skipped its own body — and no default with a pivot can satisfy `stepCountGrowsWithInput` (RCA-019) |
+| Stack & Queue | the stack blinked empty between every push — a structure restated only on the steps that changed it (RCA-034) |
+| Binary Trees / BST | clean on its own terms; the RCA-035 check run alongside it found seven canvases drawing catalogue defaults over the caller's input, 1506 steps in 142 problems |
+| Linked List | doubly linked lists drawn with only half their pointers |
+| Graphs | Kahn's-algorithm cycle default skipped the entire algorithm |
+| Binary Search | five separate defects, below |
+
+**Binary Search — 32/32 traced, five findings, all fixed.** None was visible to any existing
+test, and three of the five were a blank or lying picture rather than a wrong trace:
+
+1. `count-occurrences`, `first-last-occurrence` and `floor-ceil-sorted-array` rendered
+   **"No search range for this step." on every step of every run** — they named only the
+   bound that had just moved, and `SearchSpaceCanvas` reads the pair off one step on purpose
+   (RCA-036).
+2. `median-2-sorted-arrays` and `kth-element-2-sorted-arrays` stated a range that never
+   moved: both defaults validated on their first partition. Their cells row was
+   `concat(a, b)` built *after* the swap, so cell 0 changed which array it meant mid-trace.
+3. `SearchSpaceCanvas` decided per step whether the range indexed the cells or named
+   candidate answers, and flipped mid-animation — `aggressive-cows` began calling a distance
+   an index once `high` fell below the cell count.
+4. `binary-search-1d` targeted the last element, so the canonical binary search only ever
+   moved right.
+5. `search-rotated-sorted` never took its sorted-right-half branch, and
+   `search-rotated-sorted-2` never took the duplicate-shrink branch that is the only thing
+   distinguishing it from `search-rotated-sorted`.
+
+Guarded by `SearchSpaceContractTest` (both bounds on one step; the default range must move)
+and a `SearchSpaceCanvas` mode-stability test, each proven RED first.
+
 ---
 
 ## 5. Recommended fix sequence
