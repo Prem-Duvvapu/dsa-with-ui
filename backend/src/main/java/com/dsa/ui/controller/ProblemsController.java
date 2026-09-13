@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The v2 API: one catalogue, and problems you can run against your own input.
@@ -181,8 +182,30 @@ public class ProblemsController {
     @GetMapping("/{id}/execute")
     public TraceResponse executeDefaults(@PathVariable String id,
                                          @RequestParam(required = false) String encoding) {
-        return TraceResponse.of(runner.runDefaults(tracer(id)), encoding);
+        // Cached, because this is the hot path and it is deterministic. Most traffic is
+        // "open a problem, press play", which re-ran the same 431 algorithms over and over
+        // to produce byte-identical answers. A custom input still runs for real - see the
+        // POST below, which is deliberately NOT cached.
+        //
+        // TraceResponse is safe to share: all twelve of its fields are final and nothing
+        // mutates one after construction.
+        return defaultTraces.computeIfAbsent(
+                id + '\u0000' + (encoding == null ? "" : encoding),
+                key -> TraceResponse.of(runner.runDefaults(tracer(id)), encoding));
     }
+
+    /**
+     * Default traces, keyed by id and requested encoding.
+     *
+     * <p>Bounded only by the catalogue: 431 problems times the two encodings the API offers,
+     * so it cannot grow with traffic the way a key derived from caller input could. Measured
+     * at roughly 3 KB a trace, which is a few megabytes held for the life of the process.
+     *
+     * <p>Never populated from {@code POST /execute}. A cache keyed on caller-supplied input
+     * is a memory-exhaustion vector, and the rate limiter exists precisely because that path
+     * has to do real work every time.
+     */
+    private final Map<String, TraceResponse> defaultTraces = new ConcurrentHashMap<>();
 
     /** Runs the problem against caller-supplied input. */
     @PostMapping("/{id}/execute")

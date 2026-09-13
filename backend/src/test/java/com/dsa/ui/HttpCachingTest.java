@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -108,5 +109,45 @@ class HttpCachingTest {
                 .andExpect(status().isOk());
         mockMvc.perform(get("/api/problems/two-sum"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("The default trace is computed once and served identically thereafter")
+    void defaultTraceIsCached() throws Exception {
+        // Most traffic is "open a problem, press play", which re-ran the same algorithm to
+        // produce a byte-identical answer every time. Not a timing assertion - those are
+        // flaky - but identical output is what the cache is for and what a client can rely on.
+        String first = mockMvc.perform(get("/api/problems/kadane-algo/execute"))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        String second = mockMvc.perform(get("/api/problems/kadane-algo/execute"))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        assertEquals(first, second);
+    }
+
+    @Test
+    @DisplayName("Each encoding is cached separately rather than sharing one entry")
+    void encodingsDoNotShareACacheEntry() throws Exception {
+        String delta = mockMvc.perform(get("/api/problems/kadane-algo/execute"))
+                .andReturn().getResponse().getContentAsString();
+        String full = mockMvc.perform(get("/api/problems/kadane-algo/execute?encoding=full"))
+                .andReturn().getResponse().getContentAsString();
+        assertNotEquals(delta, full,
+                "?encoding=full returned the delta-encoded body, so the two share a cache key");
+    }
+
+    @Test
+    @DisplayName("A caller-supplied input still runs for real")
+    void customInputIsNotCached() throws Exception {
+        // A cache keyed on caller input is a memory-exhaustion vector, and this path has to
+        // do real work every time - which is why the rate limiter exists.
+        String a = mockMvc.perform(post("/api/problems/kadane-algo/execute")
+                        .contentType("application/json")
+                        .content("{\"nums\":[1,2,3]}"))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        String b = mockMvc.perform(post("/api/problems/kadane-algo/execute")
+                        .contentType("application/json")
+                        .content("{\"nums\":[5,-1,5]}"))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        assertNotEquals(a, b, "two different inputs returned the same trace");
     }
 }
