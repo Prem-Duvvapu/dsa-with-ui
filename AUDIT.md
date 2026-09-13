@@ -576,6 +576,7 @@ original snapshot rather than the current state.
 | Dynamic Programming | three, below — none in the arithmetic, all in what the picture showed |
 | Greedy Algorithms | three, below — the same "canvas pointed at the wrong structure" shape, found deliberately |
 | Heaps & PriorityQueue | four, below — including two tracers not running the algorithm on screen beside them |
+| Recursion & Backtracking | three, below — two defaults that never backtracked, and two problems with no visible recursion |
 
 **Binary Search — 32/32 traced, five findings, all fixed.** None was visible to any existing
 test, and three of the five were a blank or lying picture rather than a wrong trace:
@@ -669,6 +670,29 @@ applying that fix — carrying the last heap forward — would have shown `task-
 heap the algorithm had just drained, on precisely the steps where its emptiness is the
 point. **Absence and emptiness need opposite fixes and are indistinguishable from the
 payload alone**; only reading the tracer separates them.
+
+**Recursion & Backtracking — 25/25 traced, three findings, all fixed.** The call-stack
+check came back clean: all 26 steps across the topic that show no stack are the closing
+summary, with `callStack` explicitly `[]` after the recursion has unwound — honest, and the
+same trap as the heaps one, checked the same way. The findings:
+
+1. **`sudoku-solver` and `m-coloring` never backtracked on their defaults.** Three blanks in
+   a finished grid, and K4-minus-an-edge with three colors: eighteen and ten steps, no dead
+   end, no undo, in the topic named after the undo (RCA-045). New defaults, chosen by
+   simulating each tracer's own search order, reach every anchor and retreat twice and once
+   respectively.
+2. **`n-queens` and `sudoku-solver` pushed no call frames** — the only two in the topic —
+   so `MemoryComplexityCard`'s live call-stack section was empty for the two flagship
+   backtracking problems (RCA-046). Adding frames immediately failed the F4 guard on
+   sudoku, whose last step came from inside the recursion.
+3. **`word-break`'s dead `memoHit` is correct and stays.** `memo.put(start, true)` runs on
+   the way out of a successful call and every ancestor returns immediately, so a `true`
+   entry can never be consulted: the memo only ever serves `false`, and every real-word
+   input that hits it returns `false`. RCA-045 records the reasoning.
+
+The lesson for the sweep: **"DEAD ANCHORS ['undo']" and "DEAD ANCHORS ['absent']" print
+identically**, and one is a coverage nit while the other is the problem failing to
+demonstrate itself. Read what the anchor is for.
 
 ---
 
