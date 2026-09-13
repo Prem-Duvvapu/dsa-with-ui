@@ -558,6 +558,21 @@ duplicate ids, every legacy route 404s, and traces render.
 
 See `ARCHITECTURE.md` for the system as it now stands.
 
+### The golden read
+
+All 431 golden files were read end to end — every trace's opening and closing claim, plus
+seven mechanical checkers over every step. Seven defects in four classes, all fixed:
+`left-rotate-k` naming both cells' pre-swap values beside a post-swap picture; three traces
+(`left-rotate-k`, `lfu-cache`, `lru-cache`) ending without stating their result;
+`city-smallest-neighbors` claiming a win where two cities tied; 33 number/noun disagreements
+across 14 problems; and 12 `"%d-th"` ordinals across 7. See RCA-051.
+
+The corpus came out well on everything a machine can check: **every stated sum, product,
+modulus and shift is correct**, and every stated inequality holds. What reading found that
+the checkers could not were structural — a missing ending, a sentence true of the wrong
+moment, a tie presented as a win. `NarrationContractTest` now pins the two repetitive
+classes with 862 assertions.
+
 ### Per-topic sweeps
 
 The findings above came from a repo-wide pass. A second pass walks one topic at a time with
