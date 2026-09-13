@@ -73,19 +73,7 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
           <button
             type="button"
             onClick={() => onSelectCategory(null)}
-            style={{
-              fontSize: '0.7rem',
-              fontWeight: '700',
-              color: 'var(--bench-ink-secondary)',
-              background: 'var(--bench-fill)',
-              border: '1px solid var(--bench-rule-strong)',
-              borderRadius: '6px',
-              padding: '3px 7px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px'
-            }}
+            className={layout.chip}
           >
             All <X size={12} />
           </button>
@@ -109,7 +97,7 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
               <span className="sb-eyebrow">
                 Categories
               </span>
-              <span style={{ fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px', background: 'var(--bench-fill)', color: 'var(--bench-ink-secondary)', border: '1px solid var(--bench-rule-strong)', fontWeight: '700' }}>
+              <span className={layout.chipStatic}>
                 Popular Tags
               </span>
             </div>

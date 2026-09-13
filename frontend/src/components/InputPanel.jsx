@@ -1,3 +1,4 @@
+import layout from './layout.module.css';
 import React, { useState, useEffect } from 'react';
 import { Play, Shuffle, RotateCcw, GitBranch } from 'lucide-react';
 import IntArrayField from './IntArrayField';
@@ -123,8 +124,7 @@ function FieldEditor({ field, value, onChange }) {
       return (
         <input
           type="number"
-          className="ip-input"
-          style={{ width: '100px' }}
+          className={`ip-input ${layout.inputNarrow}`}
           min={field.constraints?.min}
           max={field.constraints?.max}
           value={value ?? 0}
@@ -136,8 +136,7 @@ function FieldEditor({ field, value, onChange }) {
       return (
         <input
           type="text"
-          className="ip-input"
-          style={{ width: '100%' }}
+          className={`ip-input ${layout.inputFull}`}
           maxLength={field.constraints?.maxLength}
           value={value ?? ''}
           onChange={(e) => onChange(e.target.value)}

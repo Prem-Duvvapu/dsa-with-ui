@@ -589,7 +589,23 @@ VERIFY
 | 7 | Honest states: loading, untraced, truncated | ✅ done |
 | 8 | ErrorBoundary, catalog-fetch error surface, mobile tab sync, default speed | ✅ done — see note below |
 | 9 | a11y: `.btn:focus-visible`, `aria-live` ticker, Escape + backdrop on mobile drawer | ✅ done — see note below |
-| 10 | CSS Modules | ❌ not started |
+| 10 | CSS Modules | ✅ done — 263 inline style objects to 39, and all 39 are values computed at render time |
+
+**Job 10, as landed.** Every static `style={{}}` in the tree is now a class. What remains
+inline is only what cannot be a class: JS constants the layout maths also uses (`CELL`,
+`GAP`, `SLOT_W`), geometry measured from the DOM (`TourGuide`'s spotlight rects), and two
+grid templates whose column count varies. Three shared sheets carry what was being retyped
+— `layout.module.css` for the row/column/empty-canvas/SVG-stage primitives,
+`fields.module.css` for the three input editors, and each component's own module for what
+is genuinely its own.
+
+Three tests had to move with it. They asserted on computed inline styles — `CodeViewer`'s
+active line carrying `var(--probe-wash)`, `StackCanvas`'s well carrying
+`justify-content: flex-end`, which is the rule that makes a stack fill bottom-up. A class
+does not reach `getComputedStyle` under jsdom, so the migration failed them, and **the
+failure looked exactly like the bug each test was written to catch**. They now read the
+module file and assert the declaration, which is the claim that actually matters and
+outlives the rule changing hands.
 
 **Where the wiring stands.** `App.jsx` fetches the catalogue once from `GET /api/problems`
 (the 18-endpoint fan-out is gone) and all playback/fetch state lives in `useTrace`. Canvas

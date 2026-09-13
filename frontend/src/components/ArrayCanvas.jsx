@@ -1,3 +1,4 @@
+import layout from './layout.module.css';
 import React from 'react';
 import styles from './ArrayCanvas.module.css';
 import { lastPayload } from '../trace/lastPayload';
@@ -61,7 +62,7 @@ export default function ArrayCanvas({ problem, currentStep, step, steps, current
           const barHeightPercent = Math.max(15, Math.min(85, Math.round(ratio * 75)));
 
           return (
-            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: '6px', height: '100%' }}>
+            <div key={idx} className={layout.barColumn}>
               {/* Value label on top of bar */}
               <span style={{ fontSize: '0.78rem', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
                 {el.value}

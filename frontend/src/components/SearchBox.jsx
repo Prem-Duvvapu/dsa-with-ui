@@ -216,8 +216,7 @@ export default function SearchBox({
               <button
                 key={item}
                 type="button"
-                className="sb-empty-action"
-                style={{ fontSize: '0.7rem', padding: '3px 9px' }}
+                className={`sb-empty-action ${layout.buttonSmall}`}
                 onClick={() => { setQuery(item); inputRef.current?.focus(); }}
               >
                 {item}

@@ -80,3 +80,49 @@
 @media (prefers-reduced-motion: reduce) {
   .stateTransition { transition: none; }
 }
+
+/* A neutral chip: the "clear filter" control and the runnable-count badge in the sidebar,
+   which were the same seven declarations written twice. */
+.chip {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--bench-ink-secondary);
+  background: var(--bench-fill);
+  border: 1px solid var(--bench-rule-strong);
+  border-radius: 6px;
+  padding: 3px 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chipStatic {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--bench-ink-secondary);
+  background: var(--bench-fill);
+  border: 1px solid var(--bench-rule-strong);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.pushRight { margin-left: auto; }
+.clickable { cursor: pointer; }
+
+/* One bar in the array canvas: the value floats above, the bar grows from the floor. */
+.barColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  height: 100%;
+}
+
+.inputNarrow { width: 100px; }
+.inputFull { width: 100%; }
+.buttonSmall {
+  font-size: 0.7rem;
+  padding: 3px 9px;
+}

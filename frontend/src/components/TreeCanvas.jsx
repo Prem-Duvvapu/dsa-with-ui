@@ -1,3 +1,4 @@
+import layout from './layout.module.css';
 import React from 'react';
 import styles from './TreeCanvas.module.css';
 import { Sparkles } from 'lucide-react';
@@ -48,7 +49,7 @@ export default function TreeCanvas({ problem, currentStep, step, steps, currentS
     <div className={styles.wrap}>
 
       <div className={styles.stage} data-testid="tree-stage">
-        <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible', maxHeight: '100%' }}>
+        <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" className={layout.svgFit}>
           {/* Render Parent-Child Connecting Lines */}
           {treeNodes.map((node) => {
             const leftChild = treeNodes.find((n) => n.id === node.leftId);
@@ -89,7 +90,7 @@ export default function TreeCanvas({ problem, currentStep, step, steps, currentS
             const isVisiting = nodeState === 'visiting';
 
             return (
-              <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} style={{ cursor: 'pointer' }}>
+              <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} className={layout.clickable}>
                 <circle
                   r={isVisiting ? 21 : 18}
                   fill={colorInfo.fill}

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import layout from './layout.module.css';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 /**
@@ -158,7 +159,7 @@ export default function CaptureStrip({ steps = [], current = 0, dsType, onSeek, 
           aria-expanded={isOpen}
           aria-label={isOpen ? 'Hide execution capture' : 'Show execution capture'}
           title={isOpen ? 'Hide execution capture' : 'Show execution capture'}
-          style={{ marginLeft: 'auto' }}
+          className={layout.pushRight}
         >
           {isOpen ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
         </button>
