@@ -15,7 +15,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 5,
-    "description" : "4 account(s). Each starts in its own set - two accounts only merge once they are found to share an email.",
+    "description" : "4 accounts. Each starts in its own set - two accounts only merge once they are found to share an email.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -155,7 +155,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 27,
-    "description" : "Root 2 covers accounts {1, 2}. Its 3 distinct email(s) sort to john00@mail.com, john_newyork@mail.com, johnsmith@mail.com, and the name comes from account 1 ('John').",
+    "description" : "Root 2 covers accounts {1, 2}. Its 3 distinct emails sort to john00@mail.com, john_newyork@mail.com, johnsmith@mail.com, and the name comes from account 1 ('John').",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -176,7 +176,7 @@
   }, {
     "stepNumber" : 9,
     "activeLine" : 27,
-    "description" : "Root 3 covers accounts {3}. Its 1 distinct email(s) sort to mary@mail.com, and the name comes from account 3 ('Mary').",
+    "description" : "Root 3 covers accounts {3}. Its 1 distinct email sorts to mary@mail.com, and the name comes from account 3 ('Mary').",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -197,7 +197,7 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 27,
-    "description" : "Root 4 covers accounts {4}. Its 1 distinct email(s) sort to johnnybravo@mail.com, and the name comes from account 4 ('John').",
+    "description" : "Root 4 covers accounts {4}. Its 1 distinct email sorts to johnnybravo@mail.com, and the name comes from account 4 ('John').",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -218,7 +218,7 @@
   }, {
     "stepNumber" : 11,
     "activeLine" : 33,
-    "description" : "4 account(s) collapse into 3 merged account(s): [John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
+    "description" : "4 accounts collapse into 3 merged accounts: [John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -226,7 +226,7 @@
     "variables" : {
       "Disjoint Sets" : "{1, 2}, {3}, {4}",
       "Merged" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
-      "Operation" : "Done: 3 merged account(s)",
+      "Operation" : "Done: 3 merged accounts",
       "parent[]" : "[0, 2, 2, 3, 4]",
       "rank[]" : "[0, 0, 1, 0, 0]"
     },

@@ -99,7 +99,7 @@ public class JobSequencingTracer implements AlgorithmTracer {
                         .var("count", count).var("profit", profit).arrayState(board(jobs, i)).step();
             }
         }
-        emit.at("done").say("Scheduled %d job(s) for maximum profit %d. Slots: %s.", count, profit, slots(slots))
+        emit.at("done").say("Scheduled %d job%s for maximum profit %d. Slots: %s.", count, Narration.s(count), profit, slots(slots))
                 .var("count", count).var("profit", profit).var("slots", slots(slots))
                 .arrayState(board(jobs, -1)).step();
     }

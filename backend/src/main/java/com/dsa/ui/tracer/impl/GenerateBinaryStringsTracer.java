@@ -92,7 +92,7 @@ public class GenerateBinaryStringsTracer implements AlgorithmTracer {
         }
 
         emit.at("appendZero")
-                .say("Append '0' to \"%s\" - always legal, recurse with %d position(s) left.", cur, remaining - 1)
+                .say("Append '0' to \"%s\" - always legal, recurse with %d position%s left.", cur, remaining - 1, Narration.s(remaining - 1))
                 .var("prefix", cur + "0").chars(cur + "0").step();
         backtrack(remaining - 1, '0', cur + "0", res, emit);
 

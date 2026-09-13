@@ -128,8 +128,8 @@ public class CombinationSum3Tracer implements AlgorithmTracer {
 
             path.add(digit);
             emit.at("choose")
-                    .say("Choose digit %d - %d digit(s) and sum %d left. Recurse from digit %d.",
-                            digit, remainingCount - 1, remainingSum - digit, digit + 1)
+                    .say("Choose digit %d - %d digit%s and sum %d left. Recurse from digit %d.",
+                            digit, remainingCount - 1, Narration.s(remainingCount - 1), remainingSum - digit, digit + 1)
                     .var("digit", digit).var("remainingCount", remainingCount - 1)
                     .var("remainingSum", remainingSum - digit).stack(path).step();
             backtrack(digit + 1, remainingCount - 1, remainingSum - digit, path, res, emit);

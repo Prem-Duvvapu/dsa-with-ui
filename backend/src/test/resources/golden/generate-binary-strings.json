@@ -14,7 +14,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 12,
-    "description" : "Append '0' to \"\" - always legal, recurse with 2 position(s) left.",
+    "description" : "Append '0' to \"\" - always legal, recurse with 2 positions left.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(remaining=3)" ],
     "nodeStates" : { },
@@ -36,7 +36,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 12,
-    "description" : "Append '0' to \"0\" - always legal, recurse with 1 position(s) left.",
+    "description" : "Append '0' to \"0\" - always legal, recurse with 1 position left.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)" ],
     "nodeStates" : { },
@@ -63,7 +63,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 12,
-    "description" : "Append '0' to \"00\" - always legal, recurse with 0 position(s) left.",
+    "description" : "Append '0' to \"00\" - always legal, recurse with 0 positions left.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
     "nodeStates" : { },
@@ -220,7 +220,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 12,
-    "description" : "Append '0' to \"01\" - always legal, recurse with 0 position(s) left.",
+    "description" : "Append '0' to \"01\" - always legal, recurse with 0 positions left.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
     "nodeStates" : { },
@@ -307,7 +307,7 @@
   }, {
     "stepNumber" : 11,
     "activeLine" : 12,
-    "description" : "Append '0' to \"1\" - always legal, recurse with 1 position(s) left.",
+    "description" : "Append '0' to \"1\" - always legal, recurse with 1 position left.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)" ],
     "nodeStates" : { },
@@ -334,7 +334,7 @@
   }, {
     "stepNumber" : 12,
     "activeLine" : 12,
-    "description" : "Append '0' to \"10\" - always legal, recurse with 0 position(s) left.",
+    "description" : "Append '0' to \"10\" - always legal, recurse with 0 positions left.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(remaining=3)", "backtrack(remaining=2)", "backtrack(remaining=1)" ],
     "nodeStates" : { },

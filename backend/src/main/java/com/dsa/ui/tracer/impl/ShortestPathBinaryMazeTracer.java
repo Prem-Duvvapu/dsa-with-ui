@@ -120,12 +120,12 @@ public class ShortestPathBinaryMazeTracer implements AlgorithmTracer {
             int row = cell[0], col = cell[1], steps = cell[2];
 
             if (row == rows - 1 && col == cols - 1) {
-                emit.at("arrived").say("Reached the destination (%d,%d) in %d step(s).", row, col, steps)
+                emit.at("arrived").say("Reached the destination (%d,%d) in %d step%s.", row, col, steps, Narration.s(steps))
                         .var("answer", steps).grid(display).step();
                 return;
             }
 
-            emit.at("poll").say("Dequeue (%d,%d) at %d step(s).", row, col, steps)
+            emit.at("poll").say("Dequeue (%d,%d) at %d step%s.", row, col, steps, Narration.s(steps))
                     .var("cell", "(" + row + "," + col + ")").var("steps", steps)
                     .grid(display).step();
 
@@ -138,8 +138,8 @@ public class ShortestPathBinaryMazeTracer implements AlgorithmTracer {
                 seen[nrow][ncol] = true;
                 display[nrow][ncol] = steps + 1;
                 queue.add(new int[]{nrow, ncol, steps + 1});
-                emit.at("expand").say("(%d,%d) is walkable and unvisited - %d step(s) away.",
-                                nrow, ncol, steps + 1)
+                emit.at("expand").say("(%d,%d) is walkable and unvisited - %d step%s away.",
+                                nrow, ncol, steps + 1, Narration.s(steps + 1))
                         .var("cell", "(" + nrow + "," + ncol + ")").var("steps", steps + 1)
                         .grid(display).step();
             }

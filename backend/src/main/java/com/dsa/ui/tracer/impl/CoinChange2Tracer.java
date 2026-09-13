@@ -177,13 +177,16 @@ public class CoinChange2Tracer implements AlgorithmTracer {
                         i, x, i - 1, x, i, x - coin, without, withAtLeastOne, total);
 
                 emit.at("combine")
-                        .say("Cell (%d,%d): %d combination(s) never use coin %d at all "
-                                + "(dp[%d][%d], the row above), plus %d combination(s) that "
-                                + "use AT LEAST ONE more coin %d — read from dp[%d][%d] = %d "
+                        .say("Cell (%d,%d): %d combination%s never %s coin %d at all "
+                                + "(dp[%d][%d], the row above), plus %d combination%s that "
+                                + "%s AT LEAST ONE more coin %d — read from dp[%d][%d] = %d "
                                 + "on THIS SAME ROW, since the coin may be reused. Every "
                                 + "combination is counted in exactly one of those two groups: "
                                 + "%d + %d = %d.",
-                                i, x, without, coin, i - 1, x, withAtLeastOne, coin, i,
+                                i, x, without, Narration.s(without),
+                                Narration.plural(without, "uses", "use"), coin, i - 1, x,
+                                withAtLeastOne, Narration.s(withAtLeastOne),
+                                Narration.plural(withAtLeastOne, "uses", "use"), coin, i,
                                 x - coin, withAtLeastOne, without, withAtLeastOne, total)
                         .var("phase", "combine").var("row", i).var("col", x)
                         .var("without", without).var("withAtLeastOne", withAtLeastOne)

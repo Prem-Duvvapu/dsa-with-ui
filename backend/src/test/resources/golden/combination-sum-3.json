@@ -17,7 +17,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 20,
-    "description" : "Choose digit 1 - 2 digit(s) and sum 6 left. Recurse from digit 2.",
+    "description" : "Choose digit 1 - 2 digits and sum 6 left. Recurse from digit 2.",
     "queueOrStackState" : [ "1" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)" ],
     "nodeStates" : { },
@@ -36,7 +36,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 20,
-    "description" : "Choose digit 2 - 1 digit(s) and sum 4 left. Recurse from digit 3.",
+    "description" : "Choose digit 2 - 1 digit and sum 4 left. Recurse from digit 3.",
     "queueOrStackState" : [ "1", "2" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=6)" ],
     "nodeStates" : { },
@@ -55,7 +55,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 20,
-    "description" : "Choose digit 3 - 0 digit(s) and sum 1 left. Recurse from digit 4.",
+    "description" : "Choose digit 3 - 0 digits and sum 1 left. Recurse from digit 4.",
     "queueOrStackState" : [ "1", "2", "3" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=6)", "backtrack(remainingCount=1,remainingSum=4)" ],
     "nodeStates" : { },
@@ -108,7 +108,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 20,
-    "description" : "Choose digit 4 - 0 digit(s) and sum 0 left. Recurse from digit 5.",
+    "description" : "Choose digit 4 - 0 digits and sum 0 left. Recurse from digit 5.",
     "queueOrStackState" : [ "1", "2", "4" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=6)", "backtrack(remainingCount=1,remainingSum=4)" ],
     "nodeStates" : { },
@@ -197,7 +197,7 @@
   }, {
     "stepNumber" : 11,
     "activeLine" : 20,
-    "description" : "Choose digit 3 - 1 digit(s) and sum 3 left. Recurse from digit 4.",
+    "description" : "Choose digit 3 - 1 digit and sum 3 left. Recurse from digit 4.",
     "queueOrStackState" : [ "1", "3" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=6)" ],
     "nodeStates" : { },
@@ -251,7 +251,7 @@
   }, {
     "stepNumber" : 14,
     "activeLine" : 20,
-    "description" : "Choose digit 4 - 1 digit(s) and sum 2 left. Recurse from digit 5.",
+    "description" : "Choose digit 4 - 1 digit and sum 2 left. Recurse from digit 5.",
     "queueOrStackState" : [ "1", "4" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=6)" ],
     "nodeStates" : { },
@@ -305,7 +305,7 @@
   }, {
     "stepNumber" : 17,
     "activeLine" : 20,
-    "description" : "Choose digit 5 - 1 digit(s) and sum 1 left. Recurse from digit 6.",
+    "description" : "Choose digit 5 - 1 digit and sum 1 left. Recurse from digit 6.",
     "queueOrStackState" : [ "1", "5" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=6)" ],
     "nodeStates" : { },
@@ -359,7 +359,7 @@
   }, {
     "stepNumber" : 20,
     "activeLine" : 20,
-    "description" : "Choose digit 6 - 1 digit(s) and sum 0 left. Recurse from digit 7.",
+    "description" : "Choose digit 6 - 1 digit and sum 0 left. Recurse from digit 7.",
     "queueOrStackState" : [ "1", "6" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=6)" ],
     "nodeStates" : { },
@@ -448,7 +448,7 @@
   }, {
     "stepNumber" : 25,
     "activeLine" : 20,
-    "description" : "Choose digit 2 - 2 digit(s) and sum 5 left. Recurse from digit 3.",
+    "description" : "Choose digit 2 - 2 digits and sum 5 left. Recurse from digit 3.",
     "queueOrStackState" : [ "2" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)" ],
     "nodeStates" : { },
@@ -467,7 +467,7 @@
   }, {
     "stepNumber" : 26,
     "activeLine" : 20,
-    "description" : "Choose digit 3 - 1 digit(s) and sum 2 left. Recurse from digit 4.",
+    "description" : "Choose digit 3 - 1 digit and sum 2 left. Recurse from digit 4.",
     "queueOrStackState" : [ "2", "3" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=5)" ],
     "nodeStates" : { },
@@ -521,7 +521,7 @@
   }, {
     "stepNumber" : 29,
     "activeLine" : 20,
-    "description" : "Choose digit 4 - 1 digit(s) and sum 1 left. Recurse from digit 5.",
+    "description" : "Choose digit 4 - 1 digit and sum 1 left. Recurse from digit 5.",
     "queueOrStackState" : [ "2", "4" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=5)" ],
     "nodeStates" : { },
@@ -575,7 +575,7 @@
   }, {
     "stepNumber" : 32,
     "activeLine" : 20,
-    "description" : "Choose digit 5 - 1 digit(s) and sum 0 left. Recurse from digit 6.",
+    "description" : "Choose digit 5 - 1 digit and sum 0 left. Recurse from digit 6.",
     "queueOrStackState" : [ "2", "5" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=5)" ],
     "nodeStates" : { },
@@ -664,7 +664,7 @@
   }, {
     "stepNumber" : 37,
     "activeLine" : 20,
-    "description" : "Choose digit 3 - 2 digit(s) and sum 4 left. Recurse from digit 4.",
+    "description" : "Choose digit 3 - 2 digits and sum 4 left. Recurse from digit 4.",
     "queueOrStackState" : [ "3" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)" ],
     "nodeStates" : { },
@@ -683,7 +683,7 @@
   }, {
     "stepNumber" : 38,
     "activeLine" : 20,
-    "description" : "Choose digit 4 - 1 digit(s) and sum 0 left. Recurse from digit 5.",
+    "description" : "Choose digit 4 - 1 digit and sum 0 left. Recurse from digit 5.",
     "queueOrStackState" : [ "3", "4" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)", "backtrack(remainingCount=2,remainingSum=4)" ],
     "nodeStates" : { },
@@ -772,7 +772,7 @@
   }, {
     "stepNumber" : 43,
     "activeLine" : 20,
-    "description" : "Choose digit 4 - 2 digit(s) and sum 3 left. Recurse from digit 5.",
+    "description" : "Choose digit 4 - 2 digits and sum 3 left. Recurse from digit 5.",
     "queueOrStackState" : [ "4" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)" ],
     "nodeStates" : { },
@@ -826,7 +826,7 @@
   }, {
     "stepNumber" : 46,
     "activeLine" : 20,
-    "description" : "Choose digit 5 - 2 digit(s) and sum 2 left. Recurse from digit 6.",
+    "description" : "Choose digit 5 - 2 digits and sum 2 left. Recurse from digit 6.",
     "queueOrStackState" : [ "5" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)" ],
     "nodeStates" : { },
@@ -880,7 +880,7 @@
   }, {
     "stepNumber" : 49,
     "activeLine" : 20,
-    "description" : "Choose digit 6 - 2 digit(s) and sum 1 left. Recurse from digit 7.",
+    "description" : "Choose digit 6 - 2 digits and sum 1 left. Recurse from digit 7.",
     "queueOrStackState" : [ "6" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)" ],
     "nodeStates" : { },
@@ -934,7 +934,7 @@
   }, {
     "stepNumber" : 52,
     "activeLine" : 20,
-    "description" : "Choose digit 7 - 2 digit(s) and sum 0 left. Recurse from digit 8.",
+    "description" : "Choose digit 7 - 2 digits and sum 0 left. Recurse from digit 8.",
     "queueOrStackState" : [ "7" ],
     "callStack" : [ "backtrack(remainingCount=3,remainingSum=7)" ],
     "nodeStates" : { },

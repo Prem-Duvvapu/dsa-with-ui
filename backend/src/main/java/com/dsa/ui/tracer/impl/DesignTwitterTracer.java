@@ -105,8 +105,8 @@ public class DesignTwitterTracer implements AlgorithmTracer {
             List<Tweet> stream = tweets.getOrDefault(source, List.of());
             if (!stream.isEmpty()) heap.offer(new Cursor(stream, stream.size() - 1));
         }
-        emit.at("feed.seed").say("Seed user %d's feed heap with the newest tweet from each of %d stream(s).",
-                        user, sources.size())
+        emit.at("feed.seed").say("Seed user %d's feed heap with the newest tweet from each of %d stream%s.",
+                        user, sources.size(), Narration.s(sources.size()))
                 .var("user", user).var("sources", sources).arrayState(render(heap)).step();
 
         List<Integer> feed = new ArrayList<>();

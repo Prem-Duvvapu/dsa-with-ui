@@ -152,9 +152,9 @@ public class NumberOfWaysDestinationTracer implements AlgorithmTracer {
             }
 
             emit.at("extract").say(
-                            "Settle intersection %d: %d is the shortest time to it, reachable in %d way(s). "
+                            "Settle intersection %d: %d is the shortest time to it, reachable in %d way%s. "
                                     + "Its roads can now be counted.",
-                            node, t, ways[node])
+                            node, t, ways[node], Narration.s(ways[node]))
                     .var("node", node).var("time", timeString(time)).var("ways", waysString(ways))
                     .graph(graph).nodes(states).queue(pqSnapshot(pq)).step();
 
@@ -177,8 +177,8 @@ public class NumberOfWaysDestinationTracer implements AlgorithmTracer {
                     emit.at("shorter").say(
                                     "Road %d-%d takes %d: %d + %d = %d beats %s. Everything counted for "
                                             + "intersection %d used a slower route, so its count is REPLACED by "
-                                            + "%d's %d way(s), not added to.",
-                                    node, next, cost, t, cost, candidate, old, next, node, ways[node])
+                                            + "%d's %d way%s, not added to.",
+                                    node, next, cost, t, cost, candidate, old, next, node, ways[node], Narration.s(ways[node]))
                             .var("road", edgeKey).var("time", timeString(time)).var("ways", waysString(ways))
                             .graph(graph).nodes(states).edges(List.of(edgeKey)).queue(pqSnapshot(pq)).step();
                 } else if (candidate == time[next]) {
@@ -186,8 +186,8 @@ public class NumberOfWaysDestinationTracer implements AlgorithmTracer {
                     ways[next] = (before + ways[node]) % MOD;
                     emit.at("tie").say(
                                     "Road %d-%d takes %d: %d + %d = %d ties the best known time to %d. "
-                                            + "These are different routes arriving equally fast, so ADD: %d + %d = %d way(s).",
-                                    node, next, cost, t, cost, candidate, next, before, ways[node], ways[next])
+                                            + "These are different routes arriving equally fast, so ADD: %d + %d = %d way%s.",
+                                    node, next, cost, t, cost, candidate, next, before, ways[node], ways[next], Narration.s(ways[next]))
                             .var("road", edgeKey).var("time", timeString(time)).var("ways", waysString(ways))
                             .graph(graph).nodes(states).edges(List.of(edgeKey)).queue(pqSnapshot(pq)).step();
                 } else {
@@ -206,8 +206,8 @@ public class NumberOfWaysDestinationTracer implements AlgorithmTracer {
 
         long answer = time[destination] == Long.MAX_VALUE ? 0 : ways[destination] % MOD;
         emit.at("answer").say(
-                        "Queue empty. The shortest time from 0 to %d is %s, and %d distinct route(s) achieve it.",
-                        destination, timeLabel(time[destination]), answer)
+                        "Queue empty. The shortest time from 0 to %d is %s, and %d distinct route%s achieve it.",
+                        destination, timeLabel(time[destination]), answer, Narration.s(answer))
                 .var("answer", answer).var("time", timeString(time)).var("ways", waysString(ways))
                 .graph(graph).nodes(states).queue(pqSnapshot(pq)).step();
     }

@@ -178,8 +178,8 @@ public class FloodFillTracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("done").say("The stack is empty: %d pixel(s) repainted from %d to %d.",
-                        painted, startColor, newColor)
+        emit.at("done").say("The stack is empty: %d pixel%s repainted from %d to %d.",
+                        painted, Narration.s(painted), startColor, newColor)
                 .var("painted", painted).grid(image).step();
     }
 

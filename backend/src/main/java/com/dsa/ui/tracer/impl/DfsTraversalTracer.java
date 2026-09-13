@@ -101,8 +101,8 @@ public class DfsTraversalTracer implements AlgorithmTracer {
         // Emitted after the outermost frame pops, so the trace ends at depth 0 rather than
         // freezing the sidebar on dfs(start)'s own frame.
         emit.at("backtrack")
-                .say("Every frame has returned. DFS from %d visited %d vertex/vertices in order: %s.",
-                        start, order.size(), order)
+                .say("Every frame has returned. DFS from %d visited %d %s in order: %s.",
+                        start, order.size(), Narration.plural(order.size(), "vertex", "vertices"), order)
                 .var("order", order)
                 .graph(graph).nodes(states).step();
     }

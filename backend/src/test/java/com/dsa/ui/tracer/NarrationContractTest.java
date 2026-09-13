@@ -55,6 +55,9 @@ class NarrationContractTest {
 
     private static final Pattern ORDINAL = Pattern.compile("\\b\\d+-th\\b");
 
+    /** The dodge: "1 step(s)", "6 vertex/vertices" - correct for no value of the count. */
+    private static final Pattern DODGE = Pattern.compile("\\(s\\)|\\(es\\)|vertex/vertices");
+
     private static final Set<String> COUNTABLE = Set.of(
             "steps", "nodes", "elements", "values", "items", "characters", "chars", "digits",
             "bits", "times", "ways", "combinations", "permutations", "subsets", "subarrays",
@@ -97,6 +100,25 @@ class NarrationContractTest {
                                 + "\": \"" + said + "\". Use Narration.s(n) — every trace that"
                                 + " counts something eventually prints 1.");
             }
+        }
+    }
+
+    @ParameterizedTest(name = "{0} commits to singular or plural")
+    @MethodSource("tracerIds")
+    @DisplayName("No trace hedges with \"(s)\"")
+    void nothingHedgesItsPlurals(String id) {
+        for (ExecutionStep step : defaults(id)) {
+            String said = step.getDescription();
+            if (said == null) {
+                continue;
+            }
+            Matcher m = DODGE.matcher(said);
+            assertTrue(!m.find(),
+                    id + " step " + step.getStepNumber() + " says \"" + (m.hitEnd() ? "" : m.group())
+                            + "\" in: \"" + said + "\". The count is known when the step is"
+                            + " emitted, so the sentence can say \"1 step\" or \"4 steps\" rather"
+                            + " than hedging. Narration.s / Narration.plural do it in one call —"
+                            + " and check the VERB too: \"1 subarray sums\", not \"1 subarray sum\".");
         }
     }
 

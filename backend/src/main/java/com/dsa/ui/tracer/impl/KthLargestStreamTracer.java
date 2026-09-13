@@ -68,8 +68,8 @@ public class KthLargestStreamTracer implements AlgorithmTracer {
 
     private static void add(int value, int k, ArrayHeap<Integer> heap, StepEmitter emit, boolean live) {
         heap.offer(value);
-        emit.at("push").say("%s %d; the min-heap temporarily contains %d value(s).",
-                        live ? "Add" : "Seed", value, heap.size())
+        emit.at("push").say("%s %d; the min-heap temporarily contains %d value%s.",
+                        live ? "Add" : "Seed", value, heap.size(), Narration.s(heap.size()))
                 .var("value", value).var("size", heap.size()).arrayState(render(heap)).step();
         if (heap.size() > k) {
             int removed = heap.poll();

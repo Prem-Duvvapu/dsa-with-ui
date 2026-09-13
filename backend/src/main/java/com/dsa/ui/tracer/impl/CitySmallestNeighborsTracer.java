@@ -139,10 +139,10 @@ public class CitySmallestNeighborsTracer implements AlgorithmTracer {
         }
 
         emit.at("init").say(
-                        "%d cities, %d road(s), threshold %d. Seed the distance table with the roads "
+                        "%d cities, %d road%s, threshold %d. Seed the distance table with the roads "
                                 + "themselves; -1 marks a pair with no route known yet. Floyd-Warshall will "
                                 + "fill in the rest before any counting happens.",
-                        n, graph.edges().length, threshold)
+                        n, graph.edges().length, Narration.s(graph.edges().length), threshold)
                 .var("n", n).var("threshold", threshold)
                 .grid(display(dist)).step();
 

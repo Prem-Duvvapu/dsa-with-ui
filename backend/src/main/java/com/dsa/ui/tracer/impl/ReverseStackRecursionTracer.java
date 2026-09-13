@@ -98,8 +98,8 @@ public class ReverseStackRecursionTracer implements AlgorithmTracer {
 
         int top = stack.remove(stack.size() - 1);
         emit.at("popTop")
-                .say("Pop %d off the top. Reverse the remaining %d element(s) first, then insert %d at the bottom.",
-                        top, stack.size(), top)
+                .say("Pop %d off the top. Reverse the remaining %d element%s first, then insert %d at the bottom.",
+                        top, stack.size(), Narration.s(stack.size()), top)
                 .var("popped", top).var("stack", stack.toString()).stack(stack).step();
 
         reverse(stack, emit);

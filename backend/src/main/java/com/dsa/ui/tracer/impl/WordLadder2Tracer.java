@@ -203,9 +203,9 @@ public class WordLadder2Tracer implements AlgorithmTracer {
         List<Integer> layer = new ArrayList<>(List.of(beginId));
 
         emit.at("init")
-                .say("Built the one-letter-transformation graph over %d word(s). BFS outward from "
+                .say("Built the one-letter-transformation graph over %d word%s. BFS outward from "
                                 + "'%s' one whole layer at a time, remembering EVERY predecessor that "
-                                + "reaches a word first.", n, beginWord)
+                                + "reaches a word first.", n, Narration.s(n), beginWord)
                 .var("layer 0", words(layer, idToWord))
                 .var("target", endWord)
                 .graph(nodes, edges).nodes(states).queue(words(layer, idToWord)).step();
@@ -267,7 +267,7 @@ public class WordLadder2Tracer implements AlgorithmTracer {
                     .var("ladders", 0)
                     .graph(nodes, edges).nodes(states).step();
             emit.at("done")
-                    .say("0 shortest transformation sequence(s) from '%s' to '%s'.", beginWord, endWord)
+                    .say("No transformation sequence exists from '%s' to '%s'.", beginWord, endWord)
                     .var("ladders", 0)
                     .graph(nodes, edges).nodes(states).step();
             return;
@@ -275,9 +275,9 @@ public class WordLadder2Tracer implements AlgorithmTracer {
 
         states.put(endId, "visiting");
         emit.at("found")
-                .say("'%s' first appears in layer %d, so every shortest ladder has %d word(s). Stop "
+                .say("'%s' first appears in layer %d, so every shortest ladder has %d word%s. Stop "
                                 + "expanding and walk the predecessor lists back from '%s'.",
-                        endWord, level.get(endId), level.get(endId) + 1, endWord)
+                        endWord, level.get(endId), level.get(endId) + 1, Narration.s(level.get(endId) + 1), endWord)
                 .var("length", level.get(endId) + 1)
                 .graph(nodes, edges).nodes(states).step();
 
@@ -286,8 +286,9 @@ public class WordLadder2Tracer implements AlgorithmTracer {
         backtrack(endId, beginId, path, preds, idToWord, ladders, nodes, edges, states, emit);
 
         emit.at("done")
-                .say("%d shortest transformation sequence(s) of %d word(s) each: %s.",
-                        ladders.size(), level.get(endId) + 1, String.join("; ", ladders))
+                .say("%d shortest transformation sequence%s of %d word%s each: %s.",
+                        ladders.size(), Narration.s(ladders.size()), level.get(endId) + 1,
+                        Narration.s(level.get(endId) + 1), String.join("; ", ladders))
                 .var("ladders", ladders.size())
                 .var("answer", String.join("; ", ladders))
                 .graph(nodes, edges).nodes(states).step();

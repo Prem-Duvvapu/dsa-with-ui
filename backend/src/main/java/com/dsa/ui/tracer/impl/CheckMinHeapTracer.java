@@ -80,8 +80,9 @@ public class CheckMinHeapTracer implements AlgorithmTracer {
         }
         emit.at("done").say(valid
                         ? "Every parent-child edge is ordered, so this is a min-heap."
-                        : "Found %d violating edge(s), so this is not a min-heap.",
-                        valid ? new Object[]{} : new Object[]{violations})
+                        : "Found %d violating edge%s, so this is not a min-heap.",
+                        valid ? new Object[]{}
+                              : new Object[]{violations, Narration.s(violations)})
                 // Preserve the same variable insertion order as the preceding comparison
                 // steps so delta decoding round-trips to an identical LinkedHashMap.
                 .var("violations", violations).var("valid", valid)

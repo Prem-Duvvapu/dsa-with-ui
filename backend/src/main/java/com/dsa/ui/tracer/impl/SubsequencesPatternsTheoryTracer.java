@@ -85,8 +85,8 @@ public class SubsequencesPatternsTheoryTracer implements AlgorithmTracer {
         // Emitted after the recursion fully unwinds. Without it the trace ends four frames
         // deep, freezing the sidebar mid-descent.
         emit.at("capture")
-                .say("The search is exhausted and every frame has returned. %d subsequence(s) summed to at most %d.",
-                        count[0], limit)
+                .say("The search is exhausted and every frame has returned. %d subsequence%s summed to at most %d.",
+                        count[0], Narration.s(count[0]), limit)
                 .var("captured", count[0]).var("limit", limit)
                 .stack(java.util.List.of()).step();
     }

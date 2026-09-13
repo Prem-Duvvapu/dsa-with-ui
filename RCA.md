@@ -1339,3 +1339,37 @@ class, and the reason is worth stating rather than rediscovering.
 - **Left deliberately:** `"1 step(s)"` and `"6 vertex/vertices"`, a parenthesised-plural
   dodge used in about 45 places. Clumsy rather than false, and now a one-call fix whenever
   someone wants it.
+
+## RCA-052 — A bulk rewrite the compiler could not check, and what caught it instead
+
+- **Discovered:** 2026-09-13, replacing the "(s)" plural dodge
+- **Status:** Resolved
+- **The change:** 84 narration sites hedged their counts — "1 step(s)", "6 vertex/vertices",
+  "0 node(s)". The count is known when the step is emitted, so the sentence can simply say
+  "1 step" or "4 steps". Rewriting 84 argument lists by hand invites its own mistakes, so
+  the transformation was scripted: turn `"%d cell(s)"` into `"%d cell%s"` and insert
+  `Narration.s(<that argument>)` at the slot the new `%s` creates.
+- **What went wrong, in order:**
+  1. **The governing argument was indexed against the wrong list.** For the *second* `(s)`
+     in one format the script used the new slot number to look up the old argument array,
+     so `"%d account(s) collapse into %d merged account(s): %s"` rendered as *"3 merged
+     account[John: ...]: s"*.
+  2. **"The specifier before the noun" is not always the count.** `"reads %d consecutive
+     '%c' character(s)"` has a `%c` between them, so the script pluralised on the character
+     instead of the count and produced *"1 consecutive '1' characters"*.
+  3. **A ternary chooses the format at some call sites**, so `args[0]` was not a literal and
+     nothing lined up.
+  4. **Making a noun singular exposed verbs that were never checked.** "1 subarray ending at
+     index 1 **sum** to 2", "1 combination that **use** at least one more coin", "Its 1
+     distinct email **sort** to mary@mail.com". The plural noun had been hiding them.
+- **What caught what.** `javac` caught three sites, and only because the mis-slotted
+  argument happened to be a `String` where a `%d` wanted a number. `GoldenTraceTest` caught
+  two more at runtime with `IllegalFormatConversionException`. **Neither can catch a
+  swapped pair of ints**, and neither has any opinion about "1 subarray sum to 2". Every one
+  of those was found by reading all 238 changed description lines in the golden diff.
+- **The rule:** a bulk rewrite of *rendered text* is verified by reading the rendered text,
+  not by the compiler and not by the tests going green. The golden files exist precisely so
+  that diff is readable.
+- **Regression guard:** `NarrationContractTest.nothingHedgesItsPlurals`, over every tracer's
+  default trace, proven RED first with 48 failures. Its message names the verb trap, since
+  that is the part the next person will miss.

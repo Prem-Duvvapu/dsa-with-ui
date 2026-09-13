@@ -131,9 +131,9 @@ public class RottingOrangesTracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("survey").say("A %dx%d crate holding %d fresh orange(s) and %d rotten one(s). Every "
+        emit.at("survey").say("A %dx%d crate holding %d fresh orange%s and %d rotten one%s. Every "
                         + "rotten orange starts the clock at minute 0.",
-                        rows, cols, fresh, queue.size())
+                        rows, cols, fresh, Narration.s(fresh), queue.size(), Narration.s(queue.size()))
                 .var("fresh", fresh).var("sources", queue.size())
                 .grid(grid).queue(stamps(queue)).step();
 
@@ -167,8 +167,8 @@ public class RottingOrangesTracer implements AlgorithmTracer {
                 queue.add(new int[]{nr, nc, minute + 1});
 
                 emit.at("spread").say("(%d,%d) is fresh and shares an edge, so it spoils at minute "
-                                + "%d. %d fresh orange(s) left.",
-                                nr, nc, minute + 1, fresh - spoiled)
+                                + "%d. %d fresh orange%s left.",
+                                nr, nc, minute + 1, fresh - spoiled, Narration.s(fresh - spoiled))
                         .var("cell", "(" + nr + "," + nc + ")").var("minute", minute + 1)
                         .var("remaining", fresh - spoiled)
                         .grid(grid).queue(stamps(queue)).step();
@@ -176,13 +176,13 @@ public class RottingOrangesTracer implements AlgorithmTracer {
         }
 
         if (spoiled == fresh) {
-            emit.at("cleared").say("All %d fresh orange(s) spoiled; the last one went at minute %d. "
-                            + "Answer: %d.", fresh, elapsed, elapsed)
+            emit.at("cleared").say("All %d fresh orange%s spoiled; the last one went at minute %d. "
+                            + "Answer: %d.", fresh, Narration.s(fresh), elapsed, elapsed)
                     .var("answer", elapsed).var("spoiled", spoiled)
                     .grid(grid).step();
         } else {
-            emit.at("stranded").say("The queue is empty but %d fresh orange(s) were never reached - "
-                            + "no amount of waiting rots them. Answer: -1.", fresh - spoiled)
+            emit.at("stranded").say("The queue is empty but %d fresh orange%s were never reached - "
+                            + "no amount of waiting rots them. Answer: -1.", fresh - spoiled, Narration.s(fresh - spoiled))
                     .var("answer", -1).var("unreachable", fresh - spoiled)
                     .grid(grid).step();
         }

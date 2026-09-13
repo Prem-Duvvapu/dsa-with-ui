@@ -111,8 +111,9 @@ public class CountSubarraysGivenSumTracer implements AlgorithmTracer {
                 int freq = map.get(remove);
                 cnt += freq;
                 emit.at("countMatch")
-                        .say("Map contains %d with frequency %d → %d subarray(s) ending at index %d sum to %d. Total count = %d.",
-                                remove, freq, freq, i, k, cnt)
+                        .say("Map contains %d with frequency %d → %d subarray%s ending at index %d %s to %d. Total count = %d.",
+                                remove, freq, freq, Narration.s(freq), i,
+                                Narration.plural(freq, "sums", "sum"), k, cnt)
                         .var("cnt", cnt).var("freq", freq)
                         .array(nums, i)
                         .step();
@@ -120,7 +121,7 @@ public class CountSubarraysGivenSumTracer implements AlgorithmTracer {
 
             map.put(preSum, map.getOrDefault(preSum, 0) + 1);
             emit.at("updateMap")
-                    .say("Record preSum %d in map (now seen %d time(s)).", preSum, map.get(preSum))
+                    .say("Record preSum %d in map (now seen %d time%s).", preSum, map.get(preSum), Narration.s(map.get(preSum)))
                     .var("map", map.toString()).var("preSum", preSum)
                     .array(nums, i)
                     .step();

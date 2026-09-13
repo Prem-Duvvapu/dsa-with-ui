@@ -177,8 +177,8 @@ public class StackQueueImplTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Sequence finished. The queue holds %d value(s), front first: %s.",
-                        q.size(), snapshot(q))
+                .say("Sequence finished. The queue holds %d value%s, front first: %s.",
+                        q.size(), Narration.s(q.size()), snapshot(q))
                 .var("size", q.size())
                 .queue(snapshot(q)).step();
     }

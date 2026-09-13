@@ -126,8 +126,8 @@ public class MstTheoryTracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("done").say("Minimum spanning forest complete: %d tree(s), %d accepted edge(s), weight %d.",
-                        trees, accepted, total)
+        emit.at("done").say("Minimum spanning forest complete: %d tree%s, %d accepted edge%s, weight %d.",
+                        trees, Narration.s(trees), accepted, Narration.s(accepted), total)
                 .var("trees", trees).var("acceptedEdges", accepted).var("weight", total)
                 .graph(graph).nodes(states).step();
     }
