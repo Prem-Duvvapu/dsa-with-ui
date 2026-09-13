@@ -52,6 +52,9 @@ public class CheckPrimeTracer implements AlgorithmTracer {
                            // @a factor
                            count++;
                            if ((n / i) != i) count++;
+                       } else {
+                           // @a noFactor
+                           continue;
                        }
                    }
                    // @a check
@@ -79,6 +82,17 @@ public class CheckPrimeTracer implements AlgorithmTracer {
                 emit.at("factor")
                         .say("i=%d divides %d%s. Factor count is now %d.",
                                 i, n, paired ? " (paired with " + (n / i) + ")" : "", count)
+                        .var("i", i).var("count", count)
+                        .array(new int[]{n, i}).step();
+            } else {
+                // The rejections ARE the trial division. Emitting only on a hit meant a
+                // prime showed exactly one step - "i=1 divides 29" - and then a verdict,
+                // with no sign that 2, 3, 4 and 5 had been tried and had failed. Nothing
+                // caught it: check-prime takes a single INT, so it is one of the tracers
+                // stepCountGrowsWithInput skips, and a silent loop body is invisible to
+                // every other check.
+                emit.at("noFactor")
+                        .say("i=%d does not divide %d - nothing to count here.", i, n)
                         .var("i", i).var("count", count)
                         .array(new int[]{n, i}).step();
             }

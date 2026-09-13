@@ -1245,3 +1245,53 @@ class, and the reason is worth stating rather than rediscovering.
 - **Worth noting:** the sweep reported this as `DEAD ANCHORS ['shrink']`, which is the same
   line it prints for a terminal not-found branch. See RCA-045 — the anchor's *name* is the
   signal, and `shrink` in Sliding Window is as load-bearing as `undo` in Backtracking.
+
+## RCA-049 — A loop that only narrated its successes
+
+- **Discovered:** 2026-09-13, by the Learn the Basics audit
+- **Status:** Resolved
+- **Symptom and impact:** `check-prime` on its default `n = 29` emitted **three steps**:
+  "count factors up to sqrt(29) ~= 5", "i=1 divides 29", "factor count = 2 -> PRIME". The
+  loop ran `i = 1..5`; four of those five iterations were silent, because the tracer emitted
+  only inside `if (n % i == 0)`. The rejections *are* the trial division — a primality demo
+  that shows one hit and a verdict has not shown the algorithm.
+- **Root cause:** the `else` branch had no anchor and no emit, so there was nothing to be
+  dead and nothing to count. `anchorsAreAllReachable` cannot flag an anchor that does not
+  exist, and `check-prime` takes a single `INT`, which puts it in the 152 tracers
+  `stepCountGrowsWithInput` skips — the one check that would otherwise notice a loop doing
+  no visible work as its bound grows. `TracerContractTest` already pins that skip list at
+  152 with a comment saying a tracer lands there "sometimes right and sometimes because it
+  should have taken an array instead of a fixture". This is a third reason to land there:
+  the input genuinely is a scalar, and the loop over it is still where the work happens.
+- **Resolution:** a `noFactor` anchor and a step per rejected divisor. Three steps become
+  seven on the default, and the count now grows with `sqrt(n)` as it should.
+- **Why no new contract test:** the honest generalisation is "scale an INT field and require
+  more steps", and most INT fields are not sizes — `k`, `target`, a bit position, the index
+  in `check-ith-bit-set`. Growing those would fail tracers that are legitimately flat. The
+  golden pins the seven steps; this note records why the rule cannot be written.
+- **How to find the next one:** read `run()` beside `annotatedCode()` and look for a branch
+  in the source with no anchor on it. An unanchored branch is invisible to every existing
+  check by construction.
+
+## RCA-050 — Two problems taught the same thing in the same words
+
+- **Discovered:** 2026-09-13, by the Strings audit
+- **Status:** Resolved
+- **Symptom and impact:** `kmp-lps-algo` and `longest-happy-prefix` build the same LPS array
+  with narration that was identical sentence-for-sentence, differing only in whether the
+  string was called `pattern` or `s`. Two problems, one lesson, told twice.
+- **Root cause:** `noTwoTracersProduceIdenticalTraces` fires only on exact equality of the
+  whole fingerprint, so different default inputs are enough to pass it. The audit-topic
+  skill names this gap explicitly — "two tracers that differ in a single step number pass it
+  while being pedagogically interchangeable" — and the sweep's similarity check is per topic,
+  which both of these are in, yet they scored below its threshold because the inputs differ
+  in length.
+- **Resolution:** not a different input — a different *lesson*. The array is the answer for
+  `longest-happy-prefix` and a tool for `kmp-lps-algo`, so the latter now says what each
+  number buys a search: where a mismatch resumes, why the text pointer never moves backwards,
+  and what the finished array means for the O(m) bound. Same algorithm, same array, and a
+  reader can now say what each problem is for.
+- **The rule this follows:** the fix for a near-identical pair is never to perturb a value
+  until the similarity score drops. It is to change what each trace *narrates* — as
+  `power-set` (captures at every node) and `subsets-i` (captures at the pick/non-pick leaves)
+  already do for the same output set.
