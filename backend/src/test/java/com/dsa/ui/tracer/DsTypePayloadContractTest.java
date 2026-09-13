@@ -97,8 +97,15 @@ class DsTypePayloadContractTest {
         // DSU has no structural field: DsuCanvas reconstructs parent[]/rank[] by parsing
         // these exact variable keys. That makes the key names a wire contract, so pin them
         // here - a rename would otherwise leave the canvas silently drawing its own default.
-        REQUIRED.put(DsType.DSU, new Requirement("variables['parent[]']",
-                s -> s.getVariables() != null && s.getVariables().containsKey("parent[]")));
+        // DSU has no structural field: DsuCanvas reconstructs parent[] and rank[] by parsing
+        // these exact variable keys out of a string. That makes the key names AND the string
+        // format a wire contract, so both are pinned - see DsuTransportContractTest for the
+        // format. A rename or a malformed value would otherwise reach the browser and either
+        // blank the canvas or draw a garbage structure.
+        REQUIRED.put(DsType.DSU, new Requirement("variables['parent[]'] and ['rank[]']",
+                s -> s.getVariables() != null
+                        && s.getVariables().containsKey("parent[]")
+                        && s.getVariables().containsKey("rank[]")));
     }
 
     Stream<String> tracerIds() {
