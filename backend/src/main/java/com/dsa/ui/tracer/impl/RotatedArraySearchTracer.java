@@ -35,12 +35,17 @@ public class RotatedArraySearchTracer implements AlgorithmTracer {
                         .label("Rotated sorted array")
                         .help("A sorted array rotated at some pivot, e.g. [4,5,6,7,0,1,2]. Distinct values.")
                         .length(1, 64).values(-999, 999).distinct()
-                        .defaultValue(List.of(4, 5, 6, 7, 0, 1, 2))
+                        // Rotated so that the FIRST probe lands with the right half
+                        // sorted. [4,5,6,7,0,1,2] keeps nums[low] <= nums[mid] on every
+                        // probe whatever you search for near the front, so the branch that
+                        // recognises a sorted right half - half of what makes this problem
+                        // different from a plain binary search - never ran on the default.
+                        .defaultValue(List.of(6, 7, 1, 2, 3, 4, 5))
                         .build(),
                 InputField.of("target", FieldType.INT)
                         .label("Target")
                         .range(-999, 999)
-                        .defaultValue(0)
+                        .defaultValue(3)
                         .build());
     }
 
@@ -50,7 +55,7 @@ public class RotatedArraySearchTracer implements AlgorithmTracer {
      */
     @Override
     public Map<String, Object> alternateInput() {
-        return Map.of("nums", List.of(6, 7, 1, 2, 3, 4, 5), "target", 10);
+        return Map.of("nums", List.of(4, 5, 6, 7, 0, 1, 2), "target", 10);
     }
 
     @Override
@@ -131,6 +136,7 @@ public class RotatedArraySearchTracer implements AlgorithmTracer {
                                         ? String.format("%d lies inside it — search there.", target)
                                         : String.format("%d is not inside it, so it can only be to the right of %d.", target, mid))
                         .var("leftSorted", true)
+                        .var("low", inside ? low : mid + 1).var("high", inside ? mid - 1 : high)
                         .arrayState(window(nums, inside ? low : mid + 1, inside ? mid - 1 : high, -1)).step();
                 if (inside) {
                     high = mid - 1;
@@ -146,6 +152,7 @@ public class RotatedArraySearchTracer implements AlgorithmTracer {
                                         ? String.format("%d lies inside it — search there.", target)
                                         : String.format("%d is not inside it, so it can only be to the left of %d.", target, mid))
                         .var("rightSorted", true)
+                        .var("low", inside ? mid + 1 : low).var("high", inside ? high : mid - 1)
                         .arrayState(window(nums, inside ? mid + 1 : low, inside ? high : mid - 1, -1)).step();
                 if (inside) {
                     low = mid + 1;

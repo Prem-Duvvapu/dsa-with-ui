@@ -38,7 +38,10 @@ public class BinarySearch1DTracer implements AlgorithmTracer {
                 InputField.of("target", FieldType.INT)
                         .label("Target")
                         .range(-999, 999)
-                        .defaultValue(13)
+                        // 5, not 13. Targeting the last element walks right on every
+                        // probe, so the canonical binary search demonstrated exactly one
+                        // of its two moves; 5 goes left, then right, then hits.
+                        .defaultValue(5)
                         .build());
     }
 
