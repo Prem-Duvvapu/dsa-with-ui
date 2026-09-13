@@ -9,6 +9,8 @@ import WelcomeGuide from './components/WelcomeGuide';
 import TourGuide from './components/TourGuide';
 import StepStateSummary from './components/StepStateSummary';
 import usePersistentState from './hooks/usePersistentState';
+import useShareableView from './hooks/useShareableView';
+import useProgress from './hooks/useProgress';
 import useLayoutPreferences from './hooks/useLayoutPreferences';
 import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 import useTheme from './hooks/useTheme';
@@ -183,6 +185,56 @@ export default function App() {
   // it isn't in the catalogue summary, so CodeViewer/MemoryComplexityCard/canvases
   // would otherwise silently fall back to placeholder data for every problem.
   const activeProblem = detail ? { ...catalogEntry, ...detail } : catalogEntry;
+
+  // ── What has actually been watched ───────────────────────────────────────
+  const { progress, markWatched, toggleStar } = useProgress();
+  const activeProgress = progress[activeProblemId];
+
+  // Reaching the last step, not opening the page: clicking into a problem is an accident
+  // of browsing, sitting through the trace to the end is not.
+  useEffect(() => {
+    if (steps.length > 0 && currentStepIndex === steps.length - 1) {
+      markWatched(activeProblemId);
+    }
+  }, [activeProblemId, currentStepIndex, steps.length, markWatched]);
+
+  // ── The rest of "what I am looking at", carried in the URL ───────────────
+  // /problem/:id already made the problem linkable; the step and the input were not, so a
+  // refresh landed you back on step 1 of the defaults.
+  const pendingView = useRef(null);
+  const { shareInput } = useShareableView({
+    problemId: activeProblemId,
+    stepIndex: currentStepIndex,
+    totalSteps: steps.length,
+    // Held, not applied: at restore time the trace for this problem has not loaded yet, so
+    // there is nothing to seek into and no inputSpec to validate against.
+    onRestore: (view) => { pendingView.current = view; }
+  });
+
+  // A custom input replaces the trace entirely, so it has to run before the step is
+  // restored — seeking into the default trace and then replacing it would land on step 1.
+  useEffect(() => {
+    const view = pendingView.current;
+    if (!view || traceLoading) return;
+    if (view.input) {
+      const input = view.input;
+      pendingView.current = { ...view, input: null };
+      runInput(input);
+      return;
+    }
+    if (view.step === null || steps.length === 0) return;
+    pendingView.current = null;
+    if (view.step < steps.length) seek(view.step);
+  }, [traceLoading, steps.length, runInput, seek]);
+
+  // Runs from the input editor are the shareable ones; the defaults are already implied by
+  // the problem id, so a ?input for them would be noise in every link.
+  const runAndShare = useCallback((values) => {
+    shareInput(values);
+    return runInput(values);
+    // shareInput closes over the live search params and is re-created each render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runInput]);
 
   // ── Single-endpoint catalogue fetch ──────────────────────────────────────
   const fetchAllProblems = useCallback(async () => {
@@ -409,7 +461,12 @@ export default function App() {
         }}
       />
 
-      <Breadcrumb problem={activeProblem} />
+      <Breadcrumb
+        problem={activeProblem}
+        watched={activeProgress?.watched === true}
+        starred={activeProgress?.starred === true}
+        onToggleStar={() => toggleStar(activeProblemId)}
+      />
 
       <ProblemStatement
         problem={activeProblem}
@@ -460,6 +517,7 @@ export default function App() {
           <div
             onClick={() => setIsSidebarOpen(false)}
             aria-hidden="true"
+            data-testid="mobile-backdrop"
             className={styles.mobileBackdrop}
           />
         )}
@@ -473,6 +531,7 @@ export default function App() {
               problems={problems}
               activeProblemId={activeProblemId}
               activeCategory={activeCategory}
+              progress={progress}
               onSelectCategory={handleSelectCategory}
               onSelectProblem={handleSelectProblem}
               onRetry={fetchAllProblems}
@@ -686,9 +745,10 @@ export default function App() {
                   <InputPanel
                     problemId={activeProblemId}
                     inputSpec={activeProblem.inputSpec}
+                    alternateInput={activeProblem.alternateInput}
                     fieldErrors={fieldErrors}
                     running={traceLoading}
-                    onRun={runInput}
+                    onRun={runAndShare}
                   />
                 </div>
               )}
@@ -736,9 +796,10 @@ export default function App() {
                     <InputPanel
                       problemId={activeProblemId}
                       inputSpec={activeProblem.inputSpec}
+                      alternateInput={activeProblem.alternateInput}
                       fieldErrors={fieldErrors}
                       running={traceLoading}
-                      onRun={runInput}
+                      onRun={runAndShare}
                     />
                   </div>
                 ) : (

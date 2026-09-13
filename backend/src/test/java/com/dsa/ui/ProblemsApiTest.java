@@ -105,6 +105,30 @@ class ProblemsApiTest {
     }
 
     @Test
+    @DisplayName("Detail exposes the tracer's alternate input, so the UI can offer it")
+    void detailCarriesAlternateInput() throws Exception {
+        // Every tracer must declare a materially different second input - the contract makes
+        // it abstract so none can skip it, and alternateInputDiffersFromDefaults rejects one
+        // pasted from the spec defaults. All 431 of them existed only for the test suite:
+        // nothing served it, so the only input a visitor could reach was the default, and
+        // every branch that only the alternate reaches was permanently unvisitable. The
+        // code panel marks those branches as not taken; this is what lets someone go take
+        // them.
+        JsonNode detail = getJson("/api/problems/next-permutation");
+        JsonNode alternate = detail.get("alternateInput");
+
+        assertNotNull(alternate, "a traced problem must expose its alternate input");
+        assertTrue(alternate.has("nums"), "alternate input carries the tracer's own field names");
+
+        // And it must run, which is the whole point of offering it.
+        mockMvc.perform(post("/api/problems/next-permutation/execute")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(MAPPER.writeValueAsString(alternate)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.steps", not(empty())));
+    }
+
+    @Test
     @DisplayName("The code returned carries no anchor markers")
     void codeIsStrippedOfAnchors() throws Exception {
         JsonNode trace = getJson("/api/problems/kadane-algo/execute");

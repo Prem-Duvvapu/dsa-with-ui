@@ -854,6 +854,12 @@ mark {
   flex-shrink: 0;
 }
 
+/* Progress markers in a result row. Passive: the star TOGGLE is in the breadcrumb, because
+   a button inside a row would make a click near the edge do something other than open the
+   problem the row names. */
+.sb-starred { color: var(--probe); flex: none; }
+.sb-watched { color: var(--settled); flex: none; }
+
 /* --- Empty / error states --- */
 .sb-empty {
   display: flex;

@@ -48,3 +48,33 @@
   background: var(--diff-hard-bg);
   border: 1px solid var(--diff-hard-border);
 }
+
+/* Progress markers. The check is passive - App sets it when the last step is reached -
+   and the star is the only thing here the learner sets by hand. */
+.watched {
+  display: inline-flex;
+  align-items: center;
+  color: var(--settled);
+}
+
+.star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  border-radius: var(--radius-xs, 4px);
+  background: transparent;
+  color: var(--bench-ink-dim);
+  cursor: pointer;
+  transition: color var(--motion-fast, 150ms) var(--ease-standard, ease);
+}
+
+.star:hover,
+.star:focus-visible {
+  color: var(--probe);
+}
+
+.starOn {
+  color: var(--probe);
+}

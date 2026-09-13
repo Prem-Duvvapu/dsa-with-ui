@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Shuffle, RotateCcw } from 'lucide-react';
+import { Play, Shuffle, RotateCcw, GitBranch } from 'lucide-react';
 import IntArrayField from './IntArrayField';
 import GridField from './GridField';
 import GraphField from './GraphField';
@@ -11,12 +11,19 @@ import styles from './InputPanel.module.css';
  * input rather than watching a fixed default. One editor per FieldType — no per-problem
  * form code, ever, or this becomes 433 hand-built forms.
  *
+ * `alternateInput` is the second input the tracer itself declares — required of every one
+ * of them, and materially different from the defaults by contract. It used to exist only
+ * for the test suite, which meant the branches only it reaches were greyed out in the code
+ * panel with no way to go and take them: next-permutation's swap and suffix reverse are
+ * unreachable from any growable default, word-break's memo can never hit on an input that
+ * succeeds, and every not-found branch is mutually exclusive with its found branch.
+ *
  * Field-level errors come from the server (InputValidator's per-field 400s) via
  * `fieldErrors`, keyed by field name — the same contract useTrace.runInput surfaces.
  * Client-side bounds shown here (min/max on the native inputs, Add/Remove disabling at
  * length caps) are a convenience only; the server remains authoritative.
  */
-export default function InputPanel({ problemId, inputSpec, fieldErrors, running, onRun }) {
+export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, onRun }) {
   const [values, setValues] = useState(() => defaultInput(inputSpec));
 
   // A stale value from the previous problem must never appear to belong to this one.
@@ -48,6 +55,24 @@ export default function InputPanel({ problemId, inputSpec, fieldErrors, running,
         >
           <Play size={12} /> Run
         </button>
+        {alternateInput && (
+          <button
+            type="button"
+            className="btn btn-outline"
+            disabled={running}
+            // Loads AND runs: the point is to see the other branch, and making that two
+            // clicks is enough friction that most people would never take the second.
+            onClick={() => {
+              const next = { ...defaultInput(inputSpec), ...alternateInput };
+              setValues(next);
+              onRun(next);
+            }}
+            aria-label="Run the other case this problem declares"
+            title="A second input chosen to take the branches the default never reaches"
+          >
+            <GitBranch size={12} /> Other case
+          </button>
+        )}
         <button
           type="button"
           className="btn btn-outline"

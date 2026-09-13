@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, X, Star, Check } from 'lucide-react';
 import { useProblemSearch } from '../search/useProblemSearch';
 import { matchRanges } from '../search/scoreProblem';
 import { normalizeCategory } from '../search/normalizeCategory';
@@ -37,6 +37,7 @@ export default function SearchBox({
   problems = [],
   activeProblemId = null,
   activeCategory = null,
+  progress = {},
   onSelectCategory = () => {},
   onSelectProblem = () => {},
   onRetry = null,
@@ -278,6 +279,22 @@ export default function SearchBox({
                   </span>
 
                   <span className="sb-row-meta">
+                    {/* Passive markers only. A row is a target for the pointer, so putting
+                        a star BUTTON in it would mean a click near the edge silently does
+                        something other than open the problem. The toggle lives in the
+                        breadcrumb, where it is the only thing there is to click. */}
+                    {progress[prob.id]?.starred && (
+                      <Star size={11} className="sb-starred" fill="currentColor" aria-hidden="true" />
+                    )}
+                    {progress[prob.id]?.watched && (
+                      <Check size={12} className="sb-watched" aria-hidden="true" />
+                    )}
+                    {(progress[prob.id]?.watched || progress[prob.id]?.starred) && (
+                      <span className="sr-only">
+                        {progress[prob.id]?.watched ? 'Watched. ' : ''}
+                        {progress[prob.id]?.starred ? 'Starred.' : ''}
+                      </span>
+                    )}
                     {diff && (
                       <span className={`sb-diff ${diff.className}`} title={diff.label}>
                         <span aria-hidden="true">{diff.letter}</span>

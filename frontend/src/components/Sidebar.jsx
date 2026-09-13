@@ -38,7 +38,7 @@ export const CATEGORIES = [
   { id: 'Tries & Prefixes', label: 'Tries', fullLabel: 'Tries & Prefixes', icon: Hash }
 ];
 
-export default function Sidebar({ problems = [], activeProblemId, activeCategory, onSelectCategory, onSelectProblem, onRetry }) {
+export default function Sidebar({ problems = [], activeProblemId, activeCategory, progress, onSelectCategory, onSelectProblem, onRetry }) {
   const [showCategoryGrid, setShowCategoryGrid] = useState(true);
 
   // Alphabetically sorted (A-Z) Category definitions
@@ -96,6 +96,7 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
         problems={problems}
         activeProblemId={activeProblemId}
         activeCategory={activeCategory}
+        progress={progress}
         onSelectCategory={onSelectCategory}
         onSelectProblem={onSelectProblem}
         onRetry={onRetry}

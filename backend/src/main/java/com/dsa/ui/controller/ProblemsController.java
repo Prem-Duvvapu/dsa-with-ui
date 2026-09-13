@@ -166,9 +166,24 @@ public class ProblemsController {
         // A traced problem's source comes from its tracer, with anchors stripped, so the
         // code on screen is provably the code the highlighted lines refer to.
         tracers.find(id).ifPresentOrElse(
-                t -> out.put("javaCode",
-                        com.dsa.ui.tracer.AnnotatedCode.parse(t.annotatedCode()).getDisplayCode()),
-                () -> out.put("javaCode", p.getJavaCode()));
+                t -> {
+                    out.put("javaCode",
+                            com.dsa.ui.tracer.AnnotatedCode.parse(t.annotatedCode()).getDisplayCode());
+                    // The second input every tracer is required to declare. It existed only
+                    // for TracerContractTest, which meant the one input a visitor could
+                    // reach was the default - and for a good many problems the default
+                    // provably cannot exercise the whole algorithm. next-permutation's swap
+                    // and suffix-reverse are unreachable from any growable default;
+                    // word-break's memo can never hit on an input that succeeds; every
+                    // not-found branch is mutually exclusive with its found branch. The code
+                    // panel already greys those lines as "not taken on this input". Serving
+                    // the alternate is what lets someone go and take them.
+                    out.put("alternateInput", t.alternateInput());
+                },
+                () -> {
+                    out.put("javaCode", p.getJavaCode());
+                    out.put("alternateInput", null);
+                });
 
         return out;
     }

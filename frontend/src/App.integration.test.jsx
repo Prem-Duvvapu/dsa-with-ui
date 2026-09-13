@@ -823,10 +823,11 @@ describe('App mobile drawer', () => {
     fireEvent.click(screen.getByLabelText(/menu|sidebar|navigation/i));
     await waitFor(() => expect(screen.getByRole('combobox')).toBeInTheDocument());
 
-    // The backdrop is the only aria-hidden element covering the screen at this point.
-    const backdrop = document.querySelector('[aria-hidden="true"]');
-    expect(backdrop).toBeTruthy();
-    fireEvent.click(backdrop);
+    // Targeted by test id, not by [aria-hidden="true"]: decorative icons carry that
+    // attribute too, so "the only aria-hidden element" stopped being true the first time
+    // an icon was added anywhere earlier in the tree, and the test then clicked the icon
+    // and reported the drawer as broken.
+    fireEvent.click(screen.getByTestId('mobile-backdrop'));
 
     await waitFor(() => expect(screen.queryByRole('combobox')).not.toBeInTheDocument());
   });
