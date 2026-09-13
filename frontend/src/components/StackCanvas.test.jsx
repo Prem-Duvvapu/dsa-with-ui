@@ -2,7 +2,22 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import StackCanvas from './StackCanvas';
+
+const MODULE_CSS = readFileSync(
+  join(dirname(fileURLToPath(import.meta.url)), 'StackCanvas.module.css'), 'utf8'
+);
+/** The declarations of one class in the module, so a style assertion survives the move
+ *  from an inline object to a class. */
+const rule = (selector) => {
+  const at = MODULE_CSS.indexOf(selector);
+  return at < 0 ? '' : MODULE_CSS.slice(at, MODULE_CSS.indexOf('}', at));
+};
+const stageRule = () => rule('.stage {');
+
 
 describe('StackCanvas', () => {
   it('shows an explicit empty state when the step carries no stack', () => {
@@ -31,7 +46,13 @@ describe('StackCanvas', () => {
     // A column lays children out top-of-screen first, so array order already puts the top
     // of the stack highest. What made it read as a list was the anchor: pinned to the
     // ceiling, the pile grew DOWNWARD on every push.
-    expect(well).toHaveStyle({ flexDirection: 'column', justifyContent: 'flex-end' });
+    //
+    // Asserted against the module rather than a computed style. The rule moved out of a
+    // style={{}} object into a class, and a class does not reach getComputedStyle under
+    // jsdom - so the old assertion would have read this migration as the bug coming back.
+    expect(well.className).toContain('stage');
+    expect(stageRule()).toContain('flex-direction: column');
+    expect(stageRule()).toContain('justify-content: flex-end');
     expect(drawn.map((el) => el.getAttribute('data-stack-index'))).toEqual(['0', '1', '2']);
     expect(drawn.map((el) => el.textContent)).toEqual(['top1', '5', '3']);
     // The floor block is last in the DOM, i.e. lowest on screen; the badged top is highest.
@@ -40,8 +61,10 @@ describe('StackCanvas', () => {
   });
 
   it('centres the empty state instead of anchoring it to the floor', () => {
-    const { container } = render(<StackCanvas step={{ queueOrStackState: [] }} />);
-    expect(screen.getByText('empty').parentElement).toHaveStyle({ justifyContent: 'center' });
+    render(<StackCanvas step={{ queueOrStackState: [] }} />);
+    const well = screen.getByText('empty').parentElement;
+    expect(well.className).toContain('stageEmpty');
+    expect(rule('.stageEmpty')).toContain('justify-content: center');
   });
 
   it('reads currentStep when step is not supplied', () => {

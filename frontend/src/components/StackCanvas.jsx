@@ -1,3 +1,4 @@
+import styles from './StackCanvas.module.css';
 import React from 'react';
 import { Layers } from 'lucide-react';
 import { lastPayload } from '../trace/lastPayload';
@@ -34,31 +35,24 @@ export default function StackCanvas({ step, currentStep, title = 'Stack', steps,
   const items = lastPayload(steps, currentStepIndex, 'queueOrStackState', activeStep) || [];
 
   return (
-    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <div className={styles.wrap}>
+      <div className={styles.header}>
+        <div className={styles.headerGroup}>
           <Layers size={16} color="var(--bench-ink-secondary)" />
-          <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
+          <span className={styles.title}>
             {title}
           </span>
-          <span style={{ fontSize: '0.66rem', padding: '2px 7px', background: 'var(--bench-fill)', color: 'var(--bench-ink-secondary)', borderRadius: 'var(--radius-full)', border: '1px solid var(--bench-rule-strong)', fontWeight: '700' }}>
+          <span className={styles.count}>
             {items.length} item{items.length === 1 ? '' : 's'}
           </span>
         </div>
       </div>
 
       <div
-        style={{
-          flex: 1, width: '100%', display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: items.length ? 'flex-end' : 'center',
-          gap: '8px', padding: '20px', overflowY: 'auto',
-          background: 'radial-gradient(ellipse at center, var(--canvas-ground-inner), var(--canvas-ground-outer))',
-          borderRadius: 'var(--radius-md)', border: '1px solid var(--border-default)',
-          borderBottom: '2px solid var(--border-strong)'
-        }}
+        className={`${styles.stage}${items.length ? '' : ` ${styles.stageEmpty}`}`}
       >
         {items.length === 0 ? (
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>
+          <span className={styles.empty}>
             empty
           </span>
         ) : (
@@ -66,23 +60,14 @@ export default function StackCanvas({ step, currentStep, title = 'Stack', steps,
             <div
               key={`${idx}-${value}`}
               data-stack-index={idx}
-              style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                gap: '12px', width: '160px', padding: '8px 14px',
-                borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-code)',
-                fontSize: '0.85rem', fontWeight: 600,
-                background: idx === 0 ? 'linear-gradient(180deg, var(--state-current), var(--state-current-deep))' : 'linear-gradient(180deg, var(--canvas-node-fill-2), var(--canvas-node-fill))',
-                border: idx === 0 ? '1.5px solid var(--state-current)' : '1px solid var(--border-default)',
-                boxShadow: idx === 0 ? 'var(--state-current-glow)' : 'none',
-                color: 'var(--text-primary)'
-              }}
+              className={`${styles.item}${idx === 0 ? ` ${styles.itemTop}` : ''}`}
             >
               {idx === 0 && (
-                <span style={{ fontSize: '0.62rem', letterSpacing: '0.4px', textTransform: 'uppercase' }}>
+                <span className={styles.topTag}>
                   top
                 </span>
               )}
-              <span style={{ marginLeft: idx === 0 ? 0 : 'auto' }}>{value}</span>
+              <span className={idx === 0 ? styles.valueTop : styles.value}>{value}</span>
             </div>
           ))
         )}

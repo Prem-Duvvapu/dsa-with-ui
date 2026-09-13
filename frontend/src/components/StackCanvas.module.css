@@ -1,0 +1,102 @@
+/* Stack stage. The "Stack" label above it is a STRUCTURE name, not a repeat of the problem
+   title CanvasShell draws - and the same component renders as a companion pane beside a
+   graph or a grid, where that label is the only thing naming it. */
+
+.wrap {
+  flex: 1;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.headerGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+}
+
+.count {
+  font-size: 0.66rem;
+  padding: 2px 7px;
+  background: var(--bench-fill);
+  color: var(--bench-ink-secondary);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--bench-rule-strong);
+  font-weight: 700;
+}
+
+/* Bottom-aligned when it holds anything, so growth reads upward the way a stack does. */
+.stage {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 20px;
+  overflow-y: auto;
+  background: radial-gradient(ellipse at center, var(--canvas-ground-inner), var(--canvas-ground-outer));
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.stageEmpty { justify-content: center; }
+
+.empty {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 160px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-code);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: linear-gradient(180deg, var(--canvas-node-fill-2), var(--canvas-node-fill));
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+}
+
+/* The top of the stack is where the next operation lands, so it carries the current-state
+   treatment rather than merely sitting first. */
+.itemTop {
+  background: linear-gradient(180deg, var(--state-current), var(--state-current-deep));
+  border: 1.5px solid var(--state-current);
+  box-shadow: var(--state-current-glow);
+}
+
+.topTag {
+  font-size: 0.62rem;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.value { margin-left: auto; }
+.valueTop { margin-left: 0; }
