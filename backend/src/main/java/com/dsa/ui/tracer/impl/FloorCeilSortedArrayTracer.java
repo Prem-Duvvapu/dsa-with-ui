@@ -99,7 +99,8 @@ public class FloorCeilSortedArrayTracer implements AlgorithmTracer {
         emit.at("init")
                 .say("Find the floor (largest value <= %d) and ceil (smallest value >= %d) "
                         + "in the sorted array, each with its own binary search.", target, target)
-                .var("target", target).arrayState(window(nums, 0, nums.length - 1, -1)).step();
+                .var("target", target).var("low", 0).var("high", nums.length - 1)
+                .arrayState(window(nums, 0, nums.length - 1, -1)).step();
 
         int low = 0, high = nums.length - 1, floor = -1;
         while (low <= high) {
@@ -109,13 +110,13 @@ public class FloorCeilSortedArrayTracer implements AlgorithmTracer {
                 emit.at("floorMid")
                         .say("nums[%d]=%d <= %d — candidate floor, look right for a closer one.",
                                 mid, nums[mid], target)
-                        .var("floor", floor).var("low", mid + 1)
+                        .var("floor", floor).var("low", mid + 1).var("high", high).var("mid", mid)
                         .arrayState(window(nums, mid + 1, high, mid)).step();
                 low = mid + 1;
             } else {
                 emit.at("floorMid")
                         .say("nums[%d]=%d > %d — too big for floor, look left.", mid, nums[mid], target)
-                        .var("high", mid - 1)
+                        .var("low", low).var("high", mid - 1).var("mid", mid)
                         .arrayState(window(nums, low, mid - 1, mid)).step();
                 high = mid - 1;
             }
@@ -130,13 +131,13 @@ public class FloorCeilSortedArrayTracer implements AlgorithmTracer {
                 emit.at("ceilMid")
                         .say("nums[%d]=%d >= %d — candidate ceil, look left for a closer one.",
                                 mid, nums[mid], target)
-                        .var("ceil", ceil).var("high", mid - 1)
+                        .var("ceil", ceil).var("low", low).var("high", mid - 1).var("mid", mid)
                         .arrayState(window(nums, low, mid - 1, mid)).step();
                 high = mid - 1;
             } else {
                 emit.at("ceilMid")
                         .say("nums[%d]=%d < %d — too small for ceil, look right.", mid, nums[mid], target)
-                        .var("low", mid + 1)
+                        .var("low", mid + 1).var("high", high).var("mid", mid)
                         .arrayState(window(nums, mid + 1, high, mid)).step();
                 low = mid + 1;
             }

@@ -831,3 +831,51 @@ two goals — exercise the whole algorithm, and grow with input — are not both
   a canvas, decide what "the trace did not say" renders as.** The reflex `|| something`
   is the bug: it always produces a confident answer, and a confident wrong picture is worse
   than an honest blank one.
+
+## RCA-036 — Good delta hygiene in a tracer blanked the canvas that needed the pair
+
+- **Discovered:** 2026-09-13, by the Binary Search audit
+- **Status:** Resolved
+- **Symptom and impact:** `count-occurrences`, `first-last-occurrence` and
+  `floor-ceil-sorted-array` ran correct binary searches beside a canvas that said
+  **"No search range for this step."** on every step of every run. Three problems in the
+  topic whose whole subject is the search space, with no search space drawn.
+- **Root cause:** `SearchSpaceCanvas` reads `low` and `high` off the **same** step, on
+  purpose — taking one bound from one moment and the other from another is precisely the
+  defect RCA-034/035 ended with in `GraphCanvas`. The three tracers each named only the
+  bound that had just moved:
+
+  ```java
+  emit.at("lowerMid").var("lb", lb).var("high", mid - 1)   // low never mentioned
+  emit.at("lowerMid").var("low", mid + 1)                  // high never mentioned
+  ```
+
+  That reads like careful delta hygiene, and against a canvas that carries values forward
+  it would be. Here no step ever carried a pair, so there was nothing to carry, and the
+  canvas's own guard (`if (low === null || high === null)`) rendered the empty state
+  forever. The tracers were right about the algorithm and wrong about the transport.
+- **The general shape:** when a canvas needs **two fields together** to mean anything, a
+  tracer emitting them separately produces not a degraded picture but no picture at all,
+  and every existing contract passes — `DsTypePayloadContractTest` was satisfied because
+  all three do emit `arrayState`. The missing payload was in `variables`, which no contract
+  looked at.
+- **A second finding from the same sweep:** `median-2-sorted-arrays` and
+  `kth-element-2-sorted-arrays` did state a range, and it never moved. Both defaults landed
+  on a valid partition with the very first guess — 4 and 3 steps, no shrink branch, no
+  halving. Same class as RCA-019's `next-permutation`: the default input is the one every
+  visitor sees, and a binary search that resolves on probe one animates a single static
+  interval.
+- **Resolution:** the three tracers now state both bounds (and `mid`) on every search step;
+  the two partition tracers took defaults that need three probes. Their cells row was
+  rebuilt at the same time — it had been `concat(a, b)` built **after** the swap, so cell 0
+  silently changed which array it belonged to mid-trace, and the row stopped being sorted in
+  any direction. `PartitionCutView` keeps the caller's order and marks the four boundary
+  elements, which is both the algorithm's actual insight and what keeps the canvas out of
+  index mode.
+- **Regression guard:** `SearchSpaceContractTest`, parameterized over every `SEARCH_SPACE`
+  tracer. `statesBothBoundsOnSomeStep` fails when no step carries a numeric low and high
+  together; `rangeNarrowsOnDefaults` fails when the default input draws fewer than two
+  distinct ranges. Proven RED first: 8 failures naming exactly those five ids.
+- **What to check when adding a canvas:** if it needs more than one field to render, say so
+  in a contract test at the same time. A canvas whose empty state is reachable from a
+  *complete* trace is a canvas with an unwritten contract.

@@ -32,16 +32,22 @@ public class MedianTwoSortedArraysTracer implements AlgorithmTracer {
                 InputField.of("nums1", FieldType.INT_ARRAY)
                         .label("Array 1 (sorted)")
                         .length(1, 10).values(-1000, 1000).sorted()
-                        .defaultValue(java.util.List.of(-18, 0, 4, 15, 23))
+                        // Six against four, so the swap fires, and cut positions the
+                        // first guess gets wrong twice - the whole point of this problem is
+                        // watching the cut range halve, and the old default
+                        // ([-18, 0, 4, 15, 23] / [0, 5]) landed on a valid partition with
+                        // its first guess. Four steps, no shrink, nothing to learn.
+                        // Even combined length, so the answer averages two boundaries.
+                        .defaultValue(java.util.List.of(1, 2, 3, 5, 6, 10))
                         .build(),
                 InputField.of("nums2", FieldType.INT_ARRAY)
                         .label("Array 2 (sorted)")
                         .length(1, 10).values(-1000, 1000).sorted()
-                        .defaultValue(java.util.List.of(0, 5))
+                        .defaultValue(java.util.List.of(4, 7, 11, 12))
                         .build());
     }
 
-    /** Different lengths and values: exercises the shrinkHigh/shrinkLow branches this default misses. */
+    /** Odd combined length, and it reaches shrinkHigh - the one branch the default never takes. */
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of(
@@ -100,7 +106,7 @@ public class MedianTwoSortedArraysTracer implements AlgorithmTracer {
             emit.at("swapToSmaller")
                     .say("Array 1 (length %d) is longer than array 2 (length %d) - always "
                             + "partition the smaller one, so swap roles.", a.length, b.length)
-                    .array(concat(a, b)).step();
+                    .arrayState(PartitionCutView.plain(nums1, nums2)).step();
             a = nums2;
             b = nums1;
         }
@@ -117,7 +123,7 @@ public class MedianTwoSortedArraysTracer implements AlgorithmTracer {
                             + "exactly half (rounded up) of everything.",
                             cut1, cut1 == 1 ? "" : "s", cut2, cut2 == 1 ? "" : "s")
                     .var("low", low).var("high", high).var("cut1", cut1).var("cut2", cut2)
-                    .array(concat(a, b)).step();
+                    .arrayState(PartitionCutView.withCuts(nums1, nums2, a, cut1, cut2)).step();
 
             int l1 = cut1 == 0 ? Integer.MIN_VALUE : a[cut1 - 1];
             int l2 = cut2 == 0 ? Integer.MIN_VALUE : b[cut2 - 1];
@@ -128,7 +134,8 @@ public class MedianTwoSortedArraysTracer implements AlgorithmTracer {
                     .say("Left boundaries: %s, %s. Right boundaries: %s, %s.",
                             fmt(l1), fmt(l2), fmt(r1), fmt(r2))
                     .var("l1", fmt(l1)).var("l2", fmt(l2)).var("r1", fmt(r1)).var("r2", fmt(r2))
-                    .array(concat(a, b)).step();
+                    .var("low", low).var("high", high)
+                    .arrayState(PartitionCutView.withCuts(nums1, nums2, a, cut1, cut2)).step();
 
             if (l1 <= r2 && l2 <= r1) {
                 double median = (n1 + n2) % 2 == 0
@@ -138,21 +145,22 @@ public class MedianTwoSortedArraysTracer implements AlgorithmTracer {
                         .say("Every left element is <= every right element in both arrays - "
                                 + "valid partition. Median = %s.", median)
                         .var("answer", median)
-                        .array(concat(a, b)).step();
+                        .var("low", low).var("high", high)
+                        .arrayState(PartitionCutView.withCuts(nums1, nums2, a, cut1, cut2)).step();
                 return;
             } else if (l1 > r2) {
                 emit.at("shrinkHigh")
                         .say("%d > %d - the smaller array's cut is too far right. Move it left.",
                                 l1, r2)
-                        .var("high", cut1 - 1)
-                        .array(concat(a, b)).step();
+                        .var("low", low).var("high", cut1 - 1)
+                        .arrayState(PartitionCutView.withCuts(nums1, nums2, a, cut1, cut2)).step();
                 high = cut1 - 1;
             } else {
                 emit.at("shrinkLow")
                         .say("%d > %d - the smaller array's cut is too far left. Move it right.",
                                 l2, r1)
-                        .var("low", cut1 + 1)
-                        .array(concat(a, b)).step();
+                        .var("low", cut1 + 1).var("high", high)
+                        .arrayState(PartitionCutView.withCuts(nums1, nums2, a, cut1, cut2)).step();
                 low = cut1 + 1;
             }
         }
@@ -166,12 +174,5 @@ public class MedianTwoSortedArraysTracer implements AlgorithmTracer {
             return "+inf";
         }
         return String.valueOf(boundary);
-    }
-
-    private static int[] concat(int[] a, int[] b) {
-        int[] out = new int[a.length + b.length];
-        System.arraycopy(a, 0, out, 0, a.length);
-        System.arraycopy(b, 0, out, a.length, b.length);
-        return out;
     }
 }
