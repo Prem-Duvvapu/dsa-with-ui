@@ -1134,3 +1134,69 @@ picture rewriting its own axis.
   same data structure appears in both. A tracer whose narration never names the structure
   its code panel is built around is the tell — `merge-k-sorted-lists` said "smallest head
   among the three candidates" eighteen times.
+
+## RCA-045 — A backtracking topic whose defaults did not backtrack
+
+- **Discovered:** 2026-09-13, by the Recursion & Backtracking audit
+- **Status:** Resolved
+- **Symptom and impact:** `sudoku-solver`'s default puzzle had **three blanks in an
+  otherwise finished grid**, so every cell had exactly one candidate: eighteen steps, no
+  dead end, no undo. `m-coloring`'s default was K4 minus an edge with three colors —
+  greedily colorable in one pass, ten steps, not a single undo. The `backtrack`, `deadEnd`
+  and `undo` anchors were dead on both, which the sweep reports as "dead anchors" and which
+  reads like a coverage nit. It is not: **the undo is the subject**. Both problems were
+  demonstrating recursion, and the topic is called Backtracking.
+- **Root cause:** the same as RCA-019's `next-permutation` and the Binary Search audit's
+  `search-rotated-sorted-2` — a default chosen to be small and to succeed, when the branch
+  that distinguishes the algorithm only appears on inputs that first fail. Nothing catches
+  it, because `anchorsAreAllReachable` accepts coverage across default **or** alternate, and
+  both alternates did reach the branch.
+- **Resolution:** defaults chosen by simulating the tracer's own search order and requiring
+  a retreat:
+  - `sudoku-solver`: four blanks, one solution, 34 steps — place, twelve conflicts, a dead
+    end where all nine digits fail, an undo, a second dead end and undo, then the real answer
+    propagating back up. All six anchors on the first input a visitor sees.
+  - `m-coloring`: a triangle 0-1-2 forcing all three colors plus a vertex seeing all of
+    them, so first-fit gives vertex 3 color 1, vertex 4 is left with nothing, and color 1
+    comes back off vertex 3. Fifteen steps.
+- **The sweep's wording is the trap.** "DEAD ANCHORS ['undo']" and "DEAD ANCHORS ['absent']"
+  print identically, and one is a coverage nit while the other is the problem not
+  demonstrating itself. **Read what the anchor is for**: a terminal failure branch
+  (`exhausted`, `noSegmentation`, `deadEnd`-as-answer) genuinely cannot coexist with success
+  and belongs to the alternate; a branch that names the technique in the topic's own title
+  belongs in the default.
+
+### A case where the default provably cannot show it
+
+`word-break`'s `memoHit` is dead on its default, and deliberately left that way. The memo is
+written as `memo.put(start, true)` on the way out of a *successful* call — and every ancestor
+of a successful call returns immediately too, so **no later call can ever consult a `true`
+entry**. The memo only ever serves `false`. A memo hit therefore requires a failed subtree
+whose index is revisited, which a succeeding input rarely produces and a short real-word
+dictionary essentially never does. Searched: every real-word candidate that hits the memo
+returns `false`. The alternate (`catsandog`) covers it, and the code panel marks it as a
+branch this input did not take. This is RCA-019's "the two goals are mutually exclusive"
+class, and the reason is worth stating rather than rediscovering.
+
+## RCA-046 — The two most famous backtracking problems showed no recursion depth
+
+- **Discovered:** 2026-09-13, by the Recursion & Backtracking audit
+- **Status:** Resolved
+- **Symptom and impact:** `n-queens` (79 steps) and `sudoku-solver` were the only two
+  tracers in the topic that never called `emit.push`/`emit.pop`. `MemoryComplexityCard`
+  renders a live "Call stack" section with the current frame marked, fed entirely from
+  `step.callStack` — so for the topic's two flagship problems, and only those, the recursion
+  depth was invisible. Their own Matrix siblings `rat-in-a-maze` (63 of 64 steps) and
+  `word-search` (20 of 21) both push.
+- **Root cause:** `callStack` is optional and nothing asks for it. `DsTypePayloadContractTest`
+  checks the field the *dsType's canvas* reads, and both are `MATRIX`, so the grid satisfied
+  the contract while the recursion went unreported.
+- **Resolution:** both push a frame named for what it is responsible for — `place(col=2)`,
+  `solve(4,5)` — so the stack reads as the chain of columns or cells currently being guessed.
+- **What adding the frames immediately exposed:** `TracerContractTest` failed with
+  *"sudoku-solver ends with 1 frame(s) still on the call stack"* — its last step was emitted
+  from inside the recursion, so the sidebar would have frozen one frame deep. It now emits a
+  closing step from `run()` after the recursion returns, as `n-queens` already did. The F4
+  guard could not see this before, because **a tracer with no call stack is skipped by every
+  call-stack assertion**; the suite's skip count dropped from 513 to 511 when these two
+  joined. An optional payload is also an opt-out from the tests that police it.

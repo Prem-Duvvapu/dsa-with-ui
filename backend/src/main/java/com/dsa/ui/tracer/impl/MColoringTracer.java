@@ -34,12 +34,18 @@ public class MColoringTracer implements AlgorithmTracer {
                         .label("Graph")
                         .help("Vertices to color so that no edge joins two same-colored vertices.")
                         .constraint("maxVertices", 8).constraint("maxEdges", 20)
+                        // A triangle 0-1-2 that forces all three colors, plus a vertex 4
+                        // that sees 1, 2 and 3. First-fit gives vertex 3 color 1, which
+                        // leaves vertex 4 with nothing - so color 1 comes back off vertex 3
+                        // and it retries with 2. The old default (K4 minus one edge) was
+                        // colorable greedily in one pass: ten steps, not a single undo, in
+                        // the problem whose whole subject is the undo.
                         .defaultValue(Map.of(
-                                "vertices", 4,
+                                "vertices", 5,
                                 "edges", java.util.List.of(
                                         java.util.List.of(0, 1), java.util.List.of(0, 2),
-                                        java.util.List.of(0, 3), java.util.List.of(1, 2),
-                                        java.util.List.of(2, 3))))
+                                        java.util.List.of(1, 2), java.util.List.of(1, 4),
+                                        java.util.List.of(2, 4), java.util.List.of(3, 4))))
                         .build(),
                 InputField.of("m", FieldType.INT)
                         .label("Available colors (M)")
@@ -53,11 +59,11 @@ public class MColoringTracer implements AlgorithmTracer {
     public Map<String, Object> alternateInput() {
         return Map.of(
                 "graph", Map.of(
-                        "vertices", 4,
+                        "vertices", 5,
                         "edges", java.util.List.of(
                                 java.util.List.of(0, 1), java.util.List.of(0, 2),
-                                java.util.List.of(0, 3), java.util.List.of(1, 2),
-                                java.util.List.of(2, 3))),
+                                java.util.List.of(1, 2), java.util.List.of(1, 4),
+                                java.util.List.of(2, 4), java.util.List.of(3, 4))),
                 "m", 2);
     }
 
@@ -150,8 +156,10 @@ public class MColoringTracer implements AlgorithmTracer {
             color[node] = c;
             states.put(node, "visiting");
             emit.at("assign")
-                    .say("Color %d is safe for vertex %d - assign it and recurse into vertex %d.",
-                            c, node, node + 1)
+                    .say("Color %d is safe for vertex %d - assign it and %s.", c, node,
+                            node + 1 == n
+                                    ? "recurse once more, which finds no vertex left and checks the assignment"
+                                    : "recurse into vertex " + (node + 1))
                     .var("node", node).var("assignedColor", c).graph(graph).nodes(states).step();
 
             if (solve(node + 1, adj, color, m, n, graph, states, emit)) {
