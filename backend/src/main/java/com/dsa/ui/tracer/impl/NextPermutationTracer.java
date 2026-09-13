@@ -35,13 +35,26 @@ public class NextPermutationTracer implements AlgorithmTracer {
                         .label("Array")
                         .help("The permutation that comes right after this one in sorted order of all permutations.")
                         .length(1, 24).values(-999, 999)
-                        .defaultValue(List.of(3, 2, 1))
+                        // Fully descending, and it has to be. This tracer is in RCA-019's
+                        // class: its step count is set by the length of the trailing
+                        // descending run, and growList prepends filler ABOVE every existing
+                        // value, so a default with a pivot scans exactly as far grown as it
+                        // did before and stepCountGrowsWithInput fails. Hand-simulated:
+                        // [1,3,5,4,2] scans 2 -> 2, [1,5,4,3,2] scans 3 -> 3, while
+                        // [5,4,3,2,1] scans 4 -> 9.
+                        //
+                        // Five elements rather than three so the scan itself is worth
+                        // watching. The swap and suffix-reverse cannot be reached from any
+                        // growable default; alternateInput() covers them, and the code panel
+                        // marks them as branches this input did not take.
+                        .defaultValue(List.of(5, 4, 3, 2, 1))
                         .build());
     }
 
     /**
-     * Has a real breakpoint (unlike the fully-descending default), so this exercises the
-     * swap-and-reverse path instead of wrapping around.
+     * Has a real breakpoint, so this is where the swap and the suffix reverse are exercised.
+     * It cannot be the default: see the note there for why only a pivot-less array satisfies
+     * stepCountGrowsWithInput.
      */
     @Override
     public Map<String, Object> alternateInput() {

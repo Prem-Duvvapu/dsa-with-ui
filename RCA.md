@@ -355,6 +355,40 @@ phase; do not describe unfinished work as resolved.
   same way anchor coverage is hand-verified — round count for this algorithm shape is a
   property of the specific values, not the array length alone.
 
+### Recurrence, 2026-09-13 — `next-permutation`, and a case where the two goals are mutually exclusive
+
+The Arrays audit found `next-permutation`'s default `[3,2,1]` was the *last* permutation: no
+pivot exists, so the algorithm skipped its entire body — 4 steps and 4 of its 7 anchors dead.
+Replacing it with `[1,3,5,4,2]` (7 steps, 0 dead anchors) failed `stepCountGrowsWithInput`
+immediately: 7 steps grown, 7 steps at defaults.
+
+Hand-simulating `growList` the way this entry prescribes explains why, and the answer is
+stronger than "pick a better default":
+
+| candidate | pivot? | scan steps, default → grown |
+| --- | --- | --- |
+| `[1,3,5,4,2]` | yes | 2 → 2 |
+| `[1,5,4,3,2]` | yes | 3 → 3 |
+| `[5,4,3,2,1]` | no | 4 → 9 |
+
+The scan length is the length of the **trailing descending run**, and `growList`'s general
+branch *prepends* filler at or above `maxValue`. Prepending above every existing value cannot
+lengthen a trailing run that already terminates at a pivot, so for this algorithm shape
+*every* default containing a pivot is flat under growth, and only a pivot-less one grows. The
+two goals — exercise the whole algorithm, and grow with input — are not both reachable here.
+
+- **Resolution:** kept a growable default but made it `[5,4,3,2,1]` rather than `[3,2,1]`, so
+  the wrap-around case at least shows the scan running its full length (4 narrated steps
+  instead of 2). `alternateInput()` carries `[2,3,1]`, which exercises the pivot, the swap
+  and the suffix reverse; between the two, all 7 anchors are reached, which is what
+  `anchorsAreAllReachable` checks. The reasoning lives in a comment at the `defaultValue`
+  call, because the next person to read `[5,4,3,2,1]` will otherwise "fix" it.
+- **Widened guidance:** hand-simulate before committing, as above — but also ask whether the
+  step count is a function of input *length* at all. When it is a function of input *shape*
+  (where a pivot, cut or breakpoint falls), no default satisfies both goals, and the honest
+  move is a growable default plus an alternate that covers the rest, not a contorted default
+  that games the ratio.
+
 ## RCA-020 — Adding nullable ListNode fields undercounted every LINKED_LIST tracer's byte estimate
 
 - **Discovered:** 2026-09-05, adding `childId`/`randomId` to `ListNode` for `flattening-ll`
