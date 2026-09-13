@@ -573,6 +573,7 @@ original snapshot rather than the current state.
 | Linked List | doubly linked lists drawn with only half their pointers |
 | Graphs | Kahn's-algorithm cycle default skipped the entire algorithm |
 | Binary Search | five separate defects, below |
+| Dynamic Programming | three, below — none in the arithmetic, all in what the picture showed |
 
 **Binary Search — 32/32 traced, five findings, all fixed.** None was visible to any existing
 test, and three of the five were a blank or lying picture rather than a wrong trace:
@@ -595,6 +596,28 @@ test, and three of the five were a blank or lying picture rather than a wrong tr
 
 Guarded by `SearchSpaceContractTest` (both bounds on one step; the default range must move)
 and a `SearchSpaceCanvas` mode-stability test, each proven RED first.
+
+**Dynamic Programming — 55/55 traced, three findings, all fixed.** The mechanical sweep came
+back almost clean: every id traced, every legacy route 404, two dead anchors (`zero`,
+`odd`) that are early-exit guards their alternates reach and that no single run can reach
+alongside the main body. Every table animates — across all 55, exactly one pair of
+consecutive frames is identical. The defects were all in what the canvas showed:
+
+1. The **recurrence panel blinked out** on 164 of 1133 table steps across 26 problems
+   (`print-lis` on 30 of its 47). `formula` is a constant of the problem and `substitution`
+   is one step's arithmetic; the canvas demanded both from the current step (RCA-037).
+2. `knapsack-01` and `unbounded-knapsack` **drew unwritten `int[][]` memory as settled
+   values** — item 4 at capacity 5 read `0` on the first frame and finishes at `13`, in the
+   same glyph as a computed cell (RCA-038).
+3. `max-rectangle-area-all-ones` declared `MATRIX` and drew a board that never changes,
+   while **60 of its 62 steps** narrate a column-height histogram no Matrix hero can render
+   (RCA-039).
+
+Two probes were run and rejected rather than acted on, and both are recorded so they are not
+retried: "a cell that later changes value must not have been presented as settled" flags
+five correct tracers whose `dp[]` legitimately starts at a lower bound of 1, and "the
+declared dsType's field must not be out-counted by another structure field" flags 33 tracers
+that are almost all correct.
 
 ---
 
