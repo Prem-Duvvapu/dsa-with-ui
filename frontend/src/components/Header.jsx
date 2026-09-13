@@ -10,7 +10,13 @@ const THEME_LABEL = {
 };
 const THEME_TEXT = { system: 'System', light: 'Light', dark: 'Dark' };
 
-export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar, theme = 'system', onCycleTheme, onStartTour }) {
+/**
+ * `runnableProblems` is the count Bench's app bar asks for. A problem is listed because it
+ * is catalogued and runnable because it is traced, and only the second means you can press
+ * play - so the bar reports the pair rather than a catalogue size. They are equal today,
+ * which is the fact worth showing: nothing in the library is a dead entry.
+ */
+export default function Header({ totalProblems, runnableProblems, isSidebarOpen, onToggleSidebar, theme = 'system', onCycleTheme, onStartTour }) {
   return (
     <header className={`glass-panel ${styles.header}`}>
       <div className={styles.leftSection}>
@@ -68,7 +74,9 @@ export default function Header({ totalProblems, isSidebarOpen, onToggleSidebar, 
         <div className={styles.libraryBadge}>
           <BookOpen size={13} color="var(--text-muted)" />
           <span className={styles.libraryLabel}>Library: </span>
-          <strong className={styles.libraryCount}>{totalProblems || 0} algorithms</strong>
+          <strong className={styles.libraryCount}>
+            {runnableProblems ?? totalProblems ?? 0}/{totalProblems || 0} runnable
+          </strong>
         </div>
       </div>
     </header>

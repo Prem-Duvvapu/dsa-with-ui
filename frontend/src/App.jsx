@@ -448,7 +448,8 @@ export default function App() {
     <div className={styles.rootLayout}>
       <Header 
         problem={activeProblem} 
-        totalProblems={problems.length} 
+        totalProblems={problems.length}
+        runnableProblems={problems.filter((p) => p.traced === true).length} 
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
         theme={theme}

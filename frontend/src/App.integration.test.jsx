@@ -150,8 +150,8 @@ describe('App catalogue loading', () => {
 
   it('merges every category into the catalogue, including Maths and Basic Recursion', async () => {
     renderApp();
-    // Header prints the merged count; 18 problems.
-    await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
+    // Header prints runnable-of-merged; 18 problems, all traced in this fixture.
+    await waitFor(() => expect(screen.getByText('18/18 runnable')).toBeInTheDocument());
     expect(screen.getByText('Count Digits')).toBeInTheDocument();
     expect(screen.getByText('Print 1 To N')).toBeInTheDocument();
   });
@@ -170,7 +170,7 @@ describe('App catalogue loading', () => {
     renderApp();
     // The backend contract already de-duplicates, but a defensive client guard keeps a
     // malformed response from creating duplicate React keys or ambiguous selection.
-    await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('18/18 runnable')).toBeInTheDocument());
     expect(screen.queryByText('Two Sum (Duplicate)')).not.toBeInTheDocument();
   });
 });

@@ -40,8 +40,14 @@ export default function Breadcrumb({ problem, watched, starred, onToggleStar }) 
         {title}
       </span>
 
-      <span className={`${styles.difficultyPill} ${getDiffClass(difficulty)}`}>
-        {difficulty}
+      {/* Bench: "a neutral outline plus a letter (E / M / H)". The full word stays for
+          screen readers - the letter is a space decision, not an information one. */}
+      <span
+        className={`${styles.difficultyPill} ${getDiffClass(difficulty)}`}
+        title={difficulty}
+      >
+        <span aria-hidden="true">{difficulty.charAt(0).toUpperCase()}</span>
+        <span className="sr-only">{difficulty}</span>
       </span>
 
       {watched && (
