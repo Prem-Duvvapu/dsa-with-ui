@@ -1,3 +1,4 @@
+import layout from './layout.module.css';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, X, Star, Check } from 'lucide-react';
 import { useProblemSearch } from '../search/useProblemSearch';
@@ -136,7 +137,7 @@ export default function SearchBox({
     : (<><strong>{totalMatches}</strong> {activeCategory ? 'in scope' : 'algorithms'}</>);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1, minHeight: 0 }}>
+    <div className={`${layout.colWide} ${layout.fill} ${layout.minHeight0}`}>
       {/* Sticky head: the field must survive scrolling a 433-row list. */}
       <div className="sb-sticky">
         <div className="sb-field">
@@ -208,9 +209,9 @@ export default function SearchBox({
       </div>
 
       {recents.length > 0 && !isSearching && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        <div className={layout.colTight}>
           <span className="sb-eyebrow">Recent</span>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+          <div className={layout.wrapRow}>
             {recents.map((item) => (
               <button
                 key={item}
@@ -232,7 +233,7 @@ export default function SearchBox({
 
       {children}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', minHeight: 0 }}>
+      <div className={`${layout.col} ${layout.minHeight0}`}>
         {problems.length === 0 ? (
           <div className="sb-empty">
             <span className="sb-empty-title">Can’t reach the backend.</span>

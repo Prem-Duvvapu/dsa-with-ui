@@ -1,4 +1,5 @@
 import React from 'react';
+import layout from './layout.module.css';
 
 /**
  * SVG node-link graph visualizer.
@@ -82,15 +83,15 @@ export default function GraphCanvas({ problem, currentStep, step, steps, current
 
   if (!nodes.length) {
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)' }}>
+      <div className={layout.canvasEmpty}>
         No graph data available
       </div>
     );
   }
 
   return (
-    <div style={{ flex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'auto', padding: '8px' }}>
-      <svg width="100%" height="320" viewBox="0 0 360 330" style={{ overflow: 'visible' }}>
+    <div className={layout.svgStage}>
+      <svg width="100%" height="320" viewBox="0 0 360 330" className={layout.svgFit}>
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="28" refY="3.5" orient="auto">
             <polygon points="0 0, 10 3.5, 0 7" fill="var(--bench-ink-dim)" />
@@ -118,7 +119,7 @@ export default function GraphCanvas({ problem, currentStep, step, steps, current
                 strokeWidth={isActive ? 3 : 2}
                 strokeDasharray={isActive ? '5,5' : 'none'}
                 markerEnd={edge.directed ? (isActive ? 'url(#arrowhead-active)' : 'url(#arrowhead)') : ''}
-                style={{ transition: 'all 0.3s ease' }}
+                className={layout.stateTransition}
               />
               {edge.weight !== null && edge.weight !== undefined && (
                 <text
@@ -150,10 +151,8 @@ export default function GraphCanvas({ problem, currentStep, step, steps, current
                 fill={s.fill}
                 stroke={s.stroke}
                 strokeWidth={isVisiting ? 3 : 2}
-                style={{
-                  transition: 'all 0.3s ease',
-                  filter: s.glow ? 'drop-shadow(0 0 8px currentColor)' : 'none'
-                }}
+                className={layout.stateTransition}
+                style={{ filter: s.glow ? 'drop-shadow(0 0 8px currentColor)' : 'none' }}
               />
               <text
                 textAnchor="middle"

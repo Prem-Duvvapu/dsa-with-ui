@@ -1,3 +1,4 @@
+import layout from './layout.module.css';
 import React, { useState, useMemo } from 'react';
 import { 
   Layers, FolderTree, Network, Cpu, 
@@ -62,7 +63,7 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
       className="glass-panel sidebar-panel"
     >
       {/* Header & Title */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className={layout.rowBetween}>
         <h3 className="sidebar-title">
           <Search size={16} color="var(--bench-ink-secondary)" />
           Search & Explore
@@ -102,9 +103,9 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
         onRetry={onRetry}
       >
         {/* 2-Column Categories Grid with Popular Tags */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div className={layout.col}>
+          <div className={layout.rowBetween}>
+            <div className={layout.row}>
               <span className="sb-eyebrow">
                 Categories
               </span>

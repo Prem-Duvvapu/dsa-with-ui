@@ -1,3 +1,4 @@
+import layout from './layout.module.css';
 import React, { useMemo } from 'react';
 
 /**
@@ -73,7 +74,7 @@ export default function TrieCanvas({ problem, currentStep, step }) {
 
   if (!positioned.length) {
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)' }}>
+      <div className={layout.canvasEmpty}>
         No trie data available
       </div>
     );
@@ -93,8 +94,8 @@ export default function TrieCanvas({ problem, currentStep, step }) {
   const nodeMap = new Map(positioned.map(n => [n.id, n]));
 
   return (
-    <div style={{ flex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'auto', padding: '8px' }}>
-      <svg width="100%" height="100%" viewBox={`${minX} ${minY} ${width} ${height}`} style={{ overflow: 'visible', maxHeight: '100%' }}>
+    <div className={layout.svgStage}>
+      <svg width="100%" height="100%" viewBox={`${minX} ${minY} ${width} ${height}`} className={layout.svgFit}>
         {/* Edges */}
         {edges.map((edge, idx) => {
           const from = nodeMap.get(edge.from);
@@ -107,7 +108,7 @@ export default function TrieCanvas({ problem, currentStep, step }) {
               x2={to.x} y2={to.y}
               stroke="var(--bench-rule-strong)"
               strokeWidth={2}
-              style={{ transition: 'all 0.3s ease' }}
+              className={layout.stateTransition}
             />
           );
         })}
@@ -126,7 +127,7 @@ export default function TrieCanvas({ problem, currentStep, step }) {
                 fill={s.fill}
                 stroke={s.stroke}
                 strokeWidth={isActive ? 3 : 2}
-                style={{ transition: 'all 0.3s ease' }}
+                className={layout.stateTransition}
               />
               <text
                 textAnchor="middle"
