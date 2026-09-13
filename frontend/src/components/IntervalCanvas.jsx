@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './IntervalCanvas.module.css';
 import CanvasShell from './CanvasShell';
 
 /**
@@ -193,30 +194,12 @@ export default function IntervalCanvas({ problem, currentStep, step, resolvedInp
     >
       <div
         data-testid="interval-canvas-stage"
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          padding: '24px 20px',
-          boxSizing: 'border-box',
-          position: 'relative',
-          overflowX: 'auto',
-          overflowY: 'auto'
-        }}
+        className={styles.stage}
       >
         {/* Interval Spans Stack */}
         <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-            position: 'relative',
-            minHeight: `${intervals.length * 42}px`,
-            paddingBottom: '20px'
-          }}
+          className={styles.spans}
+          style={{ '--interval-rows-height': `${intervals.length * 42}px` }}
         >
           {intervals.map((inv) => {
             const leftPct = ((inv.start - minTime) / timeRange) * 100;
@@ -226,37 +209,24 @@ export default function IntervalCanvas({ problem, currentStep, step, resolvedInp
             return (
               <div
                 key={inv.id}
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: '32px'
-                }}
+                className={styles.lane}
               >
                 {/* Visual Span Bar */}
                 <div
                   data-testid={`interval-span-${inv.id}`}
+                  className={styles.span}
                   style={{
-                    position: 'absolute',
                     left: `${leftPct}%`,
                     width: `${widthPct}%`,
-                    height: '100%',
-                    borderRadius: 'var(--radius-sm)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0 10px',
-                    fontSize: '0.75rem',
-                    transition: 'all var(--motion-normal) var(--ease-standard)',
-                    cursor: 'default',
                     zIndex: inv.state === 'probe' ? 3 : (inv.state === 'settled' ? 2 : 1),
                     ...style
                   }}
                   title={`${inv.label}: [${inv.start} → ${inv.end}] (${inv.state})`}
                 >
-                  <span style={{ fontFamily: 'var(--font-code)', fontSize: '0.72rem' }}>
+                  <span className={styles.spanLabel}>
                     {inv.label}
                   </span>
-                  <span style={{ fontFamily: 'var(--font-code)', fontSize: '0.68rem', letterSpacing: '0.2px' }}>
+                  <span className={styles.spanRange}>
                     [{inv.start}, {inv.end}]
                   </span>
                 </div>
@@ -267,30 +237,11 @@ export default function IntervalCanvas({ problem, currentStep, step, resolvedInp
           {/* Sweep line for current room / availability boundary if present */}
           {sweepPos !== null && sweepPos >= minTime && sweepPos <= maxTime && (
             <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: `${((sweepPos - minTime) / timeRange) * 100}%`,
-                width: '2px',
-                background: 'var(--probe)',
-                zIndex: 10,
-                pointerEvents: 'none',
-                boxShadow: '0 0 8px var(--probe)'
-              }}
+              className={styles.sweep}
+              style={{ left: `${((sweepPos - minTime) / timeRange) * 100}%` }}
             >
               <div
-                style={{
-                  position: 'absolute',
-                  top: '-18px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  fontSize: '0.62rem',
-                  fontFamily: 'var(--font-code)',
-                  color: 'var(--probe)',
-                  whiteSpace: 'nowrap',
-                  fontWeight: '700'
-                }}
+                className={styles.sweepLabel}
               >
                 t = {sweepPos}
               </div>
@@ -300,37 +251,19 @@ export default function IntervalCanvas({ problem, currentStep, step, resolvedInp
 
         {/* Timeline Axis along bottom */}
         <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '32px',
-            borderTop: '2px solid var(--bench-rule-strong)',
-            marginTop: '12px'
-          }}
+          className={styles.axis}
         >
           {ticks.map((t) => {
             const leftPct = ((t - minTime) / timeRange) * 100;
             return (
               <div
                 key={`tick-${t}`}
-                style={{
-                  position: 'absolute',
-                  left: `${leftPct}%`,
-                  transform: 'translateX(-50%)',
-                  top: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center'
-                }}
+                className={styles.tick}
+                style={{ left: `${leftPct}%` }}
               >
-                <div style={{ width: '1px', height: '6px', background: 'var(--bench-ink-dim)' }} />
+                <div className={styles.tickMark} />
                 <span
-                  style={{
-                    fontSize: '0.65rem',
-                    fontFamily: 'var(--font-code)',
-                    color: 'var(--bench-ink-dim)',
-                    marginTop: '2px'
-                  }}
+                  className={styles.tickLabel}
                 >
                   {t}
                 </span>
