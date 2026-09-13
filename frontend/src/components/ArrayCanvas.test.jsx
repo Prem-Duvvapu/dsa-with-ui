@@ -20,6 +20,23 @@ describe('ArrayCanvas', () => {
     expect(screen.getByText('900')).toBeInTheDocument();
   });
 
+  it('draws only its stage - CanvasShell owns the chrome', () => {
+    // App wraps every canvas in CanvasShell, which renders the title, the step counter and
+    // Bench's five-state legend. This canvas also drew its own header and its own FOUR-badge
+    // legend in the pre-Bench vocabulary, so the screen carried two headers and two legends
+    // that disagreed about what the states are. GraphCanvas, DsuCanvas and DpTableCanvas
+    // were migrated off their chrome when the shell was built; these three were missed.
+    const { container } = render(
+      <ArrayCanvas currentStep={{ arrayState: cells([5, 'current'], [7, 'default']) }} />
+    );
+
+    expect(screen.queryByText(/visualizer/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('Current')).not.toBeInTheDocument();
+    expect(screen.queryByText('Visited')).not.toBeInTheDocument();
+    // The stage itself is still there.
+    expect(container.querySelector('[data-testid="array-stage"]')).toBeInTheDocument();
+  });
+
   it('falls back to the index when a cell has no label', () => {
     render(<ArrayCanvas currentStep={{ arrayState: cells([5, 'default'], [7, 'default']) }} />);
     expect(screen.getByText('[0]')).toBeInTheDocument();

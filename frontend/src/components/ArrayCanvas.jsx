@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart2 } from 'lucide-react';
+import styles from './ArrayCanvas.module.css';
 import { lastPayload } from '../trace/lastPayload';
 
 export default function ArrayCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
@@ -52,58 +52,9 @@ export default function ArrayCanvas({ problem, currentStep, step, steps, current
   const maxVal = Math.max(...values, 1);
 
   return (
-    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
-      {/* Visualizer Header Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <BarChart2 size={16} color="var(--bench-ink-secondary)" />
-          <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
-            Array & bar visualizer
-          </span>
-          <span style={{ fontSize: '0.66rem', padding: '2px 7px', background: 'var(--bench-fill)', color: 'var(--bench-ink-secondary)', borderRadius: 'var(--radius-full)', border: '1px solid var(--bench-rule-strong)', fontWeight: '700' }}>
-            Size: {normalizedArray.length} elements
-          </span>
-        </div>
-
-        {/* 4 Semantic State Legend Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.72rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-current)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Current</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-target)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Target</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-visited)' }}></span>
-            <span style={{ color: 'var(--text-muted)' }}>Visited</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-done)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Done</span>
-          </div>
-        </div>
-      </div>
-
+    <div className={styles.wrap}>
       {/* Array Stage with Faint Horizontal Gridlines */}
-      <div 
-        style={{ 
-          flex: 1, 
-          width: '100%', 
-          display: 'flex', 
-          alignItems: 'flex-end', 
-          justifyContent: 'center', 
-          gap: '24px', 
-          padding: '20px', 
-          background: 'radial-gradient(ellipse at center, var(--canvas-ground-inner), var(--canvas-ground-outer)), repeating-linear-gradient(0deg, transparent, transparent 35px, var(--canvas-wash) 35px, var(--canvas-wash) 36px)', 
-          borderRadius: 'var(--radius-md)', 
-          border: '1px solid var(--border-default)', 
-          borderBottom: '2px solid var(--border-strong)', 
-          overflowX: 'auto', 
-          overflowY: 'hidden' 
-        }}
-      >
+      <div className={styles.stage} data-testid="array-stage">
         {normalizedArray.map((el, idx) => {
           const colorInfo = getElementColor(el.state);
           const ratio = Math.abs(el.value) / maxVal;

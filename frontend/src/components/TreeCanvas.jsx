@@ -1,5 +1,6 @@
 import React from 'react';
-import { GitCommit, Sparkles } from 'lucide-react';
+import styles from './TreeCanvas.module.css';
+import { Sparkles } from 'lucide-react';
 import { lastPayload } from '../trace/lastPayload';
 
 export default function TreeCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
@@ -44,37 +45,9 @@ export default function TreeCanvas({ problem, currentStep, step, steps, currentS
   };
 
   return (
-    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitCommit size={16} color="var(--bench-ink-secondary)" />
-          <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
-            Binary tree & BST topology visualizer
-          </span>
-        </div>
+    <div className={styles.wrap}>
 
-        {/* 4 Semantic Legend Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.72rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-current)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Current</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-target)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Target</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-visited)' }}></span>
-            <span style={{ color: 'var(--text-muted)' }}>Visited</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-done)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Done</span>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '260px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--canvas-well)', borderRadius: 'var(--radius-md)', overflow: 'hidden', padding: 'var(--space-md)' }}>
+      <div className={styles.stage} data-testid="tree-stage">
         <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible', maxHeight: '100%' }}>
           {/* Render Parent-Child Connecting Lines */}
           {treeNodes.map((node) => {

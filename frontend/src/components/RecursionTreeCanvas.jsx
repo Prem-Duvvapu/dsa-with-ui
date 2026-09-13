@@ -1,5 +1,6 @@
 import React from 'react';
-import { GitBranch, Layers, ArrowDown } from 'lucide-react';
+import styles from './RecursionTreeCanvas.module.css';
+import { Layers, ArrowDown } from 'lucide-react';
 
 import { buildRecursionTree, layoutRecursionTree } from '../trace/recursionTree';
 import derived from './DerivedRecursionTree.module.css';
@@ -116,39 +117,9 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
   };
 
   return (
-    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      {/* Header Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitBranch size={18} color="var(--bench-ink-secondary)" />
-          <span style={{ fontSize: '0.92rem', fontWeight: '800', letterSpacing: '0.4px' }}>
-            Divide & Conquer Recursion Tree Visualizer
-          </span>
-        </div>
-
-        {/* Legend Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--canvas-edge)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Pending</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--role-current)' }}></span>
-            <span style={{ color: 'var(--role-current-edge)' }}>Splitting / Calling</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--role-secondary)' }}></span>
-            <span style={{ color: 'var(--role-secondary-edge)' }}>Merging</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--role-done)' }}></span>
-            <span style={{ color: 'var(--role-done-edge)' }}>Sorted</span>
-          </div>
-        </div>
-      </div>
-
+    <div className={styles.wrap}>
       {/* Main SVG Recursion Tree Canvas */}
-      <div style={{ flex: 1, width: '100%', minHeight: '260px', background: 'var(--canvas-well)', borderRadius: '12px', overflow: 'auto', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className={styles.stage} data-testid="recursion-tree-stage">
         {!hasOwnTree ? (
           <DerivedRecursionTree steps={steps} currentStepIndex={currentStepIndex} />
         ) : treeNodes.length > 0 ? (
