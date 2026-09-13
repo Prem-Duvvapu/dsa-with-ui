@@ -139,10 +139,15 @@ public class MaximumPointsCardsTracer implements AlgorithmTracer {
     private static List<ArrayElement> windowState(int[] cardPoints, int left, int right) {
         List<ArrayElement> state = new ArrayList<>(cardPoints.length);
         for (int i = 0; i < cardPoints.length; i++) {
-            // Cards inside [left, right] are unpicked (active/target/current), cards outside are picked
+            // Cards inside [left, right] are unpicked (active/target/current); cards outside
+            // MUST be "default". WindowCanvas derives the window from exactly this - any
+            // non-default state reads as inside - so the old "sorted" for "already picked"
+            // put every card in the window on every step and drew a motionless window
+            // spanning the whole array while the narration described it sliding. The
+            // picked/unpicked distinction survives in the label below, where it belongs.
             String st = (left >= 0 && right >= 0 && i >= left && i <= right)
                     ? (i == right ? "current" : i == left ? "target" : "active")
-                    : "sorted";
+                    : "default";
             state.add(new ArrayElement(i, cardPoints[i], st, (left >= 0 && i >= left && i <= right) ? "unpicked" : "picked"));
         }
         return state;

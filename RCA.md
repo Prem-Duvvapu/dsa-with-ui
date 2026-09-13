@@ -1200,3 +1200,48 @@ class, and the reason is worth stating rather than rediscovering.
   guard could not see this before, because **a tracer with no call stack is skipped by every
   call-stack assertion**; the suite's skip count dropped from 513 to 511 when these two
   joined. An optional payload is also an opt-out from the tests that police it.
+
+## RCA-047 — A state name that meant one thing to the tracer and the opposite to the canvas
+
+- **Discovered:** 2026-09-13, by the Sliding Window audit
+- **Status:** Resolved
+- **Symptom and impact:** `maximum-points-cards` drew a window spanning its **entire array on
+  all nine of its steps**, motionless, while the narration read "Slide window: drop
+  cardPoints[0]=1, add cardPoints[4]=5". The words described a window moving and the picture
+  showed one that never did, in the topic whose whole subject is the window.
+- **Root cause:** `WindowCanvas` derives the window from **cell states**, not variable names
+  — deliberately, and its header says why: the twelve tracers disagree about whether the
+  bounds are `left`/`right`, `start`/`end` or just `i`, but they all agree that cells inside
+  the window carry a non-default state and everything outside stays `"default"`. That is a
+  real contract that lived only in a comment. `MaximumPointsCardsTracer` marked the cards
+  *outside* its window `"sorted"`, meaning "already picked" — a sensible-looking name that
+  is simply not `"default"`, so every cell read as inside.
+- **The general shape:** a shared vocabulary where one value is load-bearing by its absence.
+  `"default"` here does not mean "no particular state", it means "outside", and any other
+  string — however reasonable for the tracer's own semantics — silently inverts the picture.
+  The same trap as `DpCell`'s `known` standing in for `void` (RCA-038), from the other side.
+- **Resolution:** outside cells are `"default"`; the picked/unpicked distinction survives in
+  the cell `label`, where it was already duplicated.
+- **Regression guard:** `WindowContractTest.windowIsAProperSubsetAtSomePoint` over every
+  `WINDOW` tracer — the window must be narrower than the array on at least one step. Not on
+  every step: several of these problems legitimately end with everything inside. Proven RED
+  first, and it named exactly one tracer.
+
+## RCA-048 — A sliding window whose default never slid
+
+- **Discovered:** 2026-09-13, by the Sliding Window audit
+- **Status:** Resolved
+- **Symptom and impact:** `longest-repeating-character-replacement` shipped with `"ABAB"`
+  and `k = 2` — the entire string is replaceable, so `left` never moved. Nine steps of a
+  window that only ever grew, with the `shrink` branch dead. The shrink *is* the slide.
+- **Root cause:** third occurrence of RCA-045's class in three consecutive audits
+  (`search-rotated-sorted-2`'s duplicate branch, `sudoku-solver`'s undo, now this). A
+  default picked to be short and to succeed, when the branch that names the technique only
+  fires on inputs that first fail a constraint.
+- **Resolution:** LeetCode's own second example, `"AABABBA"` with `k = 1` — same answer of
+  4, reached through three shrinks, 18 steps. The old default's contrast moved to
+  `alternateInput` as `k = 0`, where the window is bounded by a run rather than by free
+  replacement.
+- **Worth noting:** the sweep reported this as `DEAD ANCHORS ['shrink']`, which is the same
+  line it prints for a terminal not-found branch. See RCA-045 — the anchor's *name* is the
+  signal, and `shrink` in Sliding Window is as load-bearing as `undo` in Backtracking.

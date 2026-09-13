@@ -8,10 +8,10 @@
   "code" : "public int characterReplacement(String s, int k) {\n    int[] freq = new int[26];\n    int left = 0, maxFreq = 0, maxLen = 0;\n\n    for (int right = 0; right < s.length(); right++) {\n        freq[s.charAt(right) - 'A']++;\n        maxFreq = Math.max(maxFreq, freq[s.charAt(right) - 'A']);\n\n        int windowLen = right - left + 1;\n        if (windowLen - maxFreq > k) {\n            freq[s.charAt(left) - 'A']--;\n            left++;\n        }\n\n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    return maxLen;\n}",
   "problemId" : "longest-repeating-character-replacement",
   "resolvedInput" : {
-    "k" : 2,
-    "s" : "ABAB"
+    "k" : 1,
+    "s" : "AABABBA"
   },
-  "stepCount" : 9,
+  "stepCount" : 18,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 6,
@@ -33,19 +33,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 2,
       "value" : 65,
       "state" : "default",
       "label" : "A"
     }, {
-      "index" : 3,
+      "index" : 2,
       "value" : 66,
       "state" : "default",
       "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -53,7 +68,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 15,
-    "description" : "Window [0,0] is valid with at most 2 replacements. Best so far: 1.",
+    "description" : "Window [0,0] is valid with at most 1 replacement. Best so far: 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -71,19 +86,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 2,
       "value" : 65,
       "state" : "default",
       "label" : "A"
     }, {
-      "index" : 3,
+      "index" : 2,
       "value" : 66,
       "state" : "default",
       "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -91,13 +121,13 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 6,
-    "description" : "Add 'B'. Most frequent character in the window now appears 1 time.",
+    "description" : "Add 'A'. Most frequent character in the window now appears 2 times.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "maxFreq" : "1",
+      "maxFreq" : "2",
       "right" : "1"
     },
     "dsType" : "Window",
@@ -109,19 +139,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
+      "value" : 65,
       "state" : "current",
-      "label" : "B"
+      "label" : "A"
     }, {
       "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
       "value" : 65,
       "state" : "default",
       "label" : "A"
     }, {
-      "index" : 3,
+      "index" : 4,
       "value" : 66,
       "state" : "default",
       "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -129,7 +174,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 15,
-    "description" : "Window [0,1] is valid with at most 2 replacements. Best so far: 2.",
+    "description" : "Window [0,1] is valid with at most 1 replacement. Best so far: 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -147,19 +192,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
+      "value" : 65,
       "state" : "current",
-      "label" : "B"
+      "label" : "A"
     }, {
       "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
       "value" : 65,
       "state" : "default",
       "label" : "A"
     }, {
-      "index" : 3,
+      "index" : 4,
       "value" : 66,
       "state" : "default",
       "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -167,7 +227,7 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 6,
-    "description" : "Add 'A'. Most frequent character in the window now appears 2 times.",
+    "description" : "Add 'B'. Most frequent character in the window now appears 2 times.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -185,19 +245,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 2,
       "value" : 65,
-      "state" : "current",
+      "state" : "active",
       "label" : "A"
     }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
       "index" : 3,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 4,
       "value" : 66,
       "state" : "default",
       "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -205,7 +280,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 15,
-    "description" : "Window [0,2] is valid with at most 2 replacements. Best so far: 3.",
+    "description" : "Window [0,2] is valid with at most 1 replacement. Best so far: 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -223,19 +298,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 2,
       "value" : 65,
-      "state" : "current",
+      "state" : "active",
       "label" : "A"
     }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
       "index" : 3,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 4,
       "value" : 66,
       "state" : "default",
       "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -243,13 +333,13 @@
   }, {
     "stepNumber" : 7,
     "activeLine" : 6,
-    "description" : "Add 'B'. Most frequent character in the window now appears 2 times.",
+    "description" : "Add 'A'. Most frequent character in the window now appears 3 times.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "maxFreq" : "2",
+      "maxFreq" : "3",
       "right" : "3"
     },
     "dsType" : "Window",
@@ -261,19 +351,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 2,
       "value" : 65,
       "state" : "active",
       "label" : "A"
     }, {
-      "index" : 3,
+      "index" : 2,
       "value" : 66,
-      "state" : "current",
+      "state" : "active",
       "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -281,7 +386,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 15,
-    "description" : "Window [0,3] is valid with at most 2 replacements. Best so far: 4.",
+    "description" : "Window [0,3] is valid with at most 1 replacement. Best so far: 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -299,27 +404,516 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 2,
       "value" : 65,
       "state" : "active",
       "label" : "A"
     }, {
-      "index" : 3,
+      "index" : 2,
       "value" : 66,
-      "state" : "current",
+      "state" : "active",
       "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
+    "activeLine" : 6,
+    "description" : "Add 'B'. Most frequent character in the window now appears 3 times.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxFreq" : "3",
+      "right" : "4"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "Window of 5 needs more than 1 replacement - shrink past 'A'. Window now starts at 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 15,
+    "description" : "Window [1,4] is valid with at most 1 replacement. Best so far: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "4",
+      "windowLen" : "4"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 6,
+    "description" : "Add 'B'. Most frequent character in the window now appears 3 times.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxFreq" : "3",
+      "right" : "5"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "Window of 5 needs more than 1 replacement - shrink past 'A'. Window now starts at 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "target",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "Window [2,5] is valid with at most 1 replacement. Best so far: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "4",
+      "windowLen" : "4"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "target",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 6,
+    "description" : "Add 'A'. Most frequent character in the window now appears 3 times.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxFreq" : "3",
+      "right" : "6"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "target",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 11,
+    "description" : "Window of 5 needs more than 1 replacement - shrink past 'B'. Window now starts at 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "3"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 15,
+    "description" : "Window [3,6] is valid with at most 1 replacement. Best so far: 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxLen" : "4",
+      "windowLen" : "4"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
     "activeLine" : 17,
-    "description" : "Every character processed. Longest window achievable with 2 replacements: 4.",
+    "description" : "Every character processed. Longest window achievable with 1 replacement: 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -336,19 +930,34 @@
       "label" : "A"
     }, {
       "index" : 1,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 2,
       "value" : 65,
       "state" : "default",
       "label" : "A"
     }, {
-      "index" : 3,
+      "index" : 2,
       "value" : 66,
       "state" : "default",
       "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
     } ],
     "listState" : null,
     "trieState" : null,
