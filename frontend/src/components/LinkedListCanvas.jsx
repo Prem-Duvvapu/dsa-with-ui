@@ -131,10 +131,10 @@ export default function LinkedListCanvas({ problem, currentStep, step, steps, cu
 
       <div
         ref={containerRef}
-        style={{ flex: 1, width: '100%', minHeight: '280px', position: 'relative', display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', background: 'var(--canvas-well)', borderRadius: '12px', overflow: 'auto' }}
+        className={styles.stage}
       >
         <svg
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible', pointerEvents: 'none' }}
+          className={styles.linkLayer}
         >
           <defs>
             <marker id="llc-child-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
@@ -185,35 +185,28 @@ export default function LinkedListCanvas({ problem, currentStep, step, steps, cu
                   if (el) nodeRefs.current.set(node.id, el);
                   else nodeRefs.current.delete(node.id);
                 }}
+                className={styles.node}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  borderRadius: '12px',
                   background: colorInfo.fill,
                   border: `2px solid ${colorInfo.stroke}`,
-                  boxShadow: colorInfo.glow,
-                  padding: '12px 18px',
-                  transition: 'all 0.3s ease',
-                  gap: '12px',
-                  position: 'relative',
-                  zIndex: 1,
+                  boxShadow: colorInfo.glow
                 }}
               >
-                <div style={{ fontSize: '1rem', fontWeight: '800', color: 'var(--role-ink)' }}>
+                <div className={styles.nodeValue}>
                   {node.val}
                 </div>
-                <div style={{ width: '1px', height: '24px', background: 'var(--border-strong)' }} />
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <div className={styles.nodeDivider} />
+                <div className={styles.nodePointers}>
                   {/* Only doubly linked lists get a prev row. A singly linked list should
                       not grow a column of NULLs it never had. */}
                   {isDoubly && (
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                    <div className={styles.pointerMuted}>
                       {node.prevId !== null && node.prevId !== undefined
                         ? `prev -> [${node.prevId}]`
                         : 'prev -> NULL'}
                     </div>
                   )}
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                  <div className={styles.pointerStrong}>
                     {node.nextId !== null && node.nextId !== undefined
                       ? `next -> [${node.nextId}]`
                       : 'next -> NULL'}
@@ -224,8 +217,8 @@ export default function LinkedListCanvas({ problem, currentStep, step, steps, cu
               {/* Arrow Connection */}
               {idx < listState.length - 1 && (
                 adjacentIsNext
-                  ? <ArrowRight size={22} color="var(--text-muted)" style={{ flexShrink: 0, position: 'relative', zIndex: 1 }} />
-                  : <div style={{ width: '22px', flexShrink: 0 }} />
+                  ? <ArrowRight size={22} color="var(--text-muted)" className={styles.arrowIcon} />
+                  : <div className={styles.arrowSpacer} />
               )}
             </React.Fragment>
           );

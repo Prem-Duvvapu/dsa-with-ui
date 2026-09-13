@@ -1,0 +1,161 @@
+/* Grid / matrix stage, in three shapes - plain matrix, sudoku board, chessboard - plus a
+   narrow companion variant. The differences are variants of one cell, so they are
+   modifier classes; only the column count and the compact cell size genuinely vary per
+   render, and those arrive as custom properties. */
+
+.empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bench-ink-dim);
+}
+
+.wrap {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 16px;
+}
+
+.scroller { overflow-x: auto; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(var(--grid-cell, 36px), 1fr));
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border-radius: var(--radius-md, 12px);
+  max-width: 100%;
+  overflow: auto;
+}
+
+.gridSudoku {
+  gap: 2px;
+  background: var(--bench-ground);
+  border: 2px solid var(--bench-rule-strong);
+}
+
+.gridCompanion {
+  gap: 3px;
+  padding: 0;
+  width: max-content;
+}
+
+/* --- chessboard --- */
+
+.queenCell {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-xs, 4px);
+  background: var(--bench-fill);
+  border: 1px solid var(--bench-rule);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all var(--motion-normal, 300ms) var(--ease-standard, ease);
+}
+
+.queenCellLight { background: var(--bench-rule-strong); }
+
+/* A placed queen is a resolved position, so it takes the settled treatment. */
+.queenCellPlaced {
+  background: color-mix(in srgb, var(--settled) 25%, transparent);
+  border: 2px solid var(--settled);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--settled) 40%, transparent);
+}
+
+.queenIcon { filter: drop-shadow(0 0 8px var(--probe)); }
+
+.coord {
+  font-size: var(--text-xs, 0.72rem);
+  color: var(--bench-ink-dim);
+}
+
+.coordSmall {
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+/* --- sudoku --- */
+
+.sudokuCell {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 24px;
+  min-height: 24px;
+  background: var(--bench-fill);
+  border-right: 1px solid var(--bench-rule);
+  border-bottom: 1px solid var(--bench-rule);
+  color: var(--bench-ink-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-family: var(--font-code);
+  font-size: var(--text-sm, 0.8rem);
+}
+
+.sudokuCellFilled {
+  background: color-mix(in srgb, var(--settled) 15%, transparent);
+  color: var(--bench-ink);
+}
+
+/* The 3x3 box rules, which are what make a sudoku readable as nine boxes rather than 81
+   cells. Amber because the box boundary is structure the solver reasons about. */
+.sudokuBoxRight { border-right: 2px solid var(--probe); }
+.sudokuBoxBottom { border-bottom: 2px solid var(--probe); }
+
+/* --- plain matrix --- */
+
+.matrixCell {
+  width: 55px;
+  height: 55px;
+  border-radius: 8px;
+  background: var(--bench-fill);
+  border: 1px solid var(--bench-rule);
+  color: var(--bench-ink-dim);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  transition: all var(--motion-normal, 300ms) var(--ease-standard, ease);
+}
+
+.matrixCellCompact {
+  width: var(--grid-cell);
+  height: var(--grid-cell);
+  border-radius: 4px;
+  font-size: 0.68rem;
+  box-shadow: none;
+}
+
+.matrixCellValue { color: var(--bench-ink); }
+
+.matrixCellActive {
+  background: color-mix(in srgb, var(--probe) 15%, transparent);
+  border-color: var(--probe);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--probe) 40%, transparent);
+}
+
+.matrixCellDone {
+  background: color-mix(in srgb, var(--settled) 25%, transparent);
+  border-color: var(--settled);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--settled) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .queenCell,
+  .matrixCell { transition: none; }
+}

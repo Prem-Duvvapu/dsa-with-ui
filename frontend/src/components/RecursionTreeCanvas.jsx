@@ -123,7 +123,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
         {!hasOwnTree ? (
           <DerivedRecursionTree steps={steps} currentStepIndex={currentStepIndex} />
         ) : treeNodes.length > 0 ? (
-          <svg width="100%" height="250" viewBox="0 0 380 250" style={{ overflow: 'visible' }}>
+          <svg width="100%" height="250" viewBox="0 0 380 250" className={styles.svg}>
             {/* Connecting Call Branch Lines */}
             {treeNodes.map((node) => {
               const leftChild = treeNodes.find((n) => n.id === node.leftId);
@@ -168,7 +168,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
               const boxHeight = 32;
 
               return (
-                <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} style={{ cursor: 'pointer' }}>
+                <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} className={styles.nodeGroup}>
                   <rect
                     x={-boxWidth / 2}
                     y={-boxHeight / 2}
@@ -178,10 +178,8 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
                     fill={colorInfo.fill}
                     stroke={colorInfo.stroke}
                     strokeWidth={isCalling || isMerging ? 2.5 : 1.5}
-                    style={{
-                      transition: 'all var(--motion-normal) var(--ease-standard)',
-                      filter: colorInfo.glow !== 'none' ? `drop-shadow(${colorInfo.glow})` : 'none'
-                    }}
+                    className={styles.nodeShape}
+                    style={{ filter: colorInfo.glow !== 'none' ? `drop-shadow(${colorInfo.glow})` : 'none' }}
                   />
                   <text
                     textAnchor="middle"
@@ -198,33 +196,31 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
             })}
           </svg>
         ) : (
-          <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+          <div className={styles.emptyNote}>
             Recursion Call Stack Active
           </div>
         )}
       </div>
 
       {/* Subarray State Bar Visualizer */}
-      <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
-        <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: '700' }}>
+      <div className={styles.strip}>
+        <span className={styles.stripLabel}>
           Live Array State:
         </span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className={styles.stripCells}>
           {arrayState.map((el, idx) => (
-            <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: '800', color: el.state === 'sorted' || el.state === 'visited' ? 'var(--role-done-edge)' : 'var(--role-ink)' }}>
+            <div key={idx} className={styles.stripCell}>
+              <span className={`${styles.stripValue}${el.state === 'sorted' || el.state === 'visited' ? ` ${styles.stripValueDone}` : ''}`}>
                 {el.value}
               </span>
               <div
-                style={{
-                  width: '28px',
-                  height: '14px',
-                  borderRadius: '4px',
-                  background: el.state === 'sorted' || el.state === 'visited' ? 'var(--role-done)' : (el.state === 'active' || el.state === 'comparing' ? 'var(--role-secondary)' : 'var(--canvas-node-fill-2)'),
-                  border: '1px solid var(--border-strong)'
-                }}
+                className={[
+                  styles.stripBar,
+                  el.state === 'sorted' || el.state === 'visited' ? styles.stripBarDone : '',
+                  el.state === 'active' || el.state === 'comparing' ? styles.stripBarActive : ''
+                ].filter(Boolean).join(' ')}
               />
-              <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>[{idx}]</span>
+              <span className={styles.stripIndex}>[{idx}]</span>
             </div>
           ))}
         </div>
