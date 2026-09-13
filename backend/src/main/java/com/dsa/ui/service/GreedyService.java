@@ -125,7 +125,10 @@ public class GreedyService implements ProblemProvider {
     private String bulkDsType(String id) {
         return switch (id) {
             case "valid-parentheses-checker" -> "String";
-            case "non-overlapping-intervals" -> "Interval";
+            // insert-interval labels every one of its cells "[a,b]" and merges them on a
+            // timeline; IntervalCanvas's own header already names it. Tagged Array it drew
+            // a bar chart whose height was each interval's END time.
+            case "non-overlapping-intervals", "insert-interval" -> "Interval";
             default -> "Array";
         };
     }

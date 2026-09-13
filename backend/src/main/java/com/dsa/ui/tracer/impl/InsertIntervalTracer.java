@@ -25,7 +25,9 @@ public class InsertIntervalTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        // Every cell it emits is labelled "[a,b]" and the algorithm is a merge along a
+        // timeline - see GreedyService.bulkDsType for why this was wrong as ARRAY.
+        return DsType.INTERVAL;
     }
 
     @Override

@@ -102,14 +102,19 @@ export default function IntervalCanvas({ problem, currentStep, step, resolvedInp
     }
   }
 
-  // Fallback if no intervals discovered
+  // No fallback. This used to fabricate [1,2] [3,4] [0,6] [5,7] - n-meetings-in-one-room's
+  // own default meetings, hardcoded, with invented 'settled' and 'probe' states - so a run
+  // that fell off the end of the chain above showed another problem's data as if it were
+  // its own. That is RCA-031 (DsuCanvas) in a second canvas, and the repo rule is explicit:
+  // a canvas that cannot tell what to draw says so.
   if (!intervals.length) {
-    intervals = [
-      { id: 1, label: '#1', start: 1, end: 2, state: 'settled' },
-      { id: 2, label: '#2', start: 3, end: 4, state: 'probe' },
-      { id: 3, label: '#3', start: 0, end: 6, state: 'default' },
-      { id: 4, label: '#4', start: 5, end: 7, state: 'default' }
-    ];
+    return (
+      <CanvasShell title={problem?.title || 'Interval Timeline'} meta="no intervals">
+        <p role="status" className="canvas-empty">
+          No intervals in this step.
+        </p>
+      </CanvasShell>
+    );
   }
 
   // Calculate timeline bounds

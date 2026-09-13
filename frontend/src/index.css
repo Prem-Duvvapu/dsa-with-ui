@@ -1349,7 +1349,9 @@ mark {
   color: var(--bench-ink-dim);
 }
 
-.dp-empty {
+.dp-empty,
+/* Any canvas saying it has nothing to draw, rather than drawing something plausible. */
+.canvas-empty {
   color: var(--bench-ink-dim);
   font-family: var(--font-code);
   font-size: var(--text-sm);

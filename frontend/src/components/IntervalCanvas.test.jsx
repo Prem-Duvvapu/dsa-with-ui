@@ -5,11 +5,16 @@ import '@testing-library/jest-dom';
 import IntervalCanvas from './IntervalCanvas';
 
 describe('IntervalCanvas', () => {
-  it('renders default intervals when step is empty', () => {
+  it('says it has no intervals rather than inventing four', () => {
+    // This used to draw a hardcoded [1,2] [3,4] [0,6] [5,7] - n-meetings-in-one-room's own
+    // default meetings, complete with invented 'settled' and 'probe' states - for any run
+    // that reached the end of the resolution chain. Same defect as RCA-031's DsuCanvas:
+    // a canvas that answers "I don't know" with a plausible picture. Currently unreachable
+    // for both Interval tracers, which is exactly when it is cheap to remove.
     render(<IntervalCanvas problem={{ title: 'Meeting Rooms' }} />);
     expect(screen.getByText('Meeting Rooms')).toBeInTheDocument();
-    expect(screen.getByTestId('interval-canvas-stage')).toBeInTheDocument();
-    expect(screen.getByTestId('interval-span-1')).toBeInTheDocument();
+    expect(screen.queryByTestId('interval-span-1')).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent(/no intervals/i);
   });
 
   it('renders intervals from resolvedInput start and end arrays', () => {

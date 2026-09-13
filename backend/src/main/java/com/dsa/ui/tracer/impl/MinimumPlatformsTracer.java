@@ -1,11 +1,9 @@
 package com.dsa.ui.tracer.impl;
 
-import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -83,13 +81,6 @@ public class MinimumPlatformsTracer implements AlgorithmTracer {
                }""";
     }
 
-    private List<ArrayElement> board(int[] vals, int cursor) {
-        List<ArrayElement> state = new ArrayList<>(vals.length);
-        for (int k = 0; k < vals.length; k++) {
-            state.add(new ArrayElement(k, vals[k], k == cursor ? "current" : "target"));
-        }
-        return state;
-    }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {

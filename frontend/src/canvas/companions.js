@@ -28,8 +28,11 @@ export function getCompanions(heroDsType, step, allSteps) {
     && allSteps.some((s) => s?.queueOrStackState?.length > 0);
 
   // Graph (bfs-traversal, dijkstra-min-heap, ...) and Matrix (rotting-oranges' multi-source
-  // BFS over a grid) both narrate a real queue alongside their hero structure.
-  if ((heroDsType === 'Graph' || heroDsType === 'Matrix') && runHasQueue) {
+  // BFS over a grid) both narrate a real queue alongside their hero structure. So does
+  // Array: lru-page-replacement walks a page reference string - the array - while the
+  // recency queue it maintains is the thing the algorithm is actually about, emitted on 13
+  // of its 16 steps and, before this, drawn nowhere.
+  if ((heroDsType === 'Graph' || heroDsType === 'Matrix' || heroDsType === 'Array') && runHasQueue) {
     companions.push({ key: 'queue', Component: QueueCanvas, props: { step, title: 'Queue' } });
   }
 

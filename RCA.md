@@ -980,3 +980,63 @@ picture rewriting its own axis.
 - **Regression guard:** `companions.test.js`, "adds a grid companion for an Array hero when
   any step carries a grid", proven RED first. The dsType itself is pinned by the golden and
   by `CatalogTracerMetadataTest`.
+
+## RCA-040 — The canned-fallback shape, found a third time, in a canvas nobody had reached it in
+
+- **Discovered:** 2026-09-13, by the Greedy Algorithms audit
+- **Status:** Resolved
+- **Symptom and impact:** none yet — and that is the point of the entry. `IntervalCanvas`
+  ended its five-branch interval-resolution chain with a hardcoded literal:
+
+  ```js
+  intervals = [
+    { id: 1, label: '#1', start: 1, end: 2, state: 'settled' },
+    { id: 2, label: '#2', start: 3, end: 4, state: 'probe' },
+    ...
+  ];
+  ```
+
+  Those are `n-meetings-in-one-room`'s own default meetings, pasted in, with invented
+  `settled` and `probe` states. Any Interval run that fell off the end of the chain would
+  have drawn another problem's data as if it were its own — confidently, with state colours
+  it made up. Checked step by step against both live Interval tracers: **0 of 26 steps**
+  reach it today.
+- **Root cause:** the same instinct as RCA-025 (`IntervalCanvas`'s `resolvedInput`),
+  RCA-031 (`DsuCanvas`) and RCA-035 (seven canvases): when a canvas cannot tell what to
+  draw, draw *something*. A blank panel looks broken in review; a plausible one does not.
+- **Resolution:** replaced with an explicit "No intervals in this step." Its test previously
+  pinned the fabricated version as intended behaviour ("renders default intervals when step
+  is empty"), so the test was rewritten to state the rule instead of the accident.
+- **Why record an unreachable defect:** it was reachable until the RCA-025 fix landed, and
+  `insert-interval` moving into this canvas in the same audit is exactly the kind of change
+  that makes a dead branch live again. Unreachable is the cheapest moment to delete a
+  landmine, not a reason to leave it.
+
+## RCA-041 — A hero canvas that could not draw the structure the run was about (second instance)
+
+- **Discovered:** 2026-09-13, by the Greedy Algorithms audit
+- **Status:** Resolved
+- **Symptom and impact:** two more of the shape RCA-039 named, found by looking for it
+  deliberately rather than by accident:
+  - `lru-page-replacement` is `ARRAY`-hero and emits the recency queue — the structure the
+    entire algorithm is about — on **13 of its 16 steps**. `ArrayCanvas` never references
+    `queueOrStackState`, so it was computed and drawn nowhere.
+  - `insert-interval` is a merge along a timeline, labels every cell it emits `"[a,b]"`, and
+    is named in `IntervalCanvas`'s own header as one of its problems — yet was tagged
+    `ARRAY`, so it drew a bar chart whose bar heights were each interval's *end time*.
+- **Root cause:** as RCA-039. `DsTypePayloadContractTest` proves a tracer is not lying about
+  its canvas; it cannot tell whether the canvas was pointed at the run's main structure.
+- **Resolution:** `insert-interval` retagged `INTERVAL`; `lru-page-replacement` keeps the
+  reference string as its hero and gains the existing queue companion, which
+  `canvas/companions.js` now offers to an `Array` hero as it already did to `Graph` and
+  `Matrix`.
+- **A test that was quietly wrong:** `companions.test.js` asserted "adds nothing for a
+  non-Graph, non-Matrix hero, even with a populated queueOrStackState", using `Array` as the
+  stand-in. Its stated reason — "a dsType whose OWN hero already draws queueOrStackState
+  must not also get a companion" — is true of `Stack` and `Queue` and **not** of `Array`,
+  which never touches the field. The example had hardened an arbitrary choice into a rule,
+  and the rule was blocking the fix. It now names `Stack` and `Queue`, the types the reason
+  actually applies to.
+- **How to find the next one:** for each tracer, list the structure fields its steps
+  populate and ask whether the declared dsType's canvas renders the one the *narration* is
+  about. Counting steps does not work — see RCA-039.
