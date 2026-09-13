@@ -4,6 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -38,6 +40,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @Component
 public class ExecuteRateLimitFilter extends OncePerRequestFilter {
 
+    private static final Logger log = LoggerFactory.getLogger(ExecuteRateLimitFilter.class);
+
     private static final int MAX_TRACKED_CLIENTS = 10_000;
 
     private final int capacity;
@@ -64,11 +68,18 @@ public class ExecuteRateLimitFilter extends OncePerRequestFilter {
         String client = clientKey(request);
 
         if (buckets.size() > MAX_TRACKED_CLIENTS) {
+            // Loud, because this briefly forgives every client and is the one case where
+            // the defence degrades. If it happens outside a test, the cap needs revisiting.
+            log.warn("rate limiter tracked {} clients, clearing all buckets", buckets.size());
             buckets.clear();
         }
 
         Bucket bucket = buckets.computeIfAbsent(client, k -> new Bucket(capacity));
         if (!bucket.tryConsume(refillIntervalNanos, capacity)) {
+            // Worth a line: sustained refusals mean either abuse or a limit set too low,
+            // and without the count there is no way to tell which.
+            log.warn("rate limited client={} path={} limit={}/min tracked={}",
+                    client, request.getRequestURI(), capacity, buckets.size());
             response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
             response.setHeader("Retry-After", "60");
             response.setContentType("application/json");
