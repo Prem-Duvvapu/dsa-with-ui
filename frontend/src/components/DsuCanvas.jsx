@@ -55,8 +55,8 @@ export default function DsuCanvas({ problem, currentStep, step }) {
         <div style={{
           display: 'flex', alignItems: 'center', gap: '10px',
           padding: '8px 16px',
-          background: 'color-mix(in srgb, var(--probe) 10%, transparent)',
-          border: '1px solid color-mix(in srgb, var(--probe) 30%, transparent)',
+          background: 'var(--bench-fill)',
+          border: '1px solid var(--bench-rule-strong)',
           borderRadius: '10px',
           fontFamily: 'var(--font-code)'
         }}>
@@ -74,7 +74,7 @@ export default function DsuCanvas({ problem, currentStep, step }) {
             border: '1px solid var(--bench-rule)',
             borderRadius: '12px'
           }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--probe)', textTransform: 'uppercase', letterSpacing: '0.6px', fontFamily: 'var(--font-code)' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--bench-ink-secondary)', textTransform: 'uppercase', letterSpacing: '0.6px', fontFamily: 'var(--font-code)' }}>
               Connected Components
             </span>
             <span style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--bench-ink)', fontFamily: 'var(--font-code)' }}>
@@ -109,7 +109,7 @@ export default function DsuCanvas({ problem, currentStep, step }) {
 
           {/* parent[i] row */}
           <div style={{ display: 'grid', gridTemplateColumns: `80px repeat(${count}, 1fr)`, gap: '8px', alignItems: 'center', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--probe)', fontFamily: 'var(--font-code)' }}>parent[i]</span>
+            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--bench-ink-secondary)', fontFamily: 'var(--font-code)' }}>parent[i]</span>
             {indices.map(idx => {
               const val = parentArr[idx] || idx;
               const isRoot = String(val) === String(idx);
@@ -136,17 +136,20 @@ export default function DsuCanvas({ problem, currentStep, step }) {
 
           {/* rank[i] row */}
           <div style={{ display: 'grid', gridTemplateColumns: `80px repeat(${count}, 1fr)`, gap: '8px', alignItems: 'center', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--settled)', fontFamily: 'var(--font-code)' }}>rank[i]</span>
+            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--bench-ink-secondary)', fontFamily: 'var(--font-code)' }}>rank[i]</span>
             {indices.map(idx => {
               const rVal = rankArr[idx] || 0;
               return (
                 <div key={idx} style={{
                   padding: '6px 4px',
-                  background: 'color-mix(in srgb, var(--settled) 10%, transparent)',
-                  border: '1px solid color-mix(in srgb, var(--settled) 30%, transparent)',
+                  // Bench's `known`: a neutral fill meaning "has a value". These cells
+                  // used to be drawn in the settled green, which means finished and
+                  // proven - true of no rank value merely because it exists.
+                  background: 'var(--bench-fill)',
+                  border: '1px solid var(--bench-rule-strong)',
                   borderRadius: '8px',
                   fontSize: '0.82rem', fontWeight: '800',
-                  color: 'var(--settled)',
+                  color: 'var(--bench-ink)',
                   fontFamily: 'var(--font-code)'
                 }}>
                   {rVal}

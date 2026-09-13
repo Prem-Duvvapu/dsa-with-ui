@@ -23,6 +23,24 @@ describe('DsuCanvas', () => {
   // The regression guard. This canvas used to default parent[]/rank[] to a hardcoded
   // 7-element DSU, so a renamed variable key drew a plausible, entirely fabricated
   // structure and nothing failed. A missing payload must be visible, not invented.
+  it('keeps the two semantic hues for state, not for row labels', () => {
+    // Bench spends amber on "happening right now" and green on "finished and proven".
+    // This canvas used both as decoration: the "Connected Components" heading and the
+    // parent[i] label in probe amber, the rank[i] label in settled green, and every rank
+    // CELL painted green unconditionally - so every rank value read as resolved whether
+    // or not anything had resolved.
+    const { container } = render(
+      <DsuCanvas currentStep={{ variables: { 'parent[]': '[0, 0, 2]', 'rank[]': '[1, 0, 0]' } }} />
+    );
+
+    // The LABELS specifically - a DSU root is still drawn in probe amber, and should be,
+    // because "this element is its own parent" is a state and not decoration.
+    for (const text of ['parent[i]', 'rank[i]', 'Connected Components']) {
+      const label = screen.getByText(text);
+      expect(label.getAttribute('style') ?? '').not.toMatch(/var\(--(probe|settled)\)/);
+    }
+  });
+
   it('says so when the step carries no DSU state, instead of inventing one', () => {
     render(<DsuCanvas step={{ variables: {} }} />);
     expect(screen.getByTestId('dsu-state-unavailable')).toBeInTheDocument();
