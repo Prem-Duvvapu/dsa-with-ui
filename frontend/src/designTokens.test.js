@@ -342,6 +342,30 @@ describe('design tokens', () => {
     }
   });
 
+  it('keeps a third hue out of the chrome', () => {
+    // Bench has two semantic hues - the amber probe and the green settled - and spends
+    // them on algorithm state. A violet accent had spread through the chrome (header
+    // icons, badge pills, tab selection) and, worse, through STATE: IntervalCanvas drew
+    // its `target` intervals violet, which is Bench's `read` and is meant to be a hollow
+    // probe ring rather than a sixth colour. The one mark a reader follows was outside
+    // the system that gives every other mark its meaning.
+    //
+    // The token stays defined in index.css - the .btn-primary chrome still uses it from
+    // CSS - but no component may reach for it.
+    const offenders = [];
+    for (const file of getJsxFiles(SRC)) {
+      if (file.endsWith('.test.jsx')) continue;
+      const source = readFileSync(file, 'utf8');
+      for (const token of ['--accent-violet', '--accent-violet-tint', '--border-accent']) {
+        if (source.includes(token)) {
+          offenders.push(`${file.slice(SRC.length + 1)}: ${token}`);
+        }
+      }
+    }
+
+    expect(offenders, 'components must style through the Bench palette').toEqual([]);
+  });
+
   it('animates the loading spinner', () => {
     // App renders <RefreshCw className="spin" /> as the catalogue loading indicator.
     expect(CSS).toMatch(/@keyframes\s+spin\b/);

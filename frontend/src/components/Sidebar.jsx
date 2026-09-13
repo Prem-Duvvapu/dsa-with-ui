@@ -64,7 +64,7 @@ export default function Sidebar({ problems = [], activeProblemId, activeCategory
       {/* Header & Title */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <h3 className="sidebar-title">
-          <Search size={16} color="var(--accent-violet)" />
+          <Search size={16} color="var(--bench-ink-secondary)" />
           Search & Explore
         </h3>
 

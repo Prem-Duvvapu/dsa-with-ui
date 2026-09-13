@@ -18,6 +18,26 @@ describe('CodeViewer', () => {
     expect(screen.queryByText(/Active line:/)).not.toBeInTheDocument();
   });
 
+  it('paints the executing line in the probe wash, the token Bench assigns to it', () => {
+    // The palette gives --probe-wash exactly one job - "active code line" - and the probe
+    // hue one meaning: happening right now. This line used to be violet-tinted, a third
+    // hue the fourteen-token palette does not have, which put the one mark a reader
+    // follows outside the system that gives every other mark its meaning.
+    const { container } = render(
+      <CodeViewer
+        problem={{ javaCode: 'int a = 1;\nint b = 2;\nreturn a + b;' }}
+        currentStep={{ activeLine: 2 }}
+      />
+    );
+
+    const active = container.querySelector('[data-active-line="true"]');
+    expect(active).toBeInTheDocument();
+    expect(active).toHaveTextContent('int b = 2;');
+    expect(active.getAttribute('style')).toContain('var(--probe-wash)');
+    expect(active.getAttribute('style')).toContain('var(--probe)');
+    expect(active.getAttribute('style')).not.toContain('accent-violet');
+  });
+
   describe('branches the current input never took', () => {
     const problem = { javaCode: 'int find(int[] a, int t) {\n  for (int x : a) {\n    if (x == t) return 1;\n  }\n  return -1;\n}' };
     // Line 3 is the hit, line 5 the miss. A run that finds the target never reaches line 5.

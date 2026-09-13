@@ -34,7 +34,7 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
     <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px solid var(--border-default)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <Code2 size={15} color="var(--accent-violet)" />
+          <Code2 size={15} color="var(--bench-ink-secondary)" />
           <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-primary)' }}>Java interview solution</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -48,7 +48,7 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
             </span>
           )}
           {activeLine !== null && javaCode && (
-            <span style={{ fontSize: '0.66rem', padding: '1px 6px', borderRadius: 'var(--radius-sm)', background: 'var(--accent-violet-tint)', color: 'var(--accent-violet)', border: '1px solid var(--border-accent)', fontWeight: '700', fontFamily: 'var(--font-code)' }}>
+            <span style={{ fontSize: '0.66rem', padding: '1px 6px', borderRadius: 'var(--radius-sm)', background: 'var(--bench-fill)', color: 'var(--bench-ink-secondary)', border: '1px solid var(--bench-rule-strong)', fontWeight: '700', fontFamily: 'var(--font-code)' }}>
               Active line: {activeLine}
             </span>
           )}
@@ -84,6 +84,7 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
           return (
             <div
               key={lineNumber}
+              data-active-line={isHighlighted ? 'true' : undefined}
               data-unreached={isUnreached ? 'true' : undefined}
               title={isUnreached
                 ? 'This branch exists but the current input never took it. Change the input to see it run.'
@@ -92,9 +93,12 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
                 display: 'flex',
                 alignItems: 'center',
                 padding: '1px 12px',
-                background: isHighlighted ? 'var(--accent-violet-tint)' : 'transparent',
+                // Bench gives --probe-wash one job and this is it, and the probe hue one
+                // meaning: happening right now. A third hue here would put the single mark
+                // a reader follows outside the system every other mark belongs to.
+                background: isHighlighted ? 'var(--probe-wash)' : 'transparent',
                 borderLeft: isHighlighted
-                  ? '3px solid var(--accent-violet)'
+                  ? '3px solid var(--probe)'
                   : isUnreached
                     ? '3px dotted var(--border-strong)'
                     : '3px solid transparent',
@@ -112,7 +116,7 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
               <span aria-hidden="true" style={{ width: '10px', minWidth: '10px', color: 'var(--text-muted)', fontSize: '0.6rem', userSelect: 'none' }}>
                 {isUnreached ? '◦' : ''}
               </span>
-              <span style={{ width: '28px', minWidth: '28px', color: isHighlighted ? 'var(--accent-violet)' : 'var(--text-muted)', fontSize: '0.7rem', userSelect: 'none' }}>
+              <span style={{ width: '28px', minWidth: '28px', color: isHighlighted ? 'var(--bench-ink-secondary)' : 'var(--text-muted)', fontSize: '0.7rem', userSelect: 'none' }}>
                 {lineNumber}
               </span>
               <span style={{ whiteSpace: 'pre' }}>{lineText}</span>

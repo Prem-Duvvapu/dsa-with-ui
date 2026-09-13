@@ -37,11 +37,11 @@ export default function StackCanvas({ step, currentStep, title = 'Stack', steps,
     <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'hidden' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Layers size={16} color="var(--accent-violet)" />
+          <Layers size={16} color="var(--bench-ink-secondary)" />
           <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
             {title}
           </span>
-          <span style={{ fontSize: '0.66rem', padding: '2px 7px', background: 'var(--accent-violet-tint)', color: 'var(--accent-violet)', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-accent)', fontWeight: '700' }}>
+          <span style={{ fontSize: '0.66rem', padding: '2px 7px', background: 'var(--bench-fill)', color: 'var(--bench-ink-secondary)', borderRadius: 'var(--radius-full)', border: '1px solid var(--bench-rule-strong)', fontWeight: '700' }}>
             {items.length} item{items.length === 1 ? '' : 's'}
           </span>
         </div>

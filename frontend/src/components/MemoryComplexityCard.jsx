@@ -113,7 +113,7 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
         <div
           role="tablist"
           aria-label="Memory and complexity"
-          style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bench-fill)', padding: '2px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-default)' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bench-recessed)', padding: '2px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-default)' }}
         >
           <button
             type="button"
@@ -129,9 +129,13 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
               borderRadius: '4px',
               fontSize: '0.74rem',
               fontWeight: activeTab === 'memory' ? '700' : '500',
-              border: 'none',
-              background: activeTab === 'memory' ? 'var(--accent-violet)' : 'transparent',
-              color: activeTab === 'memory' ? 'var(--text-on-accent)' : 'var(--text-muted)',
+              // Selected reads as a raised cell, not as a hue: Bench spends its two
+              // colours on algorithm state and leaves the chrome neutral. Ink-on-ink was
+              // the accidental result of dropping the violet - white on --bench-ink-secondary
+              // is under 3:1 in the dark theme.
+              background: activeTab === 'memory' ? 'var(--bench-fill)' : 'transparent',
+              border: activeTab === 'memory' ? '1px solid var(--bench-rule-strong)' : '1px solid transparent',
+              color: activeTab === 'memory' ? 'var(--bench-ink)' : 'var(--text-muted)',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -157,9 +161,13 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
               borderRadius: '4px',
               fontSize: '0.74rem',
               fontWeight: activeTab === 'complexity' ? '700' : '500',
-              border: 'none',
-              background: activeTab === 'complexity' ? 'var(--accent-violet)' : 'transparent',
-              color: activeTab === 'complexity' ? 'var(--text-on-accent)' : 'var(--text-muted)',
+              // Selected reads as a raised cell, not as a hue: Bench spends its two
+              // colours on algorithm state and leaves the chrome neutral. Ink-on-ink was
+              // the accidental result of dropping the violet - white on --bench-ink-secondary
+              // is under 3:1 in the dark theme.
+              background: activeTab === 'complexity' ? 'var(--bench-fill)' : 'transparent',
+              border: activeTab === 'complexity' ? '1px solid var(--bench-rule-strong)' : '1px solid transparent',
+              color: activeTab === 'complexity' ? 'var(--bench-ink)' : 'var(--text-muted)',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -196,7 +204,7 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
                     className={styles.memoryRow}
                   >
                     <span style={{ color: 'var(--text-secondary)' }}>{key}</span>
-                    <span style={{ color: 'var(--text-primary)', fontWeight: '700', background: 'var(--accent-violet-tint)', padding: '1px 6px', borderRadius: '4px', border: '1px solid var(--border-accent)' }}>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: '700', background: 'var(--bench-fill)', padding: '1px 6px', borderRadius: '4px', border: '1px solid var(--bench-rule-strong)' }}>
                       {displayValue(val)}
                     </span>
                   </div>
@@ -239,13 +247,13 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
           /* Complexity Proof Tab Content */
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {/* Time Complexity */}
-            <div style={{ background: 'var(--accent-violet-tint)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-accent)', padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ background: 'var(--bench-fill)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--bench-rule-strong)', padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-violet)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--bench-ink-secondary)' }}>
                   <Cpu size={13} />
                   <span style={{ fontWeight: '700', fontSize: '0.76rem' }}>Time Complexity</span>
                 </div>
-                <span style={{ fontSize: '0.8rem', fontWeight: '800', fontFamily: 'var(--font-code)', color: 'var(--accent-violet)' }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: '800', fontFamily: 'var(--font-code)', color: 'var(--bench-ink-secondary)' }}>
                   {timeBadge}
                 </span>
               </div>

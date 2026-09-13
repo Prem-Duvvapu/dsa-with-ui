@@ -120,7 +120,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
       {/* Header Bar */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitBranch size={18} color="var(--accent-violet)" />
+          <GitBranch size={18} color="var(--bench-ink-secondary)" />
           <span style={{ fontSize: '0.92rem', fontWeight: '800', letterSpacing: '0.4px' }}>
             Divide & Conquer Recursion Tree Visualizer
           </span>

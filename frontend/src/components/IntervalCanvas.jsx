@@ -8,8 +8,8 @@ import CanvasShell from './CanvasShell';
  * Used by DsType.INTERVAL (e.g. n-meetings-in-one-room, merge-intervals, insert-interval).
  *
  * State tokens:
- * - Current/evaluating interval: var(--probe) (#ffb000)
- * - Selected/scheduled/merged interval: var(--settled) (#3ddc97)
+ * - Current/evaluating interval: var(--probe)
+ * - Selected/scheduled/merged interval: var(--settled)
  * - Rejected/non-overlapping: var(--bench-rule-strong)
  * - Default/pending: var(--bench-fill) with var(--bench-rule-strong) border
  */
@@ -159,10 +159,12 @@ export default function IntervalCanvas({ problem, currentStep, step, resolvedInp
           boxShadow: 'var(--state-done-glow)'
         };
       case 'target':
+        // Bench's `read`: a hollow probe ring rather than a sixth colour. That is what
+        // lets "being looked at" and "being written" share one hue and still read apart.
         return {
-          background: 'var(--accent-violet-tint)',
-          color: 'var(--accent-violet)',
-          border: '1px solid var(--border-accent)',
+          background: 'transparent',
+          color: 'var(--probe)',
+          border: '1px solid var(--probe)',
           fontWeight: '600'
         };
       case 'rejected':

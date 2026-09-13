@@ -59,9 +59,9 @@ export default function GridField({ field, value, onChange }) {
                   width: '26px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontFamily: 'var(--font-code)', fontSize: '0.7rem', fontWeight: 700, cursor: 'pointer',
                   borderRadius: 'var(--radius-xs)',
-                  border: cell === 0 ? '1px solid var(--border-default)' : '1px solid var(--accent-violet)',
-                  background: cell === 0 ? 'var(--bg-elevated)' : 'var(--accent-violet-tint)',
-                  color: cell === 0 ? 'var(--text-muted)' : 'var(--accent-violet)'
+                  border: cell === 0 ? '1px solid var(--border-default)' : '1px solid var(--bench-ink-secondary)',
+                  background: cell === 0 ? 'var(--bg-elevated)' : 'var(--bench-fill)',
+                  color: cell === 0 ? 'var(--text-muted)' : 'var(--bench-ink-secondary)'
                 }}
               >
                 {cell}

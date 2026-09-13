@@ -47,7 +47,7 @@ export default function TreeCanvas({ problem, currentStep, step, steps, currentS
     <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitCommit size={16} color="var(--accent-violet)" />
+          <GitCommit size={16} color="var(--bench-ink-secondary)" />
           <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
             Binary tree & BST topology visualizer
           </span>

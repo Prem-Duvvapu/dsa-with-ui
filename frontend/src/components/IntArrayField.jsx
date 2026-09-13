@@ -48,7 +48,7 @@ export default function IntArrayField({ field, value, onChange, allowNulls = fal
               aria-label={v === null ? `Position ${i + 1}: no node, click to add a value` : `Position ${i + 1}: value ${v}, click to clear`}
               style={{
                 border: 'none', background: 'transparent', cursor: 'pointer',
-                color: v === null ? 'var(--text-muted)' : 'var(--accent-violet)',
+                color: v === null ? 'var(--text-muted)' : 'var(--bench-ink-secondary)',
                 fontFamily: 'var(--font-code)', fontSize: '0.7rem', fontWeight: 700,
                 padding: '2px 4px'
               }}
