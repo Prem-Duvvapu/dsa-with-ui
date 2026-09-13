@@ -92,6 +92,9 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
         for (int i = 0; i <= n; i++) {
             List<DpCell> row = new ArrayList<>(W + 1);
             for (int w = 0; w <= W; w++) {
+                // See Knapsack01Tracer: past the probe this is unwritten int[][] memory,
+                // not a computed zero, and the two must not look the same.
+                boolean filled = probeI < 0 || i == 0 || i < probeI || (i == probeI && w <= probeW);
                 String state;
                 if (i == probeI && w == probeW) {
                     state = "probe";
@@ -99,10 +102,12 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
                     state = "read";
                 } else if (i == probeI - 1 && (w == readW || w == probeW)) {
                     state = "read";
+                } else if (!filled) {
+                    state = "void";
                 } else {
-                    state = "known";
+                    state = probeI < 0 ? "resolved" : "known";
                 }
-                row.add(new DpCell(String.valueOf(dp[i][w]), state));
+                row.add(new DpCell(filled ? String.valueOf(dp[i][w]) : "\u00b7", state));
             }
             rows.add(row);
         }

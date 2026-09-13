@@ -897,3 +897,58 @@ mid-animation", proven RED first.
 The lesson is narrower than the heuristic: **a per-step inference about a whole-trace fact
 will eventually disagree with itself**, and the disagreement is visible to the user as the
 picture rewriting its own axis.
+
+## RCA-037 — The recurrence blinked out on every step that did not restate it
+
+- **Discovered:** 2026-09-13, by the Dynamic Programming audit
+- **Status:** Resolved
+- **Symptom and impact:** the recurrence panel - the headline teaching device of the DP
+  canvas - appeared and vanished as the viewer stepped through a trace. **164 of 1133 table
+  steps across 26 problems** dropped it after it had already been shown; `print-lis` lost it
+  on 30 of its 47 steps, `partition-equal-subset-sum` on 22 of 51, `matrix-chain-
+  multiplication` on 18 of 32.
+- **Root cause:** `DpTable` carries two fields that look like a pair and are not.
+  `formula` is a **constant of the problem** (`dp[i] = dp[j] + 1, ...`); `substitution` is
+  **one step's arithmetic** (`dp[3] = dp[2] + 1 = 2`). Tracers attach both together, on the
+  steps that actually compute a cell — correctly. `DpTableCanvas` then rendered the block
+  only when the *current* step carried both, so base cases, comparison steps and the closing
+  summary showed nothing at all. The comparison steps are exactly where a learner needs the
+  rule they are evaluating against.
+- **The general shape, third occurrence:** this is RCA-034/035 again, one level down. There
+  the missing value was a structure at the top of a step; here it is a field nested inside
+  `dpTable`, which is why the `lastPayload` sweep did not reach it. **A canvas that reads a
+  persistent value off the current step alone will blank it**, wherever that value lives.
+- **Resolution:** `DpTableCanvas` carries the *formula* forward from the most recent step
+  that stated one, and never carries the substitution — held over, it would caption the
+  wrong arithmetic. The block renders whenever a rule is known; a bare substitution still
+  renders nothing, because arithmetic with no rule above it is an unexplained fact, while a
+  bare rule is the recurrence standing over a step it does not cover, which is what a base
+  case is.
+- **Regression guard:** `DpTableCanvas.test.jsx` — "holds the rule on screen across the
+  steps that do not restate it" and "does not carry a rule backwards to steps before it was
+  stated". Proven RED first.
+
+## RCA-038 — A DP table printed unwritten array memory as settled values
+
+- **Discovered:** 2026-09-13, by the Dynamic Programming audit
+- **Status:** Resolved
+- **Symptom and impact:** `knapsack-01` and `unbounded-knapsack` drew every cell in the
+  `known` state from step 1, so the whole table read as already solved. Item 4 at capacity 5
+  showed `0` on the first frame and finishes at `13` — and a viewer had no way to tell that
+  `0` from a computed one, because both carried the same glyph. The one thing a DP table
+  exists to show, unknown cells becoming known, was the one thing these two did not show.
+- **Root cause:** the table builder assigned `known` to everything that was not the probe or
+  a read. `dp` is a plain `int[][]`, so the unreached cells were Java's zero-fill being
+  printed as data. `DpCell` already has the right word for this - `void` - and these two
+  tracers never used it.
+- **Why no contract test:** the tempting rule ("a cell that later changes value must not
+  have been presented as settled") flags five correct tracers. `print-lis`,
+  `number-of-lis`, `longest-string-chain`, `largest-divisible-subset` and
+  `longest-bitonic-subsequence` all start every cell at `1` and improve it, and their
+  narration says so: that 1 is a **genuine lower bound the algorithm holds**, not unwritten
+  memory. No structural rule separates the two — the difference is semantic. The golden
+  files pin cell state, so the fix is guarded there, and this note exists so the next person
+  does not go looking for the test that cannot be written.
+- **Resolution:** both builders mark cells past the fill frontier `void` with a `·`, and the
+  closing step marks the completed table `resolved` rather than `known` — the "table is
+  finished" frame the other DP tracers already end on.

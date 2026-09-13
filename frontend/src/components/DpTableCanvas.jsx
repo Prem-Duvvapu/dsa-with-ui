@@ -113,7 +113,28 @@ function ProvenanceArrows({ arrows, size }) {
   );
 }
 
-export default function DpTableCanvas({ currentStep, step }) {
+/**
+ * The most recent recurrence the trace stated, for the same reason `trace/lastPayload.js`
+ * exists: a value that persists between steps must not read as absent on the steps that do
+ * not restate it. `DpTable.formula` is a constant of the problem while `substitution` is
+ * one step's arithmetic, so tracers attach the pair only where a cell is computed - and
+ * reading the rule off the current step alone blanked it on every base case, comparison
+ * and closing summary in between.
+ *
+ * Looks back only, never forward: a rule the trace has not introduced yet is not on screen.
+ */
+function lastFormula(steps, index, current) {
+  if (typeof current?.dpTable?.formula === 'string') return current.dpTable.formula;
+  if (Array.isArray(steps)) {
+    for (let i = Math.min(index ?? steps.length - 1, steps.length - 1); i >= 0; i -= 1) {
+      const formula = steps[i]?.dpTable?.formula;
+      if (typeof formula === 'string') return formula;
+    }
+  }
+  return null;
+}
+
+export default function DpTableCanvas({ currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
   const table = activeStep?.dpTable;
   const rowLabels = Array.isArray(table?.rowLabels) ? table.rowLabels : [];
@@ -152,18 +173,24 @@ export default function DpTableCanvas({ currentStep, step }) {
   // header/legend taking space away from the recurrence table.
   if (!hasTable) return <p className="dp-empty">No DP table data</p>;
 
-  const formula = typeof table.formula === 'string' ? table.formula : null;
+  const formula = lastFormula(steps, currentStepIndex, activeStep);
+  // Never carried. It describes one cell of one step; held over, it would caption the
+  // wrong arithmetic.
   const substitution = typeof table.substitution === 'string' ? table.substitution : null;
 
   return (
     <div className="dp-stage">
-      {/* Absent on tracers that haven't adopted design D3 yet — see
-          PROMPT-F-visual-fidelity.md. Never render one line without the other; a bare
-          substitution with no rule above it reads as an unexplained arithmetic fact. */}
-      {formula && substitution && (
+      {/* Absent until the trace states a rule, and on tracers that haven't adopted design
+          D3 yet — see PROMPT-F-visual-fidelity.md. A bare substitution still renders
+          nothing: arithmetic with no rule above it is an unexplained fact. A bare rule is
+          the opposite — the recurrence standing while this step does something it does not
+          cover, which is exactly what a base case is. */}
+      {formula && (
         <div className="dp-recurrence">
           <div className="dp-recurrence-formula">{formula}</div>
-          <div className="dp-recurrence-substitution">{substitution}</div>
+          {substitution && (
+            <div className="dp-recurrence-substitution">{substitution}</div>
+          )}
         </div>
       )}
       <div className="dp-table-wrap" ref={wrapRef}>

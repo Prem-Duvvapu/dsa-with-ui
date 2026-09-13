@@ -208,14 +208,41 @@ describe('DpTableCanvas', () => {
       expect(container.querySelector('.dp-recurrence')).not.toBeInTheDocument();
     });
 
-    it('never renders one line without the other', () => {
-      const formulaOnly = { ...dpTable, formula: 'ways[i] = ways[i-1] + ways[i-2]', substitution: null };
-      const { container: c1 } = render(<DpTableCanvas currentStep={{ dpTable: formulaOnly }} />);
-      expect(c1.querySelector('.dp-recurrence')).not.toBeInTheDocument();
-
+    it('never renders a substitution with no rule above it', () => {
+      // Unexplained arithmetic. The reverse is not symmetric: the rule alone is the
+      // recurrence standing while this step does something it does not cover.
       const substitutionOnly = { ...dpTable, formula: null, substitution: 'ways[4] = 5' };
-      const { container: c2 } = render(<DpTableCanvas currentStep={{ dpTable: substitutionOnly }} />);
-      expect(c2.querySelector('.dp-recurrence')).not.toBeInTheDocument();
+      const { container } = render(<DpTableCanvas currentStep={{ dpTable: substitutionOnly }} />);
+      expect(container.querySelector('.dp-recurrence')).not.toBeInTheDocument();
+    });
+
+    it('holds the rule on screen across the steps that do not restate it', () => {
+      // The recurrence is a constant of the problem; the substitution is this step's
+      // arithmetic. Tracers attach both only to the steps that compute a cell, so reading
+      // the rule off the current step alone made the panel blink out on base cases,
+      // comparisons and the closing summary - 164 steps across 26 problems, print-lis on
+      // 30 of its 47. The comparison steps are exactly where a learner needs the rule they
+      // are evaluating against.
+      const formula = 'dp[i] = dp[j] + 1';
+      const steps = [
+        { dpTable: { ...dpTable, formula, substitution: 'dp[3] = dp[2] + 1 = 2' } },
+        { dpTable: { ...dpTable } }
+      ];
+      render(<DpTableCanvas steps={steps} currentStepIndex={1} currentStep={steps[1]} />);
+
+      expect(screen.getByText(formula)).toBeInTheDocument();
+      expect(screen.queryByText('dp[3] = dp[2] + 1 = 2')).not.toBeInTheDocument();
+    });
+
+    it('does not carry a rule backwards to steps before it was stated', () => {
+      const steps = [
+        { dpTable: { ...dpTable } },
+        { dpTable: { ...dpTable, formula: 'dp[i] = dp[i-1]', substitution: 'dp[1] = dp[0]' } }
+      ];
+      const { container } = render(
+        <DpTableCanvas steps={steps} currentStepIndex={0} currentStep={steps[0]} />
+      );
+      expect(container.querySelector('.dp-recurrence')).not.toBeInTheDocument();
     });
   });
 });

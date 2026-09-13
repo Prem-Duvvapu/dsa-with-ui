@@ -93,15 +93,23 @@ public class Knapsack01Tracer implements AlgorithmTracer {
         for (int i = 0; i <= n; i++) {
             List<DpCell> row = new ArrayList<>(W + 1);
             for (int w = 0; w <= W; w++) {
+                // Row 0 is the real base case (no items, so no value at any capacity).
+                // Everything past the probe is untouched int[][] memory, and printing its
+                // zeros as "known" showed the viewer a settled 0 for cells the algorithm
+                // had not reached - indistinguishable from a computed 0, and wrong: item
+                // 4 at capacity 5 read 0 on step 1 and finishes at 13.
+                boolean filled = probeI < 0 || i == 0 || i < probeI || (i == probeI && w <= probeW);
                 String state;
                 if (i == probeI && w == probeW) {
                     state = "probe";
                 } else if (i == probeI - 1 && (w == readW || w == probeW)) {
                     state = "read";
+                } else if (!filled) {
+                    state = "void";
                 } else {
-                    state = "known";
+                    state = probeI < 0 ? "resolved" : "known";
                 }
-                row.add(new DpCell(String.valueOf(dp[i][w]), state));
+                row.add(new DpCell(filled ? String.valueOf(dp[i][w]) : "\u00b7", state));
             }
             rows.add(row);
         }
