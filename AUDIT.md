@@ -575,6 +575,7 @@ original snapshot rather than the current state.
 | Binary Search | five separate defects, below |
 | Dynamic Programming | three, below — none in the arithmetic, all in what the picture showed |
 | Greedy Algorithms | three, below — the same "canvas pointed at the wrong structure" shape, found deliberately |
+| Heaps & PriorityQueue | four, below — including two tracers not running the algorithm on screen beside them |
 
 **Binary Search — 32/32 traced, five findings, all fixed.** None was visible to any existing
 test, and three of the five were a blank or lying picture rather than a wrong trace:
@@ -643,6 +644,31 @@ departure pointer `j` living in a variable string. The two-pointer sweep is ther
 visible. The honest fix is a merged event timeline — all 2n arrivals and departures in time
 order, each labelled — which is a tracer rewrite rather than a retag, and is listed here so
 it is chosen rather than forgotten.
+
+**Heaps & PriorityQueue — 17/17 traced, four findings, all fixed.** The sweep flagged one
+dead anchor (`violation`, a terminal failure branch its alternate reaches) and nothing else.
+The findings came from reading what the canvas was actually being handed:
+
+1. **Five heaps were drawn fully sorted.** `HeapCanvas` puts slot `i`'s children at `2i+1`
+   and `2i+2` and prints the index under each slot, so `Collections.sort(snapshot)` before
+   emitting drew a perfectly ordered tree at every step — teaching that a priority queue
+   keeps all its elements ordered, which is the commonest misconception about heaps
+   (RCA-042). `java.util.PriorityQueue` does not expose its array and `toArray()` is
+   documented as unordered, so sorting was the reachable way to get a deterministic order.
+   `ArrayHeap` now keeps the array explicitly.
+2. **A genuinely empty heap was reported as missing data** on 12 steps across 5 problems,
+   `task-scheduler` on 8 of its 15 — where "nothing is schedulable, the CPU sits idle"
+   beside an empty heap *is* the lesson (RCA-043).
+3. **`merge-k-sorted-lists` scanned three heads linearly** while its code panel showed
+   `PriorityQueue.poll()`, and never said "heap" in eighteen steps (RCA-044).
+4. **`min-cost-connect-sticks` kept a sorted `ArrayList`** with `remove(0)` beside the same
+   `PriorityQueue.poll()` code panel (RCA-044).
+
+The near-miss is worth as much as the findings: (2) has the exact shape of RCA-034, and
+applying that fix — carrying the last heap forward — would have shown `task-scheduler` a
+heap the algorithm had just drained, on precisely the steps where its emptiness is the
+point. **Absence and emptiness need opposite fixes and are indistinguishable from the
+payload alone**; only reading the tracer separates them.
 
 ---
 
