@@ -574,6 +574,7 @@ original snapshot rather than the current state.
 | Graphs | Kahn's-algorithm cycle default skipped the entire algorithm |
 | Binary Search | five separate defects, below |
 | Dynamic Programming | three, below — none in the arithmetic, all in what the picture showed |
+| Greedy Algorithms | three, below — the same "canvas pointed at the wrong structure" shape, found deliberately |
 
 **Binary Search — 32/32 traced, five findings, all fixed.** None was visible to any existing
 test, and three of the five were a blank or lying picture rather than a wrong trace:
@@ -618,6 +619,30 @@ retried: "a cell that later changes value must not have been presented as settle
 five correct tracers whose `dp[]` legitimately starts at a lower bound of 1, and "the
 declared dsType's field must not be out-counted by another structure field" flags 33 tracers
 that are almost all correct.
+
+**Greedy Algorithms — 14/14 traced, three findings, all fixed.** The sweep was clean: every
+id traced, every legacy route 404, and the five dead anchors (`skip`, `stuck` ×2, `already`,
+`invalid`) are all guards that fire only once the algorithm has effectively finished, each
+reached by its alternate. Every step of every problem carries its `arrayState`, so there is
+no RCA-034 blinking anywhere in the topic. What the audit found instead:
+
+1. `insert-interval` labels every cell it emits `"[a,b]"`, merges along a timeline, and is
+   named in `IntervalCanvas`'s own header — and was tagged `ARRAY`, so it drew a bar chart
+   whose bar heights were each interval's *end time* (RCA-041).
+2. `lru-page-replacement` emits its recency queue on **13 of 16 steps**, and `ArrayCanvas`
+   never references `queueOrStackState`. Computed, never drawn (RCA-041).
+3. `IntervalCanvas` ended its resolution chain with four hardcoded intervals — another
+   problem's defaults, with invented states. Unreachable from both live Interval tracers,
+   deleted while it was still cheap (RCA-040).
+
+Also deleted two dead `board()` helpers, copy-pasted between `MinimumPlatformsTracer` and
+`AssignCookiesTracer` and called by neither.
+
+**Left open, deliberately:** `minimum-platforms` draws only its arrival array, with the
+departure pointer `j` living in a variable string. The two-pointer sweep is therefore half
+visible. The honest fix is a merged event timeline — all 2n arrivals and departures in time
+order, each labelled — which is a tracer rewrite rather than a retag, and is listed here so
+it is chosen rather than forgotten.
 
 ---
 
