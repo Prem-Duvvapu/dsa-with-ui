@@ -97,7 +97,7 @@ public class DesignTwitterTracer implements AlgorithmTracer {
 
     private static List<Integer> buildFeed(int user, Map<Integer, List<Tweet>> tweets,
                                            Map<Integer, Set<Integer>> follows, StepEmitter emit) {
-        PriorityQueue<Cursor> heap = new PriorityQueue<>(Comparator.comparingInt(Cursor::time).reversed());
+        ArrayHeap<Cursor> heap = new ArrayHeap<>(Comparator.comparingInt(Cursor::time).reversed());
         Set<Integer> sources = new LinkedHashSet<>();
         sources.add(user);
         sources.addAll(follows.getOrDefault(user, Set.of()));
@@ -138,9 +138,9 @@ public class DesignTwitterTracer implements AlgorithmTracer {
         return out;
     }
 
-    private static List<ArrayElement> render(PriorityQueue<Cursor> heap) {
-        List<Cursor> copy = new ArrayList<>(heap);
-        copy.sort(Comparator.comparingInt(Cursor::time).reversed());
+    /** The heap's own array - see ArrayHeap for why this must not be sorted first. */
+    private static List<ArrayElement> render(ArrayHeap<Cursor> heap) {
+        List<Cursor> copy = heap.slots();
         List<ArrayElement> out = new ArrayList<>();
         for (int i = 0; i < copy.size(); i++) {
             Tweet t = copy.get(i).tweet();

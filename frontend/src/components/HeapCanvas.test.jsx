@@ -58,4 +58,17 @@ describe('HeapCanvas', () => {
     render(<HeapCanvas currentStep={{ variables: {} }} />);
     expect(screen.getByRole('status').textContent).toContain('No heap contents');
   });
+
+  it('distinguishes an empty heap from a step that never mentioned one', () => {
+    // task-scheduler drains its heap every time the last runnable task goes to cooldown -
+    // 8 of its 15 steps state an EMPTY heap, and "nothing is schedulable, the CPU sits
+    // idle" beside an empty heap is the whole lesson of that problem. Reporting it as
+    // missing data made a correct trace look like a broken canvas. The tracer does say
+    // which it is: [] was stated, absent was not.
+    const { rerender } = render(<HeapCanvas currentStep={{ arrayState: [] }} />);
+    expect(screen.getByRole('status').textContent).toMatch(/heap is empty/i);
+
+    rerender(<HeapCanvas currentStep={{ treeNodes: [] }} />);
+    expect(screen.getByRole('status').textContent).toMatch(/heap is empty/i);
+  });
 });

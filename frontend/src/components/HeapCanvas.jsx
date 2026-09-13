@@ -26,7 +26,13 @@ export default function HeapCanvas({ currentStep, step }) {
   const { slots, source } = heapSlots(activeStep);
 
   if (slots.length === 0) {
-    return <div className={styles.empty} role="status">No heap contents for this step.</div>;
+    // "Empty" and "not mentioned" look identical if you only count slots, and they mean
+    // opposite things: one is the algorithm's own state, the other is missing payload.
+    return (
+      <div className={styles.empty} role="status">
+        {source ? 'The heap is empty.' : 'No heap contents for this step.'}
+      </div>
+    );
   }
 
   const rows = heapLayout(slots.length);

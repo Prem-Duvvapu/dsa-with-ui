@@ -4,7 +4,6 @@ import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,19 +69,22 @@ public class MinCostConnectSticksTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] sticks = in.getIntArray("sticks");
 
-        List<Integer> heap = new ArrayList<>();
-        for (int s : sticks) heap.add(s);
-        heap.sort(Integer::compareTo);
+        // A real binary heap, not a sorted list. This used to keep the sticks fully sorted
+        // and call remove(0) / insert-in-place, which gives the same answer and draws a
+        // perfectly ordered tree at every step - while the code panel beside it says
+        // PriorityQueue.poll(). See ArrayHeap.
+        ArrayHeap<Integer> heap = ArrayHeap.minHeap();
+        for (int s : sticks) heap.offer(s);
 
         emit.at("popTwo")
-                .say("Start with sticks %s.", heap)
+                .say("Start with sticks %s.", heap.slots())
                 .var("heapSize", heap.size())
                 .array(toArray(heap)).step();
 
         int totalCost = 0;
         while (heap.size() > 1) {
-            int a = heap.remove(0);
-            int b = heap.remove(0);
+            int a = heap.poll();
+            int b = heap.poll();
             emit.at("popTwo")
                     .say("Two shortest sticks are %d and %d.", a, b)
                     .var("a", a).var("b", b)
@@ -90,8 +92,7 @@ public class MinCostConnectSticksTracer implements AlgorithmTracer {
 
             int cost = a + b;
             totalCost += cost;
-            int insertAt = insertionIndex(heap, cost);
-            heap.add(insertAt, cost);
+            int insertAt = heap.offer(cost);
             emit.at("connect")
                     .say("Connect %d + %d for cost %d (running total %d) - the joined stick, "
                                     + "length %d, rejoins the heap.",
@@ -102,20 +103,15 @@ public class MinCostConnectSticksTracer implements AlgorithmTracer {
 
         emit.at("done")
                 .say("One stick remains, length %d. Total cost to connect them all: %d.",
-                        heap.get(0), totalCost)
+                        heap.peek(), totalCost)
                 .var("answer", totalCost)
                 .array(toArray(heap), 0).step();
     }
 
-    private static int insertionIndex(List<Integer> sortedHeap, int value) {
-        int i = 0;
-        while (i < sortedHeap.size() && sortedHeap.get(i) < value) i++;
-        return i;
-    }
-
-    private static int[] toArray(List<Integer> heap) {
-        int[] out = new int[heap.size()];
-        for (int i = 0; i < out.length; i++) out[i] = heap.get(i);
+    private static int[] toArray(ArrayHeap<Integer> heap) {
+        List<Integer> slots = heap.slots();
+        int[] out = new int[slots.size()];
+        for (int i = 0; i < out.length; i++) out[i] = slots.get(i);
         return out;
     }
 }

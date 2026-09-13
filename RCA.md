@@ -1040,3 +1040,69 @@ picture rewriting its own axis.
 - **How to find the next one:** for each tracer, list the structure fields its steps
   populate and ask whether the declared dsType's canvas renders the one the *narration* is
   about. Counting steps does not work — see RCA-039.
+
+## RCA-042 — Five heaps were drawn fully sorted, teaching the misconception the canvas exists to correct
+
+- **Discovered:** 2026-09-13, by the Heaps & PriorityQueue audit
+- **Status:** Resolved
+- **Symptom and impact:** `HeapCanvas` puts slot `i`'s children at `2i+1` and `2i+2` and
+  prints the index under every slot, because "the tree and the array are the SAME structure"
+  is the entire lesson (its own header says so). Five tracers fed it a **sorted** snapshot:
+
+  ```java
+  List<Integer> values = new ArrayList<>(heap);
+  Collections.sort(values);              // <- every step, every one of these problems
+  ```
+
+  So the tree drawn was perfectly ordered at every step, on every input — which says a
+  priority queue keeps all of its elements in order. It does not; only the root is
+  guaranteed, and that is the single most common misconception about heaps. Affected:
+  `kth-largest-stream`, `sort-k-sorted-array`, `maximum-sum-combination`, `design-twitter`,
+  and `min-cost-connect-sticks`, which was not using a heap at all — it kept a sorted
+  `ArrayList` with `remove(0)` and an insert-in-place, while its code panel showed
+  `PriorityQueue.poll()`.
+- **Root cause:** `java.util.PriorityQueue` does not expose its array. `toArray()` is
+  documented to return the elements "in no particular order" — it happens to return the
+  internal heap on every mainstream JVM, but that is not something a teaching visualization
+  should rest on. Sorting was the reachable way to get *a* deterministic order, and a sorted
+  array genuinely is a valid heap, so nothing was ever wrong enough to fail.
+- **Resolution:** `ArrayHeap`, a small explicit binary heap with `offer`/`poll`/`slots()`,
+  where `slots()` returns the array the class actually sifts. `TaskSchedulerTracer` and
+  `ImplementMinHeapTracer` already owned their heap array this way and were always honest;
+  this is the same thing, shared. `offer` returns the index the value settled at, which is
+  the slot worth highlighting.
+- **Verification:** all four changed goldens produce byte-identical answers, every emitted
+  array satisfies its heap property, and no trace is fully sorted any more —
+  checked programmatically across every step, not by eye. `design-twitter`'s golden did not
+  move: its heap never holds more than three elements, where sorted order and heap order
+  coincide. It was converted anyway, since the input is caller-supplied.
+- **What this says about the class of bug:** the trace was *correct*, the canvas was
+  *correct*, the contract tests were satisfied, and the picture still taught the opposite of
+  the truth. Nothing mechanical catches that. The question to ask of a visualization is not
+  "is this data valid" but "what would a learner conclude from watching it".
+
+## RCA-043 — An empty structure reported as a missing one
+
+- **Discovered:** 2026-09-13, by the Heaps & PriorityQueue audit
+- **Status:** Resolved
+- **Symptom and impact:** `HeapCanvas` rendered "No heap contents for this step." on **12
+  steps across 5 problems** where the heap was genuinely, correctly empty.
+  `task-scheduler` was 8 of its 15 steps — and "nothing is schedulable, every remaining task
+  is still cooling down, the CPU sits idle" beside an empty heap is precisely that problem's
+  lesson. A correct trace looked like a broken canvas.
+- **Root cause:** `heapSlots` returned `{slots: [], source: null}` for an empty heap and for
+  a step that never mentioned one, so the canvas could not tell them apart. It reported both
+  as missing payload.
+- **The near-miss worth recording:** the surrounding shape — a structure absent from most
+  steps of a trace — is RCA-034/035, which this audit pass had already found three times
+  (RCA-037, and twice more in Greedy). Applying that fix here, carrying the last heap
+  forward, would have shown `task-scheduler` a heap that the algorithm had *just drained*,
+  on the exact steps where its emptiness is the point. Reading the tracer first is what
+  separated them: every one of the 12 steps calls `.array(toArray(heap))` or
+  `.arrayState(render(heap))` and passes an empty heap. **Absence and emptiness need
+  opposite fixes, and they look identical from the payload alone.**
+- **Resolution:** `heapSlots` keeps the source when the field was stated but empty, and the
+  canvas says "The heap is empty." for that case, reserving "No heap contents for this step."
+  for a step that stated neither field.
+- **Regression guard:** `HeapCanvas.test.jsx`, "distinguishes an empty heap from a step that
+  never mentioned one", proven RED first.

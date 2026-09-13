@@ -57,6 +57,14 @@ export function heapSlots(step) {
       source: 'array'
     };
   }
+  // Stated and empty is a real algorithmic state, and a common one: a heap drained by its
+  // last pop, a priority queue emptied while every remaining item cools down. The source
+  // survives so the canvas can say "empty" rather than "missing" - the same distinction
+  // trace/lastPayload.js draws, here without the look-back, because an empty heap is the
+  // truth for THIS step and carrying the previous one forward would show contents the
+  // algorithm has just removed.
+  if (Array.isArray(step?.treeNodes)) return { slots: [], source: 'tree' };
+  if (Array.isArray(step?.arrayState)) return { slots: [], source: 'array' };
   return { slots: [], source: null };
 }
 
