@@ -96,24 +96,13 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
   const spaceExplanation = complexity?.spaceExplanation || 'Space explanation unavailable.';
 
   return (
-    <div 
-      className="glass-panel" 
-      style={{ 
-        width: '100%', 
-        height: '100%', 
-        padding: '12px', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        gap: '10px', 
-        overflow: 'hidden' 
-      }}
-    >
+    <div className={`glass-panel ${styles.card}`}>
       {/* Tab Switcher Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px solid var(--border-default)', flexShrink: 0 }}>
+      <div className={styles.header}>
         <div
           role="tablist"
           aria-label="Memory and complexity"
-          style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bench-recessed)', padding: '2px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-default)' }}
+          className={styles.tablist}
         >
           <button
             type="button"
@@ -180,7 +169,7 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
           </button>
         </div>
 
-        <span style={{ fontSize: '0.66rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>
+        <span className={styles.headerMeta}>
           {activeTab === 'memory' ? `${memoryItemCount} items` : timeBadge}
         </span>
       </div>
@@ -190,21 +179,21 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
         id={panelId}
         role="tabpanel"
         aria-labelledby={activeTab === 'memory' ? memoryTabId : complexityTabId}
-        style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}
+        className={styles.panel}
       >
         {activeTab === 'memory' ? (
           /* Memory Inspector Tab Content */
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div className={styles.stack}>
             {variableEntries.length > 0 && (
-              <section aria-label="Variables" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <section aria-label="Variables" className={styles.section}>
                 <SectionHeading>Variables</SectionHeading>
                 {variableEntries.map(([key, val]) => (
                   <div
                     key={key}
                     className={styles.memoryRow}
                   >
-                    <span style={{ color: 'var(--text-secondary)' }}>{key}</span>
-                    <span style={{ color: 'var(--text-primary)', fontWeight: '700', background: 'var(--bench-fill)', padding: '1px 6px', borderRadius: '4px', border: '1px solid var(--bench-rule-strong)' }}>
+                    <span className={styles.rowKey}>{key}</span>
+                    <span className={styles.rowValue}>
                       {displayValue(val)}
                     </span>
                   </div>
@@ -238,42 +227,42 @@ export default function MemoryComplexityCard({ currentStep, problem, initialTab 
             )}
 
             {memoryItemCount === 0 && (
-              <div style={{ padding: '16px', textOverflow: 'ellipsis', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.74rem', fontStyle: 'italic' }}>
+              <div className={styles.emptyNote}>
                 No active memory state
               </div>
             )}
           </div>
         ) : (
           /* Complexity Proof Tab Content */
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div className={styles.stack}>
             {/* Time Complexity */}
-            <div style={{ background: 'var(--bench-fill)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--bench-rule-strong)', padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--bench-ink-secondary)' }}>
+            <div className={styles.complexityCard}>
+              <div className={styles.complexityHead}>
+                <div className={styles.complexityLabel}>
                   <Cpu size={13} />
-                  <span style={{ fontWeight: '700', fontSize: '0.76rem' }}>Time Complexity</span>
+                  <span className={styles.complexityLabelText}>Time Complexity</span>
                 </div>
-                <span style={{ fontSize: '0.8rem', fontWeight: '800', fontFamily: 'var(--font-code)', color: 'var(--bench-ink-secondary)' }}>
+                <span className={styles.complexityValue}>
                   {timeBadge}
                 </span>
               </div>
-              <p style={{ fontSize: '0.72rem', color: 'var(--text-primary)', lineHeight: '1.35' }}>
+              <p className={styles.complexityText}>
                 <strong>Proof: </strong>{timeExplanation}
               </p>
             </div>
 
             {/* Space Complexity */}
-            <div style={{ background: 'var(--bench-fill)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--bench-rule-strong)', padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--state-done)' }}>
+            <div className={styles.complexityCard}>
+              <div className={styles.complexityHead}>
+                <div className={styles.complexityLabel}>
                   <HardDrive size={13} />
-                  <span style={{ fontWeight: '700', fontSize: '0.76rem' }}>Space Complexity</span>
+                  <span className={styles.complexityLabelText}>Space Complexity</span>
                 </div>
-                <span style={{ fontSize: '0.8rem', fontWeight: '800', fontFamily: 'var(--font-code)', color: 'var(--state-done)' }}>
+                <span className={styles.complexityValue}>
                   {spaceBadge}
                 </span>
               </div>
-              <p style={{ fontSize: '0.72rem', color: 'var(--text-primary)', lineHeight: '1.35' }}>
+              <p className={styles.complexityText}>
                 <strong>Auxiliary Space: </strong>{spaceExplanation}
               </p>
             </div>

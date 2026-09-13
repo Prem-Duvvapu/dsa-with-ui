@@ -1,0 +1,29 @@
+/* Stage plus a dash key. CanvasShell owns the title and the state legend; this file keeps
+   only the thing the shell cannot say - that two dash patterns mean two kinds of LINK. */
+
+.wrap {
+  flex: 1;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.linkKey {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-bottom: 16px;
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+.linkKeyItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

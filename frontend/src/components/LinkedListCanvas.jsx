@@ -1,5 +1,6 @@
+import styles from './LinkedListCanvas.module.css';
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { Link2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { lastPayload } from '../trace/lastPayload';
 
 /**
@@ -106,31 +107,27 @@ export default function LinkedListCanvas({ problem, currentStep, step, steps, cu
   }, [JSON.stringify(listState.map((n) => [n.id, n.childId, n.randomId]))]);
 
   return (
-    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Link2 size={18} color="var(--bench-ink-secondary)" />
-          <span style={{ fontSize: '0.9rem', fontWeight: '700', letterSpacing: '0.4px' }}>
-            Linked List Topology Visualizer
-          </span>
+    <div className={styles.wrap}>
+      {/* No title here: CanvasShell already names the problem. What survives is the dash
+          key, which the shell's generic legend cannot express - it explains two link KINDS
+          drawn as two dash patterns, not two states. It appears only when the list
+          actually has those links. */}
+      {(edges.child.length > 0 || edges.random.length > 0) && (
+        <div className={styles.linkKey}>
+          {edges.child.length > 0 && (
+            <span className={styles.linkKeyItem}>
+              <svg width="20" height="8" aria-hidden="true"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-child)" strokeWidth="2" strokeDasharray="4,3" /></svg>
+              child
+            </span>
+          )}
+          {edges.random.length > 0 && (
+            <span className={styles.linkKeyItem}>
+              <svg width="20" height="8" aria-hidden="true"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-random)" strokeWidth="2" strokeDasharray="1,3" strokeLinecap="round" /></svg>
+              random
+            </span>
+          )}
         </div>
-        {(edges.child.length > 0 || edges.random.length > 0) && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.68rem', color: 'var(--text-secondary)' }}>
-            {edges.child.length > 0 && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-child)" strokeWidth="2" strokeDasharray="4,3" /></svg>
-                child
-              </span>
-            )}
-            {edges.random.length > 0 && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-random)" strokeWidth="2" strokeDasharray="1,3" strokeLinecap="round" /></svg>
-                random
-              </span>
-            )}
-          </div>
-        )}
-      </div>
+      )}
 
       <div
         ref={containerRef}
