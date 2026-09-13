@@ -577,6 +577,7 @@ original snapshot rather than the current state.
 | Greedy Algorithms | three, below — the same "canvas pointed at the wrong structure" shape, found deliberately |
 | Heaps & PriorityQueue | four, below — including two tracers not running the algorithm on screen beside them |
 | Recursion & Backtracking | three, below — two defaults that never backtracked, and two problems with no visible recursion |
+| Sliding Window | two, below — a window covering the whole array, and one that never slid |
 
 **Binary Search — 32/32 traced, five findings, all fixed.** None was visible to any existing
 test, and three of the five were a blank or lying picture rather than a wrong trace:
@@ -693,6 +694,23 @@ same trap as the heaps one, checked the same way. The findings:
 The lesson for the sweep: **"DEAD ANCHORS ['undo']" and "DEAD ANCHORS ['absent']" print
 identically**, and one is a coverage nit while the other is the problem failing to
 demonstrate itself. Read what the anchor is for.
+
+**Sliding Window — 12/12 traced, two findings, both fixed.** Payload transport is clean:
+all twelve carry `arrayState` on every step, and `WindowCanvas` derives the window from cell
+states rather than variable names, so the tracers' disagreement about `left`/`right` vs
+`start`/`end` vs `i` costs nothing.
+
+1. **`maximum-points-cards` drew a window covering its whole array on all nine steps**,
+   motionless, while the narration described it sliding. It marked the cards outside its
+   window `"sorted"` — meaning "already picked", and the exact inversion of what the canvas
+   reads, which is that anything not `"default"` is *inside* (RCA-047).
+2. **`longest-repeating-character-replacement` never slid.** `"ABAB"` with `k = 2` is
+   entirely replaceable, so `left` never moved: nine steps of a window that only grew, with
+   `shrink` dead (RCA-048). Now `"AABABBA"` with `k = 1` — same answer, three shrinks.
+
+`WindowContractTest` now pins the first: a `WINDOW` tracer's window must be a proper subset
+of its array on at least one step. That is the third audit in a row where the sweep's
+`DEAD ANCHORS` line named the topic's own technique rather than an edge case.
 
 ---
 
