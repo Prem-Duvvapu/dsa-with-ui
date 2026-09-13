@@ -1,3 +1,4 @@
+import styles from './DsuCanvas.module.css';
 import React from 'react';
 
 /**
@@ -24,16 +25,12 @@ export default function DsuCanvas({ problem, currentStep, step }) {
     return (
       <div
         data-testid="dsu-state-unavailable"
-        style={{
-          flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          padding: '24px', textAlign: 'center', color: 'var(--text-muted)',
-          fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)'
-        }}
+        className={styles.unavailable}
       >
         DSU state unavailable for this step — the trace did not emit
-        <code style={{ fontFamily: 'var(--font-code)', margin: '0 4px' }}>parent[]</code>
+        <code className={styles.code}>parent[]</code>
         and
-        <code style={{ fontFamily: 'var(--font-code)', margin: '0 4px' }}>rank[]</code>.
+        <code className={styles.code}>rank[]</code>.
       </div>
     );
   }
@@ -49,84 +46,49 @@ export default function DsuCanvas({ problem, currentStep, step }) {
   const indices = Array.from({ length: count }, (_, i) => i + 1);
 
   return (
-    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'auto' }}>
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
+    <div className={styles.wrap}>
+      <div className={styles.stack} style={{ '--dsu-columns': count }}>
         {/* Operation banner */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: '10px',
-          padding: '8px 16px',
-          background: 'var(--bench-fill)',
-          border: '1px solid var(--bench-rule-strong)',
-          borderRadius: '10px',
-          fontFamily: 'var(--font-code)'
-        }}>
-          <span style={{ fontSize: '0.86rem', fontWeight: '800', color: 'var(--bench-ink)' }}>
+        <div className={styles.opBanner}>
+          <span className={styles.opText}>
             {dsuOpStr}
           </span>
         </div>
 
         {/* Connected components */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', justifyContent: 'center', maxWidth: '700px' }}>
-          <div style={{
-            display: 'flex', flexDirection: 'column', gap: '6px',
-            padding: '12px 18px',
-            background: 'var(--bench-fill)',
-            border: '1px solid var(--bench-rule)',
-            borderRadius: '12px'
-          }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--bench-ink-secondary)', textTransform: 'uppercase', letterSpacing: '0.6px', fontFamily: 'var(--font-code)' }}>
+        <div className={styles.components}>
+          <div className={styles.componentCard}>
+            <span className={styles.componentLabel}>
               Connected Components
             </span>
-            <span style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--bench-ink)', fontFamily: 'var(--font-code)' }}>
+            <span className={styles.componentValue}>
               {dsuSetsStr}
             </span>
           </div>
         </div>
 
         {/* Parent & Rank tables */}
-        <div style={{
-          display: 'flex', flexDirection: 'column', gap: '12px',
-          width: '100%', maxWidth: '650px',
-          background: 'var(--bench-fill)',
-          padding: '16px', borderRadius: '12px',
-          border: '1px solid var(--bench-rule)'
-        }}>
+        <div className={styles.tables}>
           {/* Element index header */}
-          <div style={{ display: 'grid', gridTemplateColumns: `80px repeat(${count}, 1fr)`, gap: '8px', alignItems: 'center', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)' }}>Element i</span>
+          <div className={styles.row}>
+            <span className={`${styles.rowLabel} ${styles.rowLabelIndex}`}>Element i</span>
             {indices.map(idx => (
-              <div key={idx} style={{
-                padding: '4px',
-                background: 'var(--bench-ground)',
-                borderRadius: '6px',
-                fontSize: '0.8rem', fontWeight: '800', color: 'var(--bench-ink)',
-                fontFamily: 'var(--font-code)'
-              }}>
+              <div key={idx} className={styles.indexCell}>
                 {idx}
               </div>
             ))}
           </div>
 
           {/* parent[i] row */}
-          <div style={{ display: 'grid', gridTemplateColumns: `80px repeat(${count}, 1fr)`, gap: '8px', alignItems: 'center', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--bench-ink-secondary)', fontFamily: 'var(--font-code)' }}>parent[i]</span>
+          <div className={styles.row}>
+            <span className={styles.rowLabel}>parent[i]</span>
             {indices.map(idx => {
               const val = parentArr[idx] || idx;
               const isRoot = String(val) === String(idx);
               return (
                 <div
                   key={idx}
-                  style={{
-                    padding: '8px 4px',
-                    background: isRoot ? 'color-mix(in srgb, var(--probe) 15%, transparent)' : 'var(--bench-ground)',
-                    border: isRoot ? '1px solid var(--probe)' : '1px solid var(--bench-rule)',
-                    boxShadow: isRoot ? '0 0 12px color-mix(in srgb, var(--probe) 30%, transparent)' : 'none',
-                    borderRadius: '8px',
-                    fontSize: '0.88rem', fontWeight: '800',
-                    color: isRoot ? 'var(--probe)' : 'var(--bench-ink)',
-                    fontFamily: 'var(--font-code)',
-                    transition: 'all 0.3s ease'
-                  }}
+                  className={`${styles.parentCell}${isRoot ? ` ${styles.parentCellRoot}` : ''}`}
                 >
                   {val}
                 </div>
@@ -135,23 +97,12 @@ export default function DsuCanvas({ problem, currentStep, step }) {
           </div>
 
           {/* rank[i] row */}
-          <div style={{ display: 'grid', gridTemplateColumns: `80px repeat(${count}, 1fr)`, gap: '8px', alignItems: 'center', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--bench-ink-secondary)', fontFamily: 'var(--font-code)' }}>rank[i]</span>
+          <div className={styles.row}>
+            <span className={styles.rowLabel}>rank[i]</span>
             {indices.map(idx => {
               const rVal = rankArr[idx] || 0;
               return (
-                <div key={idx} style={{
-                  padding: '6px 4px',
-                  // Bench's `known`: a neutral fill meaning "has a value". These cells
-                  // used to be drawn in the settled green, which means finished and
-                  // proven - true of no rank value merely because it exists.
-                  background: 'var(--bench-fill)',
-                  border: '1px solid var(--bench-rule-strong)',
-                  borderRadius: '8px',
-                  fontSize: '0.82rem', fontWeight: '800',
-                  color: 'var(--bench-ink)',
-                  fontFamily: 'var(--font-code)'
-                }}>
+                <div key={idx} className={styles.rankCell}>
                   {rVal}
                 </div>
               );

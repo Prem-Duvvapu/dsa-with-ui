@@ -2,6 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import '@testing-library/jest-dom';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import CodeViewer from './CodeViewer';
 
 describe('CodeViewer', () => {
@@ -33,9 +36,15 @@ describe('CodeViewer', () => {
     const active = container.querySelector('[data-active-line="true"]');
     expect(active).toBeInTheDocument();
     expect(active).toHaveTextContent('int b = 2;');
-    expect(active.getAttribute('style')).toContain('var(--probe-wash)');
-    expect(active.getAttribute('style')).toContain('var(--probe)');
-    expect(active.getAttribute('style')).not.toContain('accent-violet');
+
+    // Read the module rather than a serialized inline style: the assertion is about which
+    // TOKEN the active line is painted with, and that survives the styling moving from a
+    // style={{}} object to a class - which is exactly what job 10 does to it.
+    const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'CodeViewer.module.css'), 'utf8');
+    const rule = css.slice(css.indexOf('.lineActive'), css.indexOf('}', css.indexOf('.lineActive')));
+    expect(rule).toContain('var(--probe-wash)');
+    expect(rule).toContain('var(--probe)');
+    expect(css).not.toContain('accent-violet');
   });
 
   describe('branches the current input never took', () => {

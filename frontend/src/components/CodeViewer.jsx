@@ -1,3 +1,4 @@
+import styles from './CodeViewer.module.css';
 import React from 'react';
 import { Code2 } from 'lucide-react';
 
@@ -31,24 +32,24 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
   const unreached = unreachedAnchorLines(anchors, steps);
 
   return (
-    <div className="glass-panel" style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px solid var(--border-default)', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+    <div className={`glass-panel ${styles.panel}`}>
+      <div className={styles.header}>
+        <div className={styles.headerGroup}>
           <Code2 size={15} color="var(--bench-ink-secondary)" />
-          <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-primary)' }}>Java interview solution</span>
+          <span className={styles.headerTitle}>Java interview solution</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div className={styles.headerGroup}>
           {unreached.size > 0 && javaCode && (
             <span
               data-testid="unreached-note"
               title="These branches exist in the algorithm but this input never took them. Change the input to see them run."
-              style={{ fontSize: '0.62rem', padding: '1px 6px', borderRadius: 'var(--radius-sm)', color: 'var(--text-muted)', border: '1px solid var(--border-default)', fontWeight: '600', fontFamily: 'var(--font-code)' }}
+              className={styles.unreachedBadge}
             >
               ◦ {unreached.size} branch{unreached.size === 1 ? '' : 'es'} not taken
             </span>
           )}
           {activeLine !== null && javaCode && (
-            <span style={{ fontSize: '0.66rem', padding: '1px 6px', borderRadius: 'var(--radius-sm)', background: 'var(--bench-fill)', color: 'var(--bench-ink-secondary)', border: '1px solid var(--bench-rule-strong)', fontWeight: '700', fontFamily: 'var(--font-code)' }}>
+            <span className={styles.anchorBadge}>
               Active line: {activeLine}
             </span>
           )}
@@ -56,21 +57,11 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
       </div>
 
       {/* Code Editor Body */}
-      <div style={{
-        flex: 1,
-        background: 'var(--bg-page)',
-        borderRadius: 'var(--radius-sm)',
-        border: '1px solid var(--border-default)',
-        overflowY: 'auto',
-        fontFamily: 'var(--font-code)',
-        fontSize: '0.78rem',
-        lineHeight: '1.5',
-        padding: '6px 0'
-      }}>
+      <div className={styles.source}>
         {!javaCode ? (
           <div
             role="status"
-            style={{ height: '100%', minHeight: '96px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', color: 'var(--text-muted)', textAlign: 'center', fontStyle: 'italic' }}
+            className={styles.unavailable}
           >
             Code unavailable for this problem.
           </div>
@@ -89,37 +80,22 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
               title={isUnreached
                 ? 'This branch exists but the current input never took it. Change the input to see it run.'
                 : undefined}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '1px 12px',
-                // Bench gives --probe-wash one job and this is it, and the probe hue one
-                // meaning: happening right now. A third hue here would put the single mark
-                // a reader follows outside the system every other mark belongs to.
-                background: isHighlighted ? 'var(--probe-wash)' : 'transparent',
-                borderLeft: isHighlighted
-                  ? '3px solid var(--probe)'
-                  : isUnreached
-                    ? '3px dotted var(--border-strong)'
-                    : '3px solid transparent',
-                color: isHighlighted ? 'var(--text-primary)' : lineText.trim().startsWith('//') ? 'var(--text-muted)' : 'var(--text-secondary)',
-                // Dimmed, not hidden: the branch is part of the algorithm and belongs on
-                // screen. A dotted rule and a gutter glyph carry the meaning too, because
-                // state here never rides on colour alone.
-                opacity: isUnreached ? 0.55 : 1,
-                fontWeight: isHighlighted ? '600' : '400',
-                transition: 'all 0.15s ease'
-              }}
+              className={[
+                styles.line,
+                isHighlighted ? styles.lineActive : '',
+                isUnreached ? styles.lineUnreached : '',
+                !isHighlighted && lineText.trim().startsWith('//') ? styles.lineComment : ''
+              ].filter(Boolean).join(' ')}
             >
               {/* A glyph, not just dimming: a reader who cannot see the opacity difference
                   still gets the state. Same rule the canvas legend follows. */}
-              <span aria-hidden="true" style={{ width: '10px', minWidth: '10px', color: 'var(--text-muted)', fontSize: '0.6rem', userSelect: 'none' }}>
+              <span aria-hidden="true" className={styles.gutterGlyph}>
                 {isUnreached ? '◦' : ''}
               </span>
-              <span style={{ width: '28px', minWidth: '28px', color: isHighlighted ? 'var(--bench-ink-secondary)' : 'var(--text-muted)', fontSize: '0.7rem', userSelect: 'none' }}>
+              <span className={`${styles.lineNumber}${isHighlighted ? ` ${styles.lineNumberActive}` : ''}`}>
                 {lineNumber}
               </span>
-              <span style={{ whiteSpace: 'pre' }}>{lineText}</span>
+              <span className={styles.lineText}>{lineText}</span>
             </div>
           );
         })}
