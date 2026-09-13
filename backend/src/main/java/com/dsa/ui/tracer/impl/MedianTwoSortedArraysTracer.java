@@ -101,18 +101,27 @@ public class MedianTwoSortedArraysTracer implements AlgorithmTracer {
         int[] nums1 = in.getIntArray("nums1");
         int[] nums2 = in.getIntArray("nums2");
         int[] a = nums1, b = nums2;
-
-        if (a.length > b.length) {
-            emit.at("swapToSmaller")
-                    .say("Array 1 (length %d) is longer than array 2 (length %d) - always "
-                            + "partition the smaller one, so swap roles.", a.length, b.length)
-                    .arrayState(PartitionCutView.plain(nums1, nums2)).step();
+        boolean swap = a.length > b.length;
+        if (swap) {
             a = nums2;
             b = nums1;
         }
 
         int n1 = a.length, n2 = b.length;
         int low = 0, high = n1;
+
+        // Carrying the resulting range on the swap step rather than leaving it bare: it is
+        // the first step of the trace, and a step with no bounds renders the canvas's empty
+        // state - "No search range for this step." as the opening frame.
+        if (swap) {
+            emit.at("swapToSmaller")
+                    .say("Array 1 (length %d) is longer than array 2 (length %d) - always "
+                            + "partition the smaller one, so swap roles. The cut can fall "
+                            + "anywhere from 0 to %d elements into it.", nums1.length,
+                            nums2.length, n1)
+                    .var("low", low).var("high", high)
+                    .arrayState(PartitionCutView.plain(nums1, nums2)).step();
+        }
 
         while (low <= high) {
             int cut1 = (low + high) / 2;

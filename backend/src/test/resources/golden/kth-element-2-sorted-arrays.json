@@ -18,12 +18,15 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 4,
-    "description" : "Array 1 (length 6) is longer than array 2 (length 4) - always partition the smaller one, so swap roles.",
+    "description" : "Array 1 (length 6) is longer than array 2 (length 4) - always partition the smaller one, so swap roles. The cut must fall between 1 and 4 elements into it for both sides to hold 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : { },
+    "variables" : {
+      "high" : "4",
+      "low" : "1"
+    },
     "dsType" : "SearchSpace",
     "gridState" : null,
     "arrayState" : [ {

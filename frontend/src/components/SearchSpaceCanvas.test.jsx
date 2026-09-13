@@ -29,6 +29,22 @@ describe('SearchSpaceCanvas', () => {
     expect(screen.getByTestId('search-range').textContent).toContain('5 left of 7');
   });
 
+  it('does not change its mind about what the range means mid-animation', () => {
+    // aggressive-cows searches DISTANCES 1..8 while its array holds five cow positions.
+    // Once high shrinks below the cell count the per-step heuristic flips to index mode
+    // and starts calling a distance an index - a lie the viewer watches appear halfway
+    // through the run. The kind of space a tracer searches is fixed for the whole trace,
+    // so read it once, off the first step that states a range.
+    const distances = (low, high, mid) => ({
+      variables: { low: String(low), high: String(high), mid: String(mid) },
+      arrayState: [0, 3, 4, 7, 9].map((v, i) => ({ index: i, value: v, state: 'default' }))
+    });
+    const steps = [distances(1, 8, 4), distances(1, 3, 2), distances(3, 3, 3)];
+    render(<SearchSpaceCanvas steps={steps} currentStepIndex={2} currentStep={steps[2]} />);
+    expect(screen.getByTestId('search-range').textContent).toContain('answers [3, 3]');
+    expect(screen.queryByTestId('search-cells')).not.toBeInTheDocument();
+  });
+
   it('marks the value being probed', () => {
     render(<SearchSpaceCanvas currentStep={indexStep(0, 6, 3)} />);
     expect(screen.getByTestId('search-mid').textContent).toContain('probing 3');

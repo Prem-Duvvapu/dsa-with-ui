@@ -879,3 +879,21 @@ two goals — exercise the whole algorithm, and grow with input — are not both
 - **What to check when adding a canvas:** if it needs more than one field to render, say so
   in a contract test at the same time. A canvas whose empty state is reachable from a
   *complete* trace is a canvas with an unwritten contract.
+
+### Follow-on, same sweep — the canvas changed its mind about what it was drawing
+
+`SearchSpaceCanvas` decides per step whether `[low, high]` indexes the cells or names a
+range of candidate answers, and its own header warns that "is high small" only coincides
+with the answer. The discriminator it chose coincides too. `aggressive-cows` searches
+distances 1..8 over five cow positions: answer space, correctly, until `high` shrinks below
+five — and then the badge flips to `indices [3, 3]` and starts calling a distance an index,
+halfway through the animation. `floor-ceil-sorted-array` flipped the other way.
+
+A tracer does not change what it is searching partway through a run, so the kind is read
+once now, from the first step that states a range, and held for the whole trace. Guarded by
+`SearchSpaceCanvas.test.jsx`, "does not change its mind about what the range means
+mid-animation", proven RED first.
+
+The lesson is narrower than the heuristic: **a per-step inference about a whole-trace fact
+will eventually disagree with itself**, and the disagreement is visible to the user as the
+picture rewriting its own axis.

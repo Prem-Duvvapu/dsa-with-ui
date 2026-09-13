@@ -104,18 +104,26 @@ public class KthElementTwoSortedArraysTracer implements AlgorithmTracer {
         int[] nums2 = in.getIntArray("nums2");
         int k = in.getInt("k");
         int[] a = nums1, b = nums2;
-
-        if (a.length > b.length) {
-            emit.at("swapToSmaller")
-                    .say("Array 1 (length %d) is longer than array 2 (length %d) - always "
-                            + "partition the smaller one, so swap roles.", a.length, b.length)
-                    .arrayState(PartitionCutView.plain(nums1, nums2)).step();
+        boolean swap = a.length > b.length;
+        if (swap) {
             a = nums2;
             b = nums1;
         }
 
         int n1 = a.length, n2 = b.length;
         int low = Math.max(0, k - n2), high = Math.min(k, n1);
+
+        // See MedianTwoSortedArraysTracer: the opening step states the range it produces,
+        // so the first frame is not the canvas's empty state.
+        if (swap) {
+            emit.at("swapToSmaller")
+                    .say("Array 1 (length %d) is longer than array 2 (length %d) - always "
+                            + "partition the smaller one, so swap roles. The cut must fall "
+                            + "between %d and %d elements into it for both sides to hold %d.",
+                            nums1.length, nums2.length, low, high, k)
+                    .var("low", low).var("high", high)
+                    .arrayState(PartitionCutView.plain(nums1, nums2)).step();
+        }
 
         while (low <= high) {
             int cut1 = (low + high) / 2;

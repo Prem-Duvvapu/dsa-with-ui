@@ -48,12 +48,21 @@ function isIndexSpace(cells, low, high) {
   return !cells.some((c, i) => (i < low || i > high) && LIVE.has(c.state));
 }
 
-/** The widest range the search ever considered, so the shrink is visible against it. */
+/**
+ * The first step that stated a range: the widest the search ever considered, so the shrink
+ * is visible against it, and the step that decides which KIND of space this is.
+ *
+ * Deciding the kind per step let it change mid-animation. aggressive-cows searches
+ * distances 1..8 over five cow positions and renders as an answer space until high shrinks
+ * below five, at which point the heuristic flips and the badge starts calling a distance an
+ * index. A tracer does not change what it is searching halfway through, so neither should
+ * the picture.
+ */
 function originalRange(steps, fallback) {
   if (Array.isArray(steps)) {
     for (const s of steps) {
       const b = bounds(s?.variables);
-      if (b.low !== null && b.high !== null) return b;
+      if (b.low !== null && b.high !== null) return { ...b, cells: s?.arrayState };
     }
   }
   return fallback;
@@ -84,8 +93,8 @@ export default function SearchSpaceCanvas({ currentStep, step, steps, currentSte
   }
 
   const remaining = high - low + 1;
-  const indexed = isIndexSpace(cells, low, high);
-  const full = originalRange(steps, { low, high });
+  const full = originalRange(steps, { low, high, cells });
+  const indexed = isIndexSpace(full.cells ?? cells, full.low, full.high);
   const span = Math.max(1, full.high - full.low + 1);
   const shareLeft = ((low - full.low) / span) * 100;
   const shareWidth = (remaining / span) * 100;
