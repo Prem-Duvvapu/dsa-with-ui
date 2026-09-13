@@ -1106,3 +1106,31 @@ picture rewriting its own axis.
   for a step that stated neither field.
 - **Regression guard:** `HeapCanvas.test.jsx`, "distinguishes an empty heap from a step that
   never mentioned one", proven RED first.
+
+## RCA-044 — Two tracers ran a different algorithm from the one on screen beside them
+
+- **Discovered:** 2026-09-13, by the Heaps & PriorityQueue audit
+- **Status:** Resolved
+- **Symptom and impact:** `merge-k-sorted-lists` showed
+  `PriorityQueue<ListNode> heap ... heap.poll() ... heap.add(smallest.next)` in its code
+  panel and executed a **linear scan of three heads** for the minimum. Eighteen steps, and
+  not one of them said the word "heap" — the structure the problem exists to teach and the
+  reason it is catalogued under Heaps. `min-cost-connect-sticks` was the same shape: code
+  panel `PriorityQueue.poll()`, trace a sorted `ArrayList` with `remove(0)`.
+- **Root cause:** with exactly three lists, a linear scan returns the same minimum in the
+  same order as a heap, so the trace was *correct* and every test passed. `AlgorithmTracer`'s
+  contract says `run` "executes the algorithm for real", and nothing enforces that the
+  algorithm it executes is the one `annotatedCode()` shows. The anchors line up either way,
+  because both versions have a "pick the smallest" line and an "append" line.
+- **Resolution:** both now run a real `ArrayHeap` (see RCA-042), and the narration names it:
+  the root being popped, the head that takes its place, the heap shrinking when a list runs
+  out, and the empty heap as the termination condition. Merged output is unchanged.
+- **Two narration bugs this introduced and the golden caught**, which is what golden files
+  are for: "push list 2's next head in its place" was emitted on the steps where that list
+  was exhausted and nothing was pushed, and "the smallest of the 1 live heads ... without
+  comparing them" was both ungrammatical and vacuous. Regenerating a golden without reading
+  it would have shipped both.
+- **How to find the next one:** read `annotatedCode()` beside `run()` and ask whether the
+  same data structure appears in both. A tracer whose narration never names the structure
+  its code panel is built around is the tell — `merge-k-sorted-lists` said "smallest head
+  among the three candidates" eighteen times.

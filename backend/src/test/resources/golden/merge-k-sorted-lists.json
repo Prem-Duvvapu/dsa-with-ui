@@ -15,12 +15,14 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 7,
-    "description" : "Three sorted lists to merge: [1, 4, 5], [1, 3, 4], [2, 6].",
+    "description" : "Three sorted lists to merge: [1, 4, 5], [1, 3, 4], [2, 6]. Only their heads go into the heap - 3 of them - so each pick costs log k, not k.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : { },
+    "variables" : {
+      "heap" : "[1(L1), 1(L2), 2(L3)]"
+    },
     "dsType" : "LinkedList",
     "gridState" : null,
     "arrayState" : null,
@@ -94,13 +96,14 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 1 (list 1).",
+    "description" : "Pop the heap root: 1, from list 1. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "1",
+      "heap" : "[1(L2), 2(L3)]",
       "value" : "1"
     },
     "dsType" : "LinkedList",
@@ -176,13 +179,14 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 8,
-    "description" : "Append 1 to the merged output (1 node so far).",
+    "description" : "Append 1 to the merged output (1 node so far). List 1's next head, 4, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "1",
+      "heap" : "[1(L2), 2(L3), 4(L1)]",
       "mergedSoFar" : "1"
     },
     "dsType" : "LinkedList",
@@ -258,13 +262,14 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 1 (list 2).",
+    "description" : "Pop the heap root: 1, from list 2. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "2",
+      "heap" : "[2(L3), 4(L1)]",
       "value" : "1"
     },
     "dsType" : "LinkedList",
@@ -340,13 +345,14 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 8,
-    "description" : "Append 1 to the merged output (2 nodes so far).",
+    "description" : "Append 1 to the merged output (2 nodes so far). List 2's next head, 3, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "1",
+      "heap" : "[2(L3), 4(L1), 3(L2)]",
       "mergedSoFar" : "2"
     },
     "dsType" : "LinkedList",
@@ -422,13 +428,14 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 2 (list 3).",
+    "description" : "Pop the heap root: 2, from list 3. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "3",
+      "heap" : "[3(L2), 4(L1)]",
       "value" : "2"
     },
     "dsType" : "LinkedList",
@@ -504,13 +511,14 @@
   }, {
     "stepNumber" : 7,
     "activeLine" : 8,
-    "description" : "Append 2 to the merged output (3 nodes so far).",
+    "description" : "Append 2 to the merged output (3 nodes so far). List 3's next head, 6, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "2",
+      "heap" : "[3(L2), 4(L1), 6(L3)]",
       "mergedSoFar" : "3"
     },
     "dsType" : "LinkedList",
@@ -586,13 +594,14 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 3 (list 2).",
+    "description" : "Pop the heap root: 3, from list 2. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "2",
+      "heap" : "[4(L1), 6(L3)]",
       "value" : "3"
     },
     "dsType" : "LinkedList",
@@ -668,13 +677,14 @@
   }, {
     "stepNumber" : 9,
     "activeLine" : 8,
-    "description" : "Append 3 to the merged output (4 nodes so far).",
+    "description" : "Append 3 to the merged output (4 nodes so far). List 2's next head, 4, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "3",
+      "heap" : "[4(L1), 6(L3), 4(L2)]",
       "mergedSoFar" : "4"
     },
     "dsType" : "LinkedList",
@@ -750,13 +760,14 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 4 (list 1).",
+    "description" : "Pop the heap root: 4, from list 1. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "1",
+      "heap" : "[4(L2), 6(L3)]",
       "value" : "4"
     },
     "dsType" : "LinkedList",
@@ -832,13 +843,14 @@
   }, {
     "stepNumber" : 11,
     "activeLine" : 8,
-    "description" : "Append 4 to the merged output (5 nodes so far).",
+    "description" : "Append 4 to the merged output (5 nodes so far). List 1's next head, 5, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "4",
+      "heap" : "[4(L2), 6(L3), 5(L1)]",
       "mergedSoFar" : "5"
     },
     "dsType" : "LinkedList",
@@ -914,13 +926,14 @@
   }, {
     "stepNumber" : 12,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 4 (list 2).",
+    "description" : "Pop the heap root: 4, from list 2. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "2",
+      "heap" : "[5(L1), 6(L3)]",
       "value" : "4"
     },
     "dsType" : "LinkedList",
@@ -996,13 +1009,14 @@
   }, {
     "stepNumber" : 13,
     "activeLine" : 8,
-    "description" : "Append 4 to the merged output (6 nodes so far).",
+    "description" : "Append 4 to the merged output (6 nodes so far). List 2 is exhausted, so nothing replaces it and the heap shrinks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "4",
+      "heap" : "[5(L1), 6(L3)]",
       "mergedSoFar" : "6"
     },
     "dsType" : "LinkedList",
@@ -1078,13 +1092,14 @@
   }, {
     "stepNumber" : 14,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 5 (list 1).",
+    "description" : "Pop the heap root: 5, from list 1. It is the smallest of the 2 live heads, and the heap knew that without comparing them.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "1",
+      "heap" : "[6(L3)]",
       "value" : "5"
     },
     "dsType" : "LinkedList",
@@ -1160,13 +1175,14 @@
   }, {
     "stepNumber" : 15,
     "activeLine" : 8,
-    "description" : "Append 5 to the merged output (7 nodes so far).",
+    "description" : "Append 5 to the merged output (7 nodes so far). List 1 is exhausted, so nothing replaces it and the heap shrinks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "5",
+      "heap" : "[6(L3)]",
       "mergedSoFar" : "7"
     },
     "dsType" : "LinkedList",
@@ -1242,13 +1258,14 @@
   }, {
     "stepNumber" : 16,
     "activeLine" : 7,
-    "description" : "Smallest head among the three candidates is 6 (list 3).",
+    "description" : "Pop the heap root: 6, from list 3. It is the only live head left.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "fromList" : "3",
+      "heap" : "[]",
       "value" : "6"
     },
     "dsType" : "LinkedList",
@@ -1324,13 +1341,14 @@
   }, {
     "stepNumber" : 17,
     "activeLine" : 8,
-    "description" : "Append 6 to the merged output (8 nodes so far).",
+    "description" : "Append 6 to the merged output (8 nodes so far). List 3 is exhausted, so nothing replaces it and the heap shrinks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "appended" : "6",
+      "heap" : "[]",
       "mergedSoFar" : "8"
     },
     "dsType" : "LinkedList",
@@ -1406,7 +1424,7 @@
   }, {
     "stepNumber" : 18,
     "activeLine" : 12,
-    "description" : "All three lists exhausted. Merged result: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6.",
+    "description" : "The heap is empty, so all three lists are exhausted. Merged result: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
