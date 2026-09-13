@@ -38,9 +38,11 @@ export function getCompanions(heroDsType, step, allSteps) {
 
   // maximum-rectangles-binary-matrix is Stack-hero (the row's histogram is the active
   // structure) but emits `.grid(matrix)` on some steps too — the LeetCode 85 board itself,
-  // otherwise never drawn. Not wired for Queue's own hero case: no Queue-dsType tracer
+  // otherwise never drawn. max-rectangle-area-all-ones is the same problem with the
+  // histogram itself as the hero: it narrates column heights on 60 of its 62 steps and
+  // states the board on 2. Not wired for Queue's own hero case: no Queue-dsType tracer
   // emits a grid today (see the file-level doc on why an entry needs a real emitter first).
-  if (heroDsType === 'Stack' && runHasGrid) {
+  if ((heroDsType === 'Stack' || heroDsType === 'Array') && runHasGrid) {
     companions.push({
       key: 'grid',
       Component: GridCompanion,

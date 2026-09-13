@@ -952,3 +952,31 @@ picture rewriting its own axis.
 - **Resolution:** both builders mark cells past the fill frontier `void` with a `·`, and the
   closing step marks the completed table `resolved` rather than `known` — the "table is
   finished" frame the other DP tracers already end on.
+
+## RCA-039 — A dsType named the structure the trace mentions least
+
+- **Discovered:** 2026-09-13, by the Dynamic Programming audit
+- **Status:** Resolved
+- **Symptom and impact:** `max-rectangle-area-all-ones` declared `MATRIX`, so `GridCanvas`
+  drew the binary board — which the tracer states twice and which never changes. The other
+  **60 of its 62 steps** narrate a histogram of column heights and a monotonic stack popping
+  through it, emitted as `arrayState`, which a Matrix hero has no renderer for. The viewer
+  watched a static board while the words described something not on screen.
+- **Root cause:** `DsTypePayloadContractTest` asks whether the declared type's field is
+  *ever* populated — `anyMatch`. Two steps out of sixty-two satisfies it. The contract
+  proves a tracer is not lying about its canvas; it cannot tell whether the canvas was
+  pointed at the run's main structure or its backdrop.
+- **The probe that did not work, recorded so it is not repeated:** "the declared type's
+  field must not be out-counted by another structure field" flags **33 tracers**, nearly all
+  correct — a Stack tracer legitimately emits the input array on every step and the stack
+  only where it changes, and `lastPayload` carries the sparse one. Step counts do not
+  separate a backdrop from a hero. Nothing mechanical does; this is a judgement about which
+  structure the narration is about, and the audit has to make it by reading.
+- **Resolution:** retagged `ARRAY`, so the histogram it narrates is the hero, and the board
+  is a companion pane — the same split `maximum-rectangles-binary-matrix`, the other tracer
+  for this problem, already makes. `canvas/companions.js` now offers the grid companion to
+  an Array hero as it already did to a Stack hero; both entries name a real emitter, per
+  that file's own rule.
+- **Regression guard:** `companions.test.js`, "adds a grid companion for an Array hero when
+  any step carries a grid", proven RED first. The dsType itself is pinned by the golden and
+  by `CatalogTracerMetadataTest`.
