@@ -578,6 +578,8 @@ original snapshot rather than the current state.
 | Heaps & PriorityQueue | four, below — including two tracers not running the algorithm on screen beside them |
 | Recursion & Backtracking | three, below — two defaults that never backtracked, and two problems with no visible recursion |
 | Sliding Window | two, below — a window covering the whole array, and one that never slid |
+| Strings, Sorting, Tries, Bit Manipulation, Learn the Basics | three fixes, below; Sorting and Tries clean |
+| Binary Trees / BST | the topic where the default-versus-alternate design bites hardest — below |
 
 **Binary Search — 32/32 traced, five findings, all fixed.** None was visible to any existing
 test, and three of the five were a blank or lying picture rather than a wrong trace:
@@ -711,6 +713,38 @@ states rather than variable names, so the tracers' disagreement about `left`/`ri
 `WindowContractTest` now pins the first: a `WINDOW` tracer's window must be a proper subset
 of its array on at least one step. That is the third audit in a row where the sweep's
 `DEAD ANCHORS` line named the topic's own technique rather than an edge case.
+
+**The last five topics — Sorting (5/5) and Tries (2/2) clean; three fixes elsewhere.**
+
+1. `check-prime` emitted **three steps for n = 29**: the loop ran `i = 1..5` and four of the
+   five iterations were silent, because the tracer emitted only inside `if (n % i == 0)`.
+   The rejections *are* the trial division (RCA-049). Nothing caught it — an unanchored
+   branch cannot be a dead anchor, and a single-`INT` tracer is among the 152 that
+   `stepCountGrowsWithInput` skips.
+2. `largest-odd-number-string` scans right-to-left for the first odd digit, and `"35427"`
+   ends in 7 — so the scan succeeded on its first probe and the walk leftwards never
+   happened. Now `"35427000"`.
+3. `kmp-lps-algo` and `longest-happy-prefix` built the same LPS array in **identical
+   sentences**, differing only in whether the string was called `pattern` or `s` (RCA-050).
+   The array is the *answer* for one and a *tool* for the other, so KMP now narrates what
+   each number buys a search.
+
+**Binary Trees (38/38) and BST (16/16).** Binary Trees flagged three terminal branches
+(`valuesDiffer`, `levelBreaksSymmetry`, `orphan`), all mutually exclusive with success.
+BST flagged **ten of sixteen** — `bst-insert`'s `attachRight`, `bst-lca`'s
+`bothLargerGoRight`, `bst-delete`'s `goRight`, `bst-inorder-successor`'s entire
+no-right-subtree case, and six more. Read one at a time, almost all are exclusive cases
+that cannot coexist with what the default shows: a node is attached left *or* right, a
+successor is found below *or* above, an exact hit precludes the best-candidate story.
+
+Two looked genuinely fixable, and were tested rather than assumed. For `bst-lca`, every
+target pair drawn from the values the base and grown trees share was checked against both:
+**no pair both turns right and satisfies `stepCountGrowsWithInput`**. The same probe over
+`two-sum-bst` found no tree-and-target combination either. Both were reverted.
+
+So BST is the topic that depends most completely on the alternate input — and until this
+sweep, nothing served it. It is now one click away, which makes this topic the largest
+single beneficiary of that change.
 
 ---
 
