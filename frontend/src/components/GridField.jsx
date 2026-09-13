@@ -1,3 +1,4 @@
+import fields from './fields.module.css';
 import React from 'react';
 import { Plus, Minus } from 'lucide-react';
 
@@ -45,24 +46,17 @@ export default function GridField({ field, value, onChange }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <div style={{ display: 'inline-flex', flexDirection: 'column', gap: '3px', width: 'fit-content' }}>
+    <div className={fields.gridStack}>
+      <div className={fields.gridBoard}>
         {grid.map((row, r) => (
-          <div key={r} style={{ display: 'flex', gap: '3px' }}>
+          <div key={r} className={fields.gridRow}>
             {row.map((cell, col) => (
               <button
                 type="button"
                 key={col}
                 onClick={() => clickCell(r, col)}
                 aria-label={`Cell row ${r + 1}, column ${col + 1}, value ${cell}`}
-                style={{
-                  width: '26px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--font-code)', fontSize: '0.7rem', fontWeight: 700, cursor: 'pointer',
-                  borderRadius: 'var(--radius-xs)',
-                  border: cell === 0 ? '1px solid var(--border-default)' : '1px solid var(--bench-ink-secondary)',
-                  background: cell === 0 ? 'var(--bg-elevated)' : 'var(--bench-fill)',
-                  color: cell === 0 ? 'var(--text-muted)' : 'var(--bench-ink-secondary)'
-                }}
+                className={`${fields.gridCell}${cell === 0 ? '' : ` ${fields.gridCellSet}`}`}
               >
                 {cell}
               </button>
@@ -70,29 +64,29 @@ export default function GridField({ field, value, onChange }) {
           </div>
         ))}
       </div>
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Rows</span>
+      <div className={fields.gridControls}>
+        <div className={fields.rowTight}>
+          <span className={fields.microLabel}>Rows</span>
           <button
-            type="button" className="btn btn-outline" style={{ padding: '2px 6px' }}
+            type="button" className={`btn btn-outline ${fields.tinyButton}`}
             onClick={removeRow} disabled={grid.length <= Math.max(minRows, 1)}
             aria-label="Remove a row"
           ><Minus size={11} /></button>
           <button
-            type="button" className="btn btn-outline" style={{ padding: '2px 6px' }}
+            type="button" className={`btn btn-outline ${fields.tinyButton}`}
             onClick={addRow} disabled={grid.length >= maxRows}
             aria-label="Add a row"
           ><Plus size={11} /></button>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Cols</span>
+        <div className={fields.rowTight}>
+          <span className={fields.microLabel}>Cols</span>
           <button
-            type="button" className="btn btn-outline" style={{ padding: '2px 6px' }}
+            type="button" className={`btn btn-outline ${fields.tinyButton}`}
             onClick={removeCol} disabled={cols <= 1}
             aria-label="Remove a column"
           ><Minus size={11} /></button>
           <button
-            type="button" className="btn btn-outline" style={{ padding: '2px 6px' }}
+            type="button" className={`btn btn-outline ${fields.tinyButton}`}
             onClick={addCol} disabled={cols >= maxCols}
             aria-label="Add a column"
           ><Plus size={11} /></button>
