@@ -658,11 +658,17 @@ no RCA-034 blinking anywhere in the topic. What the audit found instead:
 Also deleted two dead `board()` helpers, copy-pasted between `MinimumPlatformsTracer` and
 `AssignCookiesTracer` and called by neither.
 
-**Left open, deliberately:** `minimum-platforms` draws only its arrival array, with the
-departure pointer `j` living in a variable string. The two-pointer sweep is therefore half
-visible. The honest fix is a merged event timeline — all 2n arrivals and departures in time
-order, each labelled — which is a tracer rewrite rather than a retag, and is listed here so
-it is chosen rather than forgotten.
+**`minimum-platforms` — fixed.** It drew only its arrival array, with the departure pointer
+`j` living in a variable string, so a two-pointer sweep was animated with one pointer and
+the comparison the whole algorithm turns on had one operand off screen. It now emits the
+merged event timeline: all 2n arrivals and departures in time order, each cell labelled `A`
+or `D`, with both cursors drawn and consumed events greyed behind them.
+
+Making that readable meant fixing `ArrayCanvas`, which ignored `label` entirely — so
+`candy`'s `0→1` (rating to candies) and `job-sequencing`'s `J1 d2 p100` had been set by
+their tracers and drawn by nobody. The value stays on top, because that is what the bar
+height encodes; the label goes underneath, where the index sits when there is nothing
+better to say.
 
 **Heaps & PriorityQueue — 17/17 traced, four findings, all fixed.** The sweep flagged one
 dead anchor (`violation`, a terminal failure branch its alternate reaches) and nothing else.

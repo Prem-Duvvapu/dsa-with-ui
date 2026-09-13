@@ -20,7 +20,8 @@ export default function ArrayCanvas({ problem, currentStep, step, steps, current
       const value = el.value !== undefined ? el.value : (el.val !== undefined ? el.val : idx);
       const state = el.state || 'default';
       const index = el.index !== undefined ? el.index : idx;
-      return { value, state, index };
+      const label = typeof el.label === 'string' && el.label.length > 0 ? el.label : null;
+      return { value, state, index, label };
     }
     return { value: Number(el) || 0, state: 'default', index: idx };
   });
@@ -129,9 +130,23 @@ export default function ArrayCanvas({ problem, currentStep, step, steps, current
                 }}
               />
 
-              {/* Index label underneath bar */}
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)', fontWeight: '600' }}>
-                [{idx}]
+              {/* Whatever the tracer chose to call this cell, or its index when it said
+                  nothing. The VALUE stays on top because that is what the bar height
+                  encodes; the label is the extra dimension - minimum-platforms' A/D event
+                  kind, candy's rating→candies, job-sequencing's deadline and profit - and
+                  before this it was set by three tracers and drawn by none. */}
+              <span
+                style={{
+                  fontSize: el.label ? '0.68rem' : '0.72rem',
+                  color: 'var(--text-muted)',
+                  fontFamily: 'var(--font-code)',
+                  fontWeight: '600',
+                  maxWidth: '64px',
+                  textAlign: 'center',
+                  overflowWrap: 'anywhere'
+                }}
+              >
+                {el.label ?? `[${idx}]`}
               </span>
             </div>
           );
