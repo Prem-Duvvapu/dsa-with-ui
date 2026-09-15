@@ -25,7 +25,7 @@ public class CheckSubsequenceSumKTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STACK;
+        return DsType.RECURSION_TREE;
     }
 
     @Override

@@ -212,7 +212,7 @@ public class QueueLlImplTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Sequence finished with %d node(s) between head and tail.", nodes.size())
+                .say("Sequence finished with %d node%s between head and tail.", nodes.size(), Narration.s(nodes.size()))
                 .var("head", describe(nodes, 0))
                 .var("tail", describe(nodes, nodes.size() - 1))
                 .var("size", nodes.size())

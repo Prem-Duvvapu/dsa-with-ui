@@ -90,3 +90,26 @@
   color: var(--text-primary);
   font-weight: 700;
 }
+
+.themeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.themeBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.themeLabel {
+  letter-spacing: 0.02em;
+}

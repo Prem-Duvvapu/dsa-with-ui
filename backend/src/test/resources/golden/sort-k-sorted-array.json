@@ -5,7 +5,7 @@
     "emit" : 7,
     "offer" : 5
   },
-  "code" : "public int[] sortKSorted(int[] values, int k) {\n    PriorityQueue<Integer> heap = new PriorityQueue<>();\n    int write = 0;\n    for (int value : values) {\n        heap.offer(value);\n        if (heap.size() > k) {\n            values[write++] = heap.poll();\n        }\n    }\n    while (!heap.isEmpty()) {\n        values[write++] = heap.poll();\n    }\n    return values;\n}",
+  "code" : "public int[] sortKSorted(int[] values, int k) {\n    ArrayHeap<Integer> heap = ArrayHeap.minHeap();\n    int write = 0;\n    for (int value : values) {\n        heap.offer(value);\n        if (heap.size() > k) {\n            values[write++] = heap.poll();\n        }\n    }\n    while (!heap.isEmpty()) {\n        values[write++] = heap.poll();\n    }\n    return values;\n}",
   "problemId" : "sort-k-sorted-array",
   "resolvedInput" : {
     "k" : 3,
@@ -29,8 +29,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 6,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     } ],
     "listState" : null,
     "trieState" : null,
@@ -52,8 +52,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
       "value" : 6,
@@ -80,16 +80,16 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 3,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
-      "value" : 5,
+      "value" : 6,
       "state" : "default",
       "label" : "candidate"
     }, {
       "index" : 2,
-      "value" : 6,
+      "value" : 5,
       "state" : "default",
       "label" : "candidate"
     } ],
@@ -113,8 +113,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 2,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
       "value" : 3,
@@ -150,16 +150,16 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 3,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
-      "value" : 5,
+      "value" : 6,
       "state" : "default",
       "label" : "candidate"
     }, {
       "index" : 2,
-      "value" : 6,
+      "value" : 5,
       "state" : "default",
       "label" : "candidate"
     } ],
@@ -183,16 +183,16 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 3,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
-      "value" : 5,
+      "value" : 6,
       "state" : "default",
       "label" : "candidate"
     }, {
       "index" : 2,
-      "value" : 6,
+      "value" : 5,
       "state" : "default",
       "label" : "candidate"
     }, {
@@ -220,8 +220,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
       "value" : 6,
@@ -253,8 +253,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
       "value" : 6,
@@ -290,16 +290,16 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 6,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
-      "value" : 8,
+      "value" : 10,
       "state" : "default",
       "label" : "candidate"
     }, {
       "index" : 2,
-      "value" : 10,
+      "value" : 8,
       "state" : "default",
       "label" : "candidate"
     } ],
@@ -323,16 +323,16 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 6,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
-      "value" : 8,
+      "value" : 9,
       "state" : "default",
       "label" : "candidate"
     }, {
       "index" : 2,
-      "value" : 9,
+      "value" : 8,
       "state" : "default",
       "label" : "candidate"
     }, {
@@ -360,8 +360,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 8,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
       "value" : 9,
@@ -392,8 +392,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 9,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     }, {
       "index" : 1,
       "value" : 10,
@@ -419,8 +419,8 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 10,
-      "state" : "default",
-      "label" : "candidate"
+      "state" : "target",
+      "label" : "next out"
     } ],
     "listState" : null,
     "trieState" : null,

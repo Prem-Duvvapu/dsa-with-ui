@@ -83,12 +83,48 @@ public class MinimumPlatformsTracer implements AlgorithmTracer {
                }""";
     }
 
-    private List<ArrayElement> board(int[] vals, int cursor) {
-        List<ArrayElement> state = new ArrayList<>(vals.length);
-        for (int k = 0; k < vals.length; k++) {
-            state.add(new ArrayElement(k, vals[k], k == cursor ? "current" : "target"));
+
+    /**
+     * The two sorted arrays as ONE timeline, which is what the algorithm actually walks.
+     *
+     * <p>This tracer used to emit only {@code arrival}, with the departure pointer living
+     * in a variable string - so a two-pointer sweep was drawn with one pointer, and the
+     * comparison the whole algorithm turns on ("is the next arrival before the earliest
+     * still-open departure?") had one of its two operands off screen.
+     *
+     * <p>Cells are labelled A or D because {@code ArrayCanvas} draws the value as the bar
+     * height and the label underneath: the height is the clock time, the label is what
+     * happens at it.
+     *
+     * @param i the next unconsumed arrival, or {@code arrival.length} when they are done
+     * @param j the earliest still-open departure
+     */
+    private static List<ArrayElement> timeline(int[] arrival, int[] departure, int i, int j) {
+        record Event(int time, boolean isArrival, int index) {}
+        List<Event> events = new ArrayList<>(arrival.length + departure.length);
+        for (int k = 0; k < arrival.length; k++) {
+            events.add(new Event(arrival[k], true, k));
         }
-        return state;
+        for (int k = 0; k < departure.length; k++) {
+            events.add(new Event(departure[k], false, k));
+        }
+        // Ties put the arrival first, matching the algorithm's own `arrival[i] <= departure[j]`:
+        // a train that arrives exactly as another leaves still needs its own platform.
+        events.sort((a, b) -> a.time() != b.time()
+                ? Integer.compare(a.time(), b.time())
+                : Boolean.compare(!a.isArrival(), !b.isArrival()));
+
+        List<ArrayElement> cells = new ArrayList<>(events.size());
+        for (int k = 0; k < events.size(); k++) {
+            Event e = events.get(k);
+            boolean isCursor = e.isArrival() ? e.index() == i : e.index() == j;
+            boolean consumed = e.isArrival() ? e.index() < i : e.index() < j;
+            String state = isCursor
+                    ? (e.isArrival() ? "current" : "target")
+                    : consumed ? "sorted" : "default";
+            cells.add(new ArrayElement(k, e.time(), state, e.isArrival() ? "A" : "D"));
+        }
+        return cells;
     }
 
     @Override
@@ -105,55 +141,65 @@ public class MinimumPlatformsTracer implements AlgorithmTracer {
         Arrays.sort(arrival);
         Arrays.sort(departure);
 
-        emit.at("sort").say("Sort arrivals %s and departures %s independently — only the order of events matters now.",
+        emit.at("sort").say("Sort arrivals %s and departures %s independently, then read them as ONE "
+                        + "timeline: every A is a train arriving, every D is one leaving. Which train "
+                        + "each event belongs to stops mattering from here - only the order does.",
                         Arrays.toString(arrival), Arrays.toString(departure))
                 .var("arrival", Arrays.toString(arrival)).var("departure", Arrays.toString(departure))
-                .array(arrival).step();
+                .arrayState(timeline(arrival, departure, 0, 0)).step();
 
         if (n == 1) {
             emit.at("done").say("Only one train — one platform is always enough.")
                     .var("maxPlatforms", 1)
-                    .array(arrival, 0).step();
+                    .arrayState(timeline(arrival, departure, 1, 0)).step();
             return;
         }
 
         int platforms = 1, maxPlatforms = 1;
         int i = 1, j = 0;
 
-        emit.at("init").say("Train 0 has already arrived, so we start with 1 platform in use.")
+        emit.at("init").say("The first event on the timeline is always an arrival, so start with "
+                        + "1 platform in use. A marks the next arrival, D the earliest departure "
+                        + "not yet passed - those two cells are the only ones ever compared.")
                 .var("platforms", platforms).var("maxPlatforms", maxPlatforms)
-                .array(arrival, 0).step();
+                .arrayState(timeline(arrival, departure, i, j)).step();
 
         while (i < n && j < n) {
-            emit.at("compare").say("Next arrival is %d (train %d); earliest still-open departure is %d.",
-                            arrival[i], i, departure[j])
-                    .var("platforms", platforms).var("i", i).var("j", j)
-                    .array(arrival, i).step();
+            emit.at("compare").say("Which comes first on the timeline: the next arrival at %d, or the "
+                            + "earliest still-open departure at %d?", arrival[i], departure[j])
+                    .var("platforms", platforms).var("nextArrival", arrival[i])
+                    .var("nextDeparture", departure[j])
+                    .arrayState(timeline(arrival, departure, i, j)).step();
 
             if (arrival[i] <= departure[j]) {
                 platforms++;
-                emit.at("needMore").say("%d <= %d — that arrival lands before any platform frees up. One more platform is needed: %d.",
+                emit.at("needMore").say("The arrival wins: %d <= %d, so that train pulls in before any "
+                                + "platform frees up. One more platform is needed: %d. Step A forward.",
                                 arrival[i], departure[j], platforms)
-                        .var("platforms", platforms).var("i", i + 1).var("j", j)
-                        .array(arrival, i).step();
+                        .var("platforms", platforms).var("nextArrival", arrival[i])
+                        .var("nextDeparture", departure[j])
+                        .arrayState(timeline(arrival, departure, i + 1, j)).step();
                 i++;
             } else {
                 platforms--;
-                emit.at("freeOne").say("%d > %d — a train left before the next one arrives. A platform frees up: %d in use.",
+                emit.at("freeOne").say("The departure wins: %d > %d, so a train leaves before the next "
+                                + "one arrives. A platform frees up: %d in use. Step D forward.",
                                 arrival[i], departure[j], platforms)
-                        .var("platforms", platforms).var("i", i).var("j", j + 1)
-                        .array(arrival, i).step();
+                        .var("platforms", platforms).var("nextArrival", arrival[i])
+                        .var("nextDeparture", departure[j])
+                        .arrayState(timeline(arrival, departure, i, j + 1)).step();
                 j++;
             }
             maxPlatforms = Math.max(maxPlatforms, platforms);
 
             emit.at("track").say("Highest platform count seen so far: %d.", maxPlatforms)
                     .var("maxPlatforms", maxPlatforms)
-                    .array(arrival, Math.min(i, n - 1)).step();
+                    .arrayState(timeline(arrival, departure, i, j)).step();
         }
 
-        emit.at("done").say("Every train accounted for. Peak simultaneous trains: %d — that many platforms are required.", maxPlatforms)
+        emit.at("done").say("One pointer ran off its end, so no overlap can grow any further. Peak "
+                        + "simultaneous trains: %d — that many platforms are required.", maxPlatforms)
                 .var("maxPlatforms", maxPlatforms)
-                .array(arrival, -1).step();
+                .arrayState(timeline(arrival, departure, i, j)).step();
     }
 }

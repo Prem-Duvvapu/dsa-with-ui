@@ -84,6 +84,17 @@ public class MergeKSortedListsTracer implements AlgorithmTracer {
                }""";
     }
 
+    /** The heap's live heads, in its own array order - see ArrayHeap. */
+    private static String candidates(ArrayHeap<int[]> heap) {
+        StringBuilder out = new StringBuilder("[");
+        List<int[]> slots = heap.slots();
+        for (int i = 0; i < slots.size(); i++) {
+            if (i > 0) out.append(", ");
+            out.append(slots.get(i)[0]).append("(L").append(slots.get(i)[1] + 1).append(')');
+        }
+        return out.append(']').toString();
+    }
+
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[][] lists = {
@@ -102,37 +113,62 @@ public class MergeKSortedListsTracer implements AlgorithmTracer {
         int[] head = {0, 0, 0}; // next unconsumed position in each list
         List<Integer> mergedIds = new ArrayList<>();
 
+        // A real heap of the three live heads, because the code panel beside this says
+        // PriorityQueue.poll() and a tracer runs the algorithm it shows. This used to scan
+        // all three heads linearly for the minimum - same answer with three lists, and no
+        // test can tell, but it is not the algorithm on screen and it never mentioned the
+        // structure the problem exists to teach. Entries are {value, listIndex}.
+        ArrayHeap<int[]> heap = new ArrayHeap<>(
+                java.util.Comparator.<int[]>comparingInt(e -> e[0]).thenComparingInt(e -> e[1]));
+        for (int i = 0; i < 3; i++) {
+            if (lists[i].length > 0) {
+                heap.offer(new int[]{lists[i][0], i});
+            }
+        }
+
         emit.at("pickSmallestHead")
-                .say("Three sorted lists to merge: %s, %s, %s.",
+                .say("Three sorted lists to merge: %s, %s, %s. Only their heads go into the "
+                                + "heap - %d of them - so each pick costs log k, not k.",
                         java.util.Arrays.toString(lists[0]),
                         java.util.Arrays.toString(lists[1]),
-                        java.util.Arrays.toString(lists[2]))
+                        java.util.Arrays.toString(lists[2]), heap.size())
+                .var("heap", candidates(heap))
                 .list(render(lists, idBase, head, mergedIds, -1)).step();
 
         int total = lists[0].length + lists[1].length + lists[2].length;
         for (int step = 0; step < total; step++) {
-            int bestList = -1;
-            int bestValue = Integer.MAX_VALUE;
-            for (int i = 0; i < 3; i++) {
-                if (head[i] < lists[i].length && lists[i][head[i]] < bestValue) {
-                    bestValue = lists[i][head[i]];
-                    bestList = i;
-                }
-            }
+            int[] best = heap.poll();
+            int bestValue = best[0];
+            int bestList = best[1];
 
             int poppedId = idBase[bestList] + head[bestList];
             emit.at("pickSmallestHead")
-                    .say("Smallest head among the three candidates is %d (list %d).",
-                            bestValue, bestList + 1)
+                    .say("Pop the heap root: %d, from list %d. %s",
+                            bestValue, bestList + 1,
+                            heap.size() == 0
+                                    ? "It is the only live head left."
+                                    : String.format("It is the smallest of the %d live heads, and the"
+                                            + " heap knew that without comparing them.", heap.size() + 1))
                     .var("value", bestValue).var("fromList", bestList + 1)
+                    .var("heap", candidates(heap))
                     .list(render(lists, idBase, head, mergedIds, -1)).step();
 
             head[bestList]++;
+            boolean pushed = head[bestList] < lists[bestList].length;
+            if (pushed) {
+                heap.offer(new int[]{lists[bestList][head[bestList]], bestList});
+            }
             mergedIds.add(poppedId);
             emit.at("append")
-                    .say("Append %d to the merged output (%d node%s so far).",
-                            bestValue, mergedIds.size(), mergedIds.size() == 1 ? "" : "s")
+                    .say("Append %d to the merged output (%d node%s so far). %s",
+                            bestValue, mergedIds.size(), mergedIds.size() == 1 ? "" : "s",
+                            pushed
+                                    ? String.format("List %d's next head, %d, takes its place in the heap.",
+                                            bestList + 1, lists[bestList][head[bestList]])
+                                    : String.format("List %d is exhausted, so nothing replaces it and the heap shrinks.",
+                                            bestList + 1))
                     .var("appended", bestValue).var("mergedSoFar", mergedIds.size())
+                    .var("heap", candidates(heap))
                     .list(render(lists, idBase, head, mergedIds, poppedId)).step();
         }
 
@@ -142,7 +178,8 @@ public class MergeKSortedListsTracer implements AlgorithmTracer {
             answer.append(valueOf(lists, idBase, mergedIds.get(i)));
         }
         emit.at("done")
-                .say("All three lists exhausted. Merged result: %s.", answer)
+                .say("The heap is empty, so all three lists are exhausted. Merged result: %s.",
+                        answer)
                 .var("answer", answer.toString())
                 .list(render(lists, idBase, head, mergedIds, -1)).step();
     }

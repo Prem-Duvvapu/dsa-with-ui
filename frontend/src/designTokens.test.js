@@ -58,6 +58,39 @@ const BENCH_TOKENS = [
   '--bench-ink', '--probe', '--probe-on', '--probe-wash', '--settled', '--settled-on'
 ];
 
+/**
+ * Canvas role tokens. The canvases used to draw with literal hexes, which meant they
+ * stayed dark in the light theme - dark nodes on paper. Like the Bench tokens, these must
+ * exist in the base block AND in both light declarations, or a canvas silently keeps one
+ * theme's ground under the other theme's ink.
+ */
+const CANVAS_TOKENS = [
+  '--canvas-ground-inner', '--canvas-ground-outer', '--canvas-well',
+  '--canvas-node-fill', '--canvas-node-fill-2', '--canvas-edge', '--canvas-wash'
+];
+
+/**
+ * Algorithm role tokens - what a node MEANS during a run. Seven canvases drew these as
+ * literal hexes, repeated with slightly different values per file, so the same state read
+ * differently depending which problem you opened.
+ *
+ * --role-ink is excluded from the "must differ per theme" rule below on purpose: labels sit
+ * on a saturated fill in both themes, so it is white in both. The FILLS carry the theme by
+ * getting darker in light mode rather than lighter, which is what keeps that white legible.
+ */
+const ROLE_TOKENS = [
+  '--role-current', '--role-current-edge',
+  '--role-secondary', '--role-secondary-edge',
+  '--role-alternate', '--role-alternate-edge',
+  '--role-done', '--role-done-edge',
+  '--role-pruned', '--role-pruned-edge',
+  '--role-cached', '--role-cached-edge',
+  '--role-link-child', '--role-link-random',
+  '--state-target-deep', '--state-target-edge',
+  '--state-current-deep', '--state-current-edge',
+  '--state-done-deep', '--state-done-edge'
+];
+
 /** Declarations inside one CSS block, as { token: rawValue }. */
 function rawTokens(block) {
   const out = {};
@@ -197,6 +230,64 @@ describe('design tokens', () => {
     expect(missing, 'these resolve to nothing when the viewer has made no theme choice').toEqual([]);
   });
 
+  it('defines every canvas role token in the base and in both light declarations', () => {
+    const base = baseBlock();
+    const media = rawTokens(lightMediaBlock());
+    const stamped = rawTokens(lightStampedBlock());
+
+    expect(CANVAS_TOKENS.filter((t) => !base[t]),
+      'missing from :root, so they resolve to nothing in the dark theme').toEqual([]);
+    expect(CANVAS_TOKENS.filter((t) => !media[t]),
+      'missing from the prefers-color-scheme block, so a light OS gets dark canvases').toEqual([]);
+    expect(CANVAS_TOKENS.filter((t) => !stamped[t]),
+      'missing from [data-theme="light"], so the explicit light choice gets dark canvases').toEqual([]);
+
+    for (const key of CANVAS_TOKENS) {
+      expect(media[key], `${key} differs between the two light declarations`).toBe(stamped[key]);
+      expect(base[key], `${key} does not change with the theme`).not.toBe(stamped[key]);
+    }
+  });
+
+  it('defines every algorithm role token in the base and in both light declarations', () => {
+    const base = baseBlock();
+    const media = rawTokens(lightMediaBlock());
+    const stamped = rawTokens(lightStampedBlock());
+    const all = [...ROLE_TOKENS, '--role-ink'];
+
+    expect(all.filter((t) => !base[t]), 'missing from :root').toEqual([]);
+    expect(all.filter((t) => !media[t]), 'missing from the prefers-color-scheme block').toEqual([]);
+    expect(all.filter((t) => !stamped[t]), 'missing from [data-theme="light"]').toEqual([]);
+
+    for (const key of all) {
+      expect(media[key], `${key} differs between the two light declarations`).toBe(stamped[key]);
+    }
+    for (const key of all) {
+      expect(base[key], `${key} does not change with the theme, so one theme gets the`
+        + ' other theme\'s value').not.toBe(stamped[key]);
+    }
+  });
+
+  it('keeps every role fill legible against its own label, in BOTH themes', () => {
+    // The label flips with the theme rather than staying white, which is what makes this
+    // pass on both sides. Dark mode keeps bright fills and near-black ink; light mode
+    // darkens the fills and goes white. Checking only one theme hid a real defect: white
+    // on the dark theme's #3b82f6 is 3.68:1, and it had been that way as a literal hex in
+    // five canvases for as long as they existed.
+    const themes = {
+      dark: resolveTheme(baseBlock()),
+      light: resolveTheme({ ...baseBlock(), ...rawTokens(lightStampedBlock()) })
+    };
+    const fills = ROLE_TOKENS.filter((t) => !t.endsWith('-edge') && !t.endsWith('-deep'));
+
+    for (const [name, tokens] of Object.entries(themes)) {
+      for (const token of fills) {
+        const ratio = contrast(tokens[token], tokens['--role-ink']);
+        expect(ratio, `${token} against its label in the ${name} theme is only ${ratio.toFixed(2)}:1`)
+          .toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  });
+
   it('redefines the same Bench tokens in both light declarations', () => {
     // Light is declared twice on purpose — once for a light OS with no explicit
     // choice, once for an explicit choice. If they drift, the toggle and the OS
@@ -249,6 +340,30 @@ describe('design tokens', () => {
         `${name} compact text on --accent-violet must meet WCAG AA`
       ).toBeGreaterThanOrEqual(4.5);
     }
+  });
+
+  it('keeps a third hue out of the chrome', () => {
+    // Bench has two semantic hues - the amber probe and the green settled - and spends
+    // them on algorithm state. A violet accent had spread through the chrome (header
+    // icons, badge pills, tab selection) and, worse, through STATE: IntervalCanvas drew
+    // its `target` intervals violet, which is Bench's `read` and is meant to be a hollow
+    // probe ring rather than a sixth colour. The one mark a reader follows was outside
+    // the system that gives every other mark its meaning.
+    //
+    // The token stays defined in index.css - the .btn-primary chrome still uses it from
+    // CSS - but no component may reach for it.
+    const offenders = [];
+    for (const file of getJsxFiles(SRC)) {
+      if (file.endsWith('.test.jsx')) continue;
+      const source = readFileSync(file, 'utf8');
+      for (const token of ['--accent-violet', '--accent-violet-tint', '--border-accent']) {
+        if (source.includes(token)) {
+          offenders.push(`${file.slice(SRC.length + 1)}: ${token}`);
+        }
+      }
+    }
+
+    expect(offenders, 'components must style through the Bench palette').toEqual([]);
   });
 
   it('animates the loading spinner', () => {

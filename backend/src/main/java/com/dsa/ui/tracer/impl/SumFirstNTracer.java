@@ -58,7 +58,14 @@ public class SumFirstNTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int n = in.getInt("n");
-        recurse(n, new ArrayList<>(), emit);
+        int total = recurse(n, new ArrayList<>(), emit);
+
+        // Emitted after the outermost frame pops, so the trace ends at depth 0 rather than
+        // freezing the sidebar on sumN(n)'s own frame.
+        emit.at("call")
+                .say("The stack is empty again. sumN(%d) = %d.", n, total)
+                .var("n", n).var("total", total)
+                .stack(java.util.List.of()).step();
     }
 
     private int recurse(int n, List<String> frames, StepEmitter emit) {

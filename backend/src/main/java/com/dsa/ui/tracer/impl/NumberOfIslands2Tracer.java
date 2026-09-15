@@ -124,9 +124,9 @@ public class NumberOfIslands2Tracer implements AlgorithmTracer {
         List<Integer> answer = new ArrayList<>();
 
         emit.at("init")
-                .say("A %dx%d board of water and %d add-land operation(s). parent[cell] = -1 marks "
+                .say("A %dx%d board of water and %d add-land operation%s. parent[cell] = -1 marks "
                                 + "water; the island count is reported after every single addition.",
-                        rows, cols, operations.length)
+                        rows, cols, operations.length, Narration.s(operations.length))
                 .var("islands", 0).var("answer", answer.toString())
                 .grid(grid).step();
 
@@ -152,8 +152,8 @@ public class NumberOfIslands2Tracer implements AlgorithmTracer {
                         .grid(grid).step();
                 answer.add(count);
                 emit.at("report")
-                        .say("Report the count after this operation: %d island(s). answer = %s.",
-                                count, answer)
+                        .say("Report the count after this operation: %d island%s. answer = %s.",
+                                count, Narration.s(count), answer)
                         .var("islands", count).var("answer", answer.toString())
                         .grid(grid).step();
                 continue;
@@ -207,15 +207,15 @@ public class NumberOfIslands2Tracer implements AlgorithmTracer {
 
             answer.add(count);
             emit.at("report")
-                    .say("Report the count after this operation: %d island(s). answer = %s.",
-                            count, answer)
+                    .say("Report the count after this operation: %d island%s. answer = %s.",
+                            count, Narration.s(count), answer)
                     .var("islands", count).var("answer", answer.toString())
                     .grid(grid).step();
         }
 
         emit.at("done")
-                .say("All %d operation(s) applied. Island count after each: %s.",
-                        operations.length, answer)
+                .say("All %d operation%s applied. Island count after each: %s.",
+                        operations.length, Narration.s(operations.length), answer)
                 .var("islands", count).var("answer", answer.toString())
                 .grid(grid).step();
     }

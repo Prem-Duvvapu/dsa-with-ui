@@ -191,7 +191,7 @@ public class StackLlImplTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Sequence finished with %d node(s) on the chain, head first.", nodes.size())
+                .say("Sequence finished with %d node%s on the chain, head first.", nodes.size(), Narration.s(nodes.size()))
                 .var("size", nodes.size())
                 .var("head", nodes.isEmpty() ? "null" : nodes.get(0)[1])
                 .list(chain(nodes, -1)).step();

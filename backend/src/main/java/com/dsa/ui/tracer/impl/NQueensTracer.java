@@ -90,12 +90,19 @@ public class NQueensTracer implements AlgorithmTracer {
     }
 
     private void place(int col, boolean[][] board, List<List<String>> solutions, int n, StepEmitter emit) {
+        // Every other backtracking tracer in this topic pushes its frames, which is what
+        // feeds the live "Call stack" section of the memory card. The two most famous
+        // backtracking problems - this and sudoku-solver - were the only ones that did not,
+        // so their recursion depth was the one thing a viewer could not see.
+        emit.push("place(col=" + col + ")");
+
         if (col == n) {
             solutions.add(snapshot(board, n));
             emit.at("solutionFound")
                     .say("Column %d reached with every earlier queen placed safely - arrangement #%d recorded.",
                             col, solutions.size())
                     .var("solutions", solutions.size()).grid(toIntGrid(board, n)).step();
+            emit.pop();
             return;
         }
 
@@ -122,6 +129,7 @@ public class NQueensTracer implements AlgorithmTracer {
                             row, col, col)
                     .var("col", col).var("row", row).grid(toIntGrid(board, n)).step();
         }
+        emit.pop();
     }
 
     private boolean isSafe(boolean[][] board, int row, int col, int n) {

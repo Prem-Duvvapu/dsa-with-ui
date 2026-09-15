@@ -17,7 +17,7 @@
     "activeLine" : 18,
     "description" : "Row 0 in column 0 is safe - place a queen there and recurse into column 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -35,7 +35,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -53,7 +53,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -71,7 +71,7 @@
     "activeLine" : 18,
     "description" : "Row 2 in column 1 is safe - place a queen there and recurse into column 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -89,7 +89,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -107,7 +107,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -125,7 +125,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -143,7 +143,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -161,7 +161,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (2,1) - column 1 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -179,7 +179,7 @@
     "activeLine" : 18,
     "description" : "Row 3 in column 1 is safe - place a queen there and recurse into column 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -197,7 +197,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -215,7 +215,7 @@
     "activeLine" : 18,
     "description" : "Row 1 in column 2 is safe - place a queen there and recurse into column 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -233,7 +233,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -251,7 +251,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -269,7 +269,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -287,7 +287,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -305,7 +305,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (1,2) - column 2 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -323,7 +323,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -341,7 +341,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -359,7 +359,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (3,1) - column 1 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -377,7 +377,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (0,0) - column 0 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -395,7 +395,7 @@
     "activeLine" : 18,
     "description" : "Row 1 in column 0 is safe - place a queen there and recurse into column 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -413,7 +413,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -431,7 +431,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -449,7 +449,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -467,7 +467,7 @@
     "activeLine" : 18,
     "description" : "Row 3 in column 1 is safe - place a queen there and recurse into column 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -485,7 +485,7 @@
     "activeLine" : 18,
     "description" : "Row 0 in column 2 is safe - place a queen there and recurse into column 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -503,7 +503,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -521,7 +521,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -539,7 +539,7 @@
     "activeLine" : 18,
     "description" : "Row 2 in column 3 is safe - place a queen there and recurse into column 4.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -557,7 +557,7 @@
     "activeLine" : 10,
     "description" : "Column 4 reached with every earlier queen placed safely - arrangement #1 recorded.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)", "place(col=4)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -574,7 +574,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (2,3) - column 3 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -592,7 +592,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -610,7 +610,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (0,2) - column 2 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -628,7 +628,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -646,7 +646,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -664,7 +664,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -682,7 +682,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (3,1) - column 1 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -700,7 +700,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (1,0) - column 0 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -718,7 +718,7 @@
     "activeLine" : 18,
     "description" : "Row 2 in column 0 is safe - place a queen there and recurse into column 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -736,7 +736,7 @@
     "activeLine" : 18,
     "description" : "Row 0 in column 1 is safe - place a queen there and recurse into column 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -754,7 +754,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -772,7 +772,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -790,7 +790,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -808,7 +808,7 @@
     "activeLine" : 18,
     "description" : "Row 3 in column 2 is safe - place a queen there and recurse into column 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -826,7 +826,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -844,7 +844,7 @@
     "activeLine" : 18,
     "description" : "Row 1 in column 3 is safe - place a queen there and recurse into column 4.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -862,7 +862,7 @@
     "activeLine" : 10,
     "description" : "Column 4 reached with every earlier queen placed safely - arrangement #2 recorded.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)", "place(col=4)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -879,7 +879,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (1,3) - column 3 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -897,7 +897,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -915,7 +915,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -933,7 +933,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (3,2) - column 2 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -951,7 +951,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (0,1) - column 1 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -969,7 +969,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -987,7 +987,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1005,7 +1005,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1023,7 +1023,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (2,0) - column 0 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1041,7 +1041,7 @@
     "activeLine" : 18,
     "description" : "Row 3 in column 0 is safe - place a queen there and recurse into column 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1059,7 +1059,7 @@
     "activeLine" : 18,
     "description" : "Row 0 in column 1 is safe - place a queen there and recurse into column 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1077,7 +1077,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1095,7 +1095,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1113,7 +1113,7 @@
     "activeLine" : 18,
     "description" : "Row 2 in column 2 is safe - place a queen there and recurse into column 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1131,7 +1131,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1149,7 +1149,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1167,7 +1167,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1185,7 +1185,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 3 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)", "place(col=3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1203,7 +1203,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (2,2) - column 2 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1221,7 +1221,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1239,7 +1239,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (0,1) - column 1 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1257,7 +1257,7 @@
     "activeLine" : 18,
     "description" : "Row 1 in column 1 is safe - place a queen there and recurse into column 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1275,7 +1275,7 @@
     "activeLine" : 15,
     "description" : "Row 0 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1293,7 +1293,7 @@
     "activeLine" : 15,
     "description" : "Row 1 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1311,7 +1311,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1329,7 +1329,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 2 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)", "place(col=2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1347,7 +1347,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (1,1) - column 1 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1365,7 +1365,7 @@
     "activeLine" : 15,
     "description" : "Row 2 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1383,7 +1383,7 @@
     "activeLine" : 15,
     "description" : "Row 3 in column 1 shares a row or diagonal with an earlier queen - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)", "place(col=1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
@@ -1401,7 +1401,7 @@
     "activeLine" : 20,
     "description" : "Remove the queen at (3,0) - column 0 still has other rows left to try.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "place(col=0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {

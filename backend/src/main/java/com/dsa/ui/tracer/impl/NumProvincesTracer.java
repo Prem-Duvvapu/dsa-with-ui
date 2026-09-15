@@ -186,7 +186,7 @@ public class NumProvincesTracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("done").say("Every city assigned. The map splits into %d province(s).", provinces)
+        emit.at("done").say("Every city assigned. The map splits into %d province%s.", provinces, Narration.s(provinces))
                 .var("provinces", provinces)
                 .graph(topology).nodes(states).step();
     }

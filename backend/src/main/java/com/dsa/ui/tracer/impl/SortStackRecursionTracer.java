@@ -100,8 +100,8 @@ public class SortStackRecursionTracer implements AlgorithmTracer {
 
         int top = stack.remove(stack.size() - 1);
         emit.at("popTop")
-                .say("Pop %d off the top. Recursively sort the remaining %d element(s) before reinserting it.",
-                        top, stack.size())
+                .say("Pop %d off the top. Recursively sort the remaining %d element%s before reinserting it.",
+                        top, stack.size(), Narration.s(stack.size()))
                 .var("popped", top).var("stack", stack.toString()).stack(stack).step();
 
         sortStack(stack, emit);

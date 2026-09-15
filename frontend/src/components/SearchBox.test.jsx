@@ -256,3 +256,68 @@ describe('SearchBox component', () => {
     expect(() => fireEvent.keyDown(input, { key: 'ArrowDown' })).not.toThrow();
   });
 });
+
+describe('SearchBox: curriculum sections', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    vi.restoreAllMocks();
+  });
+
+  const sectioned = [
+    { id: 'frog-jump', title: 'Frog Jump', category: 'DP', striverSheetSection: 'DP - Basic DP', traced: true },
+    { id: 'max-sum', title: 'Max Sum Non Adjacent', category: 'DP', striverSheetSection: 'DP - Basic DP', traced: true },
+    { id: 'ninjas-training', title: "Ninja's Training", category: 'DP', striverSheetSection: 'DP - Grids', traced: true }
+  ];
+
+  it('groups the browse list under a section header, showing watched progress for the WHOLE section', () => {
+    render(
+      <SearchBox
+        problems={sectioned}
+        progress={{ 'frog-jump': { watched: true } }}
+        onSelectProblem={() => {}}
+      />
+    );
+
+    expect(screen.getByText('DP - Basic DP')).toBeInTheDocument();
+    expect(screen.getByText('1/2 watched')).toBeInTheDocument();
+    expect(screen.getByText('DP - Grids')).toBeInTheDocument();
+    expect(screen.getByText('0/1 watched')).toBeInTheDocument();
+  });
+
+  it('keeps search results flat and relevance-ordered - no section headers while searching', () => {
+    render(<SearchBox problems={sectioned} onSelectProblem={() => {}} />);
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'jump' } });
+
+    expect(screen.queryByText('DP - Basic DP')).not.toBeInTheDocument();
+    // Not a plain getByText: a matched query splits the title across a <mark>, e.g.
+    // "Frog " + <mark>Jump</mark>, so the exact string is not one text node.
+    expect(screen.getByText((_, el) => el?.className === 'sb-title' && el.textContent === 'Frog Jump')).toBeInTheDocument();
+  });
+
+  it('falls through to the flat list when nothing carries a section', () => {
+    // Every one of the 13 pre-existing tests above uses fixtures with no
+    // striverSheetSection at all, and none of them may see a behaviour change.
+    const noSections = [{ id: 'two-sum', title: 'Two Sum', category: 'Arrays', traced: true }];
+    render(<SearchBox problems={noSections} onSelectProblem={() => {}} />);
+    expect(screen.queryByRole('presentation')).not.toBeInTheDocument();
+    expect(screen.getByText('Two Sum')).toBeInTheDocument();
+  });
+
+  it('still opens a problem by click when the list is grouped', () => {
+    const onSelectProblem = vi.fn();
+    render(<SearchBox problems={sectioned} onSelectProblem={onSelectProblem} />);
+    fireEvent.click(screen.getByText('Frog Jump'));
+    expect(onSelectProblem).toHaveBeenCalledWith('frog-jump');
+  });
+
+  it('keyboard navigation still walks the flat row order across a group boundary', () => {
+    // The grouping only inserts headers between runs of the SAME flat array - activeIndex
+    // must still address rows in that array's order, headers or not.
+    render(<SearchBox problems={sectioned} onSelectProblem={() => {}} />);
+    const input = screen.getByRole('combobox');
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    expect(input).toHaveAttribute('aria-activedescendant', 'problem-opt-ninjas-training');
+  });
+});

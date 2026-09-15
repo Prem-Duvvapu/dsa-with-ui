@@ -1,9 +1,7 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.backtracking.*;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,40 +21,6 @@ public class RecursionBacktrackingService implements ProblemProvider {
 
     public ProblemDetail getProblemById(String id) {
         return problems.get(id);
-    }
-
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // Every id below now has a real tracer (tracer/impl). Refuse rather than let
-            // default: serve an unrelated legacy generator's steps under these ids.
-            case "n-queens":
-            case "sudoku-solver":
-            case "subsets-i":
-            case "combination-sum-i":
-            case "rat-in-a-maze":
-            case "m-coloring":
-            case "palindrome-partitioning":
-            case "permutations":
-            case "word-search":
-            case "atoi-recursive":
-            case "pow-x-n-recursive":
-            case "count-good-numbers":
-            case "sort-stack-recursion":
-            case "reverse-stack-recursion":
-            case "generate-binary-strings":
-            case "generate-parentheses":
-            case "power-set":
-            case "subsequences-patterns-theory":
-            case "count-subsequences-sum-k":
-            case "check-subsequence-sum-k":
-            case "combination-sum-2":
-            case "subsets-2":
-            case "combination-sum-3":
-            case "letter-combinations-phone":
-            case "word-break":
-                throw new LegacyTraceRetiredException(problemId);
-            default: return generateNQueensSteps();
-        }
     }
 
     private void initProblems() {
@@ -133,7 +97,7 @@ public class RecursionBacktrackingService implements ProblemProvider {
             }
             """,
             null, null, createPalindromeTreeNodes(), null, null, null, null,
-            new ComplexityDetail("O(2^N * N)", "Time Complexity: 2^(N-1) partition cuts * O(N) palindrome check.", "Backtracking", "O(N)", "Space Complexity: Call stack depth.", "Memory", "Auxiliary Space: O(N)", "Memory"), "Stack"
+            new ComplexityDetail("O(2^N * N)", "Time Complexity: 2^(N-1) partition cuts * O(N) palindrome check.", "Backtracking", "O(N)", "Space Complexity: Call stack depth.", "Memory", "Auxiliary Space: O(N)", "Memory"), "RecursionTree"
         ));
 
         // 6. Subsets
@@ -149,7 +113,7 @@ public class RecursionBacktrackingService implements ProblemProvider {
             }
             """,
             null, null, createSubsetsTreeNodes(), null, null, null, null,
-            new ComplexityDetail("O(2^N)", "Time Complexity: 2 choices per element (Pick / Non-Pick).", "Binary Tree Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), "Stack"
+            new ComplexityDetail("O(2^N)", "Time Complexity: 2 choices per element (Pick / Non-Pick).", "Binary Tree Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), "RecursionTree"
         ));
 
         // Bulk register remaining 19 recursion algorithms
@@ -165,10 +129,20 @@ public class RecursionBacktrackingService implements ProblemProvider {
      */
     private static DsType bulkDsType(String id) {
         return switch (id) {
-            case "atoi-recursive", "generate-binary-strings", "generate-parentheses",
-                    "letter-combinations-phone", "word-break" -> DsType.STRING;
+            // The exploration tree IS the subject for these: you try a branch, abandon it,
+            // and take the next one, which a stack cannot show. RecursionTreeCanvas rebuilds
+            // that tree from the call stacks they already emit.
+            case "subsets-i", "subsets-2", "power-set", "subsequences-patterns-theory",
+                    "count-subsequences-sum-k", "check-subsequence-sum-k",
+                    "combination-sum-i", "combination-sum-2", "combination-sum-3",
+                    "palindrome-partitioning", "permutations",
+                    "generate-binary-strings", "generate-parentheses",
+                    "letter-combinations-phone", "word-break" -> DsType.RECURSION_TREE;
+            case "atoi-recursive" -> DsType.STRING;
             case "count-good-numbers", "pow-x-n-recursive" -> DsType.BITS;
-            case "permutations" -> DsType.ARRAY;
+            // A board, a maze and a graph are each the right picture for their own problem;
+            // the tree is secondary there. n-queens and sudoku-solver emit no call stack at
+            // all, so there would be nothing to rebuild even if it were not.
             case "word-search" -> DsType.MATRIX;
             default -> DsType.STACK;
         };
@@ -206,13 +180,6 @@ public class RecursionBacktrackingService implements ProblemProvider {
                 new ComplexityDetail("O(2^N)", "Time Complexity: Exponential backtracking tree exploration.", "Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), bulkDsType(id).wireValue()
             ));
         }
-    }
-
-    // Step Generators
-    private List<ExecutionStep> generateNQueensSteps() {
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new NQueens().solve(4, recorder);
-        return recorder.toExecutionSteps();
     }
 
     // Helper Recursion Tree Nodes

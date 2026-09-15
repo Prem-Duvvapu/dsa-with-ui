@@ -29,7 +29,7 @@ public class MinimizeMaxDistanceGasStationTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.SEARCH_SPACE;
     }
 
     @Override
@@ -125,8 +125,8 @@ public class MinimizeMaxDistanceGasStationTracer implements AlgorithmTracer {
                 int extra = (int) Math.ceil(gap / mid) - 1;
                 needed += extra;
                 emit.at("gapTally")
-                        .say("Gap %d = %.2f needs %d extra station(s) at this distance. Running total = %d.",
-                                i, gap, extra, needed)
+                        .say("Gap %d = %.2f needs %d extra station%s at this distance. Running total = %d.",
+                                i, gap, extra, Narration.s(extra), needed)
                         .var("needed", needed)
                         .arrayState(gapState(gaps, i)).step();
             }

@@ -23,82 +23,10 @@ public class AdvancedGraphService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            case "graph-intro": throw new LegacyTraceRetiredException(problemId);
-            case "graph-rep-cpp": throw new LegacyTraceRetiredException(problemId);
-            case "graph-rep-java": throw new LegacyTraceRetiredException(problemId);
-            case "connected-components-intro": throw new LegacyTraceRetiredException(problemId);
-            case "bfs-dfs-intro": throw new LegacyTraceRetiredException(problemId);
-            case "num-provinces": throw new LegacyTraceRetiredException(problemId);
-            case "connected-matrix": throw new LegacyTraceRetiredException(problemId);
-            case "rotten-oranges": throw new LegacyTraceRetiredException(problemId);
-            case "flood-fill": throw new LegacyTraceRetiredException(problemId);
-            case "cycle-undirected-bfs": throw new LegacyTraceRetiredException(problemId);
-            case "cycle-undirected-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "nearest-cell-1": throw new LegacyTraceRetiredException(problemId);
-            case "surrounded-regions": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-enclaves": throw new LegacyTraceRetiredException(problemId);
-            case "word-ladder-1": throw new LegacyTraceRetiredException(problemId);
-            case "word-ladder-2": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-islands": return generateNumberOfIslandsSteps();
-            case "bipartite-graph-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "cycle-directed-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "topo-sort-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "kahn-algo-bfs": throw new LegacyTraceRetiredException(problemId);
-            case "cycle-directed-bfs": throw new LegacyTraceRetiredException(problemId);
-            case "course-schedule-1": throw new LegacyTraceRetiredException(problemId);
-            case "course-schedule-2": throw new LegacyTraceRetiredException(problemId);
-            case "find-eventual-safe-states": throw new LegacyTraceRetiredException(problemId);
-            case "alien-dictionary": throw new LegacyTraceRetiredException(problemId);
-            case "shortest-path-undirected": throw new LegacyTraceRetiredException(problemId);
-            case "shortest-path-dag": throw new LegacyTraceRetiredException(problemId);
-            case "dijkstra-pq-theory": throw new LegacyTraceRetiredException(problemId);
-            case "shortest-path-binary-maze": throw new LegacyTraceRetiredException(problemId);
-            case "path-min-effort": throw new LegacyTraceRetiredException(problemId);
-            case "cheapest-flights-k-stops": throw new LegacyTraceRetiredException(problemId);
-            case "network-delay-time": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-ways-destination": throw new LegacyTraceRetiredException(problemId);
-            case "min-multiplications-reach-end": throw new LegacyTraceRetiredException(problemId);
-            case "bellman-ford": throw new LegacyTraceRetiredException(problemId);
-            case "floyd-warshall": throw new LegacyTraceRetiredException(problemId);
-            case "city-smallest-neighbors": throw new LegacyTraceRetiredException(problemId);
-            case "mst-theory": throw new LegacyTraceRetiredException(problemId);
-            case "prims-mst": throw new LegacyTraceRetiredException(problemId);
-            case "disjoint-set-dsu": throw new LegacyTraceRetiredException(problemId);
-            case "kruskals-mst": throw new LegacyTraceRetiredException(problemId);
-            case "network-connected-ops": throw new LegacyTraceRetiredException(problemId);
-            case "most-stones-removed": throw new LegacyTraceRetiredException(problemId);
-            case "accounts-merge": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-islands-2": throw new LegacyTraceRetiredException(problemId);
-            case "making-large-island": throw new LegacyTraceRetiredException(problemId);
-            case "swim-in-rising-water": throw new LegacyTraceRetiredException(problemId);
-            case "tarjan-bridges": throw new LegacyTraceRetiredException(problemId);
-            case "articulation-points": throw new LegacyTraceRetiredException(problemId);
-            case "kosaraju-scc": throw new LegacyTraceRetiredException(problemId);
-            case "bracket-reversals":
-            case "count-and-say":
-            case "string-hashing-theory":
-            case "rabin-karp-algo":
-            // z-function-algo, kmp-lps-algo, shortest-palindrome and
-            // longest-happy-prefix have real tracers now (tracer/impl). Their
-            // generators are gone; refusing loudly beats serving this service's
-            // graph-intro animation under a string algorithm's name.
-            case "z-function-algo":
-            case "kmp-lps-algo":
-            case "shortest-palindrome":
-            case "longest-happy-prefix":
-                throw new LegacyTraceRetiredException(problemId);
-            case "count-palindromic-subsequences":
-                throw new LegacyTraceRetiredException(problemId);
-            default: return generateGraphIntroSteps();
-        }
-    }
-
     private void initProblems() {
         // 1. Introduction to Graph
         problems.put("graph-intro", new ProblemDetail(
-            "graph-intro", "1. Introduction to Graph", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "graph-intro", "1. Introduction to Graph", "Graphs - Basics", "Graphs", "Easy",
             "A Graph is a non-linear data structure consisting of Vertices (Nodes) and Edges connecting pairs of vertices.",
             """
             // Graph Definition in Java
@@ -111,7 +39,7 @@ public class AdvancedGraphService implements ProblemProvider {
 
         // 2. Graph Representation C++
         problems.put("graph-rep-cpp", new ProblemDetail(
-            "graph-rep-cpp", "2. Graph Representation | C++", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "graph-rep-cpp", "2. Graph Representation | C++", "Graphs - Basics", "Graphs", "Easy",
             "Graph representation using Adjacency Matrix and Adjacency List in C++.",
             """
             // C++ Adjacency List Representation
@@ -125,7 +53,7 @@ public class AdvancedGraphService implements ProblemProvider {
 
         // 3. Graph Representation Java
         problems.put("graph-rep-java", new ProblemDetail(
-            "graph-rep-java", "3. Graph Representation | Java", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "graph-rep-java", "3. Graph Representation | Java", "Graphs - Basics", "Graphs", "Easy",
             "Graph representation using ArrayList of ArrayLists in Java.",
             """
             // Java Adjacency List Representation
@@ -140,7 +68,7 @@ public class AdvancedGraphService implements ProblemProvider {
 
         // 4. Connected Components
         problems.put("connected-components-intro", new ProblemDetail(
-            "connected-components-intro", "4. Connected Components", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "connected-components-intro", "4. Connected Components", "Graphs - Basics", "Graphs", "Easy",
             "A connected component of an undirected graph is a maximal connected subgraph.",
             """
             // Java Connected Components Count
@@ -159,7 +87,7 @@ public class AdvancedGraphService implements ProblemProvider {
 
         // 5. Traversal Techniques
         problems.put("bfs-dfs-intro", new ProblemDetail(
-            "bfs-dfs-intro", "5. Traversal Techniques (BFS vs DFS)", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "bfs-dfs-intro", "5. Traversal Techniques (BFS vs DFS)", "Graphs - Basics", "Graphs", "Easy",
             "Breadth First Search (BFS) explores level-by-level using a Queue. Depth First Search (DFS) explores as deep as possible using a Stack/Recursion.",
             """
             // BFS Uses Queue (FIFO), DFS Uses Recursion/Stack (LIFO)
@@ -170,7 +98,7 @@ public class AdvancedGraphService implements ProblemProvider {
 
         // 6. DFS Traversal
         problems.put("dfs-traversal", new ProblemDetail(
-            "dfs-traversal", "6. Depth First Search Traversal", "Graphs - Basics", "Advanced Graphs", "Easy",
+            "dfs-traversal", "6. Depth First Search Traversal", "Graphs - Basics", "Graphs", "Easy",
             "Traverse an undirected graph using Depth First Search (DFS) recursion.",
             """
             // Java DFS Traversal (Striver A2Z Sheet)
@@ -193,7 +121,7 @@ public class AdvancedGraphService implements ProblemProvider {
     private void populateGraphProblems7To62() {
         // 7. Number of Provinces
         problems.put("num-provinces", new ProblemDetail(
-            "num-provinces", "7. Number of Provinces", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "num-provinces", "7. Number of Provinces", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Given an N x N matrix isConnected where isConnected[i][j] = 1 if city i and city j are directly connected, return total number of provinces.",
             """
             // Java Number of Provinces (LeetCode 547)
@@ -212,7 +140,7 @@ public class AdvancedGraphService implements ProblemProvider {
 
         // 8. Connected Components in Matrix
         problems.put("connected-matrix", new ProblemDetail(
-            "connected-matrix", "8. Connected Components Problem in Matrix", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "connected-matrix", "8. Connected Components Problem in Matrix", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Find number of connected components in a 2D matrix grid.",
             """
             // Java Connected Components Matrix
@@ -232,25 +160,9 @@ public class AdvancedGraphService implements ProblemProvider {
         ));
 
         // 9. Rotten Oranges
-        problems.put("rotten-oranges", new ProblemDetail(
-            "rotten-oranges", "9. Rotten Oranges", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
-            "Given an N x M grid where 0=empty, 1=fresh, 2=rotten, find minimum minutes to rot all fresh oranges using Multi-Source BFS.",
-            """
-            // Java Rotten Oranges Multi-Source BFS (LeetCode 994)
-            public int orangesRotting(int[][] grid) {
-                Queue<int[]> q = new LinkedList<>();
-                int fresh = 0, time = 0;
-                // Add all initial rotten oranges (val 2) to BFS queue...
-                return fresh == 0 ? time : -1;
-            }
-            """,
-            null, null, null, null, null, null, createOrangesGrid(),
-            new ComplexityDetail("O(N * M)", "Time Complexity: Multi-Source BFS visits each cell at most once.", "Multi-Source BFS", "O(N * M)", "Space Complexity: Queue storage for grid cells.", "Queue Space", "Auxiliary Space: O(N * M)", "Memory"), "Matrix"
-        ));
-
         // 10. Flood Fill
         problems.put("flood-fill", new ProblemDetail(
-            "flood-fill", "10. Flood Fill Algorithm", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Easy",
+            "flood-fill", "10. Flood Fill Algorithm", "Graphs - BFS/DFS Problems", "Graphs", "Easy",
             "Perform flood fill on image grid starting from cell (sr, sc) replacing connected matching pixels with newColor.",
             """
             // Java Flood Fill DFS (LeetCode 733)
@@ -270,33 +182,9 @@ public class AdvancedGraphService implements ProblemProvider {
 
     private void addProblems11To62() {
         // 11. Cycle Detection Undirected BFS
-        problems.put("cycle-undirected-bfs", new ProblemDetail(
-            "cycle-undirected-bfs", "11. Cycle Detection in Undirected Graph (BFS)", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
-            "Detect cycle in an undirected graph using Breadth First Search (BFS) tracking (node, parent) pairs in queue.",
-            """
-            // Java Undirected Cycle Detection BFS (Striver A2Z)
-            public boolean checkForCycle(int src, int V, ArrayList<ArrayList<Integer>> adj, boolean vis[]) {
-                Queue<int[]> q = new LinkedList<>();
-                q.add(new int[]{src, -1});
-                vis[src] = true;
-                while (!q.isEmpty()) {
-                    int node = q.peek()[0], parent = q.peek()[1]; q.poll();
-                    for (int adjacentNode : adj.get(node)) {
-                        if (!vis[adjacentNode]) {
-                            vis[adjacentNode] = true; q.add(new int[]{adjacentNode, node});
-                        } else if (parent != adjacentNode) return true; // Cycle detected!
-                    }
-                }
-                return false;
-            }
-            """,
-            createCyclicGraphNodes(), createCyclicGraphEdges(), null, null, null, null, null,
-            new ComplexityDetail("O(V + E)", "Time Complexity: BFS visits each node and edge.", "BFS Traversal", "O(V)", "Space Complexity: Queue and visited array.", "Queue & Visited", "Auxiliary Space: O(V)", "Memory"), "Graph"
-        ));
-
         // 12. Cycle Detection Undirected DFS
         problems.put("cycle-undirected-dfs", new ProblemDetail(
-            "cycle-undirected-dfs", "12. Cycle Detection in Undirected Graph (DFS)", "Graphs - BFS/DFS Problems", "Advanced Graphs", "Medium",
+            "cycle-undirected-dfs", "Cycle Detection in Undirected Graph (DFS - reconstruct the cycle)", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Detect cycle in an undirected graph using Depth First Search (DFS) tracking parent node.",
             """
             // Java Undirected Cycle Detection DFS
@@ -327,7 +215,7 @@ public class AdvancedGraphService implements ProblemProvider {
             {"word-ladder-2", "17. Word Ladder II", "Graphs - BFS/DFS Problems", "Hard", "Find all shortest transformation sequences using BFS + Backtracking."},
             {"number-of-islands", "18. Number of Islands", "Graphs - BFS/DFS Problems", "Medium", "Count connected land components (1s) in 2D grid."},
             {"bipartite-graph-dfs", "19. Bipartite Graph (DFS)", "Graphs - BFS/DFS Problems", "Medium", "Check if graph is bipartite using 2-Coloring DFS."},
-            {"cycle-directed-dfs", "20. Cycle Detection in Directed Graph (DFS)", "Graphs - BFS/DFS Problems", "Medium", "Detect cycle in directed graph using DFS path visited array."},
+            {"cycle-directed-dfs", "Cycle Detection in Directed Graph (DFS - edge classification)", "Graphs - BFS/DFS Problems", "Medium", "Detect cycle in directed graph using DFS path visited array."},
             {"topo-sort-dfs", "21. Topo Sort (DFS)", "Graphs - Topo Sort", "Medium", "Linear ordering of DAG vertices using DFS stack."},
             {"kahn-algo-bfs", "22. Topological Sort (Kahn's BFS)", "Graphs - Topo Sort", "Medium", "Kahn's BFS Indegree Topological Sort algorithm."},
             {"cycle-directed-bfs", "23. Cycle Detection in Directed Graph (Kahn's BFS)", "Graphs - Topo Sort", "Medium", "If topo sort contains < V vertices, directed cycle exists!"},
@@ -349,7 +237,7 @@ public class AdvancedGraphService implements ProblemProvider {
             {"floyd-warshall", "39. Floyd Warshall Algorithm", "Graphs - Shortest Path", "Medium", "All-Pairs Shortest Path dynamic programming algorithm O(V^3)."},
             {"city-smallest-neighbors", "40. City With Smallest Neighbors", "Graphs - Shortest Path", "Medium", "City with smallest reachable neighbors at threshold distance using Floyd-Warshall."},
             {"mst-theory", "41. Minimum Spanning Tree Theory", "Graphs - MST & DSU", "Easy", "MST connects all vertices with minimum total edge weight."},
-            {"prims-mst", "42. Prim's Algorithm for MST", "Graphs - MST & DSU", "Medium", "Greedy MST algorithm using Min-Heap."},
+            {"prims-mst", "42. Prim's Algorithm for MST", "Graphs - MST & DSU", "Medium", "Find a minimum spanning tree: connect every vertex at the lowest total edge weight."},
             {"disjoint-set-dsu", "43. Disjoint Set (DSU Implementation)", "Graphs - MST & DSU", "Medium", "DSU with Path Compression and Union by Rank / Size."},
             {"kruskals-mst", "44. Find MST Weight (Kruskal's)", "Graphs - MST & DSU", "Medium", "Sort edges + DSU union for Minimum Spanning Tree weight."},
             {"network-connected-ops", "45. Operations to Make Network Connected", "Graphs - MST & DSU", "Medium", "Min cables to connect all computers using DSU components."},
@@ -380,7 +268,7 @@ public class AdvancedGraphService implements ProblemProvider {
             String desc = p[4];
 
             problems.put(id, new ProblemDetail(
-                id, title, cat, cat.startsWith("Strings") ? "Strings" : "Advanced Graphs", diff, desc,
+                id, title, cat, cat.startsWith("Strings") ? "Strings" : "Graphs", diff, desc,
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Striver A2Z Sheet Implementation\n}", title),
                 createBasicGraphNodes(), createBasicGraphEdges(), null, null, null, null, null,
                 new ComplexityDetail("O(V + E)", "Time Complexity: Standard optimal graph traversal.", "Graph Algorithm", "O(V + E)", "Space Complexity: Visited arrays and recursion call stack.", "Memory", "Auxiliary Space: O(V)", "Memory"),
@@ -406,30 +294,6 @@ public class AdvancedGraphService implements ProblemProvider {
             default -> DsType.GRAPH;
         };
     }
-
-    // Step Generators
-    private List<ExecutionStep> generateGraphIntroSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        Map<Integer, String> nodeStates = Map.of(0, "visited", 1, "visiting", 2, "unvisited", 3, "unvisited");
-        List<String> activeEdges = List.of("0-1", "0-2");
-
-        steps.add(new ExecutionStep(1, 1, "Graph Intro: A Graph consists of V vertices and E edges.", List.of(), nodeStates, activeEdges, Map.of("V", "4", "E", "3"), "Graph", null));
-        steps.add(new ExecutionStep(2, 4, "Graph Intro Complete! All nodes initialized.", List.of(), nodeStates, activeEdges, Map.of("Status", "INITIALIZED"), "Graph", null));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateGraphRepCppSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateGraphRepJavaSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateConnectedComponentsIntroSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateBfsDfsIntroSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateNumberOfIslandsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateDijkstraPqTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateMstTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateBracketReversalsSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCountAndSaySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateStringHashingTheorySteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateRabinKarpSteps() { return generateGraphIntroSteps(); }
-    private List<ExecutionStep> generateCountPalindromicSubsequencesSteps() { return generateGraphIntroSteps(); }
 
     // Graph helper builders
     private List<GraphNode> createBasicGraphNodes() {

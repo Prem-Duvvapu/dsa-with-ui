@@ -139,10 +139,10 @@ public class CitySmallestNeighborsTracer implements AlgorithmTracer {
         }
 
         emit.at("init").say(
-                        "%d cities, %d road(s), threshold %d. Seed the distance table with the roads "
+                        "%d cities, %d road%s, threshold %d. Seed the distance table with the roads "
                                 + "themselves; -1 marks a pair with no route known yet. Floyd-Warshall will "
                                 + "fill in the rest before any counting happens.",
-                        n, graph.edges().length, threshold)
+                        n, graph.edges().length, Narration.s(graph.edges().length), threshold)
                 .var("n", n).var("threshold", threshold)
                 .grid(display(dist)).step();
 
@@ -210,9 +210,27 @@ public class CitySmallestNeighborsTracer implements AlgorithmTracer {
             }
         }
 
+        // The tie matters and the sentence used to hide it: with counts [2, 3, 3, 2] both
+        // city 0 and city 3 reach the fewest, and "city 3 has the smallest count" reads as
+        // though it were alone. The loop uses <= so a later city wins, which is the
+        // problem's own rule - so say that, rather than claiming a uniqueness that is not
+        // there.
+        int tied = 0;
+        for (int c : counts) {
+            if (c == fewest) {
+                tied++;
+            }
+        }
         emit.at("answer").say(
-                        "Neighbour counts are %s. City %d has the smallest count (%d), so it is the answer.",
-                        Arrays.toString(counts), best, fewest)
+                        tied > 1
+                                ? "Neighbour counts are %s. %d cities tie on the fewest (%d), and the rule "
+                                        + "breaks the tie towards the largest index, so city %d is the answer."
+                                : "Neighbour counts are %s. City %d is alone on the fewest (%d), so it is "
+                                        + "the answer.",
+                        Arrays.toString(counts),
+                        tied > 1 ? tied : best,
+                        fewest,
+                        best)
                 .var("answer", best).var("counts", Arrays.toString(counts))
                 .grid(display(dist)).step();
     }

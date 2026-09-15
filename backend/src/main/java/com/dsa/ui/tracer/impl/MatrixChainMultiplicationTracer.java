@@ -19,6 +19,10 @@ import java.util.Map;
 @Component
 public class MatrixChainMultiplicationTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][j] = min over k of dp[i][k] + dp[k+1][j] + d[i-1]*d[k]*d[j]";
+
+
     @Override
     public String id() {
         return "matrix-chain-multiplication";
@@ -160,7 +164,10 @@ public class MatrixChainMultiplicationTracer implements AlgorithmTracer {
                                 i, j, k, i, k, left, k + 1, j, right, dims[i - 1], dims[k],
                                 dims[j], joinCost, cost)
                         .var("k", k).var("cost", cost)
-                        .dpTable(table(dp, dims.length, i, j, i, k, k + 1, j)).step();
+                        .dpTable(table(dp, dims.length, i, j, i, k, k + 1, j)
+                                .withFormula(FORMULA, String.format(
+                                        "split at %d: dp[%d][%d] + dp[%d][%d] + %d*%d*%d = %d",
+                                        k, i, k, k + 1, j, dims[i - 1], dims[k], dims[j], cost))).step();
             }
         }
         dp[i][j] = mini;

@@ -125,8 +125,8 @@ public class DistanceNearest1Tracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("init").say("%dx%d grid, %d cell(s) already at distance 0. -1 means \"not yet reached\".",
-                        rows, cols, seeds)
+        emit.at("init").say("%dx%d grid, %d cell%s already at distance 0. -1 means \"not yet reached\".",
+                        rows, cols, seeds, Narration.s(seeds))
                 .var("seeds", seeds).grid(display).step();
 
         emit.at("seed").say("Seed the queue with every 1-cell at distance 0.")
@@ -153,8 +153,8 @@ public class DistanceNearest1Tracer implements AlgorithmTracer {
                 display[nrow][ncol] = steps + 1;
                 queue.add(new int[]{nrow, ncol, steps + 1});
 
-                emit.at("expand").say("(%d,%d) is new. Its nearest 1 is %d step(s) away.",
-                                nrow, ncol, steps + 1)
+                emit.at("expand").say("(%d,%d) is new. Its nearest 1 is %d step%s away.",
+                                nrow, ncol, steps + 1, Narration.s(steps + 1))
                         .var("cell", "(" + nrow + "," + ncol + ")").var("distance", steps + 1)
                         .grid(display).step();
             }

@@ -43,6 +43,15 @@ public class ProblemCatalog {
                     duplicateIds.computeIfAbsent(id, k -> new ArrayList<>()).add(providerName);
                     continue;
                 }
+                // The source problem's own constraints live apart from the ProblemDetail
+                // constructors so that filling one in is a one-line edit in one file rather
+                // than a change to whichever service happens to own the id.
+                if (problem.getConstraints() == null || problem.getConstraints().isEmpty()) {
+                    List<String> stated = ProblemConstraints.forId(id);
+                    if (!stated.isEmpty()) {
+                        problem.setConstraints(stated);
+                    }
+                }
                 Optional<AlgorithmTracer> tracer = tracers.find(id);
                 entries.put(id, new CatalogEntry(
                         problem,

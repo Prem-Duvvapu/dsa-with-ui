@@ -242,8 +242,8 @@ public class QueueStackImplTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Sequence finished. %d value(s) still queued, front first: %s.",
-                        queue.size(), view(queue, outStack.size(), false))
+                .say("Sequence finished. %d value%s still queued, front first: %s.",
+                        queue.size(), Narration.s(queue.size()), view(queue, outStack.size(), false))
                 .var("in", inStack.size()).var("out", outStack.size())
                 .queue(view(queue, outStack.size(), false)).step();
     }

@@ -128,8 +128,8 @@ public class AccountsMergeTracer implements AlgorithmTracer {
         for (int i = 0; i <= n; i++) parent[i] = i;
 
         emit.at("init")
-                .say("%d account(s). Each starts in its own set - two accounts only merge once "
-                        + "they are found to share an email.", n)
+                .say("%d account%s. Each starts in its own set - two accounts only merge once "
+                        + "they are found to share an email.", n, Narration.s(n))
                 .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
                 .var("Disjoint Sets", formatSets(parent, n))
                 .var("Operation", "Initialize DSU(" + n + ")")
@@ -202,9 +202,12 @@ public class AccountsMergeTracer implements AlgorithmTracer {
             merged.add("[" + name + ": " + sorted + "]");
 
             emit.at("merge")
-                    .say("Root %d covers accounts {%s}. Its %d distinct email(s) sort to %s, and the "
+                    .say("Root %d covers accounts {%s}. Its %d distinct email%s %s to %s, and the "
                                     + "name comes from account %d ('%s').",
-                            root, membersOf(parent, n, root), g.getValue().size(), sorted, first, name)
+                            root, membersOf(parent, n, root), g.getValue().size(),
+                            Narration.s(g.getValue().size()),
+                            Narration.plural(g.getValue().size(), "sorts", "sort"),
+                            sorted, first, name)
                     .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
                     .var("Disjoint Sets", formatSets(parent, n))
                     .var("Operation", "merge group " + root)
@@ -213,11 +216,12 @@ public class AccountsMergeTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("%d account(s) collapse into %d merged account(s): %s",
-                        n, merged.size(), String.join("; ", merged))
+                .say("%d account%s collapse into %d merged account%s: %s",
+                        n, Narration.s(n), merged.size(), Narration.s(merged.size()),
+                        String.join("; ", merged))
                 .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
                 .var("Disjoint Sets", formatSets(parent, n))
-                .var("Operation", "Done: " + merged.size() + " merged account(s)")
+                .var("Operation", "Done: " + merged.size() + " merged account" + Narration.s(merged.size()))
                 .var("Merged", String.join("; ", merged))
                 .step();
     }

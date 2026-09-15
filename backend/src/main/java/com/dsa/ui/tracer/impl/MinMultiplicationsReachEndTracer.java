@@ -140,8 +140,8 @@ public class MinMultiplicationsReachEndTracer implements AlgorithmTracer {
             int depth = steps[value];
 
             emit.at("dequeue").say(
-                            "Dequeue %d, reached in %d multiplication(s). Try every multiplier on it.",
-                            value, depth)
+                            "Dequeue %d, reached in %d multiplication%s. Try every multiplier on it.",
+                            value, depth, Narration.s(depth))
                     .var("value", value).var("steps", depth).var("discovered", discovered)
                     .queue(labels(queue, steps)).step();
 
@@ -151,8 +151,8 @@ public class MinMultiplicationsReachEndTracer implements AlgorithmTracer {
                 if (next == end) {
                     emit.at("reached").say(
                                     "%d x %d = %d (mod %d) - that is the target. It was produced from a value "
-                                            + "at depth %d, so the answer is %d multiplication(s).",
-                                    value, multiplier, next, MODULUS, depth, depth + 1)
+                                            + "at depth %d, so the answer is %d multiplication%s.",
+                                    value, multiplier, next, MODULUS, depth, depth + 1, Narration.s(depth + 1))
                             .var("value", value).var("multiplier", multiplier).var("product", next)
                             .var("answer", depth + 1).var("discovered", discovered)
                             .queue(labels(queue, steps)).step();
@@ -183,9 +183,9 @@ public class MinMultiplicationsReachEndTracer implements AlgorithmTracer {
         }
 
         emit.at("exhausted").say(
-                        "The queue is empty after producing %d distinct value(s), and %d was never among "
+                        "The queue is empty after producing %d distinct value%s, and %d was never among "
                                 + "them. Multiplying %d by %s can never reach it: the answer is -1.",
-                        discovered, end, start, Arrays.toString(arr))
+                        discovered, Narration.s(discovered), end, start, Arrays.toString(arr))
                 .var("discovered", discovered).var("answer", -1)
                 .queue(labels(queue, steps)).step();
     }

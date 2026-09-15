@@ -117,15 +117,15 @@ public class NumberOfIslandsTracer implements AlgorithmTracer {
                         grid[nr][nc] = 2;
                         stack.push(new int[]{nr, nc});
                     }
-                    emit.at("sink").say("Sink (%d,%d) into island #%d. %d cell(s) claimed, %d still queued.",
-                                    cell[0], cell[1], islands, sunk, stack.size())
+                    emit.at("sink").say("Sink (%d,%d) into island #%d. %d cell%s claimed, %d still queued.",
+                                    cell[0], cell[1], islands, sunk, Narration.s(sunk), stack.size())
                             .var("islands", islands).var("claimed", sunk).var("frontier", stack.size())
                             .grid(grid).step();
                 }
             }
         }
 
-        emit.at("done").say("Grid fully scanned. %d island(s).", islands)
+        emit.at("done").say("Grid fully scanned. %d island%s.", islands, Narration.s(islands))
                 .var("islands", islands).grid(grid).step();
     }
 }

@@ -1,0 +1,80 @@
+/* The bar between the breadcrumb and the problem statement: where this problem sits in
+   its curriculum section, and the two steps either side of it. Bench tokens throughout -
+   this is chrome, so it takes neutral ink, never a semantic hue. */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 4px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 220px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--bench-ink-secondary);
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: all var(--motion-fast, 150ms) var(--ease-standard, ease);
+}
+
+.step:hover,
+.step:focus-visible {
+  background: var(--bench-fill);
+  border-color: var(--bench-rule-strong);
+  color: var(--bench-ink);
+}
+
+.stepLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Watched is informational, not a state the algorithm reached, so it stays the settled
+   hue only faintly - a glyph, not a badge. */
+.watchedGlyph {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--settled);
+}
+
+.stepPlaceholder {
+  min-width: 24px;
+}
+
+.position {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.sectionName {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--bench-ink);
+}
+
+.count {
+  font-size: 0.66rem;
+  color: var(--bench-ink-dim);
+  font-family: var(--font-code);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step { transition: none; }
+}

@@ -115,6 +115,7 @@ public class LfuCacheTracer implements AlgorithmTracer {
                        // @a freqUp
                        freqMap.computeIfAbsent(freq + 1, k -> new LinkedHashSet<>()).add(key);
                    }
+               // @a done
                }""";
     }
 
@@ -165,6 +166,27 @@ public class LfuCacheTracer implements AlgorithmTracer {
             }
             freqMap.computeIfAbsent(freq + 1, k -> new java.util.LinkedHashSet<>()).add(key);
         }
+    }
+
+    /** The cache as text, least-frequent first - the same order the snapshot draws. */
+    private String contents(LFU lfu) {
+        List<Map.Entry<Integer, int[]>> entries = new ArrayList<>(lfu.cache.entrySet());
+        entries.sort((a, b) -> {
+            int cmp = Integer.compare(a.getValue()[1], b.getValue()[1]);
+            return cmp != 0 ? cmp : Integer.compare(a.getKey(), b.getKey());
+        });
+        if (entries.isEmpty()) {
+            return "nothing";
+        }
+        StringBuilder out = new StringBuilder();
+        for (var e : entries) {
+            if (out.length() > 0) {
+                out.append(", ");
+            }
+            out.append(e.getKey()).append("=").append(e.getValue()[0])
+                    .append(" (seen ").append(e.getValue()[1]).append("x)");
+        }
+        return out.toString();
     }
 
     private List<ListNode> snapshot(LFU lfu) {
@@ -263,5 +285,15 @@ public class LfuCacheTracer implements AlgorithmTracer {
                 }
             }
         }
+
+        // The run used to stop on whatever the last operation happened to be - "Key 3
+        // frequency bumped. minFreq = 2." was the closing word, which says nothing about
+        // what the cache ended up holding. Every other tracer states its result.
+        emit.at("done")
+                .say("All %d operation%s processed. The cache holds %s, and minFreq is %d - "
+                                + "the frequency the next eviction would look at first.",
+                        ops.length, Narration.s(ops.length), contents(lfu), lfu.minFreq)
+                .var("minFreq", lfu.minFreq).var("contents", contents(lfu))
+                .list(snapshot(lfu)).step();
     }
 }

@@ -60,6 +60,7 @@ public class LeftRotateKTracer implements AlgorithmTracer {
                    reverse(nums, k, n - 1);
                    // @a callAll
                    reverse(nums, 0, n - 1);
+                   // @a done
                }
                
                private void reverse(int[] nums, int start, int end) {
@@ -99,6 +100,15 @@ public class LeftRotateKTracer implements AlgorithmTracer {
                 .say("Phase 3: Reverse entire array (indices 0..%d).", n - 1)
                 .var("k", k).array(nums).step();
         reverse(nums, 0, n - 1, emit);
+
+        // Every other tracer closes by stating its answer; this one stopped on the last
+        // swap of phase 3, so the trace ended mid-reverse and never said what the rotation
+        // produced. Three reversals is a trick, and a trick needs the punchline.
+        emit.at("done")
+                .say("Three reversals and no extra array: rotating left by %d gives %s.",
+                        k, java.util.Arrays.toString(nums))
+                .var("k", k).var("result", java.util.Arrays.toString(nums))
+                .array(nums).step();
     }
 
     private void reverse(int[] nums, int start, int end, StepEmitter emit) {
@@ -106,8 +116,13 @@ public class LeftRotateKTracer implements AlgorithmTracer {
             int temp = nums[start];
             nums[start] = nums[end];
             nums[end] = temp;
+            // The swap has already happened by the time this step is emitted, so the
+            // sentence must describe where the values LANDED. It used to print both cells'
+            // old contents - "Swap nums[0]=1 and nums[1]=2" - beside a picture already
+            // showing 2 at index 0, so the words and the cells disagreed on the same step.
             emit.at("swap")
-                    .say("Swap nums[%d]=%d and nums[%d]=%d.", start, temp, end, nums[start])
+                    .say("Swap indices %d and %d: %d moves to index %d, %d to index %d.",
+                            start, end, nums[start], start, nums[end], end)
                     .var("start", start).var("end", end).array(nums, start, end).step();
             start++;
             end--;

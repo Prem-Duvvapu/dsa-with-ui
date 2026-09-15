@@ -1,8 +1,10 @@
+import layout from './layout.module.css';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, X, CornerDownLeft, ArrowUpDown } from 'lucide-react';
+import { Search, X, Star, Check } from 'lucide-react';
 import { useProblemSearch } from '../search/useProblemSearch';
 import { matchRanges } from '../search/scoreProblem';
 import { normalizeCategory } from '../search/normalizeCategory';
+import { groupBySection } from '../search/groupBySection';
 
 const IS_APPLE = typeof navigator !== 'undefined' && (
   /Mac|iPod|iPhone|iPad/.test(navigator.platform || '') ||
@@ -37,6 +39,7 @@ export default function SearchBox({
   problems = [],
   activeProblemId = null,
   activeCategory = null,
+  progress = {},
   onSelectCategory = () => {},
   onSelectProblem = () => {},
   onRetry = null,
@@ -48,7 +51,7 @@ export default function SearchBox({
   const {
     query, setQuery,
     runnableOnly, setRunnableOnly,
-    visible, totalMatches, globalMatches,
+    results, visible, totalMatches, globalMatches,
     activeIndex, setActiveIndex,
     recents, commitRecent,
     isSearching
@@ -58,6 +61,22 @@ export default function SearchBox({
     () => Array.isArray(problems) && problems.some(p => p && p.traced !== undefined),
     [problems]
   );
+
+  // Curriculum sections, browse mode only. Search results stay flat and relevance-ordered
+  // - grouping a ranked list by an unrelated axis would make the ranking illegible, and
+  // the fixtures every existing SearchBox test uses carry no striverSheetSection at all,
+  // so a scope with none present here falls through to the exact original flat rendering.
+  const sectioned = useMemo(() => {
+    if (isSearching) return null;
+    const groups = groupBySection(visible, results, progress);
+    return groups.some((g) => g.section) ? groups : null;
+  }, [isSearching, visible, results, progress]);
+
+  const indexById = useMemo(() => {
+    const map = new Map();
+    visible.forEach((p, i) => map.set(p.id, i));
+    return map;
+  }, [visible]);
 
   const runnableCount = useMemo(
     () => (Array.isArray(problems) ? problems.filter(p => p && p.traced === true).length : 0),
@@ -134,8 +153,69 @@ export default function SearchBox({
         : <><strong>{totalMatches}</strong> {totalMatches === 1 ? 'result' : 'results'}</>)
     : (<><strong>{totalMatches}</strong> {activeCategory ? 'in scope' : 'algorithms'}</>);
 
+  // Shared by both render paths (grouped and flat) so a row looks identical whichever one
+  // is active - the grouping only ever inserts a header between runs of these.
+  const renderRow = (prob, i) => {
+    const isCurrent = activeProblemId === prob.id;
+    const isActive = i === activeIndex;
+    const diff = DIFFICULTY[(prob.difficulty || '').toLowerCase()];
+    const rowClass = [
+      'sb-row',
+      prob.traced === true ? 'sb-row-runnable' : '',
+      isActive ? 'sb-row-active' : '',
+      isCurrent ? 'sb-row-current' : ''
+    ].filter(Boolean).join(' ');
+
+    return (
+      <div
+        key={prob.id}
+        role="option"
+        id={`problem-opt-${prob.id}`}
+        aria-selected={isActive}
+        className={rowClass}
+        onClick={() => openProblem(prob.id)}
+        onMouseEnter={() => setActiveIndex(i)}
+      >
+        <span className="sb-row-text">
+          <span className="sb-title">
+            <HighlightedText text={prob.title} query={query} />
+          </span>
+          <span className="sb-sub">
+            {normalizeCategory(prob.category)}
+            {prob.traced === true ? ' · runnable' : ''}
+          </span>
+        </span>
+
+        <span className="sb-row-meta">
+          {/* Passive markers only. A row is a target for the pointer, so putting a star
+              BUTTON in it would mean a click near the edge silently does something other
+              than open the problem. The toggle lives in the breadcrumb, where it is the
+              only thing there is to click. */}
+          {progress[prob.id]?.starred && (
+            <Star size={11} className="sb-starred" fill="currentColor" aria-hidden="true" />
+          )}
+          {progress[prob.id]?.watched && (
+            <Check size={12} className="sb-watched" aria-hidden="true" />
+          )}
+          {(progress[prob.id]?.watched || progress[prob.id]?.starred) && (
+            <span className="sr-only">
+              {progress[prob.id]?.watched ? 'Watched. ' : ''}
+              {progress[prob.id]?.starred ? 'Starred.' : ''}
+            </span>
+          )}
+          {diff && (
+            <span className={`sb-diff ${diff.className}`} title={diff.label}>
+              <span aria-hidden="true">{diff.letter}</span>
+              <span className="sr-only">{diff.label}</span>
+            </span>
+          )}
+        </span>
+      </div>
+    );
+  };
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1, minHeight: 0 }}>
+    <div className={`${layout.colWide} ${layout.fill} ${layout.minHeight0}`}>
       {/* Sticky head: the field must survive scrolling a 433-row list. */}
       <div className="sb-sticky">
         <div className="sb-field">
@@ -146,6 +226,8 @@ export default function SearchBox({
           <input
             ref={inputRef}
             className="sb-input"
+            /* App's `/` shortcut focuses this by attribute, so the two stay decoupled. */
+            data-search-input=""
             role="combobox"
             aria-expanded={isSearching}
             aria-controls="problem-results"
@@ -205,15 +287,14 @@ export default function SearchBox({
       </div>
 
       {recents.length > 0 && !isSearching && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        <div className={layout.colTight}>
           <span className="sb-eyebrow">Recent</span>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+          <div className={layout.wrapRow}>
             {recents.map((item) => (
               <button
                 key={item}
                 type="button"
-                className="sb-empty-action"
-                style={{ fontSize: '0.7rem', padding: '3px 9px' }}
+                className={`sb-empty-action ${layout.buttonSmall}`}
                 onClick={() => { setQuery(item); inputRef.current?.focus(); }}
               >
                 {item}
@@ -229,7 +310,7 @@ export default function SearchBox({
 
       {children}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', minHeight: 0 }}>
+      <div className={`${layout.col} ${layout.minHeight0}`}>
         {problems.length === 0 ? (
           <div className="sb-empty">
             <span className="sb-empty-title">Can’t reach the backend.</span>
@@ -244,48 +325,21 @@ export default function SearchBox({
           </div>
         ) : totalMatches > 0 ? (
           <div className="sb-list" role="listbox" id="problem-results" tabIndex={-1}>
-            {visible.map((prob, i) => {
-              const isCurrent = activeProblemId === prob.id;
-              const isActive = i === activeIndex;
-              const diff = DIFFICULTY[(prob.difficulty || '').toLowerCase()];
-              const rowClass = [
-                'sb-row',
-                prob.traced === true ? 'sb-row-runnable' : '',
-                isActive ? 'sb-row-active' : '',
-                isCurrent ? 'sb-row-current' : ''
-              ].filter(Boolean).join(' ');
-
-              return (
-                <div
-                  key={prob.id}
-                  role="option"
-                  id={`problem-opt-${prob.id}`}
-                  aria-selected={isActive}
-                  className={rowClass}
-                  onClick={() => openProblem(prob.id)}
-                  onMouseEnter={() => setActiveIndex(i)}
-                >
-                  <span className="sb-row-text">
-                    <span className="sb-title">
-                      <HighlightedText text={prob.title} query={query} />
-                    </span>
-                    <span className="sb-sub">
-                      {normalizeCategory(prob.category)}
-                      {prob.traced === true ? ' · runnable' : ''}
-                    </span>
-                  </span>
-
-                  <span className="sb-row-meta">
-                    {diff && (
-                      <span className={`sb-diff ${diff.className}`} title={diff.label}>
-                        <span aria-hidden="true">{diff.letter}</span>
-                        <span className="sr-only">{diff.label}</span>
-                      </span>
+            {sectioned
+              ? sectioned.map((group) => (
+                  <React.Fragment key={group.section ?? '\u0000ungrouped'}>
+                    {group.section && (
+                      <div className="sb-section-header" role="presentation">
+                        <span className="sb-section-name">{group.section}</span>
+                        <span className="sb-section-progress">
+                          {group.watchedInSection}/{group.totalInSection} watched
+                        </span>
+                      </div>
                     )}
-                  </span>
-                </div>
-              );
-            })}
+                    {group.items.map((prob) => renderRow(prob, indexById.get(prob.id)))}
+                  </React.Fragment>
+                ))
+              : visible.map((prob, i) => renderRow(prob, i))}
           </div>
         ) : (
           <div className="sb-empty">
@@ -314,20 +368,6 @@ export default function SearchBox({
         )}
       </div>
 
-      {/* The keyboard contract is the best thing about this panel and was invisible. */}
-      {problems.length > 0 && (
-        <div className="sb-legend">
-          <span className="sb-legend-item">
-            <ArrowUpDown size={11} /> <span className="sb-legend-key">browse</span>
-          </span>
-          <span className="sb-legend-item">
-            <CornerDownLeft size={11} /> <span className="sb-legend-key">open</span>
-          </span>
-          <span className="sb-legend-item">
-            <span className="sb-legend-key">esc</span> clear
-          </span>
-        </div>
-      )}
     </div>
   );
 }

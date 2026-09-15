@@ -11,7 +11,7 @@
     "limit" : 3,
     "nums" : [ 1, 2, 3 ]
   },
-  "stepCount" : 19,
+  "stepCount" : 20,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 12,
@@ -24,7 +24,7 @@
       "idx" : "0",
       "sum" : "1"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -42,7 +42,7 @@
       "idx" : "1",
       "sum" : "3"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -60,7 +60,7 @@
       "idx" : "2",
       "wouldBeSum" : "6"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -78,7 +78,7 @@
       "idx" : "2",
       "sum" : "3"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -97,7 +97,7 @@
       "subsequence" : "[1, 2]",
       "sum" : "3"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -115,7 +115,7 @@
       "idx" : "1",
       "sum" : "1"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -133,7 +133,7 @@
       "idx" : "2",
       "wouldBeSum" : "4"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -151,7 +151,7 @@
       "idx" : "2",
       "sum" : "1"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -170,7 +170,7 @@
       "subsequence" : "[1]",
       "sum" : "1"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -188,7 +188,7 @@
       "idx" : "0",
       "sum" : "0"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -206,7 +206,7 @@
       "idx" : "1",
       "sum" : "2"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -224,7 +224,7 @@
       "idx" : "2",
       "wouldBeSum" : "5"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -242,7 +242,7 @@
       "idx" : "2",
       "sum" : "2"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -261,7 +261,7 @@
       "subsequence" : "[2]",
       "sum" : "2"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -279,7 +279,7 @@
       "idx" : "1",
       "sum" : "0"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -297,7 +297,7 @@
       "idx" : "2",
       "sum" : "3"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -316,7 +316,7 @@
       "subsequence" : "[3]",
       "sum" : "3"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -334,7 +334,7 @@
       "idx" : "2",
       "sum" : "0"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,
@@ -353,7 +353,25 @@
       "subsequence" : "[]",
       "sum" : "0"
     },
-    "dsType" : "Stack",
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 7,
+    "description" : "The search is exhausted and every frame has returned. 5 subsequences summed to at most 3.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "captured" : "5",
+      "limit" : "3"
+    },
+    "dsType" : "RecursionTree",
     "gridState" : null,
     "arrayState" : null,
     "listState" : null,

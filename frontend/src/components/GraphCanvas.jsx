@@ -1,4 +1,5 @@
 import React from 'react';
+import layout from './layout.module.css';
 
 /**
  * SVG node-link graph visualizer.
@@ -11,6 +12,23 @@ import React from 'react';
  * (circles with state-driven fill), for BFS/DFS, Dijkstra, and general graph
  * problems.
  */
+
+/** The most recent step that stated a graph, returned whole so nodes and edges agree. */
+function lastTopology(steps, index, current) {
+  const take = (s) => ({
+    nodes: Array.isArray(s?.graphNodes) ? s.graphNodes : [],
+    edges: Array.isArray(s?.graphEdges) ? s.graphEdges : []
+  });
+  const here = take(current);
+  if (here.nodes.length) return here;
+  if (Array.isArray(steps)) {
+    for (let i = Math.min(index ?? steps.length - 1, steps.length - 1); i >= 0; i -= 1) {
+      const found = take(steps[i]);
+      if (found.nodes.length) return found;
+    }
+  }
+  return { nodes: [], edges: [] };
+}
 
 /** Maps node state strings to Bench-token colours. */
 function nodeStyle(state) {
@@ -37,7 +55,7 @@ function nodeStyle(state) {
   }
 }
 
-export default function GraphCanvas({ problem, currentStep, step }) {
+export default function GraphCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
   const nodeStates = activeStep?.nodeStates && typeof activeStep.nodeStates === 'object'
     ? activeStep.nodeStates
@@ -47,26 +65,33 @@ export default function GraphCanvas({ problem, currentStep, step }) {
   // A step's nodes make its whole topology authoritative. In particular, an explicitly
   // edgeless trace graph must not be joined with stale catalogue edges whose endpoints
   // happen to share ids. Defaults exist only for traces that carry no topology yet.
-  const hasStepTopology = Array.isArray(activeStep?.graphNodes)
-    && activeStep.graphNodes.length > 0;
+  // Absence is not "show the default". Tracers restate a structure only on the steps
+  // that change it, so falling through to the catalogue default drew the CATALOGUE's
+  // data over the caller's own input. Measured app-wide: 1506 steps across 142 of 232
+  // problems. The default is honest only before any step has emitted anything.
+  // Nodes and edges must come from the SAME step. Carrying the nodes forward while reading
+  // edges off the current one would draw a carried topology with no edges at all - a graph
+  // as a field of disconnected dots.
+  const carried = lastTopology(steps, currentStepIndex, activeStep);
+  const hasStepTopology = carried.nodes.length > 0;
   const nodes = hasStepTopology
-    ? activeStep.graphNodes
+    ? carried.nodes
     : Array.isArray(problem?.defaultGraphNodes) ? problem.defaultGraphNodes : [];
   const edges = hasStepTopology
-    ? Array.isArray(activeStep?.graphEdges) ? activeStep.graphEdges : []
+    ? carried.edges
     : Array.isArray(problem?.defaultGraphEdges) ? problem.defaultGraphEdges : [];
 
   if (!nodes.length) {
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)', fontFamily: 'var(--font-code)' }}>
+      <div className={layout.canvasEmpty}>
         No graph data available
       </div>
     );
   }
 
   return (
-    <div style={{ flex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'auto', padding: '8px' }}>
-      <svg width="100%" height="320" viewBox="0 0 360 330" style={{ overflow: 'visible' }}>
+    <div className={layout.svgStage}>
+      <svg width="100%" height="320" viewBox="0 0 360 330" className={layout.svgFit}>
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="28" refY="3.5" orient="auto">
             <polygon points="0 0, 10 3.5, 0 7" fill="var(--bench-ink-dim)" />
@@ -94,7 +119,7 @@ export default function GraphCanvas({ problem, currentStep, step }) {
                 strokeWidth={isActive ? 3 : 2}
                 strokeDasharray={isActive ? '5,5' : 'none'}
                 markerEnd={edge.directed ? (isActive ? 'url(#arrowhead-active)' : 'url(#arrowhead)') : ''}
-                style={{ transition: 'all 0.3s ease' }}
+                className={layout.stateTransition}
               />
               {edge.weight !== null && edge.weight !== undefined && (
                 <text
@@ -126,10 +151,8 @@ export default function GraphCanvas({ problem, currentStep, step }) {
                 fill={s.fill}
                 stroke={s.stroke}
                 strokeWidth={isVisiting ? 3 : 2}
-                style={{
-                  transition: 'all 0.3s ease',
-                  filter: s.glow ? 'drop-shadow(0 0 8px currentColor)' : 'none'
-                }}
+                className={layout.stateTransition}
+                style={{ filter: s.glow ? 'drop-shadow(0 0 8px currentColor)' : 'none' }}
               />
               <text
                 textAnchor="middle"

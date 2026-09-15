@@ -197,8 +197,8 @@ public class NumberOfEnclavesTracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("done").say("%d land cell(s) can walk off the map and %d cannot. Answer: %d.",
-                        escaped, enclaves, enclaves)
+        emit.at("done").say("%d land cell%s can walk off the map and %d cannot. Answer: %d.",
+                        escaped, Narration.s(escaped), enclaves, enclaves)
                 .var("escaped", escaped).var("enclaves", enclaves)
                 .grid(display).step();
     }

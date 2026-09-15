@@ -1,0 +1,116 @@
+/* Interval timeline. Positions are percentages of the run's own time range, so they stay
+   inline; everything else - the stage, the axis, the sweep line, the span chrome - is the
+   same whatever the intervals are. */
+
+.stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: auto;
+}
+
+.spans {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  padding-bottom: 20px;
+  min-height: var(--interval-rows-height);
+}
+
+.lane {
+  position: relative;
+  width: 100%;
+  height: 32px;
+}
+
+/* The bar's colour comes from the state lookup - probe fill, hollow read ring, settled -
+   and stays inline. This is its shape. */
+.span {
+  position: absolute;
+  height: 100%;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 0.75rem;
+  cursor: default;
+  transition: all var(--motion-normal, 300ms) var(--ease-standard, ease);
+}
+
+.spanLabel {
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+}
+
+.spanRange {
+  font-family: var(--font-code);
+  font-size: 0.68rem;
+  letter-spacing: 0.2px;
+}
+
+/* The sweep is where the algorithm has reached, so it earns the probe hue - the one place
+   in this canvas that is neither chrome nor an interval. */
+.sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--probe);
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 0 8px var(--probe);
+}
+
+.sweepLabel {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  font-family: var(--font-code);
+  color: var(--probe);
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.axis {
+  position: relative;
+  width: 100%;
+  height: 32px;
+  border-top: 2px solid var(--bench-rule-strong);
+  margin-top: 12px;
+}
+
+.tick {
+  position: absolute;
+  transform: translateX(-50%);
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tickMark {
+  width: 1px;
+  height: 6px;
+  background: var(--bench-ink-dim);
+}
+
+.tickLabel {
+  font-size: 0.65rem;
+  font-family: var(--font-code);
+  color: var(--bench-ink-dim);
+  margin-top: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .span { transition: none; }
+}

@@ -12,7 +12,7 @@ already inside WSL, call `mvn`/`npm` directly as below.
 # Backend (Java 17, Maven)
 cd backend && mvn test                                  # full backend suite
 cd backend && mvn test -Dtest=TracerContractTest         # one test class
-cd backend && mvn test -Dtest=ApiContractTest#executeRejectsUnknownIdInsteadOfFallingBack
+cd backend && mvn test -Dtest=ProblemsApiTest#missingVersusNotYetTraced
 cd backend && mvn spring-boot:run                        # http://localhost:8923
 
 # Frontend (React 18 + Vite)
@@ -24,7 +24,7 @@ cd frontend && npm run dev                               # http://localhost:5180
 cd frontend && npx vite build                            # what CI builds
 
 # Both tiers
-./start.sh                                               # backend 8923 + frontend 5180; Ctrl+C stops both
+./start.sh                                               # backend 8923 + frontend 5180; Ctrl+C stops both (Linux/WSL/macOS)
 docker-compose up --build                                # frontend on http://localhost:5174
 ```
 
@@ -64,18 +64,28 @@ green, since CI gates every merge.
 
 ## Architecture
 
-### Two layers coexist, deliberately
+### One layer. The migration is finished.
 
-The backend is mid-migration. Both layers are live and both are tested; do not delete one
-without reading `HANDOFF.md`.
+**The legacy layer is gone.** There is exactly one API — `/api/problems`, served by
+`ProblemsController` over `tracer/` and `catalog/`. The eighteen `/api/{topic}/...`
+controllers are deleted and those routes now 404;
+`ProblemsApiTest.legacyRoutesNoLongerExist` asserts that, so reintroducing one is a test
+failure rather than a quiet regression.
 
-**Legacy layer (18 controllers + 18 services).** `controller/ArrayController` →
-`service/ArrayService` → a giant `switch (problemId)` returning `List<ExecutionStep>`.
-Paths are `/api/{topic}/problems` and `/api/{topic}/execute/{id}`. They remain compatibility
-endpoints and are still contract-tested, but the frontend uses the v2 API.
+**What survives, and why it looks legacy.** The eighteen `service/*Service` classes are
+still there and still named after topics, but they are **catalogue providers only**: each
+implements `catalog/ProblemProvider` and owns the `ProblemDetail` metadata for its topic,
+which `ProblemCatalog` merges into one id-keyed view. All 431 problems' titles,
+descriptions, categories, default structures and `dsType`s live in their `initProblems()`.
+They have no `generateSteps`, no `switch (problemId)`, and no `ExecutionStep` import — that
+half was the legacy trace layer and it is deleted. `ProblemProviderContractTest` is
+parameterized over all eighteen and replaces the eighteen copy-pasted `*ServiceTest`
+classes.
 
-**Tracer layer (`tracer/`, `catalog/`, `ProblemsController`).** The replacement, served at
-`/api/problems`. This is where new work goes.
+Deleting a service therefore deletes that topic's catalogue. It is not dead code.
+
+**Tracer layer (`tracer/`, `catalog/`, `ProblemsController`).** Everything. This is where
+all work goes.
 
 ### Why the tracer layer exists
 
@@ -90,12 +100,15 @@ Three rules follow from that, and they are the point of the design:
 1. **No fallback, anywhere.** `TracerRegistry` returns `Optional.empty()` for an unknown id.
    `ProblemsController` answers **404** (no such problem) or **501** (catalogued but not yet
    traced). Never substitute a different problem's steps. An unknown `dsType` likewise
-   renders an explicit unsupported state, never `ArrayCanvas`. The legacy controllers were
-   patched to restore the same 404 guard; `ApiContractTest` is parameterized over all 18 to
-   keep it that way.
+   renders an explicit unsupported state, never `ArrayCanvas`. The fallback that caused the
+   original incident cannot recur, because the layer that held it no longer exists — the
+   eighteen legacy controllers and all 80 of their step generators are deleted.
 2. **`traced` is an honesty flag, not a feature flag.** `GET /api/problems/stats` reports
-   `catalogued` vs `traced` vs `untraced`. The UI is meant to say "not yet traced" rather
-   than animate the wrong thing. Currently **44 of 433** are traced.
+   `catalogued` vs `traced` vs `untraced`. The UI says "not yet traced" rather than animate
+   the wrong thing. **All 431 of 431 are traced**, so `untraced` is currently 0 — the flag
+   stays because it is what makes a regression visible, not because work is outstanding.
+   Never quote that number from this file: run
+   `curl -s localhost:8923/api/problems/stats`.
 3. **Tests must detect fake work, not just crashes.** `TracerContractTest.traceRespondsToItsInput`
    runs each tracer on two materially different inputs and fails if the traces are identical
    — a canned narration cannot survive it. When you fix something, prove the new test fails
@@ -177,17 +190,25 @@ tokens while 5 components still used them, and CSS silently drops unresolvable d
 
 ## Pinned numbers
 
-`ProblemsApiTest` asserts `433` unique ids and `7` duplicates. These are intentional
+`ProblemsApiTest` asserts `431` unique ids and `0` duplicates. These are intentional
 tripwires — if a change moves them, update the assertions deliberately and update the
 `README.md` coverage table in the same commit.
 
+The duplicate count is **zero and must stay zero**. It was 7 for a long time: two graph
+services catalogued the same problems, and four more pairs escaped that count entirely by
+differing only in word order (`rotten-oranges` / `rotting-oranges`).
+`DuplicateProblemTest` now fails on both shapes.
+
 ## Documentation map
 
+- `ARCHITECTURE.md` — **start here.** The system as it stands, with diagrams: the request
+  path, the tracer contract, dsType→canvas routing, and where the guards sit.
 - `plan.md` — the v2 tracing architecture. Accurate; the source of the current design.
-- `HANDOFF.md` — **temporary.** Remaining-work prompts (A: scale the harness, B: frontend
-  redesign, C: migrate ~425 problems, D: retire the legacy layer). The owner rejected the
-  current UI outright; Prompt B leads with that design brief. Delete this file when the
-  migration completes.
+- `HANDOFF.md` — **temporary.** Remaining-work prompts. C (migrate ~425 problems) and
+  D (retire the legacy layer) are **done**; A (scale the harness) and B (frontend redesign)
+  remain. The owner rejected the current UI outright; Prompt B leads with that design brief.
+- `AUDIT.md` — full per-problem audit of the catalogue across its topics, with the
+  findings fixed so far and the two left open for an owner decision.
 - `references.md` — UI/UX research and design tokens. `PROJECT_CONTEXT.md` — pedagogical
   principles.
 - `RCA.md` — recurring-incident ledger. Consult it before changing an affected subsystem;

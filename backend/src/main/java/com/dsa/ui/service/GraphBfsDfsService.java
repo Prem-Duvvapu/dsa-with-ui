@@ -23,27 +23,10 @@ public class GraphBfsDfsService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            case "bfs-traversal": throw new LegacyTraceRetiredException(problemId);
-            case "dfs-traversal": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-provinces": throw new LegacyTraceRetiredException(problemId);
-            case "number-of-islands": return generateIslandsSteps();
-            case "rotting-oranges": throw new LegacyTraceRetiredException(problemId);
-            case "flood-fill": return generateFloodFillSteps();
-            case "undirected-cycle-bfs": throw new LegacyTraceRetiredException(problemId);
-            case "undirected-cycle-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "directed-cycle-dfs": throw new LegacyTraceRetiredException(problemId);
-            case "distance-nearest-1": throw new LegacyTraceRetiredException(problemId);
-            case "surrounded-regions": return generateSurroundedRegionsSteps();
-            default: return generateIslandsSteps();
-        }
-    }
-
     private void initProblems() {
         // 1. BFS Traversal
         problems.put("bfs-traversal", new ProblemDetail(
-            "bfs-traversal", "BFS Traversal of Graph", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Easy",
+            "bfs-traversal", "BFS Traversal of Graph", "Graphs - BFS/DFS Problems", "Graphs", "Easy",
             "Given a connected undirected graph with V vertices and E edges, perform a Breadth First Search (BFS) starting from vertex 0.",
             """
             // Java BFS Implementation (Striver A2Z Sheet)
@@ -84,46 +67,9 @@ public class GraphBfsDfsService implements ProblemProvider {
         ));
 
         // 2. DFS Traversal
-        problems.put("dfs-traversal", new ProblemDetail(
-            "dfs-traversal", "DFS Traversal of Graph", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Easy",
-            "Given a connected undirected graph with V vertices and E edges, perform a Depth First Search (DFS) starting from vertex 0 using recursion/call stack.",
-            """
-            // Java DFS Implementation (Striver A2Z Sheet)
-            public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
-                boolean vis[] = new boolean[V];
-                ArrayList<Integer> ls = new ArrayList<>();
-                dfs(0, vis, adj, ls);
-                return ls;
-            }
-
-            private void dfs(int node, boolean vis[], ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> ls) {
-                vis[node] = true;
-                ls.add(node);
-
-                for (Integer it : adj.get(node)) {
-                    if (!vis[it]) {
-                        dfs(it, vis, adj, ls);
-                    }
-                }
-            }
-            """,
-            createDefaultNodes(), createDefaultEdges(), null, null,
-            new ComplexityDetail(
-                "O(V + 2E)",
-                "Time Complexity: The recursive DFS function is called exactly once for each vertex O(V). Inside each call, we iterate through its adjacency list. For all vertices combined, edges are checked 2E times in undirected graph.",
-                "Why O(V + 2E)? Every vertex is marked visited upon entry, so recursive call runs V times. Each edge is traversed from both direction endpoints.",
-                "O(V)",
-                "Space Complexity: O(V) auxiliary recursion call stack space in the worst case (skewed/linear graph) plus O(V) for visited array.",
-                "Why O(V) space? If the graph is a single line 0-1-2-3-...-V-1, the maximum depth of the call stack reaches V frames.",
-                "Auxiliary Space: O(V) (Recursion Call Stack & Visited Array)",
-                "Adjacency List Space: O(V + 2E)"
-            ),
-            "Stack"
-        ));
-
         // 3. Number of Provinces
         problems.put("number-of-provinces", new ProblemDetail(
-            "number-of-provinces", "Number of Provinces", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
+            "number-of-provinces", "Number of Provinces", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Given an N x N matrix isConnected where isConnected[i][j] = 1 if the ith city and jth city are directly connected. Find the total number of connected components (provinces).",
             """
             // Java Solution: Number of Provinces (LeetCode 547)
@@ -165,64 +111,9 @@ public class GraphBfsDfsService implements ProblemProvider {
         ));
 
         // 4. Number of Islands
-        problems.put("number-of-islands", new ProblemDetail(
-            "number-of-islands", "Number of Islands", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
-            "Given an m x n 2D binary grid grid where '1' represents land and '0' represents water, return the number of islands.",
-            """
-            // Java Solution: Number of Islands (LeetCode 200)
-            public int numIslands(char[][] grid) {
-                int n = grid.length, m = grid[0].length;
-                boolean[][] vis = new boolean[n][m];
-                int count = 0;
-
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        if (grid[i][j] == '1' && !vis[i][j]) {
-                            count++;
-                            bfs(i, j, grid, vis);
-                        }
-                    }
-                }
-                return count;
-            }
-
-            private void bfs(int r, int c, char[][] grid, boolean[][] vis) {
-                vis[r][c] = true;
-                Queue<int[]> q = new LinkedList<>();
-                q.add(new int[]{r, c});
-                int[] dr = {-1, 1, 0, 0};
-                int[] dc = {0, 0, -1, 1};
-
-                while (!q.isEmpty()) {
-                    int[] cell = q.poll();
-                    for (int i = 0; i < 4; i++) {
-                        int nr = cell[0] + dr[i], nc = cell[1] + dc[i];
-                        if (nr >= 0 && nr < grid.length && nc >= 0 && nc < grid[0].length
-                            && grid[nr][nc] == '1' && !vis[nr][nc]) {
-                            vis[nr][nc] = true;
-                            q.add(new int[]{nr, nc});
-                        }
-                    }
-                }
-            }
-            """,
-            null, null, null, createIslandGrid(),
-            new ComplexityDetail(
-                "O(N x M)",
-                "Time Complexity: Outer nested loops iterate over all N x M cells. Each land cell ('1') is visited at most once by BFS/DFS. For each cell, we inspect 4 directional neighbors.",
-                "Why O(N x M)? Total grid cells = N x M. Each cell undergoes 4 boundary & land checks, making total work proportional to 4 * N * M = O(N x M).",
-                "O(N x M)",
-                "Space Complexity: Visited boolean matrix vis[N][M] takes O(N x M). The Queue can hold up to O(N x M) cells in the worst case (e.g. grid filled with all '1's).",
-                "Why O(N x M)? In worst-case diagonal traversal of a full land grid, queue size can grow up to O(min(N, M)) or O(N x M).",
-                "Auxiliary Space: O(N x M) (Queue & Visited Grid)",
-                "Grid Space: O(N x M)"
-            ),
-            DsType.MATRIX.wireValue()
-        ));
-
         // 5. Rotting Oranges
         problems.put("rotting-oranges", new ProblemDetail(
-            "rotting-oranges", "Rotting Oranges", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
+            "rotting-oranges", "Rotting Oranges", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Given a grid where 0=empty, 1=fresh orange, 2=rotten orange. Every minute, any fresh orange adjacent to a rotten orange becomes rotten. Return minimum minutes to rot all oranges, or -1.",
             """
             // Java Solution: Rotting Oranges (LeetCode 994 - Multi-Source BFS)
@@ -273,47 +164,9 @@ public class GraphBfsDfsService implements ProblemProvider {
         ));
 
         // 6. Flood Fill
-        problems.put("flood-fill", new ProblemDetail(
-            "flood-fill", "Flood Fill Algorithm", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Easy",
-            "An image is represented by an m x n grid of integers. Perform a flood fill on image starting from pixel (sr, sc) with color newColor.",
-            """
-            // Java Solution: Flood Fill (LeetCode 733)
-            public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-                int iniColor = image[sr][sc];
-                if (iniColor != newColor) {
-                    dfs(sr, sc, image, iniColor, newColor);
-                }
-                return image;
-            }
-
-            private void dfs(int r, int c, int[][] image, int iniColor, int newColor) {
-                if (r < 0 || r >= image.length || c < 0 || c >= image[0].length || image[r][c] != iniColor) {
-                    return;
-                }
-                image[r][c] = newColor;
-                dfs(r - 1, c, image, iniColor, newColor);
-                dfs(r + 1, c, image, iniColor, newColor);
-                dfs(r, c - 1, image, iniColor, newColor);
-                dfs(r, c + 1, image, iniColor, newColor);
-            }
-            """,
-            null, null, null, createFloodFillGrid(),
-            new ComplexityDetail(
-                "O(N x M)",
-                "Time Complexity: In the worst case, all pixels in the image have the initial color. The DFS algorithm visits each connected pixel of the same color exactly once.",
-                "Why O(N x M)? At most N x M pixels are repainted. For each pixel, 4 recursive calls check boundaries and matching initial color.",
-                "O(N x M)",
-                "Space Complexity: Call stack depth can reach O(N x M) in the worst case (e.g. a long snake-like region of matching color pixels).",
-                "Why O(N x M)? Max call stack depth equals the maximum path length of same-colored adjacent pixels.",
-                "Auxiliary Space: O(N x M) (Recursion Stack)",
-                "Grid Space: Modified in-place O(1)"
-            ),
-            "Stack"
-        ));
-
         // 7. Undirected Cycle BFS
         problems.put("undirected-cycle-bfs", new ProblemDetail(
-            "undirected-cycle-bfs", "Detect Cycle in Undirected Graph (BFS)", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
+            "undirected-cycle-bfs", "Detect Cycle in Undirected Graph (BFS)", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Given an undirected graph with V vertices and E edges, check whether it contains a cycle using Breadth First Search.",
             """
             // Java Solution: Detect Cycle in Undirected Graph (BFS)
@@ -370,7 +223,7 @@ public class GraphBfsDfsService implements ProblemProvider {
 
         // 8. Undirected Cycle DFS
         problems.put("undirected-cycle-dfs", new ProblemDetail(
-            "undirected-cycle-dfs", "Detect Cycle in Undirected Graph (DFS)", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
+            "undirected-cycle-dfs", "Detect Cycle in Undirected Graph (DFS - parent check)", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Given an undirected graph with V vertices and E edges, check whether it contains a cycle using Depth First Search (Recursion).",
             """
             // Java Solution: Detect Cycle in Undirected Graph (DFS)
@@ -412,7 +265,7 @@ public class GraphBfsDfsService implements ProblemProvider {
 
         // 9. Directed Cycle DFS
         problems.put("directed-cycle-dfs", new ProblemDetail(
-            "directed-cycle-dfs", "Detect Cycle in Directed Graph (DFS)", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
+            "directed-cycle-dfs", "Detect Cycle in Directed Graph (DFS - recursion path)", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Given a directed graph with V vertices and E edges, check whether it contains a cycle using DFS with pathVisited array / recursion stack tracking.",
             """
             // Java Solution: Detect Cycle in Directed Graph (DFS)
@@ -460,7 +313,7 @@ public class GraphBfsDfsService implements ProblemProvider {
 
         // 10. Distance of Nearest 1 (0/1 Matrix)
         problems.put("distance-nearest-1", new ProblemDetail(
-            "distance-nearest-1", "0/1 Matrix - Distance of Nearest 1", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
+            "distance-nearest-1", "0/1 Matrix - Distance of Nearest 1", "Graphs - BFS/DFS Problems", "Graphs", "Medium",
             "Given an m x n binary matrix grid, return a matrix dist where dist[i][j] is the distance of the nearest 1 from cell (i, j).",
             """
             // Java Solution: 0/1 Matrix (LeetCode 542 - Multi-Source BFS)
@@ -513,112 +366,6 @@ public class GraphBfsDfsService implements ProblemProvider {
         ));
 
         // 11. Surrounded Regions
-        problems.put("surrounded-regions", new ProblemDetail(
-            "surrounded-regions", "Surrounded Regions (Replace 'O' with 'X')", "Graphs - BFS/DFS Problems", "Graph BFS/DFS", "Medium",
-            "Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.",
-            """
-            // Java Solution: Surrounded Regions (LeetCode 130 - Boundary Traversal)
-            public void solve(char[][] board) {
-                int n = board.length, m = board[0].length;
-                boolean[][] vis = new boolean[n][m];
-
-                // Check boundary rows
-                for (int j = 0; j < m; j++) {
-                    if (!vis[0][j] && board[0][j] == 'O') dfs(0, j, board, vis);
-                    if (!vis[n - 1][j] && board[n - 1][j] == 'O') dfs(n - 1, j, board, vis);
-                }
-                // Check boundary columns
-                for (int i = 0; i < n; i++) {
-                    if (!vis[i][0] && board[i][0] == 'O') dfs(i, 0, board, vis);
-                    if (!vis[i][m - 1] && board[i][m - 1] == 'O') dfs(i, m - 1, board, vis);
-                }
-
-                // Replace unvisited 'O's with 'X'
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        if (!vis[i][j] && board[i][j] == 'O') board[i][j] = 'X';
-                    }
-                }
-            }
-
-            private void dfs(int r, int c, char[][] board, boolean[][] vis) {
-                vis[r][c] = true;
-                int[] dr = {-1, 1, 0, 0}, dc = {0, 0, -1, 1};
-                for (int i = 0; i < 4; i++) {
-                    int nr = r + dr[i], nc = c + dc[i];
-                    if (nr >= 0 && nr < board.length && nc >= 0 && nc < board[0].length
-                        && !vis[nr][nc] && board[nr][nc] == 'O') {
-                        dfs(nr, nc, board, vis);
-                    }
-                }
-            }
-            """,
-            null, null, null, createSurroundedGrid(),
-            new ComplexityDetail(
-                "O(N x M)",
-                "Time Complexity: Traversing 4 boundaries takes O(N + M). DFS starting from boundary 'O's visits each connected 'O' once O(N x M). Final grid scan takes O(N x M).",
-                "Why Boundary Traversal key? Any 'O' connected to a boundary 'O' CANNOT be surrounded by 'X's! Thus, marking boundary-connected 'O's leaves only truly surrounded interior 'O's.",
-                "O(N x M)",
-                "Space Complexity: Visited boolean matrix O(N x M) + recursion stack memory depth up to O(N x M).",
-                "Why O(N x M)? Maximum connected component of boundary-touching 'O's can span up to N x M cells.",
-                "Auxiliary Space: O(N x M)",
-                "Grid Space: Modified in-place O(1)"
-            ),
-            "Stack"
-        ));
-    }
-
-    // Step Generators
-    private List<ExecutionStep> generateIslandsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] grid = createIslandGrid();
-
-        steps.add(new ExecutionStep(1, 7, "Start grid traversal. Scan cell (0,0)", List.of(), Map.of(), List.of(), Map.of("count", "0"), "Matrix", copyGrid(grid)));
-        grid[0][0] = 3;
-        steps.add(new ExecutionStep(2, 9, "Found land at (0,0) & unvisited. Found Island 1! Launch BFS(0,0)", List.of("(0,0)"), Map.of(), List.of(), Map.of("count", "1"), "Matrix", copyGrid(grid)));
-        grid[0][1] = 3; grid[1][0] = 3;
-        steps.add(new ExecutionStep(3, 21, "BFS expands: mark connected land cells (0,1) and (1,0)", List.of("(0,1)", "(1,0)"), Map.of(), List.of(), Map.of("count", "1"), "Matrix", copyGrid(grid)));
-        grid[0][0] = 4; grid[0][1] = 4; grid[1][0] = 4;
-        steps.add(new ExecutionStep(4, 11, "Completed BFS for Island 1. Continue grid search...", List.of(), Map.of(), List.of(), Map.of("count", "1"), "Matrix", copyGrid(grid)));
-        grid[2][2] = 3;
-        steps.add(new ExecutionStep(5, 9, "Found land at (2,2). Found Island 2! Launch BFS(2,2)", List.of("(2,2)"), Map.of(), List.of(), Map.of("count", "2"), "Matrix", copyGrid(grid)));
-        grid[2][3] = 3;
-        steps.add(new ExecutionStep(6, 21, "BFS expands: mark connected land cell (2,3)", List.of("(2,3)"), Map.of(), List.of(), Map.of("count", "2"), "Matrix", copyGrid(grid)));
-        grid[2][2] = 4; grid[2][3] = 4;
-        steps.add(new ExecutionStep(7, 13, "Grid scan finished. Total Islands = 2", List.of(), Map.of(), List.of(), Map.of("Total Islands", "2"), "Matrix", copyGrid(grid)));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateFloodFillSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] grid = createFloodFillGrid();
-
-        steps.add(new ExecutionStep(1, 3, "Start Flood Fill at (1,1) with newColor = 2. Initial color = 1", List.of("dfs(1,1)"), Map.of(), List.of(), Map.of("iniColor", "1", "newColor", "2"), "Matrix", copyGrid(grid)));
-        grid[1][1] = 2;
-        steps.add(new ExecutionStep(2, 11, "Repaint (1,1) -> 2. Recurse 4 directions...", List.of("dfs(1,1)"), Map.of(), List.of(), Map.of("pixel", "(1,1)"), "Matrix", copyGrid(grid)));
-        grid[0][1] = 2; grid[1][0] = 2; grid[1][2] = 2; grid[2][1] = 2;
-        steps.add(new ExecutionStep(3, 12, "Repaint connected color 1 pixels at (0,1), (1,0), (1,2), (2,1)", List.of("dfs(0,1)", "dfs(1,0)", "dfs(1,2)", "dfs(2,1)"), Map.of(), List.of(), Map.of("pixel", "connected"), "Matrix", copyGrid(grid)));
-        steps.add(new ExecutionStep(4, 5, "Flood Fill algorithm completed successfully!", List.of(), Map.of(), List.of(), Map.of("Status", "Complete"), "Matrix", copyGrid(grid)));
-
-        return steps;
-    }
-
-    private List<ExecutionStep> generateSurroundedRegionsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[][] grid = new int[][]{
-            {1, 1, 1, 1},
-            {1, 0, 0, 1},
-            {1, 1, 0, 1},
-            {1, 0, 1, 1}
-        };
-
-        steps.add(new ExecutionStep(1, 6, "Traverse boundary cells looking for 'O's...", List.of(), Map.of(), List.of(), Map.of("phase", "Boundary Search"), "Matrix", copyGrid(grid)));
-        grid[3][1] = 2;
-        steps.add(new ExecutionStep(2, 9, "Found boundary 'O' at (3,1). DFS marks it and its connected 'O's as un-capturable safe 'O's", List.of("dfs(3,1)"), Map.of(), List.of(), Map.of("safe", "(3,1)"), "Matrix", copyGrid(grid)));
-        steps.add(new ExecutionStep(3, 16, "Flip remaining unvisited interior 'O's to 'X's. Surrounded regions captured!", List.of(), Map.of(), List.of(), Map.of("status", "Complete"), "Matrix", copyGrid(grid)));
-
-        return steps;
     }
 
     // Helper builders

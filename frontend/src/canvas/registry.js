@@ -10,6 +10,9 @@ import StackCanvas from '../components/StackCanvas';
 import TreeCanvas from '../components/TreeCanvas';
 import TrieCanvas from '../components/TrieCanvas';
 import IntervalCanvas from '../components/IntervalCanvas';
+import WindowCanvas from '../components/WindowCanvas';
+import SearchSpaceCanvas from '../components/SearchSpaceCanvas';
+import HeapCanvas from '../components/HeapCanvas';
 
 /**
  * The sole dsType-to-renderer routing table.
@@ -22,11 +25,16 @@ import IntervalCanvas from '../components/IntervalCanvas';
  * variant of QueueCanvas, which widens the pane the companion usage keeps narrow.
  * bfs-traversal is `Graph`-hero with a queue companion pane instead (see
  * canvas/companions.js) because its graph topology is the point.
+ *
+ * `Window` and `SearchSpace` had both been placeholders routed to ArrayCanvas. Bars show
+ * the values but not the thing being taught: for a window, the bounds moving and
+ * stretching; for a binary search, the space halving. Each now has the canvas its own
+ * question needs.
  */
 export const CANVAS_BY_DSTYPE = Object.freeze({
   Array: ArrayCanvas,
-  Window: ArrayCanvas,
-  SearchSpace: ArrayCanvas,
+  Window: WindowCanvas,
+  SearchSpace: SearchSpaceCanvas,
   Matrix: GridCanvas,
   DpTable: DpTableCanvas,
   String: ArrayCanvas,
@@ -36,7 +44,7 @@ export const CANVAS_BY_DSTYPE = Object.freeze({
   LinkedList: LinkedListCanvas,
   Stack: StackCanvas,
   Queue: QueueHeroCanvas,
-  PriorityQueue: ArrayCanvas,
+  PriorityQueue: HeapCanvas,
   Trie: TrieCanvas,
   RecursionTree: RecursionTreeCanvas,
   Dsu: DsuCanvas,

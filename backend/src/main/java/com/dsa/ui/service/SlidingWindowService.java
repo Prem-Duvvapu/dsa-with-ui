@@ -23,27 +23,6 @@ public class SlidingWindowService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // All 12 sliding window problems now have real tracers (tracer/impl).
-            case "fruit-into-baskets":
-            case "longest-repeating-character-replacement":
-            case "minimum-window-substring":
-            case "subarrays-k-different-integers":
-            case "longest-substring-without-repeating":
-            case "max-consecutive-ones-3":
-            case "binary-subarrays-with-sum":
-            case "count-nice-subarrays":
-            case "number-substrings-all-three-chars":
-            case "maximum-points-cards":
-            case "longest-substring-k-distinct":
-            case "minimum-window-subsequence":
-                throw new LegacyTraceRetiredException(problemId);
-            default:
-                throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Longest Substring Without Repeating
         problems.put("longest-substring-without-repeating", new ProblemDetail(
@@ -65,7 +44,7 @@ public class SlidingWindowService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{1, 2, 3, 1, 2, 3, 1, 1}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N)", "Time Complexity: Single pass with two pointers left & right.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 character map.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "String"
+            new ComplexityDetail("O(N)", "Time Complexity: Single pass with two pointers left & right.", "Sliding Window", "O(1)", "Space Complexity: Bounded by 256 character map.", "HashMap", "Auxiliary Space: O(1)", "Memory"), "Window"
         ));
 
         // Bulk register remaining 11 Sliding Window problems
@@ -87,15 +66,14 @@ public class SlidingWindowService implements ProblemProvider {
             {"minimum-window-subsequence", "Minimum Window Subsequence", "Sliding Window - Hard", "Hard", "Find minimum window subsequence matching S2 in S1."}
         };
 
-        // These now have real tracers that trace a string window, not an int array.
-        Set<String> stringDsType = Set.of(
-                "longest-repeating-character-replacement", "minimum-window-substring",
-                "number-substrings-all-three-chars", "longest-substring-k-distinct",
-                "minimum-window-subsequence");
-
+        // Every problem in this topic is a WINDOW, whether its cells hold characters or
+        // ints. They were tagged String or Array, which routed all twelve to a bar chart -
+        // a picture that shows the values and not the window, which is the one thing the
+        // technique is named after. The cells carry their own labels, so one canvas serves
+        // both: WindowCanvas draws the bounds moving over whatever the cells hold.
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
-            String dsType = stringDsType.contains(id) ? "String" : "Array";
+            String dsType = "Window";
             problems.put(id, new ProblemDetail(
                 id, title, cat, "Sliding Window", diff, desc,
                 String.format("// Java Implementation for %s\npublic int solve() {\n    // Sliding Window Striver A2Z Implementation\n    return 0;\n}", title),
@@ -120,29 +98,6 @@ public class SlidingWindowService implements ProblemProvider {
             list.add(new ArrayElement(i, vals[i], state));
         }
         return list;
-    }
-
-    // Step Generators
-    private List<ExecutionStep> generateLongestSubstringSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] vals = new int[]{1, 2, 3, 1, 2, 3, 1, 1};
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 4, "Sliding Window: Input s = \"abcabcbb\". Initialize left = 0, right = 0, maxLen = 0.", createRangeArrayState(vals, 0, 0), Map.of("left", "0", "right", "0", "maxLen", "0")));
-        steps.add(createStep(stepNum++, 8, "Expand window right -> 2 (\"abc\"). All characters unique! maxLen = 3.", createRangeArrayState(vals, 0, 2), Map.of("left", "0", "right", "2", "maxLen", "3")));
-        steps.add(createStep(stepNum++, 10, "Duplicate 'a' found at right=3. Shrink window left -> 1 (\"bca\"). maxLen remains 3.", createRangeArrayState(vals, 1, 3), Map.of("left", "1", "right", "3", "maxLen", "3")));
-        steps.add(createStep(stepNum++, 12, "Sliding Window Complete! maxLen = 3 (Substring \"abc\").", createRangeArrayState(vals, 0, 2), Map.of("maxLen", "3")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateMaxConsecutiveOnesSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0};
-        int k = 2;
-        int stepNum = 1;
-        steps.add(createStep(stepNum++, 3, "Max Consecutive Ones III: nums = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], K = 2 (Flips allowed).", createRangeArrayState(nums, 0, 0), Map.of("K", "2", "zeroCount", "0")));
-        steps.add(createStep(stepNum++, 6, "Expand window right -> 5: Zero count = 3 > K=2! Shrink left -> 3.", createRangeArrayState(nums, 3, 5), Map.of("left", "3", "right", "5", "zeroCount", "3")));
-        steps.add(createStep(stepNum++, 9, "Expand window to index 9 [1, 1, 1, 1] with 2 zero flips! Max Consecutive Ones = 6.", createRangeArrayState(nums, 4, 9), Map.of("maxConsecutiveOnes", "6")));
-        return steps;
     }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {

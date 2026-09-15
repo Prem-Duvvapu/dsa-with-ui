@@ -312,6 +312,37 @@ class TracerContractTest {
      * <p>Tracers with nothing scalable are skipped rather than passed. Surefire reports the
      * skip and its reason; a silently green case would read as coverage that does not exist.
      */
+    @Test
+    @DisplayName("Coverage of the growth check does not quietly erode")
+    void growthCheckCoverageDoesNotErode() {
+        // stepCountGrowsWithInput is one of the two tests that can tell real work from a
+        // canned narration, and it skips any tracer with nothing to scale. Each skip is
+        // legitimate on its own; the aggregate is what nobody was watching. 152 of 433 -
+        // over a third of the catalogue - sit outside it today.
+        //
+        // This pins that number so it can only fall, or rise on purpose. A new tracer with
+        // no growable field is sometimes right (check-number-odd takes one integer) and
+        // sometimes a tracer that should have taken an array and took a fixture instead.
+        // The failure makes someone say which.
+        List<String> notCovered = registry.tracedIds().stream()
+                .filter(id -> registry.find(id).orElseThrow().inputSpec().getFields().stream()
+                        .noneMatch(f -> GROWABLE.contains(f.getType())))
+                .sorted()
+                .toList();
+
+        // The list itself is 152 ids long and useless in a failure message. What a reader
+        // needs is the delta and a handful of names to start from.
+        assertTrue(notCovered.size() <= 152,
+                "stepCountGrowsWithInput now skips " + notCovered.size() + " of "
+                        + registry.tracedIds().size() + " tracers, up from 152, so "
+                        + (notCovered.size() - 152) + " more are outside the only check that"
+                        + " tells real work from a canned narration. Either give the new tracer"
+                        + " a growable input field (INT_ARRAY / INT_GRID / LINKED_LIST /"
+                        + " BINARY_TREE), or lower this bound deliberately and say why."
+                        + " Currently skipped, first 10: "
+                        + notCovered.subList(0, Math.min(10, notCovered.size())));
+    }
+
     @ParameterizedTest(name = "{0} does more work on a larger input")
     @MethodSource("tracerIds")
     @DisplayName("Step count grows with input size")
@@ -514,5 +545,24 @@ class TracerContractTest {
               .append(s.getVariables()).append('\n');
         }
         return sb.toString();
+    }
+
+    @ParameterizedTest(name = "{0} unwinds its call stack before the trace ends")
+    @MethodSource("tracerIds")
+    @DisplayName("A trace that pushes call frames must drain them before its last step")
+    void traceEndsWithAnEmptyCallStack(String id) {
+        AlgorithmTracer tracer = registry.find(id).orElseThrow();
+        List<ExecutionStep> steps = runner.runDefaults(tracer).getSteps();
+        boolean usesCallStack = steps.stream()
+                .anyMatch(s -> s.getCallStack() != null && !s.getCallStack().isEmpty());
+        assumeTrue(usesCallStack, id + " does not model a call stack");
+
+        List<String> last = steps.get(steps.size() - 1).getCallStack();
+        assertTrue(last == null || last.isEmpty(),
+                id + " ends with " + (last == null ? 0 : last.size()) + " frame(s) still on the"
+                        + " call stack: " + last + ". The pushes and pops balance, but the final"
+                        + " step is emitted from inside the recursion, so the sidebar freezes"
+                        + " showing frames the viewer never watches drain. Emit a closing step"
+                        + " from run() after the recursion returns.");
     }
 }

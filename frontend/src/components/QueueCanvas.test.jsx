@@ -75,4 +75,23 @@ describe('QueueCanvas', () => {
     expect(CANVAS_BY_DSTYPE.Queue).toBe(QueueHeroCanvas);
     expect(CANVAS_BY_DSTYPE.Queue).not.toBe(QueueCanvas);
   });
+
+  describe('a step that does not restate the queue', () => {
+    it('keeps showing what is there, rather than claiming it is empty', () => {
+      // stock-span-problem narrates a span between every push, and those steps carry no
+      // payload. Rendering them as empty made the queue blink empty on every other step -
+      // 60 such steps across 21 of the 24 Stack & Queue problems.
+      const steps = [{ queueOrStackState: ['0'] }, { description: 'span for day 1 = 1' }];
+      render(<QueueCanvas steps={steps} currentStepIndex={1} currentStep={steps[1]} />);
+      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.queryByText('empty')).not.toBeInTheDocument();
+    });
+
+    it('still shows empty when the trace actually says empty', () => {
+      // An explicit [] is a real value and must not be confused with silence.
+      const steps = [{ queueOrStackState: ['0'] }, { queueOrStackState: [] }];
+      render(<QueueCanvas steps={steps} currentStepIndex={1} currentStep={steps[1]} />);
+      expect(screen.getByText('empty')).toBeInTheDocument();
+    });
+  });
 });

@@ -111,9 +111,9 @@ public class ReverseLlGroupKTracer implements AlgorithmTracer {
             boolean fullGroup = i + k <= n;
             emit.at("countGroup")
                     .say(fullGroup
-                            ? "Starting at index %d: %d more nodes remain - a full group of %d."
-                            : "Starting at index %d: only %d nodes remain - fewer than %d, this is a partial group.",
-                            i, Math.min(k, n - i), k)
+                            ? "Starting at index %d: %d more node%s remain - a full group of %d."
+                            : "Starting at index %d: only %d node%s remain - fewer than %d, this is a partial group.",
+                            i, Math.min(k, n - i), Narration.s(Math.min(k, n - i)), k)
                     .var("groupStart", i).var("count", Math.min(k, n - i))
                     .list(render(concat(result, values, i, n), i, Math.min(i + k, n) - 1)).step();
 

@@ -21,6 +21,10 @@ import java.util.Map;
 @Component
 public class BurstBalloonsTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]";
+
+
     @Override
     public String id() {
         return "burst-balloons";
@@ -133,14 +137,21 @@ public class BurstBalloonsTracer implements AlgorithmTracer {
                                     balloons[right + 1], dp[left][k - 1], dp[k + 1][right], coins,
                                     better ? " New best for this range." : "")
                             .var("left", left).var("right", right).var("k", k).var("coins", coins)
-                            .dpTable(table(dp, n + 2, left, right, k)).step();
+                            .dpTable(table(dp, n + 2, left, right, k)
+                                    .withFormula(FORMULA, String.format(
+                                            "burst %d last: dp[%d][%d] + %d*%d*%d + dp[%d][%d] = %d",
+                                            k, left, k - 1, balloons[left - 1], balloons[k],
+                                            balloons[right + 1], k + 1, right, coins))).step();
 
                     if (better) {
                         dp[left][right] = coins;
                         emit.at("newBest")
                                 .say("Recorded: dp[%d][%d] = %d.", left, right, coins)
                                 .var("left", left).var("right", right).var("dp", coins)
-                                .dpTable(table(dp, n + 2, left, right, k)).step();
+                                .dpTable(table(dp, n + 2, left, right, k)
+                                        .withFormula(FORMULA, String.format(
+                                                "dp[%d][%d] = %d, best so far for this range",
+                                                left, right, coins))).step();
                     }
                 }
             }

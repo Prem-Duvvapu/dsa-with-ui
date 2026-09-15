@@ -119,6 +119,14 @@ public class DirectedCycleDfsTracer implements AlgorithmTracer {
         if (!cycle) {
             emit.at("noCycle").say("Every node's recursion path unwound cleanly. No directed cycle.")
                     .graph(layout.nodes(), layout.edges()).nodes(states).step();
+        } else {
+            // dfsCheck returns true straight up the stack, so its last emitted step is the
+            // cycleDetected one - emitted while every frame is still on the stack. Close the
+            // trace at depth 0 instead of freezing the sidebar mid-descent.
+            emit.at("cycleDetected")
+                    .say("The recursion returned true all the way to the top. A directed cycle exists,"
+                            + " so the search stops here.")
+                    .graph(layout.nodes(), layout.edges()).nodes(states).step();
         }
     }
 

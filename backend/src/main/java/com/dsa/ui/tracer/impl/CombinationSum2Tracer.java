@@ -26,7 +26,7 @@ public class CombinationSum2Tracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STACK;
+        return DsType.RECURSION_TREE;
     }
 
     @Override

@@ -6,8 +6,13 @@
 > (trace-owned tree/graph topology) are complete, and its Phase 2 wire contract is complete.
 > `DpTableCanvas` and the complete 55-problem Dynamic Programming family are delivered.
 > Dedicated canvases/retagging for the other types and `CaptureStrip` Phase 5 remain open;
-> the original 433-entry tracer migration is complete. `RCA-012` is resolved
-> — the current Tries & Prefixes set is fully traced (2/2), and Strings is fully traced (24/24).
+> the original 433-entry tracer migration is complete. `RCA-012` is resolved.
+> **All 18 topics are fully traced (433/433); no topic is partial.** Prompt C (migrate the
+> catalogue) is done, and **Prompt D is done**: the eighteen legacy controllers are
+> deleted and those routes 404, the 80 legacy step generators are gone, and the eighteen
+> services survive as catalogue providers only (they own every ProblemDetail, so they are
+> not dead code). Prompts A and B remain. See `AUDIT.md` for the two open per-problem
+> decisions.
 > Five additional Trie-sheet topics are recorded in `PROJECT_COMPLETION_PLAN.md`. Read live counts from
 > `GET /api/problems/stats`; do not treat old counts below as current claims.
 
@@ -584,14 +589,65 @@ VERIFY
 | 7 | Honest states: loading, untraced, truncated | ✅ done |
 | 8 | ErrorBoundary, catalog-fetch error surface, mobile tab sync, default speed | ✅ done — see note below |
 | 9 | a11y: `.btn:focus-visible`, `aria-live` ticker, Escape + backdrop on mobile drawer | ✅ done — see note below |
-| 10 | CSS Modules | ❌ not started |
+| 10 | CSS Modules | ✅ done — 263 inline style objects to 39, and all 39 are values computed at render time |
+
+**The VERIFY list, as far as it has been run.**
+
+*Both themes, measured against the running app* (not against the CSS text — `data-theme`
+toggled on `:root` and the resolved values read back). All fourteen Bench tokens match the
+spec table exactly in both themes, and every contrast figure the spec states reproduces to
+two decimal places:
+
+| role | spec dark / light | measured |
+|---|---|---|
+| primary ink | 13.26 / 18.20 | 13.26 / 18.20 |
+| secondary ink | 6.62 / 7.49 | 6.62 / 7.49 |
+| dim | 4.69 / 4.62 | 4.69 / 4.62 |
+| probe | 10.10 / 5.01 | 10.10 / 5.01 |
+| resolved | 10.47 / 5.36 | 10.47 / 5.36 |
+| text on fills | 10.56 / 5.01 | 10.56 / 5.01 |
+
+Every role clears 4.5:1 in both. And the light theme is provably not an inversion: `--fill`
+is lighter than its ground in dark and darker than its paper in light, and a true inversion
+would put the probe at luminance 0.477 where it actually sits at 0.160 (settled: 0.456 vs
+0.146). The three tokens the spec says flip role do flip.
+
+*320px* — analysed but **not seen**. Chrome would not resize below the display width
+(`resize_window` reported success, `innerWidth` stayed at 1512, `outerWidth` read 0), so
+this is static analysis, not a screenshot. What it shows: the mobile layout starts at 768px
+(`useLayoutPreferences.MOBILE_BREAKPOINT`), every three-digit width in the CSS is a
+`max-width` rather than a fixed one, the only `min-width` is 200px, and the capture strip
+carries `overflow-x: auto` with `min-width: 0` so it scrolls inside itself instead of
+widening the page. Nothing in the stylesheet forces horizontal overflow at 320px. Somebody
+should still look at it in a real narrow window before this is called done.
+
+**Job 10, as landed.** Every static `style={{}}` in the tree is now a class. What remains
+inline is only what cannot be a class: JS constants the layout maths also uses (`CELL`,
+`GAP`, `SLOT_W`), geometry measured from the DOM (`TourGuide`'s spotlight rects), and two
+grid templates whose column count varies. Three shared sheets carry what was being retyped
+— `layout.module.css` for the row/column/empty-canvas/SVG-stage primitives,
+`fields.module.css` for the three input editors, and each component's own module for what
+is genuinely its own.
+
+Three tests had to move with it. They asserted on computed inline styles — `CodeViewer`'s
+active line carrying `var(--probe-wash)`, `StackCanvas`'s well carrying
+`justify-content: flex-end`, which is the rule that makes a stack fill bottom-up. A class
+does not reach `getComputedStyle` under jsdom, so the migration failed them, and **the
+failure looked exactly like the bug each test was written to catch**. They now read the
+module file and assert the declaration, which is the claim that actually matters and
+outlives the rule changing hands.
 
 **Where the wiring stands.** `App.jsx` fetches the catalogue once from `GET /api/problems`
 (the 18-endpoint fan-out is gone) and all playback/fetch state lives in `useTrace`. Canvas
 selection is a lookup in `frontend/src/canvas/registry.js`, keyed only by the backend's
 closed `dsType`; the `hasGrid` and title/id sniffs are gone. Unknown values render an explicit
-unsupported state. The sidebar itself, and the search box, are still on the pre-Bench tokens
-and layout — restyling them is not tracked as its own job above and should be.
+unsupported state.
+
+The sidebar and the search box have since been brought onto Bench: they style through the
+`--bench-*` and `--probe` tokens, the panel is the specified `15rem` rather than the 320px
+it was, and both draw from `layout.module.css` rather than inline objects. The note that
+used to stand here — that they were still on the pre-Bench tokens and layout — is no longer
+true, and is removed rather than left to send someone after work that is done.
 
 **The catalogue-summary vs. detail split.** `GET /api/problems` (the list) returns summary
 fields only — id, title, category, dsType, traced, inputSpec. `javaCode`, `complexity`, and

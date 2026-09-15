@@ -93,9 +93,16 @@ public class KmpLpsTracer implements AlgorithmTracer {
             if (pattern.charAt(i) == pattern.charAt(len)) {
                 len++;
                 lps[i] = len;
+                // Every step says what the number MEANS for a search, not just what it is.
+                // longest-happy-prefix builds the identical array with the identical
+                // narration, because the array is its answer; here the array is a tool, and
+                // a trace that never says what the tool does is interchangeable with that
+                // one - which is how two problems end up teaching the same thing twice.
                 emit.at("match")
-                        .say("pattern[%d]='%c' matches pattern[%d]='%c' - extend the match to length %d and record lps[%d]=%d.",
-                                i, pattern.charAt(i), len - 1, pattern.charAt(len - 1), len, i, len)
+                        .say("pattern[%d]='%c' matches pattern[%d]='%c' - extend the match to length %d and "
+                                + "record lps[%d]=%d. In a search, a mismatch just after index %d now resumes "
+                                + "at pattern[%d] instead of restarting at 0.",
+                                i, pattern.charAt(i), len - 1, pattern.charAt(len - 1), len, i, len, i, len)
                         .var("len", len).var("i", i).var("lps", Arrays.toString(lps))
                         .chars(pattern, i, len - 1).step();
                 i++;
@@ -104,7 +111,9 @@ public class KmpLpsTracer implements AlgorithmTracer {
                 len = lps[len - 1];
                 emit.at("fallback")
                         .say("pattern[%d]='%c' breaks the match of length %d - fall back to the next-best "
-                                + "recorded match length %d (lps[%d]) without moving i forward.",
+                                + "recorded match length %d (lps[%d]) without moving i forward. This is the "
+                                + "same retreat a KMP search makes on a mismatch: never re-read the text, "
+                                + "only slide the pattern.",
                                 i, pattern.charAt(i), before, len, before - 1)
                         .var("len", len).var("i", i).var("lps", Arrays.toString(lps))
                         .chars(pattern, i, len).step();
@@ -112,7 +121,8 @@ public class KmpLpsTracer implements AlgorithmTracer {
                 lps[i] = 0;
                 emit.at("noMatch")
                         .say("pattern[%d]='%c' does not match pattern[0]='%c', and there is no shorter match "
-                                + "left to fall back to - lps[%d] = 0.",
+                                + "left to fall back to - lps[%d] = 0. A search failing here restarts the "
+                                + "pattern from scratch, but still never steps the text backwards.",
                                 i, pattern.charAt(i), pattern.charAt(0), i)
                         .var("len", len).var("i", i).var("lps", Arrays.toString(lps))
                         .chars(pattern, i, 0).step();
@@ -121,7 +131,10 @@ public class KmpLpsTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Every index considered. LPS array complete: %s.", Arrays.toString(lps))
+                .say("Every index considered. LPS array complete: %s. That array is the whole of "
+                        + "KMP's preprocessing: with it, matching a pattern against a text of length m "
+                        + "takes O(m) because the text pointer only ever moves forward.",
+                        Arrays.toString(lps))
                 .var("lps", Arrays.toString(lps))
                 .chars(pattern).step();
     }

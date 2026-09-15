@@ -25,7 +25,11 @@ public class MaxRectangleAreaTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.MATRIX;
+        // The board is stated twice and never changes; the column-height histogram is what
+        // the other 60 steps are about, and under MATRIX it had no renderer at all. The
+        // board survives as a companion pane (canvas/companions.js), the same split
+        // maximum-rectangles-binary-matrix already makes for this problem.
+        return DsType.ARRAY;
     }
 
     @Override

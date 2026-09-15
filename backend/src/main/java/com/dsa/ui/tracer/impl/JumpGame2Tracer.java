@@ -59,7 +59,7 @@ public class JumpGame2Tracer implements AlgorithmTracer {
                         .var("jumps", jumps).var("layerEnd", end).array(nums, i, Math.min(end, nums.length - 1)).step();
             }
         }
-        emit.at("done").say("The last index is inside layer %d, so the minimum is %d jump(s).", jumps, jumps)
+        emit.at("done").say("The last index is inside layer %d, so the minimum is %d jump%s.", jumps, jumps, Narration.s(jumps))
                 .var("jumps", jumps).array(nums, nums.length - 1).step();
     }
 }

@@ -10,12 +10,12 @@
   "problemId" : "m-coloring",
   "resolvedInput" : {
     "graph" : {
-      "edges" : [ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 1, 2 ], [ 2, 3 ] ],
-      "vertices" : 4
+      "edges" : [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ], [ 1, 4 ], [ 2, 4 ], [ 3, 4 ] ],
+      "vertices" : 5
     },
     "m" : 3
   },
-  "stepCount" : 10,
+  "stepCount" : 15,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 15,
@@ -26,7 +26,8 @@
       "0" : "visiting",
       "1" : "unvisited",
       "2" : "unvisited",
-      "3" : "unvisited"
+      "3" : "unvisited",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
@@ -48,20 +49,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -77,20 +84,26 @@
       "directed" : false,
       "highlighted" : false
     }, {
-      "from" : 0,
-      "to" : 3,
-      "weight" : null,
-      "directed" : false,
-      "highlighted" : false
-    }, {
       "from" : 1,
       "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -105,7 +118,8 @@
       "0" : "visiting",
       "1" : "unvisited",
       "2" : "unvisited",
-      "3" : "unvisited"
+      "3" : "unvisited",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
@@ -127,20 +141,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -156,20 +176,26 @@
       "directed" : false,
       "highlighted" : false
     }, {
-      "from" : 0,
-      "to" : 3,
-      "weight" : null,
-      "directed" : false,
-      "highlighted" : false
-    }, {
       "from" : 1,
       "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -184,7 +210,8 @@
       "0" : "visiting",
       "1" : "visiting",
       "2" : "unvisited",
-      "3" : "unvisited"
+      "3" : "unvisited",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
@@ -206,20 +233,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -235,20 +268,26 @@
       "directed" : false,
       "highlighted" : false
     }, {
-      "from" : 0,
-      "to" : 3,
-      "weight" : null,
-      "directed" : false,
-      "highlighted" : false
-    }, {
       "from" : 1,
       "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -263,7 +302,8 @@
       "0" : "visiting",
       "1" : "visiting",
       "2" : "unvisited",
-      "3" : "unvisited"
+      "3" : "unvisited",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
@@ -285,20 +325,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -314,20 +360,26 @@
       "directed" : false,
       "highlighted" : false
     }, {
-      "from" : 0,
-      "to" : 3,
-      "weight" : null,
-      "directed" : false,
-      "highlighted" : false
-    }, {
       "from" : 1,
       "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -342,7 +394,8 @@
       "0" : "visiting",
       "1" : "visiting",
       "2" : "unvisited",
-      "3" : "unvisited"
+      "3" : "unvisited",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
@@ -364,20 +417,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -393,20 +452,26 @@
       "directed" : false,
       "highlighted" : false
     }, {
-      "from" : 0,
-      "to" : 3,
-      "weight" : null,
-      "directed" : false,
-      "highlighted" : false
-    }, {
       "from" : 1,
       "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -421,7 +486,8 @@
       "0" : "visiting",
       "1" : "visiting",
       "2" : "visiting",
-      "3" : "unvisited"
+      "3" : "unvisited",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
@@ -443,20 +509,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -472,8 +544,94 @@
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 15,
+    "description" : "Color 1 is safe for vertex 3 - assign it and recurse into vertex 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "visiting",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "assignedColor" : "1",
+      "node" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
       "from" : 0,
-      "to" : 3,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -484,27 +642,40 @@
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     } ]
   }, {
-    "stepNumber" : 7,
+    "stepNumber" : 8,
     "activeLine" : 12,
-    "description" : "Color 1 conflicts with a neighbour of vertex 3 that already holds it - skip it.",
+    "description" : "Color 1 conflicts with a neighbour of vertex 4 that already holds it - skip it.",
     "queueOrStackState" : null,
-    "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)" ],
+    "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)", "solve(node=4)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
       "2" : "visiting",
-      "3" : "unvisited"
+      "3" : "visiting",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "3",
+      "node" : "4",
       "triedColor" : "1"
     },
     "dsType" : "Graph",
@@ -522,20 +693,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -551,8 +728,94 @@
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 12,
+    "description" : "Color 2 conflicts with a neighbour of vertex 4 that already holds it - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)", "solve(node=4)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "visiting",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "4",
+      "triedColor" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
       "from" : 0,
-      "to" : 3,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -563,14 +826,209 @@
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     } ]
   }, {
-    "stepNumber" : 8,
+    "stepNumber" : 10,
+    "activeLine" : 12,
+    "description" : "Color 3 conflicts with a neighbour of vertex 4 that already holds it - skip it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)", "solve(node=4)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "visiting",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "4",
+      "triedColor" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 17,
+    "description" : "Coloring vertex 3 with 1 did not lead to a full solution - undo it and try the next color.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "unvisited",
+      "4" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
     "activeLine" : 15,
     "description" : "Color 2 is safe for vertex 3 - assign it and recurse into vertex 4.",
     "queueOrStackState" : null,
@@ -579,7 +1037,8 @@
       "0" : "visiting",
       "1" : "visiting",
       "2" : "visiting",
-      "3" : "visiting"
+      "3" : "visiting",
+      "4" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
@@ -601,20 +1060,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -630,39 +1095,47 @@
       "directed" : false,
       "highlighted" : false
     }, {
-      "from" : 0,
-      "to" : 3,
-      "weight" : null,
-      "directed" : false,
-      "highlighted" : false
-    }, {
       "from" : 1,
       "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     } ]
   }, {
-    "stepNumber" : 9,
-    "activeLine" : 8,
-    "description" : "Every vertex 0..3 has a color. This assignment works.",
+    "stepNumber" : 13,
+    "activeLine" : 15,
+    "description" : "Color 1 is safe for vertex 4 - assign it and recurse once more, which finds no vertex left and checks the assignment.",
     "queueOrStackState" : null,
     "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)", "solve(node=4)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
       "2" : "visiting",
-      "3" : "visiting"
+      "3" : "visiting",
+      "4" : "visiting"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "colors" : "[1, 2, 3, 2]"
+      "assignedColor" : "1",
+      "node" : "4"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -679,20 +1152,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -708,8 +1187,93 @@
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 8,
+    "description" : "Every vertex 0..4 has a color. This assignment works.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(node=0)", "solve(node=1)", "solve(node=2)", "solve(node=3)", "solve(node=4)", "solve(node=5)" ],
+    "nodeStates" : {
+      "0" : "visiting",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "visiting",
+      "4" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "colors" : "[1, 2, 3, 2, 1]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
       "from" : 0,
-      "to" : 3,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
@@ -720,27 +1284,40 @@
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     } ]
   }, {
-    "stepNumber" : 10,
+    "stepNumber" : 15,
     "activeLine" : 3,
-    "description" : "Every vertex colored with at most 3 colors. Assignment: [1, 2, 3, 2].",
+    "description" : "Every vertex colored with at most 3 colors. Assignment: [1, 2, 3, 2, 1].",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
       "2" : "visiting",
-      "3" : "visiting"
+      "3" : "visiting",
+      "4" : "visiting"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "colors" : "[1, 2, 3, 2]",
+      "colors" : "[1, 2, 3, 2, 1]",
       "possible" : "true"
     },
     "dsType" : "Graph",
@@ -758,20 +1335,26 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 300.0,
-      "y" : 160.0,
+      "x" : 294.12678195541844,
+      "y" : 122.91796067500631,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 180.0,
-      "y" : 280.0,
+      "x" : 250.53423027509677,
+      "y" : 257.08203932499373,
       "state" : "unvisited"
     }, {
       "id" : 3,
       "label" : "3",
-      "x" : 60.0,
-      "y" : 160.00000000000003,
+      "x" : 109.46576972490324,
+      "y" : 257.08203932499373,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "4",
+      "x" : 65.87321804458156,
+      "y" : 122.91796067500633,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -787,20 +1370,26 @@
       "directed" : false,
       "highlighted" : false
     }, {
-      "from" : 0,
-      "to" : 3,
-      "weight" : null,
-      "directed" : false,
-      "highlighted" : false
-    }, {
       "from" : 1,
       "to" : 2,
       "weight" : null,
       "directed" : false,
       "highlighted" : false
     }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
       "from" : 2,
-      "to" : 3,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 4,
       "weight" : null,
       "directed" : false,
       "highlighted" : false

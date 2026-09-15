@@ -52,23 +52,24 @@ public class KthLargestStreamTracer implements AlgorithmTracer {
             throw new InputValidationException(Map.of("k", "Must not exceed initial.length (" + initial.length + ")."));
         }
 
-        PriorityQueue<Integer> heap = new PriorityQueue<>();
+        ArrayHeap<Integer> heap = ArrayHeap.minHeap();
         for (int value : initial) add(value, k, heap, emit, false);
         List<Integer> answers = new ArrayList<>();
         for (int value : additions) {
             add(value, k, heap, emit, true);
             answers.add(heap.peek());
-            emit.at("report").say("After adding %d, the %d-th largest stream value is %d.", value, k, heap.peek())
+            emit.at("report").say("After adding %d, the %s largest stream value is %d.",
+                    value, Narration.ordinal(k), heap.peek())
                     .var("added", value).var("answer", heap.peek()).arrayState(render(heap)).step();
         }
         emit.at("done").say("Kth-largest answers for all additions: %s.", answers)
                 .var("answers", answers).arrayState(render(heap)).step();
     }
 
-    private static void add(int value, int k, PriorityQueue<Integer> heap, StepEmitter emit, boolean live) {
+    private static void add(int value, int k, ArrayHeap<Integer> heap, StepEmitter emit, boolean live) {
         heap.offer(value);
-        emit.at("push").say("%s %d; the min-heap temporarily contains %d value(s).",
-                        live ? "Add" : "Seed", value, heap.size())
+        emit.at("push").say("%s %d; the min-heap temporarily contains %d value%s.",
+                        live ? "Add" : "Seed", value, heap.size(), Narration.s(heap.size()))
                 .var("value", value).var("size", heap.size()).arrayState(render(heap)).step();
         if (heap.size() > k) {
             int removed = heap.poll();
@@ -77,9 +78,9 @@ public class KthLargestStreamTracer implements AlgorithmTracer {
         }
     }
 
-    private static List<ArrayElement> render(PriorityQueue<Integer> heap) {
-        List<Integer> values = new ArrayList<>(heap);
-        Collections.sort(values);
+    /** The heap's own array - see ArrayHeap for why this must not be sorted first. */
+    private static List<ArrayElement> render(ArrayHeap<Integer> heap) {
+        List<Integer> values = heap.slots();
         List<ArrayElement> out = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             out.add(new ArrayElement(i, values.get(i), i == 0 ? "target" : "default", i == 0 ? "kth largest" : null));

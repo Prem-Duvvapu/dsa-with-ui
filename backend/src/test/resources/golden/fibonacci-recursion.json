@@ -8,7 +8,7 @@
   "resolvedInput" : {
     "n" : 5
   },
-  "stepCount" : 22,
+  "stepCount" : 23,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 5,
@@ -3291,6 +3291,160 @@
       "leftId" : 2,
       "rightId" : 11,
       "state" : "merging"
+    }, {
+      "id" : 2,
+      "val" : "fib(4)",
+      "x" : 300.0,
+      "y" : 95.0,
+      "leftId" : 3,
+      "rightId" : 8,
+      "state" : "visited"
+    }, {
+      "id" : 3,
+      "val" : "fib(3)",
+      "x" : 196.0,
+      "y" : 150.0,
+      "leftId" : 4,
+      "rightId" : 7,
+      "state" : "visited"
+    }, {
+      "id" : 4,
+      "val" : "fib(2)",
+      "x" : 92.0,
+      "y" : 205.0,
+      "leftId" : 5,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 5,
+      "val" : "fib(1)",
+      "x" : 40.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "fib(0)",
+      "x" : 144.0,
+      "y" : 260.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 7,
+      "val" : "fib(1)",
+      "x" : 248.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 8,
+      "val" : "fib(2)",
+      "x" : 404.0,
+      "y" : 150.0,
+      "leftId" : 9,
+      "rightId" : 10,
+      "state" : "visited"
+    }, {
+      "id" : 9,
+      "val" : "fib(1)",
+      "x" : 352.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 10,
+      "val" : "fib(0)",
+      "x" : 456.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 11,
+      "val" : "fib(3)",
+      "x" : 716.0,
+      "y" : 95.0,
+      "leftId" : 12,
+      "rightId" : 15,
+      "state" : "visited"
+    }, {
+      "id" : 12,
+      "val" : "fib(2)",
+      "x" : 612.0,
+      "y" : 150.0,
+      "leftId" : 13,
+      "rightId" : 14,
+      "state" : "visited"
+    }, {
+      "id" : 13,
+      "val" : "fib(1)",
+      "x" : 560.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 14,
+      "val" : "fib(0)",
+      "x" : 664.0,
+      "y" : 205.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    }, {
+      "id" : 15,
+      "val" : "fib(1)",
+      "x" : 768.0,
+      "y" : 150.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "visited"
+    } ]
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 5,
+    "description" : "The whole tree has been evaluated and every frame has returned. fib(5) = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "visited",
+      "7" : "visited",
+      "8" : "visited",
+      "9" : "visited",
+      "10" : "visited",
+      "11" : "visited",
+      "12" : "visited",
+      "13" : "visited",
+      "14" : "visited",
+      "15" : "visited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "n" : "5",
+      "result" : "5"
+    },
+    "dsType" : "RecursionTree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 1,
+      "val" : "fib(5)",
+      "x" : 508.0,
+      "y" : 40.0,
+      "leftId" : 2,
+      "rightId" : 11,
+      "state" : "visited"
     }, {
       "id" : 2,
       "val" : "fib(4)",

@@ -20,6 +20,10 @@ import java.util.Map;
 @Component
 public class Knapsack01Tracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i-1][w - wt[i-1]])";
+
+
     @Override
     public String id() {
         return "knapsack-01";
@@ -89,15 +93,23 @@ public class Knapsack01Tracer implements AlgorithmTracer {
         for (int i = 0; i <= n; i++) {
             List<DpCell> row = new ArrayList<>(W + 1);
             for (int w = 0; w <= W; w++) {
+                // Row 0 is the real base case (no items, so no value at any capacity).
+                // Everything past the probe is untouched int[][] memory, and printing its
+                // zeros as "known" showed the viewer a settled 0 for cells the algorithm
+                // had not reached - indistinguishable from a computed 0, and wrong: item
+                // 4 at capacity 5 read 0 on step 1 and finishes at 13.
+                boolean filled = probeI < 0 || i == 0 || i < probeI || (i == probeI && w <= probeW);
                 String state;
                 if (i == probeI && w == probeW) {
                     state = "probe";
                 } else if (i == probeI - 1 && (w == readW || w == probeW)) {
                     state = "read";
+                } else if (!filled) {
+                    state = "void";
                 } else {
-                    state = "known";
+                    state = probeI < 0 ? "resolved" : "known";
                 }
-                row.add(new DpCell(String.valueOf(dp[i][w]), state));
+                row.add(new DpCell(filled ? String.valueOf(dp[i][w]) : "\u00b7", state));
             }
             rows.add(row);
         }
@@ -124,7 +136,10 @@ public class Knapsack01Tracer implements AlgorithmTracer {
                                     i, wt[i - 1], val[i - 1], w, val[i - 1], i - 1,
                                     w - wt[i - 1], withIt, i - 1, w, withoutIt, dp[i][w])
                             .var("i", i).var("w", w).var("value", dp[i][w])
-                            .dpTable(table(dp, n, W, i, w, w - wt[i - 1])).step();
+                            .dpTable(table(dp, n, W, i, w, w - wt[i - 1]).withFormula(FORMULA, String.format(
+                                    "dp[%d][%d] = max(%d, %d + %d) = %d",
+                                    i, w, withoutIt, val[i - 1], dp[i - 1][w - wt[i - 1]], dp[i][w])))
+                            .step();
                 } else {
                     dp[i][w] = dp[i - 1][w];
                     emit.at("doesntFit")
@@ -132,7 +147,10 @@ public class Knapsack01Tracer implements AlgorithmTracer {
                                     + "forward dp[%d][%d]=%d unchanged.",
                                     i, wt[i - 1], w, i - 1, w, dp[i][w])
                             .var("i", i).var("w", w).var("value", dp[i][w])
-                            .dpTable(table(dp, n, W, i, w, w)).step();
+                            .dpTable(table(dp, n, W, i, w, w).withFormula(FORMULA, String.format(
+                                    "item %d does not fit, so dp[%d][%d] = dp[%d][%d] = %d",
+                                    i, i, w, i - 1, w, dp[i][w])))
+                            .step();
                 }
             }
         }

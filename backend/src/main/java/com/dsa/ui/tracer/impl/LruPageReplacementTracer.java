@@ -74,7 +74,7 @@ public class LruPageReplacementTracer implements AlgorithmTracer {
             }
             cache.addFirst(page);
         }
-        emit.at("done").say("Reference string complete with %d page fault(s). Final MRU→LRU order: %s.", faults, cache)
+        emit.at("done").say("Reference string complete with %d page fault%s. Final MRU→LRU order: %s.", faults, Narration.s(faults), cache)
                 .var("faults", faults).array(pages).stack(cache).step();
     }
 }

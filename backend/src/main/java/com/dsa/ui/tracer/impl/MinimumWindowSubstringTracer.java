@@ -27,7 +27,7 @@ public class MinimumWindowSubstringTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STRING;
+        return DsType.WINDOW;
     }
 
     @Override

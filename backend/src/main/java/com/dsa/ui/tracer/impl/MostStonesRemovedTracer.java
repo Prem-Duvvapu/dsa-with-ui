@@ -130,15 +130,15 @@ public class MostStonesRemovedTracer implements AlgorithmTracer {
         Set<Integer> roots = new HashSet<>();
         for (int i = 1; i <= n; i++) roots.add(find(i, parent));
         emit.at("count")
-                .say("Count distinct roots across all %d stones: %d group(s) - %s.", n, roots.size(), formatSets(parent, n))
+                .say("Count distinct roots across all %d stones: %d group%s - %s.", n, roots.size(), Narration.s(roots.size()), formatSets(parent, n))
                 .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
                 .var("Disjoint Sets", formatSets(parent, n)).var("Operation", "Count groups")
                 .step();
         int answer = n - roots.size();
 
         emit.at("done")
-                .say("%d group(s) formed. One stone per group is unremovable - the rest can go. Max removable: %d.",
-                        roots.size(), answer)
+                .say("%d group%s formed. One stone per group is unremovable - the rest can go. Max removable: %d.",
+                        roots.size(), Narration.s(roots.size()), answer)
                 .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
                 .var("Disjoint Sets", formatSets(parent, n))
                 .var("Operation", "Done: " + answer + " removable")

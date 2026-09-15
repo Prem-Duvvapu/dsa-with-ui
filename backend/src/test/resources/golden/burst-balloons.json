@@ -142,8 +142,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 1 last: dp[1][0] + 1*3*1 + dp[2][1] = 3"
     }
   }, {
     "stepNumber" : 2,
@@ -276,8 +276,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[1][1] = 3, best so far for this range"
     }
   }, {
     "stepNumber" : 3,
@@ -411,8 +411,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 2 last: dp[2][1] + 3*1*5 + dp[3][2] = 15"
     }
   }, {
     "stepNumber" : 4,
@@ -545,8 +545,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[2][2] = 15, best so far for this range"
     }
   }, {
     "stepNumber" : 5,
@@ -680,8 +680,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 3 last: dp[3][2] + 1*5*8 + dp[4][3] = 40"
     }
   }, {
     "stepNumber" : 6,
@@ -814,8 +814,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[3][3] = 40, best so far for this range"
     }
   }, {
     "stepNumber" : 7,
@@ -949,8 +949,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 4 last: dp[4][3] + 5*8*1 + dp[5][4] = 40"
     }
   }, {
     "stepNumber" : 8,
@@ -1083,8 +1083,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[4][4] = 40, best so far for this range"
     }
   }, {
     "stepNumber" : 9,
@@ -1218,8 +1218,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 1 last: dp[1][0] + 1*3*5 + dp[2][2] = 30"
     }
   }, {
     "stepNumber" : 10,
@@ -1352,8 +1352,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[1][2] = 30, best so far for this range"
     }
   }, {
     "stepNumber" : 11,
@@ -1487,8 +1487,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 2 last: dp[1][1] + 1*1*5 + dp[3][2] = 8"
     }
   }, {
     "stepNumber" : 12,
@@ -1622,8 +1622,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 2 last: dp[2][1] + 3*1*8 + dp[3][3] = 64"
     }
   }, {
     "stepNumber" : 13,
@@ -1756,8 +1756,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[2][3] = 64, best so far for this range"
     }
   }, {
     "stepNumber" : 14,
@@ -1891,8 +1891,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 3 last: dp[2][2] + 3*5*8 + dp[4][3] = 135"
     }
   }, {
     "stepNumber" : 15,
@@ -2025,8 +2025,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[2][3] = 135, best so far for this range"
     }
   }, {
     "stepNumber" : 16,
@@ -2160,8 +2160,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 3 last: dp[3][2] + 1*5*1 + dp[4][4] = 45"
     }
   }, {
     "stepNumber" : 17,
@@ -2294,8 +2294,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[3][4] = 45, best so far for this range"
     }
   }, {
     "stepNumber" : 18,
@@ -2429,8 +2429,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 4 last: dp[3][3] + 1*8*1 + dp[5][4] = 48"
     }
   }, {
     "stepNumber" : 19,
@@ -2563,8 +2563,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[3][4] = 48, best so far for this range"
     }
   }, {
     "stepNumber" : 20,
@@ -2698,8 +2698,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 1 last: dp[1][0] + 1*3*8 + dp[2][3] = 159"
     }
   }, {
     "stepNumber" : 21,
@@ -2832,8 +2832,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[1][3] = 159, best so far for this range"
     }
   }, {
     "stepNumber" : 22,
@@ -2967,8 +2967,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 2 last: dp[1][1] + 1*1*8 + dp[3][3] = 51"
     }
   }, {
     "stepNumber" : 23,
@@ -3102,8 +3102,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 3 last: dp[1][2] + 1*5*8 + dp[4][3] = 70"
     }
   }, {
     "stepNumber" : 24,
@@ -3237,8 +3237,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 2 last: dp[2][1] + 3*1*1 + dp[3][4] = 51"
     }
   }, {
     "stepNumber" : 25,
@@ -3371,8 +3371,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[2][4] = 51, best so far for this range"
     }
   }, {
     "stepNumber" : 26,
@@ -3506,8 +3506,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 3 last: dp[2][2] + 3*5*1 + dp[4][4] = 70"
     }
   }, {
     "stepNumber" : 27,
@@ -3640,8 +3640,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[2][4] = 70, best so far for this range"
     }
   }, {
     "stepNumber" : 28,
@@ -3775,8 +3775,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 4 last: dp[2][3] + 3*8*1 + dp[5][4] = 159"
     }
   }, {
     "stepNumber" : 29,
@@ -3909,8 +3909,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[2][4] = 159, best so far for this range"
     }
   }, {
     "stepNumber" : 30,
@@ -4044,8 +4044,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 1 last: dp[1][0] + 1*3*1 + dp[2][4] = 162"
     }
   }, {
     "stepNumber" : 31,
@@ -4178,8 +4178,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[1][4] = 162, best so far for this range"
     }
   }, {
     "stepNumber" : 32,
@@ -4313,8 +4313,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 2 last: dp[1][1] + 1*1*1 + dp[3][4] = 52"
     }
   }, {
     "stepNumber" : 33,
@@ -4448,8 +4448,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 3 last: dp[1][2] + 1*5*1 + dp[4][4] = 75"
     }
   }, {
     "stepNumber" : 34,
@@ -4583,8 +4583,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "burst 4 last: dp[1][3] + 1*8*1 + dp[5][4] = 167"
     }
   }, {
     "stepNumber" : 35,
@@ -4717,8 +4717,8 @@
         "value" : "0",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = max over k of dp[i][k-1] + nums[i-1]*nums[k]*nums[j+1] + dp[k+1][j]",
+      "substitution" : "dp[1][4] = 167, best so far for this range"
     }
   }, {
     "stepNumber" : 36,

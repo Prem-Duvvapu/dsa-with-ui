@@ -10,34 +10,32 @@
   "code" : "public int kthElement(int[] nums1, int[] nums2, int k) {\n    int[] a = nums1, b = nums2;\n    if (a.length > b.length) {\n        a = nums2; b = nums1;\n    }\n    int n1 = a.length, n2 = b.length;\n    int low = Math.max(0, k - n2), high = Math.min(k, n1);\n\n    while (low <= high) {\n        int cut1 = (low + high) / 2;\n        int cut2 = k - cut1;\n\n        int l1 = cut1 == 0 ? Integer.MIN_VALUE : a[cut1 - 1];\n        int l2 = cut2 == 0 ? Integer.MIN_VALUE : b[cut2 - 1];\n        int r1 = cut1 == n1 ? Integer.MAX_VALUE : a[cut1];\n        int r2 = cut2 == n2 ? Integer.MAX_VALUE : b[cut2];\n\n        if (l1 <= r2 && l2 <= r1) {\n            return Math.max(l1, l2);\n        } else if (l1 > r2) {\n            high = cut1 - 1;\n        } else {\n            low = cut1 + 1;\n        }\n    }\n    return -1;\n}",
   "problemId" : "kth-element-2-sorted-arrays",
   "resolvedInput" : {
-    "k" : 4,
-    "nums1" : [ -13, -11, 14, 16 ],
-    "nums2" : [ -14, -9, -1, 15, 17 ]
+    "k" : 7,
+    "nums1" : [ 9, 10, 14, 17, 20, 24 ],
+    "nums2" : [ 1, 2, 4, 13 ]
   },
-  "stepCount" : 3,
+  "stepCount" : 10,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 10,
-    "description" : "Try cutting the smaller array after 2 elements. That forces the larger array's cut after 2 elements, so the left side holds exactly 4 elements - the first 4 of the merged order.",
+    "activeLine" : 4,
+    "description" : "Array 1 (length 6) is longer than array 2 (length 4) - always partition the smaller one, so swap roles. The cut must fall between 1 and 4 elements into it for both sides to hold 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cut1" : "2",
-      "cut2" : "2",
       "high" : "4",
-      "low" : "0"
+      "low" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "SearchSpace",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : -13,
+      "value" : 9,
       "state" : "default"
     }, {
       "index" : 1,
-      "value" : -11,
+      "value" : 10,
       "state" : "default"
     }, {
       "index" : 2,
@@ -45,27 +43,31 @@
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 16,
+      "value" : 17,
       "state" : "default"
     }, {
       "index" : 4,
-      "value" : -14,
+      "value" : 20,
       "state" : "default"
     }, {
       "index" : 5,
-      "value" : -9,
+      "value" : 24,
       "state" : "default"
     }, {
       "index" : 6,
-      "value" : -1,
+      "value" : 1,
       "state" : "default"
     }, {
       "index" : 7,
-      "value" : 15,
+      "value" : 2,
       "state" : "default"
     }, {
       "index" : 8,
-      "value" : 17,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 13,
       "state" : "default"
     } ],
     "listState" : null,
@@ -73,27 +75,27 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 13,
-    "description" : "Left boundaries: -11, -9. Right boundaries: 14, -1.",
+    "activeLine" : 10,
+    "description" : "Try cutting the smaller array after 2 elements. That forces the larger array's cut after 5 elements, so the left side holds exactly 7 elements - the first 7 of the merged order.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "l1" : "-11",
-      "l2" : "-9",
-      "r1" : "14",
-      "r2" : "-1"
+      "cut1" : "2",
+      "cut2" : "5",
+      "high" : "4",
+      "low" : "1"
     },
-    "dsType" : "Array",
+    "dsType" : "SearchSpace",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : -13,
+      "value" : 9,
       "state" : "default"
     }, {
       "index" : 1,
-      "value" : -11,
+      "value" : 10,
       "state" : "default"
     }, {
       "index" : 2,
@@ -101,27 +103,31 @@
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 16,
+      "value" : 17,
       "state" : "default"
     }, {
       "index" : 4,
-      "value" : -14,
-      "state" : "default"
+      "value" : 20,
+      "state" : "target"
     }, {
       "index" : 5,
-      "value" : -9,
-      "state" : "default"
+      "value" : 24,
+      "state" : "probe"
     }, {
       "index" : 6,
-      "value" : -1,
+      "value" : 1,
       "state" : "default"
     }, {
       "index" : 7,
-      "value" : 15,
-      "state" : "default"
+      "value" : 2,
+      "state" : "target"
     }, {
       "index" : 8,
-      "value" : 17,
+      "value" : 4,
+      "state" : "probe"
+    }, {
+      "index" : 9,
+      "value" : 13,
       "state" : "default"
     } ],
     "listState" : null,
@@ -129,24 +135,29 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 19,
-    "description" : "Every left element is <= every right element in both arrays - valid partition. The 4-th element is -9.",
+    "activeLine" : 13,
+    "description" : "Left boundaries: 2, 20. Right boundaries: 4, 24.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "-9"
+      "high" : "4",
+      "l1" : "2",
+      "l2" : "20",
+      "low" : "1",
+      "r1" : "4",
+      "r2" : "24"
     },
-    "dsType" : "Array",
+    "dsType" : "SearchSpace",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : -13,
+      "value" : 9,
       "state" : "default"
     }, {
       "index" : 1,
-      "value" : -11,
+      "value" : 10,
       "state" : "default"
     }, {
       "index" : 2,
@@ -154,28 +165,451 @@
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 16,
+      "value" : 17,
       "state" : "default"
     }, {
       "index" : 4,
-      "value" : -14,
-      "state" : "default"
+      "value" : 20,
+      "state" : "target"
     }, {
       "index" : 5,
-      "value" : -9,
-      "state" : "default"
+      "value" : 24,
+      "state" : "probe"
     }, {
       "index" : 6,
-      "value" : -1,
+      "value" : 1,
       "state" : "default"
     }, {
       "index" : 7,
-      "value" : 15,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "probe"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 23,
+    "description" : "20 > 4 - the smaller array's cut is too far left. Move it right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "3"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 17,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 24,
+      "state" : "probe"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "target"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "probe"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 10,
+    "description" : "Try cutting the smaller array after 3 elements. That forces the larger array's cut after 4 elements, so the left side holds exactly 7 elements - the first 7 of the merged order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cut1" : "3",
+      "cut2" : "4",
+      "high" : "4",
+      "low" : "3"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 17,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "probe"
+    }, {
+      "index" : 5,
+      "value" : 24,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
       "state" : "default"
     }, {
       "index" : 8,
-      "value" : 17,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "probe"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 13,
+    "description" : "Left boundaries: 4, 17. Right boundaries: 13, 20.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "l1" : "4",
+      "l2" : "17",
+      "low" : "3",
+      "r1" : "13",
+      "r2" : "20"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
       "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 17,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "probe"
+    }, {
+      "index" : 5,
+      "value" : 24,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "probe"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 23,
+    "description" : "17 > 13 - the smaller array's cut is too far left. Move it right.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "low" : "4"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 17,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "probe"
+    }, {
+      "index" : 5,
+      "value" : 24,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "probe"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 10,
+    "description" : "Try cutting the smaller array after 4 elements. That forces the larger array's cut after 3 elements, so the left side holds exactly 7 elements - the first 7 of the merged order.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cut1" : "4",
+      "cut2" : "3",
+      "high" : "4",
+      "low" : "4"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 17,
+      "state" : "probe"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 24,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 13,
+    "description" : "Left boundaries: 13, 14. Right boundaries: +inf, 17.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4",
+      "l1" : "13",
+      "l2" : "14",
+      "low" : "4",
+      "r1" : "+inf",
+      "r2" : "17"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 17,
+      "state" : "probe"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 24,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 19,
+    "description" : "Every left element is <= every right element in both arrays - valid partition. The 7th element is 14.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "14",
+      "high" : "4",
+      "low" : "4"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 9,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 10,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 14,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 17,
+      "state" : "probe"
+    }, {
+      "index" : 4,
+      "value" : 20,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 24,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 13,
+      "state" : "target"
     } ],
     "listState" : null,
     "trieState" : null,

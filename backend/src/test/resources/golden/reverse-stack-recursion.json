@@ -15,7 +15,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 6,
-    "description" : "Pop 4 off the top. Reverse the remaining 3 element(s) first, then insert 4 at the bottom.",
+    "description" : "Pop 4 off the top. Reverse the remaining 3 elements first, then insert 4 at the bottom.",
     "queueOrStackState" : [ "1", "2", "3" ],
     "callStack" : [ "reverse(size=4)" ],
     "nodeStates" : { },
@@ -33,7 +33,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 6,
-    "description" : "Pop 3 off the top. Reverse the remaining 2 element(s) first, then insert 3 at the bottom.",
+    "description" : "Pop 3 off the top. Reverse the remaining 2 elements first, then insert 3 at the bottom.",
     "queueOrStackState" : [ "1", "2" ],
     "callStack" : [ "reverse(size=4)", "reverse(size=3)" ],
     "nodeStates" : { },
@@ -51,7 +51,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 6,
-    "description" : "Pop 2 off the top. Reverse the remaining 1 element(s) first, then insert 2 at the bottom.",
+    "description" : "Pop 2 off the top. Reverse the remaining 1 element first, then insert 2 at the bottom.",
     "queueOrStackState" : [ "1" ],
     "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)" ],
     "nodeStates" : { },
@@ -69,7 +69,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 6,
-    "description" : "Pop 1 off the top. Reverse the remaining 0 element(s) first, then insert 1 at the bottom.",
+    "description" : "Pop 1 off the top. Reverse the remaining 0 elements first, then insert 1 at the bottom.",
     "queueOrStackState" : [ ],
     "callStack" : [ "reverse(size=4)", "reverse(size=3)", "reverse(size=2)", "reverse(size=1)" ],
     "nodeStates" : { },

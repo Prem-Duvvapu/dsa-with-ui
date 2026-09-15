@@ -24,7 +24,7 @@ public class GenerateParenthesesTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STRING;
+        return DsType.RECURSION_TREE;
     }
 
     @Override
@@ -77,8 +77,8 @@ public class GenerateParenthesesTracer implements AlgorithmTracer {
         backtrack(n, 0, 0, "", res, emit);
 
         emit.at("done")
-                .say("Every position filled at every leaf. %d well-formed combination%s of %d pair(s) found.",
-                        res.size(), res.size() == 1 ? "" : "s", n)
+                .say("Every position filled at every leaf. %d well-formed combination%s of %d pair%s found.",
+                        res.size(), res.size() == 1 ? "" : "s", n, Narration.s(n))
                 .var("count", res.size()).chars("").step();
     }
 

@@ -355,6 +355,40 @@ phase; do not describe unfinished work as resolved.
   same way anchor coverage is hand-verified — round count for this algorithm shape is a
   property of the specific values, not the array length alone.
 
+### Recurrence, 2026-09-13 — `next-permutation`, and a case where the two goals are mutually exclusive
+
+The Arrays audit found `next-permutation`'s default `[3,2,1]` was the *last* permutation: no
+pivot exists, so the algorithm skipped its entire body — 4 steps and 4 of its 7 anchors dead.
+Replacing it with `[1,3,5,4,2]` (7 steps, 0 dead anchors) failed `stepCountGrowsWithInput`
+immediately: 7 steps grown, 7 steps at defaults.
+
+Hand-simulating `growList` the way this entry prescribes explains why, and the answer is
+stronger than "pick a better default":
+
+| candidate | pivot? | scan steps, default → grown |
+| --- | --- | --- |
+| `[1,3,5,4,2]` | yes | 2 → 2 |
+| `[1,5,4,3,2]` | yes | 3 → 3 |
+| `[5,4,3,2,1]` | no | 4 → 9 |
+
+The scan length is the length of the **trailing descending run**, and `growList`'s general
+branch *prepends* filler at or above `maxValue`. Prepending above every existing value cannot
+lengthen a trailing run that already terminates at a pivot, so for this algorithm shape
+*every* default containing a pivot is flat under growth, and only a pivot-less one grows. The
+two goals — exercise the whole algorithm, and grow with input — are not both reachable here.
+
+- **Resolution:** kept a growable default but made it `[5,4,3,2,1]` rather than `[3,2,1]`, so
+  the wrap-around case at least shows the scan running its full length (4 narrated steps
+  instead of 2). `alternateInput()` carries `[2,3,1]`, which exercises the pivot, the swap
+  and the suffix reverse; between the two, all 7 anchors are reached, which is what
+  `anchorsAreAllReachable` checks. The reasoning lives in a comment at the `defaultValue`
+  call, because the next person to read `[5,4,3,2,1]` will otherwise "fix" it.
+- **Widened guidance:** hand-simulate before committing, as above — but also ask whether the
+  step count is a function of input *length* at all. When it is a function of input *shape*
+  (where a pivot, cut or breakpoint falls), no default satisfies both goals, and the honest
+  move is a growable default plus an alternate that covers the rest, not a contorted default
+  that games the ratio.
+
 ## RCA-020 — Adding nullable ListNode fields undercounted every LINKED_LIST tracer's byte estimate
 
 - **Discovered:** 2026-09-05, adding `childId`/`randomId` to `ListNode` for `flattening-ll`
@@ -540,3 +574,833 @@ phase; do not describe unfinished work as resolved.
   after pulling a branch that added or renamed files in the `tracer` package. The CI workflow
   already runs `mvn -B test` on a fresh checkout (no stale `target/`), so this failure cannot
   reach `main`.
+
+## RCA-025 — `resolvedInput` read off a step, which never carries it
+
+- **Discovered:** 2026-09-12, during the canvas audit
+- **Status:** Resolved
+- **Symptom and impact:** five branches across two canvases had never executed, and the
+  failure was not merely dead code — it drew the **wrong data**. `IntervalCanvas` resolves
+  its intervals through a chain of fallbacks; with the `resolvedInput` rungs dead it fell
+  through to the `inputSpec` **defaults**. For `n-meetings-in-one-room` that is 15 of 16
+  steps, so running your own meetings drew `[1,3,0]/[2,4,6]` while the narration described
+  yours. Measured before and after on a real custom run: 7 of 8 steps showed the defaults.
+- **Root cause:** `resolvedInput` is a property of the **trace** — `ExecutionTrace` carries
+  it once and `TraceResponse` serialises it at the top level — but four call sites read
+  `step.resolvedInput`, and nothing has ever placed it on a step. The mistake survived
+  because it is invisible at the point of use: `activeStep?.resolvedInput` is valid
+  JavaScript that silently yields `undefined`.
+- **Resolution:** `useTrace` captures `resolvedInput` from the execute response and clears it
+  at request start so a stale echo cannot outlive its trace; `App` passes it to the canvases;
+  `IntervalCanvas` and `CaptureStrip` take it as a prop. `CaptureStrip`'s `useMemo`
+  dependencies gained it too — without that it would have kept a previous run's intervals
+  after a re-run.
+- **Regression guard:** `IntervalCanvas.test.jsx` asserts a run's own intervals appear **and**
+  that the spec defaults do not; written RED first, where the failure rendered
+  `#1[1, 2]#2[3, 4]#3[0, 6]` — the defaults, exactly as a user saw them.
+- **The general lesson:** before adding a canvas, check where the field you are reading
+  actually lives. Trace-level data (`resolvedInput`, `anchors`, `code`) is not on a step, and
+  optional chaining will not tell you.
+
+## RCA-026 — Tests asserted payload shapes the server has never sent
+
+- **Discovered:** 2026-09-12
+- **Status:** Resolved
+- **Symptom and impact:** dead code reported itself as covered. Three separate cases:
+  `IntervalCanvas.test.jsx` and `CaptureStrip.test.jsx` hung `resolvedInput` on a step, so
+  they exercised the branches of RCA-025 that cannot run in production; and a test for the
+  new `constraints` field asserted against the **in-memory catalogue** while
+  `/api/problems/{id}` silently dropped the field, so the feature shipped populated
+  correctly and serving nothing, green throughout.
+- **Root cause:** a hand-written fixture is only as true as its author's model of the wire.
+  Nothing compared the fixture to a real response, and `/api/problems/{id}` builds its map
+  field by field, so a model field is not served until someone names it there.
+- **Resolution:** the fixtures now carry what the running backend actually returns, verified
+  against it rather than assumed. `DetailResponseContractTest` walks `ProblemDetail` by
+  reflection and fails on any field the wire does not carry, with an `INTENTIONALLY_ABSENT`
+  set so an omission stays a decision.
+- **Regression guard:** `DetailResponseContractTest`, proven RED by deleting the
+  `constraints` line again — the failure names the field.
+- **The general lesson:** assert over the wire, not over the object. A fixture invented at
+  the keyboard can validate code that can never execute.
+
+## RCA-027 — Retagging a `dsType` misses the entries registered outside the bulk helper
+
+- **Discovered:** 2026-09-12 and 2026-09-13, three times in a row
+- **Status:** Resolved (recurring; the guard is what catches it)
+- **Symptom and impact:** every batch retag left catalogue entries behind, because the same
+  topic registers problems in two ways — a bulk table driven by a `bulkDsType`-style helper,
+  and individual `problems.put(...)` calls with their own literal. Sliding Window left one
+  (`longest-substring-without-repeating`), Binary Search left fourteen, Recursion &
+  Backtracking left two. Untouched, those render through the wrong canvas.
+- **Root cause:** there is no single place a topic's `dsType` is decided, so "change the
+  topic's type" has no single edit.
+- **Resolution:** none needed beyond finishing each retag — but the workflow now assumes a
+  second pass. Run `CatalogTracerMetadataTest` after changing any tracer's `dsType`; it names
+  the stragglers by id.
+- **Regression guard:** `CatalogTracerMetadataTest.catalogueDsTypesMatchEveryRegisteredTracer`,
+  which caught all three batches and reported the ids verbatim.
+- **The general lesson:** a retag is not done when the tracers compile. Grep the service for
+  the literal as well as the helper, and let the cross-tier test decide.
+
+## RCA-028 — A payload contract written narrower than the canvas it describes
+
+- **Discovered:** 2026-09-13
+- **Status:** Resolved
+- **Symptom and impact:** `DsTypePayloadContractTest` failed on correct tracers. Its
+  `RECURSION_TREE` rule required `treeNodes`, and its `HEAP` rule required `arrayState`, but
+  both canvases read **either** source: `RecursionTreeCanvas` rebuilds the tree from
+  `callStack` when a tracer emits no `treeNodes`, and `HeapCanvas` derives whichever of the
+  tree or the array was not emitted, since the mapping is arithmetic. The failures named
+  `generate-binary-strings`, `heaps-theory` and `implement-min-heap` as broken when they
+  were not.
+- **Root cause:** the requirement was written from one tracer's habit rather than from what
+  the canvas reads, and the two drifted the moment a canvas learned a second source.
+- **Resolution:** both rules accept either field, with the reason recorded beside them.
+  Neither present is still a failure — that renders an empty canvas, which is the thing the
+  test exists to prevent.
+- **Regression guard:** the test itself; it is doing its job correctly in both directions.
+  What changed is the rule, not the enforcement.
+- **The general lesson:** this contract describes the **canvas**, not the tracer. When a
+  canvas gains a fallback source, the rule has to gain it in the same commit, or the test
+  starts reporting healthy tracers as broken.
+
+## RCA-029 — Truncating a label from the front removed the only part that varied
+
+- **Discovered:** 2026-09-13, reported against the permutations visualizer
+- **Status:** Resolved
+- **Symptom and impact:** every node in a derived recursion tree read `backtrack(` and the
+  tree was unreadable — 16 identical boxes where the whole point is that they differ.
+- **Root cause:** the node label was truncated to its first 11 characters. In a recursion
+  tree every node calls the *same* function, so the name is the one part carrying no
+  information, repeated once per node, while the arguments are the only thing distinguishing
+  siblings. Truncating from the front kept exactly the wrong half.
+- **Resolution:** nodes show what is inside the parentheses — `idx=0`, `open=1,close=0` —
+  with the whole frame kept in a `<title>` for hover, and the node widened to suit.
+- **Regression guard:** `RecursionTreeCanvas.derived.test.jsx` asserts two sibling frames
+  render distinguishably and that the bare function name is not what appears.
+- **The general lesson:** when truncating for display, keep the part that varies. A cap
+  chosen for layout can silently destroy the information the element exists to convey, and
+  no test catches it unless one asserts that two different inputs look different.
+
+## RCA-030 — A retired topic left its `switch` `default:` returning steps
+
+- **Discovered:** 2026-09-12, by the full-catalogue audit in `AUDIT.md` (F1)
+- **Status:** Resolved, permanently — the layer that held it is deleted
+- **Symptom and impact:** twelve of the eighteen legacy services still ended their
+  `switch (problemId)` in a `default:` that **returned** steps. With every catalogued id
+  traced on `/api/problems`, those branches had no legitimate consumer left and existed only
+  to serve a wrong animation to whatever id nobody had explicitly retired. Seven id/route
+  pairs were live: `/api/graphs/advanced/execute/dijkstra-min-heap` answered 200 with the
+  graph-intro animation.
+- **Root cause:** retiring a topic was done id by id, and `default:` was treated as the
+  holding pen for "the ones not done yet". Nothing marked the moment the holding pen should
+  have become a throw. Worse, the refusals were pinned by **hand-maintained lists** of
+  retired ids — a 430-entry `RETIRED_IDS` in `ApiContractTest` and a per-topic `retired` set
+  in eight service tests — and drift in those lists is what kept the stragglers invisible
+  through four rounds of cleanup.
+- **Resolution:** all eighteen services were made to throw, then the legacy layer was deleted
+  outright: eighteen controllers, all eighty step generators, and twenty-six test classes.
+  The services survive as `ProblemProvider`s owning catalogue metadata only.
+- **Regression guard:** `ProblemsApiTest.legacyRoutesNoLongerExist` asserts the routes are
+  gone, so reintroducing one fails a test. `ProblemProviderContractTest` is parameterized
+  over the providers Spring actually registers rather than over a typed list.
+- **The general lesson:** never write a per-id list in a test to express "which ids are in
+  state X". Derive it from the registry or the catalogue. A list is a second source of truth
+  that drifts silently and hides exactly the cases it was meant to pin.
+
+## RCA-031 — A canvas invented a plausible structure when its state was missing
+
+- **Discovered:** 2026-09-12 (`AUDIT.md` F7)
+- **Status:** Resolved
+- **Symptom and impact:** `DsuCanvas` read four magic string keys out of `step.variables` and
+  defaulted each to a hardcoded literal, so a renamed key or a step without them drew a
+  **fabricated seven-element DSU** that looked entirely plausible. Nothing failed; the user
+  was shown a lie. This is RCA-001's defect moved into the render path.
+- **Root cause:** the DSU has no structural payload field — its state is smuggled through
+  `variables` as human-readable strings and re-parsed with a regex in the browser — so the
+  canvas had no way to distinguish "absent" from "not yet set" and chose to look complete.
+- **Resolution:** missing state renders an explicit "DSU state unavailable" panel.
+  `DsTypePayloadContractTest` pins the `parent[]` key, making the variable names a wire
+  contract rather than a convention.
+- **Regression guard:** three `DsuCanvas.test.jsx` cases, proven RED against the old
+  component with "Unable to find `[data-testid=dsu-state-unavailable]`".
+- **Still open:** the transport itself. DSU state is still string round-tripping through
+  `variables`, which is the most fragile payload path left in the app.
+
+## RCA-032 — A layout refactor removed three panels from mobile with every test green
+
+- **Discovered:** 2026-09-12, while reading a diff — not by a failure
+- **Status:** Resolved
+- **Symptom and impact:** moving the code panel beside the canvas restructured a ternary and
+  made the mobile branch unreachable. The phone layout silently lost the code panel, the
+  input editor and the complexity card **at once**, and all 245 tests stayed green.
+- **Root cause:** the desktop and mobile layouts share one conditional expression, and
+  rewriting its condition changed which branch mobile reaches. No test rendered the app at a
+  narrow viewport and asserted the mobile-only affordances exist.
+- **Resolution:** the branches were rewritten so each viewport has its own explicit arm.
+- **Regression guard:** a mobile-viewport test asserting the tab card's Code control is
+  present, proven RED by disabling the branch.
+- **The general lesson:** this codebase catches fake work inside a unit very well and wrong
+  wiring between units very poorly. A structural change needs a smoke test per breakpoint,
+  because "the component still renders" is not the same as "the user can still reach it".
+
+## RCA-033 — Contrast verified in one theme, failing in the other
+
+- **Discovered:** 2026-09-13, while tokenising the canvas role colours
+- **Symptom and impact:** every algorithm role fill failed 4.5:1 against its white label in
+  the **dark** theme — `#3b82f6` at 3.68:1, `#10b981` at 2.54:1, `#f59e0b` at 2.15:1 — and
+  had done so for as long as those values existed as literals in five canvases.
+- **Status:** Resolved
+- **Root cause:** two compounding. The colours were hardcoded, so the token system's measured
+  4.5:1 standard never applied to them. And the first guard written for them checked only the
+  light theme — it passed on the first run, which was the tell.
+- **Resolution:** `--role-ink` now flips with the theme exactly as `--probe-on` does: dark
+  mode keeps bright fills that read against the dark ground and takes near-black ink, light
+  mode darkens the fills and goes white. Every role clears 4.5:1 on both sides, measured.
+- **Regression guard:** `designTokens.test.js` checks both themes, proven RED by lightening
+  `--role-current` for light mode the way anyone adapting a colour naturally would: 1.80:1.
+- **The general lesson:** a guard that passes on its first run has not been shown to work.
+  For anything theme-dependent, assert both themes in the same test — checking one is a
+  coin flip that looks like diligence.
+
+## RCA-034 — A structure that persists between steps rendered as empty on the steps that did not restate it
+
+- **Discovered:** 2026-09-13, by the Stack & Queue topic audit
+- **Status:** Resolved
+- **Symptom and impact:** `StackCanvas` and `QueueCanvas` read
+  `activeStep?.queueOrStackState || []`, which collapses "the stack is empty" and "this step
+  did not mention the stack" into the same render. Tracers restate a structure only on the
+  steps that change it and narrate in between, so the stack **blinked empty between every
+  push**. Measured: **60 steps across 21 of the 24** Stack & Queue problems displayed an
+  empty stack while it held items. `stock-span-problem` did it on every other step — push,
+  empty, push, empty — which destroys the only thing a monotonic-stack problem teaches.
+- **Root cause:** `|| []` treats absence as a value. The payload is genuinely optional per
+  step by design; the canvas simply had no way to say "unchanged".
+- **Resolution:** `trace/lastPayload.js` returns the most recent stated value, looking back
+  no further than the step being shown. An explicit `[]` is a real value and still renders
+  empty; only absence looks back.
+- **Regression guard:** cases in `StackCanvas.test.jsx` and `QueueCanvas.test.jsx` asserting
+  both halves — that a silent step keeps the contents, and that an explicit empty array
+  still reads empty. Proven RED against the old expression.
+- **Related:** the same shape as RCA-025 and RCA-031 — a missing payload rendered as a
+  confident wrong answer. Three canvases have now made this mistake in three different ways.
+  Before writing a canvas, decide explicitly what "the trace did not say" should look like,
+  and make sure it is distinguishable from a real value.
+
+## RCA-035 — Seven canvases drew the catalogue's data over the caller's own input
+
+- **Discovered:** 2026-09-13, by the Binary Trees / BST audit; the audit's own findings were
+  clean and this was found while checking for the RCA-034 shape
+- **Status:** Resolved
+- **Symptom and impact:** the same defect as RCA-025, present in seven more canvases and far
+  wider than any single one. A tracer restates a structure only on the steps that change it;
+  every canvas that read `activeStep?.field || problem?.defaultX` therefore fell through to
+  the **catalogue default** on every narration step. Run a tree of `[9,8,7,6]` through
+  `tree-balanced` and seven of its thirteen steps drew `1,2,3,4,5`.
+
+  Measured across the catalogue: **1506 steps in 142 of 232 problems** drew a catalogue
+  default mid-run. `construct-bst-preorder` did it on 84% of its steps.
+
+  | dsType | steps | problems |
+  |---|---:|---:|
+  | Graph | 612 | 40 |
+  | Matrix | 608 | 31 |
+  | Array | 176 | 40 |
+  | LinkedList | 36 | 9 |
+  | RecursionTree | 27 | 3 |
+  | Bits | 24 | 9 |
+  | String | 23 | 10 |
+
+- **Root cause:** `||` collapses "this step did not restate the structure" into "there is no
+  structure", and the chosen replacement was the catalogue's own sample data — which looks
+  entirely plausible and is wrong for any run the user configured. The defaults are honest in
+  exactly one situation, before any step has emitted anything, and that is the only one the
+  expression got right.
+- **Resolution:** every affected canvas now uses `trace/lastPayload.js`, which returns the
+  most recent stated value and looks back no further than the step being shown. The
+  catalogue default survives only as the pre-run fallback. `GraphCanvas` needed more than a
+  one-line change: nodes and edges must come from the **same** step, or a carried topology
+  renders with no edges at all — a graph as a field of disconnected dots.
+- **Regression guard:** a carry test per canvas, each asserting the emitted value survives a
+  narration step **and** that the default no longer appears; plus the pre-run case, which
+  must still show the default. `TreeCanvas`'s was proven RED first.
+- **The general lesson, now fifth time:** this is RCA-025, RCA-031, RCA-034 and this entry —
+  four separate canvases inventing data when the trace was silent, in four different ways
+  (spec defaults, a hardcoded literal, an empty array, catalogue defaults). **Before writing
+  a canvas, decide what "the trace did not say" renders as.** The reflex `|| something`
+  is the bug: it always produces a confident answer, and a confident wrong picture is worse
+  than an honest blank one.
+
+## RCA-036 — Good delta hygiene in a tracer blanked the canvas that needed the pair
+
+- **Discovered:** 2026-09-13, by the Binary Search audit
+- **Status:** Resolved
+- **Symptom and impact:** `count-occurrences`, `first-last-occurrence` and
+  `floor-ceil-sorted-array` ran correct binary searches beside a canvas that said
+  **"No search range for this step."** on every step of every run. Three problems in the
+  topic whose whole subject is the search space, with no search space drawn.
+- **Root cause:** `SearchSpaceCanvas` reads `low` and `high` off the **same** step, on
+  purpose — taking one bound from one moment and the other from another is precisely the
+  defect RCA-034/035 ended with in `GraphCanvas`. The three tracers each named only the
+  bound that had just moved:
+
+  ```java
+  emit.at("lowerMid").var("lb", lb).var("high", mid - 1)   // low never mentioned
+  emit.at("lowerMid").var("low", mid + 1)                  // high never mentioned
+  ```
+
+  That reads like careful delta hygiene, and against a canvas that carries values forward
+  it would be. Here no step ever carried a pair, so there was nothing to carry, and the
+  canvas's own guard (`if (low === null || high === null)`) rendered the empty state
+  forever. The tracers were right about the algorithm and wrong about the transport.
+- **The general shape:** when a canvas needs **two fields together** to mean anything, a
+  tracer emitting them separately produces not a degraded picture but no picture at all,
+  and every existing contract passes — `DsTypePayloadContractTest` was satisfied because
+  all three do emit `arrayState`. The missing payload was in `variables`, which no contract
+  looked at.
+- **A second finding from the same sweep:** `median-2-sorted-arrays` and
+  `kth-element-2-sorted-arrays` did state a range, and it never moved. Both defaults landed
+  on a valid partition with the very first guess — 4 and 3 steps, no shrink branch, no
+  halving. Same class as RCA-019's `next-permutation`: the default input is the one every
+  visitor sees, and a binary search that resolves on probe one animates a single static
+  interval.
+- **Resolution:** the three tracers now state both bounds (and `mid`) on every search step;
+  the two partition tracers took defaults that need three probes. Their cells row was
+  rebuilt at the same time — it had been `concat(a, b)` built **after** the swap, so cell 0
+  silently changed which array it belonged to mid-trace, and the row stopped being sorted in
+  any direction. `PartitionCutView` keeps the caller's order and marks the four boundary
+  elements, which is both the algorithm's actual insight and what keeps the canvas out of
+  index mode.
+- **Regression guard:** `SearchSpaceContractTest`, parameterized over every `SEARCH_SPACE`
+  tracer. `statesBothBoundsOnSomeStep` fails when no step carries a numeric low and high
+  together; `rangeNarrowsOnDefaults` fails when the default input draws fewer than two
+  distinct ranges. Proven RED first: 8 failures naming exactly those five ids.
+- **What to check when adding a canvas:** if it needs more than one field to render, say so
+  in a contract test at the same time. A canvas whose empty state is reachable from a
+  *complete* trace is a canvas with an unwritten contract.
+
+### Follow-on, same sweep — the canvas changed its mind about what it was drawing
+
+`SearchSpaceCanvas` decides per step whether `[low, high]` indexes the cells or names a
+range of candidate answers, and its own header warns that "is high small" only coincides
+with the answer. The discriminator it chose coincides too. `aggressive-cows` searches
+distances 1..8 over five cow positions: answer space, correctly, until `high` shrinks below
+five — and then the badge flips to `indices [3, 3]` and starts calling a distance an index,
+halfway through the animation. `floor-ceil-sorted-array` flipped the other way.
+
+A tracer does not change what it is searching partway through a run, so the kind is read
+once now, from the first step that states a range, and held for the whole trace. Guarded by
+`SearchSpaceCanvas.test.jsx`, "does not change its mind about what the range means
+mid-animation", proven RED first.
+
+The lesson is narrower than the heuristic: **a per-step inference about a whole-trace fact
+will eventually disagree with itself**, and the disagreement is visible to the user as the
+picture rewriting its own axis.
+
+## RCA-037 — The recurrence blinked out on every step that did not restate it
+
+- **Discovered:** 2026-09-13, by the Dynamic Programming audit
+- **Status:** Resolved
+- **Symptom and impact:** the recurrence panel - the headline teaching device of the DP
+  canvas - appeared and vanished as the viewer stepped through a trace. **164 of 1133 table
+  steps across 26 problems** dropped it after it had already been shown; `print-lis` lost it
+  on 30 of its 47 steps, `partition-equal-subset-sum` on 22 of 51, `matrix-chain-
+  multiplication` on 18 of 32.
+- **Root cause:** `DpTable` carries two fields that look like a pair and are not.
+  `formula` is a **constant of the problem** (`dp[i] = dp[j] + 1, ...`); `substitution` is
+  **one step's arithmetic** (`dp[3] = dp[2] + 1 = 2`). Tracers attach both together, on the
+  steps that actually compute a cell — correctly. `DpTableCanvas` then rendered the block
+  only when the *current* step carried both, so base cases, comparison steps and the closing
+  summary showed nothing at all. The comparison steps are exactly where a learner needs the
+  rule they are evaluating against.
+- **The general shape, third occurrence:** this is RCA-034/035 again, one level down. There
+  the missing value was a structure at the top of a step; here it is a field nested inside
+  `dpTable`, which is why the `lastPayload` sweep did not reach it. **A canvas that reads a
+  persistent value off the current step alone will blank it**, wherever that value lives.
+- **Resolution:** `DpTableCanvas` carries the *formula* forward from the most recent step
+  that stated one, and never carries the substitution — held over, it would caption the
+  wrong arithmetic. The block renders whenever a rule is known; a bare substitution still
+  renders nothing, because arithmetic with no rule above it is an unexplained fact, while a
+  bare rule is the recurrence standing over a step it does not cover, which is what a base
+  case is.
+- **Regression guard:** `DpTableCanvas.test.jsx` — "holds the rule on screen across the
+  steps that do not restate it" and "does not carry a rule backwards to steps before it was
+  stated". Proven RED first.
+
+## RCA-038 — A DP table printed unwritten array memory as settled values
+
+- **Discovered:** 2026-09-13, by the Dynamic Programming audit
+- **Status:** Resolved
+- **Symptom and impact:** `knapsack-01` and `unbounded-knapsack` drew every cell in the
+  `known` state from step 1, so the whole table read as already solved. Item 4 at capacity 5
+  showed `0` on the first frame and finishes at `13` — and a viewer had no way to tell that
+  `0` from a computed one, because both carried the same glyph. The one thing a DP table
+  exists to show, unknown cells becoming known, was the one thing these two did not show.
+- **Root cause:** the table builder assigned `known` to everything that was not the probe or
+  a read. `dp` is a plain `int[][]`, so the unreached cells were Java's zero-fill being
+  printed as data. `DpCell` already has the right word for this - `void` - and these two
+  tracers never used it.
+- **Why no contract test:** the tempting rule ("a cell that later changes value must not
+  have been presented as settled") flags five correct tracers. `print-lis`,
+  `number-of-lis`, `longest-string-chain`, `largest-divisible-subset` and
+  `longest-bitonic-subsequence` all start every cell at `1` and improve it, and their
+  narration says so: that 1 is a **genuine lower bound the algorithm holds**, not unwritten
+  memory. No structural rule separates the two — the difference is semantic. The golden
+  files pin cell state, so the fix is guarded there, and this note exists so the next person
+  does not go looking for the test that cannot be written.
+- **Resolution:** both builders mark cells past the fill frontier `void` with a `·`, and the
+  closing step marks the completed table `resolved` rather than `known` — the "table is
+  finished" frame the other DP tracers already end on.
+
+## RCA-039 — A dsType named the structure the trace mentions least
+
+- **Discovered:** 2026-09-13, by the Dynamic Programming audit
+- **Status:** Resolved
+- **Symptom and impact:** `max-rectangle-area-all-ones` declared `MATRIX`, so `GridCanvas`
+  drew the binary board — which the tracer states twice and which never changes. The other
+  **60 of its 62 steps** narrate a histogram of column heights and a monotonic stack popping
+  through it, emitted as `arrayState`, which a Matrix hero has no renderer for. The viewer
+  watched a static board while the words described something not on screen.
+- **Root cause:** `DsTypePayloadContractTest` asks whether the declared type's field is
+  *ever* populated — `anyMatch`. Two steps out of sixty-two satisfies it. The contract
+  proves a tracer is not lying about its canvas; it cannot tell whether the canvas was
+  pointed at the run's main structure or its backdrop.
+- **The probe that did not work, recorded so it is not repeated:** "the declared type's
+  field must not be out-counted by another structure field" flags **33 tracers**, nearly all
+  correct — a Stack tracer legitimately emits the input array on every step and the stack
+  only where it changes, and `lastPayload` carries the sparse one. Step counts do not
+  separate a backdrop from a hero. Nothing mechanical does; this is a judgement about which
+  structure the narration is about, and the audit has to make it by reading.
+- **Resolution:** retagged `ARRAY`, so the histogram it narrates is the hero, and the board
+  is a companion pane — the same split `maximum-rectangles-binary-matrix`, the other tracer
+  for this problem, already makes. `canvas/companions.js` now offers the grid companion to
+  an Array hero as it already did to a Stack hero; both entries name a real emitter, per
+  that file's own rule.
+- **Regression guard:** `companions.test.js`, "adds a grid companion for an Array hero when
+  any step carries a grid", proven RED first. The dsType itself is pinned by the golden and
+  by `CatalogTracerMetadataTest`.
+
+## RCA-040 — The canned-fallback shape, found a third time, in a canvas nobody had reached it in
+
+- **Discovered:** 2026-09-13, by the Greedy Algorithms audit
+- **Status:** Resolved
+- **Symptom and impact:** none yet — and that is the point of the entry. `IntervalCanvas`
+  ended its five-branch interval-resolution chain with a hardcoded literal:
+
+  ```js
+  intervals = [
+    { id: 1, label: '#1', start: 1, end: 2, state: 'settled' },
+    { id: 2, label: '#2', start: 3, end: 4, state: 'probe' },
+    ...
+  ];
+  ```
+
+  Those are `n-meetings-in-one-room`'s own default meetings, pasted in, with invented
+  `settled` and `probe` states. Any Interval run that fell off the end of the chain would
+  have drawn another problem's data as if it were its own — confidently, with state colours
+  it made up. Checked step by step against both live Interval tracers: **0 of 26 steps**
+  reach it today.
+- **Root cause:** the same instinct as RCA-025 (`IntervalCanvas`'s `resolvedInput`),
+  RCA-031 (`DsuCanvas`) and RCA-035 (seven canvases): when a canvas cannot tell what to
+  draw, draw *something*. A blank panel looks broken in review; a plausible one does not.
+- **Resolution:** replaced with an explicit "No intervals in this step." Its test previously
+  pinned the fabricated version as intended behaviour ("renders default intervals when step
+  is empty"), so the test was rewritten to state the rule instead of the accident.
+- **Why record an unreachable defect:** it was reachable until the RCA-025 fix landed, and
+  `insert-interval` moving into this canvas in the same audit is exactly the kind of change
+  that makes a dead branch live again. Unreachable is the cheapest moment to delete a
+  landmine, not a reason to leave it.
+
+## RCA-041 — A hero canvas that could not draw the structure the run was about (second instance)
+
+- **Discovered:** 2026-09-13, by the Greedy Algorithms audit
+- **Status:** Resolved
+- **Symptom and impact:** two more of the shape RCA-039 named, found by looking for it
+  deliberately rather than by accident:
+  - `lru-page-replacement` is `ARRAY`-hero and emits the recency queue — the structure the
+    entire algorithm is about — on **13 of its 16 steps**. `ArrayCanvas` never references
+    `queueOrStackState`, so it was computed and drawn nowhere.
+  - `insert-interval` is a merge along a timeline, labels every cell it emits `"[a,b]"`, and
+    is named in `IntervalCanvas`'s own header as one of its problems — yet was tagged
+    `ARRAY`, so it drew a bar chart whose bar heights were each interval's *end time*.
+- **Root cause:** as RCA-039. `DsTypePayloadContractTest` proves a tracer is not lying about
+  its canvas; it cannot tell whether the canvas was pointed at the run's main structure.
+- **Resolution:** `insert-interval` retagged `INTERVAL`; `lru-page-replacement` keeps the
+  reference string as its hero and gains the existing queue companion, which
+  `canvas/companions.js` now offers to an `Array` hero as it already did to `Graph` and
+  `Matrix`.
+- **A test that was quietly wrong:** `companions.test.js` asserted "adds nothing for a
+  non-Graph, non-Matrix hero, even with a populated queueOrStackState", using `Array` as the
+  stand-in. Its stated reason — "a dsType whose OWN hero already draws queueOrStackState
+  must not also get a companion" — is true of `Stack` and `Queue` and **not** of `Array`,
+  which never touches the field. The example had hardened an arbitrary choice into a rule,
+  and the rule was blocking the fix. It now names `Stack` and `Queue`, the types the reason
+  actually applies to.
+- **How to find the next one:** for each tracer, list the structure fields its steps
+  populate and ask whether the declared dsType's canvas renders the one the *narration* is
+  about. Counting steps does not work — see RCA-039.
+
+## RCA-042 — Five heaps were drawn fully sorted, teaching the misconception the canvas exists to correct
+
+- **Discovered:** 2026-09-13, by the Heaps & PriorityQueue audit
+- **Status:** Resolved
+- **Symptom and impact:** `HeapCanvas` puts slot `i`'s children at `2i+1` and `2i+2` and
+  prints the index under every slot, because "the tree and the array are the SAME structure"
+  is the entire lesson (its own header says so). Five tracers fed it a **sorted** snapshot:
+
+  ```java
+  List<Integer> values = new ArrayList<>(heap);
+  Collections.sort(values);              // <- every step, every one of these problems
+  ```
+
+  So the tree drawn was perfectly ordered at every step, on every input — which says a
+  priority queue keeps all of its elements in order. It does not; only the root is
+  guaranteed, and that is the single most common misconception about heaps. Affected:
+  `kth-largest-stream`, `sort-k-sorted-array`, `maximum-sum-combination`, `design-twitter`,
+  and `min-cost-connect-sticks`, which was not using a heap at all — it kept a sorted
+  `ArrayList` with `remove(0)` and an insert-in-place, while its code panel showed
+  `PriorityQueue.poll()`.
+- **Root cause:** `java.util.PriorityQueue` does not expose its array. `toArray()` is
+  documented to return the elements "in no particular order" — it happens to return the
+  internal heap on every mainstream JVM, but that is not something a teaching visualization
+  should rest on. Sorting was the reachable way to get *a* deterministic order, and a sorted
+  array genuinely is a valid heap, so nothing was ever wrong enough to fail.
+- **Resolution:** `ArrayHeap`, a small explicit binary heap with `offer`/`poll`/`slots()`,
+  where `slots()` returns the array the class actually sifts. `TaskSchedulerTracer` and
+  `ImplementMinHeapTracer` already owned their heap array this way and were always honest;
+  this is the same thing, shared. `offer` returns the index the value settled at, which is
+  the slot worth highlighting.
+- **Verification:** all four changed goldens produce byte-identical answers, every emitted
+  array satisfies its heap property, and no trace is fully sorted any more —
+  checked programmatically across every step, not by eye. `design-twitter`'s golden did not
+  move: its heap never holds more than three elements, where sorted order and heap order
+  coincide. It was converted anyway, since the input is caller-supplied.
+- **What this says about the class of bug:** the trace was *correct*, the canvas was
+  *correct*, the contract tests were satisfied, and the picture still taught the opposite of
+  the truth. Nothing mechanical catches that. The question to ask of a visualization is not
+  "is this data valid" but "what would a learner conclude from watching it".
+
+## RCA-043 — An empty structure reported as a missing one
+
+- **Discovered:** 2026-09-13, by the Heaps & PriorityQueue audit
+- **Status:** Resolved
+- **Symptom and impact:** `HeapCanvas` rendered "No heap contents for this step." on **12
+  steps across 5 problems** where the heap was genuinely, correctly empty.
+  `task-scheduler` was 8 of its 15 steps — and "nothing is schedulable, every remaining task
+  is still cooling down, the CPU sits idle" beside an empty heap is precisely that problem's
+  lesson. A correct trace looked like a broken canvas.
+- **Root cause:** `heapSlots` returned `{slots: [], source: null}` for an empty heap and for
+  a step that never mentioned one, so the canvas could not tell them apart. It reported both
+  as missing payload.
+- **The near-miss worth recording:** the surrounding shape — a structure absent from most
+  steps of a trace — is RCA-034/035, which this audit pass had already found three times
+  (RCA-037, and twice more in Greedy). Applying that fix here, carrying the last heap
+  forward, would have shown `task-scheduler` a heap that the algorithm had *just drained*,
+  on the exact steps where its emptiness is the point. Reading the tracer first is what
+  separated them: every one of the 12 steps calls `.array(toArray(heap))` or
+  `.arrayState(render(heap))` and passes an empty heap. **Absence and emptiness need
+  opposite fixes, and they look identical from the payload alone.**
+- **Resolution:** `heapSlots` keeps the source when the field was stated but empty, and the
+  canvas says "The heap is empty." for that case, reserving "No heap contents for this step."
+  for a step that stated neither field.
+- **Regression guard:** `HeapCanvas.test.jsx`, "distinguishes an empty heap from a step that
+  never mentioned one", proven RED first.
+
+## RCA-044 — Two tracers ran a different algorithm from the one on screen beside them
+
+- **Discovered:** 2026-09-13, by the Heaps & PriorityQueue audit
+- **Status:** Resolved
+- **Symptom and impact:** `merge-k-sorted-lists` showed
+  `PriorityQueue<ListNode> heap ... heap.poll() ... heap.add(smallest.next)` in its code
+  panel and executed a **linear scan of three heads** for the minimum. Eighteen steps, and
+  not one of them said the word "heap" — the structure the problem exists to teach and the
+  reason it is catalogued under Heaps. `min-cost-connect-sticks` was the same shape: code
+  panel `PriorityQueue.poll()`, trace a sorted `ArrayList` with `remove(0)`.
+- **Root cause:** with exactly three lists, a linear scan returns the same minimum in the
+  same order as a heap, so the trace was *correct* and every test passed. `AlgorithmTracer`'s
+  contract says `run` "executes the algorithm for real", and nothing enforces that the
+  algorithm it executes is the one `annotatedCode()` shows. The anchors line up either way,
+  because both versions have a "pick the smallest" line and an "append" line.
+- **Resolution:** both now run a real `ArrayHeap` (see RCA-042), and the narration names it:
+  the root being popped, the head that takes its place, the heap shrinking when a list runs
+  out, and the empty heap as the termination condition. Merged output is unchanged.
+- **Two narration bugs this introduced and the golden caught**, which is what golden files
+  are for: "push list 2's next head in its place" was emitted on the steps where that list
+  was exhausted and nothing was pushed, and "the smallest of the 1 live heads ... without
+  comparing them" was both ungrammatical and vacuous. Regenerating a golden without reading
+  it would have shipped both.
+- **How to find the next one:** read `annotatedCode()` beside `run()` and ask whether the
+  same data structure appears in both. A tracer whose narration never names the structure
+  its code panel is built around is the tell — `merge-k-sorted-lists` said "smallest head
+  among the three candidates" eighteen times.
+
+## RCA-045 — A backtracking topic whose defaults did not backtrack
+
+- **Discovered:** 2026-09-13, by the Recursion & Backtracking audit
+- **Status:** Resolved
+- **Symptom and impact:** `sudoku-solver`'s default puzzle had **three blanks in an
+  otherwise finished grid**, so every cell had exactly one candidate: eighteen steps, no
+  dead end, no undo. `m-coloring`'s default was K4 minus an edge with three colors —
+  greedily colorable in one pass, ten steps, not a single undo. The `backtrack`, `deadEnd`
+  and `undo` anchors were dead on both, which the sweep reports as "dead anchors" and which
+  reads like a coverage nit. It is not: **the undo is the subject**. Both problems were
+  demonstrating recursion, and the topic is called Backtracking.
+- **Root cause:** the same as RCA-019's `next-permutation` and the Binary Search audit's
+  `search-rotated-sorted-2` — a default chosen to be small and to succeed, when the branch
+  that distinguishes the algorithm only appears on inputs that first fail. Nothing catches
+  it, because `anchorsAreAllReachable` accepts coverage across default **or** alternate, and
+  both alternates did reach the branch.
+- **Resolution:** defaults chosen by simulating the tracer's own search order and requiring
+  a retreat:
+  - `sudoku-solver`: four blanks, one solution, 34 steps — place, twelve conflicts, a dead
+    end where all nine digits fail, an undo, a second dead end and undo, then the real answer
+    propagating back up. All six anchors on the first input a visitor sees.
+  - `m-coloring`: a triangle 0-1-2 forcing all three colors plus a vertex seeing all of
+    them, so first-fit gives vertex 3 color 1, vertex 4 is left with nothing, and color 1
+    comes back off vertex 3. Fifteen steps.
+- **The sweep's wording is the trap.** "DEAD ANCHORS ['undo']" and "DEAD ANCHORS ['absent']"
+  print identically, and one is a coverage nit while the other is the problem not
+  demonstrating itself. **Read what the anchor is for**: a terminal failure branch
+  (`exhausted`, `noSegmentation`, `deadEnd`-as-answer) genuinely cannot coexist with success
+  and belongs to the alternate; a branch that names the technique in the topic's own title
+  belongs in the default.
+
+### A case where the default provably cannot show it
+
+`word-break`'s `memoHit` is dead on its default, and deliberately left that way. The memo is
+written as `memo.put(start, true)` on the way out of a *successful* call — and every ancestor
+of a successful call returns immediately too, so **no later call can ever consult a `true`
+entry**. The memo only ever serves `false`. A memo hit therefore requires a failed subtree
+whose index is revisited, which a succeeding input rarely produces and a short real-word
+dictionary essentially never does. Searched: every real-word candidate that hits the memo
+returns `false`. The alternate (`catsandog`) covers it, and the code panel marks it as a
+branch this input did not take. This is RCA-019's "the two goals are mutually exclusive"
+class, and the reason is worth stating rather than rediscovering.
+
+## RCA-046 — The two most famous backtracking problems showed no recursion depth
+
+- **Discovered:** 2026-09-13, by the Recursion & Backtracking audit
+- **Status:** Resolved
+- **Symptom and impact:** `n-queens` (79 steps) and `sudoku-solver` were the only two
+  tracers in the topic that never called `emit.push`/`emit.pop`. `MemoryComplexityCard`
+  renders a live "Call stack" section with the current frame marked, fed entirely from
+  `step.callStack` — so for the topic's two flagship problems, and only those, the recursion
+  depth was invisible. Their own Matrix siblings `rat-in-a-maze` (63 of 64 steps) and
+  `word-search` (20 of 21) both push.
+- **Root cause:** `callStack` is optional and nothing asks for it. `DsTypePayloadContractTest`
+  checks the field the *dsType's canvas* reads, and both are `MATRIX`, so the grid satisfied
+  the contract while the recursion went unreported.
+- **Resolution:** both push a frame named for what it is responsible for — `place(col=2)`,
+  `solve(4,5)` — so the stack reads as the chain of columns or cells currently being guessed.
+- **What adding the frames immediately exposed:** `TracerContractTest` failed with
+  *"sudoku-solver ends with 1 frame(s) still on the call stack"* — its last step was emitted
+  from inside the recursion, so the sidebar would have frozen one frame deep. It now emits a
+  closing step from `run()` after the recursion returns, as `n-queens` already did. The F4
+  guard could not see this before, because **a tracer with no call stack is skipped by every
+  call-stack assertion**; the suite's skip count dropped from 513 to 511 when these two
+  joined. An optional payload is also an opt-out from the tests that police it.
+
+## RCA-047 — A state name that meant one thing to the tracer and the opposite to the canvas
+
+- **Discovered:** 2026-09-13, by the Sliding Window audit
+- **Status:** Resolved
+- **Symptom and impact:** `maximum-points-cards` drew a window spanning its **entire array on
+  all nine of its steps**, motionless, while the narration read "Slide window: drop
+  cardPoints[0]=1, add cardPoints[4]=5". The words described a window moving and the picture
+  showed one that never did, in the topic whose whole subject is the window.
+- **Root cause:** `WindowCanvas` derives the window from **cell states**, not variable names
+  — deliberately, and its header says why: the twelve tracers disagree about whether the
+  bounds are `left`/`right`, `start`/`end` or just `i`, but they all agree that cells inside
+  the window carry a non-default state and everything outside stays `"default"`. That is a
+  real contract that lived only in a comment. `MaximumPointsCardsTracer` marked the cards
+  *outside* its window `"sorted"`, meaning "already picked" — a sensible-looking name that
+  is simply not `"default"`, so every cell read as inside.
+- **The general shape:** a shared vocabulary where one value is load-bearing by its absence.
+  `"default"` here does not mean "no particular state", it means "outside", and any other
+  string — however reasonable for the tracer's own semantics — silently inverts the picture.
+  The same trap as `DpCell`'s `known` standing in for `void` (RCA-038), from the other side.
+- **Resolution:** outside cells are `"default"`; the picked/unpicked distinction survives in
+  the cell `label`, where it was already duplicated.
+- **Regression guard:** `WindowContractTest.windowIsAProperSubsetAtSomePoint` over every
+  `WINDOW` tracer — the window must be narrower than the array on at least one step. Not on
+  every step: several of these problems legitimately end with everything inside. Proven RED
+  first, and it named exactly one tracer.
+
+## RCA-048 — A sliding window whose default never slid
+
+- **Discovered:** 2026-09-13, by the Sliding Window audit
+- **Status:** Resolved
+- **Symptom and impact:** `longest-repeating-character-replacement` shipped with `"ABAB"`
+  and `k = 2` — the entire string is replaceable, so `left` never moved. Nine steps of a
+  window that only ever grew, with the `shrink` branch dead. The shrink *is* the slide.
+- **Root cause:** third occurrence of RCA-045's class in three consecutive audits
+  (`search-rotated-sorted-2`'s duplicate branch, `sudoku-solver`'s undo, now this). A
+  default picked to be short and to succeed, when the branch that names the technique only
+  fires on inputs that first fail a constraint.
+- **Resolution:** LeetCode's own second example, `"AABABBA"` with `k = 1` — same answer of
+  4, reached through three shrinks, 18 steps. The old default's contrast moved to
+  `alternateInput` as `k = 0`, where the window is bounded by a run rather than by free
+  replacement.
+- **Worth noting:** the sweep reported this as `DEAD ANCHORS ['shrink']`, which is the same
+  line it prints for a terminal not-found branch. See RCA-045 — the anchor's *name* is the
+  signal, and `shrink` in Sliding Window is as load-bearing as `undo` in Backtracking.
+
+## RCA-049 — A loop that only narrated its successes
+
+- **Discovered:** 2026-09-13, by the Learn the Basics audit
+- **Status:** Resolved
+- **Symptom and impact:** `check-prime` on its default `n = 29` emitted **three steps**:
+  "count factors up to sqrt(29) ~= 5", "i=1 divides 29", "factor count = 2 -> PRIME". The
+  loop ran `i = 1..5`; four of those five iterations were silent, because the tracer emitted
+  only inside `if (n % i == 0)`. The rejections *are* the trial division — a primality demo
+  that shows one hit and a verdict has not shown the algorithm.
+- **Root cause:** the `else` branch had no anchor and no emit, so there was nothing to be
+  dead and nothing to count. `anchorsAreAllReachable` cannot flag an anchor that does not
+  exist, and `check-prime` takes a single `INT`, which puts it in the 152 tracers
+  `stepCountGrowsWithInput` skips — the one check that would otherwise notice a loop doing
+  no visible work as its bound grows. `TracerContractTest` already pins that skip list at
+  152 with a comment saying a tracer lands there "sometimes right and sometimes because it
+  should have taken an array instead of a fixture". This is a third reason to land there:
+  the input genuinely is a scalar, and the loop over it is still where the work happens.
+- **Resolution:** a `noFactor` anchor and a step per rejected divisor. Three steps become
+  seven on the default, and the count now grows with `sqrt(n)` as it should.
+- **Why no new contract test:** the honest generalisation is "scale an INT field and require
+  more steps", and most INT fields are not sizes — `k`, `target`, a bit position, the index
+  in `check-ith-bit-set`. Growing those would fail tracers that are legitimately flat. The
+  golden pins the seven steps; this note records why the rule cannot be written.
+- **How to find the next one:** read `run()` beside `annotatedCode()` and look for a branch
+  in the source with no anchor on it. An unanchored branch is invisible to every existing
+  check by construction.
+
+## RCA-050 — Two problems taught the same thing in the same words
+
+- **Discovered:** 2026-09-13, by the Strings audit
+- **Status:** Resolved
+- **Symptom and impact:** `kmp-lps-algo` and `longest-happy-prefix` build the same LPS array
+  with narration that was identical sentence-for-sentence, differing only in whether the
+  string was called `pattern` or `s`. Two problems, one lesson, told twice.
+- **Root cause:** `noTwoTracersProduceIdenticalTraces` fires only on exact equality of the
+  whole fingerprint, so different default inputs are enough to pass it. The audit-topic
+  skill names this gap explicitly — "two tracers that differ in a single step number pass it
+  while being pedagogically interchangeable" — and the sweep's similarity check is per topic,
+  which both of these are in, yet they scored below its threshold because the inputs differ
+  in length.
+- **Resolution:** not a different input — a different *lesson*. The array is the answer for
+  `longest-happy-prefix` and a tool for `kmp-lps-algo`, so the latter now says what each
+  number buys a search: where a mismatch resumes, why the text pointer never moves backwards,
+  and what the finished array means for the O(m) bound. Same algorithm, same array, and a
+  reader can now say what each problem is for.
+- **The rule this follows:** the fix for a near-identical pair is never to perturb a value
+  until the similarity score drops. It is to change what each trace *narrates* — as
+  `power-set` (captures at every node) and `subsets-i` (captures at the pick/non-pick leaves)
+  already do for the same output set.
+
+## RCA-051 — What reading all 431 golden files found, and what it says about checking
+
+- **Discovered:** 2026-09-13, reading every golden trace end to end for the first time
+- **Status:** Resolved
+- **What was found:** seven defects in four classes. Two are mechanical and repetitive, two
+  are not:
+
+  | class | scale |
+  |---|---|
+  | "1 <plural>" — "at most 1 replacements", "only 1 nodes remain", "1 transactions are allowed" | 33 steps, 14 problems |
+  | "%d-th" — "the 2-th largest", "the 3-th root", "the 5-th missing positive integer" | 12 steps, 7 problems |
+  | a trace ending without stating its result — `left-rotate-k`, `lfu-cache`, `lru-cache` | 3 problems |
+  | narration contradicting the picture on the same step — `left-rotate-k`'s swap | 1 problem |
+  | a claim of uniqueness where there was a tie — `city-smallest-neighbors` | 1 problem |
+
+- **The swap is the one worth describing.** `left-rotate-k` emitted its step *after*
+  mutating, and printed both cells' **old** contents: "Swap nums[0]=1 and nums[1]=2" beside
+  a picture already showing 2 at index 0. Words and cells disagreed on the same step, in
+  the same frame, and every test passed. It now says where the values landed.
+- **Three traces simply stopped.** `left-rotate-k` ended on the last swap of its third
+  reversal; `lfu-cache` ended on "Key 3 frequency bumped. minFreq = 2"; `lru-cache` on
+  whatever its final operation happened to be. For a cache, the contents and their recency
+  order *are* the result. All three now close with one.
+- **What this says about writing checkers.** The first draft of the checker reported **283
+  hits and every one was an artifact**: `2^2 - 1 = 3` parsed as `2 - 1 = 3`, a four-term sum
+  parsed as its last two terms, and "1 beats" parsed as a plural noun. A checker that cries
+  wolf is worse than no checker, because the next person stops reading its output. Three
+  rounds of tightening brought it to 33 real hits and a handful of understood false
+  positives — and even then, of the four problems flagged for a value claim, three were
+  cases where `arrayState` legitimately holds a *different* array from the one the sentence
+  names.
+- **What reading found that no checker could.** All stated arithmetic was correct — every
+  sum, product, modulus and shift, including `4095 × 65 mod 100000 = 66175` and
+  `4^2 * 5^2 = 400`. Every stated inequality held. The defects that mattered were structural:
+  a missing ending, a tense mismatch between sentence and payload, a tie presented as a
+  win. **Regexes find repetition; only reading finds a sentence that is true of the wrong
+  moment.**
+- **Regression guard:** `NarrationContractTest` over every tracer's default trace — 862
+  assertions covering the two repetitive classes, proven RED first with 21 failures. The
+  other three were one-offs and are pinned by their goldens.
+- **Left deliberately:** `"1 step(s)"` and `"6 vertex/vertices"`, a parenthesised-plural
+  dodge used in about 45 places. Clumsy rather than false, and now a one-call fix whenever
+  someone wants it.
+
+## RCA-052 — A bulk rewrite the compiler could not check, and what caught it instead
+
+- **Discovered:** 2026-09-13, replacing the "(s)" plural dodge
+- **Status:** Resolved
+- **The change:** 84 narration sites hedged their counts — "1 step(s)", "6 vertex/vertices",
+  "0 node(s)". The count is known when the step is emitted, so the sentence can simply say
+  "1 step" or "4 steps". Rewriting 84 argument lists by hand invites its own mistakes, so
+  the transformation was scripted: turn `"%d cell(s)"` into `"%d cell%s"` and insert
+  `Narration.s(<that argument>)` at the slot the new `%s` creates.
+- **What went wrong, in order:**
+  1. **The governing argument was indexed against the wrong list.** For the *second* `(s)`
+     in one format the script used the new slot number to look up the old argument array,
+     so `"%d account(s) collapse into %d merged account(s): %s"` rendered as *"3 merged
+     account[John: ...]: s"*.
+  2. **"The specifier before the noun" is not always the count.** `"reads %d consecutive
+     '%c' character(s)"` has a `%c` between them, so the script pluralised on the character
+     instead of the count and produced *"1 consecutive '1' characters"*.
+  3. **A ternary chooses the format at some call sites**, so `args[0]` was not a literal and
+     nothing lined up.
+  4. **Making a noun singular exposed verbs that were never checked.** "1 subarray ending at
+     index 1 **sum** to 2", "1 combination that **use** at least one more coin", "Its 1
+     distinct email **sort** to mary@mail.com". The plural noun had been hiding them.
+- **What caught what.** `javac` caught three sites, and only because the mis-slotted
+  argument happened to be a `String` where a `%d` wanted a number. `GoldenTraceTest` caught
+  two more at runtime with `IllegalFormatConversionException`. **Neither can catch a
+  swapped pair of ints**, and neither has any opinion about "1 subarray sum to 2". Every one
+  of those was found by reading all 238 changed description lines in the golden diff.
+- **The rule:** a bulk rewrite of *rendered text* is verified by reading the rendered text,
+  not by the compiler and not by the tests going green. The golden files exist precisely so
+  that diff is readable.
+- **Regression guard:** `NarrationContractTest.nothingHedgesItsPlurals`, over every tracer's
+  default trace, proven RED first with 48 failures. Its message names the verb trap, since
+  that is the part the next person will miss.
+
+## RCA-053 — Investigated: two spurious test failures, no bug found
+
+- **Discovered:** 2026-09-14, two full-suite runs during heavy concurrent session activity
+  (bulk file edits landing in quick succession, and separately, browser automation running
+  alongside the suite)
+- **Status:** Closed, no fix — recorded because "the suite is flaky" was left as an open
+  question and deserved a real answer rather than staying folklore.
+- **Symptom:** one run failed `Sidebar.categories.test.js` with a vague async rejection; a
+  separate run failed with `HTMLCanvasElement.prototype.getContext ... Not implemented`, the
+  literal string `CaptureStrip.test.jsx`'s `fakeCanvas()` helper throws when deliberately
+  simulating a browser without canvas support. Both cleared on an immediate re-run with no
+  code changed.
+- **What was checked and ruled out:** the natural suspect for the second failure is a leaked
+  `vi.spyOn(HTMLCanvasElement.prototype, 'getContext')` bleeding into another file's tests.
+  Read the test file: the mock is created inside `describe('CaptureStrip', ...)`, and that
+  block's own `afterEach(() => vi.restoreAllMocks())` covers every call site. Vitest's
+  default pool also runs each file in an isolated worker/module context, so a
+  prototype-level spy in one file cannot reach another file's run regardless. Five repeated
+  full-suite runs, and five more with a file touched between each to force a rebuild, all
+  passed clean — the failure did not reproduce under any deliberate attempt.
+- **Conclusion:** both incidents coincided with heavy concurrent CPU load in the session
+  (rapid successive file edits in one case, live browser automation in the other). The
+  likely mechanism is a starved worker thread timing out mid-test and vitest's recovery path
+  surfacing a stale or unrelated error as the suite's result, not a defect in the mock
+  scoping or the component under test.
+- **Why this is worth a permanent entry despite finding nothing:** "flaky, investigate
+  later" is exactly the kind of note that gets carried forward and never actually checked.
+  This is the check. If it recurs *without* concurrent load competing for the machine, that
+  would be new information and worth reopening — this entry is not a promise it can never
+  happen, only a record that the obvious cause was ruled out.

@@ -16,6 +16,10 @@ import java.util.*;
 @Component
 public class EditDistanceTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])";
+
+
     @Override
     public String id() {
         return "edit-distance";
@@ -125,7 +129,10 @@ public class EditDistanceTracer implements AlgorithmTracer {
                                     word1.charAt(i - 1), word2.charAt(j - 1), i - 1, j - 1, dp[i][j])
                             .var("i", i).var("j", j).var("value", dp[i][j])
                             .dpTable(table(dp, settled, word1, word2, here, String.valueOf(dp[i][j]),
-                                    Set.of(diag), false)).step();
+                                    Set.of(diag), false)
+                                    .withFormula(FORMULA, String.format(
+                                            "characters match, so dp[%d][%d] = dp[%d][%d] = %d",
+                                            i, j, i - 1, j - 1, dp[i][j]))).step();
                 } else {
                     int replace = dp[i - 1][j - 1];
                     int delete = dp[i - 1][j];
@@ -157,7 +164,10 @@ public class EditDistanceTracer implements AlgorithmTracer {
                                     anchor, best, i, j, best, dp[i][j])
                             .var("i", i).var("j", j).var("value", dp[i][j])
                             .dpTable(table(dp, settled, word1, word2, here, String.valueOf(dp[i][j]),
-                                    reads, false)).step();
+                                    reads, false)
+                                    .withFormula(FORMULA, String.format(
+                                            "dp[%d][%d] = 1 + min(delete %d, insert %d, replace %d) = %d",
+                                            i, j, delete, insert, replace, dp[i][j]))).step();
                 }
             }
         }
