@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, RefreshCw, Compass } from 'lucide-react';
+import { ArrowRight, RefreshCw, Compass, Flame } from 'lucide-react';
 import useProgress from '../hooks/useProgress';
 import useLastVisited from '../hooks/useLastVisited';
+import useStreak from '../hooks/useStreak';
+import { pickDailyProblem } from '../search/dailyProblem';
 import styles from './Dashboard.module.css';
 
 const BROWSE_FALLBACK_ID = 'two-sum';
@@ -15,6 +17,10 @@ const BROWSE_FALLBACK_ID = 'two-sum';
  * route, does that) and offers a continue link if there is one, or a plain start link
  * if there is not.
  *
+ * Also the one place useStreak is ever read without being written: recording a visit
+ * happens on App's problem route, where a visit is real, not here where landing could
+ * mean nothing more than the tab reopening.
+ *
  * Kept deliberately thin: it fetches the catalogue only for a title and a count, and
  * hands off to the existing problem page - fully featured sidebar, search, category grid
  * - for everything past that first click, rather than rebuilding any of it here.
@@ -25,8 +31,11 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { watchedCount } = useProgress();
+  const { progress, watchedCount } = useProgress();
   const lastVisitedId = useLastVisited();
+
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const { current: streakDays } = useStreak(today);
 
   const fetchCatalog = useCallback(async () => {
     try {
@@ -49,6 +58,10 @@ export default function Dashboard() {
   const continueProblem = problems.find((p) => p.id === lastVisitedId) || null;
   const startId = problems[0]?.id || BROWSE_FALLBACK_ID;
   const browseId = continueProblem?.id || startId;
+  const dailyProblem = useMemo(() => pickDailyProblem(problems, today), [problems, today]);
+
+  const starredIds = Object.keys(progress).filter((id) => progress[id]?.starred);
+  const reviewProblem = problems.find((p) => p.id === starredIds[0]) || null;
 
   return (
     <div className={styles.page}>
@@ -77,6 +90,12 @@ export default function Dashboard() {
               </p>
             )}
 
+            {streakDays > 0 && (
+              <p className={styles.streakLine}>
+                <Flame size={13} /> {streakDays}-day streak
+              </p>
+            )}
+
             {continueProblem ? (
               <div className={styles.continueBlock}>
                 <p className={styles.continueLabel}>Continue where you left off</p>
@@ -97,6 +116,33 @@ export default function Dashboard() {
               >
                 Start with the first problem <ArrowRight size={14} />
               </button>
+            )}
+
+            {dailyProblem && (
+              <div className={styles.dailyBlock}>
+                <p className={styles.dailyLabel}>Today&rsquo;s pick</p>
+                <p className={styles.dailyTitle}>{dailyProblem.title}</p>
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => navigate(`/problem/${dailyProblem.id}`)}
+                >
+                  Try today&rsquo;s problem <ArrowRight size={14} />
+                </button>
+              </div>
+            )}
+
+            {reviewProblem && (
+              <div className={styles.reviewBlock}>
+                <p className={styles.reviewLabel}>Review queue ({starredIds.length})</p>
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => navigate(`/problem/${reviewProblem.id}`)}
+                >
+                  Review {reviewProblem.title} <ArrowRight size={14} />
+                </button>
+              </div>
             )}
 
             <button

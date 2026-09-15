@@ -14,6 +14,7 @@ import usePersistentState from './hooks/usePersistentState';
 import useShareableView from './hooks/useShareableView';
 import useProgress from './hooks/useProgress';
 import useLastVisited from './hooks/useLastVisited';
+import useStreak from './hooks/useStreak';
 import useLayoutPreferences from './hooks/useLayoutPreferences';
 import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 import useTheme from './hooks/useTheme';
@@ -194,6 +195,12 @@ export default function App() {
   // ── What has actually been watched ───────────────────────────────────────
   const { progress, markWatched, toggleStar } = useProgress();
   useLastVisited(activeProblemId);
+
+  // A visit only counts once real navigation to a problem has happened, not merely the
+  // app mounting - Dashboard reads this streak but never writes it, for the same reason.
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const { recordVisit } = useStreak(today);
+  useEffect(() => { recordVisit(); }, [recordVisit]);
   const activeProgress = progress[activeProblemId];
 
   // Reaching the last step, not opening the page: clicking into a problem is an accident
