@@ -1373,3 +1373,34 @@ class, and the reason is worth stating rather than rediscovering.
 - **Regression guard:** `NarrationContractTest.nothingHedgesItsPlurals`, over every tracer's
   default trace, proven RED first with 48 failures. Its message names the verb trap, since
   that is the part the next person will miss.
+
+## RCA-053 — Investigated: two spurious test failures, no bug found
+
+- **Discovered:** 2026-09-14, two full-suite runs during heavy concurrent session activity
+  (bulk file edits landing in quick succession, and separately, browser automation running
+  alongside the suite)
+- **Status:** Closed, no fix — recorded because "the suite is flaky" was left as an open
+  question and deserved a real answer rather than staying folklore.
+- **Symptom:** one run failed `Sidebar.categories.test.js` with a vague async rejection; a
+  separate run failed with `HTMLCanvasElement.prototype.getContext ... Not implemented`, the
+  literal string `CaptureStrip.test.jsx`'s `fakeCanvas()` helper throws when deliberately
+  simulating a browser without canvas support. Both cleared on an immediate re-run with no
+  code changed.
+- **What was checked and ruled out:** the natural suspect for the second failure is a leaked
+  `vi.spyOn(HTMLCanvasElement.prototype, 'getContext')` bleeding into another file's tests.
+  Read the test file: the mock is created inside `describe('CaptureStrip', ...)`, and that
+  block's own `afterEach(() => vi.restoreAllMocks())` covers every call site. Vitest's
+  default pool also runs each file in an isolated worker/module context, so a
+  prototype-level spy in one file cannot reach another file's run regardless. Five repeated
+  full-suite runs, and five more with a file touched between each to force a rebuild, all
+  passed clean — the failure did not reproduce under any deliberate attempt.
+- **Conclusion:** both incidents coincided with heavy concurrent CPU load in the session
+  (rapid successive file edits in one case, live browser automation in the other). The
+  likely mechanism is a starved worker thread timing out mid-test and vitest's recovery path
+  surfacing a stale or unrelated error as the suite's result, not a defect in the mock
+  scoping or the component under test.
+- **Why this is worth a permanent entry despite finding nothing:** "flaky, investigate
+  later" is exactly the kind of note that gets carried forward and never actually checked.
+  This is the check. If it recurs *without* concurrent load competing for the machine, that
+  would be new information and worth reopening — this entry is not a promise it can never
+  happen, only a record that the obvious cause was ruled out.
