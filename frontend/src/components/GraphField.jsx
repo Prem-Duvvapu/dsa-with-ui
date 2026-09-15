@@ -45,7 +45,6 @@ export default function GraphField({ field, value, onChange }) {
           max={maxVertices === Infinity ? undefined : maxVertices}
           value={vertices}
           onChange={(e) => setVertices(Number(e.target.value) || 1)}
-          className="ip-input"
           className={fields.countInput}
         />
       </label>

@@ -155,7 +155,6 @@ export default function CaptureStrip({ steps = [], current = 0, dsType, onSeek, 
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="sb-disclosure"
           aria-expanded={isOpen}
           aria-label={isOpen ? 'Hide execution capture' : 'Show execution capture'}
           title={isOpen ? 'Hide execution capture' : 'Show execution capture'}
