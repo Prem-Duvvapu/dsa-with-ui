@@ -22,6 +22,7 @@ import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
 import CaptureStrip from './components/CaptureStrip';
+import CompareStrip from './components/CompareStrip';
 import CodeViewer from './components/CodeViewer';
 import MemoryComplexityCard from './components/MemoryComplexityCard';
 import InputPanel from './components/InputPanel';
@@ -294,6 +295,7 @@ export default function App() {
 
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
   const { theme, cycleTheme } = useTheme();
   // Shown once, on a genuine first visit. Tracked rather than inferred from other
   // preferences: someone who only ever changed the theme has still never been introduced.
@@ -629,6 +631,18 @@ export default function App() {
               </div>
             )}
 
+            {!isMobile && isCompareOpen && activeProblem?.alternateInput
+              && !CAPTURE_STRIP_REDUNDANT_FOR.has(activeDsType) && (
+              <div className={styles.compareCard}>
+                <CompareStrip
+                  key={activeProblemId}
+                  problemId={activeProblemId}
+                  dsType={activeDsType}
+                  alternateInput={activeProblem.alternateInput}
+                />
+              </div>
+            )}
+
             {/* Integrated Playback Controls */}
             <div data-tour="controls">
             <Controls
@@ -703,6 +717,17 @@ export default function App() {
                 >
                   {isComplexityOpen ? 'Hide' : 'Show'} memory &amp; complexity
                 </button>
+                {activeProblem?.alternateInput && !CAPTURE_STRIP_REDUNDANT_FOR.has(activeDsType) && (
+                  <button
+                    type="button"
+                    onClick={() => setIsCompareOpen(prev => !prev)}
+                    aria-expanded={isCompareOpen}
+                    className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                    title={isCompareOpen ? 'Hide the comparison' : 'Compare against the other case'}
+                  >
+                    {isCompareOpen ? 'Hide' : 'Compare'} other case
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => setIsHelpOpen(true)}

@@ -919,3 +919,68 @@ describe('App command palette', () => {
     expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
   });
 });
+
+describe('App comparison panel', () => {
+  const TWO_SUM_WITH_ALTERNATE = {
+    id: 'two-sum', title: 'Two Sum', category: 'Arrays', difficulty: 'Easy', dsType: 'Array',
+    traced: true, javaCode: 'int solve() {\n    return 0;\n}',
+    complexity: { timeComplexity: 'O(N)', spaceComplexity: 'O(1)' },
+    alternateInput: { nums: [2, 3, 1], target: 5 }
+  };
+
+  function tinyTrace(n) {
+    return {
+      encoding: 'full',
+      resolvedInput: { n },
+      steps: Array.from({ length: n }, (_, i) => ({
+        stepNumber: i + 1, activeLine: 1, description: `compare step ${i + 1}`,
+        arrayState: [{ index: 0, value: i, state: 'default' }]
+      }))
+    };
+  }
+
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn((url, opts) => {
+      calls.push(url);
+      if (url === '/api/problems') return Promise.resolve(ok([TWO_SUM_WITH_ALTERNATE]));
+      if (url === '/api/problems/two-sum') return Promise.resolve(ok(TWO_SUM_WITH_ALTERNATE));
+      if (url === '/api/problems/two-sum/execute' && opts?.method === 'POST') {
+        const body = JSON.parse(opts.body);
+        const n = Object.keys(body).length === 0 ? 2 : 5;
+        return Promise.resolve(ok(tinyTrace(n)));
+      }
+      if (url === '/api/problems/two-sum/execute') return Promise.resolve(ok(tinyTrace(2)));
+      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
+    }));
+  });
+
+  it('offers a compare toggle only when the problem has an alternate input', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(await screen.findByRole('button', { name: /compare other case/i })).toBeInTheDocument();
+  });
+
+  it('shows both runs stacked, each with its own step count, once opened', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.click(await screen.findByRole('button', { name: /compare other case/i }));
+
+    expect(await screen.findByText(/default input/i)).toHaveTextContent('2 steps');
+    await waitFor(() =>
+      expect(screen.getByText((_, el) => el?.tagName === 'P' && /other case/i.test(el.textContent)))
+        .toHaveTextContent('5 steps')
+    );
+  });
+
+  it('hides again on a second click', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.click(await screen.findByRole('button', { name: /compare other case/i }));
+    await screen.findByText(/default input/i);
+
+    fireEvent.click(screen.getByRole('button', { name: /hide other case/i }));
+    expect(screen.queryByText(/default input/i)).not.toBeInTheDocument();
+  });
+});
