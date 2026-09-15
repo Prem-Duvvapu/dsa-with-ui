@@ -1,6 +1,7 @@
 import layout from './layout.module.css';
 import React, { useState, useEffect } from 'react';
-import { Play, Shuffle, RotateCcw, GitBranch } from 'lucide-react';
+import { Play, Shuffle, RotateCcw, GitBranch, Bookmark, X } from 'lucide-react';
+import useInputPresets from '../hooks/useInputPresets';
 import IntArrayField from './IntArrayField';
 import GridField from './GridField';
 import GraphField from './GraphField';
@@ -23,13 +24,21 @@ import styles from './InputPanel.module.css';
  * `fieldErrors`, keyed by field name — the same contract useTrace.runInput surfaces.
  * Client-side bounds shown here (min/max on the native inputs, Add/Remove disabling at
  * length caps) are a convenience only; the server remains authoritative.
+ *
+ * Saved inputs (`useInputPresets`) are what stop a hand-built case from being lost the
+ * moment someone navigates away. Loading one runs it immediately, following the "Other
+ * case" button's own precedent: the whole point of saving is to remove friction, and
+ * loading-without-running would put it straight back.
  */
 export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, onRun }) {
   const [values, setValues] = useState(() => defaultInput(inputSpec));
+  const { presets, savePreset, removePreset } = useInputPresets(problemId);
+  const [savingName, setSavingName] = useState(null);
 
   // A stale value from the previous problem must never appear to belong to this one.
   useEffect(() => {
     setValues(defaultInput(inputSpec));
+    setSavingName(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [problemId]);
 
@@ -90,7 +99,70 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
         >
           <RotateCcw size={12} /> Reset
         </button>
+        <button
+          type="button"
+          className="btn btn-outline"
+          onClick={() => setSavingName('')}
+          aria-label="Save this input"
+          title="Name this input to come back to it later"
+        >
+          <Bookmark size={12} /> Save
+        </button>
       </div>
+
+      {savingName !== null && (
+        <form
+          className={styles.saveForm}
+          onSubmit={(e) => {
+            e.preventDefault();
+            savePreset(savingName, values);
+            setSavingName(null);
+          }}
+        >
+          <input
+            type="text"
+            className="ip-input"
+            autoFocus
+            placeholder="Name this input"
+            aria-label="Preset name"
+            value={savingName}
+            onChange={(e) => setSavingName(e.target.value)}
+          />
+          <button type="submit" className="btn btn-primary" aria-label="Confirm save">
+            Save
+          </button>
+          <button type="button" className="btn btn-outline" onClick={() => setSavingName(null)}>
+            Cancel
+          </button>
+        </form>
+      )}
+
+      {presets.length > 0 && (
+        <ul className={styles.presetList} aria-label="Saved inputs">
+          {presets.map((preset) => (
+            <li key={preset.id} className={styles.presetItem}>
+              <button
+                type="button"
+                className={styles.presetLoad}
+                onClick={() => onRun(preset.values)}
+                aria-label={`Load ${preset.name}`}
+                title={`Run the input saved as "${preset.name}"`}
+              >
+                {preset.name}
+              </button>
+              <button
+                type="button"
+                className={styles.presetRemove}
+                onClick={() => removePreset(preset.id)}
+                aria-label={`Remove preset ${preset.name}`}
+                title="Remove this saved input"
+              >
+                <X size={11} />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <div className={styles.fieldsContainer}>
         {inputSpec.fields.map((field) => (
