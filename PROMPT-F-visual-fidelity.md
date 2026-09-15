@@ -55,6 +55,21 @@
 > Traced count has grown substantially since this file's original 39 (DP batches #34–39
 > landed independently); F3–F10 below have not started and their "8 tracers" framing is
 > now stale — re-verify against `GET /api/problems/stats` before starting any of them.
+>
+> **Current state — 2026-09-15.** All 431 catalogued problems are traced, 0 duplicates
+> (`GET /api/problems/stats`). Against `frontend/src/canvas/registry.js`: F1 (companion
+> panes), F3 (DP rank-driven layout), F4 (`SEARCH_SPACE`, both variants, with `left`/
+> `rightSorted`/`miss` now exercised), F5 (`WINDOW`), F6 (`BITS` — resolved as an
+> `ArrayCanvas` track rather than a standalone canvas, see the README), and F7
+> (`INTERVAL`) have all landed. F10's `TRIE` activation landed (`RCA-012` resolved) and
+> `HeapCanvas`/`DsuCanvas`/`RecursionTreeCanvas` are built. The one slice with no evidence
+> of having landed is `STRING` (no dedicated canvas exists; still routes to `ArrayCanvas`)
+> — F9's invariant strip (D5) is likewise unconfirmed. Re-verify both against the live
+> registry and a running frontend before treating either as open work.
+>
+> `HANDOFF.md` is deleted — the Prompt B design brief this file's D1/D2 sections build on
+> is now implemented rather than specified, so cross-references to it below are frozen,
+> not live.
 
 ---
 

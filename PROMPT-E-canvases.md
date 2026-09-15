@@ -17,6 +17,21 @@
 > phase followed by one retag phase; and a single `ExecutionStep` can carry several
 > structures at once, so a canvas has a *hero* structure plus *companion panes*. F also
 > adds the `INTERVAL` type this taxonomy missed. **Where E and F disagree, F wins.**
+>
+> **Current state — 2026-09-15, read from `frontend/src/canvas/registry.js`.** Every
+> `dsType` this file names now has its dedicated canvas: `DpTableCanvas`, `SearchSpaceCanvas`
+> (both variants), `StackCanvas`, `QueueCanvas`, `HeapCanvas`, `WindowCanvas`, `TrieCanvas`
+> (`RCA-012` resolved) and `IntervalCanvas` (added by `PROMPT-F`'s D7) are all built and
+> wired. `BITS` renders via a fixed 32-wide track over `ArrayCanvas` by design, not as an
+> unbuilt placeholder — see the README's Bit Manipulation notes. The one genuine gap left
+> against this file's own taxonomy is `STRING`: still routed to `ArrayCanvas`, no dedicated
+> canvas built. All 431 catalogued problems are traced (`GET /api/problems/stats`).
+>
+> `HANDOFF.md`, which this file cites below for the Bench design spec and the
+> per-category "still present on purpose" list, is deleted — that work is finished and its
+> content lives in `ARCHITECTURE.md`, `README.md`, and `frontend/src/index.css`'s own
+> comments now. The citations below are frozen references to a document that no longer
+> exists, not live pointers.
 
 > Paste everything below the line into the implementing agent. It is written to be
 > self-contained: it assumes no prior conversation and no access to this file's history.

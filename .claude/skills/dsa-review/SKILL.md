@@ -6,8 +6,8 @@ description: >
   reintroduced legacy controller or `generateSteps` fallback that makes one problem play
   another's animation, a dead or dangling `// @a` anchor, an `alternateInput()` copied from
   the spec defaults, a new npm dependency, a `var()` or className that `index.css` does not
-  define, a recursion trace that ends mid-unwind, a moved pinned number (433 problems /
-  7 duplicates), or work committed on `main`. Use alongside — not instead of — the built-in /code-review.
+  define, a recursion trace that ends mid-unwind, a moved pinned number (431 problems /
+  0 duplicates), or work committed on `main`. Use alongside — not instead of — the built-in /code-review.
 ---
 
 # dsa-review
@@ -56,9 +56,9 @@ grep -rn "default:" backend/src/main/java/com/dsa/ui/tracer/ \
 ```
 
 ```bash
-# Expect 18 lines, each `...Service.java:1` — one legacy `default:` per service. Tracked
-# debt (HANDOFF PROMPT C deletes them as problems get traced), so the count must go DOWN
-# or stay flat. A service showing 2, or a 19th file, means a new fallback was added.
+# Expect no hits at all. The eighteen services no longer have a switch, a default:, or a
+# generateSteps method of any kind - they are pure ProblemProvider catalogue metadata (see
+# §2). Any hit here means the legacy trace layer, deleted once already, is coming back.
 grep -rc "default:" backend/src/main/java/com/dsa/ui/service/ | grep -v ":0"
 ```
 
@@ -74,17 +74,9 @@ Also reject, by inspection of the diff:
 - a `catch` that returns an empty or placeholder step list instead of propagating
 - `501` softened to `200` with a synthetic "coming soon" step — the UI is supposed to say
   "not yet traced", and the honest signal is the status code
-- a new one-line delegate generator in a service (`{ return generateSomethingElseSteps(); }`)
-
-```bash
-# Existing delegate census. 122 today, in four clusters. Must never grow.
-grep -rhoP 'private List<ExecutionStep> \w+\(\) \{ return \K\w+' \
-     backend/src/main/java/com/dsa/ui/service/ | sort | uniq -c | sort -rn
-#      60 generateGraphIntroSteps
-#      31 generateBs1dSteps
-#      29 generateReverseSteps
-#       2 generateClimbingStairsSteps
-```
+- any new `generateSteps`/one-line delegate method reappearing in a service class - that
+  shape of code was the original defect (122 such delegates, in four clusters, all
+  deleted) and has no legitimate reason to exist post-migration
 
 ---
 
@@ -157,11 +149,11 @@ nothing — reject it in review even though the test is green.
 
 ## 5. Pinned numbers moved only deliberately
 
-`ProblemsApiTest` asserts 433 unique ids and 7 duplicate ids. They are tripwires against
+`ProblemsApiTest` asserts 431 unique ids and 0 duplicate ids. They are tripwires against
 accidental catalogue loss.
 
 ```bash
-grep -n "433\|assertEquals(7" backend/src/test/java/com/dsa/ui/ProblemsApiTest.java
+grep -n "431\|assertEquals(0" backend/src/test/java/com/dsa/ui/ProblemsApiTest.java
 ```
 
 If the diff changes either, the same commit must (a) say why in the message and (b) update
@@ -228,6 +220,6 @@ nothing — see the `prove-the-test-fails` skill.
 ## Reporting
 
 Group findings as **Blocking** / **Should fix** / **Note**, each with a file:line and the
-command that produced it. Do not report the known baseline debt (18 legacy `default:`
-branches, 122 delegates, 7 duplicate ids, 6 tracers with pre-existing dead anchors) as new
-findings — say explicitly that they are unchanged.
+command that produced it. There is no known baseline debt left to exclude — the 18 legacy
+`default:` branches, 122 delegates and 7 duplicate ids this section used to carve out are
+all gone. Anything §1–§5 flags on a current diff is a real finding, not baseline noise.

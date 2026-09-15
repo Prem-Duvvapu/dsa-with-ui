@@ -1,12 +1,26 @@
 # PROMPT J: Full roadmap for the 39 candidate list (+ Tries)
 
-**Status at time of writing:** planned, not yet implemented, except Strings (batch 3,
-`PROMPT-I-strings-batch.md`, in progress — `feat/trace-strings-medium` has a first draft
-tracer, not yet tested). `traced` is 76 of 433 and will be 80 once Strings ships. This
-doc plans everything else from the 32-problem list and the 7-problem Strings/Tries
-addendum given in conversation (39 total), plus the 2 Trie problems added on request —
-41 ids in all, 4 of which (Strings) are already covered by `PROMPT-I` and not repeated
-here.
+> **Status — complete, 2026-09-15.** Every batch below shipped and merged. Read from a
+> live backend rather than trusting this line: `GET /api/problems/stats` reports
+> `431 catalogued, 431 traced, 0 untraced, 0 duplicateIds`. The Linked List model-change
+> blocker in finding #1 was resolved (`ListNode` gained `childId`/`randomId`) and
+> `flattening-ll`/`clone-ll-random-pointer` are traced; the `lru-cache` design question in
+> finding #2 was resolved as the fixed-operation-sequence `STRING` encoding, and it is
+> traced; the 3D-DP question in finding #3 was resolved as the per-row slice approach and
+> `ninja-and-his-friends` is traced; the graph-input-shape question in finding #4 was
+> resolved for `word-ladder-1`/`alien-dictionary` and both are traced. `RCA-012` (the Trie
+> canvas/backend shape mismatch blocking batch 11) is resolved. This file is kept for its
+> bug-taxonomy (fallback delegate / hardcoded narration / real legacy algorithm) and its
+> per-batch verification discipline, not as a live worklist. `HANDOFF.md`, cited below as a
+> place to update per-batch, is deleted; its own migration having finished is why.
+
+**Status at time of writing (original, historical):** planned, not yet implemented, except
+Strings (batch 3, `PROMPT-I-strings-batch.md`, in progress — `feat/trace-strings-medium`
+has a first draft tracer, not yet tested). `traced` is 76 of 433 and will be 80 once
+Strings ships. This doc plans everything else from the 32-problem list and the 7-problem
+Strings/Tries addendum given in conversation (39 total), plus the 2 Trie problems added on
+request — 41 ids in all, 4 of which (Strings) are already covered by `PROMPT-I` and not
+repeated here.
 
 **What this doc is, and isn't.** Batch-level plan docs so far (`PROMPT-G`, `PROMPT-H`,
 `PROMPT-I`) scope one topic (or three) at a time, immediately before implementation, with

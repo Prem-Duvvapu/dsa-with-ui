@@ -91,7 +91,7 @@ cd frontend && npx vitest run && npx vite build
       invented constraint is indistinguishable from a true one on screen.
 - [ ] Source-of-truth confusion avoided. The problem's own constraints and the visualiser's
       input caps differ by orders of magnitude and are labelled apart on purpose.
-- [ ] Coverage claims in `README.md` / `CLAUDE.md` / `HANDOFF.md` match
+- [ ] Coverage claims in `README.md` / `CLAUDE.md` / `PROJECT_CONTEXT.md` match
       `GET /api/problems/stats`. Never quote a number from a document.
 - [ ] Scope stated: what this does *not* do is written down rather than left implied.
 
@@ -115,7 +115,7 @@ curl -s localhost:8923/api/problems/stats | python3 -m json.tool
       payload backs it; a canvas reads a documented field rather than parsing a string.
 - [ ] Dead code goes. A retired branch means deleting the generator it called, not just
       refusing to call it — check reachability transitively.
-- [ ] Content stays out of constructors where it can. 433 `ProblemDetail`s in Java means
+- [ ] Content stays out of constructors where it can. 431 `ProblemDetail`s in Java means
       every copy edit is a recompile.
 - [ ] Anchors, not positions. Anything that points at the UI from outside it — the tour,
       a test — targets a stable attribute, never a CSS class or a coordinate.
@@ -152,7 +152,7 @@ git diff backend/src/test/resources/golden/
 
 - [ ] Branch cut from `main`; nothing committed on `main` itself.
 - [ ] Full suite green on both tiers.
-- [ ] Pinned numbers unmoved (433 unique ids, 7 duplicates), or moved deliberately with the
+- [ ] Pinned numbers unmoved (431 unique ids, 0 duplicates), or moved deliberately with the
       `README.md` coverage table updated in the same commit.
 - [ ] Recurring classes of defect recorded in `RCA.md`.
 - [ ] The commit message says what was wrong, not only what changed.
