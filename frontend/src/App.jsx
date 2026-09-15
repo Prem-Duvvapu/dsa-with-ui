@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
+import SectionNav from './components/SectionNav';
 import ProblemStatement from './components/ProblemStatement';
 import InputSummary from './components/InputSummary';
 import ShortcutHelp from './components/ShortcutHelp';
@@ -467,6 +468,17 @@ export default function App() {
         watched={activeProgress?.watched === true}
         starred={activeProgress?.starred === true}
         onToggleStar={() => toggleStar(activeProblemId)}
+      />
+
+      {/* Where this problem sits in its curriculum section, and the one either side of it -
+          every trace used to end in silence, with no next action and no reason to come
+          back. striverSheetSection is on every catalogue entry already; this is the first
+          thing in the app that reads it. */}
+      <SectionNav
+        problems={problems}
+        activeProblemId={activeProblemId}
+        progress={progress}
+        onSelectProblem={handleSelectProblem}
       />
 
       <ProblemStatement
