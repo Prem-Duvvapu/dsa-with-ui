@@ -157,11 +157,17 @@ cancellation, stale-response protection, delta decoding, and playback. Canvas se
 one source of truth: `frontend/src/canvas/registry.js`. It is keyed by the backend's 16-value
 `DsType` contract, and its cross-tier test fails if the enum/fixture/registry drift.
 
-Nine canvases currently exist (`Array`, `Tree`, `Graph`, `LinkedList`, `RecursionTree`,
-`Grid`, `Dsu`, `Trie`, `DpTable`). Some registry values intentionally still reuse a generic
-renderer until visualization Phase 3 builds their dedicated canvas; this is explicit mapping,
-not an unknown-type fallback. Trie transport and its canonical backend/canvas node shape are
-active and guarded by the Trie canvas tests; see resolved `RCA-012` in `RCA.md`.
+`frontend/src/canvas/registry.js`'s `CANVAS_BY_DSTYPE` map routes the backend's 17
+`dsType` values to fifteen canvas components: `ArrayCanvas`, `WindowCanvas`,
+`SearchSpaceCanvas`, `GridCanvas`, `DpTableCanvas`, `TreeCanvas`, `GraphCanvas`,
+`LinkedListCanvas`, `StackCanvas`, `QueueHeroCanvas`, `HeapCanvas`, `TrieCanvas`,
+`RecursionTreeCanvas`, `DsuCanvas` and `IntervalCanvas`. `String` and `Bits` still route to
+`ArrayCanvas`: `Bits` deliberately — `StepEmitter.bits()` renders a fixed 32-wide bit track
+over it rather than a new canvas (see README's Bit Manipulation notes) — while `String` has
+no dedicated canvas yet. This is explicit mapping, not an unknown-type fallback; an unlisted
+`dsType` renders an explicit unsupported state. Trie transport and its canonical
+backend/canvas node shape are active and guarded by the Trie canvas tests; see resolved
+`RCA-012` in `RCA.md`.
 
 Styling is CSS custom properties in `index.css` plus inline styles; only a handful of CSS
 classes exist. `designTokens.test.js` is a static guard that fails the build on any `var()`
@@ -204,12 +210,20 @@ differing only in word order (`rotten-oranges` / `rotting-oranges`).
 - `ARCHITECTURE.md` — **start here.** The system as it stands, with diagrams: the request
   path, the tracer contract, dsType→canvas routing, and where the guards sit.
 - `plan.md` — the v2 tracing architecture. Accurate; the source of the current design.
-- `HANDOFF.md` — **temporary.** Remaining-work prompts. C (migrate ~425 problems) and
-  D (retire the legacy layer) are **done**; A (scale the harness) and B (frontend redesign)
-  remain. The owner rejected the current UI outright; Prompt B leads with that design brief.
 - `AUDIT.md` — full per-problem audit of the catalogue across its topics, with the
   findings fixed so far and the two left open for an owner decision.
+- `REVIEW.md` — six review gates every change goes through (backend, frontend, product,
+  security, performance, docs), each built from a failure this codebase has actually had.
+  Run it alongside `dsa-review` before a PR lands.
 - `references.md` — UI/UX research and design tokens. `PROJECT_CONTEXT.md` — pedagogical
   principles.
 - `RCA.md` — recurring-incident ledger. Consult it before changing an affected subsystem;
   update it when a defect is introduced or discovered, including the RED-first guard.
+- `PROMPT-E-canvases.md` / `PROMPT-F-visual-fidelity.md` / `PROMPT-J-full-roadmap.md` —
+  historical implementation prompts for the canvas build-out and the tracer migration's
+  later batches. Kept for their design rationale (the `SEARCH_SPACE`/`DP_TABLE` variant
+  reasoning, the Bench token system, the per-batch verification discipline), not as a
+  live worklist — their status headers say what has since shipped. `HANDOFF.md` and
+  `PROJECT_COMPLETION_PLAN.md`, the two working documents these superseded, were deleted
+  once the work they tracked (the tracer migration and the legacy-layer retirement) was
+  complete, per their own stated deletion criteria.

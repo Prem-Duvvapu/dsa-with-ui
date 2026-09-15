@@ -23,7 +23,7 @@ problems, all 24 **Strings** problems, all 32 **Binary Search** problems, and al
 | Tier | Technology | Notes |
 | :--- | :--- | :--- |
 | Backend | Spring Boot 3.2.3, Java 17 | `http://localhost:8923` |
-| Frontend | React 18 + Vite | `dsType` registry with nine current canvases, including DP tables |
+| Frontend | React 18 + Vite | `dsType` registry routing 17 problem types to 15 canvases |
 | Testing | JUnit 5 + Vitest | Contract, golden-trace, accessibility, and design-token guards |
 | Deployment | Docker Compose | One command for both tiers |
 
@@ -139,7 +139,7 @@ is deleted.
 
 ---
 
-## Architecture
+## Full system architecture
 
 See **[`ARCHITECTURE.md`](ARCHITECTURE.md)** for the system in diagrams — the request path
 and its guards, the tracer contract, how a `dsType` selects a canvas, and where the
@@ -163,26 +163,29 @@ hand-maintained coverage data.
 
 | Category | Catalogued |
 | :--- | ---: |
-| Advanced Graphs & Graph Strings | 62 |
+| Graphs | 58 |
 | Dynamic Programming | 55 |
-| Binary Trees & BST | 54 |
-| Arrays & Matrices | 40 |
+| Arrays | 40 |
+| Binary Trees | 38 |
 | Binary Search | 32 |
-| Linked List & Doubly LL | 31 |
+| Linked List | 31 |
 | Stack & Queue | 30 |
 | Recursion & Backtracking | 25 |
-| Bit Manipulation & Advanced Math | 18 |
+| Strings | 24 |
+| Bit Manipulation | 18 |
 | Heaps & PriorityQueue | 17 |
-| Strings | 16 |
-| Greedy | 15 |
-| Sliding Window & Two Pointer | 12 |
-| Graphs: BFS & DFS | 11 |
-| Basic Math | 7 |
-| Basic Recursion | 7 |
-| Sorting | 5 |
-| Tries | 3 |
+| BST | 16 |
+| Greedy Algorithms | 14 |
+| Learn the Basics | 14 |
+| Sliding Window | 12 |
+| Sorting Algorithms | 5 |
+| Tries & Prefixes | 2 |
 | **Total registrations** | **431** |
 | **Unique ids** | **431** |
+
+Graph BFS/DFS and Advanced Graph Algorithms are catalogued as one **Graphs** topic (see
+below); Binary Trees and BST are two separate categories that both draw on
+`BinaryTreeLayout`.
 
 **No id is registered twice.** Seven were, for a long time — `dfs-traversal`, `flood-fill`,
 `longest-common-prefix`, `longest-substring-without-repeating`, `merge-intervals`,
@@ -199,64 +202,19 @@ ways and their titles say which: directed cycle detection by CLRS edge classific
 against the two-boolean recursion path, and undirected cycle detection that reconstructs
 the cycle against one that only answers whether it exists.
 
-### Traced so far
+### Coverage detail
 
-`aggressive-cows`, `alien-dictionary`, `armstrong-check`, `assign-cookies`, `asteroid-collision`,
-`bellman-ford`,
-`bfs-traversal`, `binary-search-1d`, `binary-subarrays-with-sum`, `book-allocation`, `bst-delete`, `bst-floor-ceil`,
-`bst-insert`, `bubble-sort`, `burst-balloons`, `celebrity-problem`,
-`check-power-of-2`, `check-prime`, `check-sorted-ii`, `clone-ll-random-pointer`, `coin-change-2`, `combination-sum-i`, `correct-bst-swap`, `count-digits`, `count-inversions`, `count-nice-subarrays`,
-`count-partitions-given-diff`, `count-set-bits`, `count-square-submatrices`, `count-subarrays-given-sum`, `count-subarrays-xor-k`, `count-subsets-with-sum-k`,
-`climbing-stairs`, `dfs-traversal`, `dijkstra-min-heap`, `directed-cycle-dfs`, `distance-nearest-1`, `edit-distance`, `find-missing-number`,
-`factorial-number`, `fibonacci-recursion`,
-`find-min-rotated-sorted`, `find-starting-point-loop`, `flattening-ll`, `four-sum`, `fruit-into-baskets`,
-`fractional-knapsack`, `frog-jump`, `frog-jump-k-distance`, `gcd-two-numbers`, `grid-unique-paths`, `hand-of-straights`, `house-robber-2`,
-`implement-trie`, `infix-to-postfix`, `infix-to-prefix`, `insert-interval`, `insertion-sort`,
-`jump-game-1`,
-`kadane-algo`, `kmp-lps-algo`, `knapsack-01`, `koko-eating-bananas`, `kosaraju-scc`, `kth-element-2-sorted-arrays`,
-`kth-largest-element`, `kth-smallest-element`, `largest-rectangle-histogram`, `largest-subarray-sum-0`, `lemonade-change`, `lfu-cache`, `lower-bound`, `minimum-falling-path-sum`, `minimum-platforms`, `minimum-window-subsequence`,
-`ninja-and-his-friends`, `ninjas-training`,
-`largest-element`, `leaders-in-array`, `left-rotate-k`, `left-rotate-one`, `linear-search`,
-`lis-binary-search`, `longest-consecutive-sequence`, `longest-happy-prefix`, `longest-increasing-subsequence`, `longest-repeating-character-replacement`, `longest-subarray-sum-k`, `longest-subarray-sum-k-positives`, `longest-substring-k-distinct`, `longest-substring-without-repeating`,
-`lru-cache`,
-`majority-element`, `majority-element-ii`, `matrix-chain-multiplication`, `maximum-rectangles-binary-matrix`, `max-consecutive-ones`, `max-consecutive-ones-3`, `max-product-subarray`, `max-rectangle-area-all-ones`, `maximum-points-cards`, `median-data-stream`, `minimum-coins-dp`,
-`merge-intervals`, `merge-k-sorted-lists`, `merge-sort`, `min-cost-connect-sticks`,
-`max-sum-non-adjacent`, `median-2-sorted-arrays`, `merge-two-sorted-arrays`, `min-stack`, `minimum-window-substring`, `morris-inorder`, `move-zeros-end`,
-`n-meetings-in-one-room`, `n-queens`, `next-greater-element-2`, `next-permutation`, `next-smaller-element`, `number-greater-elements-right`, `number-of-islands`, `number-of-provinces`, `number-substrings-all-three-chars`,
-`palindrome-number`, `palindrome-string-recursion`, `partition-equal-subset-sum`, `pascals-triangle`,
-`postfix-to-infix`, `postfix-to-prefix`, `prefix-to-infix`, `prefix-to-postfix`,
-`pow-x-n-math`, `print-1-to-n`, `print-divisors`, `print-lis`, `print-max-subarray`, `print-n-to-1`,
-`quick-sort`,
-`rearrange-by-sign`, `remove-duplicates-sorted`, `remove-k-digits`, `repeating-missing-number`, `reverse-array-recursion`, `reverse-number`, `rotate-matrix-90`, `rotting-oranges`,
-`reverse-linked-list`, `reverse-ll-group-k`, `reverse-pairs`, `search-rotated-sorted`, `second-largest-element`,
-`selection-sort`, `serialize-deserialize-bt`, `set-matrix-zeroes`, `shortest-palindrome`,
-`single-element-sorted`, `single-number`, `single-number-1`, `single-number-3`, `sliding-window-maximum`,
-`sort-0-1-2`, `spiral-matrix`, `split-array-largest-sum`, `stock-span-problem`, `subarrays-k-different-integers`, `subset-sum-equal-target`, `sum-first-n`,
-`stock-buy-sell`, `subsets-i`, `sudoku-solver`, `sum-subarray-minimums`, `sum-subarray-ranges`, `task-scheduler`, `three-sum`, `top-k-frequent-elements`, `tree-burn-time`, `tree-inorder`, `tree-lca`, `tree-level-order`, `tree-max-path-sum`, `tree-postorder`, `tree-preorder`,
-`trapping-rainwater`,
-`triangle-min-path-sum`, `two-sum`, `unbounded-knapsack`, `undirected-cycle-bfs`, `undirected-cycle-dfs`, `union-sorted-arrays`, `unique-paths-2`, `upper-bound`,
-`vertical-order-traversal`, `wildcard-matching`, `word-break-trie`, `word-ladder-1`,
-`xor-numbers-in-range`,
-`cycle-directed-bfs`, `disjoint-set-dsu`, `kahn-algo-bfs`,
-`cycle-undirected-bfs`, `cycle-undirected-dfs`, `cycle-directed-dfs`, `bipartite-graph-dfs`,
-`topo-sort-dfs`, `course-schedule-1`, `course-schedule-2`, `find-eventual-safe-states`,
-`shortest-path-undirected`, `shortest-path-dag`, `shortest-path-binary-maze`, `path-min-effort`,
-`prims-mst`, `kruskals-mst`, `network-connected-ops`, `most-stones-removed`,
-`num-provinces`, `connected-matrix`, `rotten-oranges`, `flood-fill`, `nearest-cell-1`, `surrounded-regions`, `number-of-enclaves`,
-`cheapest-flights-k-stops`, `network-delay-time`, `number-of-ways-destination`, `min-multiplications-reach-end`, `floyd-warshall`, `city-smallest-neighbors`,
-`accounts-merge`, `number-of-islands-2`, `making-large-island`, `swim-in-rising-water`, `tarjan-bridges`, `articulation-points`, `word-ladder-2`,
-`balanced-parentheses`, `next-greater-element-1`, `stack-array-impl`, `queue-array-impl`, `stack-queue-impl`, `queue-stack-impl`, `stack-ll-impl`, `queue-ll-impl`,
-`tree-intro`, `tree-rep-java`, `iterative-preorder`, `iterative-inorder`, `postorder-2-stacks`, `postorder-1-stack`, `morris-preorder`,
-`traversals-in-one-pass`, `pre-post-in-one-traversal`, `top-view-bt`, `bottom-view-bt`, `right-left-view-bt`, `boundary-traversal`,
-`tree-height`, `tree-balanced`, `tree-diameter`, `symmetric-tree`, `identical-trees`, `children-sum-property`, `max-width-bt`,
-`unique-bt-requirements`, `count-complete-tree-nodes`, `construct-bt-pre-in`, `construct-bt-post-in`, `flatten-bt-to-ll`, `root-to-leaf-path`, `nodes-distance-k`,
-`bst-intro`, `bst-search`, `bst-min-max`, `bst-floor`, `bst-lca`, `bst-validate`,
-`bst-kth-smallest`, `bst-inorder-successor`, `two-sum-bst`, `construct-bst-preorder`, `merge-two-bsts`, `largest-bst-in-bt`,
-`graph-intro`, `graph-rep-cpp`, `graph-rep-java`, `connected-components-intro`, `bfs-dfs-intro`, `dijkstra-pq-theory`, `mst-theory`,
-`job-sequencing`, `valid-parentheses-checker`, `jump-game-2`, `candy`, `shortest-job-first`, `lru-page-replacement`, `non-overlapping-intervals`,
-`heaps-theory`, `implement-min-heap`, `check-min-heap`, `min-to-max-heap`,
-`sort-k-sorted-array`, `replace-rank-array`, `design-twitter`, `kth-largest-stream`, `maximum-sum-combination`,
-`z-function-algo`, and `zigzag-traversal`.
+All 431 catalogued problems are traced — there is no partial list to maintain here.
+For a specific problem's tracer, read its source in
+`backend/src/main/java/com/dsa/ui/tracer/impl/`, or query the live catalogue:
+
+```bash
+curl -s http://localhost:8923/api/problems | python3 -c \
+  "import json,sys; [print(p['id']) for p in json.load(sys.stdin)]"
+```
+
+A few design decisions from the migration are worth keeping in prose, because they explain
+*why* a tracer looks the way it does rather than just *that* it exists:
 
 Sixteen problems emit labelled, recurrence-aware `DpTable` traces: the three LIS
 variants, plus `climbing-stairs`, `frog-jump`, `frog-jump-k-distance`,
@@ -384,8 +342,11 @@ The suite is built to catch fake work, not just crashes:
 
 | File | What it is |
 | :--- | :--- |
+| `ARCHITECTURE.md` | The system as it stands, with diagrams. Start here. |
 | `plan.md` | The v2 tracing architecture. Accurate; the source of the current design. |
+| `AUDIT.md` | Full per-problem audit of the catalogue, with findings fixed and the two left open for an owner decision. |
+| `REVIEW.md` | Six review gates every change goes through, each built from a failure this codebase has actually had. |
 | `references.md` | UI/UX research and the design-token system. |
 | `PROJECT_CONTEXT.md` | Pedagogical principles behind the visualizations. |
-| `HANDOFF.md` | **Temporary.** Implementation prompts for the remaining phases. Delete once the migration is complete. |
 | `RCA.md` | Root causes, resolutions, open debt, and the regression guard for each recurring incident. |
+| `PROMPT-E-canvases.md`, `PROMPT-F-visual-fidelity.md`, `PROMPT-J-full-roadmap.md` | Historical implementation prompts, kept for design rationale rather than as a live worklist — see each file's status header for what has since shipped. |

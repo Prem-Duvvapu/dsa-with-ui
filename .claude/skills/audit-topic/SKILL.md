@@ -48,8 +48,8 @@ cd backend && mvn spring-boot:run                             # in another shell
 python3 .claude/skills/audit-topic/audit_topic.py             # every category, traced/total
 ```
 
-Pick the exact category string from that listing — the catalogue's own, not a heading from
-`PROJECT_COMPLETION_PLAN.md`.
+Pick the exact category string from that listing — the catalogue's own, not a category
+name half-remembered from a doc.
 
 ```bash
 TOPIC="Recursion & Backtracking"
@@ -217,23 +217,28 @@ teach different things, by changing what each one *narrates*:
 
 ## 7. The cross-topic assertions this batch just invalidated
 
-Tracing a topic can break tests that name ids in *other* topics. Two known chains:
+**Historical, but re-read if the catalogue ever grows again.** While the migration was in
+progress, tracing a topic routinely broke tests that named ids in *other* topics:
+`ProblemsApiTest` kept one hardcoded "canonical untraced id" to prove 501 and the absent
+`inputSpec`, and that id moved three times across four PRs (`bracket-reversals` →
+`search-insert-position` → `middle-linked-list` → `longest-common-subsequence`) as each
+move's target got traced out from under it. A companion assertion,
+`legacyEndpointsUnaffected`, similarly needed a topic with a still-live legacy `default:`.
 
-**The canonical untraced example.** `ProblemsApiTest` needs a catalogued-but-untraced id to
-prove 501 and the absent `inputSpec`. When a batch traces that id, three assertions fail at
-once:
+Neither exists any more. `untraced` is 0 — there is no catalogued-but-untraced id left to
+anchor a canonical example on — and the legacy layer that `legacyEndpointsUnaffected`
+tested is deleted; `legacyRoutesNoLongerExist` (§3) replaced it with an unconditional
+404 assertion that names no id and cannot go stale this way. So on the current catalogue,
+this step is a no-op: `audit_topic.py` reporting `N/N` for your topic is not something
+that needs a cross-topic assertion repointed.
 
-```bash
-grep -n "untraced\|isNotImplemented\|legacyEndpointsUnaffected" -A4 \
-  backend/src/test/java/com/dsa/ui/ProblemsApiTest.java
-```
+**It comes back the moment someone catalogues a new problem ahead of its tracer** — a new
+topic added to the catalogue, a new sheet of problems, anything that makes `untraced`
+non-zero again. If that happens, check whether `ProblemsApiTest` grew a new
+canonical-untraced-id assertion pointing at your topic's ids, and repoint it before your
+batch traces them out from under it — confirm with the sweep, not from memory.
 
-Repoint them at an id that is *currently* untraced and unlikely to be traced next —
-confirm with the sweep, not from memory. `legacyEndpointsUnaffected` needs the same
-treatment: it asserts a legacy endpoint still answers 200, so it must name an id whose
-topic still has a live `default:`.
-
-**The pinned numbers.** `ProblemsApiTest` asserts 433 unique ids and 7 duplicates. Tracing
+**The pinned numbers.** `ProblemsApiTest` asserts 431 unique ids and 0 duplicates. Tracing
 does not move either, so if they move, a `ProblemDetail` was added or removed — that is a
 separate change needing its own justification and a `README.md` coverage-table update in
 the same commit.
@@ -257,12 +262,15 @@ Then take every number in the docs from the live endpoint, never from another do
 curl -s http://localhost:8923/api/problems/stats | python3 -m json.tool
 ```
 
-Reconcile `README.md` (status line and coverage table), `HANDOFF.md` (tracer count),
-`PROJECT_CONTEXT.md`, and `PROJECT_COMPLETION_PLAN.md` (topic status table, completed-work
-bullets, and the **cascading expected-result numbers of every later topic** — those are
-written as running totals, so completing one topic invalidates the projections of all the
-ones after it). Stale projections were the single most common doc defect across the last
-four topic PRs.
+Reconcile `README.md` (status line and coverage table) and `PROJECT_CONTEXT.md`'s coverage
+note against those numbers. If your batch is (re-)traversing already-migrated ground — the
+normal case now that the catalogue is 431/431 — also check `AUDIT.md`'s findings and
+`RCA.md`'s open items for anything your topic touches; a fix that resolves one of those
+should update the entry rather than leave it reading as still-open. `HANDOFF.md` and
+`PROJECT_COMPLETION_PLAN.md`, which used to carry a **cascading expected-result number for
+every later topic** here, are deleted — stale projections in those two were the single most
+common doc defect across the topic-PR era they covered; there is no equivalent running
+total to maintain now that migration is complete.
 
 ---
 
