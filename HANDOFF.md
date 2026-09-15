@@ -611,8 +611,13 @@ outlives the rule changing hands.
 (the 18-endpoint fan-out is gone) and all playback/fetch state lives in `useTrace`. Canvas
 selection is a lookup in `frontend/src/canvas/registry.js`, keyed only by the backend's
 closed `dsType`; the `hasGrid` and title/id sniffs are gone. Unknown values render an explicit
-unsupported state. The sidebar itself, and the search box, are still on the pre-Bench tokens
-and layout — restyling them is not tracked as its own job above and should be.
+unsupported state.
+
+The sidebar and the search box have since been brought onto Bench: they style through the
+`--bench-*` and `--probe` tokens, the panel is the specified `15rem` rather than the 320px
+it was, and both draw from `layout.module.css` rather than inline objects. The note that
+used to stand here — that they were still on the pre-Bench tokens and layout — is no longer
+true, and is removed rather than left to send someone after work that is done.
 
 **The catalogue-summary vs. detail split.** `GET /api/problems` (the list) returns summary
 fields only — id, title, category, dsType, traced, inputSpec. `javaCode`, `complexity`, and
