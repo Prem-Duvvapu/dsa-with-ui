@@ -12,6 +12,10 @@ vi.mock('./App.jsx', () => ({
   }
 }));
 
+vi.mock('./components/Dashboard.jsx', () => ({
+  default: () => <div data-testid="dashboard-route-target">Dashboard</div>
+}));
+
 describe('AppRouter', () => {
   const routerFuture = { v7_startTransition: true, v7_relativeSplatPath: true };
 
@@ -26,25 +30,23 @@ describe('AppRouter', () => {
     expect(target).toHaveTextContent('Active Problem: kadane-algo');
   });
 
-  it('redirects root path / to /problem/two-sum', () => {
+  it('renders the dashboard at the root path /', () => {
     render(
       <MemoryRouter initialEntries={['/']} future={routerFuture}>
         <AppRouter />
       </MemoryRouter>
     );
 
-    const target = screen.getByTestId('app-route-target');
-    expect(target).toHaveTextContent('Active Problem: two-sum');
+    expect(screen.getByTestId('dashboard-route-target')).toBeInTheDocument();
   });
 
-  it('redirects unmatched wildcard route * to / then to /problem/two-sum', () => {
+  it('redirects unmatched wildcard route * to / (the dashboard)', () => {
     render(
       <MemoryRouter initialEntries={['/some/unknown/deep/path']} future={routerFuture}>
         <AppRouter />
       </MemoryRouter>
     );
 
-    const target = screen.getByTestId('app-route-target');
-    expect(target).toHaveTextContent('Active Problem: two-sum');
+    expect(screen.getByTestId('dashboard-route-target')).toBeInTheDocument();
   });
 });
