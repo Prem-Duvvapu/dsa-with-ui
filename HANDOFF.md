@@ -591,6 +591,36 @@ VERIFY
 | 9 | a11y: `.btn:focus-visible`, `aria-live` ticker, Escape + backdrop on mobile drawer | ✅ done — see note below |
 | 10 | CSS Modules | ✅ done — 263 inline style objects to 39, and all 39 are values computed at render time |
 
+**The VERIFY list, as far as it has been run.**
+
+*Both themes, measured against the running app* (not against the CSS text — `data-theme`
+toggled on `:root` and the resolved values read back). All fourteen Bench tokens match the
+spec table exactly in both themes, and every contrast figure the spec states reproduces to
+two decimal places:
+
+| role | spec dark / light | measured |
+|---|---|---|
+| primary ink | 13.26 / 18.20 | 13.26 / 18.20 |
+| secondary ink | 6.62 / 7.49 | 6.62 / 7.49 |
+| dim | 4.69 / 4.62 | 4.69 / 4.62 |
+| probe | 10.10 / 5.01 | 10.10 / 5.01 |
+| resolved | 10.47 / 5.36 | 10.47 / 5.36 |
+| text on fills | 10.56 / 5.01 | 10.56 / 5.01 |
+
+Every role clears 4.5:1 in both. And the light theme is provably not an inversion: `--fill`
+is lighter than its ground in dark and darker than its paper in light, and a true inversion
+would put the probe at luminance 0.477 where it actually sits at 0.160 (settled: 0.456 vs
+0.146). The three tokens the spec says flip role do flip.
+
+*320px* — analysed but **not seen**. Chrome would not resize below the display width
+(`resize_window` reported success, `innerWidth` stayed at 1512, `outerWidth` read 0), so
+this is static analysis, not a screenshot. What it shows: the mobile layout starts at 768px
+(`useLayoutPreferences.MOBILE_BREAKPOINT`), every three-digit width in the CSS is a
+`max-width` rather than a fixed one, the only `min-width` is 200px, and the capture strip
+carries `overflow-x: auto` with `min-width: 0` so it scrolls inside itself instead of
+widening the page. Nothing in the stylesheet forces horizontal overflow at 320px. Somebody
+should still look at it in a real narrow window before this is called done.
+
 **Job 10, as landed.** Every static `style={{}}` in the tree is now a class. What remains
 inline is only what cannot be a class: JS constants the layout maths also uses (`CELL`,
 `GAP`, `SLOT_W`), geometry measured from the DOM (`TourGuide`'s spotlight rects), and two
