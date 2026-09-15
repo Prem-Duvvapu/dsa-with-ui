@@ -15,6 +15,7 @@ export default function useKeyboardShortcuts({
   togglePlay, stepNext, stepPrev, reset, seek, stepCount, nudgeSpeed,
   isMobile, isSidebarOpen, setIsSidebarOpen,
   isHelpOpen, setIsHelpOpen,
+  isPaletteOpen, setIsPaletteOpen,
   hasSeenWelcome, setHasSeenWelcome
 }) {
 // ── Global keyboard shortcuts ────────────────────────────────────────────
@@ -23,7 +24,16 @@ export default function useKeyboardShortcuts({
 // but were written down only in two button tooltips, which is not discoverable.
 useEffect(() => {
   const handleKeyDown = (e) => {
-    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    // Cmd/Ctrl+K is the one modifier combo this app binds - every other modifier chord is
+    // left to the browser - so it is checked before the blanket modifier bail below rather
+    // than folded into the no-modifier switch further down.
+    if (e.metaKey || e.ctrlKey || e.altKey) {
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsPaletteOpen(true);
+      }
+      return;
+    }
 
     const active = document.activeElement;
     const tag = active?.tagName;
@@ -32,6 +42,11 @@ useEffect(() => {
     // Escape works even while typing - someone in the search field is exactly who needs
     // it - and closes the topmost thing first.
     if (e.code === 'Escape') {
+      if (isPaletteOpen) {
+        e.preventDefault();
+        setIsPaletteOpen(false);
+        return;
+      }
       if (!hasSeenWelcome) {
         e.preventDefault();
         setHasSeenWelcome(true);
@@ -122,5 +137,6 @@ useEffect(() => {
   return () => window.removeEventListener('keydown', handleKeyDown);
 }, [togglePlay, stepNext, stepPrev, reset, seek, stepCount, nudgeSpeed,
     isMobile, isSidebarOpen, isHelpOpen, setIsSidebarOpen, setIsHelpOpen,
+    isPaletteOpen, setIsPaletteOpen,
     hasSeenWelcome, setHasSeenWelcome]);
 }

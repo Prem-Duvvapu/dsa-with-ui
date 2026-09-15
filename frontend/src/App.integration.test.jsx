@@ -845,3 +845,77 @@ describe('App mobile drawer', () => {
     await waitFor(() => expect(screen.queryByRole('combobox')).not.toBeInTheDocument());
   });
 });
+
+describe('App command palette', () => {
+  it('is closed until Cmd/Ctrl+K opens it', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+
+    expect(screen.getByRole('dialog', { name: /command palette/i })).toBeInTheDocument();
+  });
+
+  it('opens with the query field already focused', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+    expect(within(dialog).getByRole('textbox')).toHaveFocus();
+  });
+
+  it('Escape closes it', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    expect(screen.getByRole('dialog', { name: /command palette/i })).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { code: 'Escape' });
+
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+  });
+
+  it('clicking the backdrop closes it', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    fireEvent.click(screen.getByTestId('command-palette-backdrop'));
+
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+  });
+
+  it('jumps straight to a problem chosen from the results, and closes', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+
+    fireEvent.change(within(dialog).getByRole('textbox'), { target: { value: 'Dijkstra' } });
+    fireEvent.click(within(dialog).getByText('Dijkstra'));
+
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument());
+    expect(screen.getAllByText('Dijkstra').length).toBeGreaterThan(0);
+  });
+
+  it('offers quick actions on an empty query, including toggling the theme', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    expect(document.documentElement.getAttribute('data-theme')).toBeNull();
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+
+    fireEvent.click(within(dialog).getByRole('button', { name: /toggle theme/i }));
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+  });
+});

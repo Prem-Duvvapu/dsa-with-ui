@@ -6,6 +6,7 @@ import SectionNav from './components/SectionNav';
 import ProblemStatement from './components/ProblemStatement';
 import InputSummary from './components/InputSummary';
 import ShortcutHelp from './components/ShortcutHelp';
+import CommandPalette from './components/CommandPalette';
 import WelcomeGuide from './components/WelcomeGuide';
 import TourGuide from './components/TourGuide';
 import StepStateSummary from './components/StepStateSummary';
@@ -15,6 +16,7 @@ import useProgress from './hooks/useProgress';
 import useLayoutPreferences from './hooks/useLayoutPreferences';
 import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 import useTheme from './hooks/useTheme';
+import useFocusTrap from './hooks/useFocusTrap';
 import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -289,6 +291,7 @@ export default function App() {
   } = useLayoutPreferences();
 
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const { theme, cycleTheme } = useTheme();
   // Shown once, on a genuine first visit. Tracked rather than inferred from other
   // preferences: someone who only ever changed the theme has still never been introduced.
@@ -297,53 +300,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('code');
 
   const drawerRef = useRef(null);
-
-  // ── Mobile drawer focus trap ─────────────────────────────────────────────
-  useEffect(() => {
-    if (!isMobile || !isSidebarOpen) return;
-
-    const drawer = drawerRef.current;
-    if (!drawer) return;
-
-    const previouslyFocused = document.activeElement;
-    const focusables = drawer.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (focusables.length > 0) {
-      focusables[0].focus();
-    }
-
-    const handleTabKey = (e) => {
-      if (e.key !== 'Tab') return;
-      const currentFocusables = Array.from(drawer.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )).filter(el => !el.disabled && el.offsetParent !== null);
-      if (currentFocusables.length === 0) return;
-
-      const firstEl = currentFocusables[0];
-      const lastEl = currentFocusables[currentFocusables.length - 1];
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstEl) {
-          e.preventDefault();
-          lastEl.focus();
-        }
-      } else {
-        if (document.activeElement === lastEl) {
-          e.preventDefault();
-          firstEl.focus();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleTabKey);
-    return () => {
-      window.removeEventListener('keydown', handleTabKey);
-      if (previouslyFocused && previouslyFocused.focus) {
-        previouslyFocused.focus();
-      }
-    };
-  }, [isMobile, isSidebarOpen]);
+  useFocusTrap(drawerRef, isMobile && isSidebarOpen);
 
   // A speed change is both playback state and a saved preference, so it goes through one
   // handler rather than leaving the two to drift.
@@ -367,6 +324,7 @@ export default function App() {
     togglePlay, stepNext, stepPrev, reset, seek, stepCount: steps.length, nudgeSpeed,
     isMobile, isSidebarOpen, setIsSidebarOpen,
     isHelpOpen, setIsHelpOpen,
+    isPaletteOpen, setIsPaletteOpen,
     hasSeenWelcome, setHasSeenWelcome
   });
 
@@ -494,6 +452,17 @@ export default function App() {
           setIsHelpOpen(false);
           setHasSeenWelcome(false);
         }}
+      />
+
+      <CommandPalette
+        isOpen={isPaletteOpen}
+        onClose={() => setIsPaletteOpen(false)}
+        problems={problems}
+        onSelectProblem={(id) => {
+          handleSelectProblem(id);
+          setIsPaletteOpen(false);
+        }}
+        onCycleTheme={cycleTheme}
       />
 
       <WelcomeGuide

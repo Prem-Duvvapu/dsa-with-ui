@@ -19,6 +19,7 @@ export const SHORTCUTS = [
   { keys: ['['], label: 'Slower' },
   { keys: [']'], label: 'Faster' },
   { keys: ['/'], label: 'Search problems' },
+  { keys: ['⌘K', 'Ctrl+K'], label: 'Open command palette' },
   { keys: ['?'], label: 'Show this list' },
   { keys: ['Esc'], label: 'Close this list or the sidebar' }
 ];
