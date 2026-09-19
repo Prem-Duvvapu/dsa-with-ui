@@ -799,14 +799,33 @@ describe('App mobile drawer', () => {
     Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: ORIGINAL_WIDTH });
   });
 
-  it('still offers the code, input and complexity tabs on mobile', async () => {
+  it('starts with the statement, code and tab card collapsed for the canvas\'s sake', async () => {
+    // The app shell is a fixed 100vh with overflow hidden, and both panels defaulted open
+    // on desktop and mobile alike. Stacked above the canvas on a phone with nothing
+    // yielding height, they squeezed the canvas's own wrapper to zero pixels - measured,
+    // not assumed - so a first-time mobile visitor opening any problem never saw the thing
+    // the whole app exists to show.
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(await screen.findByRole('button', { name: /expand the code panel/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Code' })).not.toBeInTheDocument();
+  });
+
+  it('still offers the code, input and complexity tabs on mobile once opened', async () => {
     // Moving the code beside the canvas is a DESKTOP change. Mobile keeps the stacked tab
     // card, and an early version of that refactor made this branch unreachable - the phone
     // layout silently lost the code panel, the input editor and the complexity card at
     // once, with every test still green.
     renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));
-    expect(screen.getByRole('button', { name: 'Code' })).toBeInTheDocument();
+
+    fireEvent.click(await screen.findByRole('button', { name: /expand the code panel/i }));
+
+    // Input is conditional on the problem having an inputSpec, which this file's shared
+    // fixture does not set - see problem() above - so it is deliberately not asserted here.
+    expect(await screen.findByRole('button', { name: 'Code' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Memory' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Complexity' })).toBeInTheDocument();
   });
 
   it('starts closed on a narrow viewport', async () => {

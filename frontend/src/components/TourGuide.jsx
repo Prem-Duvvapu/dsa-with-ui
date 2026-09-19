@@ -16,11 +16,16 @@ import styles from './TourGuide.module.css';
  * TourGuide.test.jsx asserts every declared target exists in the rendered app, so a
  * removed anchor fails a test instead of shipping a tour that highlights empty space.
  */
+// {{totalProblems}} is substituted at render time from the live catalogue length, not
+// hardcoded - the number this replaced (433) was already stale once by the time anyone
+// noticed. TOUR_STEPS itself stays a plain exported array, structurally unchanged, because
+// TourGuide.test.jsx iterates it to assert every declared target exists in the rendered
+// app; only the substitution happens per-render, in the component.
 export const TOUR_STEPS = [
   {
     target: 'problem-list',
     title: 'Every problem, one list',
-    body: '433 problems, each with a real execution trace rather than a recording. '
+    body: '{{totalProblems}} problems, each with a real execution trace rather than a recording. '
         + 'Press / from anywhere to jump into the search box.'
   },
   {
@@ -91,7 +96,7 @@ function placeTooltip(rect, tipSize) {
   return { top, left };
 }
 
-export default function TourGuide({ open, onClose, steps = TOUR_STEPS }) {
+export default function TourGuide({ open, onClose, steps = TOUR_STEPS, totalProblems }) {
   const [index, setIndex] = useState(0);
   const [visibleSteps, setVisibleSteps] = useState([]);
   const [rect, setRect] = useState(null);
@@ -196,7 +201,9 @@ export default function TourGuide({ open, onClose, steps = TOUR_STEPS }) {
         </div>
 
         <h3 id="tour-step-title" className={styles.tipTitle}>{step.title}</h3>
-        <p className={styles.tipBody}>{step.body}</p>
+        <p className={styles.tipBody}>
+          {step.body.replace('{{totalProblems}}', totalProblems ? String(totalProblems) : 'All the')}
+        </p>
 
         <div className={styles.tipActions}>
           <button type="button" onClick={onClose} className={styles.skipBtn}>Skip</button>
