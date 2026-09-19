@@ -76,7 +76,7 @@ function rowValues(step, dsType, ranOn) {
     if (step.intervals?.length) return step.intervals.map((inv) => Array.isArray(inv) ? `[${inv[0]},${inv[1]}]` : `[${inv.start},${inv.end}]`);
     if (ranOn?.start) return ranOn.start.map((s, i) => `[${s},${ranOn.end?.[i]}]`);
   }
-  if (step.arrayState?.length) return step.arrayState.map((e) => String(e.value));
+  if (step.arrayState?.length) return step.arrayState.map((e) => e.label ?? String(e.value));
   if (step.treeNodes?.length) return step.treeNodes.map((n) => String(n.val));
   if (step.listState?.length) return step.listState.map((n) => String(n.val));
   if (step.gridState?.length) {
