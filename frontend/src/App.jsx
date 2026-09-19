@@ -487,9 +487,10 @@ export default function App() {
           setHasSeenWelcome(true);
           setIsTourOpen(true);
         }}
+        totalProblems={problems.length}
       />
 
-      <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} />
+      <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} totalProblems={problems.length} />
 
       {catalogError && (
         <div

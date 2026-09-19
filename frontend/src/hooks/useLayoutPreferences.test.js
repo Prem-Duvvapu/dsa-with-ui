@@ -57,6 +57,45 @@ describe('useLayoutPreferences', () => {
     expect(back.result.current.isSidebarOpen).toBe(false);
   });
 
+  it('never restores an open statement or code panel on a narrow viewport', () => {
+    // The same rule as the sidebar test above, for the same reason: the app shell is a
+    // fixed 100vh with overflow hidden, and both panels default open on desktop. Restoring
+    // that onto a phone leaves nothing to yield height, and the canvas - the entire point
+    // of the app - renders at zero pixels. Measured, not assumed: this is what a first-time
+    // mobile visitor actually saw before this test existed.
+    setWidth(1200);
+    const desktop = renderHook(() => useLayoutPreferences());
+    expect(desktop.result.current.isStatementOpen).toBe(true);
+    expect(desktop.result.current.isBottomPanelOpen).toBe(true);
+
+    setWidth(480);
+    const mobile = renderHook(() => useLayoutPreferences());
+    expect(mobile.result.current.isMobile).toBe(true);
+    expect(mobile.result.current.isStatementOpen).toBe(false);
+    expect(mobile.result.current.isBottomPanelOpen).toBe(false);
+  });
+
+  it('does not let mobile panel toggles overwrite the desktop preference', () => {
+    setWidth(1200);
+    const desktop = renderHook(() => useLayoutPreferences());
+    act(() => desktop.result.current.setIsStatementOpen(true));
+    act(() => desktop.result.current.setIsBottomPanelOpen(true));
+
+    setWidth(480);
+    const mobile = renderHook(() => useLayoutPreferences());
+    act(() => mobile.result.current.setIsStatementOpen(true));
+    act(() => mobile.result.current.setIsBottomPanelOpen(true));
+    expect(mobile.result.current.isStatementOpen).toBe(true);
+    expect(mobile.result.current.isBottomPanelOpen).toBe(true);
+
+    // Back on a wide viewport, the desktop preference from before the phone visit is
+    // untouched - opening the panels on a phone is not a statement about the desktop.
+    setWidth(1200);
+    const back = renderHook(() => useLayoutPreferences());
+    expect(back.result.current.isStatementOpen).toBe(true);
+    expect(back.result.current.isBottomPanelOpen).toBe(true);
+  });
+
   it('reports the viewport it is deciding from', () => {
     setWidth(1024);
     const { result } = renderHook(() => useLayoutPreferences());

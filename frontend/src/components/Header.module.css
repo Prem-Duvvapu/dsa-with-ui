@@ -113,3 +113,36 @@
 .themeLabel {
   letter-spacing: 0.02em;
 }
+
+/* Below this width the full row - hamburger, logo, two-line title block, tour/theme
+   buttons, library badge - does not fit a fixed 46px header with no wrap; the title
+   block was measured overlapping the breadcrumb beneath it. Drop what a phone visitor
+   does not need to read (the marketing subtitle, the decorative badge, the count the
+   sidebar drawer already shows) and let the header grow to whatever one line needs,
+   rather than clip. */
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+    min-height: 46px;
+    padding: 8px 10px;
+  }
+
+  .leftSection {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .title {
+    font-size: 0.86rem;
+  }
+
+  .proBadge,
+  .subtitle,
+  .libraryBadge {
+    display: none;
+  }
+
+  .rightSection {
+    gap: 6px;
+  }
+}
