@@ -1,4 +1,5 @@
 import ArrayCanvas from '../components/ArrayCanvas';
+import StringCanvas from '../components/StringCanvas';
 import DpTableCanvas from '../components/DpTableCanvas';
 import DsuCanvas from '../components/DsuCanvas';
 import GraphCanvas from '../components/GraphCanvas';
@@ -30,6 +31,16 @@ import HeapCanvas from '../components/HeapCanvas';
  * the values but not the thing being taught: for a window, the bounds moving and
  * stretching; for a binary search, the space halving. Each now has the canvas its own
  * question needs.
+ *
+ * `String` was the same placeholder, with the same symptom: StepEmitter.chars() writes
+ * a character's Unicode code point into the same `value` field .array() uses for a
+ * number, so ArrayCanvas drew it as a bar sized by code point with the letter itself
+ * demoted to a small caption. StringCanvas reads the same arrayState and draws the
+ * letters as the structure - a row of character cells - instead of a number chart.
+ *
+ * `Bits` stays on ArrayCanvas by design, not as a placeholder: StepEmitter.bits()
+ * renders a fixed 32-wide MSB-to-LSB track over the same arrayState shape, and that
+ * track reads fine as bars (each cell is 0 or 1, so height carries no false precision).
  */
 export const CANVAS_BY_DSTYPE = Object.freeze({
   Array: ArrayCanvas,
@@ -37,7 +48,7 @@ export const CANVAS_BY_DSTYPE = Object.freeze({
   SearchSpace: SearchSpaceCanvas,
   Matrix: GridCanvas,
   DpTable: DpTableCanvas,
-  String: ArrayCanvas,
+  String: StringCanvas,
   Bits: ArrayCanvas,
   Tree: TreeCanvas,
   Graph: GraphCanvas,
