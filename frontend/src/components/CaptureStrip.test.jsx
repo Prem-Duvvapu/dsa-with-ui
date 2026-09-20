@@ -103,6 +103,30 @@ describe('CaptureStrip', () => {
     expect(container.querySelector('.cs-settled').textContent).toContain('✓');
   });
 
+  it('shows the character, not its code point, for a String trace', () => {
+    // StepEmitter.chars() writes a character's Unicode code point into `value` and the
+    // character itself into `label` - the same shape ArrayCanvas/StringCanvas fixed for
+    // the hero panel. This strip reads arrayState too, via its own rowValues(), and had
+    // the identical bug: it ignored `label` and printed the code point instead.
+    const charStep = (n, letters, states) => ({
+      stepNumber: n,
+      activeLine: 1,
+      description: `step ${n}`,
+      arrayState: letters.split('').map((ch, index) => ({
+        index,
+        value: ch.codePointAt(0),
+        label: ch,
+        state: states[index]
+      }))
+    });
+    const stringSteps = [charStep(1, 'ab', ['default', 'default'])];
+    render(<CaptureStrip steps={stringSteps} current={0} dsType="String" />);
+    expect(screen.getByText('a')).toBeInTheDocument();
+    expect(screen.getByText('b')).toBeInTheDocument();
+    expect(screen.queryByText('97')).not.toBeInTheDocument();
+    expect(screen.queryByText('98')).not.toBeInTheDocument();
+  });
+
   it('drops per-cell labels once the trace is too long to read them', () => {
     const many = Array.from({ length: 120 }, (_, i) => arrayStep(i + 1, ['default']));
     const { container } = render(<CaptureStrip steps={many} current={0} />);
