@@ -36,3 +36,17 @@ These features are already implemented upstream; they are not new scope or optio
 - Planning package committed and reconciled with current upstream. Only documentation changes relative to `2b6b709` are included in the first PR.
 - Initial tests/build began against the older checkout; those results are not the current baseline. Current-baseline checks and browser audit are in progress and will be recorded separately.
 - Further work proceeds in medium-sized PRs, one merged change at a time, as requested by the user.
+
+## 2026-09-23 — library implementation batch
+
+- Planning merged as PR #144 (`b57044f`). Implementation branch: `feat/algorithm-library`.
+- Live API audit: 431 catalogued, 431 traced, zero duplicate IDs and zero orphaned tracers.
+- Baseline frontend: 61 files / 467 tests passed; production build passed.
+- Added a naturally scrolling library with URL-backed search, category/difficulty/progress/runnable filters, incremental results beyond 50, recent searches and return-scroll restoration.
+- Preserved Continue, daily pick, watched progress, streak and starred review in a learning disclosure. Existing theme/progress storage remains compatible.
+- Extracted shared catalogue loading, cancellation, deduplication and retry; navigation between library and problem no longer fetches the entire catalogue again. Offline samples remain explicitly labeled; no execution is fabricated.
+- Added shared header/page styles. Existing problem workspace remains in place; this batch does not claim R2–R4 completion or a completed problem switcher.
+- Initial implementation verification: 62 files / 472 frontend tests passed and production build passed. A later parallel local rerun under heavy CPU load had four App integration failures; focused rerun and PR CI must pass before merge. Local backend rerun was terminated (exit 143), so no successful backend result is claimed for that attempt.
+- Real-backend browser checks: light/dark at 320, 390, 768, 1366 and 1440px; no horizontal page overflow or page errors. Load-more to 100, search, open and Back preserved query state. Browser artifacts are local in `/tmp/dsa-ui-review` (not permanent release assets).
+- Visual review shortened the hero: first result moved from y840 to y703 at 1366×768. Small-screen filters still require scrolling; further mobile refinement belongs to the responsive pass.
+- R1 catalogue/library work is implemented and awaiting PR checks/merge; comprehensive accessibility and renderer coverage remain pending.

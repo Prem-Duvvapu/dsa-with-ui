@@ -30,110 +30,12 @@ import InputPanel from './components/InputPanel';
 import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
 import useTrace from './hooks/useTrace';
+import { useCatalog } from './catalog/CatalogProvider';
 import { CANVAS_BY_DSTYPE } from './canvas/registry';
 import { getCompanions } from './canvas/companions';
 import { RefreshCw, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
 import styles from './App.module.css';
 
-const DEFAULT_FALLBACK_PROBLEMS = [
-  {
-    id: 'two-sum',
-    title: 'Two Sum',
-    category: 'Arrays & Hashing',
-    difficulty: 'Easy',
-    dsType: 'Array',
-    defaultArray: [
-      { value: 2, state: 'default' },
-      { value: 7, state: 'current' },
-      { value: 11, state: 'target' },
-      { value: 15, state: 'visited' }
-    ],
-    javaCode: `public int[] twoSum(int[] nums, int target) {
-    Map<Integer, Integer> map = new HashMap<>();
-    for (int i = 0; i < nums.length; i++) {
-        int complement = target - nums[i];
-        if (map.containsKey(complement)) {
-            return new int[] { map.get(complement), i };
-        }
-        map.put(nums[i], i);
-    }
-    return new int[0];
-}`,
-    complexity: {
-      timeComplexity: 'O(N)',
-      spaceComplexity: 'O(N)',
-      timeExplanation: 'Single pass through array using Hash Map lookups.',
-      spaceExplanation: 'Hash map stores up to N element complement mappings.'
-    },
-    executionSteps: [
-      {
-        stepNumber: 1,
-        activeLine: 3,
-        description: 'Initialize empty HashMap. Iterate index i = 0, current value = 2.',
-        arrayState: [
-          { value: 2, state: 'current' },
-          { value: 7, state: 'default' },
-          { value: 11, state: 'default' },
-          { value: 15, state: 'default' }
-        ],
-        variables: { i: 0, val: 2, target: 9, complement: 7 }
-      },
-      {
-        stepNumber: 2,
-        activeLine: 7,
-        description: 'Iterate index i = 1, current value = 7. Complement 9 - 7 = 2 exists in map at index 0!',
-        arrayState: [
-          { value: 2, state: 'done' },
-          { value: 7, state: 'target' },
-          { value: 11, state: 'default' },
-          { value: 15, state: 'default' }
-        ],
-        variables: { i: 1, val: 7, target: 9, complement: 2, result: '[0, 1]' }
-      }
-    ]
-  },
-  {
-    id: 'longest-substring-without-repeating',
-    title: 'Longest Substring Without Repeating Characters',
-    category: 'Sliding Window',
-    difficulty: 'Medium',
-    dsType: 'Array',
-    defaultArray: [
-      { value: 97, state: 'visited' },
-      { value: 98, state: 'current' },
-      { value: 99, state: 'target' },
-      { value: 97, state: 'default' }
-    ],
-    javaCode: `public int lengthOfLongestSubstring(String s) {
-    HashMap<Character, Integer> map = new HashMap<>();
-    int left = 0, right = 0, maxLen = 0;
-    while (right < s.length()) {
-        char ch = s.charAt(right);
-        if (map.containsKey(ch)) {
-            left = Math.max(map.get(ch) + 1, left);
-        }
-        map.put(ch, right);
-        maxLen = Math.max(maxLen, right - left + 1);
-        right++;
-    }
-    return maxLen;
-}`,
-    complexity: {
-      timeComplexity: 'O(N)',
-      spaceComplexity: 'O(min(m, n))',
-      timeExplanation: 'Single pass sliding window pointers right and left.',
-      spaceExplanation: 'Hash map stores unique characters bounded by alphabet size.'
-    },
-    executionSteps: [
-      {
-        stepNumber: 1,
-        activeLine: 4,
-        description: 'Input string s = "abcabcbb". Initialize sliding window pointers left = 0, right = 0, maxLen = 0.',
-        variables: { left: 0, right: 0, maxLen: 0, s: '"abcabcbb"' }
-      }
-    ]
-  }
-];
 
 const TRACE_ERROR_COPY = Object.freeze({
   fetch: 'Could not load this trace from the backend.',
@@ -147,25 +49,13 @@ const TRACE_ERROR_COPY = Object.freeze({
 // original DpTable case and PROMPT-F-visual-fidelity.md for Graph/Tree.
 const CAPTURE_STRIP_REDUNDANT_FOR = new Set(['DpTable', 'Graph', 'Tree']);
 
-function uniqueProblemsById(problems) {
-  const seen = new Set();
-  return problems.filter((problem) => {
-    const id = typeof problem?.id === 'string' ? problem.id : '';
-    if (!id || seen.has(id)) return false;
-    seen.add(id);
-    return true;
-  });
-}
-
 export default function App() {
   const { id: urlProblemId } = useParams();
   const navigate = useNavigate();
 
-  const [problems, setProblems] = useState(DEFAULT_FALLBACK_PROBLEMS);
+  const { problems, loading: catalogLoading, error: catalogError, retry: fetchAllProblems } = useCatalog();
   const [activeCategory, setActiveCategory] = useState(null);
   const activeProblemId = urlProblemId || 'two-sum';
-  const [catalogLoading, setCatalogLoading] = useState(false);
-  const [catalogError, setCatalogError] = useState(null);
 
   // The catalogue entry — summary fields only (id, title, category, dsType, traced).
   const catalogEntry = problems.find(p => p.id === activeProblemId) || problems[0] || null;
@@ -249,43 +139,13 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runInput]);
 
-  // ── Single-endpoint catalogue fetch ──────────────────────────────────────
-  const fetchAllProblems = useCallback(async () => {
-    try {
-      setCatalogLoading(true);
-      const response = await fetch('/api/problems');
-      if (!response.ok) throw new Error(`Catalogue fetch failed: ${response.status}`);
-      const data = await response.json();
-
-      if (Array.isArray(data) && data.length > 0) {
-        const uniqueProblems = uniqueProblemsById(data);
-        if (uniqueProblems.length > 0) {
-          setProblems(uniqueProblems);
-          setCatalogError(null);
-
-          // If the URL points to a problem that doesn't exist in the catalogue,
-          // navigate to a sensible default instead of showing a blank canvas.
-          const urlIdExists = uniqueProblems.some(p => p.id === activeProblemId);
-          if (!urlIdExists) {
-            const fallbackId = uniqueProblems.find(p => p.id === 'two-sum')?.id
-              || uniqueProblems[0].id;
-            navigate(`/problem/${fallbackId}`, { replace: true });
-          }
-        }
-      }
-    } catch (err) {
-      console.warn('Backend connection failed:', err);
-      // Fall through to DEFAULT_FALLBACK_PROBLEMS — the app is usable offline, but the
-      // learner should be told why the library says "2 algorithms" instead of guessing.
-      setCatalogError('Could not reach the backend. Showing a small offline sample.');
-    } finally {
-      setCatalogLoading(false);
-    }
-  }, [activeProblemId, navigate]);
-
+  // Preserve the existing unknown-ID redirect until the workspace route migration.
   useEffect(() => {
-    fetchAllProblems();
-  }, [fetchAllProblems]);
+    if (catalogLoading || catalogError || !problems.length) return;
+    if (!problems.some(problem => problem.id === activeProblemId)) {
+      navigate(`/problem/${problems.find(problem => problem.id === 'two-sum')?.id || problems[0].id}`, { replace: true });
+    }
+  }, [problems, catalogLoading, catalogError, activeProblemId, navigate]);
 
   // ── Layout state ─────────────────────────────────────────────────────────
   // View preferences survive a reload. The selected problem deliberately does not - the
