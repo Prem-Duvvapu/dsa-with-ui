@@ -6,6 +6,8 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
+The proposed UI/UX redesign is documented in the [redesign project plan](docs/ui-revamp/PROJECT_PLAN.md), with a feature-preservation inventory, experience specification, architecture, phased roadmap, and release criteria. This is planning work; the redesigned interface is not implemented yet.
+
 **Status: 431 problems catalogued, all 431 with real execution traces.** The API still
 reports catalogued, traced, and untraced counts independently — see
 [Coverage](#coverage-catalogued-vs-traced) below. Complete execution traces now cover all
