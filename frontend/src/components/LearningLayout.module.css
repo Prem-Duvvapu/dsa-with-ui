@@ -1,0 +1,26 @@
+.page { min-height: 100dvh; background: var(--bench-ground); color: var(--bench-ink); line-height: 1.55; }
+.width { width: min(1320px, calc(100% - 64px)); margin-inline: auto; }
+.header { min-height: 76px; padding: 16px max(32px, calc((100% - 1320px) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--bench-rule); background: var(--bench-panel); }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--bench-ink); font-size: 17px; font-weight: 750; text-decoration: none; flex-shrink: 0; }
+.brand small { display: block; font: 9px var(--font-code); letter-spacing: .14em; color: var(--bench-ink-secondary); margin-top: 3px; }
+.brandMark { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--bench-rule-strong); border-radius: 8px; background: var(--bench-recessed); }
+.headerActions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.button { min-height: 44px; border: 1px solid var(--bench-rule-strong); padding: 9px 15px; border-radius: 7px; background: var(--bench-panel); color: var(--bench-ink); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: inherit; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.button:hover { background: var(--bench-fill); }
+.primary { background: var(--bench-ink); color: var(--bench-ground); border-color: var(--bench-ink); }
+.primary:hover { background: var(--bench-ink-secondary); }
+.eyebrow { font: 11px var(--font-code); letter-spacing: .12em; text-transform: uppercase; color: var(--bench-ink-secondary); margin-bottom: 12px; }
+.muted { color: var(--bench-ink-secondary); }
+.skip { position: fixed; top: 8px; left: 12px; transform: translateY(-150%); z-index: 300; padding: 12px 18px; background: var(--bench-ink); color: var(--bench-ground); }
+.skip:focus { transform: none; }
+.page :is(button, a, input, select, summary, [tabindex]):focus-visible { outline: 3px solid var(--probe); outline-offset: 4px; }
+.alert { border: 1px solid var(--bench-rule-strong); border-left: 4px solid var(--probe); padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-block: 24px; background: var(--bench-panel); }
+@media (max-width: 640px) {
+  .width { width: calc(100% - 32px); }
+  .header { padding: 14px 16px; gap: 10px; }
+  .brand { font-size: 14px; gap: 8px; }
+  .brand small { font-size: 8px; letter-spacing: .06em; }
+  .brandMark { width: 32px; height: 32px; }
+  .headerActions { gap: 6px; }
+  .alert { align-items: start; flex-direction: column; }
+}

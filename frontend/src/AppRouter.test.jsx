@@ -5,6 +5,9 @@ import '@testing-library/jest-dom';
 import { MemoryRouter, useParams } from 'react-router-dom';
 import AppRouter from './AppRouter.jsx';
 
+// Routing is isolated here; catalogue lifecycle is covered by library integration tests.
+vi.mock('./catalog/CatalogProvider', () => ({ CatalogProvider: ({ children }) => children }));
+
 vi.mock('./App.jsx', () => ({
   default: () => {
     const { id } = useParams();

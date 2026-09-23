@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import App from './App.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import { CatalogProvider } from './catalog/CatalogProvider';
 
 /**
  * Top-level route table.
@@ -18,10 +19,10 @@ import Dashboard from './components/Dashboard.jsx';
  */
 export default function AppRouter() {
   return (
-    <Routes>
+    <CatalogProvider><Routes>
       <Route path="/problem/:id" element={<App />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    </Routes></CatalogProvider>
   );
 }
