@@ -31,11 +31,15 @@ describe('getCompanions', () => {
     expect(getCompanions('Graph', allSteps[0], allSteps)).toEqual([]);
   });
 
-  it('adds nothing for a non-Graph, non-Matrix hero, even with a populated queueOrStackState', () => {
-    // A dsType whose OWN hero already draws queueOrStackState (once one exists) must not
-    // also get a companion for the same field — that would draw the same structure twice.
+  it('adds no queue companion to a hero that already draws the queue itself', () => {
+    // Stack and Queue heroes read queueOrStackState directly, so a companion for the same
+    // field would draw the same structure twice. Array used to stand in for "some other
+    // hero" here, which made this read as a rule about every non-Graph, non-Matrix type -
+    // it is not. ArrayCanvas never touches queueOrStackState, which is why
+    // lru-page-replacement's recency queue went unrendered for as long as it did.
     const allSteps = [{ queueOrStackState: ['0'] }];
-    expect(getCompanions('Array', allSteps[0], allSteps)).toEqual([]);
+    expect(getCompanions('Stack', allSteps[0], allSteps)).toEqual([]);
+    expect(getCompanions('Queue', allSteps[0], allSteps)).toEqual([]);
   });
 
   it('adds a queue companion for a Matrix hero too', () => {
@@ -80,6 +84,31 @@ describe('getCompanions', () => {
     const companions = getCompanions('Stack', pushCol, allSteps);
 
     expect(companions[0].props.step.gridState).toEqual([[1, 0], [1, 1]]);
+  });
+
+  it('adds a queue companion for an Array hero when the run uses one', () => {
+    // lru-page-replacement is Array-hero (the page reference string is what the run walks)
+    // and emits the recency queue on 13 of its 16 steps - the structure the whole algorithm
+    // is about, with no renderer under an Array hero.
+    const row = { arrayState: [{ index: 0, value: 7, state: 'current' }] };
+    const allSteps = [row, { ...row, queueOrStackState: ['7', '0'] }];
+    const companions = getCompanions('Array', allSteps[1], allSteps);
+
+    expect(companions.map((c) => c.key)).toEqual(['queue']);
+  });
+
+  it('adds a grid companion for an Array hero when any step carries a grid', () => {
+    // max-rectangle-area-all-ones narrates a histogram of column heights on 60 of its 62
+    // steps and emits the board on 2. Tagged Matrix it drew the board and nothing else, so
+    // the structure the narration was about had no renderer at all. The histogram is the
+    // hero; the board is the input it was built from.
+    const row = { arrayState: [{ index: 0, value: 1, state: 'default' }] };
+    const allSteps = [{ ...row, gridState: [[1, 0], [1, 1]] }, row];
+    const companions = getCompanions('Array', row, allSteps);
+
+    expect(companions).toHaveLength(1);
+    expect(companions[0].key).toBe('grid');
+    expect(companions[0].Component).toBe(GridCompanion);
   });
 
   it('adds nothing for a Stack hero when no step in the run ever carries a grid', () => {

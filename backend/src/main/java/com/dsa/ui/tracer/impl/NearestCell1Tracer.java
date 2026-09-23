@@ -128,8 +128,8 @@ public class NearestCell1Tracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("scan").say("A %dx%d matrix with %d source cell(s). -1 marks a cell no wavefront "
-                        + "has reached yet.", rows, cols, sources)
+        emit.at("scan").say("A %dx%d matrix with %d source cell%s. -1 marks a cell no wavefront "
+                        + "has reached yet.", rows, cols, sources, Narration.s(sources))
                 .var("sources", sources).grid(display).step();
 
         Deque<int[]> queue = new ArrayDeque<>();
@@ -154,8 +154,8 @@ public class NearestCell1Tracer implements AlgorithmTracer {
             int r = cell[0];
             int c = cell[1];
 
-            emit.at("front").say("Expand from (%d,%d), which sits %d step(s) from its nearest 1.",
-                            r, c, dist[r][c])
+            emit.at("front").say("Expand from (%d,%d), which sits %d step%s from its nearest 1.",
+                            r, c, dist[r][c], Narration.s(dist[r][c]))
                     .var("cell", "(" + r + "," + c + ")").var("distance", dist[r][c])
                     .grid(display).queue(cells(queue)).step();
 

@@ -195,7 +195,8 @@ class DistinctSubsequencesRemainingTracer extends RemainingDpTracer {
             dp[i][j] = dp[i - 1][j] + (equal ? dp[i - 1][j - 1] : 0); known[i][j] = true;
             Set<DpTraceSupport.Coord> reads = equal ? Set.of(new DpTraceSupport.Coord(i - 1, j), new DpTraceSupport.Coord(i - 1, j - 1))
                     : Set.of(new DpTraceSupport.Coord(i - 1, j));
-            emit.at("fill").say("Source '%c', target '%c': %d ways for these prefixes.", source.charAt(i - 1), target.charAt(j - 1), dp[i][j])
+            emit.at("fill").say("Source '%c', target '%c': %d way%s for these prefixes.",
+                            source.charAt(i - 1), target.charAt(j - 1), dp[i][j], Narration.s(dp[i][j]))
                     .var("i", i).var("j", j).var("ways", dp[i][j]).dpTable(DpTraceSupport.table(dp, known,
                             new DpTraceSupport.Coord(i, j), reads, DpTraceSupport.chars(source), DpTraceSupport.chars(target), false,
                             "match ? skip + take : skip", equal ? "skip + take = " + dp[i][j] : "skip = " + dp[i][j])).step();

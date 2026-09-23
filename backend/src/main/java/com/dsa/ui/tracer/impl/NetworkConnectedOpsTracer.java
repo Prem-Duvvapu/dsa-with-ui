@@ -122,8 +122,8 @@ public class NetworkConnectedOpsTracer implements AlgorithmTracer {
                 .var("components", roots.size()).graph(graph).nodes(states).step();
 
         int answer = roots.size() - 1;
-        emit.at("done").say("%d components need %d cable move(s) to merge into one connected network.",
-                        roots.size(), answer)
+        emit.at("done").say("%d components need %d cable move%s to merge into one connected network.",
+                        roots.size(), answer, Narration.s(answer))
                 .var("answer", answer).graph(graph).nodes(states).step();
     }
 

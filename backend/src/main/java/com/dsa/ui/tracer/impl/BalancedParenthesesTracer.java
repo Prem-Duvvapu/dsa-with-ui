@@ -141,8 +141,8 @@ public class BalancedParenthesesTracer implements AlgorithmTracer {
         emit.at("done")
                 .say(balanced
                         ? String.format("End of the string with nothing left open. \"%s\" is balanced.", s)
-                        : String.format("End of the string, but %d opener(s) never closed. \"%s\" is not balanced.",
-                                stack.size(), s))
+                        : String.format("End of the string, but %d opener%s never closed. \"%s\" is not balanced.",
+                                stack.size(), Narration.s(stack.size()), s))
                 .var("answer", balanced).var("leftOpen", stack.size())
                 .chars(s, -1).stack(stack).step();
     }

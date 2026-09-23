@@ -24,7 +24,7 @@ public class CountOccurrencesTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.SEARCH_SPACE;
     }
 
     @Override
@@ -107,13 +107,13 @@ public class CountOccurrencesTracer implements AlgorithmTracer {
                 lb = mid;
                 emit.at("lowerMid")
                         .say("nums[%d]=%d >= %d — candidate span start, keep looking left.", mid, nums[mid], target)
-                        .var("lb", lb).var("high", mid - 1)
+                        .var("lb", lb).var("low", low).var("high", mid - 1).var("mid", mid)
                         .arrayState(window(nums, low, mid - 1, mid)).step();
                 high = mid - 1;
             } else {
                 emit.at("lowerMid")
                         .say("nums[%d]=%d < %d — too small, look right.", mid, nums[mid], target)
-                        .var("low", mid + 1)
+                        .var("low", mid + 1).var("high", high).var("mid", mid)
                         .arrayState(window(nums, mid + 1, high, mid)).step();
                 low = mid + 1;
             }
@@ -136,13 +136,13 @@ public class CountOccurrencesTracer implements AlgorithmTracer {
                 ub = mid;
                 emit.at("upperMid")
                         .say("nums[%d]=%d > %d — candidate span end, keep looking left.", mid, nums[mid], target)
-                        .var("ub", ub).var("high", mid - 1)
+                        .var("ub", ub).var("low", low).var("high", mid - 1).var("mid", mid)
                         .arrayState(window(nums, low, mid - 1, mid)).step();
                 high = mid - 1;
             } else {
                 emit.at("upperMid")
                         .say("nums[%d]=%d <= %d — still in span, look right.", mid, nums[mid], target)
-                        .var("low", mid + 1)
+                        .var("low", mid + 1).var("high", high).var("mid", mid)
                         .arrayState(window(nums, mid + 1, high, mid)).step();
                 low = mid + 1;
             }

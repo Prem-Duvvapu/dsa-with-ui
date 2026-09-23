@@ -23,112 +23,6 @@ public class TreeService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // tree-preorder, tree-inorder, tree-postorder and tree-level-order have real
-            // tracers now (tracer/impl). Their generators are gone; refusing loudly beats
-            // falling into default: and serving another tree's animation. The rest of
-            // this switch dies with PROMPT D.
-            case "tree-preorder":
-            case "tree-inorder":
-            case "tree-postorder":
-            case "tree-level-order":
-            case "tree-max-path-sum":
-            case "serialize-deserialize-bt":
-            case "zigzag-traversal":
-            case "tree-lca":
-                throw new LegacyTraceRetiredException(problemId);
-            // tree-burn-time and vertical-order-traversal have real tracers (tracer/impl)
-            // now. tree-burn-time used to delegate to generatePreorderSteps();
-            // vertical-order-traversal had no case at all, silently falling to
-            // default:. Refuse rather than serve either's unrelated steps.
-            case "tree-burn-time":
-            case "vertical-order-traversal":
-                throw new LegacyTraceRetiredException(problemId);
-            // morris-inorder and correct-bst-swap have real tracers (tracer/impl) now.
-            // Neither had a case at all, silently falling to default:. Refuse rather
-            // than serve an unrelated preorder walk under either id.
-            case "morris-inorder":
-            case "correct-bst-swap":
-                throw new LegacyTraceRetiredException(problemId);
-            // bst-insert, bst-delete and bst-floor-ceil have real tracers (tracer/impl)
-            // now; they had no case at all before, silently falling to default:. Refuse
-            // rather than serve an unrelated preorder walk under any of them.
-            // bst-validate, bst-kth-smallest and bst-lca are deliberately NOT retired here
-            // yet - see RCA.md's entry on TracerContractTest.stepCountGrowsWithInput and
-            // BINARY_TREE auto-growth for why.
-            case "bst-insert":
-            case "bst-delete":
-            case "bst-floor-ceil":
-                throw new LegacyTraceRetiredException(problemId);
-            // Traversal mechanics: tree-intro, tree-rep-java, the two explicit-stack
-            // traversals, both iterative postorders and Morris preorder have real tracers
-            // now. None had a case at all before - every one of them silently fell into
-            // default: and served the same canned four-node preorder demo under seven
-            // different names.
-            case "tree-intro":
-            case "tree-rep-java":
-            case "iterative-preorder":
-            case "iterative-inorder":
-            case "postorder-2-stacks":
-            case "postorder-1-stack":
-            case "morris-preorder":
-                throw new LegacyTraceRetiredException(problemId);
-            // Combined passes and the four view/outline problems. Same story: no case at
-            // all before, so every one of them animated the canned preorder demo.
-            case "traversals-in-one-pass":
-            case "pre-post-in-one-traversal":
-            case "top-view-bt":
-            case "bottom-view-bt":
-            case "right-left-view-bt":
-            case "boundary-traversal":
-                throw new LegacyTraceRetiredException(problemId);
-            // Structural properties. tree-height/tree-balanced/tree-diameter each had an
-            // explicit case delegating to generatePreorderSteps() - three named problems
-            // routed by hand to a fourth problem's canned demo. The other four had no case
-            // and reached the same generator through default:.
-            case "tree-height":
-            case "tree-balanced":
-            case "tree-diameter":
-            case "symmetric-tree":
-            case "identical-trees":
-            case "children-sum-property":
-            case "max-width-bt":
-                throw new LegacyTraceRetiredException(problemId);
-            // Construction and paths. None had a case; all seven fell into default:.
-            case "unique-bt-requirements":
-            case "count-complete-tree-nodes":
-            case "construct-bt-pre-in":
-            case "construct-bt-post-in":
-            case "flatten-bt-to-ll":
-            case "root-to-leaf-path":
-            case "nodes-distance-k":
-                throw new LegacyTraceRetiredException(problemId);
-            // BST core. bst-search/bst-validate/bst-kth-smallest each had an explicit
-            // case delegating to generatePreorderSteps(). bst-validate and bst-lca were
-            // held back by RCA-021 (TracerContractTest's BINARY_TREE auto-grower never
-            // produced a valid BST); that is resolved now via InputField.bstOrdered().
-            case "bst-intro":
-            case "bst-search":
-            case "bst-min-max":
-            case "bst-floor":
-            case "bst-lca":
-            case "bst-validate":
-                throw new LegacyTraceRetiredException(problemId);
-            // The last six BST ids. bst-kth-smallest had an explicit case delegating to
-            // generatePreorderSteps() and was the third id RCA-021 held back; the other
-            // five had no case at all. Every BST problem in this catalogue is traced now.
-            case "bst-kth-smallest":
-            case "bst-inorder-successor":
-            case "two-sum-bst":
-            case "construct-bst-preorder":
-            case "merge-two-bsts":
-            case "largest-bst-in-bt":
-                throw new LegacyTraceRetiredException(problemId);
-            default: return generatePreorderSteps();
-        }
-    }
-
     private void initProblems() {
         // 1. Binary Tree Preorder Traversal
         problems.put("tree-preorder", new ProblemDetail(
@@ -186,9 +80,9 @@ public class TreeService implements ProblemProvider {
             {"tree-rep-java", "Binary Tree Representation in Java", "Binary Trees - Traversals", "Easy", "Class TreeNode with val, left, and right pointers."},
             {"pre-post-in-one-traversal", "Pre, Post, Inorder in One Traversal", "Binary Trees - Traversals", "Medium", "Single pass state stack for Pre, In, Post traversals."},
             {"tree-postorder", "Postorder Traversal of Binary Tree", "Binary Trees - Traversals", "Easy", "Postorder Traversal (Left -> Right -> Root)."},
-            {"tree-level-order", "Level Order Traversal (BFS)", "Binary Trees - Traversals", "Easy", "Level order BFS traversal using Queue."},
+            {"tree-level-order", "Level Order Traversal (BFS)", "Binary Trees - Traversals", "Easy", "Visit a binary tree level by level, top to bottom."},
             {"iterative-preorder", "Iterative Preorder Traversal", "Binary Trees - Traversals", "Medium", "Preorder traversal using explicit Stack."},
-            {"iterative-inorder", "Iterative Inorder Traversal", "Binary Trees - Traversals", "Medium", "Inorder traversal using explicit Stack."},
+            {"iterative-inorder", "Iterative Inorder Traversal", "Binary Trees - Traversals", "Medium", "Produce a binary tree's inorder sequence without using recursion."},
             {"postorder-2-stacks", "Postorder Traversal Using 2 Stacks", "Binary Trees - Traversals", "Medium", "Iterative postorder traversal using 2 Stacks."},
             {"postorder-1-stack", "Postorder Traversal Using 1 Stack", "Binary Trees - Traversals", "Hard", "Iterative postorder traversal using 1 Stack & lastVisited pointer."},
             {"traversals-in-one-pass", "Pre, In, and Postorder in One Pass", "Binary Trees - Traversals", "Medium", "Single stack pass tracking node visiting state 1, 2, 3."},
@@ -281,15 +175,6 @@ public class TreeService implements ProblemProvider {
     }
 
     // Step Generators
-    private List<ExecutionStep> generatePreorderSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        List<TreeNode> nodes = createDefaultTreeNodes();
-        steps.add(new ExecutionStep(1, 4, "Preorder Traversal (Root -> Left -> Right): Visit Root (1).", List.of("1"), Map.of(), List.of(), Map.of("visited", "1"), "Stack", null, null, null, null, nodes));
-        steps.add(new ExecutionStep(2, 62, "Traverse Left Subtree of 1 -> Node 2. Visit Node 2.", List.of("1", "2"), Map.of(), List.of(), Map.of("visited", "1, 2"), "Stack", null, null, null, null, nodes));
-        steps.add(new ExecutionStep(3, 63, "Preorder Traversal Complete! Result: [1, 2, 4, 5, 3].", List.of(), Map.of(), List.of(), Map.of("Result", "[1, 2, 4, 5, 3]"), "Stack", null, null, null, null, nodes));
-        return steps;
-    }
-
     private List<TreeNode> createDefaultTreeNodes() {
         return List.of(
             new TreeNode(1, "1", 190, 40, 2, 3, "unvisited"),

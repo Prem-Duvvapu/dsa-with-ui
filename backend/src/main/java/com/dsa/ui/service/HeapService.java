@@ -1,9 +1,7 @@
 package com.dsa.ui.service;
 
-import com.dsa.ui.algorithm.heap.*;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,33 +23,6 @@ public class HeapService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // These ids have real tracers (tracer/impl). Refuse rather than let default:
-            // serve another algorithm's steps under this id. The default: stays until
-            // PROMPT D; other ids in this service still rely on it.
-            case "kth-largest-element":
-            case "kth-smallest-element":
-            case "task-scheduler":
-            case "top-k-frequent-elements":
-            case "hand-of-straights":
-            case "min-cost-connect-sticks":
-            case "median-data-stream":
-            case "merge-k-sorted-lists":
-            case "heaps-theory":
-            case "implement-min-heap":
-            case "check-min-heap":
-            case "min-to-max-heap":
-            case "sort-k-sorted-array":
-            case "replace-rank-array":
-            case "design-twitter":
-            case "kth-largest-stream":
-            case "maximum-sum-combination":
-                throw new LegacyTraceRetiredException(problemId);
-            default: return generateKthLargestSteps();
-        }
-    }
-
     private void initProblems() {
         // 1. Kth Largest Element
         problems.put("kth-largest-element", new ProblemDetail(
@@ -69,7 +40,7 @@ public class HeapService implements ProblemProvider {
             }
             """,
             null, null, null, createArrayState(new int[]{3, 2, 1, 5, 6, 4}, -1, -1), null, null, null,
-            new ComplexityDetail("O(N log K)", "Time Complexity: Min-Heap size K.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue bounded by K.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "Tree"
+            new ComplexityDetail("O(N log K)", "Time Complexity: Min-Heap size K.", "Min-Heap", "O(K)", "Space Complexity: PriorityQueue bounded by K.", "PriorityQueue", "Auxiliary Space: O(K)", "Memory"), "PriorityQueue"
         ));
 
         // 2. Merge K Sorted Lists
@@ -117,16 +88,16 @@ public class HeapService implements ProblemProvider {
             {"top-k-frequent-elements", "Top K Frequent Elements", "Heaps - Hard", "Medium", "Find top K frequent elements using HashMap count + Min-Heap PriorityQueue."}
         };
 
-        // These now have real tracers whose emitted structure is Array, not the
-        // heap-as-tree default every other id in this bulk list still carries.
-        Set<String> arrayDsType = Set.of("kth-smallest-element", "task-scheduler", "top-k-frequent-elements",
-                "hand-of-straights", "min-cost-connect-sticks", "median-data-stream", "replace-rank-array");
-        Set<String> treeDsType = Set.of("heaps-theory", "implement-min-heap", "check-min-heap", "min-to-max-heap");
-
+        // One type for all of them. This used to be a three-way split - Tree for the ones
+        // modelling heap mechanics, Array for the ones using a heap as a tool, and
+        // PriorityQueue for the remainder - and the split bought nothing: Array and
+        // PriorityQueue both routed to the same bar chart, and Tree showed the shape while
+        // hiding the array it is actually stored in. A heap IS both views at once, and
+        // HeapCanvas derives whichever one the tracer did not emit, since the mapping is
+        // arithmetic: children of i at 2i+1 and 2i+2.
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
-            String dsType = treeDsType.contains(id) ? "Tree"
-                    : arrayDsType.contains(id) ? "Array" : "PriorityQueue";
+            String dsType = "PriorityQueue";
             problems.put(id, new ProblemDetail(
                 id, title, cat, "Heaps & PriorityQueue", diff, desc,
                 String.format("// Java Implementation for %s\npublic void solve() {\n    // Heap Striver A2Z Implementation\n}", title),
@@ -134,14 +105,6 @@ public class HeapService implements ProblemProvider {
                 new ComplexityDetail("O(N log K)", "Time Complexity: Min/Max-Heap priority queue operations.", "PriorityQueue", "O(K)", "Space Complexity: PriorityQueue space.", "Memory", "Auxiliary Space: O(K)", "Memory"), dsType
             ));
         }
-    }
-
-    // Step Generators
-    private List<ExecutionStep> generateKthLargestSteps() {
-        int[] nums = {3, 2, 1, 5, 6, 4};
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new KthLargestElement().solve(nums, 2, recorder);
-        return recorder.toExecutionSteps();
     }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {

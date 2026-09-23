@@ -1,5 +1,6 @@
 {
   "anchors" : {
+    "done" : 33,
     "get.hit" : 14,
     "get.miss" : 12,
     "init" : 7,
@@ -13,7 +14,7 @@
     "capacity" : 2,
     "operations" : "put 1 1;put 2 2;get 1;put 3 3;get 2;put 4 4;get 1;get 3;get 4"
   },
-  "stepCount" : 12,
+  "stepCount" : 13,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 7,
@@ -380,6 +381,40 @@
       "childId" : null,
       "randomId" : null,
       "state" : "active"
+    }, {
+      "id" : 3,
+      "val" : "3:3",
+      "nextId" : null,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
+    } ],
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 33,
+    "description" : "Every operation processed. Most recently used first, the cache holds 4=4 -> 3=3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cache" : "{3=3, 4=4}",
+      "order" : "[4, 3]"
+    },
+    "dsType" : "LinkedList",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : [ {
+      "id" : 4,
+      "val" : "4:4",
+      "nextId" : 3,
+      "prevId" : null,
+      "childId" : null,
+      "randomId" : null,
+      "state" : "default"
     }, {
       "id" : 3,
       "val" : "3:3",

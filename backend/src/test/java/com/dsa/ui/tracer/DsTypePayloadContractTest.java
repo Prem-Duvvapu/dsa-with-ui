@@ -67,6 +67,45 @@ class DsTypePayloadContractTest {
         REQUIRED.put(DsType.DP_TABLE, new Requirement("dpTable", s -> s.getDpTable() != null));
         REQUIRED.put(DsType.TRIE, new Requirement("trieState",
                 s -> s.getTrieState() != null && !s.getTrieState().isEmpty()));
+
+        // Everything routed to ArrayCanvas by canvas/registry.js reads arrayState. Without
+        // these entries the test skipped 170 of 433 problems: an ARRAY-tagged tracer that
+        // never calls .array(...) passed every check and rendered an empty canvas.
+        Requirement arrayState = new Requirement("arrayState",
+                s -> s.getArrayState() != null && !s.getArrayState().isEmpty());
+        REQUIRED.put(DsType.ARRAY, arrayState);
+        REQUIRED.put(DsType.BITS, arrayState);
+        REQUIRED.put(DsType.STRING, arrayState);
+        REQUIRED.put(DsType.WINDOW, arrayState);
+        REQUIRED.put(DsType.SEARCH_SPACE, arrayState);
+        // HeapCanvas draws BOTH views and derives whichever one the tracer did not emit,
+        // because a heap's tree and its array are the same structure - children of i live
+        // at 2i+1 and 2i+2, with no pointer anywhere. Tracers modelling heap mechanics emit
+        // treeNodes; those using a heap as a tool emit arrayState. Either is enough.
+        REQUIRED.put(DsType.HEAP, new Requirement("treeNodes or arrayState",
+                s -> (s.getTreeNodes() != null && !s.getTreeNodes().isEmpty())
+                        || (s.getArrayState() != null && !s.getArrayState().isEmpty())));
+        // IntervalCanvas reads arrayState too, falling back to `intervals` when present.
+        REQUIRED.put(DsType.INTERVAL, arrayState);
+        // RecursionTreeCanvas draws from EITHER source, and both are legitimate. A tracer
+        // that builds its own tree emits treeNodes; a backtracking tracer emits the call
+        // stack and the canvas rebuilds the tree from it, because the sequence of stacks IS
+        // the tree. What is not acceptable is neither - that renders an empty canvas.
+        REQUIRED.put(DsType.RECURSION_TREE, new Requirement("treeNodes or callStack",
+                s -> (s.getTreeNodes() != null && !s.getTreeNodes().isEmpty())
+                        || (s.getCallStack() != null && !s.getCallStack().isEmpty())));
+        // DSU has no structural field: DsuCanvas reconstructs parent[]/rank[] by parsing
+        // these exact variable keys. That makes the key names a wire contract, so pin them
+        // here - a rename would otherwise leave the canvas silently drawing its own default.
+        // DSU has no structural field: DsuCanvas reconstructs parent[] and rank[] by parsing
+        // these exact variable keys out of a string. That makes the key names AND the string
+        // format a wire contract, so both are pinned - see DsuTransportContractTest for the
+        // format. A rename or a malformed value would otherwise reach the browser and either
+        // blank the canvas or draw a garbage structure.
+        REQUIRED.put(DsType.DSU, new Requirement("variables['parent[]'] and ['rank[]']",
+                s -> s.getVariables() != null
+                        && s.getVariables().containsKey("parent[]")
+                        && s.getVariables().containsKey("rank[]")));
     }
 
     Stream<String> tracerIds() {

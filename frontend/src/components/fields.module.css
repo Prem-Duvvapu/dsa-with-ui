@@ -1,0 +1,179 @@
+/* Shared chrome for the input-panel field editors.
+
+   GridField, GraphField and IntArrayField are three renderings of one idea - edit a
+   structure by hand - and they had three copies of the same stack, row, tiny-label and
+   narrow-input styling as inline objects. One module, because the point of moving off
+   inline styles is to stop the same rule being written three times and drifting. */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stackTight {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rowTight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wrapRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}
+
+.microLabel {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.ordinal {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  width: 14px;
+}
+
+.arrow { color: var(--text-muted); }
+
+.numberInput { width: 48px; }
+.countInput { width: 64px; }
+
+.iconButton {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+}
+
+.tinyButton { padding: 2px 6px; }
+.smallButton { padding: 4px 8px; }
+.addButton {
+  padding: 4px 8px;
+  width: fit-content;
+}
+
+/* Disabled-looking rather than disabled: the cap is a convenience, and the server stays
+   authoritative about what it will accept. */
+.atCap { opacity: 0.4; }
+
+/* --- GridField --- */
+
+.gridStack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gridBoard {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+  width: fit-content;
+}
+
+.gridRow {
+  display: flex;
+  gap: 3px;
+}
+
+.gridCell {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+}
+
+/* A painted cell. Neutral ink, not a semantic hue: this is an input the reader is
+   composing, not a state the algorithm has reached. */
+.gridCellSet {
+  border-color: var(--bench-ink-secondary);
+  background: var(--bench-fill);
+  color: var(--bench-ink-secondary);
+}
+
+.gridControls {
+  display: flex;
+  gap: 10px;
+}
+
+/* --- IntArrayField: a value as a chip --- */
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 2px 2px 2px 8px;
+}
+
+.chipNullToggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--bench-ink-secondary);
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 4px;
+}
+
+.chipNullToggleEmpty { color: var(--text-muted); }
+
+.chipInput {
+  width: 52px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-code);
+  font-size: 0.78rem;
+  outline: none;
+  padding: 4px 0;
+}
+
+.chipRemove {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  padding: 4px;
+}
+
+.chipRemoveDisabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}

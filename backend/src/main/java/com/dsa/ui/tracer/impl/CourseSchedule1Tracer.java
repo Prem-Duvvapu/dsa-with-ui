@@ -128,7 +128,7 @@ public class CourseSchedule1Tracer implements AlgorithmTracer {
             for (int next : adj.get(course)) {
                 indegree[next]--;
                 emit.at("decrement")
-                        .say("%d -> %d: course %d has %d unmet prerequisite(s) left.", course, next, next, indegree[next])
+                        .say("%d -> %d: course %d has %d unmet prerequisite%s left.", course, next, next, indegree[next], Narration.s(indegree[next]))
                         .var("course", course).var("unlocked", next).var("indegreeLeft", indegree[next])
                         .graph(layout.nodes(), layout.edges()).nodes(states)
                         .edges(List.of(course + "-" + next)).queue(queue).step();

@@ -74,7 +74,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 14,
-    "description" : "pattern[1]='b' does not match pattern[0]='a', and there is no shorter match left to fall back to - lps[1] = 0.",
+    "description" : "pattern[1]='b' does not match pattern[0]='a', and there is no shorter match left to fall back to - lps[1] = 0. A search failing here restarts the pattern from scratch, but still never steps the text backwards.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -133,7 +133,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 8,
-    "description" : "pattern[2]='a' matches pattern[0]='a' - extend the match to length 1 and record lps[2]=1.",
+    "description" : "pattern[2]='a' matches pattern[0]='a' - extend the match to length 1 and record lps[2]=1. In a search, a mismatch just after index 2 now resumes at pattern[1] instead of restarting at 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -192,7 +192,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 8,
-    "description" : "pattern[3]='b' matches pattern[1]='b' - extend the match to length 2 and record lps[3]=2.",
+    "description" : "pattern[3]='b' matches pattern[1]='b' - extend the match to length 2 and record lps[3]=2. In a search, a mismatch just after index 3 now resumes at pattern[2] instead of restarting at 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -251,7 +251,7 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 8,
-    "description" : "pattern[4]='a' matches pattern[2]='a' - extend the match to length 3 and record lps[4]=3.",
+    "description" : "pattern[4]='a' matches pattern[2]='a' - extend the match to length 3 and record lps[4]=3. In a search, a mismatch just after index 4 now resumes at pattern[3] instead of restarting at 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -310,7 +310,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 8,
-    "description" : "pattern[5]='b' matches pattern[3]='b' - extend the match to length 4 and record lps[5]=4.",
+    "description" : "pattern[5]='b' matches pattern[3]='b' - extend the match to length 4 and record lps[5]=4. In a search, a mismatch just after index 5 now resumes at pattern[4] instead of restarting at 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -369,7 +369,7 @@
   }, {
     "stepNumber" : 7,
     "activeLine" : 12,
-    "description" : "pattern[6]='c' breaks the match of length 4 - fall back to the next-best recorded match length 2 (lps[3]) without moving i forward.",
+    "description" : "pattern[6]='c' breaks the match of length 4 - fall back to the next-best recorded match length 2 (lps[3]) without moving i forward. This is the same retreat a KMP search makes on a mismatch: never re-read the text, only slide the pattern.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -428,7 +428,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 12,
-    "description" : "pattern[6]='c' breaks the match of length 2 - fall back to the next-best recorded match length 0 (lps[1]) without moving i forward.",
+    "description" : "pattern[6]='c' breaks the match of length 2 - fall back to the next-best recorded match length 0 (lps[1]) without moving i forward. This is the same retreat a KMP search makes on a mismatch: never re-read the text, only slide the pattern.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -487,7 +487,7 @@
   }, {
     "stepNumber" : 9,
     "activeLine" : 14,
-    "description" : "pattern[6]='c' does not match pattern[0]='a', and there is no shorter match left to fall back to - lps[6] = 0.",
+    "description" : "pattern[6]='c' does not match pattern[0]='a', and there is no shorter match left to fall back to - lps[6] = 0. A search failing here restarts the pattern from scratch, but still never steps the text backwards.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -546,7 +546,7 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 8,
-    "description" : "pattern[7]='a' matches pattern[0]='a' - extend the match to length 1 and record lps[7]=1.",
+    "description" : "pattern[7]='a' matches pattern[0]='a' - extend the match to length 1 and record lps[7]=1. In a search, a mismatch just after index 7 now resumes at pattern[1] instead of restarting at 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -605,7 +605,7 @@
   }, {
     "stepNumber" : 11,
     "activeLine" : 18,
-    "description" : "Every index considered. LPS array complete: [0, 0, 1, 2, 3, 4, 0, 1].",
+    "description" : "Every index considered. LPS array complete: [0, 0, 1, 2, 3, 4, 0, 1]. That array is the whole of KMP's preprocessing: with it, matching a pattern against a text of length m takes O(m) because the text pointer only ever moves forward.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },

@@ -45,8 +45,20 @@ process_log="$smoke_dir/processes.log"
 output_log="$smoke_dir/start.log"
 : > "$process_log"
 
-PATH="$smoke_dir/bin:$PATH" START_SMOKE_LOG="$process_log" \
-  setsid "$repo_dir/start.sh" > "$output_log" 2>&1 &
+# The launcher needs its own process group so this test can signal it the way a service
+# manager would. setsid does that on Linux/WSL; macOS has none, so fall back to bash job
+# control, which puts the background job in a fresh group just the same.
+setsid_bin="$(command -v setsid 2>/dev/null || true)"
+perl_bin="$(command -v perl 2>/dev/null || true)"
+
+if [[ -n "$setsid_bin" ]]; then
+  PATH="$smoke_dir/bin:$PATH" START_SMOKE_LOG="$process_log" \
+    "$setsid_bin" "$repo_dir/start.sh" > "$output_log" 2>&1 &
+else
+  PATH="$smoke_dir/bin:$PATH" START_SMOKE_LOG="$process_log" \
+    "$perl_bin" -e 'setpgrp(0, 0); exec @ARGV or die $!' "$repo_dir/start.sh" \
+    > "$output_log" 2>&1 &
+fi
 launcher_pid=$!
 
 deadline=$((SECONDS + 5))

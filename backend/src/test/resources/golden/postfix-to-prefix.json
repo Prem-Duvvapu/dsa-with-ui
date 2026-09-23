@@ -14,7 +14,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 2,
-    "description" : "Convert postfix \"ABC*+\" to prefix. Scan left to right.",
+    "description" : "Convert postfix \"ABC*+\" to prefix. Postfix puts the operator last, so its operands are already complete by the time we meet it - scanning LEFT to RIGHT reaches every operand before the operator that consumes it.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -56,7 +56,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 5,
-    "description" : "s[0] = 'A' is an operand — push \"A\".",
+    "description" : "s[0] = 'A' is an operand. Park it: we cannot place it until we learn which operator claims it.",
     "queueOrStackState" : [ "A" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -99,7 +99,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 5,
-    "description" : "s[1] = 'B' is an operand — push \"B\".",
+    "description" : "s[1] = 'B' is an operand. Park it: we cannot place it until we learn which operator claims it.",
     "queueOrStackState" : [ "B", "A" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -142,7 +142,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 5,
-    "description" : "s[2] = 'C' is an operand — push \"C\".",
+    "description" : "s[2] = 'C' is an operand. Park it: we cannot place it until we learn which operator claims it.",
     "queueOrStackState" : [ "C", "B", "A" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -185,7 +185,7 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 9,
-    "description" : "s[3] = '*' is an operator — pop \"C\" and \"B\", push \"*BC\".",
+    "description" : "s[3] = '*' claims the last two. Scanning left to right, the most recent push \"C\" is the RIGHT operand and \"B\" the left. Prefix puts the operator FIRST: '*' + \"B\" + \"C\" = \"*BC\".",
     "queueOrStackState" : [ "*BC", "A" ],
     "callStack" : [ ],
     "nodeStates" : { },
@@ -230,7 +230,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 9,
-    "description" : "s[4] = '+' is an operator — pop \"*BC\" and \"A\", push \"+A*BC\".",
+    "description" : "s[4] = '+' claims the last two. Scanning left to right, the most recent push \"*BC\" is the RIGHT operand and \"A\" the left. Prefix puts the operator FIRST: '+' + \"A\" + \"*BC\" = \"+A*BC\".",
     "queueOrStackState" : [ "+A*BC" ],
     "callStack" : [ ],
     "nodeStates" : { },

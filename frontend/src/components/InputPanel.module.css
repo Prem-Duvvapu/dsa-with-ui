@@ -58,3 +58,65 @@
   color: #f87171;
   margin: 4px 0 0 0;
 }
+
+/* --- saved inputs --- */
+
+.saveForm {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.presetList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.presetItem {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--bench-rule-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bench-fill);
+  overflow: hidden;
+}
+
+.presetLoad {
+  border: none;
+  background: transparent;
+  color: var(--bench-ink-secondary);
+  font-size: 0.72rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.presetLoad:hover,
+.presetLoad:focus-visible {
+  color: var(--bench-ink);
+}
+
+.presetRemove {
+  border: none;
+  border-left: 1px solid var(--bench-rule-strong);
+  background: transparent;
+  color: var(--bench-ink-dim);
+  padding: 4px 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.presetRemove:hover,
+.presetRemove:focus-visible {
+  color: var(--probe);
+}

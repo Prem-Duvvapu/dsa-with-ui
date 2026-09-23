@@ -157,8 +157,8 @@ class SortCharactersFrequencyTracer extends StringTracerSupport {
         StringBuilder answer = new StringBuilder();
         for (char ch : order) {
             answer.append(String.valueOf(ch).repeat(counts.get(ch)));
-            emit.at("append").say("Append '%c' %d time(s); output is now \"%s\".",
-                            ch, counts.get(ch), answer)
+            emit.at("append").say("Append '%c' %d time%s; output is now \"%s\".",
+                            ch, counts.get(ch), Narration.s(counts.get(ch)), answer)
                     .var("character", ch).var("frequency", counts.get(ch)).var("output", answer)
                     .chars(s).step();
         }

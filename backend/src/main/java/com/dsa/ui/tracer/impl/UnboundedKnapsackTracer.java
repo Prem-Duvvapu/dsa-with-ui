@@ -19,6 +19,10 @@ import java.util.Map;
 @Component
 public class UnboundedKnapsackTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i][w - wt[i-1]])  // dp[i], not dp[i-1]";
+
+
     @Override
     public String id() {
         return "unbounded-knapsack";
@@ -88,6 +92,9 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
         for (int i = 0; i <= n; i++) {
             List<DpCell> row = new ArrayList<>(W + 1);
             for (int w = 0; w <= W; w++) {
+                // See Knapsack01Tracer: past the probe this is unwritten int[][] memory,
+                // not a computed zero, and the two must not look the same.
+                boolean filled = probeI < 0 || i == 0 || i < probeI || (i == probeI && w <= probeW);
                 String state;
                 if (i == probeI && w == probeW) {
                     state = "probe";
@@ -95,10 +102,12 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
                     state = "read";
                 } else if (i == probeI - 1 && (w == readW || w == probeW)) {
                     state = "read";
+                } else if (!filled) {
+                    state = "void";
                 } else {
-                    state = "known";
+                    state = probeI < 0 ? "resolved" : "known";
                 }
-                row.add(new DpCell(String.valueOf(dp[i][w]), state));
+                row.add(new DpCell(filled ? String.valueOf(dp[i][w]) : "\u00b7", state));
             }
             rows.add(row);
         }
@@ -126,7 +135,11 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
                                     i, wt[i - 1], val[i - 1], w, val[i - 1], i,
                                     w - wt[i - 1], withIt, i, i - 1, w, withoutIt, dp[i][w])
                             .var("i", i).var("w", w).var("value", dp[i][w])
-                            .dpTable(table(dp, n, W, i, w, 1, w - wt[i - 1])).step();
+                            .dpTable(table(dp, n, W, i, w, 1, w - wt[i - 1])
+                                    .withFormula(FORMULA, String.format(
+                                            "dp[%d][%d] = max(dp[%d][%d], val + dp[%d][%d]) = %d",
+                                            i, w, i - 1, w, i, w - wt[i - 1], dp[i][w])))
+                            .step();
                 } else {
                     dp[i][w] = dp[i - 1][w];
                     emit.at("doesntFit")
@@ -134,7 +147,11 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
                                     + "forward dp[%d][%d]=%d unchanged.",
                                     i, wt[i - 1], w, i - 1, w, dp[i][w])
                             .var("i", i).var("w", w).var("value", dp[i][w])
-                            .dpTable(table(dp, n, W, i, w, 0, w)).step();
+                            .dpTable(table(dp, n, W, i, w, 0, w)
+                                    .withFormula(FORMULA, String.format(
+                                            "item %d does not fit, so dp[%d][%d] = dp[%d][%d] = %d",
+                                            i, i, w, i - 1, w, dp[i][w])))
+                            .step();
                 }
             }
         }

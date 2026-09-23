@@ -1,0 +1,132 @@
+/* Code pane. The line row is the only thing here that changes per render, and all three of
+   its variants are states rather than decoration, so each gets a class. */
+
+.panel {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.headerGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.headerTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.unreachedBadge {
+  font-size: 0.62rem;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  font-weight: 600;
+  font-family: var(--font-code);
+}
+
+.anchorBadge {
+  font-size: 0.66rem;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--bench-fill);
+  color: var(--bench-ink-secondary);
+  border: 1px solid var(--bench-rule-strong);
+  font-weight: 700;
+  font-family: var(--font-code);
+}
+
+.source {
+  flex: 1;
+  background: var(--bg-page);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  overflow-y: auto;
+  font-family: var(--font-code);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  padding: 6px 0;
+}
+
+.unavailable {
+  height: 100%;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  color: var(--text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  padding: 1px 12px;
+  border-left: 3px solid transparent;
+  color: var(--text-secondary);
+  transition: all var(--motion-fast, 150ms) var(--ease-standard, ease);
+}
+
+.lineComment { color: var(--text-muted); }
+
+/* Bench gives --probe-wash one job and this is it, and the probe hue one meaning:
+   happening right now. A third hue here would put the single mark a reader follows
+   outside the system every other mark belongs to. */
+.lineActive {
+  background: var(--probe-wash);
+  border-left-color: var(--probe);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Dimmed, not hidden: the branch is part of the algorithm and belongs on screen. The
+   dotted rule and the gutter glyph carry the meaning too, because state here never rides
+   on colour alone. */
+.lineUnreached {
+  border-left-style: dotted;
+  border-left-color: var(--border-strong);
+  opacity: 0.55;
+}
+
+.gutterGlyph {
+  width: 10px;
+  min-width: 10px;
+  color: var(--text-muted);
+  font-size: 0.6rem;
+  user-select: none;
+}
+
+.lineNumber {
+  width: 28px;
+  min-width: 28px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  user-select: none;
+}
+
+.lineNumberActive { color: var(--bench-ink-secondary); }
+
+.lineText { white-space: pre; }
+
+@media (prefers-reduced-motion: reduce) {
+  .line { transition: none; }
+}

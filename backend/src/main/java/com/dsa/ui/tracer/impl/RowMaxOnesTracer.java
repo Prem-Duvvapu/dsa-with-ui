@@ -89,8 +89,9 @@ public class RowMaxOnesTracer implements AlgorithmTracer {
             }
             int count = row.length - low;
             emit.at("rowSearch")
-                    .say("Row %d: first 1 at index %s -> %d ones.", r,
-                            low == row.length ? "none" : String.valueOf(low), count)
+                    .say("Row %d: first 1 at index %s -> %d %s.", r,
+                            low == row.length ? "none" : String.valueOf(low), count,
+                            Narration.plural(count, "one", "ones"))
                     .var("row", r).var("count", count).grid(matrix).step();
 
             if (count > bestCount) {
@@ -98,7 +99,9 @@ public class RowMaxOnesTracer implements AlgorithmTracer {
                 bestCount = count;
                 bestRow = r;
                 emit.at("newBest")
-                        .say("Row %d's %d ones beats the previous best (%s) — new best row.", r, count,
+                        .say("Row %d's %d %s %s the previous best (%s) — new best row.", r, count,
+                                Narration.plural(count, "one", "ones"),
+                                Narration.plural(count, "beats", "beat"),
                                 previousBest == -1 ? "none" : String.valueOf(previousBest))
                         .var("bestRow", bestRow).var("bestCount", bestCount).grid(matrix).step();
             }

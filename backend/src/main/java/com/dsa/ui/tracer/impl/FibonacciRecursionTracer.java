@@ -70,7 +70,14 @@ public class FibonacciRecursionTracer implements AlgorithmTracer {
             states.put(id, "unvisited");
         }
 
-        realFib(n, struct, states, new int[]{1}, emit);
+        int result = realFib(n, struct, states, new int[]{1}, emit);
+
+        // Emitted after the outermost frame pops, so the trace ends at depth 0 rather than
+        // freezing the sidebar on fib(n)'s own frame.
+        emit.at("call")
+                .say("The whole tree has been evaluated and every frame has returned. fib(%d) = %d.", n, result)
+                .var("n", n).var("result", result)
+                .tree(render(struct, states)).nodes(states).step();
     }
 
     /** One record per call frame: which n it computes, where it sits, and its children's ids. */

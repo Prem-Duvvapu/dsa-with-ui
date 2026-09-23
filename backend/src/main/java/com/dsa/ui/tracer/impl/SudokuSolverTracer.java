@@ -19,9 +19,16 @@ import java.util.Map;
 @Component
 public class SudokuSolverTracer implements AlgorithmTracer {
 
+    // Four blanks, one solution, and two forced retreats on the way to it. The old default
+    // had three blanks in an otherwise finished grid, so every cell had exactly one
+    // candidate: eighteen steps, no dead end, no undo. A sudoku solver that never
+    // backtracks is not showing backtracking, which is the entire reason this problem is
+    // in this topic. Hand-checked: place, twelve conflicts, deadEnd, backtrack, another
+    // deadEnd and backtrack, then the real answer propagating back up - all six anchors on
+    // the input a visitor sees first.
     private static final String DEFAULT_PUZZLE =
-            "..4678912" + ".72195348" + "198342567" + "859761423" + "426853791"
-                    + "713924856" + "961537284" + "287419635" + "345286179";
+            "534678912" + "672195348" + "198342567" + "859761423" + "4.685.79."
+                    + "7.3924856" + "961537284" + "287419635" + "345286179";
 
     private static final String ALTERNATE_PUZZLE =
             "53467.912" + "6.2195.48" + "198342567" + "859761.23" + "4.685379."
@@ -93,14 +100,31 @@ public class SudokuSolverTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[][] board = parse(in.getString("puzzle"));
-        solve(board, emit);
+        boolean solved = solve(board, emit);
+
+        // Emitted from run(), after the recursion has returned, so the last frame the
+        // viewer sees is the stack draining to empty rather than freezing one deep.
+        emit.at("done")
+                .say(solved
+                        ? "Every frame has returned and the board holds a complete, legal grid."
+                        : "Every digit was tried at the first empty cell and none survived - "
+                                + "this puzzle has no solution.")
+                .var("solved", solved).grid(copy(board)).step();
     }
 
     private boolean solve(int[][] board, StepEmitter emit) {
         int[] empty = findEmpty(board);
+        // See NQueensTracer.place: the frames are what the memory card's live call-stack
+        // section reads, and a backtracking tracer that never pushes shows no depth at all.
+        // Named by the cell this frame is responsible for, so the stack reads as the chain
+        // of cells currently being guessed.
+        emit.push(empty == null ? "solve(full board)"
+                : "solve(" + empty[0] + "," + empty[1] + ")");
+
         if (empty == null) {
             emit.at("done").say("No empty cell remains - the puzzle is solved.")
                     .grid(copy(board)).step();
+            emit.pop();
             return true;
         }
 
@@ -129,6 +153,7 @@ public class SudokuSolverTracer implements AlgorithmTracer {
                         .say("The rest of the board completed with %d still at (%d,%d) - keep it and report success upward.",
                                 digit, row, col)
                         .var("row", row).var("col", col).grid(copy(board)).step();
+                emit.pop();
                 return true;
             }
 
@@ -143,6 +168,7 @@ public class SudokuSolverTracer implements AlgorithmTracer {
                 .say("No digit 1-9 fits (%d,%d) given the current board - this branch cannot be completed.",
                         row, col)
                 .var("row", row).var("col", col).grid(copy(board)).step();
+        emit.pop();
         return false;
     }
 

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import layout from './layout.module.css';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 /**
@@ -15,11 +16,11 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
  */
 
 /** Rows come from whichever payload the step actually carries, guided by dsType. */
-function rowStates(step, dsType) {
+function rowStates(step, dsType, ranOn) {
   if (!step) return [];
   if (dsType === 'Interval') {
     if (step.intervals?.length) return step.intervals.map((e) => e.state || 'default');
-    if (step.resolvedInput?.start) return step.resolvedInput.start.map((_, idx) => step.arrayState?.[idx]?.state || 'default');
+    if (ranOn?.start) return ranOn.start.map((_, idx) => step.arrayState?.[idx]?.state || 'default');
   }
   if (dsType === 'Graph' && step.nodeStates && Object.keys(step.nodeStates).length) {
     return Object.keys(step.nodeStates).sort((a, b) => Number(a) - Number(b)).map((k) => step.nodeStates[k]);
@@ -43,11 +44,11 @@ function rowStates(step, dsType) {
   return [];
 }
 
-function rowLabels(step, dsType) {
+function rowLabels(step, dsType, ranOn) {
   if (!step) return [];
   if (dsType === 'Interval') {
     if (step.intervals?.length) return step.intervals.map((inv, i) => Array.isArray(inv) ? `[${inv[0]},${inv[1]}]` : `#${i + 1}`);
-    if (step.resolvedInput?.start) return step.resolvedInput.start.map((_, i) => `#${i + 1}`);
+    if (ranOn?.start) return ranOn.start.map((_, i) => `#${i + 1}`);
   }
   if (dsType === 'Graph' && step.nodeStates && Object.keys(step.nodeStates).length) {
     return Object.keys(step.nodeStates).sort((a, b) => Number(a) - Number(b)).map((k) => `v${k}`);
@@ -69,19 +70,19 @@ function rowLabels(step, dsType) {
   return [];
 }
 
-function rowValues(step, dsType) {
+function rowValues(step, dsType, ranOn) {
   if (!step) return [];
   if (dsType === 'Interval') {
     if (step.intervals?.length) return step.intervals.map((inv) => Array.isArray(inv) ? `[${inv[0]},${inv[1]}]` : `[${inv.start},${inv.end}]`);
-    if (step.resolvedInput?.start) return step.resolvedInput.start.map((s, i) => `[${s},${step.resolvedInput.end?.[i]}]`);
+    if (ranOn?.start) return ranOn.start.map((s, i) => `[${s},${ranOn.end?.[i]}]`);
   }
-  if (step.arrayState?.length) return step.arrayState.map((e) => String(e.value));
+  if (step.arrayState?.length) return step.arrayState.map((e) => e.label ?? String(e.value));
   if (step.treeNodes?.length) return step.treeNodes.map((n) => String(n.val));
   if (step.listState?.length) return step.listState.map((n) => String(n.val));
   if (step.gridState?.length) {
     return step.gridState.map((row) => String(row.filter((c) => c !== 0).length));
   }
-  return rowStates(step, dsType).map(() => '');
+  return rowStates(step, dsType, ranOn).map(() => '');
 }
 
 /** A grid row collapses to whichever single state best describes it. */
@@ -127,14 +128,14 @@ const CELL_CLASS = {
 const LABELLED_UP_TO = 40;
 const DOM_UP_TO = 400;
 
-export default function CaptureStrip({ steps = [], current = 0, dsType, onSeek }) {
+export default function CaptureStrip({ steps = [], current = 0, dsType, onSeek, resolvedInput }) {
   const [isOpen, setIsOpen] = useState(true);
   const columns = steps.length;
   const mode = columns <= LABELLED_UP_TO ? 'labelled' : columns <= DOM_UP_TO ? 'dense' : 'band';
 
-  const grid = useMemo(() => steps.map((s) => rowStates(s, dsType)), [steps, dsType]);
-  const labels = useMemo(() => rowLabels(steps[0], dsType), [steps, dsType]);
-  const values = useMemo(() => steps.map((s) => rowValues(s, dsType)), [steps, dsType]);
+  const grid = useMemo(() => steps.map((s) => rowStates(s, dsType, resolvedInput)), [steps, dsType, resolvedInput]);
+  const labels = useMemo(() => rowLabels(steps[0], dsType, resolvedInput), [steps, dsType, resolvedInput]);
+  const values = useMemo(() => steps.map((s) => rowValues(s, dsType, resolvedInput)), [steps, dsType, resolvedInput]);
   const rows = labels.length;
 
   if (!columns || !rows) return null;
@@ -154,11 +155,10 @@ export default function CaptureStrip({ steps = [], current = 0, dsType, onSeek }
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="sb-disclosure"
           aria-expanded={isOpen}
           aria-label={isOpen ? 'Hide execution capture' : 'Show execution capture'}
           title={isOpen ? 'Hide execution capture' : 'Show execution capture'}
-          style={{ marginLeft: 'auto' }}
+          className={layout.pushRight}
         >
           {isOpen ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
         </button>

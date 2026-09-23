@@ -25,7 +25,7 @@ public class SearchRotatedSorted2Tracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.SEARCH_SPACE;
     }
 
     @Override
@@ -34,12 +34,18 @@ public class SearchRotatedSorted2Tracer implements AlgorithmTracer {
                 InputField.of("nums", FieldType.INT_ARRAY)
                         .label("Rotated sorted array (with duplicates)")
                         .length(1, 40).values(-99, 99)
-                        .defaultValue(List.of(2, 5, 6, 0, 0, 1, 2))
+                        // nums[low] == nums[mid] == nums[high] on the first probe, which
+                        // is the ONLY thing separating this problem from search-rotated-
+                        // sorted: neither half can be shown to be the sorted one, so the
+                        // search gives up a single element from each end. The old default
+                        // ([2,5,6,0,0,1,2], target 6) never hit that case, so the trace was
+                        // indistinguishable from the no-duplicates version.
+                        .defaultValue(List.of(1, 0, 1, 1, 1))
                         .build(),
                 InputField.of("target", FieldType.INT)
                         .label("Target")
                         .range(-99, 99)
-                        .defaultValue(6)
+                        .defaultValue(0)
                         .build());
     }
 
@@ -49,7 +55,7 @@ public class SearchRotatedSorted2Tracer implements AlgorithmTracer {
      */
     @Override
     public Map<String, Object> alternateInput() {
-        return Map.of("nums", List.of(1, 0, 1, 1, 1), "target", 5);
+        return Map.of("nums", List.of(2, 5, 6, 0, 0, 1, 2), "target", 3);
     }
 
     @Override
@@ -136,6 +142,7 @@ public class SearchRotatedSorted2Tracer implements AlgorithmTracer {
                                 inside ? "Target lies inside it — search there."
                                         : "Target is outside it — search the right half.")
                         .var("leftSorted", true)
+                        .var("low", inside ? low : mid + 1).var("high", inside ? mid - 1 : high)
                         .arrayState(window(nums, inside ? low : mid + 1, inside ? mid - 1 : high, -1)).step();
                 if (inside) high = mid - 1; else low = mid + 1;
             } else {
@@ -145,6 +152,7 @@ public class SearchRotatedSorted2Tracer implements AlgorithmTracer {
                                 inside ? "Target lies inside it — search there."
                                         : "Target is outside it — search the left half.")
                         .var("rightSorted", true)
+                        .var("low", inside ? mid + 1 : low).var("high", inside ? high : mid - 1)
                         .arrayState(window(nums, inside ? mid + 1 : low, inside ? high : mid - 1, -1)).step();
                 if (inside) low = mid + 1; else high = mid - 1;
             }

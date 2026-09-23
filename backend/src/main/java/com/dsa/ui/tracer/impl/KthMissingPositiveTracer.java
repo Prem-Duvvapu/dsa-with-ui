@@ -25,7 +25,7 @@ public class KthMissingPositiveTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.SEARCH_SPACE;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class KthMissingPositiveTracer implements AlgorithmTracer {
         int low = 0, high = arr.length - 1;
 
         emit.at("init")
-                .say("Find the %d-th missing positive integer. arr[i] - (i+1) counts how many are missing up to index i.", k)
+                .say("Find the %s missing positive integer. arr[i] - (i+1) counts how many are missing up to index i.", Narration.ordinal(k))
                 .var("k", k).var("low", low).var("high", high)
                 .arrayState(window(arr, low, high, -1)).step();
 
@@ -118,7 +118,7 @@ public class KthMissingPositiveTracer implements AlgorithmTracer {
 
         int answer = low + k;
         emit.at("done")
-                .say("low passed high at %d. The %d-th missing positive integer is %d.", low, k, answer)
+                .say("low passed high at %d. The %s missing positive integer is %d.", low, Narration.ordinal(k), answer)
                 .var("answer", answer)
                 .arrayState(window(arr, 0, -1, -1)).step();
     }

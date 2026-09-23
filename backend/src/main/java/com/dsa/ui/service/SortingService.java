@@ -23,20 +23,6 @@ public class SortingService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // All five have real tracers now (tracer/impl). Refuse rather than let
-            // default: serve another sorting algorithm's steps under these ids.
-            case "selection-sort":
-            case "bubble-sort":
-            case "insertion-sort":
-            case "merge-sort":
-            case "quick-sort":
-                throw new LegacyTraceRetiredException(problemId);
-            default: throw new LegacyTraceRetiredException(problemId);
-        }
-    }
-
     private void initProblems() {
         // 1. Selection Sort
         problems.put("selection-sort", new ProblemDetail(

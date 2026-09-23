@@ -108,8 +108,9 @@ public class CountSubarraysXorKTracer implements AlgorithmTracer {
                 int freq = map.get(x);
                 cnt += freq;
                 emit.at("countMatch")
-                        .say("Map contains %d with frequency %d → %d subarray(s) ending at index %d have XOR = %d. Total = %d.",
-                                x, freq, freq, i, k, cnt)
+                        .say("Map contains %d with frequency %d → %d subarray%s ending at index %d %s XOR = %d. Total = %d.",
+                                x, freq, freq, Narration.s(freq), i,
+                                Narration.plural(freq, "has", "have"), k, cnt)
                         .var("cnt", cnt).var("freq", freq)
                         .array(a, i)
                         .step();
@@ -117,7 +118,7 @@ public class CountSubarraysXorKTracer implements AlgorithmTracer {
 
             map.put(xr, map.getOrDefault(xr, 0) + 1);
             emit.at("updateMap")
-                    .say("Store prefix XOR %d in map (now seen %d time(s)).", xr, map.get(xr))
+                    .say("Store prefix XOR %d in map (now seen %d time%s).", xr, map.get(xr), Narration.s(map.get(xr)))
                     .var("map", map.toString()).var("xr", xr)
                     .array(a, i)
                     .step();

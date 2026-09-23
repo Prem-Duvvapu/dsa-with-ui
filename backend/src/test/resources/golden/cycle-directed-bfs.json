@@ -11,25 +11,26 @@
   "problemId" : "cycle-directed-bfs",
   "resolvedInput" : {
     "graph" : {
-      "edges" : [ [ 0, 1 ], [ 1, 2 ], [ 2, 0 ] ],
-      "vertices" : 3
+      "edges" : [ [ 0, 1 ], [ 1, 2 ], [ 2, 3 ], [ 3, 2 ] ],
+      "vertices" : 4
     }
   },
-  "stepCount" : 3,
+  "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 2,
-    "description" : "3 vertices, 3 directed edges. Indegree of each: [1, 1, 1].",
+    "description" : "4 vertices, 4 directed edges. Indegree of each: [0, 1, 2, 1].",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "unvisited",
       "1" : "unvisited",
-      "2" : "unvisited"
+      "2" : "unvisited",
+      "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "indegree" : "[1, 1, 1]"
+      "indegree" : "[0, 1, 2, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -46,14 +47,20 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 283.92304845413264,
-      "y" : 219.99999999999997,
+      "x" : 300.0,
+      "y" : 160.0,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 76.07695154586739,
-      "y" : 220.00000000000006,
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -70,7 +77,13 @@
       "highlighted" : false
     }, {
       "from" : 2,
-      "to" : 0,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
       "weight" : null,
       "directed" : true,
       "highlighted" : false
@@ -78,17 +91,18 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 7,
-    "description" : "Every vertex with indegree 0 has no unprocessed prerequisite - seed the queue with [].",
-    "queueOrStackState" : [ ],
+    "description" : "Every vertex with indegree 0 has no unprocessed prerequisite - seed the queue with [0].",
+    "queueOrStackState" : [ "0" ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "unvisited",
+      "0" : "queued",
       "1" : "unvisited",
-      "2" : "unvisited"
+      "2" : "unvisited",
+      "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "queue" : "[]"
+      "queue" : "[0]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -105,14 +119,20 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 283.92304845413264,
-      "y" : 219.99999999999997,
+      "x" : 300.0,
+      "y" : 160.0,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 76.07695154586739,
-      "y" : 220.00000000000006,
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -129,26 +149,33 @@
       "highlighted" : false
     }, {
       "from" : 2,
-      "to" : 0,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
       "weight" : null,
       "directed" : true,
       "highlighted" : false
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 23,
-    "description" : "Only 0 of 3 vertices ever reached indegree 0 - the rest form a directed cycle.",
-    "queueOrStackState" : null,
+    "activeLine" : 14,
+    "description" : "Dequeue 0 (processed 1 of 4 so far).",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "unvisited",
+      "0" : "visited",
       "1" : "unvisited",
-      "2" : "unvisited"
+      "2" : "unvisited",
+      "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "true",
-      "processed" : "0"
+      "node" : "0",
+      "processed" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -165,14 +192,20 @@
     }, {
       "id" : 1,
       "label" : "1",
-      "x" : 283.92304845413264,
-      "y" : 219.99999999999997,
+      "x" : 300.0,
+      "y" : 160.0,
       "state" : "unvisited"
     }, {
       "id" : 2,
       "label" : "2",
-      "x" : 76.07695154586739,
-      "y" : 220.00000000000006,
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
       "state" : "unvisited"
     } ],
     "graphEdges" : [ {
@@ -189,7 +222,379 @@
       "highlighted" : false
     }, {
       "from" : 2,
-      "to" : 0,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 17,
+    "description" : "0 -> 1: 1's remaining indegree drops to 0.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "unvisited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "indegreeLeft" : "0",
+      "neighbour" : "1",
+      "node" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 19,
+    "description" : "1 has no prerequisite left - enqueue it.",
+    "queueOrStackState" : [ "1" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "queued",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "enqueued" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 14,
+    "description" : "Dequeue 1 (processed 2 of 4 so far).",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "node" : "1",
+      "processed" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 17,
+    "description" : "1 -> 2: 2's remaining indegree drops to 1.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ "1-2" ],
+    "variables" : {
+      "indegreeLeft" : "1",
+      "neighbour" : "2",
+      "node" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 23,
+    "description" : "Only 2 of 4 vertices ever reached indegree 0 - the rest form a directed cycle.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "unvisited",
+      "3" : "unvisited"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "true",
+      "processed" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 2,
       "weight" : null,
       "directed" : true,
       "highlighted" : false

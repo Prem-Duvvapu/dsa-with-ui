@@ -81,9 +81,9 @@ public class CountGoodNumbersTracer implements AlgorithmTracer {
         long oddPositions = n / 2;
 
         emit.at("split")
-                .say("A length-%d string has %d even-indexed position(s) (need a prime digit: 2,3,5,7) "
-                        + "and %d odd-indexed position(s) (need an even digit: 0,2,4,6,8).",
-                        n, evenPositions, oddPositions)
+                .say("A length-%d string has %d even-indexed position%s (need a prime digit: 2,3,5,7) "
+                        + "and %d odd-indexed position%s (need an even digit: 0,2,4,6,8).",
+                        n, evenPositions, Narration.s(evenPositions), oddPositions, Narration.s(oddPositions))
                 .var("evenPositions", evenPositions).var("oddPositions", oddPositions).bits(n).step();
 
         long primeChoices = power(4, evenPositions, emit);

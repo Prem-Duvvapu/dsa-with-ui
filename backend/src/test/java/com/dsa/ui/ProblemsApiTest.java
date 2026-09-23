@@ -38,7 +38,7 @@ class ProblemsApiTest {
         JsonNode all = getJson("/api/problems");
         // 440 registrations across 18 services, 7 of which are ids claimed by two
         // services with different content. Pinned so accidental catalogue loss is caught.
-        assertEquals(433, all.size(), "catalogue size changed");
+        assertEquals(431, all.size(), "catalogue size changed");
         for (JsonNode entry : all) {
             assertTrue(entry.has("traced"), entry.path("id").asText() + " has no traced flag");
             assertFalse(entry.path("id").asText().isBlank());
@@ -59,8 +59,12 @@ class ProblemsApiTest {
 
         // Cross-service id collisions are surfaced rather than hidden; resolving them
         // means moving problems between services, which is Phase 4 work.
-        assertEquals(7, stats.get("duplicateIds").size(),
-                "duplicate id count changed: " + stats.get("duplicateIds"));
+        // Zero, and it must stay zero. Seven ids were registered twice and four more problems
+        // were registered under word-order variants of the same name; all eleven came from
+        // AdvancedGraphService and GraphBfsDfsService cataloguing the same problems. Both
+        // now live in one "Graphs" topic, which removes the cause rather than the symptom.
+        assertEquals(0, stats.get("duplicateIds").size(),
+                "a problem is registered twice again: " + stats.get("duplicateIds"));
     }
 
     @Test
@@ -98,6 +102,30 @@ class ProblemsApiTest {
         String body = result.getResponse().getContentAsString();
         assertTrue(body.contains("23"), "the trace should mention the caller's target");
         assertFalse(body.contains("[2, 7, 11, 15]"), "the default fixture must not leak in");
+    }
+
+    @Test
+    @DisplayName("Detail exposes the tracer's alternate input, so the UI can offer it")
+    void detailCarriesAlternateInput() throws Exception {
+        // Every tracer must declare a materially different second input - the contract makes
+        // it abstract so none can skip it, and alternateInputDiffersFromDefaults rejects one
+        // pasted from the spec defaults. All 431 of them existed only for the test suite:
+        // nothing served it, so the only input a visitor could reach was the default, and
+        // every branch that only the alternate reaches was permanently unvisitable. The
+        // code panel marks those branches as not taken; this is what lets someone go take
+        // them.
+        JsonNode detail = getJson("/api/problems/next-permutation");
+        JsonNode alternate = detail.get("alternateInput");
+
+        assertNotNull(alternate, "a traced problem must expose its alternate input");
+        assertTrue(alternate.has("nums"), "alternate input carries the tracer's own field names");
+
+        // And it must run, which is the whole point of offering it.
+        mockMvc.perform(post("/api/problems/next-permutation/execute")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(MAPPER.writeValueAsString(alternate)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.steps", not(empty())));
     }
 
     @Test
@@ -170,13 +198,16 @@ class ProblemsApiTest {
     }
 
     @Test
-    @DisplayName("Legacy per-topic endpoints still work during the migration")
-    void legacyEndpointsUnaffected() throws Exception {
-        // Arrays retired its last legacy id in the same batch that traced its remaining
-        // problems, so /api/arrays/execute/{anyId} now answers 410 for everything. DP is
-        // now fully migrated too, and its legacy route must fail explicitly rather than
-        // serving a hardcoded animation.
-        mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isOk());
-        mockMvc.perform(get("/api/dp/execute/longest-common-subsequence")).andExpect(status().isGone());
+    @DisplayName("The legacy per-topic routes are gone, not merely retired")
+    void legacyRoutesNoLongerExist() throws Exception {
+        // The eighteen legacy controllers are deleted. They answered 410 for a while after
+        // every id was traced; now the routes themselves do not exist, so Spring 404s. This
+        // asserts the deletion rather than leaving the migration's last step untested - if a
+        // legacy controller were ever reintroduced, this is what would catch it.
+        mockMvc.perform(get("/api/arrays/problems")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/dp/execute/longest-common-subsequence"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/graphs/bfs-dfs/execute/number-of-islands"))
+                .andExpect(status().isNotFound());
     }
 }

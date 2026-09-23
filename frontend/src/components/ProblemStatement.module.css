@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: 0 var(--space-md) var(--space-sm);
+  flex-shrink: 0;
+}
+
+.description {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  max-width: 78ch;
+}
+
+.constraints {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-sm);
+}
+
+.constraintsLabel {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.constraintsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.constraint {
+  font-family: var(--font-code);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.collapsedRow {
+  display: flex;
+  padding: 0 var(--space-md) 4px;
+  flex-shrink: 0;
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 1px 7px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.toggleBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}

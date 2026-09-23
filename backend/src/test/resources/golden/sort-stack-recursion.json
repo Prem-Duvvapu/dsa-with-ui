@@ -15,7 +15,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 6,
-    "description" : "Pop 5 off the top. Recursively sort the remaining 4 element(s) before reinserting it.",
+    "description" : "Pop 5 off the top. Recursively sort the remaining 4 elements before reinserting it.",
     "queueOrStackState" : [ "3", "1", "4", "1" ],
     "callStack" : [ "sortStack(size=5)" ],
     "nodeStates" : { },
@@ -33,7 +33,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 6,
-    "description" : "Pop 1 off the top. Recursively sort the remaining 3 element(s) before reinserting it.",
+    "description" : "Pop 1 off the top. Recursively sort the remaining 3 elements before reinserting it.",
     "queueOrStackState" : [ "3", "1", "4" ],
     "callStack" : [ "sortStack(size=5)", "sortStack(size=4)" ],
     "nodeStates" : { },
@@ -51,7 +51,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 6,
-    "description" : "Pop 4 off the top. Recursively sort the remaining 2 element(s) before reinserting it.",
+    "description" : "Pop 4 off the top. Recursively sort the remaining 2 elements before reinserting it.",
     "queueOrStackState" : [ "3", "1" ],
     "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)" ],
     "nodeStates" : { },
@@ -69,7 +69,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 6,
-    "description" : "Pop 1 off the top. Recursively sort the remaining 1 element(s) before reinserting it.",
+    "description" : "Pop 1 off the top. Recursively sort the remaining 1 element before reinserting it.",
     "queueOrStackState" : [ "3" ],
     "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)" ],
     "nodeStates" : { },
@@ -87,7 +87,7 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 6,
-    "description" : "Pop 3 off the top. Recursively sort the remaining 0 element(s) before reinserting it.",
+    "description" : "Pop 3 off the top. Recursively sort the remaining 0 elements before reinserting it.",
     "queueOrStackState" : [ ],
     "callStack" : [ "sortStack(size=5)", "sortStack(size=4)", "sortStack(size=3)", "sortStack(size=2)", "sortStack(size=1)" ],
     "nodeStates" : { },

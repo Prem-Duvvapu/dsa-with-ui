@@ -15,7 +15,7 @@
     "key" : 5,
     "tree" : [ 5, 3, 8, 1, 4, 7, 9 ]
   },
-  "stepCount" : 7,
+  "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 16,
@@ -447,6 +447,69 @@
     "description" : "7's subtree is settled - return it upward unchanged.",
     "queueOrStackState" : null,
     "callStack" : [ "deleteNode(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : { },
+    "dsType" : "Tree",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : [ {
+      "id" : 0,
+      "val" : "7",
+      "x" : 373.3333333333333,
+      "y" : 40.0,
+      "leftId" : 1,
+      "rightId" : 4,
+      "state" : "visited"
+    }, {
+      "id" : 1,
+      "val" : "3",
+      "x" : 160.0,
+      "y" : 114.0,
+      "leftId" : 2,
+      "rightId" : 3,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "val" : "1",
+      "x" : 53.333333333333336,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "val" : "4",
+      "x" : 266.6666666666667,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "val" : "8",
+      "x" : 480.0,
+      "y" : 114.0,
+      "leftId" : null,
+      "rightId" : 6,
+      "state" : "visited"
+    }, {
+      "id" : 6,
+      "val" : "9",
+      "x" : 586.6666666666666,
+      "y" : 188.0,
+      "leftId" : null,
+      "rightId" : null,
+      "state" : "unvisited"
+    } ]
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 21,
+    "description" : "Every frame has returned and 7 is the root again - the tree below is the result of deleting 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : { },

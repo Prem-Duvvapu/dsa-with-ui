@@ -2,7 +2,6 @@ package com.dsa.ui.service;
 
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,32 +21,6 @@ public class GreedyService implements ProblemProvider {
 
     public ProblemDetail getProblemById(String id) {
         return problems.get(id);
-    }
-
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // These ids have real tracers (tracer/impl). Refuse rather than let default:
-            // serve another algorithm's steps under this id. The default: stays until
-            // PROMPT D; other ids in this service still rely on it.
-            case "n-meetings-in-one-room":
-            case "jump-game-1":
-            case "assign-cookies":
-            case "fractional-knapsack":
-            case "lemonade-change":
-            case "minimum-platforms":
-            case "insert-interval":
-            case "job-sequencing":
-            case "valid-parentheses-checker":
-            case "jump-game-2":
-            case "candy":
-            case "shortest-job-first":
-            case "lru-page-replacement":
-            case "merge-intervals":
-            case "non-overlapping-intervals":
-                throw new LegacyTraceRetiredException(problemId);
-            case "jump-game-i": return generateJumpGameSteps();
-            default: return generateMeetingsSteps();
-        }
     }
 
     private void initProblems() {
@@ -134,7 +107,6 @@ public class GreedyService implements ProblemProvider {
             {"shortest-job-first", "Shortest Job First (SJF) Scheduling", "Greedy - Scheduling", "Medium", "Calculate average waiting time for CPU tasks using SJF scheduling."},
             {"lru-page-replacement", "LRU Page Replacement Algorithm", "Greedy - Cache", "Easy", "Calculate total page faults using LRU page replacement."},
             {"insert-interval", "Insert Interval", "Greedy - Intervals", "Medium", "Insert newInterval into sorted non-overlapping intervals array."},
-            {"merge-intervals", "Merge Overlapping Intervals", "Greedy - Intervals", "Medium", "Merge all overlapping intervals into non-overlapping range list."},
             {"non-overlapping-intervals", "Non-overlapping Intervals", "Greedy - Intervals", "Medium", "Find minimum number of intervals to remove to make remaining non-overlapping."}
         };
 
@@ -153,7 +125,10 @@ public class GreedyService implements ProblemProvider {
     private String bulkDsType(String id) {
         return switch (id) {
             case "valid-parentheses-checker" -> "String";
-            case "non-overlapping-intervals" -> "Interval";
+            // insert-interval labels every one of its cells "[a,b]" and merges them on a
+            // timeline; IntervalCanvas's own header already names it. Tagged Array it drew
+            // a bar chart whose height was each interval's END time.
+            case "non-overlapping-intervals", "insert-interval" -> "Interval";
             default -> "Array";
         };
     }
@@ -165,53 +140,6 @@ public class GreedyService implements ProblemProvider {
             List.of(), Map.of(), List.of(), vars,
             "Array", null, arrayState, null, null
         );
-    }
-
-    private List<ExecutionStep> generateMeetingsSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] start = new int[]{1, 3, 0, 5, 8, 5};
-        int[] end = new int[]{2, 4, 6, 7, 9, 9};
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 4, "N Meetings: Start = [1,3,0,5,8,5], End = [2,4,6,7,9,9]. Sort by end time.", createArrayState(end, -1, -1), Map.of("count", "0")));
-        steps.add(createStep(stepNum++, 8, "Select Meeting 1: [1..2]. End time limit = 2. Total meetings = 1.", createArrayState(end, 0, -1), Map.of("count", "1", "limit", "2")));
-        steps.add(createStep(stepNum++, 11, "Select Meeting 2: [3..4] (3 > 2). End time limit = 4. Total meetings = 2.", createArrayState(end, 1, -1), Map.of("count", "2", "limit", "4")));
-        steps.add(createStep(stepNum++, 11, "Select Meeting 4: [5..7] (5 > 4). End time limit = 7. Total meetings = 3.", createArrayState(end, 3, -1), Map.of("count", "3", "limit", "7")));
-        steps.add(createStep(stepNum++, 11, "Select Meeting 5: [8..9] (8 > 7). End time limit = 9. Total meetings = 4.", createArrayState(end, 4, -1), Map.of("count", "4", "limit", "9")));
-        steps.add(createStep(stepNum++, 15, "N Meetings Complete! Maximum non-overlapping meetings = 4.", createArrayState(end, -1, -1), Map.of("maxMeetings", "4")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateJumpGameSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{2, 3, 1, 1, 4};
-        int maxReach = 0;
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 3, "Jump Game I: nums = [2, 3, 1, 1, 4]. Initialize maxReach = 0.", createArrayState(nums, -1, -1), Map.of("maxReach", "0")));
-
-        for (int i = 0; i < nums.length; i++) {
-            maxReach = Math.max(maxReach, i + nums[i]);
-            steps.add(createStep(stepNum++, 6, "i=" + i + " (val " + nums[i] + "): Update maxReach = max(" + maxReach + ", " + i + "+" + nums[i] + ") = " + maxReach, createArrayState(nums, i, -1), Map.of("i", String.valueOf(i), "maxReach", String.valueOf(maxReach))));
-            if (maxReach >= nums.length - 1) {
-                steps.add(createStep(stepNum++, 8, "maxReach (" + maxReach + ") >= last index (" + (nums.length - 1) + ")! Can reach target!", createArrayState(nums, i, nums.length - 1), Map.of("canJump", "true")));
-                return steps;
-            }
-        }
-        steps.add(createStep(stepNum++, 10, "Jump Game Complete! Return TRUE.", createArrayState(nums, -1, -1), Map.of("canJump", "true")));
-        return steps;
-    }
-
-    private List<ExecutionStep> generateJobSequencingSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] profit = new int[]{100, 50, 40, 20};
-        int stepNum = 1;
-
-        steps.add(createStep(stepNum++, 4, "Job Sequencing: Profits = [100, 50, 40, 20]. Sort jobs by profit descending.", createArrayState(profit, -1, -1), Map.of("totalProfit", "0")));
-        steps.add(createStep(stepNum++, 8, "Schedule Job 1 (Profit 100) at deadline slot 2 -> Total Profit = 100", createArrayState(profit, 0, -1), Map.of("totalProfit", "100")));
-        steps.add(createStep(stepNum++, 11, "Schedule Job 2 (Profit 50) at deadline slot 1 -> Total Profit = 150", createArrayState(profit, 1, -1), Map.of("totalProfit", "150")));
-        steps.add(createStep(stepNum++, 14, "Job Sequencing Complete! Max Profit = 150 across 2 scheduled jobs.", createArrayState(profit, -1, -1), Map.of("maxProfit", "150")));
-        return steps;
     }
 
     private List<ArrayElement> createArrayState(int[] vals, int idx1, int idx2) {

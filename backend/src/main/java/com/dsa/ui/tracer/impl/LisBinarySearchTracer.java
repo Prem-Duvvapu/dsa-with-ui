@@ -18,6 +18,10 @@ import java.util.Map;
 @Component
 public class LisBinarySearchTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "tails[k] = the smallest possible tail of an increasing subsequence of length k+1";
+
+
     @Override
     public String id() {
         return "lis-binary-search";
@@ -108,13 +112,18 @@ public class LisBinarySearchTracer implements AlgorithmTracer {
                                 x, lo, size)
                         .var("x", x).var("pos", lo).var("size", size)
                         .array(java.util.Arrays.copyOf(tails, size), lo)
-                        .dpTable(table(nums, tails, size, inputIndex, -1, lo, false)).step();
+                        .dpTable(table(nums, tails, size, inputIndex, -1, lo, false)
+                                .withFormula(FORMULA, String.format(
+                                        "%d exceeds every tail, so tails grows to length %d", x, size))).step();
             } else {
                 emit.at("place").say("x=%d lands at index %d: a smaller tail can now end a run of length %d. Length stays %d.",
                                 x, lo, lo + 1, size)
                         .var("x", x).var("pos", lo).var("size", size)
                         .array(java.util.Arrays.copyOf(tails, size), lo)
-                        .dpTable(table(nums, tails, size, inputIndex, -1, lo, false)).step();
+                        .dpTable(table(nums, tails, size, inputIndex, -1, lo, false)
+                                .withFormula(FORMULA, String.format(
+                                        "tails[%d] = %d: a run of length %d can now end lower",
+                                        lo, x, lo + 1))).step();
             }
         }
 

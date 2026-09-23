@@ -20,7 +20,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 2,
-    "description" : "4 cities, 4 road(s), threshold 4. Seed the distance table with the roads themselves; -1 marks a pair with no route known yet. Floyd-Warshall will fill in the rest before any counting happens.",
+    "description" : "4 cities, 4 roads, threshold 4. Seed the distance table with the roads themselves; -1 marks a pair with no route known yet. Floyd-Warshall will fill in the rest before any counting happens.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -380,7 +380,7 @@
   }, {
     "stepNumber" : 20,
     "activeLine" : 31,
-    "description" : "Neighbour counts are [2, 3, 3, 2]. City 3 has the smallest count (2), so it is the answer.",
+    "description" : "Neighbour counts are [2, 3, 3, 2]. 2 cities tie on the fewest (2), and the rule breaks the tie towards the largest index, so city 3 is the answer.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },

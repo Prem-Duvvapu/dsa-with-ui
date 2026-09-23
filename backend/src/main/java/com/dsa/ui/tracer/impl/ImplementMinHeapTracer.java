@@ -11,7 +11,7 @@ import java.util.*;
 @Component
 public class ImplementMinHeapTracer implements AlgorithmTracer {
     @Override public String id() { return "implement-min-heap"; }
-    @Override public DsType dsType() { return DsType.TREE; }
+    @Override public DsType dsType() { return DsType.HEAP; }
 
     @Override public InputSpec inputSpec() {
         return InputSpec.of(

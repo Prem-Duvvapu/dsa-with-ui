@@ -25,7 +25,7 @@ public class SubsequencesPatternsTheoryTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STACK;
+        return DsType.RECURSION_TREE;
     }
 
     @Override
@@ -81,6 +81,14 @@ public class SubsequencesPatternsTheoryTracer implements AlgorithmTracer {
         int limit = in.getInt("limit");
         int[] count = {0};
         backtrack(0, nums, limit, new ArrayList<>(), 0, count, emit);
+
+        // Emitted after the recursion fully unwinds. Without it the trace ends four frames
+        // deep, freezing the sidebar mid-descent.
+        emit.at("capture")
+                .say("The search is exhausted and every frame has returned. %d subsequence%s summed to at most %d.",
+                        count[0], Narration.s(count[0]), limit)
+                .var("captured", count[0]).var("limit", limit)
+                .stack(java.util.List.of()).step();
     }
 
     private void backtrack(int idx, int[] nums, int limit, List<Integer> path, int sum, int[] count,

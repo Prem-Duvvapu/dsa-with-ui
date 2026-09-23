@@ -1,14 +1,15 @@
 {
   "anchors" : {
-    "backtrack" : 26,
-    "component" : 6,
-    "cycleDetected" : 23,
-    "init" : 2,
-    "noCycle" : 11,
-    "recurse" : 19,
-    "visit" : 15
+    "backEdge" : 23,
+    "component" : 7,
+    "discover" : 16,
+    "finish" : 26,
+    "forwardOrCrossEdge" : 25,
+    "init" : 4,
+    "noCycle" : 12,
+    "treeEdge" : 19
   },
-  "code" : "public boolean isCyclic(int v, List<List<Integer>> adj) {\n    boolean[] vis = new boolean[v];\n    boolean[] pathVis = new boolean[v];\n    for (int i = 0; i < v; i++) {\n        if (!vis[i]) {\n            if (dfsCheck(i, adj, vis, pathVis)) {\n                return true;\n            }\n        }\n    }\n    return false;\n}\n\nprivate boolean dfsCheck(int node, List<List<Integer>> adj, boolean[] vis, boolean[] pathVis) {\n    vis[node] = true;\n    pathVis[node] = true;\n    for (int next : adj.get(node)) {\n        if (!vis[next]) {\n            if (dfsCheck(next, adj, vis, pathVis)) {\n                return true;\n            }\n        } else if (pathVis[next]) {\n            return true;\n        }\n    }\n    pathVis[node] = false;\n    return false;\n}",
+  "code" : "static final int WHITE = 0, GRAY = 1, BLACK = 2;\n\npublic boolean isCyclic(int v, List<List<Integer>> adj) {\n    int[] colour = new int[v];          // all WHITE\n    for (int i = 0; i < v; i++) {\n        if (colour[i] == WHITE) {\n            if (dfsVisit(i, adj, colour)) {\n                return true;\n            }\n        }\n    }\n    return false;\n}\n\nprivate boolean dfsVisit(int node, List<List<Integer>> adj, int[] colour) {\n    colour[node] = GRAY;                // discovered, still on the call path\n    for (int next : adj.get(node)) {\n        if (colour[next] == WHITE) {\n            if (dfsVisit(next, adj, colour)) {\n                return true;\n            }\n        } else if (colour[next] == GRAY) {\n            return true;               // edge into the current path = cycle\n        }\n    }\n    colour[node] = BLACK;               // finished, off the call path\n    return false;\n}",
   "problemId" : "cycle-directed-dfs",
   "resolvedInput" : {
     "graph" : {
@@ -16,11 +17,11 @@
       "vertices" : 4
     }
   },
-  "stepCount" : 10,
+  "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "4 vertices, 4 directed edges. Track an overall visited set plus the current recursion path.",
+    "activeLine" : 4,
+    "description" : "4 vertices, 4 directed edges. Every vertex starts WHITE. DFS will colour it GRAY on discovery and BLACK when it finishes; a cycle is an edge into GRAY.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -30,7 +31,9 @@
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
-    "variables" : { },
+    "variables" : {
+      "colour[]" : "[WHITE, WHITE, WHITE, WHITE]"
+    },
     "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
@@ -89,8 +92,8 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 6,
-    "description" : "0 starts a new component. dfsCheck(0).",
+    "activeLine" : 7,
+    "description" : "0 is still WHITE, so it begins a fresh DFS tree.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -101,7 +104,8 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "src" : "0"
+      "colour[]" : "[WHITE, WHITE, WHITE, WHITE]",
+      "root" : "0"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -161,10 +165,10 @@
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 15,
-    "description" : "Enter 0. Mark it visited and add it to the current recursion path.",
+    "activeLine" : 16,
+    "description" : "Discover 0: WHITE -> GRAY. GRAY means \"on the path I am standing on right now\".",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)" ],
+    "callStack" : [ "dfsVisit(0)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "unvisited",
@@ -173,6 +177,7 @@
     },
     "activeEdges" : [ ],
     "variables" : {
+      "colour[]" : "[GRAY, WHITE, WHITE, WHITE]",
       "node" : "0"
     },
     "dsType" : "Graph",
@@ -234,9 +239,9 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 19,
-    "description" : "0 -> 1 is unvisited. Descend into it.",
+    "description" : "0 -> 1 reaches a WHITE vertex, so it is a TREE edge. Descend.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)" ],
+    "callStack" : [ "dfsVisit(0)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "unvisited",
@@ -245,8 +250,9 @@
     },
     "activeEdges" : [ "0-1" ],
     "variables" : {
-      "neighbour" : "1",
-      "node" : "0"
+      "classified" : "tree edge",
+      "colour[]" : "[GRAY, WHITE, WHITE, WHITE]",
+      "edge" : "0 -> 1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -306,10 +312,10 @@
     } ]
   }, {
     "stepNumber" : 5,
-    "activeLine" : 15,
-    "description" : "Enter 1. Mark it visited and add it to the current recursion path.",
+    "activeLine" : 16,
+    "description" : "Discover 1: WHITE -> GRAY. GRAY means \"on the path I am standing on right now\".",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)" ],
+    "callStack" : [ "dfsVisit(0)", "dfsVisit(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -318,6 +324,7 @@
     },
     "activeEdges" : [ ],
     "variables" : {
+      "colour[]" : "[GRAY, GRAY, WHITE, WHITE]",
       "node" : "1"
     },
     "dsType" : "Graph",
@@ -379,9 +386,9 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 19,
-    "description" : "1 -> 2 is unvisited. Descend into it.",
+    "description" : "1 -> 2 reaches a WHITE vertex, so it is a TREE edge. Descend.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)" ],
+    "callStack" : [ "dfsVisit(0)", "dfsVisit(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -390,8 +397,9 @@
     },
     "activeEdges" : [ "1-2" ],
     "variables" : {
-      "neighbour" : "2",
-      "node" : "1"
+      "classified" : "tree edge",
+      "colour[]" : "[GRAY, GRAY, WHITE, WHITE]",
+      "edge" : "1 -> 2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -451,10 +459,10 @@
     } ]
   }, {
     "stepNumber" : 7,
-    "activeLine" : 15,
-    "description" : "Enter 2. Mark it visited and add it to the current recursion path.",
+    "activeLine" : 16,
+    "description" : "Discover 2: WHITE -> GRAY. GRAY means \"on the path I am standing on right now\".",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)" ],
+    "callStack" : [ "dfsVisit(0)", "dfsVisit(1)", "dfsVisit(2)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -463,6 +471,7 @@
     },
     "activeEdges" : [ ],
     "variables" : {
+      "colour[]" : "[GRAY, GRAY, GRAY, WHITE]",
       "node" : "2"
     },
     "dsType" : "Graph",
@@ -524,9 +533,9 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 19,
-    "description" : "2 -> 3 is unvisited. Descend into it.",
+    "description" : "2 -> 3 reaches a WHITE vertex, so it is a TREE edge. Descend.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)" ],
+    "callStack" : [ "dfsVisit(0)", "dfsVisit(1)", "dfsVisit(2)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -535,8 +544,9 @@
     },
     "activeEdges" : [ "2-3" ],
     "variables" : {
-      "neighbour" : "3",
-      "node" : "2"
+      "classified" : "tree edge",
+      "colour[]" : "[GRAY, GRAY, GRAY, WHITE]",
+      "edge" : "2 -> 3"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -596,10 +606,10 @@
     } ]
   }, {
     "stepNumber" : 9,
-    "activeLine" : 15,
-    "description" : "Enter 3. Mark it visited and add it to the current recursion path.",
+    "activeLine" : 16,
+    "description" : "Discover 3: WHITE -> GRAY. GRAY means \"on the path I am standing on right now\".",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)", "dfsCheck(3)" ],
+    "callStack" : [ "dfsVisit(0)", "dfsVisit(1)", "dfsVisit(2)", "dfsVisit(3)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -608,6 +618,7 @@
     },
     "activeEdges" : [ ],
     "variables" : {
+      "colour[]" : "[GRAY, GRAY, GRAY, GRAY]",
       "node" : "3"
     },
     "dsType" : "Graph",
@@ -669,9 +680,9 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 23,
-    "description" : "3 -> 0: 0 is already on the CURRENT recursion path - a directed cycle exists.",
+    "description" : "3 -> 0 reaches a GRAY vertex: 0 is an ancestor still on this path, so this is a BACK edge - and a back edge is a cycle.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)", "dfsCheck(3)" ],
+    "callStack" : [ "dfsVisit(0)", "dfsVisit(1)", "dfsVisit(2)", "dfsVisit(3)" ],
     "nodeStates" : {
       "0" : "cycle",
       "1" : "visiting",
@@ -680,8 +691,81 @@
     },
     "activeEdges" : [ "3-0" ],
     "variables" : {
-      "neighbour" : "0",
-      "node" : "3"
+      "classified" : "BACK edge",
+      "colour[]" : "[GRAY, GRAY, GRAY, GRAY]",
+      "edge" : "3 -> 0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 23,
+    "description" : "A back edge was found, so the answer is settled and the remaining vertices never need colouring. The graph is cyclic.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "cycle",
+      "1" : "visiting",
+      "2" : "visiting",
+      "3" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "colour[]" : "[GRAY, GRAY, GRAY, GRAY]"
     },
     "dsType" : "Graph",
     "gridState" : null,

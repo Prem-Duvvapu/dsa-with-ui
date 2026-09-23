@@ -45,4 +45,12 @@ describe('GridCompanion', () => {
     expect(hero.textContent).toContain('(0,0)');
     expect(companion.textContent).not.toContain('(0,0)');
   });
+
+  it('keeps what the run emitted when a later step does not restate it', () => {
+    // Measured app-wide: 1506 steps across 142 of 232 problems fell through to the
+    // catalogue default mid-run, drawing the catalogue's data over the caller's input.
+    const steps = [{ gridState: [[1, 0], [0, 1]] }, { description: 'narration only' }];
+    render(<GridCanvas problem={{ defaultGrid: [[9, 9], [9, 9]] }} steps={steps} currentStepIndex={1} currentStep={steps[1]} />);
+    expect(screen.getAllByText('1')).toHaveLength(2); expect(screen.queryByText('9')).not.toBeInTheDocument();
+  });
 });

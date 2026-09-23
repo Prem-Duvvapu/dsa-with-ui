@@ -1,5 +1,5 @@
-import React from 'react';
-import { Play, Pause, SkipBack, SkipForward, RotateCcw } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Play, Pause, SkipBack, SkipForward, RotateCcw, Link2, Check, AlertTriangle } from 'lucide-react';
 import styles from './Controls.module.css';
 
 export default function Controls({
@@ -20,6 +20,28 @@ export default function Controls({
     ? Math.min(Math.max(currentStepIndex || 0, 0), stepCount - 1)
     : 0;
   const maxIndex = Math.max(0, stepCount - 1);
+
+  // 'idle' | 'copied' | 'failed'. useShareableView already mirrors the current step (and
+  // any custom input) into the URL with `replace`, for every run - so the address bar at
+  // any moment already IS the shareable link. This never reconstructs one; it only copies
+  // what is already there, which is also why it needs no props from the caller.
+  const [copyState, setCopyState] = useState('idle');
+  const resetTimer = useRef(null);
+  useEffect(() => () => clearTimeout(resetTimer.current), []);
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopyState('copied');
+    } catch {
+      // Never fail silently: an insecure context, an older browser, or a denied
+      // permission are all real, and a click that does nothing looks like a broken button
+      // rather than an environment limitation.
+      setCopyState('failed');
+    }
+    clearTimeout(resetTimer.current);
+    resetTimer.current = setTimeout(() => setCopyState('idle'), 2000);
+  };
 
   return (
     <div className={styles.container}>
@@ -50,6 +72,25 @@ export default function Controls({
           <button className="btn btn-outline" onClick={onReset} disabled={!hasSteps} title="Reset (Shortcut: R)">
             <RotateCcw size={13} /> Reset
           </button>
+
+          <button
+            type="button"
+            className="btn btn-outline"
+            onClick={copyLink}
+            title="Copy a link to this exact step"
+            aria-label="Copy link to this step"
+          >
+            {copyState === 'copied' ? <Check size={13} /> : copyState === 'failed' ? <AlertTriangle size={13} /> : <Link2 size={13} />}
+            {' '}{copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy link'}
+          </button>
+
+          {copyState !== 'idle' && (
+            <span role="status" className="sr-only">
+              {copyState === 'copied'
+                ? 'Link to this step copied to clipboard.'
+                : 'Could not copy the link. Copy the address bar instead.'}
+            </span>
+          )}
 
           <button
             className="btn btn-outline"

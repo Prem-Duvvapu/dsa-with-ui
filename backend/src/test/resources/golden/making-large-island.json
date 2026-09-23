@@ -17,7 +17,7 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 3,
-    "description" : "3x3 grid: 6 land cell(s), 3 water cell(s). Every land cell starts as its own island; the right and down neighbours are enough to union them all.",
+    "description" : "3x3 grid: 6 land cells, 3 water cells. Every land cell starts as its own island; the right and down neighbours are enough to union them all.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -107,7 +107,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 20,
-    "description" : "Island 1 (root cell 0) covers 3 cell(s).",
+    "description" : "Island 1 (root cell 0) covers 3 cells.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -126,7 +126,7 @@
   }, {
     "stepNumber" : 7,
     "activeLine" : 20,
-    "description" : "Island 2 (root cell 7) covers 3 cell(s).",
+    "description" : "Island 2 (root cell 7) covers 3 cells.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -145,7 +145,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 34,
-    "description" : "Flip (0,2): it touches 2 distinct island(s) [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
+    "description" : "Flip (0,2): it touches 2 distinct islands [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -183,7 +183,7 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 34,
-    "description" : "Flip (1,1): it touches 2 distinct island(s) [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
+    "description" : "Flip (1,1): it touches 2 distinct islands [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -203,7 +203,7 @@
   }, {
     "stepNumber" : 11,
     "activeLine" : 34,
-    "description" : "Flip (2,0): it touches 2 distinct island(s) [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
+    "description" : "Flip (2,0): it touches 2 distinct islands [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -223,7 +223,7 @@
   }, {
     "stepNumber" : 12,
     "activeLine" : 45,
-    "description" : "Every water cell tried. Flipping (0,2) gives the largest island: 7 cell(s).",
+    "description" : "Every water cell tried. Flipping (0,2) gives the largest island: 7 cells.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },

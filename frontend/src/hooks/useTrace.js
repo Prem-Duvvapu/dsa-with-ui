@@ -41,20 +41,35 @@ function classifyExecValue(execValue) {
 /**
  * @param {string|null} problemId  the currently selected problem id
  * @param {object|null} problem    the catalogue entry (for checked-in offline steps)
+ * @param {{initialSpeed?: number}} [options]  persisted preferences to start from
  * @returns playback state + controls
  */
-export default function useTrace(problemId, problem) {
+export default function useTrace(problemId, problem, options = {}) {
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   // 1000ms is the "1.0x" preset in Controls — the only default that lands on a real
   // button. 800ms matched none of the 2000/1000/500/250 presets, so nothing was ever
-  // highlighted at startup.
-  const [speed, setSpeed] = useState(1000);
+  // highlighted at startup. App passes the persisted preference in as initialSpeed so a
+  // reload does not silently reset someone who prefers 4x.
+  const [speed, setSpeed] = useState(options.initialSpeed ?? 1000);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   /** true when the last successful run hit the server's step budget. */
   const [truncated, setTruncated] = useState(false);
+  /**
+   * The input the server actually ran, echoed back on the execute response. Needed so the
+   * UI can state what is being animated without keeping the input editor on screen. It has
+   * been on the wire all along and was never read - IntervalCanvas reads
+   * `step.resolvedInput`, which is always undefined, because nothing put it there.
+   */
+  const [resolvedInput, setResolvedInput] = useState(null);
+  /**
+   * The tracer's `// @a` anchors, name -> line. Every anchor marks a line the algorithm can
+   * reach; comparing them against the lines this run actually visited is what lets the code
+   * panel say "this input never took that branch" instead of leaving it silently unmarked.
+   */
+  const [anchors, setAnchors] = useState(null);
   /** Per-field messages from the last rejected POST /execute. Cleared on any success. */
   const [fieldErrors, setFieldErrors] = useState({});
   /** The full per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
@@ -85,6 +100,8 @@ export default function useTrace(problemId, problem) {
     setLoading(true);
     setDetail(null);
     setSteps([]);
+    setResolvedInput(null);
+    setAnchors(null);
     setTruncated(false);
 
     (async () => {
@@ -152,6 +169,12 @@ export default function useTrace(problemId, problem) {
         }
 
         setSteps(classified.steps);
+        setResolvedInput(Array.isArray(execOutcome.value)
+          ? null
+          : execOutcome.value?.resolvedInput ?? null);
+        setAnchors(Array.isArray(execOutcome.value)
+          ? null
+          : execOutcome.value?.anchors ?? null);
         setTruncated(!Array.isArray(execOutcome.value)
           && execOutcome.value?.truncated === true);
         setCurrentStepIndex(0);
@@ -328,6 +351,8 @@ export default function useTrace(problemId, problem) {
     loading,
     error,
     truncated,
+    resolvedInput,
+    anchors,
     fieldErrors,
     detail,
     play,

@@ -58,7 +58,14 @@ public class FactorialNumberTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int n = in.getInt("n");
-        recurse(n, new ArrayList<>(), emit);
+        int result = recurse(n, new ArrayList<>(), emit);
+
+        // Emitted after the outermost frame pops, so the trace ends at depth 0 rather than
+        // freezing the sidebar on factorial(n)'s own frame.
+        emit.at("call")
+                .say("The stack is empty again. factorial(%d) = %d.", n, result)
+                .var("n", n).var("result", result)
+                .stack(java.util.List.of()).step();
     }
 
     private int recurse(int n, List<String> frames, StepEmitter emit) {

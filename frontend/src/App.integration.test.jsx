@@ -1,6 +1,7 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, cleanup, within } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import React from 'react';
+import { TOUR_STEPS } from './components/TourGuide';
 import '@testing-library/jest-dom';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
@@ -49,8 +50,8 @@ function problem(id, title, category, dsType = 'Array') {
 
 /** The full catalogue served by GET /api/problems. */
 const CATALOG = [
-  problem('bfs-traversal', 'BFS Traversal', 'Graph BFS/DFS', 'Graph'),
-  problem('dijkstra', 'Dijkstra', 'Advanced Graphs', 'Graph'),
+  problem('bfs-traversal', 'BFS Traversal', 'Graphs', 'Graph'),
+  problem('dijkstra', 'Dijkstra', 'Graphs', 'Graph'),
   problem('tree-preorder', 'Preorder Traversal', 'Binary Trees', 'Tree'),
   problem('n-queens', 'N Queens', 'Recursion & Backtracking', 'RecursionTree'),
   problem('merge-sort', 'Merge Sort', 'Sorting Algorithms', 'Array'),
@@ -149,8 +150,8 @@ describe('App catalogue loading', () => {
 
   it('merges every category into the catalogue, including Maths and Basic Recursion', async () => {
     renderApp();
-    // Header prints the merged count; 18 problems.
-    await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
+    // Header prints runnable-of-merged; 18 problems, all traced in this fixture.
+    await waitFor(() => expect(screen.getByText('18/18 runnable')).toBeInTheDocument());
     expect(screen.getByText('Count Digits')).toBeInTheDocument();
     expect(screen.getByText('Print 1 To N')).toBeInTheDocument();
   });
@@ -169,7 +170,7 @@ describe('App catalogue loading', () => {
     renderApp();
     // The backend contract already de-duplicates, but a defensive client guard keeps a
     // malformed response from creating duplicate React keys or ambiguous selection.
-    await waitFor(() => expect(screen.getByText('18 algorithms')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('18/18 runnable')).toBeInTheDocument());
     expect(screen.queryByText('Two Sum (Duplicate)')).not.toBeInTheDocument();
   });
 });
@@ -325,7 +326,7 @@ describe('App execution capture', () => {
     // A graph traversal is already fully legible from watching nodes change state in
     // motion; a row-per-vertex strip beneath it conveys the same traversal order less
     // directly than the diagram itself. See RCA-016 / PROMPT-F-visual-fidelity.md.
-    const bfs = problem('bfs-traversal', 'BFS Traversal', 'Graph BFS/DFS', 'Graph');
+    const bfs = problem('bfs-traversal', 'BFS Traversal', 'Graphs', 'Graph');
 
     vi.stubGlobal('fetch', vi.fn((url) => {
       if (url === '/api/problems') return Promise.resolve(ok([bfs]));
@@ -502,6 +503,14 @@ describe('App input panel', () => {
     return {
       encoding: 'delta',
       truncated: false,
+      // The real /execute echoes back what it ran - verified against the running backend,
+      // which returns {"target": 9, "nums": [2, 7, 11, 15]} for this problem. InputSummary
+      // reads it, so a mock without it would test a shape the server does not send.
+      resolvedInput: { nums, target },
+      // Line 6 is the "found" branch and line 10 the "no pair exists" one. The mock run
+      // finds a pair, so line 10 is a branch this input never took - the real two-sum
+      // trace behaves identically, which is what F2 in AUDIT.md was about.
+      anchors: { init: 2, complement: 4, found: 6, remember: 8, none: 10 },
       steps: [{
         stepNumber: 1, activeLine: 1, keyframe: true, dsType: 'Array', variables: {},
         description: `custom run nums=${JSON.stringify(nums)} target=${target}`,
@@ -535,13 +544,182 @@ describe('App input panel', () => {
     }));
   });
 
-  /** two-sum is the app's default selection, so the panel is already open on mount. */
+  /**
+   * two-sum is the app's default selection, so its trace runs on mount. The input EDITOR
+   * is not open though: it is setup furniture, and while a trace plays the running input
+   * is stated by InputSummary instead. Tests that drive the editor open it the way a user
+   * does, from that summary's Edit button.
+   */
   async function openTwoSum() {
     renderApp();
     await waitFor(() =>
       expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
     );
+    fireEvent.click(screen.getByRole('button', { name: /Edit/i }));
+    await screen.findByLabelText('Target sum');
   }
+
+  it('says which branches the current input never took', async () => {
+    // F2: 93 problems have a line the default input never reaches. Left unmarked it reads
+    // as if the animation skipped something; marked, it says the true thing - the branch
+    // exists and this input did not take it.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    expect(screen.getByTestId('unreached-note').textContent).toMatch(/branch(es)? not taken/);
+  });
+
+  it('gives the canvas state a text alternative', async () => {
+    // A screen-reader user gets the narration from LiveTraceTicker and the code from the
+    // code panel, but the DATA the canvas draws had no text form at all.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    expect(screen.getByTestId('step-state-summary').textContent)
+      .toContain('Array of 4: 2, 7, 11, 15.');
+  });
+
+  it('anchors every tour step to an element the app actually renders', async () => {
+    // The contract that keeps the tour honest. Steps point at data-tour attributes rather
+    // than classes or coordinates precisely so a refactor has to break them deliberately -
+    // and this is what makes "deliberately" mean "a red test". The code panel moved from
+    // below the canvas to beside it in this same branch, which is exactly the kind of
+    // change that silently leaves a tour highlighting empty space.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    const missing = TOUR_STEPS
+      .map((s) => s.target)
+      .filter((t) => document.querySelector(`[data-tour="${t}"]`) === null);
+
+    expect(missing, 'tour steps pointing at anchors no longer in the DOM').toEqual([]);
+  });
+
+  it('opens the tour from the header and walks through it', async () => {
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Tour/i }));
+    expect(await screen.findByTestId('tour-guide')).toBeInTheDocument();
+    expect(screen.getByText('Every problem, one list')).toBeInTheDocument();
+
+    // Scoped to the tour's own dialog: the playback controls have their own "Next".
+    const tour = within(screen.getByRole('dialog', { name: /Every problem, one list/i }));
+    fireEvent.click(tour.getByRole('button', { name: 'Next' }));
+    expect(screen.getByText('The algorithm actually runs')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Skip' }));
+    await waitFor(() => expect(screen.queryByTestId('tour-guide')).not.toBeInTheDocument());
+  });
+
+  it('greets a genuine first visitor, once', async () => {
+    // setupTests marks the guide seen by default, so this opts back into a real first load.
+    window.localStorage.removeItem('dsa-ui:seenWelcome');
+    renderApp();
+
+    expect(await screen.findByTestId('welcome-guide')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /Start exploring/i }));
+    await waitFor(() => expect(screen.queryByTestId('welcome-guide')).not.toBeInTheDocument());
+
+    // Second visit: introduced already, so it stays out of the way.
+    cleanup();
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(screen.queryByTestId('welcome-guide')).not.toBeInTheDocument();
+  });
+
+  it('is reachable again from the shortcut panel after being dismissed', async () => {
+    // A first-run screen nobody can get back to punishes a misclick.
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(screen.queryByTestId('welcome-guide')).not.toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: '?' });
+    fireEvent.click(await screen.findByRole('button', { name: /Show the introduction again/i }));
+    expect(await screen.findByTestId('welcome-guide')).toBeInTheDocument();
+  });
+
+  it('opens the shortcut list with ? and closes it with Escape', async () => {
+    // The shortcuts worked before this; they were written down only in two button
+    // tooltips, so nobody could find them.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    fireEvent.keyDown(window, { key: '?' });
+    expect(await screen.findByRole('dialog', { name: 'Keyboard shortcuts' })).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { code: 'Escape' });
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Keyboard shortcuts' })).not.toBeInTheDocument()
+    );
+  });
+
+  it('keeps stepping with J and L after a control button has been clicked', async () => {
+    // The old handler ignored every key while a BUTTON had focus, so one click on Play
+    // killed the keyboard until you clicked elsewhere.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    const reset = screen.getByRole('button', { name: /Reset/i });
+    reset.focus();
+    expect(document.activeElement).toBe(reset);
+
+    fireEvent.keyDown(window, { code: 'KeyL' });
+    fireEvent.keyDown(window, { code: 'KeyJ' });
+    // Still responsive: the shortcut list still opens from the same focused-button state.
+    fireEvent.keyDown(window, { key: '?' });
+    expect(await screen.findByRole('dialog', { name: 'Keyboard shortcuts' })).toBeInTheDocument();
+  });
+
+  it('remembers the playback speed across a reload', async () => {
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    fireEvent.click(screen.getByRole('button', { name: '4x' }));
+    expect(window.localStorage.getItem('dsa-ui:speed')).toBe('250');
+
+    cleanup();
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    // The 4.0x preset is still the active one rather than silently resetting to 1.0x.
+    expect(screen.getByRole('button', { name: '4x' }).className).toMatch(/Active/);
+  });
+
+  it('keeps the input editor and complexity card off screen until asked for', async () => {
+    // The point of the change: while a trace plays, the row holds the code panel alone.
+    // The editor and the complexity card are setup furniture, opened on demand.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+
+    expect(screen.queryByLabelText('Target sum')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Edit input/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /memory & complexity/i })).toBeInTheDocument();
+  });
+
+  it('still says which input the animation is running on', async () => {
+    // Hiding the editor must not hide what is being animated - that was the whole
+    // requirement. The echo comes from the server's resolvedInput, not the form state.
+    renderApp();
+    await waitFor(() =>
+      expect(screen.getByText('custom run nums=[2,7,11,15] target=9')).toBeInTheDocument()
+    );
+    expect(screen.getByTestId('input-summary')).toBeInTheDocument();
+  });
 
   it('renders an editor from inputSpec and runs a custom input through POST /execute', async () => {
     await openTwoSum();
@@ -621,6 +799,35 @@ describe('App mobile drawer', () => {
     Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: ORIGINAL_WIDTH });
   });
 
+  it('starts with the statement, code and tab card collapsed for the canvas\'s sake', async () => {
+    // The app shell is a fixed 100vh with overflow hidden, and both panels defaulted open
+    // on desktop and mobile alike. Stacked above the canvas on a phone with nothing
+    // yielding height, they squeezed the canvas's own wrapper to zero pixels - measured,
+    // not assumed - so a first-time mobile visitor opening any problem never saw the thing
+    // the whole app exists to show.
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(await screen.findByRole('button', { name: /expand the code panel/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Code' })).not.toBeInTheDocument();
+  });
+
+  it('still offers the code, input and complexity tabs on mobile once opened', async () => {
+    // Moving the code beside the canvas is a DESKTOP change. Mobile keeps the stacked tab
+    // card, and an early version of that refactor made this branch unreachable - the phone
+    // layout silently lost the code panel, the input editor and the complexity card at
+    // once, with every test still green.
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.click(await screen.findByRole('button', { name: /expand the code panel/i }));
+
+    // Input is conditional on the problem having an inputSpec, which this file's shared
+    // fixture does not set - see problem() above - so it is deliberately not asserted here.
+    expect(await screen.findByRole('button', { name: 'Code' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Memory' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Complexity' })).toBeInTheDocument();
+  });
+
   it('starts closed on a narrow viewport', async () => {
     renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));
@@ -635,10 +842,11 @@ describe('App mobile drawer', () => {
     fireEvent.click(screen.getByLabelText(/menu|sidebar|navigation/i));
     await waitFor(() => expect(screen.getByRole('combobox')).toBeInTheDocument());
 
-    // The backdrop is the only aria-hidden element covering the screen at this point.
-    const backdrop = document.querySelector('[aria-hidden="true"]');
-    expect(backdrop).toBeTruthy();
-    fireEvent.click(backdrop);
+    // Targeted by test id, not by [aria-hidden="true"]: decorative icons carry that
+    // attribute too, so "the only aria-hidden element" stopped being true the first time
+    // an icon was added anywhere earlier in the tree, and the test then clicked the icon
+    // and reported the drawer as broken.
+    fireEvent.click(screen.getByTestId('mobile-backdrop'));
 
     await waitFor(() => expect(screen.queryByRole('combobox')).not.toBeInTheDocument());
   });
@@ -654,5 +862,144 @@ describe('App mobile drawer', () => {
     fireEvent.keyDown(window, { code: 'Escape' });
 
     await waitFor(() => expect(screen.queryByRole('combobox')).not.toBeInTheDocument());
+  });
+});
+
+describe('App command palette', () => {
+  it('is closed until Cmd/Ctrl+K opens it', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+
+    expect(screen.getByRole('dialog', { name: /command palette/i })).toBeInTheDocument();
+  });
+
+  it('opens with the query field already focused', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+    expect(within(dialog).getByRole('textbox')).toHaveFocus();
+  });
+
+  it('Escape closes it', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    expect(screen.getByRole('dialog', { name: /command palette/i })).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { code: 'Escape' });
+
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+  });
+
+  it('clicking the backdrop closes it', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    fireEvent.click(screen.getByTestId('command-palette-backdrop'));
+
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+  });
+
+  it('jumps straight to a problem chosen from the results, and closes', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+
+    fireEvent.change(within(dialog).getByRole('textbox'), { target: { value: 'Dijkstra' } });
+    fireEvent.click(within(dialog).getByText('Dijkstra'));
+
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument());
+    expect(screen.getAllByText('Dijkstra').length).toBeGreaterThan(0);
+  });
+
+  it('offers quick actions on an empty query, including toggling the theme', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    expect(document.documentElement.getAttribute('data-theme')).toBeNull();
+
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+
+    fireEvent.click(within(dialog).getByRole('button', { name: /toggle theme/i }));
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+  });
+});
+
+describe('App comparison panel', () => {
+  const TWO_SUM_WITH_ALTERNATE = {
+    id: 'two-sum', title: 'Two Sum', category: 'Arrays', difficulty: 'Easy', dsType: 'Array',
+    traced: true, javaCode: 'int solve() {\n    return 0;\n}',
+    complexity: { timeComplexity: 'O(N)', spaceComplexity: 'O(1)' },
+    alternateInput: { nums: [2, 3, 1], target: 5 }
+  };
+
+  function tinyTrace(n) {
+    return {
+      encoding: 'full',
+      resolvedInput: { n },
+      steps: Array.from({ length: n }, (_, i) => ({
+        stepNumber: i + 1, activeLine: 1, description: `compare step ${i + 1}`,
+        arrayState: [{ index: 0, value: i, state: 'default' }]
+      }))
+    };
+  }
+
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn((url, opts) => {
+      calls.push(url);
+      if (url === '/api/problems') return Promise.resolve(ok([TWO_SUM_WITH_ALTERNATE]));
+      if (url === '/api/problems/two-sum') return Promise.resolve(ok(TWO_SUM_WITH_ALTERNATE));
+      if (url === '/api/problems/two-sum/execute' && opts?.method === 'POST') {
+        const body = JSON.parse(opts.body);
+        const n = Object.keys(body).length === 0 ? 2 : 5;
+        return Promise.resolve(ok(tinyTrace(n)));
+      }
+      if (url === '/api/problems/two-sum/execute') return Promise.resolve(ok(tinyTrace(2)));
+      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
+    }));
+  });
+
+  it('offers a compare toggle only when the problem has an alternate input', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+    expect(await screen.findByRole('button', { name: /compare other case/i })).toBeInTheDocument();
+  });
+
+  it('shows both runs stacked, each with its own step count, once opened', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.click(await screen.findByRole('button', { name: /compare other case/i }));
+
+    expect(await screen.findByText(/default input/i)).toHaveTextContent('2 steps');
+    await waitFor(() =>
+      expect(screen.getByText((_, el) => el?.tagName === 'P' && /other case/i.test(el.textContent)))
+        .toHaveTextContent('5 steps')
+    );
+  });
+
+  it('hides again on a second click', async () => {
+    renderApp();
+    await waitFor(() => expect(calls).toContain('/api/problems'));
+
+    fireEvent.click(await screen.findByRole('button', { name: /compare other case/i }));
+    await screen.findByText(/default input/i);
+
+    fireEvent.click(screen.getByRole('button', { name: /hide other case/i }));
+    expect(screen.queryByText(/default input/i)).not.toBeInTheDocument();
   });
 });

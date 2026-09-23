@@ -69,6 +69,12 @@ public class PrintNTo1Tracer implements AlgorithmTracer {
         }
 
         recurse(n, n, nodes, states, emit);
+
+        // Emitted after the outermost frame pops, so the trace ends at depth 0.
+        emit.at("unwind")
+                .say("Every frame has returned. The call stack is empty and %d..1 were printed in order.", n)
+                .var("n", n)
+                .tree(nodes).nodes(states).step();
     }
 
     private void recurse(int current, int total, List<TreeNode> nodes, Map<Integer, String> states,

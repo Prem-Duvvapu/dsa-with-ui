@@ -208,8 +208,8 @@ public class StackArrayImplTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Sequence finished. top = %d, so %d value(s) remain in the %d-slot array.",
-                        top, top + 1, capacity)
+                .say("Sequence finished. top = %d, so %d value%s remain in the %d-slot array.",
+                        top, top + 1, Narration.s(top + 1), capacity)
                 .var("top", top).var("size", top + 1)
                 .arrayState(buffer(slots, top, -1)).stack(live(slots, top)).step();
     }

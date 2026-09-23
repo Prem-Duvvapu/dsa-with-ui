@@ -8,22 +8,26 @@ import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
 
 describe('Frontend Component Tests', () => {
-  it('renders Header with the product name and catalog size', () => {
-    render(<Header totalProblems={11} />);
+  it('renders Header with the product name and how much of the catalogue runs', () => {
+    // Bench's app bar asks for "N/433 runnable", not a catalogue size. The distinction is
+    // the honesty flag the backend carries: a problem is listed because it is catalogued
+    // and runnable because it is traced, and only the second number means you can press
+    // play. They are equal today, which is exactly the fact worth showing.
+    render(<Header totalProblems={11} runnableProblems={9} />);
     expect(screen.getByText('DSA Visualizer')).toBeInTheDocument();
-    expect(screen.getByText('11 algorithms')).toBeInTheDocument();
+    expect(screen.getByText('9/11 runnable')).toBeInTheDocument();
   });
 
   it('renders Sidebar with list of graph problems', () => {
     const mockProblems = [
-      { id: 'bfs-traversal', title: 'BFS Traversal of Graph', category: 'Graph BFS/DFS', difficulty: 'Easy', dsType: 'Queue' },
-      { id: 'dfs-traversal', title: 'DFS Traversal of Graph', category: 'Graph BFS/DFS', difficulty: 'Easy', dsType: 'Stack' }
+      { id: 'bfs-traversal', title: 'BFS Traversal of Graph', category: 'Graphs', difficulty: 'Easy', dsType: 'Queue' },
+      { id: 'dfs-traversal', title: 'DFS Traversal of Graph', category: 'Graphs', difficulty: 'Easy', dsType: 'Stack' }
     ];
     render(
       <Sidebar
         problems={mockProblems}
         activeProblemId="bfs-traversal"
-        activeCategory="Graph BFS/DFS"
+        activeCategory="Graphs"
         onSelectCategory={() => {}}
         onSelectProblem={() => {}}
       />

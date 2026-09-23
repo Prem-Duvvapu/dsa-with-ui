@@ -26,7 +26,7 @@ public class KthLargestElementTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.TREE;
+        return DsType.HEAP;
     }
 
     @Override
@@ -130,8 +130,8 @@ public class KthLargestElementTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Every value processed. The heap's root, %d, is the %d-th largest.",
-                        heap.get(0), k)
+                .say("Every value processed. The heap's root, %d, is the %s largest.",
+                        heap.get(0), Narration.ordinal(k))
                 .var("answer", heap.get(0))
                 .tree(render(heap, 0)).step();
     }

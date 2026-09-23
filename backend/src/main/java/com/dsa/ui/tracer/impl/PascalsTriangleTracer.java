@@ -89,7 +89,7 @@ public class PascalsTriangleTracer implements AlgorithmTracer {
         for (int i = 0; i < numRows; i++) {
             List<Integer> row = new ArrayList<>();
             emit.at("newRow")
-                    .say("Start building row %d (will have %d elements).", i, i + 1)
+                    .say("Start building row %d (will have %d element%s).", i, i + 1, Narration.s(i + 1))
                     .var("row", i)
                     .grid(display)
                     .step();

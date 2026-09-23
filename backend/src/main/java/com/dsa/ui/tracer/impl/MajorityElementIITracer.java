@@ -97,8 +97,8 @@ public class MajorityElementIITracer implements AlgorithmTracer {
         int el1 = Integer.MIN_VALUE, el2 = Integer.MIN_VALUE;
 
         emit.at("init")
-                .say("Find elements appearing > ⌊%d/3⌋ = %d times. Two candidate slots, both empty.",
-                        nums.length, nums.length / 3)
+                .say("Find elements appearing > ⌊%d/3⌋ = %d time%s. Two candidate slots, both empty.",
+                        nums.length, nums.length / 3, Narration.s(nums.length / 3))
                 .var("el1", "∅").var("cnt1", 0).var("el2", "∅").var("cnt2", 0)
                 .array(nums)
                 .step();
@@ -174,10 +174,10 @@ public class MajorityElementIITracer implements AlgorithmTracer {
         if (cnt2 > mini && el2 != Integer.MIN_VALUE) ls.add(el2);
 
         emit.at("result")
-                .say("Threshold = %d. el1=%d appears %d times%s. el2=%s appears %d times%s. Result: %s.",
-                        mini, el1, cnt1, cnt1 > mini ? " ✓" : " ✗",
+                .say("Threshold = %d. el1=%d appears %d time%s%s. el2=%s appears %d time%s%s. Result: %s.",
+                        mini, el1, cnt1, Narration.s(cnt1), cnt1 > mini ? " ✓" : " ✗",
                         el2 == Integer.MIN_VALUE ? "∅" : String.valueOf(el2), cnt2,
-                        cnt2 > mini ? " ✓" : " ✗", ls)
+                        Narration.s(cnt2), cnt2 > mini ? " ✓" : " ✗", ls)
                 .var("result", ls.toString())
                 .array(nums)
                 .step();

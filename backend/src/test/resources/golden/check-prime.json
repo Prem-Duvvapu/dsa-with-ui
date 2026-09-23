@@ -1,15 +1,16 @@
 {
   "anchors" : {
-    "check" : 10,
+    "check" : 12,
     "factor" : 6,
-    "init" : 3
+    "init" : 3,
+    "noFactor" : 9
   },
-  "code" : "public boolean isPrime(int n) {\n    if (n <= 1) return false;\n    int count = 0;\n    for (int i = 1; i * i <= n; i++) {\n        if (n % i == 0) {\n            count++;\n            if ((n / i) != i) count++;\n        }\n    }\n    return count == 2;\n}",
+  "code" : "public boolean isPrime(int n) {\n    if (n <= 1) return false;\n    int count = 0;\n    for (int i = 1; i * i <= n; i++) {\n        if (n % i == 0) {\n            count++;\n            if ((n / i) != i) count++;\n        } else {\n            continue;\n        }\n    }\n    return count == 2;\n}",
   "problemId" : "check-prime",
   "resolvedInput" : {
     "n" : 29
   },
-  "stepCount" : 3,
+  "stepCount" : 7,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 3,
@@ -60,7 +61,111 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 10,
+    "activeLine" : 9,
+    "description" : "i=2 does not divide 29 - nothing to count here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 29,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 9,
+    "description" : "i=3 does not divide 29 - nothing to count here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 29,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 9,
+    "description" : "i=4 does not divide 29 - nothing to count here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "4"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 29,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 9,
+    "description" : "i=5 does not divide 29 - nothing to count here.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "count" : "2",
+      "i" : "5"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 29,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 12,
     "description" : "Factor count = 2 -> PRIME (exactly 1 and n).",
     "queueOrStackState" : null,
     "callStack" : [ ],

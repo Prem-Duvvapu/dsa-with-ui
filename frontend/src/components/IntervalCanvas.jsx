@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './IntervalCanvas.module.css';
 import CanvasShell from './CanvasShell';
 
 /**
@@ -8,8 +9,8 @@ import CanvasShell from './CanvasShell';
  * Used by DsType.INTERVAL (e.g. n-meetings-in-one-room, merge-intervals, insert-interval).
  *
  * State tokens:
- * - Current/evaluating interval: var(--probe) (#ffb000)
- * - Selected/scheduled/merged interval: var(--settled) (#3ddc97)
+ * - Current/evaluating interval: var(--probe)
+ * - Selected/scheduled/merged interval: var(--settled)
  * - Rejected/non-overlapping: var(--bench-rule-strong)
  * - Default/pending: var(--bench-fill) with var(--bench-rule-strong) border
  */
@@ -26,8 +27,14 @@ function parseMeetingsVar(str) {
   }));
 }
 
-export default function IntervalCanvas({ problem, currentStep, step }) {
+export default function IntervalCanvas({ problem, currentStep, step, resolvedInput }) {
   const activeStep = currentStep || step;
+  // What the server actually ran, echoed back on the trace. This used to be read off the
+  // STEP - `activeStep.resolvedInput` - which nothing ever sets, so those branches had
+  // never executed and the chain fell through to the inputSpec defaults instead. For
+  // n-meetings-in-one-room that is 15 of its 16 steps, so a custom run drew the default
+  // meetings while the narration described the caller's.
+  const ranOn = resolvedInput ?? activeStep?.resolvedInput ?? null;
 
   // Extract intervals from available step metadata
   let intervals = [];
@@ -60,8 +67,8 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
       const state = activeStep?.arrayState?.[idx]?.state || 'default';
       return { ...m, state };
     });
-  } else if (Array.isArray(activeStep?.resolvedInput?.intervals)) {
-    intervals = activeStep.resolvedInput.intervals
+  } else if (Array.isArray(ranOn?.intervals)) {
+    intervals = ranOn.intervals
       .filter((interval) => Array.isArray(interval) && interval.length >= 2)
       .map((interval, idx) => ({
         id: idx + 1,
@@ -70,9 +77,9 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
         end: interval[1],
         state: activeStep?.arrayState?.[idx]?.state || 'default'
       }));
-  } else if (activeStep?.resolvedInput?.start && activeStep?.resolvedInput?.end) {
-    const starts = activeStep.resolvedInput.start;
-    const ends = activeStep.resolvedInput.end;
+  } else if (ranOn?.start && ranOn?.end) {
+    const starts = ranOn.start;
+    const ends = ranOn.end;
     intervals = starts.map((s, idx) => ({
       id: idx + 1,
       label: `#${idx + 1}`,
@@ -81,7 +88,8 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
       state: activeStep?.arrayState?.[idx]?.state || 'default'
     }));
   } else if (problem?.inputSpec) {
-    // Try to extract from default inputs
+    // Last resort, and only honest before a run has happened: the defaults are what a run
+    // WOULD use. Once one has, `ranOn` above is the truth and this must not be reached.
     const startField = problem.inputSpec.fields?.find((f) => f.name === 'start');
     const endField = problem.inputSpec.fields?.find((f) => f.name === 'end');
     if (startField?.defaultValue && endField?.defaultValue) {
@@ -95,14 +103,19 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
     }
   }
 
-  // Fallback if no intervals discovered
+  // No fallback. This used to fabricate [1,2] [3,4] [0,6] [5,7] - n-meetings-in-one-room's
+  // own default meetings, hardcoded, with invented 'settled' and 'probe' states - so a run
+  // that fell off the end of the chain above showed another problem's data as if it were
+  // its own. That is RCA-031 (DsuCanvas) in a second canvas, and the repo rule is explicit:
+  // a canvas that cannot tell what to draw says so.
   if (!intervals.length) {
-    intervals = [
-      { id: 1, label: '#1', start: 1, end: 2, state: 'settled' },
-      { id: 2, label: '#2', start: 3, end: 4, state: 'probe' },
-      { id: 3, label: '#3', start: 0, end: 6, state: 'default' },
-      { id: 4, label: '#4', start: 5, end: 7, state: 'default' }
-    ];
+    return (
+      <CanvasShell title={problem?.title || 'Interval Timeline'} meta="no intervals">
+        <p role="status" className="canvas-empty">
+          No intervals in this step.
+        </p>
+      </CanvasShell>
+    );
   }
 
   // Calculate timeline bounds
@@ -147,10 +160,12 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
           boxShadow: 'var(--state-done-glow)'
         };
       case 'target':
+        // Bench's `read`: a hollow probe ring rather than a sixth colour. That is what
+        // lets "being looked at" and "being written" share one hue and still read apart.
         return {
-          background: 'var(--accent-violet-tint)',
-          color: 'var(--accent-violet)',
-          border: '1px solid var(--border-accent)',
+          background: 'transparent',
+          color: 'var(--probe)',
+          border: '1px solid var(--probe)',
           fontWeight: '600'
         };
       case 'rejected':
@@ -179,30 +194,12 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
     >
       <div
         data-testid="interval-canvas-stage"
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          padding: '24px 20px',
-          boxSizing: 'border-box',
-          position: 'relative',
-          overflowX: 'auto',
-          overflowY: 'auto'
-        }}
+        className={styles.stage}
       >
         {/* Interval Spans Stack */}
         <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-            position: 'relative',
-            minHeight: `${intervals.length * 42}px`,
-            paddingBottom: '20px'
-          }}
+          className={styles.spans}
+          style={{ '--interval-rows-height': `${intervals.length * 42}px` }}
         >
           {intervals.map((inv) => {
             const leftPct = ((inv.start - minTime) / timeRange) * 100;
@@ -212,37 +209,24 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
             return (
               <div
                 key={inv.id}
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: '32px'
-                }}
+                className={styles.lane}
               >
                 {/* Visual Span Bar */}
                 <div
                   data-testid={`interval-span-${inv.id}`}
+                  className={styles.span}
                   style={{
-                    position: 'absolute',
                     left: `${leftPct}%`,
                     width: `${widthPct}%`,
-                    height: '100%',
-                    borderRadius: 'var(--radius-sm)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0 10px',
-                    fontSize: '0.75rem',
-                    transition: 'all var(--motion-normal) var(--ease-standard)',
-                    cursor: 'default',
                     zIndex: inv.state === 'probe' ? 3 : (inv.state === 'settled' ? 2 : 1),
                     ...style
                   }}
                   title={`${inv.label}: [${inv.start} → ${inv.end}] (${inv.state})`}
                 >
-                  <span style={{ fontFamily: 'var(--font-code)', fontSize: '0.72rem' }}>
+                  <span className={styles.spanLabel}>
                     {inv.label}
                   </span>
-                  <span style={{ fontFamily: 'var(--font-code)', fontSize: '0.68rem', letterSpacing: '0.2px' }}>
+                  <span className={styles.spanRange}>
                     [{inv.start}, {inv.end}]
                   </span>
                 </div>
@@ -253,30 +237,11 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
           {/* Sweep line for current room / availability boundary if present */}
           {sweepPos !== null && sweepPos >= minTime && sweepPos <= maxTime && (
             <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: `${((sweepPos - minTime) / timeRange) * 100}%`,
-                width: '2px',
-                background: 'var(--probe)',
-                zIndex: 10,
-                pointerEvents: 'none',
-                boxShadow: '0 0 8px var(--probe)'
-              }}
+              className={styles.sweep}
+              style={{ left: `${((sweepPos - minTime) / timeRange) * 100}%` }}
             >
               <div
-                style={{
-                  position: 'absolute',
-                  top: '-18px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  fontSize: '0.62rem',
-                  fontFamily: 'var(--font-code)',
-                  color: 'var(--probe)',
-                  whiteSpace: 'nowrap',
-                  fontWeight: '700'
-                }}
+                className={styles.sweepLabel}
               >
                 t = {sweepPos}
               </div>
@@ -286,37 +251,19 @@ export default function IntervalCanvas({ problem, currentStep, step }) {
 
         {/* Timeline Axis along bottom */}
         <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '32px',
-            borderTop: '2px solid var(--bench-rule-strong)',
-            marginTop: '12px'
-          }}
+          className={styles.axis}
         >
           {ticks.map((t) => {
             const leftPct = ((t - minTime) / timeRange) * 100;
             return (
               <div
                 key={`tick-${t}`}
-                style={{
-                  position: 'absolute',
-                  left: `${leftPct}%`,
-                  transform: 'translateX(-50%)',
-                  top: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center'
-                }}
+                className={styles.tick}
+                style={{ left: `${leftPct}%` }}
               >
-                <div style={{ width: '1px', height: '6px', background: 'var(--bench-ink-dim)' }} />
+                <div className={styles.tickMark} />
                 <span
-                  style={{
-                    fontSize: '0.65rem',
-                    fontFamily: 'var(--font-code)',
-                    color: 'var(--bench-ink-dim)',
-                    marginTop: '2px'
-                  }}
+                  className={styles.tickLabel}
                 >
                   {t}
                 </span>

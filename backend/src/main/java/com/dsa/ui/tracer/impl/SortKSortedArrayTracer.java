@@ -29,7 +29,7 @@ public class SortKSortedArrayTracer implements AlgorithmTracer {
     @Override public String annotatedCode() {
         return """
                public int[] sortKSorted(int[] values, int k) {
-                   PriorityQueue<Integer> heap = new PriorityQueue<>();
+                   ArrayHeap<Integer> heap = ArrayHeap.minHeap();
                    int write = 0;
                    for (int value : values) {
                        // @a offer
@@ -54,37 +54,38 @@ public class SortKSortedArrayTracer implements AlgorithmTracer {
         if (k >= values.length) {
             throw new InputValidationException(Map.of("k", "Must be smaller than values.length (" + values.length + ")."));
         }
-        PriorityQueue<Integer> heap = new PriorityQueue<>();
+        ArrayHeap<Integer> heap = ArrayHeap.minHeap();
         int[] sorted = new int[values.length];
         int write = 0;
         for (int i = 0; i < values.length; i++) {
             heap.offer(values[i]);
             emit.at("offer").say("Add %d from index %d. The next answer lies among these at most %d candidates.",
                             values[i], i, k + 1)
-                    .var("read", i).var("write", write).arrayState(renderHeap(heap, -1)).step();
+                    .var("read", i).var("write", write).arrayState(renderHeap(heap)).step();
             if (heap.size() > k) {
                 sorted[write] = heap.poll();
                 emit.at("emit").say("Remove minimum %d and place it at sorted index %d.", sorted[write], write)
-                        .var("write", write).arrayState(renderHeap(heap, -1)).step();
+                        .var("write", write).arrayState(renderHeap(heap)).step();
                 write++;
             }
         }
         while (!heap.isEmpty()) {
             sorted[write] = heap.poll();
             emit.at("drain").say("Input exhausted; drain %d into sorted index %d.", sorted[write], write)
-                    .var("write", write).arrayState(renderHeap(heap, -1)).step();
+                    .var("write", write).arrayState(renderHeap(heap)).step();
             write++;
         }
         emit.at("done").say("Every candidate emitted in order: %s.", Arrays.toString(sorted))
                 .var("result", Arrays.toString(sorted)).array(sorted).step();
     }
 
-    private static List<ArrayElement> renderHeap(PriorityQueue<Integer> heap, int current) {
-        List<Integer> snapshot = new ArrayList<>(heap);
-        Collections.sort(snapshot);
+    /** The heap's own array - see ArrayHeap for why this must not be sorted first. */
+    private static List<ArrayElement> renderHeap(ArrayHeap<Integer> heap) {
+        List<Integer> snapshot = heap.slots();
         List<ArrayElement> out = new ArrayList<>();
         for (int i = 0; i < snapshot.size(); i++) {
-            out.add(new ArrayElement(i, snapshot.get(i), i == current ? "current" : "default", "candidate"));
+            out.add(new ArrayElement(i, snapshot.get(i), i == 0 ? "target" : "default",
+                    i == 0 ? "next out" : "candidate"));
         }
         return out;
     }

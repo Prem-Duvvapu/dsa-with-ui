@@ -149,7 +149,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 11,
-    "description" : "Settle intersection 0: 0 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "description" : "Settle intersection 0: 0 is the shortest time to it, reachable in 1 way. Its roads can now be counted.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -280,7 +280,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 18,
-    "description" : "Road 0-6 takes 7: 0 + 7 = 7 beats unknown. Everything counted for intersection 6 used a slower route, so its count is REPLACED by 0's 1 way(s), not added to.",
+    "description" : "Road 0-6 takes 7: 0 + 7 = 7 beats unknown. Everything counted for intersection 6 used a slower route, so its count is REPLACED by 0's 1 way, not added to.",
     "queueOrStackState" : [ "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -411,7 +411,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 18,
-    "description" : "Road 0-1 takes 2: 0 + 2 = 2 beats unknown. Everything counted for intersection 1 used a slower route, so its count is REPLACED by 0's 1 way(s), not added to.",
+    "description" : "Road 0-1 takes 2: 0 + 2 = 2 beats unknown. Everything counted for intersection 1 used a slower route, so its count is REPLACED by 0's 1 way, not added to.",
     "queueOrStackState" : [ "1 in 2", "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -542,7 +542,7 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 18,
-    "description" : "Road 0-4 takes 5: 0 + 5 = 5 beats unknown. Everything counted for intersection 4 used a slower route, so its count is REPLACED by 0's 1 way(s), not added to.",
+    "description" : "Road 0-4 takes 5: 0 + 5 = 5 beats unknown. Everything counted for intersection 4 used a slower route, so its count is REPLACED by 0's 1 way, not added to.",
     "queueOrStackState" : [ "1 in 2", "6 in 7", "4 in 5" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -673,7 +673,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 11,
-    "description" : "Settle intersection 1: 2 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "description" : "Settle intersection 1: 2 is the shortest time to it, reachable in 1 way. Its roads can now be counted.",
     "queueOrStackState" : [ "4 in 5", "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -935,7 +935,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 18,
-    "description" : "Road 1-2 takes 3: 2 + 3 = 5 beats unknown. Everything counted for intersection 2 used a slower route, so its count is REPLACED by 1's 1 way(s), not added to.",
+    "description" : "Road 1-2 takes 3: 2 + 3 = 5 beats unknown. Everything counted for intersection 2 used a slower route, so its count is REPLACED by 1's 1 way, not added to.",
     "queueOrStackState" : [ "4 in 5", "6 in 7", "2 in 5" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -1066,7 +1066,7 @@
   }, {
     "stepNumber" : 9,
     "activeLine" : 18,
-    "description" : "Road 1-3 takes 3: 2 + 3 = 5 beats unknown. Everything counted for intersection 3 used a slower route, so its count is REPLACED by 1's 1 way(s), not added to.",
+    "description" : "Road 1-3 takes 3: 2 + 3 = 5 beats unknown. Everything counted for intersection 3 used a slower route, so its count is REPLACED by 1's 1 way, not added to.",
     "queueOrStackState" : [ "4 in 5", "3 in 5", "2 in 5", "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -1197,7 +1197,7 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 11,
-    "description" : "Settle intersection 4: 5 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "description" : "Settle intersection 4: 5 is the shortest time to it, reachable in 1 way. Its roads can now be counted.",
     "queueOrStackState" : [ "3 in 5", "6 in 7", "2 in 5" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -1459,7 +1459,7 @@
   }, {
     "stepNumber" : 12,
     "activeLine" : 22,
-    "description" : "Road 4-6 takes 2: 5 + 2 = 7 ties the best known time to 6. These are different routes arriving equally fast, so ADD: 1 + 1 = 2 way(s).",
+    "description" : "Road 4-6 takes 2: 5 + 2 = 7 ties the best known time to 6. These are different routes arriving equally fast, so ADD: 1 + 1 = 2 ways.",
     "queueOrStackState" : [ "3 in 5", "6 in 7", "2 in 5" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -1590,7 +1590,7 @@
   }, {
     "stepNumber" : 13,
     "activeLine" : 11,
-    "description" : "Settle intersection 3: 5 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "description" : "Settle intersection 3: 5 is the shortest time to it, reachable in 1 way. Its roads can now be counted.",
     "queueOrStackState" : [ "2 in 5", "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -1983,7 +1983,7 @@
   }, {
     "stepNumber" : 16,
     "activeLine" : 18,
-    "description" : "Road 3-5 takes 1: 5 + 1 = 6 beats unknown. Everything counted for intersection 5 used a slower route, so its count is REPLACED by 3's 1 way(s), not added to.",
+    "description" : "Road 3-5 takes 1: 5 + 1 = 6 beats unknown. Everything counted for intersection 5 used a slower route, so its count is REPLACED by 3's 1 way, not added to.",
     "queueOrStackState" : [ "2 in 5", "6 in 7", "5 in 6" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -2114,7 +2114,7 @@
   }, {
     "stepNumber" : 17,
     "activeLine" : 11,
-    "description" : "Settle intersection 2: 5 is the shortest time to it, reachable in 1 way(s). Its roads can now be counted.",
+    "description" : "Settle intersection 2: 5 is the shortest time to it, reachable in 1 way. Its roads can now be counted.",
     "queueOrStackState" : [ "5 in 6", "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -2376,7 +2376,7 @@
   }, {
     "stepNumber" : 19,
     "activeLine" : 22,
-    "description" : "Road 2-5 takes 1: 5 + 1 = 6 ties the best known time to 5. These are different routes arriving equally fast, so ADD: 1 + 1 = 2 way(s).",
+    "description" : "Road 2-5 takes 1: 5 + 1 = 6 ties the best known time to 5. These are different routes arriving equally fast, so ADD: 1 + 1 = 2 ways.",
     "queueOrStackState" : [ "5 in 6", "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -2507,7 +2507,7 @@
   }, {
     "stepNumber" : 20,
     "activeLine" : 11,
-    "description" : "Settle intersection 5: 6 is the shortest time to it, reachable in 2 way(s). Its roads can now be counted.",
+    "description" : "Settle intersection 5: 6 is the shortest time to it, reachable in 2 ways. Its roads can now be counted.",
     "queueOrStackState" : [ "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -2769,7 +2769,7 @@
   }, {
     "stepNumber" : 22,
     "activeLine" : 22,
-    "description" : "Road 5-6 takes 1: 6 + 1 = 7 ties the best known time to 6. These are different routes arriving equally fast, so ADD: 2 + 2 = 4 way(s).",
+    "description" : "Road 5-6 takes 1: 6 + 1 = 7 ties the best known time to 6. These are different routes arriving equally fast, so ADD: 2 + 2 = 4 ways.",
     "queueOrStackState" : [ "6 in 7" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -3031,7 +3031,7 @@
   }, {
     "stepNumber" : 24,
     "activeLine" : 11,
-    "description" : "Settle intersection 6: 7 is the shortest time to it, reachable in 4 way(s). Its roads can now be counted.",
+    "description" : "Settle intersection 6: 7 is the shortest time to it, reachable in 4 ways. Its roads can now be counted.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -3686,7 +3686,7 @@
   }, {
     "stepNumber" : 29,
     "activeLine" : 28,
-    "description" : "Queue empty. The shortest time from 0 to 6 is 7, and 4 distinct route(s) achieve it.",
+    "description" : "Queue empty. The shortest time from 0 to 6 is 7, and 4 distinct routes achieve it.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {

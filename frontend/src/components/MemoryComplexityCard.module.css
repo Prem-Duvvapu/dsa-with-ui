@@ -48,3 +48,125 @@
   padding: 0;
   list-style: none;
 }
+
+/* --- Card chrome (job 10: off inline styles, onto the tokens) --- */
+
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+/* Recessed, so the selected tab reads as raised against it. Bench marks selection with
+   depth rather than with a hue - the two colours it has are spent on algorithm state. */
+.tablist {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bench-recessed);
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+}
+
+.headerMeta {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  font-family: var(--font-code);
+}
+
+.panel {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rowKey { color: var(--text-secondary); }
+
+.rowValue {
+  color: var(--text-primary);
+  font-weight: 700;
+  background: var(--bench-fill);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--bench-rule-strong);
+}
+
+.emptyNote {
+  padding: 16px;
+  text-overflow: ellipsis;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-style: italic;
+}
+
+.complexityCard {
+  background: var(--bench-fill);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--bench-rule-strong);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.complexityHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Neutral ink, not the settled green: Bench keeps its two hues for algorithm state, and a
+   section heading is chrome. Space complexity used to be green here purely as decoration. */
+.complexityLabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--bench-ink-secondary);
+}
+
+.complexityLabelText {
+  font-weight: 700;
+  font-size: 0.76rem;
+}
+
+.complexityValue {
+  font-size: 0.8rem;
+  font-weight: 800;
+  font-family: var(--font-code);
+  color: var(--bench-ink-secondary);
+}
+
+.complexityText {
+  font-size: 0.72rem;
+  color: var(--text-primary);
+  line-height: 1.35;
+}

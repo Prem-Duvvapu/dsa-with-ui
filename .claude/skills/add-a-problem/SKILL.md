@@ -3,21 +3,23 @@ name: add-a-problem
 description: >
   Add or trace a DSA problem in the dsa-with-ui repo, given a LeetCode URL, a GeeksforGeeks
   URL, or just a problem name ("add Dijkstra", "trace merge intervals", "make climbing
-  stairs actually animate"). Covers finding whether the id is already catalogued (425 of
-  433 are catalogued but untraced — that is the usual case), registering a genuinely new
-  ProblemDetail in the right service, writing the AlgorithmTracer with `// @a` anchored
-  code and an InputSpec, implementing the alternateInput() the interface requires, deleting
-  the legacy delegate, and the verification runs.
+  stairs actually animate"). Covers finding whether the id is already catalogued (all 431
+  catalogued problems are traced, so a request is usually a genuinely new problem or a
+  rework of an existing tracer), registering a new ProblemDetail in the right service,
+  writing the AlgorithmTracer with `// @a` anchored code and an InputSpec, implementing
+  the alternateInput() the interface requires, and the verification runs.
 ---
 
 # Adding a problem
 
-Two very different jobs share this name:
+Three different jobs share this name, and coverage being 431/431 (`GET
+/api/problems/stats`) changes which one a request usually is:
 
-| Situation | How many | What you do |
+| Situation | How common now | What you do |
 |---|---|---|
-| **Catalogued but untraced** | 425 of 433 | Write only the tracer. The `ProblemDetail` already exists — do not add a second one. |
-| **Genuinely new** | rare | Register a `ProblemDetail` first, then the tracer, then move the pinned `433`. |
+| **Catalogued but untraced** | none — `untraced` is 0 | Confirm with `stats` first; if this is what you find, write only the tracer. The `ProblemDetail` already exists — do not add a second one. |
+| **Rework an existing tracer** | common | The id is already traced but the request wants it fixed or redone (a bad default, a dead anchor, a design change). Edit the tracer in place; do not register a duplicate `ProblemDetail`. |
+| **Genuinely new** | the normal case for "add X" | Register a `ProblemDetail` first, then the tracer, then move the pinned `431`. |
 
 Step 1 decides which.
 
@@ -125,9 +127,9 @@ falls through to `GraphCanvas` and renders blank. Say so rather than pretending 
 A new problem moves a pinned number:
 
 ```bash
-# ProblemsApiTest asserts 433 unique ids. Update it in the SAME commit, with a reason,
+# ProblemsApiTest asserts 431 unique ids. Update it in the SAME commit, with a reason,
 # and update the README coverage table too.
-grep -n "assertEquals(433" backend/src/test/java/com/dsa/ui/ProblemsApiTest.java
+grep -n "assertEquals(431" backend/src/test/java/com/dsa/ui/ProblemsApiTest.java
 ```
 
 ---
@@ -275,12 +277,12 @@ has landed, implement the method instead and this step is moot.)
 
 Per HANDOFF PROMPT C, once a problem is traced:
 
-- Delete its `case "<id>": return generate…Steps();` from the service's `generateSteps`
-  switch, and delete the generator if nothing else calls it — otherwise the two paths
-  diverge.
-- **Keep** the `initProblems()` metadata. That still feeds `ProblemCatalog` until PROMPT D.
-- Do **not** delete the switch's `default:` branch yet; other ids in that service still
-  rely on it, and `ApiContractTest` exercises it. Removing it is PROMPT D.
+- **Nothing to delete.** PROMPT D is done: the legacy layer is gone. Services have no
+  `generateSteps`, no `switch (problemId)`, and no `default:` branch — there is no second
+  path for a new tracer to diverge from.
+- **Keep** the `initProblems()` metadata. That is now the service's *only* job: it feeds
+  `ProblemCatalog`, and it is where a genuinely new problem's `ProblemDetail` is
+  registered. Deleting a service deletes its topic's catalogue.
 
 ---
 

@@ -198,6 +198,10 @@
   padding: 0 12px 10px 12px;
 }
 
+.compareCard {
+  padding: 0 12px 10px 12px;
+}
+
 .bottomToggleBtn {
   align-self: center;
   padding: 2px 16px;
@@ -254,5 +258,63 @@
 .mobileInputContainer {
   padding: 10px 12px;
   height: 100%;
+  overflow: hidden;
+}
+
+/* --- Bottom bar: collapse handle, the running-input echo, and the on-demand panels. --- */
+.bottomBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.bottomBarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* --- Desktop split: code on the left, the visualiser on the right. ---------------
+   Stacking put the code panel above the canvas, which spends vertical space - the
+   scarcer axis on a laptop - on the one panel that reads fine tall and narrow, while
+   squeezing the graph and tree canvases that actually need width. */
+.stageSplit {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.stageStack {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Clamped rather than a bare percentage: below ~320px the code wraps badly, and past
+   ~560px the canvas starts losing more than the code gains. */
+.codeColumn {
+  flex: 0 0 clamp(300px, 34%, 560px);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.stageColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
   overflow: hidden;
 }

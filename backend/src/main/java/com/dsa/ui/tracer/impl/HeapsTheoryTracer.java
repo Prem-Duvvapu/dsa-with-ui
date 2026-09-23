@@ -11,7 +11,7 @@ import java.util.*;
 @Component
 public class HeapsTheoryTracer implements AlgorithmTracer {
     @Override public String id() { return "heaps-theory"; }
-    @Override public DsType dsType() { return DsType.TREE; }
+    @Override public DsType dsType() { return DsType.HEAP; }
 
     @Override public InputSpec inputSpec() {
         return InputSpec.of(InputField.of("values", FieldType.INT_ARRAY).label("Values to insert")

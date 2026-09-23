@@ -158,7 +158,7 @@ public class KosarajuSccTracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("done").say("%d strongly connected component(s) found: %s.", sccs.size(), sccs)
+        emit.at("done").say("%d strongly connected component%s found: %s.", sccs.size(), Narration.s(sccs.size()), sccs)
                 .var("sccs", String.valueOf(sccs))
                 .graph(transposeLayout.nodes(), transposeLayout.edges()).nodes(states).step();
     }

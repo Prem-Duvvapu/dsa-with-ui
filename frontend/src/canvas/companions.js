@@ -28,8 +28,11 @@ export function getCompanions(heroDsType, step, allSteps) {
     && allSteps.some((s) => s?.queueOrStackState?.length > 0);
 
   // Graph (bfs-traversal, dijkstra-min-heap, ...) and Matrix (rotting-oranges' multi-source
-  // BFS over a grid) both narrate a real queue alongside their hero structure.
-  if ((heroDsType === 'Graph' || heroDsType === 'Matrix') && runHasQueue) {
+  // BFS over a grid) both narrate a real queue alongside their hero structure. So does
+  // Array: lru-page-replacement walks a page reference string - the array - while the
+  // recency queue it maintains is the thing the algorithm is actually about, emitted on 13
+  // of its 16 steps and, before this, drawn nowhere.
+  if ((heroDsType === 'Graph' || heroDsType === 'Matrix' || heroDsType === 'Array') && runHasQueue) {
     companions.push({ key: 'queue', Component: QueueCanvas, props: { step, title: 'Queue' } });
   }
 
@@ -38,9 +41,11 @@ export function getCompanions(heroDsType, step, allSteps) {
 
   // maximum-rectangles-binary-matrix is Stack-hero (the row's histogram is the active
   // structure) but emits `.grid(matrix)` on some steps too — the LeetCode 85 board itself,
-  // otherwise never drawn. Not wired for Queue's own hero case: no Queue-dsType tracer
+  // otherwise never drawn. max-rectangle-area-all-ones is the same problem with the
+  // histogram itself as the hero: it narrates column heights on 60 of its 62 steps and
+  // states the board on 2. Not wired for Queue's own hero case: no Queue-dsType tracer
   // emits a grid today (see the file-level doc on why an entry needs a real emitter first).
-  if (heroDsType === 'Stack' && runHasGrid) {
+  if ((heroDsType === 'Stack' || heroDsType === 'Array') && runHasGrid) {
     companions.push({
       key: 'grid',
       Component: GridCompanion,

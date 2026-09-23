@@ -62,7 +62,14 @@ public class PalindromeStringRecursionTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
-        recurse(0, s, emit);
+        boolean palindrome = recurse(0, s, emit);
+
+        // Emitted after every frame pops. Without it the trace ends inside the recursion,
+        // with frames still on the stack that the viewer never watches drain.
+        emit.at("recurse")
+                .say("The stack is empty again. \"%s\" is %s.", s, palindrome ? "a palindrome" : "not a palindrome")
+                .var("s", s).var("result", palindrome)
+                .step();
     }
 
     private boolean recurse(int i, String s, StepEmitter emit) {

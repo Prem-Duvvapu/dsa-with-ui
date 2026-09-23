@@ -17,6 +17,10 @@ import java.util.*;
 @Component
 public class WildcardMatchingTracer implements AlgorithmTracer {
 
+    private static final String FORMULA =
+            "dp[i][j] = p[j-1]=='*' ? (dp[i-1][j] || dp[i][j-1]) : (chars match && dp[i-1][j-1])";
+
+
     @Override
     public String id() {
         return "wildcard-matching";
@@ -130,7 +134,10 @@ public class WildcardMatchingTracer implements AlgorithmTracer {
                                     i, j, dp[i][j])
                             .var("i", i).var("j", j).var("value", dp[i][j])
                             .dpTable(table(dp, settled, s, p, here, String.valueOf(dp[i][j]),
-                                    Set.of(up, left), false)).step();
+                                    Set.of(up, left), false)
+                                    .withFormula(FORMULA, String.format(
+                                            "'*' at p[%d]: dp[%d][%d] = dp[%d][%d] || dp[%d][%d] = %b",
+                                            j - 1, i, j, i - 1, j, i, j - 1, dp[i][j]))).step();
                 } else if (pc == '?' || pc == s.charAt(i - 1)) {
                     StringDpTable.Coord diag = new StringDpTable.Coord(i - 1, j - 1);
                     dp[i][j] = dp[i - 1][j - 1];
@@ -140,7 +147,10 @@ public class WildcardMatchingTracer implements AlgorithmTracer {
                                     j - 1, pc, i - 1, s.charAt(i - 1), i - 1, j - 1, dp[i][j])
                             .var("i", i).var("j", j).var("value", dp[i][j])
                             .dpTable(table(dp, settled, s, p, here, String.valueOf(dp[i][j]),
-                                    Set.of(diag), false)).step();
+                                    Set.of(diag), false)
+                                    .withFormula(FORMULA, String.format(
+                                            "characters match, so dp[%d][%d] = dp[%d][%d] = %b",
+                                            i, j, i - 1, j - 1, dp[i][j]))).step();
                 } else {
                     dp[i][j] = false;
                     settled[i][j] = true;
@@ -149,7 +159,10 @@ public class WildcardMatchingTracer implements AlgorithmTracer {
                                             + "the same character. dp[%d][%d]=false.",
                                     j - 1, pc, i - 1, s.charAt(i - 1), i, j)
                             .var("i", i).var("j", j).var("value", false)
-                            .dpTable(table(dp, settled, s, p, here, "false", Set.of(), false)).step();
+                            .dpTable(table(dp, settled, s, p, here, "false", Set.of(), false)
+                                    .withFormula(FORMULA, String.format(
+                                            "characters differ at s[%d] and p[%d], so dp[%d][%d] = false",
+                                            i - 1, j - 1, i, j))).step();
                 }
             }
         }

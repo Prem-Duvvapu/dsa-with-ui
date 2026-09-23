@@ -35,9 +35,17 @@ public class CycleDirectedBfsTracer implements AlgorithmTracer {
                         .directed()
                         .constraint("maxVertices", 20)
                         .constraint("maxEdges", 48)
+                        // A tail feeding a cycle, NOT a pure cycle. In a pure 3-cycle every
+                        // vertex has indegree 1, so the queue seeds empty and Kahn's reports
+                        // "cycle" in three steps without ever polling, decrementing or
+                        // enqueueing - the learner is told the answer and shown none of the
+                        // algorithm. Here 0 and 1 are processed first and the queue THEN
+                        // empties with work outstanding, which is what makes
+                        // "processed < V means a cycle" mean something.
                         .defaultValue(Map.of(
-                                "vertices", 3,
-                                "edges", List.of(List.of(0, 1), List.of(1, 2), List.of(2, 0))))
+                                "vertices", 4,
+                                "edges", List.of(List.of(0, 1), List.of(1, 2),
+                                        List.of(2, 3), List.of(3, 2))))
                         .build());
     }
 

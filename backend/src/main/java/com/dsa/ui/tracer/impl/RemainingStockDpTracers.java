@@ -36,7 +36,8 @@ abstract class StockStateRemainingTracer extends RemainingDpTracer {
         boolean[][] known = new boolean[dp.length][dp[0].length];
         for (int a = 0; a <= actions; a++) known[prices.length][a] = true;
         for (int d = 0; d <= prices.length; d++) known[d][actions] = true;
-        emit.at("init").say("dp[day][action] stores maximum future profit; even actions buy, odd actions sell, and %d transactions are allowed.", cap)
+        emit.at("init").say("dp[day][action] stores maximum future profit; even actions buy, odd actions sell, and %d transaction%s %s allowed.",
+                cap, Narration.s(cap), Narration.is(cap))
                 .dpTable(stockTable(dp, known, null, Set.of(), false, "max(skip, execute action)", "terminal states = 0")).step();
         for (int day = prices.length - 1; day >= 0; day--) for (int action = actions - 1; action >= 0; action--) {
             long skip = dp[day + 1][action];

@@ -11,7 +11,7 @@ import java.util.*;
 @Component
 public class ReplaceRankArrayTracer implements AlgorithmTracer {
     @Override public String id() { return "replace-rank-array"; }
-    @Override public DsType dsType() { return DsType.ARRAY; }
+    @Override public DsType dsType() { return DsType.HEAP; }
 
     @Override public InputSpec inputSpec() {
         return InputSpec.of(InputField.of("values", FieldType.INT_ARRAY).label("Values")

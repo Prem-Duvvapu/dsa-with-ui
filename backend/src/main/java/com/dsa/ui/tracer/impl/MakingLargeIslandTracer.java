@@ -132,9 +132,9 @@ public class MakingLargeIslandTracer implements AlgorithmTracer {
         }
 
         emit.at("init")
-                .say("%dx%d grid: %d land cell(s), %d water cell(s). Every land cell starts as its "
+                .say("%dx%d grid: %d land cell%s, %d water cell%s. Every land cell starts as its "
                                 + "own island; the right and down neighbours are enough to union them all.",
-                        rows, cols, land, water)
+                        rows, cols, land, Narration.s(land), water, Narration.s(water))
                 .var("land", land).var("water", water)
                 .grid(labelled(grid, parent, rows, cols)).step();
 
@@ -173,8 +173,8 @@ public class MakingLargeIslandTracer implements AlgorithmTracer {
         }
         for (Map.Entry<Integer, Integer> island : size.entrySet()) {
             emit.at("sizes")
-                    .say("Island %d (root cell %d) covers %d cell(s).",
-                            labelOf(island.getKey(), size), island.getKey(), island.getValue())
+                    .say("Island %d (root cell %d) covers %d cell%s.",
+                            labelOf(island.getKey(), size), island.getKey(), island.getValue(), Narration.s(island.getValue()))
                     .var("island", labelOf(island.getKey(), size))
                     .var("size", island.getValue())
                     .var("sizes", sizesString(size))
@@ -219,9 +219,9 @@ public class MakingLargeIslandTracer implements AlgorithmTracer {
                 }
 
                 emit.at("tryZero")
-                        .say("Flip (%d,%d): it touches %d distinct island(s) %s, so the merged area "
+                        .say("Flip (%d,%d): it touches %d distinct island%s %s, so the merged area "
                                         + "would be %s = %d.",
-                                r, c, roots.size(), labelsOf(roots, size), parts, area)
+                                r, c, roots.size(), Narration.s(roots.size()), labelsOf(roots, size), parts, area)
                         .var("cell", "(" + r + "," + c + ")")
                         .var("islands", labelsOf(roots, size))
                         .var("area", area).var("best", best)
@@ -241,8 +241,8 @@ public class MakingLargeIslandTracer implements AlgorithmTracer {
         }
 
         emit.at("done")
-                .say("Every water cell tried. Flipping %s gives the largest island: %d cell(s).",
-                        bestCell, best)
+                .say("Every water cell tried. Flipping %s gives the largest island: %d cell%s.",
+                        bestCell, best, Narration.s(best))
                 .var("answer", best).var("cell", bestCell)
                 .grid(labelled(grid, parent, rows, cols)).step();
     }

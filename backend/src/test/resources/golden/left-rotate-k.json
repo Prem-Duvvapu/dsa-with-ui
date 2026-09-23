@@ -3,6 +3,7 @@
     "callAll" : 6,
     "callFirst" : 4,
     "callRest" : 5,
+    "done" : 7,
     "init" : 2,
     "swap" : 11
   },
@@ -12,7 +13,7 @@
     "k" : 2,
     "nums" : [ 1, 2, 3, 4, 5, 6, 7 ]
   },
-  "stepCount" : 10,
+  "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 2,
@@ -107,7 +108,7 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 11,
-    "description" : "Swap nums[0]=1 and nums[1]=2.",
+    "description" : "Swap indices 0 and 1: 2 moves to index 0, 1 to index 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -198,7 +199,7 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 11,
-    "description" : "Swap nums[2]=3 and nums[6]=7.",
+    "description" : "Swap indices 2 and 6: 7 moves to index 2, 3 to index 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -244,7 +245,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 11,
-    "description" : "Swap nums[3]=4 and nums[5]=6.",
+    "description" : "Swap indices 3 and 5: 6 moves to index 3, 4 to index 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -335,7 +336,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 11,
-    "description" : "Swap nums[0]=2 and nums[6]=3.",
+    "description" : "Swap indices 0 and 6: 3 moves to index 0, 2 to index 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -381,7 +382,7 @@
   }, {
     "stepNumber" : 9,
     "activeLine" : 11,
-    "description" : "Swap nums[1]=1 and nums[5]=4.",
+    "description" : "Swap indices 1 and 5: 4 moves to index 1, 1 to index 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -427,7 +428,7 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 11,
-    "description" : "Swap nums[2]=7 and nums[4]=5.",
+    "description" : "Swap indices 2 and 4: 5 moves to index 2, 7 to index 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -458,6 +459,52 @@
       "index" : 4,
       "value" : 7,
       "state" : "target"
+    }, {
+      "index" : 5,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 2,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 7,
+    "description" : "Three reversals and no extra array: rotating left by 2 gives [3, 4, 5, 6, 7, 1, 2].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "k" : "2",
+      "result" : "[3, 4, 5, 6, 7, 1, 2]"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 7,
+      "state" : "default"
     }, {
       "index" : 5,
       "value" : 1,

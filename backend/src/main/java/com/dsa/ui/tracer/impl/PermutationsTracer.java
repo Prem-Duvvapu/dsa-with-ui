@@ -25,7 +25,7 @@ public class PermutationsTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.RECURSION_TREE;
     }
 
     @Override

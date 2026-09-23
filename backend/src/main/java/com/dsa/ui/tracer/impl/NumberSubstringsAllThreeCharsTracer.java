@@ -25,7 +25,7 @@ public class NumberSubstringsAllThreeCharsTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STRING;
+        return DsType.WINDOW;
     }
 
     @Override

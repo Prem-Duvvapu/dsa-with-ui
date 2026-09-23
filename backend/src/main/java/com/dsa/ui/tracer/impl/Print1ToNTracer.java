@@ -70,6 +70,14 @@ public class Print1ToNTracer implements AlgorithmTracer {
         }
 
         recurse(1, n, nodes, states, emit);
+
+        // Emitted after the outermost frame pops, so the trace ends at depth 0. Without it
+        // the last step is the outermost `unwind`, which still shows its own frame on the
+        // stack and leaves the sidebar frozen on a frame the viewer never sees drain.
+        emit.at("unwind")
+                .say("Every frame has returned. The call stack is empty and 1..%d were printed in order.", n)
+                .var("n", n)
+                .tree(nodes).nodes(states).step();
     }
 
     private void recurse(int i, int n, List<TreeNode> nodes, Map<Integer, String> states, StepEmitter emit) {

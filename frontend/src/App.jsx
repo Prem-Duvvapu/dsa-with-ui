@@ -1,11 +1,29 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
+import SectionNav from './components/SectionNav';
+import ProblemStatement from './components/ProblemStatement';
+import InputSummary from './components/InputSummary';
+import ShortcutHelp from './components/ShortcutHelp';
+import CommandPalette from './components/CommandPalette';
+import WelcomeGuide from './components/WelcomeGuide';
+import TourGuide from './components/TourGuide';
+import StepStateSummary from './components/StepStateSummary';
+import usePersistentState from './hooks/usePersistentState';
+import useShareableView from './hooks/useShareableView';
+import useProgress from './hooks/useProgress';
+import useLastVisited from './hooks/useLastVisited';
+import useStreak from './hooks/useStreak';
+import useLayoutPreferences from './hooks/useLayoutPreferences';
+import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
+import useTheme from './hooks/useTheme';
+import useFocusTrap from './hooks/useFocusTrap';
 import Sidebar from './components/Sidebar';
 import CanvasShell from './components/CanvasShell';
 import ErrorBoundary from './components/ErrorBoundary';
 import CaptureStrip from './components/CaptureStrip';
+import CompareStrip from './components/CompareStrip';
 import CodeViewer from './components/CodeViewer';
 import MemoryComplexityCard from './components/MemoryComplexityCard';
 import InputPanel from './components/InputPanel';
@@ -152,6 +170,11 @@ export default function App() {
   // The catalogue entry — summary fields only (id, title, category, dsType, traced).
   const catalogEntry = problems.find(p => p.id === activeProblemId) || problems[0] || null;
 
+  // Only the four presets Controls can render. A speed persisted by an older build would
+  // otherwise highlight no button and could not be changed back by clicking one.
+  const [persistedSpeed, setPersistedSpeed] = usePersistentState(
+    'speed', 1000, (v) => [2000, 1000, 500, 250].includes(v));
+
   // All playback state lives in useTrace.
   const {
     steps, currentStep, currentStepIndex,
@@ -161,13 +184,70 @@ export default function App() {
     truncated: traceTruncated,
     fieldErrors,
     detail,
-    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput
-  } = useTrace(activeProblemId, catalogEntry);
+    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput, resolvedInput, anchors
+  } = useTrace(activeProblemId, catalogEntry, { initialSpeed: persistedSpeed });
 
   // Merge in the per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
   // it isn't in the catalogue summary, so CodeViewer/MemoryComplexityCard/canvases
   // would otherwise silently fall back to placeholder data for every problem.
   const activeProblem = detail ? { ...catalogEntry, ...detail } : catalogEntry;
+
+  // ── What has actually been watched ───────────────────────────────────────
+  const { progress, markWatched, toggleStar } = useProgress();
+  useLastVisited(activeProblemId);
+
+  // A visit only counts once real navigation to a problem has happened, not merely the
+  // app mounting - Dashboard reads this streak but never writes it, for the same reason.
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const { recordVisit } = useStreak(today);
+  useEffect(() => { recordVisit(); }, [recordVisit]);
+  const activeProgress = progress[activeProblemId];
+
+  // Reaching the last step, not opening the page: clicking into a problem is an accident
+  // of browsing, sitting through the trace to the end is not.
+  useEffect(() => {
+    if (steps.length > 0 && currentStepIndex === steps.length - 1) {
+      markWatched(activeProblemId);
+    }
+  }, [activeProblemId, currentStepIndex, steps.length, markWatched]);
+
+  // ── The rest of "what I am looking at", carried in the URL ───────────────
+  // /problem/:id already made the problem linkable; the step and the input were not, so a
+  // refresh landed you back on step 1 of the defaults.
+  const pendingView = useRef(null);
+  const { shareInput } = useShareableView({
+    problemId: activeProblemId,
+    stepIndex: currentStepIndex,
+    totalSteps: steps.length,
+    // Held, not applied: at restore time the trace for this problem has not loaded yet, so
+    // there is nothing to seek into and no inputSpec to validate against.
+    onRestore: (view) => { pendingView.current = view; }
+  });
+
+  // A custom input replaces the trace entirely, so it has to run before the step is
+  // restored — seeking into the default trace and then replacing it would land on step 1.
+  useEffect(() => {
+    const view = pendingView.current;
+    if (!view || traceLoading) return;
+    if (view.input) {
+      const input = view.input;
+      pendingView.current = { ...view, input: null };
+      runInput(input);
+      return;
+    }
+    if (view.step === null || steps.length === 0) return;
+    pendingView.current = null;
+    if (view.step < steps.length) seek(view.step);
+  }, [traceLoading, steps.length, runInput, seek]);
+
+  // Runs from the input editor are the shareable ones; the defaults are already implied by
+  // the problem id, so a ?input for them would be noise in every link.
+  const runAndShare = useCallback((values) => {
+    shareInput(values);
+    return runInput(values);
+    // shareInput closes over the live search params and is re-created each render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runInput]);
 
   // ── Single-endpoint catalogue fetch ──────────────────────────────────────
   const fetchAllProblems = useCallback(async () => {
@@ -208,106 +288,56 @@ export default function App() {
   }, [fetchAllProblems]);
 
   // ── Layout state ─────────────────────────────────────────────────────────
-  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
-  // Collapsing this row frees up vertical space for the canvas while a trace is playing.
-  const [isBottomPanelOpen, setIsBottomPanelOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState('code');
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-  const isMobile = viewportWidth <= 768;
+  // View preferences survive a reload. The selected problem deliberately does not - the
+  // URL owns that, and persisting it would fight deep links.
+  const isBool = (v) => typeof v === 'boolean';
+  const {
+    viewportWidth, isMobile,
+    isSidebarOpen, setIsSidebarOpen,
+    isBottomPanelOpen, setIsBottomPanelOpen,
+    isInputEditorOpen, setIsInputEditorOpen,
+    isComplexityOpen, setIsComplexityOpen,
+    isStatementOpen, setIsStatementOpen
+  } = useLayoutPreferences();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportWidth(window.innerWidth);
-      if (window.innerWidth > 768) {
-        setIsSidebarOpen(true);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
+  const { theme, cycleTheme } = useTheme();
+  // Shown once, on a genuine first visit. Tracked rather than inferred from other
+  // preferences: someone who only ever changed the theme has still never been introduced.
+  const [hasSeenWelcome, setHasSeenWelcome] = usePersistentState('seenWelcome', false, isBool);
+  const [isTourOpen, setIsTourOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('code');
 
   const drawerRef = useRef(null);
+  useFocusTrap(drawerRef, isMobile && isSidebarOpen);
 
-  // ── Mobile drawer focus trap ─────────────────────────────────────────────
-  useEffect(() => {
-    if (!isMobile || !isSidebarOpen) return;
+  // A speed change is both playback state and a saved preference, so it goes through one
+  // handler rather than leaving the two to drift.
+  const changeSpeed = useCallback((ms) => {
+    setSpeed(ms);
+    setPersistedSpeed(ms);
+  }, [setSpeed, setPersistedSpeed]);
 
-    const drawer = drawerRef.current;
-    if (!drawer) return;
+  const SPEED_PRESETS = useMemo(() => [2000, 1000, 500, 250], []);
 
-    const previouslyFocused = document.activeElement;
-    const focusables = drawer.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (focusables.length > 0) {
-      focusables[0].focus();
-    }
+  const nudgeSpeed = useCallback((direction) => {
+    // Presets run slow -> fast, so "faster" moves right. Clamped rather than wrapping:
+    // holding the key should settle at 4x, not jump back to 0.5x.
+    const at = SPEED_PRESETS.indexOf(speed);
+    const from = at === -1 ? 1 : at;
+    const next = Math.min(SPEED_PRESETS.length - 1, Math.max(0, from + direction));
+    changeSpeed(SPEED_PRESETS[next]);
+  }, [SPEED_PRESETS, speed, changeSpeed]);
 
-    const handleTabKey = (e) => {
-      if (e.key !== 'Tab') return;
-      const currentFocusables = Array.from(drawer.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )).filter(el => !el.disabled && el.offsetParent !== null);
-      if (currentFocusables.length === 0) return;
-
-      const firstEl = currentFocusables[0];
-      const lastEl = currentFocusables[currentFocusables.length - 1];
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstEl) {
-          e.preventDefault();
-          lastEl.focus();
-        }
-      } else {
-        if (document.activeElement === lastEl) {
-          e.preventDefault();
-          firstEl.focus();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleTabKey);
-    return () => {
-      window.removeEventListener('keydown', handleTabKey);
-      if (previouslyFocused && previouslyFocused.focus) {
-        previouslyFocused.focus();
-      }
-    };
-  }, [isMobile, isSidebarOpen]);
-
-  // ── Global keyboard shortcuts ────────────────────────────────────────────
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      // Escape closes the mobile drawer regardless of what's focused — a learner typing
-      // in the search field is exactly who needs Escape to work.
-      if (e.code === 'Escape' && isMobile && isSidebarOpen) {
-        e.preventDefault();
-        setIsSidebarOpen(false);
-        return;
-      }
-
-      const tag = document.activeElement?.tagName;
-      if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(tag)
-          || document.activeElement?.isContentEditable) return;
-
-      if (e.code === 'Space') {
-        e.preventDefault();
-        togglePlay();
-      } else if (e.code === 'ArrowRight') {
-        e.preventDefault();
-        stepNext();
-      } else if (e.code === 'ArrowLeft') {
-        e.preventDefault();
-        stepPrev();
-      } else if (e.code === 'KeyR') {
-        e.preventDefault();
-        reset();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [togglePlay, stepNext, stepPrev, reset, isMobile, isSidebarOpen]);
+  useKeyboardShortcuts({
+    togglePlay, stepNext, stepPrev, reset, seek, stepCount: steps.length, nudgeSpeed,
+    isMobile, isSidebarOpen, setIsSidebarOpen,
+    isHelpOpen, setIsHelpOpen,
+    isPaletteOpen, setIsPaletteOpen,
+    hasSeenWelcome, setHasSeenWelcome
+  });
 
   const handleSelectCategory = (cat) => {
     setActiveCategory(cat);
@@ -322,6 +352,12 @@ export default function App() {
 
   const loading = catalogLoading;
   const hasInputSpec = Boolean(activeProblem?.inputSpec?.fields?.length);
+
+  // With the code beside the canvas, the bottom row exists only for the on-demand panels
+  // and disappears entirely when neither is open - no empty reserved strip.
+  const showInputEditor = hasInputSpec && isInputEditorOpen;
+  const showBottomRow = showInputEditor || isComplexityOpen;
+  const bottomGridColumns = showInputEditor && isComplexityOpen ? '1fr 1fr' : '1fr';
   const activeDsType = currentStep?.dsType || activeProblem?.dsType || '';
   const traceErrorCopy = TRACE_ERROR_COPY[traceError];
   const showingOfflineTrace = traceError === 'fetch' && steps.length > 0;
@@ -339,7 +375,15 @@ export default function App() {
       );
     }
 
-    const props = { currentStep, step: currentStep, problem: activeProblem };
+    // resolvedInput is the trace's, not a step's. IntervalCanvas needs it to draw the
+    // intervals the run actually used rather than the inputSpec defaults.
+    // steps + index let a canvas look back for the last step that carried structure.
+    // WindowCanvas needs it: tracers interleave commentary steps with no arrayState, and
+    // dropping the frame on those would make the window flicker out every other step.
+    const props = {
+      currentStep, step: currentStep, problem: activeProblem, resolvedInput,
+      steps, currentStepIndex
+    };
 
     const Canvas = CANVAS_BY_DSTYPE[activeDsType];
     if (!Canvas) {
@@ -374,12 +418,79 @@ export default function App() {
     <div className={styles.rootLayout}>
       <Header 
         problem={activeProblem} 
-        totalProblems={problems.length} 
+        totalProblems={problems.length}
+        runnableProblems={problems.filter((p) => p.traced === true).length} 
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
+        theme={theme}
+        onCycleTheme={cycleTheme}
+        onStartTour={isMobile ? null : () => {
+          // Dismiss the first-run screen first: the tour highlights the UI behind it.
+          setHasSeenWelcome(true);
+          setIsHelpOpen(false);
+          setIsTourOpen(true);
+        }}
       />
 
-      <Breadcrumb problem={activeProblem} />
+      <Breadcrumb
+        problem={activeProblem}
+        watched={activeProgress?.watched === true}
+        starred={activeProgress?.starred === true}
+        onToggleStar={() => toggleStar(activeProblemId)}
+      />
+
+      {/* Where this problem sits in its curriculum section, and the one either side of it -
+          every trace used to end in silence, with no next action and no reason to come
+          back. striverSheetSection is on every catalogue entry already; this is the first
+          thing in the app that reads it. */}
+      <SectionNav
+        problems={problems}
+        activeProblemId={activeProblemId}
+        progress={progress}
+        onSelectProblem={handleSelectProblem}
+      />
+
+      <ProblemStatement
+        problem={activeProblem}
+        open={isStatementOpen}
+        onToggle={() => setIsStatementOpen(prev => !prev)}
+      />
+
+      <ShortcutHelp
+        open={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        onReplayWelcome={() => {
+          setIsHelpOpen(false);
+          setHasSeenWelcome(false);
+        }}
+      />
+
+      <CommandPalette
+        isOpen={isPaletteOpen}
+        onClose={() => setIsPaletteOpen(false)}
+        problems={problems}
+        onSelectProblem={(id) => {
+          handleSelectProblem(id);
+          setIsPaletteOpen(false);
+        }}
+        onCycleTheme={cycleTheme}
+      />
+
+      <WelcomeGuide
+        open={!hasSeenWelcome && !loading && !catalogError && !isTourOpen}
+        onDismiss={() => setHasSeenWelcome(true)}
+        onShowShortcuts={() => {
+          setHasSeenWelcome(true);
+          setIsHelpOpen(true);
+        }}
+        onStartTour={isMobile ? null : () => {
+          setHasSeenWelcome(true);
+          setIsTourOpen(true);
+        }}
+        totalProblems={problems.length}
+      />
+
+      <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} totalProblems={problems.length} />
 
       {catalogError && (
         <div
@@ -400,18 +511,21 @@ export default function App() {
           <div
             onClick={() => setIsSidebarOpen(false)}
             aria-hidden="true"
+            data-testid="mobile-backdrop"
             className={styles.mobileBackdrop}
           />
         )}
         {isSidebarOpen && (
           <div
             ref={drawerRef}
+            data-tour="problem-list"
             className={isMobile ? styles.sidebarMobile : styles.sidebarDesktop}
           >
             <Sidebar
               problems={problems}
               activeProblemId={activeProblemId}
               activeCategory={activeCategory}
+              progress={progress}
               onSelectCategory={handleSelectCategory}
               onSelectProblem={handleSelectProblem}
               onRetry={fetchAllProblems}
@@ -442,8 +556,23 @@ export default function App() {
         )}
 
         <main className={styles.mainStage}>
+          {/* Desktop puts the code beside the canvas rather than beneath it. Vertical space
+              is the scarcer axis on a laptop, and a stacked layout spends it on the one
+              panel that reads fine in a tall narrow column while squeezing the graphs and
+              trees that need width. Mobile stays stacked, where that is the right shape. */}
+          <div className={isMobile ? styles.stageStack : styles.stageSplit}>
+            {!isMobile && isBottomPanelOpen && (
+              <div data-tour="code-panel" className={styles.codeColumn}>
+                <CodeViewer problem={activeProblem} currentStep={currentStep} anchors={anchors} steps={steps} />
+              </div>
+            )}
+
           {/* Main Visualizer Stage + Controls + Live Trace Banner */}
-          <div className={`glass-panel ${styles.stagePanel}`}>
+          <div className={styles.stageColumn}>
+          <div data-tour="canvas" className={`glass-panel ${styles.stagePanel}`}>
+            {/* The canvas draws the state; this says it. Inside the canvas region so it
+                reads as part of the visualization rather than as stray page text. */}
+            <StepStateSummary step={currentStep} dsType={activeDsType} />
             <div className={styles.stageInner}>
               {loading ? (
                 <div className={styles.loadingCatalog}>
@@ -499,15 +628,31 @@ export default function App() {
                 change state in motion, and the strip's row-per-vertex grid conveys that
                 traversal order less directly than the diagram already does. */}
             {!CAPTURE_STRIP_REDUNDANT_FOR.has(activeDsType) && (
-              <CaptureStrip
-                steps={steps}
-                current={currentStepIndex}
-                dsType={activeDsType}
-                onSeek={seek}
-              />
+              <div data-tour="capture-strip">
+                <CaptureStrip
+                  steps={steps}
+                  current={currentStepIndex}
+                  dsType={activeDsType}
+                  onSeek={seek}
+                  resolvedInput={resolvedInput}
+                />
+              </div>
+            )}
+
+            {!isMobile && isCompareOpen && activeProblem?.alternateInput
+              && !CAPTURE_STRIP_REDUNDANT_FOR.has(activeDsType) && (
+              <div className={styles.compareCard}>
+                <CompareStrip
+                  key={activeProblemId}
+                  problemId={activeProblemId}
+                  dsType={activeDsType}
+                  alternateInput={activeProblem.alternateInput}
+                />
+              </div>
             )}
 
             {/* Integrated Playback Controls */}
+            <div data-tour="controls">
             <Controls
               isPlaying={isPlaying}
               currentStepIndex={currentStepIndex}
@@ -518,52 +663,117 @@ export default function App() {
               onStepPrev={stepPrev}
               onStepSelect={seek}
               onReset={reset}
-              onSpeedChange={setSpeed}
+              onSpeedChange={changeSpeed}
             />
+            </div>
 
             {/* Quiet Live Trace Banner */}
             <div className={styles.tickerWrapper}>
               <LiveTraceTicker stepDescription={currentStep?.description} />
             </div>
           </div>
+          </div>
+          </div>
 
           {/* Collapse handle for the whole bottom section, so the canvas can take the
               full height while a trace is playing. Always visible so it can be reopened. */}
-          <button
-            type="button"
-            onClick={() => setIsBottomPanelOpen(prev => !prev)}
-            aria-expanded={isBottomPanelOpen}
-            aria-label={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
-            title={isBottomPanelOpen ? 'Collapse the code and details panel' : 'Expand the code and details panel'}
-            className={`btn btn-outline ${styles.bottomToggleBtn}`}
-          >
-            {isBottomPanelOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
-            {isBottomPanelOpen ? 'Hide code & details' : 'Show code & details'}
-          </button>
+          <div className={styles.bottomBar}>
+            <button
+              type="button"
+              onClick={() => setIsBottomPanelOpen(prev => !prev)}
+              aria-expanded={isBottomPanelOpen}
+              aria-label={isBottomPanelOpen ? 'Collapse the code panel' : 'Expand the code panel'}
+              title={isBottomPanelOpen ? 'Collapse the code panel' : 'Expand the code panel'}
+              className={`btn btn-outline ${styles.bottomToggleBtn}`}
+            >
+              {isBottomPanelOpen ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+              {isBottomPanelOpen ? 'Hide code' : 'Show code'}
+            </button>
 
-          {/* Desktop Bottom Section: Wide Java Code + Input Panel + Right Tabbed Memory/Complexity Card */}
-          {!isBottomPanelOpen ? null : !isMobile ? (
+            {/* What the animation is running on, without the editor that sets it. */}
+            {!isMobile && !isInputEditorOpen && (
+              <div data-tour="input-summary">
+                <InputSummary resolvedInput={resolvedInput} />
+              </div>
+            )}
+
+            {!isMobile && (
+              <div data-tour="panel-toggles" className={styles.bottomBarActions}>
+                {hasInputSpec && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsInputEditorOpen(prev => !prev);
+                      setIsBottomPanelOpen(true);
+                    }}
+                    aria-expanded={isInputEditorOpen}
+                    className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                    title={isInputEditorOpen ? 'Close the input editor' : 'Change the input'}
+                  >
+                    {isInputEditorOpen ? 'Done editing' : 'Edit input'}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsComplexityOpen(prev => !prev);
+                    setIsBottomPanelOpen(true);
+                  }}
+                  aria-expanded={isComplexityOpen}
+                  className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                  title={isComplexityOpen ? 'Hide memory and complexity' : 'Show memory and complexity'}
+                >
+                  {isComplexityOpen ? 'Hide' : 'Show'} memory &amp; complexity
+                </button>
+                {activeProblem?.alternateInput && !CAPTURE_STRIP_REDUNDANT_FOR.has(activeDsType) && (
+                  <button
+                    type="button"
+                    onClick={() => setIsCompareOpen(prev => !prev)}
+                    aria-expanded={isCompareOpen}
+                    className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                    title={isCompareOpen ? 'Hide the comparison' : 'Compare against the other case'}
+                  >
+                    {isCompareOpen ? 'Hide' : 'Compare'} other case
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setIsHelpOpen(true)}
+                  className={`btn btn-outline ${styles.bottomToggleBtn}`}
+                  title="Keyboard shortcuts (?)"
+                  aria-label="Show keyboard shortcuts"
+                >
+                  ?
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Bottom section. On desktop the code now lives beside the canvas, so this row
+              carries only the on-demand panels and disappears when neither is open. Mobile
+              keeps its stacked tab card, which is the right shape on a narrow screen. */}
+          {!isMobile ? (showBottomRow ? (
             <div
               className={styles.bottomDesktopGrid}
-              style={{
-                gridTemplateColumns: hasInputSpec ? '1.6fr 1fr 1fr' : '2fr 1fr'
-              }}
+              style={{ gridTemplateColumns: bottomGridColumns }}
             >
-              <CodeViewer problem={activeProblem} currentStep={currentStep} />
-              {hasInputSpec && (
+              {hasInputSpec && isInputEditorOpen && (
                 <div className={`glass-panel ${styles.inputCard}`}>
                   <InputPanel
                     problemId={activeProblemId}
                     inputSpec={activeProblem.inputSpec}
+                    alternateInput={activeProblem.alternateInput}
                     fieldErrors={fieldErrors}
                     running={traceLoading}
-                    onRun={runInput}
+                    onRun={runAndShare}
                   />
                 </div>
               )}
-              <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} />
+              {isComplexityOpen && (
+                <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} />
+              )}
             </div>
-          ) : (
+          ) : null) : (isBottomPanelOpen ? (
             /* Mobile Tab Bottom Card Section (Code / Input / Memory / Complexity) */
             <div className={`glass-panel ${styles.bottomMobileCard}`}>
               <div className={styles.mobileTabNav}>
@@ -597,15 +807,16 @@ export default function App() {
 
               <div className={styles.mobileTabBody}>
                 {activeTab === 'code' ? (
-                  <CodeViewer problem={activeProblem} currentStep={currentStep} />
+                  <CodeViewer problem={activeProblem} currentStep={currentStep} anchors={anchors} steps={steps} />
                 ) : activeTab === 'input' ? (
                   <div className={styles.mobileInputContainer}>
                     <InputPanel
                       problemId={activeProblemId}
                       inputSpec={activeProblem.inputSpec}
+                      alternateInput={activeProblem.alternateInput}
                       fieldErrors={fieldErrors}
                       running={traceLoading}
-                      onRun={runInput}
+                      onRun={runAndShare}
                     />
                   </div>
                 ) : (
@@ -613,7 +824,7 @@ export default function App() {
                 )}
               </div>
             </div>
-          )}
+          ) : null)}
         </main>
       </div>
     </div>

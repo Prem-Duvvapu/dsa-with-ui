@@ -40,7 +40,10 @@ class DpRecurrenceTraceTest {
             "ninjas-training", "max-sum-non-adjacent", "house-robber-2",
             "frog-jump-k-distance", "partition-equal-subset-sum",
             "count-partitions-given-diff", "coin-change-2",
-            "longest-increasing-subsequence", "print-lis");
+            "longest-increasing-subsequence", "print-lis",
+            "knapsack-01", "unbounded-knapsack", "edit-distance", "wildcard-matching",
+            "lis-binary-search", "matrix-chain-multiplication", "burst-balloons",
+            "ninja-and-his-friends");
 
     @ParameterizedTest(name = "{0} carries a formula and a live substitution on at least one step")
     @ValueSource(strings = {
@@ -50,7 +53,10 @@ class DpRecurrenceTraceTest {
             "ninjas-training", "max-sum-non-adjacent", "house-robber-2",
             "frog-jump-k-distance", "partition-equal-subset-sum",
             "count-partitions-given-diff", "coin-change-2",
-            "longest-increasing-subsequence", "print-lis"})
+            "longest-increasing-subsequence", "print-lis",
+            "knapsack-01", "unbounded-knapsack", "edit-distance", "wildcard-matching",
+            "lis-binary-search", "matrix-chain-multiplication", "burst-balloons",
+            "ninja-and-his-friends"})
     void recurrenceReachesTheWire(String id) {
         AlgorithmTracer tracer = registry.find(id).orElseThrow();
         List<ExecutionStep> steps = runner.runDefaults(tracer).getSteps();
@@ -73,7 +79,10 @@ class DpRecurrenceTraceTest {
             "ninjas-training", "max-sum-non-adjacent", "house-robber-2",
             "frog-jump-k-distance", "partition-equal-subset-sum",
             "count-partitions-given-diff", "coin-change-2",
-            "longest-increasing-subsequence", "print-lis"})
+            "longest-increasing-subsequence", "print-lis",
+            "knapsack-01", "unbounded-knapsack", "edit-distance", "wildcard-matching",
+            "lis-binary-search", "matrix-chain-multiplication", "burst-balloons",
+            "ninja-and-his-friends"})
     void formulaAndSubstitutionArePaired(String id) {
         AlgorithmTracer tracer = registry.find(id).orElseThrow();
         List<ExecutionStep> steps = runner.runDefaults(tracer).getSteps();

@@ -73,7 +73,7 @@ public class NonOverlappingIntervalsTracer implements AlgorithmTracer {
                         .arrayState(board(intervals, states, i)).step();
             }
         }
-        emit.at("done").say("Remove %d interval(s); the remainder is non-overlapping.", removals)
+        emit.at("done").say("Remove %d interval%s; the remainder is non-overlapping.", removals, Narration.s(removals))
                 .var("lastEnd", lastEnd).var("removals", removals)
                 .arrayState(board(intervals, states, -1)).step();
     }

@@ -111,9 +111,9 @@ public class MatrixMedianTracer implements AlgorithmTracer {
         }
 
         emit.at("init")
-                .say("The median is the %d-th smallest of %d elements (the lower of the two middle "
+                .say("The median is the %s smallest of %d elements (the lower of the two middle "
                         + "values when the count is even). Binary search values [%d, %d].",
-                        desired, rows * cols, low, high)
+                        Narration.ordinal(desired), rows * cols, low, high)
                 .var("desired", desired).var("low", low).var("high", high).grid(matrix).step();
 
         while (low < high) {
@@ -123,7 +123,8 @@ public class MatrixMedianTracer implements AlgorithmTracer {
                 count += countLessEqual(row, mid);
             }
             emit.at("mid")
-                    .say("Test value %d: %d elements across the matrix are <= %d.", mid, count, mid)
+                    .say("Test value %d: %d element%s across the matrix %s <= %d.", mid, count,
+                            Narration.s(count), Narration.is(count), mid)
                     .var("low", low).var("high", high).var("mid", mid).var("count", count).grid(matrix).step();
 
             if (count < desired) {

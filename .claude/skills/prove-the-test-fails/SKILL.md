@@ -25,7 +25,7 @@ and every service's `switch (problemId)` ended in `default: return generateSomet
 — which guaranteed a non-empty list for every id, including typos. The suite could not
 distinguish a working implementation from a stub, and nobody noticed for months.
 
-So the rule, from `HANDOFF.md`'s non-negotiable working rules:
+So the rule, one of this repo's non-negotiable working rules since:
 
 > Every fix gets a test, and you **must** verify the test FAILS against the broken code
 > before accepting it. Temporarily revert the fix, watch the test go red, restore. A green
@@ -86,7 +86,7 @@ Never leave a reverted fix in the tree. Re-run the full suite afterwards.
 
 ---
 
-## Worked example, from `HANDOFF.md` PROMPT A
+## Worked example: proving the harness still detects fake work
 
 To prove the harness still detects fake work, break a tracer on purpose:
 
@@ -136,8 +136,9 @@ Recognise these — each is a version of the mistake that hid the 303 stubs.
   across the whole registry.
 - `TracerContractTest.stepBudgetTruncates` — builds an intentionally runaway tracer inline
   and asserts it is capped at 25 steps.
-- `ApiContractTest` — parameterized over all 18 base paths, because testing one controller
-  by hand is exactly how eight of them silently lost their 404 guard.
+- `ProblemProviderContractTest` — parameterized over all 18 catalogue providers, because
+  testing one by hand is exactly how eight legacy controllers silently lost their 404
+  guard, and how eighteen copy-pasted service tests drifted into pinning nothing.
 - `designTokens.test.js` — a static guard over `index.css`, because CSS silently drops a
   declaration whose `var()` cannot resolve and no runtime test can see it.
 
@@ -149,7 +150,7 @@ Recognise these — each is a version of the mistake that hid the 303 stubs.
   `anchorsAreAllReachable` names a dead anchor, emit it or delete the marker — do not
   narrow the assertion. If `alternateInputDiffersFromDefaults` fires, write a genuinely
   different input. Those failures are the design working.
-- **Do not move a pinned number to make a test pass.** `ProblemsApiTest`'s `433` and `7`
+- **Do not move a pinned number to make a test pass.** `ProblemsApiTest`'s `431` and `0`
   are tripwires. Changing one is a deliberate act that belongs in the commit message,
   alongside the `README.md` update.
 - **Report honestly.** If a part is unfinished, say which part. `traced` is an honesty

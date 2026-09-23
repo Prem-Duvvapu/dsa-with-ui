@@ -153,8 +153,8 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
 
         emit.at("init").say(
                         "%d cities, %d flights. dist[%d] = 0 and every other city is unreachable. "
-                                + "At most %d stops means at most %d flights, so the relaxation gets exactly %d rounds.",
-                        n, graph.edges().length, src, k, k + 1, k + 1)
+                                + "At most %d stop%s means at most %d flights, so the relaxation gets exactly %d rounds.",
+                        n, graph.edges().length, src, k, Narration.s(k), k + 1, k + 1)
                 .var("src", src).var("dst", dst).var("k", k).var("dist", priceString(dist))
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
 
@@ -189,7 +189,8 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
                             .edges(List.of(edgeKey)).step();
                 } else {
                     String reason = dist[from] == Integer.MAX_VALUE
-                            ? String.format("city %d is not reachable in %d flight(s) yet", from, round)
+                            ? String.format("city %d is not reachable in %d flight%s yet",
+                                    from, round, Narration.s(round))
                             : String.format("%d + %d = %d does not beat next[%d] = %s",
                                     dist[from], price, dist[from] + price, to, priceLabel(next[to]));
                     emit.at("noImprovement").say("Flight %d -> %d costs %d, but %s. Leave next[%d] alone.",
@@ -203,8 +204,8 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
 
             dist = next;
             emit.at("roundEnd").say(
-                            "Round %d done. dist = %s - these are the cheapest prices using at most %d flight(s).",
-                            round + 1, priceString(dist), round + 1)
+                            "Round %d done. dist = %s - these are the cheapest prices using at most %d flight%s.",
+                            round + 1, priceString(dist), round + 1, Narration.s(round + 1))
                     .var("round", round + 1).var("dist", priceString(dist))
                     .graph(layout.nodes(), layout.edges()).nodes(states).step();
         }
@@ -214,9 +215,11 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
             states.put(dst, "done");
         }
         String verdict = answer < 0
-                ? String.format("%d is not reachable from %d within %d stop(s), so the answer is -1", dst, src, k)
-                : String.format("the cheapest %d -> %d route within %d stop(s) costs %d", src, dst, k, answer);
-        emit.at("done").say("All %d round(s) complete. dist = %s, so %s.", k + 1, priceString(dist), verdict)
+                ? String.format("%d is not reachable from %d within %d stop%s, so the answer is -1",
+                        dst, src, k, Narration.s(k))
+                : String.format("the cheapest %d -> %d route within %d stop%s costs %d",
+                        src, dst, k, Narration.s(k), answer);
+        emit.at("done").say("All %d round%s complete. dist = %s, so %s.", k + 1, Narration.s(k + 1), priceString(dist), verdict)
                 .var("answer", answer).var("dist", priceString(dist))
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
     }

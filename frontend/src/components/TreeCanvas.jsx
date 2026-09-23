@@ -1,11 +1,18 @@
+import layout from './layout.module.css';
 import React from 'react';
-import { GitCommit, Sparkles } from 'lucide-react';
+import styles from './TreeCanvas.module.css';
+import { Sparkles } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
-export default function TreeCanvas({ problem, currentStep, step }) {
+export default function TreeCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const treeNodes = activeStep?.treeNodes?.length
-    ? activeStep.treeNodes
-    : (problem?.defaultTreeNodes || []);
+  // Absence is not "show the default". Tracers restate the tree only on the steps that
+  // change it, so falling straight through to problem.defaultTreeNodes drew the CATALOGUE's
+  // tree over somebody's own input - 259 steps across 48 of 54 Binary Tree and BST
+  // problems, up to 84% of a run. The default is honest only before any step has emitted
+  // a tree at all, which is what a run would use anyway.
+  const emitted = lastPayload(steps, currentStepIndex, 'treeNodes', activeStep);
+  const treeNodes = emitted?.length ? emitted : (problem?.defaultTreeNodes || []);
   const nodeStates = activeStep?.nodeStates || {};
   const nodeXs = treeNodes.map((node) => node.x);
   const nodeYs = treeNodes.map((node) => node.y);
@@ -21,56 +28,28 @@ export default function TreeCanvas({ problem, currentStep, step }) {
       case 'visiting':
       case 'current':
       case 'queued':
-        return { fill: 'var(--state-current)', stroke: '#fbbf24', glow: 'var(--state-current-glow)' };
+        return { fill: 'var(--state-current)', stroke: 'var(--role-secondary-edge)', glow: 'var(--state-current-glow)' };
       case 'target':
       case 'root':
       case 'found':
-        return { fill: 'var(--state-target)', stroke: '#a78bfa', glow: 'var(--state-target-glow)' };
+        return { fill: 'var(--state-target)', stroke: 'var(--state-target-edge)', glow: 'var(--state-target-glow)' };
       case 'visited':
       case 'processed':
         return { fill: 'var(--state-visited-bg)', stroke: 'var(--state-visited)', glow: 'none' };
       case 'done':
       case 'completed':
       case 'sorted':
-        return { fill: 'var(--state-done)', stroke: '#2dd4bf', glow: 'var(--state-done-glow)' };
+        return { fill: 'var(--state-done)', stroke: 'var(--state-done-edge)', glow: 'var(--state-done-glow)' };
       default:
-        return { fill: '#1e293b', stroke: 'var(--border-default)', glow: 'none' };
+        return { fill: 'var(--canvas-node-fill)', stroke: 'var(--border-default)', glow: 'none' };
     }
   };
 
   return (
-    <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitCommit size={16} color="var(--accent-violet)" />
-          <span style={{ fontSize: '0.86rem', fontWeight: '800', letterSpacing: '0.3px', color: 'var(--text-primary)' }}>
-            Binary tree & BST topology visualizer
-          </span>
-        </div>
+    <div className={styles.wrap}>
 
-        {/* 4 Semantic Legend Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.72rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-current)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Current</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-target)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Target</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-visited)' }}></span>
-            <span style={{ color: 'var(--text-muted)' }}>Visited</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--state-done)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Done</span>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ flex: 1, width: '100%', height: '100%', minHeight: '260px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.25)', borderRadius: 'var(--radius-md)', overflow: 'hidden', padding: 'var(--space-md)' }}>
-        <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible', maxHeight: '100%' }}>
+      <div className={styles.stage} data-testid="tree-stage">
+        <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" className={layout.svgFit}>
           {/* Render Parent-Child Connecting Lines */}
           {treeNodes.map((node) => {
             const leftChild = treeNodes.find((n) => n.id === node.leftId);
@@ -84,7 +63,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
                     y1={node.y}
                     x2={leftChild.x}
                     y2={leftChild.y}
-                    stroke="#475569"
+                    stroke="var(--canvas-edge)"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                   />
@@ -95,7 +74,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
                     y1={node.y}
                     x2={rightChild.x}
                     y2={rightChild.y}
-                    stroke="#475569"
+                    stroke="var(--canvas-edge)"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                   />
@@ -111,7 +90,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
             const isVisiting = nodeState === 'visiting';
 
             return (
-              <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} style={{ cursor: 'pointer' }}>
+              <g key={`node-${node.id}`} transform={`translate(${node.x}, ${node.y})`} className={layout.clickable}>
                 <circle
                   r={isVisiting ? 21 : 18}
                   fill={colorInfo.fill}
@@ -125,7 +104,7 @@ export default function TreeCanvas({ problem, currentStep, step }) {
                 <text
                   textAnchor="middle"
                   dy=".3em"
-                  fill="#ffffff"
+                  fill="var(--role-ink)"
                   fontSize="13"
                   fontWeight="700"
                 >

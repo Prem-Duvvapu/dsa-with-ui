@@ -26,7 +26,7 @@ public class LongestSubstringWithoutRepeatingTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.STRING;
+        return DsType.WINDOW;
     }
 
     @Override

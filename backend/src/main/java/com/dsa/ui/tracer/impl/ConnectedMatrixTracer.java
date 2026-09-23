@@ -158,8 +158,8 @@ public class ConnectedMatrixTracer implements AlgorithmTracer {
                     int[] cell = queue.poll();
                     size++;
 
-                    emit.at("claim").say("(%d,%d) belongs to component #%d. %d cell(s) claimed so far.",
-                                    cell[0], cell[1], components, size)
+                    emit.at("claim").say("(%d,%d) belongs to component #%d. %d cell%s claimed so far.",
+                                    cell[0], cell[1], components, size, Narration.s(size))
                             .var("cell", "(" + cell[0] + "," + cell[1] + ")")
                             .var("size", size).var("components", components)
                             .grid(display).queue(cells(queue)).step();
@@ -188,7 +188,7 @@ public class ConnectedMatrixTracer implements AlgorithmTracer {
             }
         }
 
-        emit.at("done").say("Scan finished. The grid holds %d connected component(s).", components)
+        emit.at("done").say("Scan finished. The grid holds %d connected component%s.", components, Narration.s(components))
                 .var("components", components).grid(display).step();
     }
 

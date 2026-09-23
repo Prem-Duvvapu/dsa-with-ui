@@ -65,7 +65,7 @@ public class MaximumSumCombinationTracer implements AlgorithmTracer {
             emit.at("sort").say("Sorted B[%d] = %d.", i, b[i]).var("array", "B").var("index", i).array(b, i).step();
         }
 
-        PriorityQueue<Pair> heap = new PriorityQueue<>(Comparator.comparingInt(Pair::sum).reversed());
+        ArrayHeap<Pair> heap = new ArrayHeap<>(Comparator.comparingInt(Pair::sum).reversed());
         Set<Long> seen = new HashSet<>();
         Pair first = pair(a, b, a.length - 1, b.length - 1);
         heap.offer(first); seen.add(key(first.i(), first.j()));
@@ -95,9 +95,9 @@ public class MaximumSumCombinationTracer implements AlgorithmTracer {
     private static Pair pair(int[] a, int[] b, int i, int j) { return new Pair(i, j, a[i] + b[j]); }
     private static long key(int i, int j) { return ((long) i << 32) ^ (j & 0xffffffffL); }
 
-    private static List<ArrayElement> render(PriorityQueue<Pair> heap) {
-        List<Pair> snapshot = new ArrayList<>(heap);
-        snapshot.sort(Comparator.comparingInt(Pair::sum).reversed());
+    /** The heap's own array - see ArrayHeap for why this must not be sorted first. */
+    private static List<ArrayElement> render(ArrayHeap<Pair> heap) {
+        List<Pair> snapshot = heap.slots();
         List<ArrayElement> out = new ArrayList<>();
         for (int i = 0; i < snapshot.size(); i++) {
             Pair p = snapshot.get(i);

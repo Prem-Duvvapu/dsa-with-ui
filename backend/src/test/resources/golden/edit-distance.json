@@ -203,8 +203,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[1][1] = 1 + min(delete 1, insert 1, replace 0) = 1"
     }
   }, {
     "stepNumber" : 3,
@@ -301,8 +301,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[1][2] = 1 + min(delete 2, insert 1, replace 1) = 2"
     }
   }, {
     "stepNumber" : 4,
@@ -399,8 +399,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[1][3] = 1 + min(delete 3, insert 2, replace 2) = 3"
     }
   }, {
     "stepNumber" : 5,
@@ -497,8 +497,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[2][1] = 1 + min(delete 1, insert 2, replace 1) = 2"
     }
   }, {
     "stepNumber" : 6,
@@ -595,8 +595,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "characters match, so dp[2][2] = dp[1][1] = 1"
     }
   }, {
     "stepNumber" : 7,
@@ -693,8 +693,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[2][3] = 1 + min(delete 3, insert 1, replace 2) = 2"
     }
   }, {
     "stepNumber" : 8,
@@ -791,8 +791,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "characters match, so dp[3][1] = dp[2][0] = 2"
     }
   }, {
     "stepNumber" : 9,
@@ -889,8 +889,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[3][2] = 1 + min(delete 1, insert 2, replace 2) = 2"
     }
   }, {
     "stepNumber" : 10,
@@ -987,8 +987,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[3][3] = 1 + min(delete 2, insert 2, replace 1) = 2"
     }
   }, {
     "stepNumber" : 11,
@@ -1085,8 +1085,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[4][1] = 1 + min(delete 2, insert 4, replace 3) = 3"
     }
   }, {
     "stepNumber" : 12,
@@ -1183,8 +1183,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[4][2] = 1 + min(delete 2, insert 3, replace 2) = 3"
     }
   }, {
     "stepNumber" : 13,
@@ -1281,8 +1281,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "characters match, so dp[4][3] = dp[3][2] = 2"
     }
   }, {
     "stepNumber" : 14,
@@ -1379,8 +1379,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[5][1] = 1 + min(delete 3, insert 5, replace 4) = 4"
     }
   }, {
     "stepNumber" : 15,
@@ -1477,8 +1477,8 @@
         "value" : "·",
         "state" : "void"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[5][2] = 1 + min(delete 3, insert 4, replace 3) = 4"
     }
   }, {
     "stepNumber" : 16,
@@ -1575,8 +1575,8 @@
         "value" : "3",
         "state" : "probe"
       } ] ],
-      "formula" : null,
-      "substitution" : null
+      "formula" : "dp[i][j] = s[i-1]==t[j-1] ? dp[i-1][j-1] : 1 + min(delete dp[i-1][j], insert dp[i][j-1], replace dp[i-1][j-1])",
+      "substitution" : "dp[5][3] = 1 + min(delete 2, insert 4, replace 3) = 3"
     }
   }, {
     "stepNumber" : 17,

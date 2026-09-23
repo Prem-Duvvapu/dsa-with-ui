@@ -9,14 +9,20 @@ import com.dsa.ui.tracer.wire.TraceResponse;
 import com.dsa.ui.tracer.InputSpec;
 import com.dsa.ui.tracer.TraceRunner;
 import com.dsa.ui.tracer.TracerRegistry;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.MessageDigest;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The v2 API: one catalogue, and problems you can run against your own input.
@@ -42,10 +48,84 @@ public class ProblemsController {
         this.runner = runner;
     }
 
-    /** The whole catalogue as lightweight summaries — full detail is one request away. */
+    /**
+     * The whole catalogue as lightweight summaries — full detail is one request away.
+     *
+     * <p>Computed once. The catalogue is assembled at startup from eighteen providers and
+     * never changes afterwards, so re-projecting 433 maps on every request was work with no
+     * possible different answer. Held in a volatile field rather than synchronized: two
+     * threads racing on first call both build the same immutable list, and the loser's copy
+     * is simply discarded.
+     */
+    private volatile List<Map<String, Object>> cachedSummaries;
+
+    /**
+     * The ETag for that projection, computed once with it.
+     *
+     * <p>Spring's {@code ShallowEtagHeaderFilter} was the obvious way to do this and it is
+     * the wrong one here: it buffers the response and sets Content-Length itself, which
+     * stops Tomcat compressing at all. Measured - the catalogue came back 236 KB with the
+     * filter in place no matter what Accept-Encoding asked for. Hashing the immutable
+     * projection once and answering If-None-Match here keeps compression working on the
+     * 200s, and is cheaper besides: the filter re-hashed the body on every request.
+     */
+    private volatile String cachedEtag;
+
     @GetMapping
-    public List<Map<String, Object>> list() {
-        return catalog.all().stream().map(ProblemsController::summarize).toList();
+    public ResponseEntity<List<Map<String, Object>>> list(
+            @RequestHeader(value = HttpHeaders.IF_NONE_MATCH, required = false) String ifNoneMatch) {
+        List<Map<String, Object>> summaries = cachedSummaries;
+        if (summaries == null) {
+            // Unmodifiable because this list is now shared across every request. summarize()
+            // hands back a mutable LinkedHashMap, and one caller mutating an entry would
+            // corrupt the catalogue for everyone afterwards. Collections.unmodifiableMap
+            // rather than Map.copyOf: a summary legitimately holds nulls (inputSpec is null
+            // for an untraced problem) and Map.copyOf rejects them.
+            summaries = catalog.all().stream()
+                    .map(ProblemsController::summarize)
+                    .map(Collections::unmodifiableMap)
+                    .toList();
+            cachedSummaries = summaries;
+            cachedEtag = etagFor(summaries);
+        }
+        String etag = cachedEtag;
+
+        if (etag != null && etag.equals(ifNoneMatch)) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).eTag(etag).build();
+        }
+        return ResponseEntity.ok()
+                // no-cache + must-revalidate, not a max-age: the catalogue changes only on
+                // deploy, but when it does a client holding a stale copy must find out at
+                // once rather than after an arbitrary window.
+                .cacheControl(CacheControl.noCache().mustRevalidate())
+                .eTag(etag)
+                .body(summaries);
+    }
+
+    /**
+     * A stable hash of the rendered catalogue, so a deploy that changes it changes this.
+     *
+     * <p><strong>Weak</strong> (the {@code W/} prefix), and that is load-bearing rather than
+     * stylistic. Tomcat refuses to compress a response carrying a STRONG ETag, because a
+     * strong tag identifies an exact byte sequence and gzip changes those bytes. With a
+     * strong tag this endpoint came back 236 KB uncompressed while every other endpoint
+     * compressed normally - the one response that most needed it was the only one excluded.
+     * A weak tag says "semantically the same catalogue", which is all revalidation needs
+     * and which permits the transformation.
+     */
+    private static String etagFor(List<Map<String, Object>> summaries) {
+        try {
+            byte[] digest = MessageDigest.getInstance("SHA-256")
+                    .digest(new ObjectMapper().writeValueAsBytes(summaries));
+            StringBuilder hex = new StringBuilder(32);
+            for (int i = 0; i < 16; i++) {
+                hex.append(String.format("%02x", digest[i]));
+            }
+            return "W/\"" + hex + "\"";
+        } catch (Exception e) {
+            // No ETag is correctness-preserving: the client simply re-downloads.
+            return null;
+        }
     }
 
     /**
@@ -71,6 +151,9 @@ public class ProblemsController {
 
         Map<String, Object> out = new LinkedHashMap<>(summarize(entry));
         out.put("description", p.getDescription());
+        // The SOURCE problem's constraints. Distinct from the inputSpec field constraints
+        // below, which are this visualiser's own caps; the UI labels them apart.
+        out.put("constraints", p.getConstraints());
         out.put("complexity", p.getComplexity());
         out.put("defaultArray", p.getDefaultArray());
         out.put("defaultGrid", p.getDefaultGrid());
@@ -83,9 +166,24 @@ public class ProblemsController {
         // A traced problem's source comes from its tracer, with anchors stripped, so the
         // code on screen is provably the code the highlighted lines refer to.
         tracers.find(id).ifPresentOrElse(
-                t -> out.put("javaCode",
-                        com.dsa.ui.tracer.AnnotatedCode.parse(t.annotatedCode()).getDisplayCode()),
-                () -> out.put("javaCode", p.getJavaCode()));
+                t -> {
+                    out.put("javaCode",
+                            com.dsa.ui.tracer.AnnotatedCode.parse(t.annotatedCode()).getDisplayCode());
+                    // The second input every tracer is required to declare. It existed only
+                    // for TracerContractTest, which meant the one input a visitor could
+                    // reach was the default - and for a good many problems the default
+                    // provably cannot exercise the whole algorithm. next-permutation's swap
+                    // and suffix-reverse are unreachable from any growable default;
+                    // word-break's memo can never hit on an input that succeeds; every
+                    // not-found branch is mutually exclusive with its found branch. The code
+                    // panel already greys those lines as "not taken on this input". Serving
+                    // the alternate is what lets someone go and take them.
+                    out.put("alternateInput", t.alternateInput());
+                },
+                () -> {
+                    out.put("javaCode", p.getJavaCode());
+                    out.put("alternateInput", null);
+                });
 
         return out;
     }
@@ -99,8 +197,30 @@ public class ProblemsController {
     @GetMapping("/{id}/execute")
     public TraceResponse executeDefaults(@PathVariable String id,
                                          @RequestParam(required = false) String encoding) {
-        return TraceResponse.of(runner.runDefaults(tracer(id)), encoding);
+        // Cached, because this is the hot path and it is deterministic. Most traffic is
+        // "open a problem, press play", which re-ran the same 431 algorithms over and over
+        // to produce byte-identical answers. A custom input still runs for real - see the
+        // POST below, which is deliberately NOT cached.
+        //
+        // TraceResponse is safe to share: all twelve of its fields are final and nothing
+        // mutates one after construction.
+        return defaultTraces.computeIfAbsent(
+                id + '\u0000' + (encoding == null ? "" : encoding),
+                key -> TraceResponse.of(runner.runDefaults(tracer(id)), encoding));
     }
+
+    /**
+     * Default traces, keyed by id and requested encoding.
+     *
+     * <p>Bounded only by the catalogue: 431 problems times the two encodings the API offers,
+     * so it cannot grow with traffic the way a key derived from caller input could. Measured
+     * at roughly 3 KB a trace, which is a few megabytes held for the life of the process.
+     *
+     * <p>Never populated from {@code POST /execute}. A cache keyed on caller-supplied input
+     * is a memory-exhaustion vector, and the rate limiter exists precisely because that path
+     * has to do real work every time.
+     */
+    private final Map<String, TraceResponse> defaultTraces = new ConcurrentHashMap<>();
 
     /** Runs the problem against caller-supplied input. */
     @PostMapping("/{id}/execute")

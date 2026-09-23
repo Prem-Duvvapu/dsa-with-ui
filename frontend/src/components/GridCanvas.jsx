@@ -1,5 +1,7 @@
+import styles from './GridCanvas.module.css';
 import React from 'react';
 import { Crown } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
 /**
  * 2D grid / matrix visualizer.
@@ -17,9 +19,14 @@ import { Crown } from 'lucide-react';
  * itself was invisible: `Stack`/`Queue` heroes had no companion that read
  * `gridState` at all. See `canvas/companions.js`'s `runHasGrid` check.
  */
-export default function GridCanvas({ problem, currentStep, step, variant = 'hero', title = 'Grid' }) {
+export default function GridCanvas({ problem, currentStep, step, variant = 'hero', title = 'Grid', steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const gridState = activeStep?.gridState || problem?.defaultGrid;
+  // Absence is not "show the default". Tracers restate a structure only on the steps
+  // that change it, so falling through to the catalogue default drew the CATALOGUE's
+  // data over the caller's own input. Measured app-wide: 1506 steps across 142 of 232
+  // problems. The default is honest only before any step has emitted anything.
+  const gridState = lastPayload(steps, currentStepIndex, 'gridState', activeStep)
+    || problem?.defaultGrid;
   const isCompanion = variant === 'companion';
 
   if (!gridState || !gridState.length) {
@@ -32,7 +39,7 @@ export default function GridCanvas({ problem, currentStep, step, variant = 'hero
       );
     }
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--bench-ink-dim)' }}>
+      <div className={styles.empty}>
         No grid data available
       </div>
     );
@@ -45,17 +52,14 @@ export default function GridCanvas({ problem, currentStep, step, variant = 'hero
 
   const grid = (
     <div
+      className={[
+        styles.grid,
+        isSudoku ? styles.gridSudoku : '',
+        isCompanion ? styles.gridCompanion : ''
+      ].filter(Boolean).join(' ')}
       style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${gridState[0].length}, minmax(${cellSize ? `${cellSize}px` : isSudoku ? '24px' : isChessboard ? '44px' : '36px'}, 1fr))`,
-        gap: isSudoku ? '2px' : isCompanion ? '3px' : 'var(--space-xs)',
-        padding: isCompanion ? '0' : 'var(--space-md)',
-        background: isSudoku ? 'var(--bench-ground)' : 'transparent',
-        borderRadius: 'var(--radius-md, 12px)',
-        border: isSudoku ? '2px solid var(--bench-rule-strong)' : 'none',
-        maxWidth: '100%',
-        width: isCompanion ? 'max-content' : undefined,
-        overflow: 'auto'
+        '--grid-columns': gridState[0].length,
+        '--grid-cell': cellSize ? `${cellSize}px` : isSudoku ? '24px' : isChessboard ? '44px' : '36px'
       }}
     >
       {gridState.map((row, rIdx) =>
@@ -72,13 +76,13 @@ export default function GridCanvas({ problem, currentStep, step, variant = 'hero
     return (
       <div className="companion-pane" aria-label={title}>
         <div className="companion-title">{title}</div>
-        <div style={{ overflowX: 'auto' }}>{grid}</div>
+        <div className={styles.scroller}>{grid}</div>
       </div>
     );
   }
 
   return (
-    <div style={{ flex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'auto', padding: '16px' }}>
+    <div className={styles.wrap}>
       {grid}
     </div>
   );
@@ -99,55 +103,33 @@ function renderQueenCell(rIdx, cIdx, val) {
   return (
     <div
       key={`queen-${rIdx}-${cIdx}`}
-      style={{
-        width: '100%',
-        aspectRatio: '1',
-        minWidth: '44px',
-        minHeight: '44px',
-        borderRadius: 'var(--radius-xs, 4px)',
-        background: val === 1 ? 'rgba(61, 220, 151, 0.25)' : isLightSquare ? 'var(--bench-rule-strong)' : 'var(--bench-fill)',
-        border: val === 1 ? '2px solid var(--settled)' : '1px solid var(--bench-rule)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        transition: 'all var(--motion-normal, 300ms) var(--ease-standard, ease)',
-        boxShadow: val === 1 ? '0 0 14px rgba(61, 220, 151, 0.4)' : 'none'
-      }}
+      className={[
+        styles.queenCell,
+        val === 1 ? styles.queenCellPlaced : isLightSquare ? styles.queenCellLight : ''
+      ].filter(Boolean).join(' ')}
     >
       {val === 1 ? (
-        <Crown size={24} color="var(--probe)" style={{ filter: 'drop-shadow(0 0 8px var(--probe))' }} />
+        <Crown size={24} color="var(--probe)" className={styles.queenIcon} />
       ) : (
-        <span style={{ fontSize: 'var(--text-xs, 0.72rem)', color: 'var(--bench-ink-dim)' }}>({rIdx},{cIdx})</span>
+        <span className={styles.coord}>({rIdx},{cIdx})</span>
       )}
     </div>
   );
 }
 
 function renderSudokuCell(rIdx, cIdx, val) {
-  const borderRight = (cIdx + 1) % 3 === 0 && cIdx !== 8 ? '2px solid var(--probe)' : '1px solid var(--bench-rule)';
-  const borderBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8 ? '2px solid var(--probe)' : '1px solid var(--bench-rule)';
+  const boxRight = (cIdx + 1) % 3 === 0 && cIdx !== 8;
+  const boxBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8;
 
   return (
     <div
       key={`sudoku-${rIdx}-${cIdx}`}
-      style={{
-        width: '100%',
-        aspectRatio: '1',
-        minWidth: '24px',
-        minHeight: '24px',
-        background: val !== 0 ? 'rgba(61, 220, 151, 0.15)' : 'var(--bench-fill)',
-        borderRight,
-        borderBottom,
-        color: val !== 0 ? 'var(--bench-ink)' : 'var(--bench-ink-dim)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight: '800',
-        fontFamily: 'var(--font-code)',
-        fontSize: 'var(--text-sm, 0.8rem)'
-      }}
+      className={[
+        styles.sudokuCell,
+        val !== 0 ? styles.sudokuCellFilled : '',
+        boxRight ? styles.sudokuBoxRight : '',
+        boxBottom ? styles.sudokuBoxBottom : ''
+      ].filter(Boolean).join(' ')}
     >
       {val !== 0 ? val : '.'}
     </div>
@@ -159,26 +141,16 @@ function renderMatrixCell(rIdx, cIdx, val, cellSize) {
   return (
     <div
       key={`grid-${rIdx}-${cIdx}`}
-      style={{
-        width: compact ? `${cellSize}px` : '55px',
-        height: compact ? `${cellSize}px` : '55px',
-        borderRadius: compact ? '4px' : '8px',
-        background: val === 2 ? 'rgba(61, 220, 151, 0.25)' : val === 1 || val === 99 ? 'rgba(255, 176, 0, 0.15)' : 'var(--bench-fill)',
-        border: val === 2 ? '1px solid var(--settled)' : val === 1 || val === 99 ? '1px solid var(--probe)' : '1px solid var(--bench-rule)',
-        boxShadow: compact ? 'none' : val === 2 ? '0 0 14px rgba(61, 220, 151, 0.4)' : val === 1 || val === 99 ? '0 0 14px rgba(255, 176, 0, 0.4)' : 'none',
-        color: val !== 0 ? 'var(--bench-ink)' : 'var(--bench-ink-dim)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight: '700',
-        fontFamily: 'var(--font-code)',
-        fontSize: compact ? '0.68rem' : '0.9rem',
-        transition: 'all var(--motion-normal, 300ms) var(--ease-standard, ease)'
-      }}
+      className={[
+        styles.matrixCell,
+        compact ? styles.matrixCellCompact : '',
+        val === 2 ? styles.matrixCellDone : val === 1 || val === 99 ? styles.matrixCellActive : '',
+        val !== 0 ? styles.matrixCellValue : ''
+      ].filter(Boolean).join(' ')}
+      style={compact ? { '--grid-cell': `${cellSize}px` } : undefined}
     >
       <span>{val}</span>
-      {!compact && <span style={{ fontSize: '0.6rem', opacity: 0.6 }}>({rIdx},{cIdx})</span>}
+      {!compact && <span className={styles.coordSmall}>({rIdx},{cIdx})</span>}
     </div>
   );
 }

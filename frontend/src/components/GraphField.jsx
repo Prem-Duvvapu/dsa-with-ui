@@ -1,3 +1,4 @@
+import fields from './fields.module.css';
 import React from 'react';
 import { Plus, X } from 'lucide-react';
 
@@ -35,8 +36,8 @@ export default function GraphField({ field, value, onChange }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: 'var(--text-secondary)' }}>
+    <div className={fields.stack}>
+      <label className={fields.label}>
         Vertices
         <input
           type="number"
@@ -44,29 +45,28 @@ export default function GraphField({ field, value, onChange }) {
           max={maxVertices === Infinity ? undefined : maxVertices}
           value={vertices}
           onChange={(e) => setVertices(Number(e.target.value) || 1)}
-          className="ip-input"
-          style={{ width: '64px' }}
+          className={fields.countInput}
         />
       </label>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      <div className={fields.stackTight}>
         {edges.map((edge, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', width: '14px' }}>{i + 1}</span>
+          <div key={i} className={fields.row}>
+            <span className={fields.ordinal}>{i + 1}</span>
             <input
               type="number" min={0} max={Math.max(0, vertices - 1)}
               value={edge[0]}
               onChange={(ev) => setEdge(i, 0, Number(ev.target.value) || 0)}
               aria-label={`Edge ${i + 1} from vertex`}
-              className="ip-input" style={{ width: '48px' }}
+              className={`ip-input ${fields.numberInput}`}
             />
-            <span style={{ color: 'var(--text-muted)' }}>→</span>
+            <span className={fields.arrow}>→</span>
             <input
               type="number" min={0} max={Math.max(0, vertices - 1)}
               value={edge[1]}
               onChange={(ev) => setEdge(i, 1, Number(ev.target.value) || 0)}
               aria-label={`Edge ${i + 1} to vertex`}
-              className="ip-input" style={{ width: '48px' }}
+              className={`ip-input ${fields.numberInput}`}
             />
             {weighted && (
               <input
@@ -75,14 +75,14 @@ export default function GraphField({ field, value, onChange }) {
                 onChange={(ev) => setEdge(i, 2, Number(ev.target.value) || 0)}
                 aria-label={`Edge ${i + 1} weight`}
                 title="weight"
-                className="ip-input" style={{ width: '48px' }}
+                className={`ip-input ${fields.numberInput}`}
               />
             )}
             <button
               type="button"
               onClick={() => removeEdge(i)}
               aria-label={`Remove edge ${i + 1}`}
-              style={{ border: 'none', background: 'transparent', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
+              className={fields.iconButton}
             >
               <X size={12} />
             </button>
@@ -94,8 +94,7 @@ export default function GraphField({ field, value, onChange }) {
         type="button"
         onClick={addEdge}
         disabled={edges.length >= maxEdges}
-        className="btn btn-outline"
-        style={{ padding: '4px 8px', width: 'fit-content', opacity: edges.length >= maxEdges ? 0.4 : 1 }}
+        className={`btn btn-outline ${fields.addButton}${edges.length >= maxEdges ? ` ${fields.atCap}` : ''}`}
       >
         <Plus size={12} /> Add edge
       </button>

@@ -3,7 +3,6 @@ package com.dsa.ui.service;
 import com.dsa.ui.algorithm.trie.*;
 import com.dsa.ui.catalog.ProblemProvider;
 import com.dsa.ui.model.*;
-import com.dsa.ui.trace.ListTraceRecorder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,19 +22,6 @@ public class TrieService implements ProblemProvider {
 
     public ProblemDetail getProblemById(String id) {
         return problems.get(id);
-    }
-
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            // implement-trie and word-break-trie are traced by the v2 tracer layer
-            // (tracer/impl/ImplementTrieTracer, tracer/impl/WordBreakTrieTracer); serving
-            // their legacy narration here would substitute a canned trace for the real one.
-            case "implement-trie":
-            case "word-break-trie":
-                throw new LegacyTraceRetiredException(problemId);
-            case "longest-common-prefix": throw new LegacyTraceRetiredException(problemId);
-            default: return generateImplementTrieSteps();
-        }
     }
 
     private void initProblems() {
@@ -105,40 +91,6 @@ public class TrieService implements ProblemProvider {
         ));
 
         // 2. Longest Common Prefix
-        problems.put("longest-common-prefix", new ProblemDetail(
-            "longest-common-prefix", "Longest Common Prefix", "Tries - Applications", "Tries & Prefixes", "Easy",
-            "Find the longest common prefix string amongst an array of strings using Trie.",
-            """
-            // Java Longest Common Prefix via Trie (LeetCode 14)
-            public String longestCommonPrefix(String[] strs) {
-                if (strs == null || strs.length == 0) return "";
-                Trie trie = new Trie();
-                for (String word : strs) trie.insert(word);
-
-                StringBuilder prefix = new StringBuilder();
-                Node curr = trie.root;
-                while (curr != null && countChildren(curr) == 1 && !curr.isEnd()) {
-                    int childIdx = getOnlyChild(curr);
-                    prefix.append((char)('a' + childIdx));
-                    curr = curr.links[childIdx];
-                }
-                return prefix.toString();
-            }
-            """,
-            null, null, createLcpTreeNodes(), null, null, null, null,
-            new ComplexityDetail(
-                "O(N x L)",
-                "Time Complexity: O(N x L) to build Trie + O(L) to traverse single-child branch.",
-                "Why Trie for LCP? Single-child branches in the Trie directly represent the shared prefix of all inserted strings.",
-                "O(N x L)",
-                "Space Complexity: Trie storage space for string array.",
-                "Why O(N x L)? Trie nodes store character links for all strings.",
-                "Auxiliary Space: O(N x L)",
-                "Prefix Output: O(L)"
-            ),
-            "String"
-        ));
-
         // 3. Word Break Problem using Trie
         problems.put("word-break-trie", new ProblemDetail(
             "word-break-trie", "Word Break Problem", "Tries - Hard", "Tries & Prefixes", "Medium",
@@ -179,22 +131,6 @@ public class TrieService implements ProblemProvider {
             ),
             "Trie"
         ));
-    }
-
-    // Step Generators
-    private List<ExecutionStep> generateImplementTrieSteps() {
-        ImplementTrie.Node root = new ImplementTrie.Node();
-        ListTraceRecorder recorder = new ListTraceRecorder();
-        new ImplementTrie().insert(root, "apple", recorder);
-        return recorder.toExecutionSteps();
-    }
-
-    private List<ExecutionStep> generateLcpSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        steps.add(new ExecutionStep(1, 4, "Longest Common Prefix: Insert strings [\"flower\", \"flow\", \"flight\"] into Trie.", List.of("LCP"), Map.of(), List.of(), Map.of("Input", "[\"flower\", \"flow\", \"flight\"]"), "Stack", null));
-        steps.add(new ExecutionStep(2, 9, "Traverse Trie from root: Node 'f' has 1 child ('l'). Node 'l' has 1 child ('o' and 'i' split at node 'l'!).", List.of("LCP traversal"), Map.of(), List.of(), Map.of("Common Prefix", "\"fl\""), "Stack", null));
-        steps.add(new ExecutionStep(3, 13, "Longest Common Prefix Complete! Result = \"fl\".", List.of(), Map.of(), List.of(), Map.of("LCP", "\"fl\""), "Stack", null));
-        return steps;
     }
 
     // Helper tree nodes

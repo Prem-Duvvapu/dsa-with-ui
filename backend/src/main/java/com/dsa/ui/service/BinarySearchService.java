@@ -23,53 +23,6 @@ public class BinarySearchService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        switch (problemId) {
-            case "binary-search-1d": return generateBs1dSteps();
-            // lower-bound has a real tracer (tracer/impl). Refuse rather than let default:
-            // serve binary-search-1d's steps under this id.
-            case "lower-bound":
-                throw new LegacyTraceRetiredException(problemId);
-            // upper-bound has a real tracer (tracer/impl). Refuse rather than let default:
-            // serve binary-search-1d's steps under this id.
-            case "upper-bound":
-                throw new LegacyTraceRetiredException(problemId);
-            // Every id below now has a real tracer (tracer/impl). Refuse rather than let
-            // default: serve binary-search-1d's unrelated steps under these ids.
-            case "search-insert-position":
-            case "floor-ceil-sorted-array":
-            case "first-last-occurrence":
-            case "count-occurrences":
-            case "search-rotated-sorted":
-            case "search-rotated-sorted-2":
-            case "find-min-rotated-sorted":
-            case "single-element-sorted":
-            case "count-rotations":
-            case "find-peak-element":
-            case "square-root-number":
-            case "nth-root-number":
-            case "koko-eating-bananas":
-            case "split-array-largest-sum":
-            case "min-days-bouquets":
-            case "smallest-divisor":
-            case "ship-packages-d-days":
-            case "kth-missing-positive":
-            case "aggressive-cows":
-            case "book-allocation":
-            case "painters-partition":
-            case "minimize-max-distance-gas-station":
-            case "median-2-sorted-arrays":
-            case "kth-element-2-sorted-arrays":
-            case "row-max-ones":
-            case "search-2d-matrix":
-            case "search-2d-matrix-2":
-            case "find-peak-element-2d":
-            case "matrix-median":
-                throw new LegacyTraceRetiredException(problemId);
-            default: return generateBs1dSteps();
-        }
-    }
-
     private void initProblems() {
         // 1. Binary Search 1D
         problems.put("binary-search-1d", new ProblemDetail(
@@ -89,7 +42,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createSortedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Search space is halved at every iteration.", "Recurrence log2(N)", "O(1)", "Space Complexity: Iterative pointers low, high, mid.", "Iterative", "Auxiliary Space: O(1)", "Pointers"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Search space is halved at every iteration.", "Recurrence log2(N)", "O(1)", "Space Complexity: Iterative pointers low, high, mid.", "Iterative", "Auxiliary Space: O(1)", "Pointers"), "SearchSpace"
         ));
 
         // 2. Lower Bound
@@ -109,7 +62,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createSortedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Halves search space each step.", "Binary Search", "O(1)", "Space Complexity: Constant memory.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Halves search space each step.", "Binary Search", "O(1)", "Space Complexity: Constant memory.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 3. Upper Bound
@@ -129,7 +82,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createSortedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Binary search halving.", "Binary Search", "O(1)", "Space Complexity: O(1) space.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Binary search halving.", "Binary Search", "O(1)", "Space Complexity: O(1) space.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 4. Search Insert Position
@@ -149,7 +102,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createSortedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Equivalent to finding Lower Bound of target.", "Lower Bound", "O(1)", "Space Complexity: Constant extra memory.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Equivalent to finding Lower Bound of target.", "Lower Bound", "O(1)", "Space Complexity: Constant extra memory.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 5. Floor and Ceil
@@ -165,7 +118,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createSortedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Two binary searches for floor and ceil.", "Binary Search", "O(1)", "Space Complexity: O(1) memory.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Two binary searches for floor and ceil.", "Binary Search", "O(1)", "Space Complexity: O(1) memory.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 6. First and Last Occurrence
@@ -182,7 +135,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createDuplicateSortedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Two binary searches 2 * O(log N) = O(log N).", "Binary Search", "O(1)", "Space Complexity: Constant auxiliary space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Two binary searches 2 * O(log N) = O(log N).", "Binary Search", "O(1)", "Space Complexity: Constant auxiliary space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 7. Count Occurrences
@@ -199,7 +152,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createDuplicateSortedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Difference between last and first occurrence indices.", "Binary Search", "O(1)", "Space Complexity: O(1) space.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Difference between last and first occurrence indices.", "Binary Search", "O(1)", "Space Complexity: O(1) space.", "Iterative", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 8. Search in Rotated Sorted Array I
@@ -225,7 +178,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createRotatedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: At least one half of array is always sorted.", "Sorted Half Halving", "O(1)", "Space Complexity: Iterative pointers.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: At least one half of array is always sorted.", "Sorted Half Halving", "O(1)", "Space Complexity: Iterative pointers.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 9. Search in Rotated Sorted Array II
@@ -254,7 +207,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createRotatedDuplicateArray(), null, null, null,
-            new ComplexityDetail("O(log N) Avg, O(N) Worst", "Time Complexity: Average O(log N), Worst O(N) when all array elements are identical.", "Duplicate Shrinking", "O(1)", "Space Complexity: Constant memory.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N) Avg, O(N) Worst", "Time Complexity: Average O(log N), Worst O(N) when all array elements are identical.", "Duplicate Shrinking", "O(1)", "Space Complexity: Constant memory.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 10. Find Minimum in Rotated Sorted Array
@@ -277,7 +230,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createRotatedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Halves array by tracking min in sorted half.", "Binary Search", "O(1)", "Space Complexity: Constant extra space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Halves array by tracking min in sorted half.", "Binary Search", "O(1)", "Space Complexity: Constant extra space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 11. Count Rotations
@@ -302,7 +255,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createRotatedArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Index of minimum element equals total right rotations.", "Min Index Search", "O(1)", "Space Complexity: O(1) space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Index of minimum element equals total right rotations.", "Min Index Search", "O(1)", "Space Complexity: O(1) space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 12. Single Element in Sorted Array
@@ -331,7 +284,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createSingleNonDuplicateArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Even/Odd index parity determines whether single element lies left or right.", "Index Parity Halving", "O(1)", "Space Complexity: Constant memory.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Even/Odd index parity determines whether single element lies left or right.", "Index Parity Halving", "O(1)", "Space Complexity: Constant memory.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // 13. Find Peak Element
@@ -357,7 +310,7 @@ public class BinarySearchService implements ProblemProvider {
             }
             """,
             null, null, null, createPeakArray(), null, null, null,
-            new ComplexityDetail("O(log N)", "Time Complexity: Follows rising slope towards peak.", "Slope Binary Search", "O(1)", "Space Complexity: O(1) space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "Array"
+            new ComplexityDetail("O(log N)", "Time Complexity: Follows rising slope towards peak.", "Slope Binary Search", "O(1)", "Space Complexity: O(1) space.", "Pointers", "Auxiliary Space: O(1)", "Memory"), "SearchSpace"
         ));
 
         // Populate BS on Answers (14 to 27) and BS on 2D Arrays (28 to 32)
@@ -399,37 +352,13 @@ public class BinarySearchService implements ProblemProvider {
                 String.format("// Java Implementation for %s\npublic int solve() {\n    // Binary Search Striver A2Z Implementation\n    return 0;\n}", title),
                 null, null, null, createSortedArray(), null, null, null,
                 new ComplexityDetail("O(log N)", "Time Complexity: Binary search halving over answer search space.", "BS on Answers", "O(1)", "Space Complexity: Iterative pointers low, high, mid.", "Memory", "Auxiliary Space: O(1)", "Pointers"),
-                cat.endsWith("2D Arrays") ? "Matrix" : "Array"
+                // A 2D search really is a grid and GridCanvas already draws it right. The
+                // rest are the answer-space family - koko, capacities, partitions - where
+                // low and high are candidate VALUES, not indices. SearchSpaceCanvas draws
+                // the range shrinking and labels the array as what the check reads.
+                cat.endsWith("2D Arrays") ? "Matrix" : "SearchSpace"
             ));
         }
-    }
-
-    // Step Generators
-    private List<ExecutionStep> generateBs1dSteps() {
-        List<ExecutionStep> steps = new ArrayList<>();
-        int[] nums = new int[]{1, 3, 5, 7, 9, 11, 13};
-        int target = 7, low = 0, high = nums.length - 1;
-        int stepNum = 1;
-
-        steps.add(new ExecutionStep(stepNum++, 4, "Binary Search: Search target X = 7 in sorted array [1, 3, 5, 7, 9, 11, 13]. Initialize low = 0 (val 1), high = 6 (val 13).", List.of(), Map.of(0, "low", 6, "high"), List.of(), Map.of("low", "0", "high", "6", "target", "7"), "Array", null, createBsArrayState(nums, low, high, -1, false), null, null));
-
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            steps.add(new ExecutionStep(stepNum++, 6, String.format("Calculate mid = (%d + %d) / 2 = %d (nums[mid] = %d). Compare with target 7.", low, high, mid, nums[mid]), List.of(), Map.of(low, "low", high, "high", mid, "mid"), List.of(), Map.of("low", String.valueOf(low), "high", String.valueOf(high), "mid", String.valueOf(mid), "nums[mid]", String.valueOf(nums[mid]), "target", "7"), "Array", null, createBsArrayState(nums, low, high, mid, false), null, null));
-
-            if (nums[mid] == target) {
-                steps.add(new ExecutionStep(stepNum++, 8, String.format("nums[mid=%d] (%d) == target (7)! Target 7 MATCH FOUND at index %d!", mid, nums[mid], mid), List.of(), Map.of(mid, "mid"), List.of(), Map.of("Found Index", String.valueOf(mid), "target", "7"), "Array", null, createBsArrayState(nums, low, high, mid, true), null, null));
-                return steps;
-            } else if (nums[mid] < target) {
-                steps.add(new ExecutionStep(stepNum++, 9, String.format("nums[mid=%d] (%d) < target (7). Eliminate left search range [0..%d]. Move low = mid + 1 -> %d.", mid, nums[mid], mid, mid + 1), List.of(), Map.of(mid + 1, "low", high, "high"), List.of(), Map.of("low", String.valueOf(mid + 1), "high", String.valueOf(high), "target", "7"), "Array", null, createBsArrayState(nums, mid + 1, high, mid, false), null, null));
-                low = mid + 1;
-            } else {
-                steps.add(new ExecutionStep(stepNum++, 10, String.format("nums[mid=%d] (%d) > target (7). Eliminate right search range [%d..%d]. Move high = mid - 1 -> %d.", mid, nums[mid], mid, high, mid - 1), List.of(), Map.of(low, "low", mid - 1, "high"), List.of(), Map.of("low", String.valueOf(low), "high", String.valueOf(mid - 1), "target", "7"), "Array", null, createBsArrayState(nums, low, mid - 1, mid, false), null, null));
-                high = mid - 1;
-            }
-        }
-        steps.add(new ExecutionStep(stepNum++, 12, "Target 7 not found in sorted array. Return -1.", List.of(), Map.of(), List.of(), Map.of("result", "-1"), "Array", null, createBsArrayState(nums, -1, -1, -1, false), null, null));
-        return steps;
     }
 
     // Helpers

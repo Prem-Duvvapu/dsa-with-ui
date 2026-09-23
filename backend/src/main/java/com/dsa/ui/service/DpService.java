@@ -23,13 +23,6 @@ public class DpService implements ProblemProvider {
         return problems.get(id);
     }
 
-    public List<ExecutionStep> generateSteps(String problemId) {
-        if (problems.containsKey(problemId)) {
-            throw new LegacyTraceRetiredException(problemId);
-        }
-        throw new IllegalArgumentException("Unknown Dynamic Programming problem: " + problemId);
-    }
-
     private void initProblems() {
         // 1. Climbing Stairs
         problems.put("climbing-stairs", new ProblemDetail(
@@ -213,8 +206,9 @@ public class DpService implements ProblemProvider {
                     "matrix-chain-multiplication", "burst-balloons", "unbounded-knapsack",
                     "edit-distance", "wildcard-matching", "ninja-and-his-friends" ->
                     DsType.DP_TABLE;
-            case "max-rectangle-area-all-ones", "count-square-submatrices" ->
-                    DsType.MATRIX;
+            case "count-square-submatrices" -> DsType.MATRIX;
+            // The histogram, not the board — see MaxRectangleAreaTracer.dsType().
+            case "max-rectangle-area-all-ones" -> DsType.ARRAY;
             default -> DsType.DP_TABLE;
         };
     }

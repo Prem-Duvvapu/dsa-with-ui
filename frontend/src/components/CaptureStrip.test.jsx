@@ -103,6 +103,30 @@ describe('CaptureStrip', () => {
     expect(container.querySelector('.cs-settled').textContent).toContain('✓');
   });
 
+  it('shows the character, not its code point, for a String trace', () => {
+    // StepEmitter.chars() writes a character's Unicode code point into `value` and the
+    // character itself into `label` - the same shape ArrayCanvas/StringCanvas fixed for
+    // the hero panel. This strip reads arrayState too, via its own rowValues(), and had
+    // the identical bug: it ignored `label` and printed the code point instead.
+    const charStep = (n, letters, states) => ({
+      stepNumber: n,
+      activeLine: 1,
+      description: `step ${n}`,
+      arrayState: letters.split('').map((ch, index) => ({
+        index,
+        value: ch.codePointAt(0),
+        label: ch,
+        state: states[index]
+      }))
+    });
+    const stringSteps = [charStep(1, 'ab', ['default', 'default'])];
+    render(<CaptureStrip steps={stringSteps} current={0} dsType="String" />);
+    expect(screen.getByText('a')).toBeInTheDocument();
+    expect(screen.getByText('b')).toBeInTheDocument();
+    expect(screen.queryByText('97')).not.toBeInTheDocument();
+    expect(screen.queryByText('98')).not.toBeInTheDocument();
+  });
+
   it('drops per-cell labels once the trace is too long to read them', () => {
     const many = Array.from({ length: 120 }, (_, i) => arrayStep(i + 1, ['default']));
     const { container } = render(<CaptureStrip steps={many} current={0} />);
@@ -177,6 +201,43 @@ describe('CaptureStrip', () => {
     expect(probes[0].x / width).toBeLessThan(0.6);
   });
 
+  it('stays interactive at the scale the band exists for', () => {
+    // The brief's acceptance test: "Measure the 6000-step render; if it is not
+    // interactive, it is not done." Measured on this machine, 40 rows throughout:
+    //
+    //     steps    mode        render    DOM nodes
+    //        40    labelled      95ms        3,329
+    //       250    dense        127ms       10,300
+    //       400    dense        198ms       16,450
+    //       401    band           9ms            9
+    //      6000    band          15ms            9
+    //
+    // The band is cheaper at every size because it paints instead of building nodes, and
+    // the DOM tier above the labelled one renders empty coloured spans - the labels and
+    // glyphs are already suppressed there - which is exactly what the band paints. Worth
+    // knowing: 409 of the 431 catalogue traces are 40 steps or fewer and none exceeds 400,
+    // so the band is only reached on caller-supplied input today.
+    //
+    // The ceiling is deliberately loose. It is here to catch the bucketing being removed
+    // or the band falling back to DOM, not to police tens of milliseconds.
+    const STATES = ['probe', 'read', 'known', 'resolved', 'void'];
+    const steps = Array.from({ length: 6000 }, (_, i) => ({
+      arrayState: Array.from({ length: 40 }, (_, r) => ({
+        index: r, value: (i + r) % 97, state: STATES[(i + r) % STATES.length]
+      }))
+    }));
+
+    const started = performance.now();
+    const { container } = render(
+      <CaptureStrip steps={steps} current={3000} dsType="Array" onSeek={() => {}} />
+    );
+    const elapsed = performance.now() - started;
+
+    expect(elapsed).toBeLessThan(2000);
+    // A node count in the thousands means the band silently became DOM again.
+    expect(container.querySelectorAll('*').length).toBeLessThan(100);
+  });
+
   it('renders nothing when there is no trace', () => {
     const { container } = render(<CaptureStrip steps={[]} current={0} />);
     expect(container.firstChild).toBeNull();
@@ -197,15 +258,13 @@ describe('CaptureStrip', () => {
   });
 
   it('extracts interval rows when dsType is Interval', () => {
+    // resolvedInput is the TRACE's and arrives as a prop. This used to hang it on the step,
+    // a shape the server has never sent, so it covered a branch that could not run.
     const intervalSteps = [
       {
         stepNumber: 1,
         activeLine: 1,
         description: 'step 1',
-        resolvedInput: {
-          start: [1, 3],
-          end: [2, 6]
-        },
         arrayState: [
           { index: 0, state: 'probe' },
           { index: 1, state: 'default' }
@@ -213,7 +272,14 @@ describe('CaptureStrip', () => {
       }
     ];
 
-    render(<CaptureStrip steps={intervalSteps} current={0} dsType="Interval" />);
+    render(
+      <CaptureStrip
+        steps={intervalSteps}
+        current={0}
+        dsType="Interval"
+        resolvedInput={{ start: [1, 3], end: [2, 6] }}
+      />
+    );
     expect(screen.getByText(/2 rows/)).toBeInTheDocument();
     expect(screen.getByText('#1')).toBeInTheDocument();
     expect(screen.getByText('#2')).toBeInTheDocument();

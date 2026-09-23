@@ -160,7 +160,10 @@ class LargestOddNumberStringTracer extends StringTracerSupport {
     public String id() { return "largest-odd-number-string"; }
 
     public InputSpec inputSpec() {
-        return InputSpec.of(patternedText("number", "Decimal number", "35427", 1, 40,
+        // Trailing zeros, deliberately. "35427" ends in an odd digit, so the right-to-left
+        // scan succeeded on its very first probe: two steps, and the walk leftwards past
+        // even digits - the only thing this algorithm does - never happened.
+        return InputSpec.of(patternedText("number", "Decimal number", "35427000", 1, 40,
                 "[0-9]+", "Use decimal digits only."));
     }
 

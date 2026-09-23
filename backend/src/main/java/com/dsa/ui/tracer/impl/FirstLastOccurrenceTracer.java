@@ -24,7 +24,7 @@ public class FirstLastOccurrenceTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.ARRAY;
+        return DsType.SEARCH_SPACE;
     }
 
     @Override
@@ -110,19 +110,19 @@ public class FirstLastOccurrenceTracer implements AlgorithmTracer {
                 emit.at("firstMid")
                         .say("nums[%d]=%d matches %d — record it, then keep hunting left for an earlier one.",
                                 mid, nums[mid], target)
-                        .var("first", first).var("high", mid - 1)
+                        .var("first", first).var("low", low).var("high", mid - 1).var("mid", mid)
                         .arrayState(window(nums, low, mid - 1, mid)).step();
                 high = mid - 1;
             } else if (nums[mid] < target) {
                 emit.at("firstMid")
                         .say("nums[%d]=%d < %d — too small, look right.", mid, nums[mid], target)
-                        .var("low", mid + 1)
+                        .var("low", mid + 1).var("high", high).var("mid", mid)
                         .arrayState(window(nums, mid + 1, high, mid)).step();
                 low = mid + 1;
             } else {
                 emit.at("firstMid")
                         .say("nums[%d]=%d > %d — too big, look left.", mid, nums[mid], target)
-                        .var("high", mid - 1)
+                        .var("low", low).var("high", mid - 1).var("mid", mid)
                         .arrayState(window(nums, low, mid - 1, mid)).step();
                 high = mid - 1;
             }
@@ -145,19 +145,19 @@ public class FirstLastOccurrenceTracer implements AlgorithmTracer {
                 emit.at("lastMid")
                         .say("nums[%d]=%d matches %d — record it, then keep hunting right for a later one.",
                                 mid, nums[mid], target)
-                        .var("last", last).var("low", mid + 1)
+                        .var("last", last).var("low", mid + 1).var("high", high).var("mid", mid)
                         .arrayState(window(nums, mid + 1, high, mid)).step();
                 low = mid + 1;
             } else if (nums[mid] < target) {
                 emit.at("lastMid")
                         .say("nums[%d]=%d < %d — too small, look right.", mid, nums[mid], target)
-                        .var("low", mid + 1)
+                        .var("low", mid + 1).var("high", high).var("mid", mid)
                         .arrayState(window(nums, mid + 1, high, mid)).step();
                 low = mid + 1;
             } else {
                 emit.at("lastMid")
                         .say("nums[%d]=%d > %d — too big, look left.", mid, nums[mid], target)
-                        .var("high", mid - 1)
+                        .var("low", low).var("high", mid - 1).var("mid", mid)
                         .arrayState(window(nums, low, mid - 1, mid)).step();
                 high = mid - 1;
             }

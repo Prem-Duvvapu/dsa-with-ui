@@ -112,8 +112,8 @@ class CountAndSayTracer extends StringTracerSupport {
                 while (end < term.length() && term.charAt(end) == term.charAt(i)) end++;
                 int count = end - i;
                 next.append(count).append(term.charAt(i));
-                emit.at("group").say("Round %d reads %d consecutive '%c' character(s), appending \"%d%c\".",
-                                round, count, term.charAt(i), count, term.charAt(i))
+                emit.at("group").say("Round %d reads %d consecutive '%c' character%s, appending \"%d%c\".",
+                                round, count, term.charAt(i), Narration.s(count), count, term.charAt(i))
                         .var("round", round).var("count", count).var("next", next)
                         .chars(term, i, end - 1).step();
                 i = end;

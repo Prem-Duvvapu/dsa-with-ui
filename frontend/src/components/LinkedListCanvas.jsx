@@ -1,5 +1,7 @@
+import styles from './LinkedListCanvas.module.css';
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { Link2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { lastPayload } from '../trace/lastPayload';
 
 /**
  * A childId/randomId edge can point at any other node in the row, not just the one
@@ -10,9 +12,19 @@ import { Link2, ArrowRight } from 'lucide-react';
  * draws those extra edges as an absolutely-positioned SVG overlay on top of the row, without
  * touching how next/prev render when childId/randomId are absent.
  */
-export default function LinkedListCanvas({ problem, currentStep, step }) {
+export default function LinkedListCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
-  const listState = activeStep?.listState || problem?.defaultList || [];
+  // Absence is not "show the default". Tracers restate a structure only on the steps
+  // that change it, so falling through to the catalogue default drew the CATALOGUE's
+  // data over the caller's own input. Measured app-wide: 1506 steps across 142 of 232
+  // problems. The default is honest only before any step has emitted anything.
+  const listState = lastPayload(steps, currentStepIndex, 'listState', activeStep)
+    || problem?.defaultList || [];
+
+  // Seven problems emit prevId, and for a doubly linked list the backward pointer is half
+  // the structure: reversing one means swapping next AND prev on every node, which was
+  // invisible while only next was drawn.
+  const isDoubly = listState.some((n) => n.prevId !== null && n.prevId !== undefined);
 
   const containerRef = useRef(null);
   const nodeRefs = useRef(new Map());
@@ -22,15 +34,15 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
     switch (state) {
       case 'active':
       case 'curr':
-        return { fill: '#3b82f6', stroke: '#60a5fa', glow: '0 0 18px rgba(59,130,246,0.8)' };
+        return { fill: 'var(--role-current)', stroke: 'var(--role-current-edge)', glow: '0 0 18px color-mix(in srgb, var(--role-current) 80%, transparent)' };
       case 'slow':
-        return { fill: '#f59e0b', stroke: '#fbbf24', glow: '0 0 16px rgba(245,158,11,0.7)' };
+        return { fill: 'var(--role-secondary)', stroke: 'var(--role-secondary-edge)', glow: '0 0 16px color-mix(in srgb, var(--role-secondary) 70%, transparent)' };
       case 'fast':
-        return { fill: '#ec4899', stroke: '#f472b6', glow: '0 0 18px rgba(236,72,153,0.8)' };
+        return { fill: 'var(--role-alternate)', stroke: 'var(--role-alternate-edge)', glow: '0 0 18px color-mix(in srgb, var(--role-alternate) 80%, transparent)' };
       case 'visited':
-        return { fill: '#10b981', stroke: '#34d399', glow: '0 0 14px rgba(16,185,129,0.5)' };
+        return { fill: 'var(--role-done)', stroke: 'var(--role-done-edge)', glow: '0 0 14px color-mix(in srgb, var(--role-done) 50%, transparent)' };
       default:
-        return { fill: '#1e293b', stroke: '#475569', glow: 'none' };
+        return { fill: 'var(--canvas-node-fill)', stroke: 'var(--canvas-edge)', glow: 'none' };
     }
   };
 
@@ -95,45 +107,41 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
   }, [JSON.stringify(listState.map((n) => [n.id, n.childId, n.randomId]))]);
 
   return (
-    <div style={{ flex: 1, padding: '14px 20px', display: 'flex', flexDirection: 'column', position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Link2 size={18} color="var(--accent-violet)" />
-          <span style={{ fontSize: '0.9rem', fontWeight: '700', letterSpacing: '0.4px' }}>
-            Linked List Topology Visualizer
-          </span>
+    <div className={styles.wrap}>
+      {/* No title here: CanvasShell already names the problem. What survives is the dash
+          key, which the shell's generic legend cannot express - it explains two link KINDS
+          drawn as two dash patterns, not two states. It appears only when the list
+          actually has those links. */}
+      {(edges.child.length > 0 || edges.random.length > 0) && (
+        <div className={styles.linkKey}>
+          {edges.child.length > 0 && (
+            <span className={styles.linkKeyItem}>
+              <svg width="20" height="8" aria-hidden="true"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-child)" strokeWidth="2" strokeDasharray="4,3" /></svg>
+              child
+            </span>
+          )}
+          {edges.random.length > 0 && (
+            <span className={styles.linkKeyItem}>
+              <svg width="20" height="8" aria-hidden="true"><line x1="0" y1="4" x2="20" y2="4" stroke="var(--role-link-random)" strokeWidth="2" strokeDasharray="1,3" strokeLinecap="round" /></svg>
+              random
+            </span>
+          )}
         </div>
-        {(edges.child.length > 0 || edges.random.length > 0) && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '0.68rem', color: '#94a3b8' }}>
-            {edges.child.length > 0 && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#a855f7" strokeWidth="2" strokeDasharray="4,3" /></svg>
-                child
-              </span>
-            )}
-            {edges.random.length > 0 && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#f97316" strokeWidth="2" strokeDasharray="1,3" strokeLinecap="round" /></svg>
-                random
-              </span>
-            )}
-          </div>
-        )}
-      </div>
+      )}
 
       <div
         ref={containerRef}
-        style={{ flex: 1, width: '100%', minHeight: '280px', position: 'relative', display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '12px', overflow: 'auto' }}
+        className={styles.stage}
       >
         <svg
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible', pointerEvents: 'none' }}
+          className={styles.linkLayer}
         >
           <defs>
             <marker id="llc-child-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 Z" fill="#a855f7" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="var(--role-link-child)" />
             </marker>
             <marker id="llc-random-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 Z" fill="#f97316" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="var(--role-link-random)" />
             </marker>
           </defs>
           {edges.child.map((e) => (
@@ -141,7 +149,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
               key={`child-${e.key}`}
               d={`M ${e.x1} ${e.y1} Q ${(e.x1 + e.x2) / 2} ${e.midY} ${e.x2} ${e.y2}`}
               fill="none"
-              stroke="#a855f7"
+              stroke="var(--role-link-child)"
               strokeWidth="2"
               strokeDasharray="6,4"
               markerEnd="url(#llc-child-arrow)"
@@ -152,7 +160,7 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
               key={`random-${e.key}`}
               d={`M ${e.x1} ${e.y1} Q ${(e.x1 + e.x2) / 2} ${e.midY} ${e.x2} ${e.y2}`}
               fill="none"
-              stroke="#f97316"
+              stroke="var(--role-link-random)"
               strokeWidth="2"
               strokeDasharray="1,4"
               strokeLinecap="round"
@@ -177,34 +185,40 @@ export default function LinkedListCanvas({ problem, currentStep, step }) {
                   if (el) nodeRefs.current.set(node.id, el);
                   else nodeRefs.current.delete(node.id);
                 }}
+                className={styles.node}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  borderRadius: '12px',
                   background: colorInfo.fill,
                   border: `2px solid ${colorInfo.stroke}`,
-                  boxShadow: colorInfo.glow,
-                  padding: '12px 18px',
-                  transition: 'all 0.3s ease',
-                  gap: '12px',
-                  position: 'relative',
-                  zIndex: 1,
+                  boxShadow: colorInfo.glow
                 }}
               >
-                <div style={{ fontSize: '1rem', fontWeight: '800', color: '#ffffff' }}>
+                <div className={styles.nodeValue}>
                   {node.val}
                 </div>
-                <div style={{ width: '1px', height: '24px', background: 'rgba(255, 255, 255, 0.2)' }} />
-                <div style={{ fontSize: '0.72rem', color: '#cbd5e1', fontWeight: '600' }}>
-                  {node.nextId !== null ? `next -> [${node.nextId}]` : 'next -> NULL'}
+                <div className={styles.nodeDivider} />
+                <div className={styles.nodePointers}>
+                  {/* Only doubly linked lists get a prev row. A singly linked list should
+                      not grow a column of NULLs it never had. */}
+                  {isDoubly && (
+                    <div className={styles.pointerMuted}>
+                      {node.prevId !== null && node.prevId !== undefined
+                        ? `prev -> [${node.prevId}]`
+                        : 'prev -> NULL'}
+                    </div>
+                  )}
+                  <div className={styles.pointerStrong}>
+                    {node.nextId !== null && node.nextId !== undefined
+                      ? `next -> [${node.nextId}]`
+                      : 'next -> NULL'}
+                  </div>
                 </div>
               </div>
 
               {/* Arrow Connection */}
               {idx < listState.length - 1 && (
                 adjacentIsNext
-                  ? <ArrowRight size={22} color="#64748b" style={{ flexShrink: 0, position: 'relative', zIndex: 1 }} />
-                  : <div style={{ width: '22px', flexShrink: 0 }} />
+                  ? <ArrowRight size={22} color="var(--text-muted)" className={styles.arrowIcon} />
+                  : <div className={styles.arrowSpacer} />
               )}
             </React.Fragment>
           );

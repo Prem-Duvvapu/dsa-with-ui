@@ -89,7 +89,7 @@ public class CheckSortedIITracer implements AlgorithmTracer {
 
         boolean result = count <= 1;
         emit.at("done")
-                .say("Scan complete: found %d drop(s) (<= 1 drop means sorted and rotated: %s).", count, result)
+                .say("Scan complete: found %d drop%s (<= 1 drop means sorted and rotated: %s).", count, Narration.s(count), result)
                 .var("count", count).var("result", result).array(nums).step();
     }
 }
