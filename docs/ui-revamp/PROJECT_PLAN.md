@@ -2,6 +2,8 @@
 
 Planning baseline: 2026-09-23. Status: **proposed; implementation paused for planning**.
 
+Implementation has now been authorized. Read the [implementation log](IMPLEMENTATION_LOG.md) first: newer upstream changes add preservation requirements and supersede several initial baseline observations below.
+
 The user wants the clarity and spaciousness of the sibling `hld-with-ui` project, with every existing DSA feature preserved. This is a redesign of an existing learning product, not a new algorithm implementation project. Nothing in these documents should be read as shipped behavior or completed verification.
 
 ## 1. Product goal
