@@ -1404,3 +1404,32 @@ class, and the reason is worth stating rather than rediscovering.
   This is the check. If it recurs *without* concurrent load competing for the machine, that
   would be new information and worth reopening — this entry is not a promise it can never
   happen, only a record that the obvious cause was ruled out.
+
+## RCA-054 — A run's parts drifted apart: steps from one input, its label, draft and link from others
+
+- **Discovered:** 2026-09-29, UI revamp P0 baseline, reproduced in Chromium against the real
+  backend at `82f2808` (REVAMP_TRACKER.md B1–B7)
+- **Status:** Fixed in the P1 session PR
+- **Symptom:** after a custom run the canvas showed target 18 while "Running on" said
+  target 9. Reopening the editor reset the draft to 9. A rejected input (400) was written into
+  the share link while the old run stayed on screen. Loading a saved preset ran it but left
+  the old values in the fields. An unknown `/problem/:id` silently opened Two Sum.
+- **Root cause:** one shape, several copies. "What ran" was five independent setters in
+  `useTrace`, and the success path of `runInput` updated the steps but not `resolvedInput`.
+  The draft lived inside `InputPanel`, so unmounting the editor destroyed it. `runAndShare`
+  wrote the link *before* the run's outcome was known. The preset button called `onRun`
+  without touching the draft. `App` picked `problems[0]` for an id it did not know and
+  redirected there. Every one of these is the same failure: a view of the session derived
+  from a source other than the committed run.
+- **Fix:** a run is now one committed object (steps, input echo, anchors, truncation,
+  submitted snapshot, problem id), replaced only by a response that is still the newest
+  after its body is decoded. `useProblemSession` owns the draft above every panel and shares
+  the input only after `runInput` resolves `{ ok: true }`. A failed rerun keeps the previous
+  run and labels it. `useShareableView` is the only writer of `step`/`input`/`view` and
+  merges writes. An unknown id renders an explicit not-found state.
+- **Guard (RED first):** `useTrace.session.test.js`, `App.session.test.jsx` and the new
+  `InputPanel.test.jsx` cases. 29 of the new cases failed against `82f2808` before the fix.
+  Seven existing integration tests had passed only *because* of the unknown-id redirect: they
+  opened `/problem/two-sum` against catalogues without it. They now open their own problem.
+- **Lesson:** when a screen describes a run, every part of that description must be read
+  from the run itself, never from the component that happened to submit it.

@@ -12,7 +12,38 @@ import { decodeTrace } from '../trace/decodeTrace';
  *
  * The hook does NOT own the catalogue fetch (GET /api/problems). That is a one-time
  * load with different error handling; mixing it in would muddy the interface.
+ *
+ * A RUN is one committed unit: its steps, the input it ran on, its anchors and whether it
+ * hit the step budget. They used to be five independent setters, and a custom run replaced
+ * the steps while leaving `resolvedInput` describing the default - the "Running on" line
+ * then stated an input the animation was not running. Now a run is replaced whole, and
+ * only by a response that is still the newest request after its body has been decoded.
+ *
+ * A failed RERUN keeps the last valid run and reports `rerunFailure`, so the screen can
+ * say "previous result; the new run failed" instead of blanking the one thing the learner
+ * was looking at. The very first load has no previous run to keep, so its failure is
+ * `error` as before.
  */
+
+const EMPTY_RUN = Object.freeze({
+  id: 0,
+  problemId: null,
+  steps: [],
+  resolvedInput: null,
+  anchors: null,
+  truncated: false,
+  submittedInput: null,
+  offline: false
+});
+
+/** A deep copy of an input map, so later edits to the draft cannot rewrite what ran. */
+function snapshot(values) {
+  try {
+    return JSON.parse(JSON.stringify(values ?? {}));
+  } catch {
+    return {};
+  }
+}
 
 /** Classifies a successful execute body without turning broken data into a fake trace. */
 function classifyExecValue(execValue) {
@@ -38,6 +69,21 @@ function classifyExecValue(execValue) {
   return { kind: 'ok', steps: decoded };
 }
 
+/** The run a decoded body describes. A legacy bare-array body carries no metadata. */
+function runFrom(id, problemId, body, steps, submittedInput) {
+  const envelope = Array.isArray(body) ? null : body;
+  return {
+    id,
+    problemId,
+    steps,
+    resolvedInput: envelope?.resolvedInput ?? submittedInput ?? null,
+    anchors: envelope?.anchors ?? null,
+    truncated: envelope?.truncated === true,
+    submittedInput,
+    offline: false
+  };
+}
+
 /**
  * @param {string|null} problemId  the currently selected problem id
  * @param {object|null} problem    the catalogue entry (for checked-in offline steps)
@@ -45,7 +91,7 @@ function classifyExecValue(execValue) {
  * @returns playback state + controls
  */
 export default function useTrace(problemId, problem, options = {}) {
-  const [steps, setSteps] = useState([]);
+  const [run, setRun] = useState(EMPTY_RUN);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   // 1000ms is the "1.0x" preset in Controls — the only default that lands on a real
@@ -53,38 +99,44 @@ export default function useTrace(problemId, problem, options = {}) {
   // highlighted at startup. App passes the persisted preference in as initialSpeed so a
   // reload does not silently reset someone who prefers 4x.
   const [speed, setSpeed] = useState(options.initialSpeed ?? 1000);
+  /** The problem's first (default) trace is loading; nothing valid is drawable yet. */
   const [loading, setLoading] = useState(false);
+  /** A submitted input is in flight. The current run stays drawable meanwhile. */
+  const [pending, setPending] = useState(false);
   const [error, setError] = useState(null);
-  /** true when the last successful run hit the server's step budget. */
-  const [truncated, setTruncated] = useState(false);
-  /**
-   * The input the server actually ran, echoed back on the execute response. Needed so the
-   * UI can state what is being animated without keeping the input editor on screen. It has
-   * been on the wire all along and was never read - IntervalCanvas reads
-   * `step.resolvedInput`, which is always undefined, because nothing put it there.
-   */
-  const [resolvedInput, setResolvedInput] = useState(null);
-  /**
-   * The tracer's `// @a` anchors, name -> line. Every anchor marks a line the algorithm can
-   * reach; comparing them against the lines this run actually visited is what lets the code
-   * panel say "this input never took that branch" instead of leaving it silently unmarked.
-   */
-  const [anchors, setAnchors] = useState(null);
+  /** { kind, input } for the most recent failed submission, kept beside the old run. */
+  const [rerunFailure, setRerunFailure] = useState(null);
   /** Per-field messages from the last rejected POST /execute. Cleared on any success. */
   const [fieldErrors, setFieldErrors] = useState({});
   /** The full per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
    *  the catalogue list endpoint only carries summary fields, so canvases and the
-   *  code/complexity panels need this merged in by the caller. */
-  const [detail, setDetail] = useState(null);
+   *  code/complexity panels need this merged in by the caller. Stored with the id it
+   *  belongs to, so the render that switches problems can never offer the old one. */
+  const [detailState, setDetailState] = useState({ problemId: null, value: null });
+  /** The problem whose first load has finished (either way); null while it is in flight. */
+  const [settledFor, setSettledFor] = useState(null);
 
   const timerRef = useRef(null);
   /** Monotonic counter: a slower earlier response must never overwrite a newer one. */
   const requestIdRef = useRef(0);
   const abortRef = useRef(null);
+  const runIdRef = useRef(0);
+  /** The committed run, readable synchronously by seek() right after a commit. */
+  const runRef = useRef(EMPTY_RUN);
+  /** Read at failure time only: changing the entry without the id must not refetch. */
+  const problemRef = useRef(problem);
+  problemRef.current = problem;
+
+  const commit = useCallback((next) => {
+    runRef.current = next;
+    setRun(next);
+    setCurrentStepIndex(0);
+    setIsPlaying(false);
+  }, []);
 
   // ── Fetch trace on problem change ──────────────────────────────────────────
   useEffect(() => {
-    if (!problemId) return;
+    if (!problemId) return undefined;
 
     const requestId = ++requestIdRef.current;
 
@@ -92,204 +144,172 @@ export default function useTrace(problemId, problem, options = {}) {
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
+    // Detail has its own lifetime: a custom run superseding the default trace must not
+    // cancel the problem's code and complexity along with it.
+    const detailController = new AbortController();
 
-    setIsPlaying(false);
-    setCurrentStepIndex(0);
+    commit(EMPTY_RUN);
     setError(null);
+    setRerunFailure(null);
     setFieldErrors({});
+    setPending(false);
     setLoading(true);
-    setDetail(null);
-    setSteps([]);
-    setResolvedInput(null);
-    setAnchors(null);
-    setTruncated(false);
+    setSettledFor(null);
+    setDetailState({ problemId, value: null });
+
+    fetch(`/api/problems/${problemId}`, { signal: detailController.signal })
+      .then(r => (r.ok ? r.json() : null))
+      .catch(() => null)
+      .then((value) => {
+        if (detailController.signal.aborted) return;
+        setDetailState({ problemId, value: value && typeof value === 'object' ? value : null });
+      });
+
+    const isCurrent = () => requestId === requestIdRef.current;
 
     (async () => {
+      let failure = null;
       try {
-        // Try the v2 unified endpoint first.
-        const [detailRes, execRes] = await Promise.allSettled([
-          fetch(`/api/problems/${problemId}`, { signal: controller.signal })
-            .then(r => r.ok ? r.json() : null),
-          fetch(`/api/problems/${problemId}/execute`, { signal: controller.signal })
-            .then(async r => {
-              if (r.status === 501) return { kind: 'untraced' };
-              if (!r.ok) return { kind: 'fetch' };
-              try {
-                return { kind: 'body', value: await r.json() };
-              } catch {
-                return { kind: 'malformed' };
-              }
-            })
-        ]);
+        const response = await fetch(`/api/problems/${problemId}/execute`, { signal: controller.signal });
+        if (!isCurrent()) return;
 
-        // A newer selection landed while these were in flight — discard.
-        if (requestId !== requestIdRef.current) return;
+        if (response.status === 404) failure = 'notfound';
+        else if (response.status === 501) failure = 'untraced';
+        else if (!response.ok) failure = 'fetch';
 
-        const detailValue = detailRes.status === 'fulfilled' ? detailRes.value : null;
-        setDetail(detailValue);
+        if (!failure) {
+          let body;
+          try {
+            body = await response.json();
+          } catch {
+            failure = 'malformed';
+          }
+          // Decoding is its own await: a newer request can start while it runs.
+          if (!isCurrent()) return;
 
-        const execOutcome = execRes.status === 'fulfilled'
-          ? execRes.value
-          : { kind: 'fetch' };
-
-        if (execOutcome?.kind === 'untraced') {
-          setSteps([]);
-          setTruncated(false);
-          setError('untraced');
-          setLoading(false);
-          return;
+          if (!failure) {
+            const classified = classifyExecValue(body);
+            if (classified.kind === 'ok') {
+              commit(runFrom(++runIdRef.current, problemId, body, classified.steps, null));
+              setError(null);
+              return;
+            }
+            failure = classified.kind;
+          }
         }
-
-        if (execOutcome?.kind === 'fetch') {
-          const offlineSteps = Array.isArray(problem?.executionSteps)
-            ? problem.executionSteps
-            : [];
-          setSteps(offlineSteps);
-          setTruncated(false);
-          setCurrentStepIndex(0);
-          setError('fetch');
-          return;
-        }
-
-        if (execOutcome?.kind === 'malformed') {
-          setSteps([]);
-          setTruncated(false);
-          setCurrentStepIndex(0);
-          setError('malformed');
-          return;
-        }
-
-        const classified = classifyExecValue(execOutcome?.value);
-        if (classified.kind !== 'ok') {
-          setSteps([]);
-          setTruncated(false);
-          setCurrentStepIndex(0);
-          setError(classified.kind);
-          return;
-        }
-
-        setSteps(classified.steps);
-        setResolvedInput(Array.isArray(execOutcome.value)
-          ? null
-          : execOutcome.value?.resolvedInput ?? null);
-        setAnchors(Array.isArray(execOutcome.value)
-          ? null
-          : execOutcome.value?.anchors ?? null);
-        setTruncated(!Array.isArray(execOutcome.value)
-          && execOutcome.value?.truncated === true);
-        setCurrentStepIndex(0);
-        setError(null);
       } catch (err) {
-        if (err.name === 'AbortError') return;
-        if (requestId !== requestIdRef.current) return;
+        if (err.name === 'AbortError' || !isCurrent()) return;
         console.error('useTrace fetch error:', err);
-        setError('fetch');
+        failure = 'fetch';
       } finally {
-        if (requestId === requestIdRef.current) {
+        if (isCurrent()) {
           setLoading(false);
+          setSettledFor(problemId);
         }
       }
+
+      if (!isCurrent()) return;
+      // Only a network-level failure may fall back to the checked-in sample, and only
+      // to the sample for THIS problem. It is labelled offline everywhere it is drawn.
+      const offlineSteps = failure === 'fetch' && Array.isArray(problemRef.current?.executionSteps)
+        ? problemRef.current.executionSteps
+        : null;
+      if (offlineSteps?.length) {
+        commit({ ...EMPTY_RUN, id: ++runIdRef.current, problemId, steps: offlineSteps, offline: true });
+      }
+      setError(failure);
     })();
 
-    return () => controller.abort();
-  }, [problemId]); // eslint-disable-line react-hooks/exhaustive-deps
-  // `problem` is intentionally excluded: changing it without changing the id should
-  // not refetch. The id alone drives the request lifecycle.
+    return () => {
+      controller.abort();
+      detailController.abort();
+    };
+  }, [problemId, commit]);
 
   // ── Run against caller-supplied input ───────────────────────────────────────
   /**
-   * POSTs to /api/problems/{id}/execute with the given input. A 400 attaches
-   * fieldErrors and leaves the current animation on screen — the point of inline
-   * field errors is that the learner sees what to fix without losing their place.
+   * POSTs to /api/problems/{id}/execute with a snapshot of the given input and resolves to
+   * an explicit outcome, so callers can act on success (share the link) without guessing:
+   *
+   *   { ok: true, run }                         committed; step 1, paused
+   *   { ok: false, kind: 'invalid', fieldErrors }  400 - run and draft both kept
+   *   { ok: false, kind: 'fetch'|'malformed'|'empty'|'untraced'|'rate-limited' }
+   *                                             prior run kept, `rerunFailure` set
+   *   { ok: false, kind: 'superseded' }         a newer request or problem replaced it
    */
   const runInput = useCallback(async (inputValues) => {
-    if (!problemId) return;
+    if (!problemId) return { ok: false, kind: 'superseded' };
 
+    const submitted = snapshot(inputValues);
     const requestId = ++requestIdRef.current;
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
+    const isCurrent = () => requestId === requestIdRef.current;
 
-    setLoading(true);
+    // A submission supersedes the default load too, so that load can no longer clear it.
+    setLoading(false);
+    setIsPlaying(false);
+    setPending(true);
+    setFieldErrors({});
+    setRerunFailure(null);
+
+    const fail = (kind) => {
+      if (!isCurrent()) return { ok: false, kind: 'superseded' };
+      setRerunFailure({ kind, input: submitted });
+      return { ok: false, kind };
+    };
+
     try {
       const res = await fetch(`/api/problems/${problemId}/execute`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(inputValues || {}),
+        body: JSON.stringify(submitted),
         signal: controller.signal
       });
-      if (requestId !== requestIdRef.current) return;
+      if (!isCurrent()) return { ok: false, kind: 'superseded' };
 
       if (res.status === 400) {
         const body = await res.json().catch(() => null);
-        setFieldErrors(body?.fieldErrors || {});
-        setError(null);
-        return;
+        if (!isCurrent()) return { ok: false, kind: 'superseded' };
+        const errors = body?.fieldErrors && typeof body.fieldErrors === 'object' ? body.fieldErrors : {};
+        setFieldErrors(errors);
+        return { ok: false, kind: 'invalid', fieldErrors: errors, message: body?.message ?? null };
       }
-      if (res.status === 501) {
-        setFieldErrors({});
-        setSteps([]);
-        setTruncated(false);
-        setCurrentStepIndex(0);
-        setIsPlaying(false);
-        setError('untraced');
-        return;
-      }
-      if (!res.ok) {
-        setFieldErrors({});
-        setSteps([]);
-        setTruncated(false);
-        setCurrentStepIndex(0);
-        setIsPlaying(false);
-        setError('fetch');
-        return;
-      }
+      if (res.status === 501) return fail('untraced');
+      if (res.status === 429) return fail('rate-limited');
+      if (!res.ok) return fail('fetch');
 
       let body;
       try {
         body = await res.json();
       } catch {
-        setFieldErrors({});
-        setSteps([]);
-        setTruncated(false);
-        setCurrentStepIndex(0);
-        setIsPlaying(false);
-        setError('malformed');
-        return;
+        return fail('malformed');
       }
+      if (!isCurrent()) return { ok: false, kind: 'superseded' };
 
       const classified = classifyExecValue(body);
-      if (classified.kind !== 'ok') {
-        setFieldErrors({});
-        setSteps([]);
-        setTruncated(false);
-        setCurrentStepIndex(0);
-        setIsPlaying(false);
-        setError(classified.kind);
-        return;
-      }
+      if (classified.kind !== 'ok') return fail(classified.kind);
 
-      setFieldErrors({});
-      setSteps(classified.steps);
-      setTruncated(body?.truncated === true);
-      setCurrentStepIndex(0);
-      setIsPlaying(false);
+      const next = runFrom(++runIdRef.current, problemId, body, classified.steps, submitted);
+      commit(next);
       setError(null);
+      return { ok: true, run: next };
     } catch (err) {
-      if (err.name === 'AbortError') return;
-      if (requestId !== requestIdRef.current) return;
-      setFieldErrors({});
-      setSteps([]);
-      setTruncated(false);
-      setCurrentStepIndex(0);
-      setIsPlaying(false);
-      setError('fetch');
+      if (err.name === 'AbortError' || !isCurrent()) return { ok: false, kind: 'superseded' };
+      return fail('fetch');
     } finally {
-      if (requestId === requestIdRef.current) {
-        setLoading(false);
+      if (isCurrent()) {
+        setPending(false);
+        // A submission that superseded the default load is this problem's first result.
+        setSettledFor(problemId);
       }
     }
-  }, [problemId]);
+  }, [problemId, commit]);
+
+  const dismissRerunFailure = useCallback(() => setRerunFailure(null), []);
+
+  const steps = run.steps;
 
   // ── Playback clock ─────────────────────────────────────────────────────────
   useEffect(() => {
@@ -308,6 +328,13 @@ export default function useTrace(problemId, problem, options = {}) {
     }
     return () => clearInterval(timerRef.current);
   }, [isPlaying, speed, steps.length]);
+
+  // A hidden tab pauses rather than playing to the end unseen; it does not resume by itself.
+  useEffect(() => {
+    const onVisibility = () => { if (document.hidden) setIsPlaying(false); };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
 
   // ── Controls ───────────────────────────────────────────────────────────────
   const currentStep = steps[currentStepIndex] || null;
@@ -335,26 +362,31 @@ export default function useTrace(problemId, problem, options = {}) {
     setCurrentStepIndex(0);
   }, []);
 
+  // Clamped against the committed run itself, so a seek issued right after a commit (a
+  // shared link restoring its step) lands inside the new run, not the old one.
   const seek = useCallback((idx) => {
+    const total = runRef.current.steps.length;
     setIsPlaying(false);
-    setCurrentStepIndex(steps.length > 0
-      ? Math.min(Math.max(idx, 0), steps.length - 1)
-      : 0);
-  }, [steps.length]);
+    setCurrentStepIndex(total > 0 ? Math.min(Math.max(idx, 0), total - 1) : 0);
+  }, []);
 
   return {
+    run,
     steps,
     currentStep,
     currentStepIndex,
     isPlaying,
     speed,
     loading,
+    pending,
     error,
-    truncated,
-    resolvedInput,
-    anchors,
+    rerunFailure,
+    truncated: run.truncated,
+    resolvedInput: run.resolvedInput,
+    anchors: run.anchors,
     fieldErrors,
-    detail,
+    detail: detailState.problemId === problemId ? detailState.value : null,
+    settled: settledFor === problemId && Boolean(problemId),
     play,
     pause,
     togglePlay,
@@ -363,6 +395,7 @@ export default function useTrace(problemId, problem, options = {}) {
     reset,
     seek,
     setSpeed,
-    runInput
+    runInput,
+    dismissRerunFailure
   };
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
 import SectionNav from './components/SectionNav';
@@ -11,7 +11,6 @@ import WelcomeGuide from './components/WelcomeGuide';
 import TourGuide from './components/TourGuide';
 import StepStateSummary from './components/StepStateSummary';
 import usePersistentState from './hooks/usePersistentState';
-import useShareableView from './hooks/useShareableView';
 import useProgress from './hooks/useProgress';
 import useLastVisited from './hooks/useLastVisited';
 import useStreak from './hooks/useStreak';
@@ -29,7 +28,7 @@ import MemoryComplexityCard from './components/MemoryComplexityCard';
 import InputPanel from './components/InputPanel';
 import Controls from './components/Controls';
 import LiveTraceTicker from './components/LiveTraceTicker';
-import useTrace from './hooks/useTrace';
+import useProblemSession from './hooks/useProblemSession';
 import { useCatalog } from './catalog/CatalogProvider';
 import { CANVAS_BY_DSTYPE } from './canvas/registry';
 import { getCompanions } from './canvas/companions';
@@ -42,6 +41,28 @@ const TRACE_ERROR_COPY = Object.freeze({
   empty: 'The backend returned an empty trace.',
   malformed: 'The backend returned a malformed trace.'
 });
+
+/** Why a submitted run failed, for the label beside the result it did not replace. */
+const RUN_FAILURE_COPY = Object.freeze({
+  fetch: 'the backend could not be reached',
+  malformed: 'the backend returned a malformed trace',
+  empty: 'the backend returned an empty trace',
+  untraced: 'this problem has no execution trace',
+  'rate-limited': 'too many runs in a short time; wait a moment and retry'
+});
+
+/** What a shared link asked for that could not be honoured, in the learner's terms. */
+function linkNoticeText(notice) {
+  if (notice.kind === 'input') {
+    return notice.reason === 'invalid'
+      ? 'The input in this link could not be run: the server rejected it. Showing the default input; the rejected values are in the editor.'
+      : `The input in this link could not be run: ${RUN_FAILURE_COPY[notice.reason] ?? 'the run failed'}. Showing the default input.`;
+  }
+  if (notice.kind === 'step-dropped') {
+    return `Its step ${notice.requested} belonged to that run, so playback starts at step 1.`;
+  }
+  return `This link pointed to step ${notice.requested}, but this run has ${notice.total} steps. Showing step 1.`;
+}
 
 // dsTypes whose hero canvas already IS the full-run view, so the capture strip beneath
 // it would either duplicate what's on screen (DpTable) or convey the run's shape less
@@ -58,33 +79,39 @@ export default function App() {
   const activeProblemId = urlProblemId || 'two-sum';
 
   // The catalogue entry — summary fields only (id, title, category, dsType, traced).
-  const catalogEntry = problems.find(p => p.id === activeProblemId) || problems[0] || null;
+  // Never another problem's entry: an id the catalogue does not hold is "not found", not
+  // "the first problem in the list".
+  const catalogEntry = problems.find(p => p.id === activeProblemId) || null;
 
   // Only the four presets Controls can render. A speed persisted by an older build would
   // otherwise highlight no button and could not be changed back by clicking one.
   const [persistedSpeed, setPersistedSpeed] = usePersistentState(
     'speed', 1000, (v) => [2000, 1000, 500, 250].includes(v));
 
-  // All playback state lives in useTrace.
+  // All playback, the editable draft, sharing and link restoration live in the session.
+  const session = useProblemSession({
+    problemId: activeProblemId,
+    catalogEntry,
+    initialSpeed: persistedSpeed
+  });
   const {
     steps, currentStep, currentStepIndex,
     isPlaying, speed,
     loading: traceLoading,
+    pending: runPending,
     error: traceError,
     truncated: traceTruncated,
     fieldErrors,
-    detail,
-    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, runInput, resolvedInput, anchors
-  } = useTrace(activeProblemId, catalogEntry, { initialSpeed: persistedSpeed });
-
-  // Merge in the per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
-  // it isn't in the catalogue summary, so CodeViewer/MemoryComplexityCard/canvases
-  // would otherwise silently fall back to placeholder data for every problem.
-  const activeProblem = detail ? { ...catalogEntry, ...detail } : catalogEntry;
+    togglePlay, stepNext, stepPrev, reset, seek, setSpeed, resolvedInput, anchors,
+    run, rerunFailure, retry, dismissRerunFailure,
+    draft, draftChanged, submit, linkNotices, dismissLinkNotices, shareNote,
+    problem: activeProblem
+  } = session;
 
   // ── What has actually been watched ───────────────────────────────────────
   const { progress, markWatched, toggleStar } = useProgress();
-  useLastVisited(activeProblemId);
+  // Only a problem that exists is worth continuing from the library.
+  useLastVisited(catalogEntry ? activeProblemId : null);
 
   // A visit only counts once real navigation to a problem has happened, not merely the
   // app mounting - Dashboard reads this streak but never writes it, for the same reason.
@@ -95,57 +122,16 @@ export default function App() {
 
   // Reaching the last step, not opening the page: clicking into a problem is an accident
   // of browsing, sitting through the trace to the end is not.
+  // A run cut short by the step budget, or the offline sample, is not a finished trace.
+  const completable = !traceTruncated && !run.offline && run.problemId === activeProblemId;
   useEffect(() => {
-    if (steps.length > 0 && currentStepIndex === steps.length - 1) {
+    if (completable && steps.length > 0 && currentStepIndex === steps.length - 1) {
       markWatched(activeProblemId);
     }
-  }, [activeProblemId, currentStepIndex, steps.length, markWatched]);
+  }, [activeProblemId, completable, currentStepIndex, steps.length, markWatched]);
 
-  // ── The rest of "what I am looking at", carried in the URL ───────────────
-  // /problem/:id already made the problem linkable; the step and the input were not, so a
-  // refresh landed you back on step 1 of the defaults.
-  const pendingView = useRef(null);
-  const { shareInput } = useShareableView({
-    problemId: activeProblemId,
-    stepIndex: currentStepIndex,
-    totalSteps: steps.length,
-    // Held, not applied: at restore time the trace for this problem has not loaded yet, so
-    // there is nothing to seek into and no inputSpec to validate against.
-    onRestore: (view) => { pendingView.current = view; }
-  });
-
-  // A custom input replaces the trace entirely, so it has to run before the step is
-  // restored — seeking into the default trace and then replacing it would land on step 1.
-  useEffect(() => {
-    const view = pendingView.current;
-    if (!view || traceLoading) return;
-    if (view.input) {
-      const input = view.input;
-      pendingView.current = { ...view, input: null };
-      runInput(input);
-      return;
-    }
-    if (view.step === null || steps.length === 0) return;
-    pendingView.current = null;
-    if (view.step < steps.length) seek(view.step);
-  }, [traceLoading, steps.length, runInput, seek]);
-
-  // Runs from the input editor are the shareable ones; the defaults are already implied by
-  // the problem id, so a ?input for them would be noise in every link.
-  const runAndShare = useCallback((values) => {
-    shareInput(values);
-    return runInput(values);
-    // shareInput closes over the live search params and is re-created each render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [runInput]);
-
-  // Preserve the existing unknown-ID redirect until the workspace route migration.
-  useEffect(() => {
-    if (catalogLoading || catalogError || !problems.length) return;
-    if (!problems.some(problem => problem.id === activeProblemId)) {
-      navigate(`/problem/${problems.find(problem => problem.id === 'two-sum')?.id || problems[0].id}`, { replace: true });
-    }
-  }, [problems, catalogLoading, catalogError, activeProblemId, navigate]);
+  const notFound = traceError === 'notfound'
+    || (!catalogLoading && !catalogError && problems.length > 0 && !catalogEntry);
 
   // ── Layout state ─────────────────────────────────────────────────────────
   // View preferences survive a reload. The selected problem deliberately does not - the
@@ -222,6 +208,20 @@ export default function App() {
   const traceErrorCopy = TRACE_ERROR_COPY[traceError];
   const showingOfflineTrace = traceError === 'fetch' && steps.length > 0;
 
+  const inputPanel = hasInputSpec ? (
+    <InputPanel
+      problemId={activeProblemId}
+      inputSpec={activeProblem.inputSpec}
+      alternateInput={activeProblem.alternateInput}
+      fieldErrors={fieldErrors}
+      running={traceLoading || runPending}
+      values={draft.values}
+      onChange={draft.replace}
+      onRun={submit}
+      draftChanged={draftChanged}
+    />
+  ) : null;
+
   // ── Canvas selection by dsType ───────────────────────────────────────────
   const renderCanvas = () => {
     if (!activeProblem) {
@@ -273,6 +273,16 @@ export default function App() {
       </div>
     );
   };
+
+  if (notFound) {
+    return (
+      <main className={styles.notFound} aria-labelledby="not-found-title">
+        <h1 id="not-found-title">No algorithm called “{activeProblemId}”</h1>
+        <p>This link does not match any problem in the catalogue, so nothing has been run in its place.</p>
+        <Link to="/" className="btn btn-primary">Browse all algorithms</Link>
+      </main>
+    );
+  }
 
   return (
     <div className={styles.rootLayout}>
@@ -433,6 +443,30 @@ export default function App() {
             {/* The canvas draws the state; this says it. Inside the canvas region so it
                 reads as part of the visualization rather than as stray page text. */}
             <StepStateSummary step={currentStep} dsType={activeDsType} />
+            {linkNotices.length > 0 && (
+              <div role="status" aria-label="Shared link" className={styles.sessionNotice}>
+                <span>{linkNotices.map(linkNoticeText).join(' ')}</span>
+                <button type="button" className="btn btn-outline" onClick={dismissLinkNotices}>Dismiss</button>
+              </div>
+            )}
+            {rerunFailure && (
+              <div
+                role="alert"
+                aria-label={steps.length > 0 ? 'New run failed' : 'Run failed'}
+                className={styles.sessionNotice}
+              >
+                <span>{steps.length > 0
+                  ? `Previous result shown. The new run failed: ${RUN_FAILURE_COPY[rerunFailure.kind] ?? 'the run did not complete'}.`
+                  : `The run failed: ${RUN_FAILURE_COPY[rerunFailure.kind] ?? 'the run did not complete'}.`}</span>
+                <button type="button" className="btn btn-outline" onClick={retry} aria-label="Retry this input">Retry</button>
+                <button type="button" className="btn btn-outline" onClick={dismissRerunFailure}>Dismiss</button>
+              </div>
+            )}
+            {runPending && (
+              <div role="status" className={styles.sessionPending}>
+                <RefreshCw size={13} className="spin" aria-hidden="true" /> Running your input… the result below is still the previous run.
+              </div>
+            )}
             <div className={styles.stageInner}>
               {loading ? (
                 <div className={styles.loadingCatalog}>
@@ -552,8 +586,12 @@ export default function App() {
 
             {/* What the animation is running on, without the editor that sets it. */}
             {!isMobile && !isInputEditorOpen && (
-              <div data-tour="input-summary">
+              <div data-tour="input-summary" className={styles.inputSummaryRow}>
                 <InputSummary resolvedInput={resolvedInput} />
+                {draftChanged && <span className={styles.draftChanged}>Changes not run</span>}
+                {shareNote === 'too-long' && (
+                  <span className={styles.draftChanged}>This input is too large for a link; copied links open the default input.</span>
+                )}
               </div>
             )}
 
@@ -619,14 +657,7 @@ export default function App() {
             >
               {hasInputSpec && isInputEditorOpen && (
                 <div className={`glass-panel ${styles.inputCard}`}>
-                  <InputPanel
-                    problemId={activeProblemId}
-                    inputSpec={activeProblem.inputSpec}
-                    alternateInput={activeProblem.alternateInput}
-                    fieldErrors={fieldErrors}
-                    running={traceLoading}
-                    onRun={runAndShare}
-                  />
+                  {inputPanel}
                 </div>
               )}
               {isComplexityOpen && (
@@ -670,14 +701,7 @@ export default function App() {
                   <CodeViewer problem={activeProblem} currentStep={currentStep} anchors={anchors} steps={steps} />
                 ) : activeTab === 'input' ? (
                   <div className={styles.mobileInputContainer}>
-                    <InputPanel
-                      problemId={activeProblemId}
-                      inputSpec={activeProblem.inputSpec}
-                      alternateInput={activeProblem.alternateInput}
-                      fieldErrors={fieldErrors}
-                      running={traceLoading}
-                      onRun={runAndShare}
-                    />
+                    {inputPanel}
                   </div>
                 ) : (
                   <MemoryComplexityCard currentStep={currentStep} problem={activeProblem} initialTab={activeTab} />

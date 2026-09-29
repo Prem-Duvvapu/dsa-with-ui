@@ -316,14 +316,19 @@ describe('useTrace', () => {
     expect(result.current.truncated).toBe(true);
   });
 
-  it('runInput rejects a malformed success instead of clearing the error with no steps', async () => {
+  it('runInput rejects a malformed success instead of presenting it as a completed run', async () => {
     const { result } = renderHook(() => useTrace('two-sum', null));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
     vi.stubGlobal('fetch', vi.fn(() => Promise.resolve(ok({ unexpected: true }))));
-    await act(async () => { await result.current.runInput({ nums: [1, 2] }); });
+    let outcome;
+    await act(async () => { outcome = await result.current.runInput({ nums: [1, 2] }); });
 
-    expect(result.current.error).toBe('malformed');
-    expect(result.current.steps).toEqual([]);
+    // Still reported as malformed - but as a failed RERUN beside the last valid run, which
+    // stays on screen labelled as the previous result (IMPLEMENTATION_HANDOFF.md §6.7),
+    // rather than blanking the canvas the learner was reading.
+    expect(outcome).toMatchObject({ ok: false, kind: 'malformed' });
+    expect(result.current.rerunFailure).toMatchObject({ kind: 'malformed' });
+    expect(result.current.steps).toHaveLength(2);
   });
 });

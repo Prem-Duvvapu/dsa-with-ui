@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 /**
@@ -18,10 +18,22 @@ import { useSearchParams } from 'react-router-dom';
  *   what comes back off the URL goes through `runInput` like any other input, so the
  *   server's own per-field validation answers, and a corrupted link produces the ordinary
  *   field errors rather than a broken page.
+ *
+ * This is the ONE writer of the problem route's query string (`step`, `input`, `view`).
+ * Every write is a merge onto the latest parameters this hook has produced, not onto the
+ * ones captured by the render that scheduled it - two writes in the same tick (a view
+ * change and a step change, say) used to race, and the second silently dropped the first.
  */
 
 const STEP = 'step';
 const INPUT = 'input';
+const VIEW = 'view';
+
+/**
+ * Past this an input link stops being safely shareable: some servers and chat clients cut
+ * URLs near 8 KB, and an input that large is better saved as a preset than mailed around.
+ */
+export const MAX_SHARED_INPUT_LENGTH = 4000;
 
 /** JSON → URL-safe base64. Kept symmetric with decodeInput; neither ever throws. */
 export function encodeInput(values) {
@@ -54,51 +66,82 @@ export function decodeInput(encoded) {
 /**
  * @param problemId    the problem currently shown; changing it clears the carried input
  * @param stepIndex    the step being shown, mirrored into ?step
- * @param totalSteps   used to ignore an out-of-range ?step from an older or edited link
+ * @param totalSteps   steps in the run that belongs to `problemId`; 0 while none is loaded
+ * @param mirror       false while a link is being restored, so nothing overwrites it
  * @param onRestore    called once per problem with {step, input} recovered from the URL
  */
-export default function useShareableView({ problemId, stepIndex, totalSteps, onRestore }) {
+export default function useShareableView({ problemId, stepIndex, totalSteps, mirror = true, onRestore }) {
   const [params, setParams] = useSearchParams();
+
+  // `latest` is what the URL WILL be once pending writes land. It follows the router
+  // whenever the router moves on its own (navigation, Back), and our own writes advance it
+  // synchronously so a second write in the same tick merges onto the first.
+  const latest = useRef(params);
+  const seen = useRef(params);
+  if (seen.current !== params) {
+    seen.current = params;
+    latest.current = params;
+  }
+  const setParamsRef = useRef(setParams);
+  setParamsRef.current = setParams;
+  const onRestoreRef = useRef(onRestore);
+  onRestoreRef.current = onRestore;
+
+  const update = useCallback((mutate) => {
+    const next = new URLSearchParams(latest.current);
+    mutate(next);
+    if (next.toString() === latest.current.toString()) return;
+    latest.current = next;
+    setParamsRef.current(next, { replace: true });
+  }, []);
+
   const restoredFor = useRef(null);
-  const paramsRef = useRef(params);
-  paramsRef.current = params;
 
   // Restore once per problem, before any mirroring can overwrite what the link carried.
   useEffect(() => {
     if (!problemId || restoredFor.current === problemId) return;
     restoredFor.current = problemId;
 
-    const rawStep = Number(paramsRef.current.get(STEP));
-    onRestore({
+    const rawStep = Number(latest.current.get(STEP));
+    onRestoreRef.current?.({
       step: Number.isInteger(rawStep) && rawStep > 0 ? rawStep - 1 : null,
-      input: decodeInput(paramsRef.current.get(INPUT))
+      input: decodeInput(latest.current.get(INPUT))
     });
-    // onRestore is re-created every render by callers; depending on it would restore on
-    // every render instead of once per problem.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [problemId]);
 
   // Mirror the step outward. 1-based in the URL: step=1 is the first step, which is what
   // the controls show and what anyone reading the link expects.
   useEffect(() => {
-    if (restoredFor.current !== problemId) return;
+    if (!mirror || restoredFor.current !== problemId) return;
     if (!Number.isInteger(stepIndex) || totalSteps <= 0) return;
-    const next = new URLSearchParams(paramsRef.current);
-    if (stepIndex <= 0) next.delete(STEP);
-    else next.set(STEP, String(stepIndex + 1));
-    if (next.toString() !== paramsRef.current.toString()) {
-      setParams(next, { replace: true });
-    }
-  }, [problemId, stepIndex, totalSteps, setParams]);
+    update((next) => {
+      if (stepIndex <= 0) next.delete(STEP);
+      else next.set(STEP, String(stepIndex + 1));
+    });
+  }, [problemId, stepIndex, totalSteps, mirror, update]);
 
-  /** Call when a run happens on caller-supplied input; pass null to drop it from the URL. */
-  const shareInput = (values) => {
-    const next = new URLSearchParams(paramsRef.current);
+  /**
+   * Call after a run on caller-supplied input has SUCCEEDED; pass null to drop it from the
+   * URL. Returns false when the input cannot be represented in a link (encoding failed or
+   * the result is too long), in which case the link carries no input rather than a wrong one.
+   */
+  const shareInput = useCallback((values) => {
     const encoded = values ? encodeInput(values) : null;
-    if (encoded) next.set(INPUT, encoded);
-    else next.delete(INPUT);
-    setParams(next, { replace: true });
-  };
+    const fits = Boolean(encoded) && encoded.length <= MAX_SHARED_INPUT_LENGTH;
+    update((next) => {
+      if (fits) next.set(INPUT, encoded);
+      else next.delete(INPUT);
+    });
+    return values ? fits : true;
+  }, [update]);
 
-  return { shareInput };
+  /** Presentation only: the default view is written as no parameter at all. */
+  const setView = useCallback((view, defaultView = null) => {
+    update((next) => {
+      if (!view || view === defaultView) next.delete(VIEW);
+      else next.set(VIEW, view);
+    });
+  }, [update]);
+
+  return { shareInput, setView, view: params.get(VIEW) };
 }

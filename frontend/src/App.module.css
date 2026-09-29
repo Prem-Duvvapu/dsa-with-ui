@@ -318,3 +318,69 @@
   min-height: 0;
   overflow: hidden;
 }
+
+/* Session status: a failed rerun beside the result it did not replace, a link that could
+   not be honoured, a run in flight. Quiet surfaces - --probe is algorithm state, so these
+   borrow it only as a thin edge, never as a fill. */
+.sessionNotice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 8px 10px 0;
+  padding: 8px 12px;
+  border: 1px solid var(--bench-rule-strong);
+  border-left: 3px solid var(--probe);
+  border-radius: var(--radius-sm);
+  background: var(--bench-panel);
+  color: var(--bench-ink);
+  font-size: 0.8rem;
+}
+
+.sessionNotice > span {
+  flex: 1 1 260px;
+}
+
+.sessionPending {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 10px 0;
+  color: var(--bench-ink-secondary);
+  font-size: 0.78rem;
+}
+
+.inputSummaryRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.draftChanged {
+  flex-shrink: 0;
+  font: 600 0.72rem var(--font-code);
+  color: var(--bench-ink);
+  border: 1px dashed var(--bench-rule-strong);
+  border-radius: var(--radius-full);
+  padding: 3px 9px;
+}
+
+.notFound {
+  max-width: 640px;
+  margin: 12vh auto;
+  padding: 0 16px;
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+  color: var(--bench-ink);
+}
+
+.notFound h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.notFound p {
+  color: var(--bench-ink-secondary);
+}
