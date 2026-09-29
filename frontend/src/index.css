@@ -70,6 +70,61 @@
   --space-md: 12px;
   --space-lg: 16px;
   --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
+  --space-4xl: 48px;
+
+  /* ==========================================================================
+     Learning-experience foundations (docs/ui-revamp/REFERENCE_DESIGN.md D1-D5).
+
+     Layout, type and interaction sizes shared by the library and the problem
+     workspace. Colour roles here are ALIASES of Bench tokens, never new hues, so they
+     follow every theme without a per-theme declaration: navigation selection is an
+     inverted ink surface (amber and green stay reserved for algorithm state), and
+     the focus ring is full-strength ink offset from the control.
+     ========================================================================== */
+  --gutter: 32px;
+  --width-library: 1320px;
+  --width-workspace: 1440px;
+  --width-reading: 72ch;
+
+  --type-title: clamp(1.625rem, 1.2rem + 1.1vw, 2.125rem);
+  --type-heading: 1.25rem;
+  --type-body: 1rem;
+  --type-control: 0.9375rem;
+  --type-meta: 0.8125rem;
+  --leading-body: 1.6;
+  --leading-tight: 1.2;
+
+  --target-min: 44px;
+  --radius-control: 8px;
+
+  --focus-ring: var(--bench-ink);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 3px;
+  --ink-strong: var(--bench-ink);
+  --ink-secondary: var(--bench-ink-secondary);
+
+  /* Chrome palette from the owner's concept (docs/ui-revamp/playground-concept.png):
+     paper page, plain card surfaces, and ONE chrome accent - a forest green for primary
+     actions, the selected view and the seek fill. It is deliberately far darker (light
+     theme) or paler (dark theme) than --settled, so "a primary button" never reads as
+     "this value is resolved". Amber stays exclusively --probe. Redefined in both light
+     declarations below. */
+  --surface-page: #0b1012;
+  --surface-panel: #11181b;
+  --surface-recessed: #0e1417;
+  --rule-subtle: #1f2a2e;
+  --rule-strong: #2e3b40;
+  --accent: #d2e9d9;
+  --accent-hover: #e3f2e8;
+  --accent-ink: #0b1012;
+  --accent-line: #b9dcc5;
+  --accent-soft: #132019;
+  --accent-soft-ink: #c3e2cd;
+  --nav-selected-bg: var(--accent);
+  --nav-selected-ink: var(--accent-ink);
+  --nav-idle-ink: var(--bench-ink-secondary);
 
   /* Motion */
   --motion-fast: 150ms;
@@ -220,8 +275,26 @@
    unstamped state, which is how a page ends up rendering one theme's text on the
    other theme's ground.
    ========================================================================== */
+/* Phone gutters: 16px, per the handoff's layout table. */
+@media (max-width: 640px) {
+  :root {
+    --gutter: 16px;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
+    --surface-page: #f9f8f4;
+    --surface-panel: #ffffff;
+    --surface-recessed: #f3f2ed;
+    --rule-subtle: #e6e4de;
+    --rule-strong: #c9c6bd;
+    --accent: #1b3b29;
+    --accent-hover: #26503a;
+    --accent-ink: #ffffff;
+    --accent-line: #1f532e;
+    --accent-soft: #eef4ef;
+    --accent-soft-ink: #1f532e;
     --bench-ground: #eef1f4;
     --bench-recessed: #ffffff;
     --bench-panel: #f7f9fb;
@@ -290,6 +363,17 @@
 }
 
 :root[data-theme="light"] {
+  --surface-page: #f9f8f4;
+  --surface-panel: #ffffff;
+  --surface-recessed: #f3f2ed;
+  --rule-subtle: #e6e4de;
+  --rule-strong: #c9c6bd;
+  --accent: #1b3b29;
+  --accent-hover: #26503a;
+  --accent-ink: #ffffff;
+  --accent-line: #1f532e;
+  --accent-soft: #eef4ef;
+  --accent-soft-ink: #1f532e;
   --role-current: #1d4ed8;
   --role-current-edge: #3b82f6;
   --role-secondary: #b45309;

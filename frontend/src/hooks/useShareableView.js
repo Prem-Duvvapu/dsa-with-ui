@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import useLatestSearchParams from './useLatestSearchParams';
 
 /**
  * The parts of "what I am looking at" that the URL did not carry.
@@ -71,29 +71,13 @@ export function decodeInput(encoded) {
  * @param onRestore    called once per problem with {step, input} recovered from the URL
  */
 export default function useShareableView({ problemId, stepIndex, totalSteps, mirror = true, onRestore }) {
-  const [params, setParams] = useSearchParams();
-
-  // `latest` is what the URL WILL be once pending writes land. It follows the router
-  // whenever the router moves on its own (navigation, Back), and our own writes advance it
-  // synchronously so a second write in the same tick merges onto the first.
+  // Every write merges onto the latest URL this hook produced, even while the router's
+  // transition has not delivered it yet (see useLatestSearchParams).
+  const [params, update] = useLatestSearchParams();
   const latest = useRef(params);
-  const seen = useRef(params);
-  if (seen.current !== params) {
-    seen.current = params;
-    latest.current = params;
-  }
-  const setParamsRef = useRef(setParams);
-  setParamsRef.current = setParams;
+  latest.current = params;
   const onRestoreRef = useRef(onRestore);
   onRestoreRef.current = onRestore;
-
-  const update = useCallback((mutate) => {
-    const next = new URLSearchParams(latest.current);
-    mutate(next);
-    if (next.toString() === latest.current.toString()) return;
-    latest.current = next;
-    setParamsRef.current(next, { replace: true });
-  }, []);
 
   const restoredFor = useRef(null);
 

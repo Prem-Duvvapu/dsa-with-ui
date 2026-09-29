@@ -32,9 +32,10 @@ describe('Algorithm library', () => {
     expect(within(library).getAllByRole('link')).toHaveLength(31);
     fireEvent.change(screen.getByRole('textbox', { name: 'Search algorithms' }), { target: { value: 'no-such-problem' } });
     expect(screen.getByText('No algorithms match these filters.')).toBeInTheDocument();
-    fireEvent.click(screen.getAllByRole('button', { name: 'Clear filters' })[0]);
+    // The empty state names its scope: it clears the search AND the filters.
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search and filters' }));
     expect(within(library).getAllByRole('link')).toHaveLength(50);
-    expect(screen.getByTestId('location')).toHaveTextContent('/');
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/$/);
   });
   it('shares one catalogue across route changes and never executes a problem from the library', async () => {
     mount();
@@ -57,5 +58,133 @@ describe('Algorithm library', () => {
     mount();
     expect(await screen.findByText('The catalogue is empty.')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Start with/ })).not.toBeInTheDocument();
+  });
+
+  it('clears filters without discarding the search, and each chip removes only its own filter', async () => {
+    mount('/?q=Algorithm&category=Graphs&difficulty=Hard');
+    await screen.findByRole('link', { name: /Algorithm 01/ });
+    const chips = screen.getByRole('list', { name: 'Active filters' });
+    expect(within(chips).getAllByRole('button')).toHaveLength(2);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Remove filter Difficulty: Hard' }));
+    expect(screen.getByTestId('location').textContent).toMatch(/category=Graphs/);
+    expect(screen.getByTestId('location').textContent).not.toMatch(/difficulty/);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }));
+    expect(screen.getByTestId('location')).toHaveTextContent('/?q=Algorithm');
+    expect(screen.queryByRole('list', { name: 'Active filters' })).not.toBeInTheDocument();
+  });
+
+  it('folds the same filter controls into a Filters (N) disclosure', async () => {
+    mount('/?category=Graphs');
+    await screen.findByRole('link', { name: /Algorithm 01/ });
+    const toggle = screen.getByRole('button', { name: /Filters \(1\)/ });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    const panel = document.getElementById(toggle.getAttribute('aria-controls'));
+    expect(within(panel).getByRole('combobox', { name: 'Category' })).toHaveValue('Graphs');
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(panel).toHaveAttribute('data-open', 'true');
+  });
+
+  it('normalises invalid URL values to "no filter" instead of an empty list', async () => {
+    mount('/?category=Nope&difficulty=Impossible&status=weird&limit=-4');
+    await screen.findByRole('link', { name: /Algorithm 00/ });
+    expect(within(screen.getByRole('region', { name: 'Algorithm library' })).getAllByRole('link')).toHaveLength(50);
+    expect(screen.queryByRole('list', { name: 'Active filters' })).not.toBeInTheDocument();
+  });
+
+  it('announces loaded rows and keeps focus somewhere sensible after the last batch', async () => {
+    mount();
+    await screen.findByRole('link', { name: /Algorithm 00/ });
+    expect(screen.getByText('Showing 50 of 63')).toHaveAttribute('role', 'status');
+    const more = screen.getByRole('button', { name: /Load more algorithms/ });
+    more.focus();
+    fireEvent.click(more);
+    expect(screen.getByText('Showing 63 of 63')).toBeInTheDocument();
+    // The button is gone once everything is loaded; focus lands on the first new row.
+    expect(document.activeElement).toBe(screen.getByRole('link', { name: /Algorithm 50/ }));
+  });
+
+  it('offers Continue beside the progress summary, outside the closed disclosure', async () => {
+    localStorage.setItem('dsa-ui:lastVisitedProblem', JSON.stringify('problem-7'));
+    mount();
+    const link = await screen.findByRole('link', { name: /Continue: Algorithm 07/ });
+    expect(link).toHaveAttribute('href', '/problem/problem-7');
+    expect(link.closest('details')).toBeNull();
+  });
+
+  it('restores the scroll position saved for this history entry once the rows exist', async () => {
+    sessionStorage.setItem('dsa:library-scroll:default', '900');
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    const raf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => { cb(); return 0; });
+    mount();
+    await screen.findByRole('link', { name: /Algorithm 00/ });
+    expect(scrollTo).toHaveBeenCalledWith(0, 900);
+    scrollTo.mockRestore();
+    raf.mockRestore();
+  });
+
+  it('starts a direct visit at the top', async () => {
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    mount();
+    await screen.findByRole('link', { name: /Algorithm 00/ });
+    expect(scrollTo).not.toHaveBeenCalled();
+    scrollTo.mockRestore();
+  });
+
+  it('keeps working when storage is denied', async () => {
+    const setItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('denied'); });
+    const getItem = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('denied'); });
+    mount();
+    fireEvent.click(await screen.findByRole('button', { name: 'Star Algorithm 00' }));
+    expect(screen.getByRole('button', { name: 'Unstar Algorithm 00' })).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.click(screen.getByRole('link', { name: /Algorithm 00/ }));
+    expect(screen.getByText('Selected from 63')).toBeInTheDocument();
+    setItem.mockRestore();
+    getItem.mockRestore();
+  });
+
+  it('labels an offline sample as a sample and retries the catalogue itself', async () => {
+    fetch.mockRejectedValueOnce(new Error('offline'));
+    mount();
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/small offline sample/i);
+    expect(alert).toHaveTextContent(/browsing only/i);
+    fireEvent.click(screen.getByRole('button', { name: 'Retry loading the catalogue' }));
+    await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(fetch.mock.calls.every(([url]) => url === '/api/problems')).toBe(true);
+  });
+});
+
+describe('Catalogue provider lifecycle', () => {
+  function Probe() {
+    const { problems, error, source, loading, retry } = useCatalog();
+    return <div><output data-testid="state">{loading ? 'loading' : `${source}:${problems.length}:${error ? 'error' : 'ok'}`}</output><button onClick={retry}>retry</button></div>;
+  }
+  const mountProbe = () => render(<CatalogProvider><Probe /></CatalogProvider>);
+
+  it('keeps a live catalogue, labelled as such, when a later refresh fails', async () => {
+    mountProbe();
+    await waitFor(() => expect(screen.getByTestId('state')).toHaveTextContent('live:63:ok'));
+    fetch.mockRejectedValueOnce(new Error('down'));
+    fireEvent.click(screen.getByText('retry'));
+    await waitFor(() => expect(screen.getByTestId('state')).toHaveTextContent('live:63:error'));
+  });
+
+  it('treats a non-array body as a failure rather than an empty catalogue', async () => {
+    fetch.mockResolvedValueOnce({ ok: true, json: async () => ({ problems: [] }) });
+    mountProbe();
+    await waitFor(() => expect(screen.getByTestId('state')).toHaveTextContent(/sample:\d+:error/));
+  });
+
+  it('aborts the request when the provider unmounts', async () => {
+    let signal;
+    fetch.mockImplementationOnce((url, opts) => { signal = opts.signal; return new Promise(() => {}); });
+    const { unmount } = mountProbe();
+    await waitFor(() => expect(signal).toBeDefined());
+    unmount();
+    expect(signal.aborted).toBe(true);
   });
 });

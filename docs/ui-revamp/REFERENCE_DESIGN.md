@@ -168,6 +168,40 @@ Start vertex  [0]
 Saved inputs · [Save current input]
 ```
 
+## Owner concept: `playground-concept.png` (added 2026-09-29, supersedes D1/D2)
+
+The owner supplied [playground-concept.png](playground-concept.png), a Playground view for
+Longest Substring Without Repeating Characters. It is the visual target for P3/P4 and
+overrides the wireframes above wherever they differ.
+
+| Concept element | Adopted as | Notes |
+| --- | --- | --- |
+| Paper page `#f9f8f4`, white cards `#fefefd`, hairline `#e7e6e5` | `--surface-page`, `--surface-panel`, `--rule-subtle` (light); darker equivalents in dark | Sampled from the image; defined in all three theme declarations |
+| Forest-green primary (Play, Run input), active-tab underline, seek fill (`#1b3b29` / `#1f532e`) | `--accent`, `--accent-line`; `--nav-selected-*` alias the accent | **Revises D1/D2.** A chrome accent is now allowed. `designTokens.test.js` keeps it ≥0.08 luminance away from `--settled` in both themes, so a primary button never reads as "resolved" |
+| Amber "Inspecting" cell and arrow (`#da9e45`, `#b35f00`) | Existing `--probe` | Already the Bench "happening now" hue |
+| Quiet header links: All algorithms · Switch problem · theme · Help | Workspace header (P3) | Library keeps brand plus theme |
+| Breadcrumb, title, one-line summary, difficulty pill, star | Context header (P3) | Difficulty stays a neutral outline pill: amber is reserved for execution state |
+| Full-width "Problem & examples" bar with Previous / Next | Statement disclosure plus curriculum navigation (P3) | Previous/Next keep the authored section order |
+| Underlined tabs Playground / Code walkthrough / Analysis | View rail (P3/P4) | Manual-activation tabs (D8) |
+| One card: title, Edit input / Show code / Focus, per-renderer legend, diagram, "Current step" panel, transport, speed menu | Playground stage (P3); renderer legends and cell sizing (P7) | See the honesty notes below |
+| "Input used", then "Try your own input" card: field plus Run input, then Other case / Randomize / Restore defaults / Save input | Input section (P3) | |
+| "Execution history" bar plus Compare other case | History and comparison (P6) | |
+
+**Honesty adaptations.** The concept's copy is illustrative. The shipped page must show only
+what the backend sends:
+
+- The "Current step" headline is the trace's own narration. For this problem, step 4 reads
+  "Duplicate 'a' previously seen at index 0. Slide window left to 1.", not the concept's
+  wording. A secondary line may only restate payload fields such as `left`, `right` and
+  `windowLen`.
+- "Best so far 3 | abc": the trace carries `maxLen` (3) but not the best substring. The page
+  shows "Best so far: 3" until a tracer emits the substring. A backend change for that is out
+  of scope unless the owner asks for it.
+- Pointer labels (`left = 1`, `right = 3`) and the window bracket come from step variables and
+  the window payload, never from the problem's title.
+- The WindowCanvas currently draws small fixed-size cells (visible in the P2 preview). The
+  concept's large cells are a P7 wrapper/sizing task.
+
 ## Open decisions
 
 None block P1. Two will be re-checked with real journeys at the P4 gate: whether a

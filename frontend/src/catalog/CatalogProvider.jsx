@@ -12,8 +12,14 @@ export function uniqueProblems(problems) {
   });
 }
 
+/**
+ * `source` says what the list on screen actually is, so a failure can be described
+ * honestly: 'sample' is the small checked-in offline set (never loaded from the backend
+ * in this session), 'live' is a catalogue the backend served. After a failed retry a live
+ * list is kept - it is still true, just possibly stale - and says so.
+ */
 function useCatalogResource(enabled) {
-  const [state, setState] = useState({ problems: DEFAULT_FALLBACK_PROBLEMS, loading: true, error: null });
+  const [state, setState] = useState({ problems: DEFAULT_FALLBACK_PROBLEMS, loading: true, error: null, source: 'sample' });
   const [attempt, setAttempt] = useState(0);
   const retry = useCallback(() => setAttempt(value => value + 1), []);
   useEffect(() => {
@@ -27,10 +33,16 @@ function useCatalogResource(enabled) {
         if (!response.ok) throw new Error('Catalogue unavailable');
         const body = await response.json();
         if (!Array.isArray(body)) throw new Error('Invalid catalogue');
-        if (active) setState({ problems: uniqueProblems(body), loading: false, error: null });
+        if (active) setState({ problems: uniqueProblems(body), loading: false, error: null, source: 'live' });
       } catch (error) {
         if (active && error.name !== 'AbortError') {
-          setState(previous => ({ ...previous, loading: false, error: 'Could not reach the backend. Showing the last available catalogue or a small offline sample.' }));
+          setState(previous => ({
+            ...previous,
+            loading: false,
+            error: previous.source === 'live'
+              ? 'Could not reach the backend to refresh the catalogue. Showing the list already loaded in this session.'
+              : 'Could not reach the backend. Showing a small offline sample of problems.'
+          }));
         }
       }
     })();

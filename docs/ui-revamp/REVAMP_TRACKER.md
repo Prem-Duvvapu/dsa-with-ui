@@ -11,8 +11,8 @@ its gate and evidence are complete.
 | Package | Status | PR / commit | Gate evidence / remaining work |
 | --- | --- | --- | --- |
 | P0 Baseline and reference designs | Done | #146 / `bc9829f` | Fresh tests, live API, 16 browser captures, manifests and decisions recorded below |
-| P1 Session/input/sharing correctness | Review | this PR | B1–B7 fixed regression-first (29 new tests red on `bc9829f`); existing shell verified in Chromium with the real backend |
-| P2 Foundations/library refinement | Planned | — | Build on #145; phone filters, hierarchy and return navigation |
+| P1 Session/input/sharing correctness | Done | #147 / `748b489` | B1–B7 fixed regression-first (29 new tests red on `bc9829f`); existing shell verified in Chromium with the real backend |
+| P2 Foundations/library refinement | Review | this PR | Foundation + concept palette tokens; library gates met at 320–1440px in both themes; fast-typing and search-param race fixed; owner concept recorded |
 | P3 Shell/Playground reference | Planned | — | Array, Graph+Queue, 2D DP; isolated until integration gate |
 | P4 Code/Analysis/integrated route | Planned | — | One session across views; real input and shared-link journeys |
 | P5 Switcher/focus/guidance | Planned | — | Keyboard/focus/modal/tour verification |
@@ -56,13 +56,13 @@ feature at its new location.
 
 | Feature ID | Implementing package | Destination | Automated proof | Browser proof | Status / limitation |
 | --- | --- | --- | --- | --- | --- |
-| F01 Catalogue & metadata | P2 | Library rows beyond first batch | Existing: `AlgorithmLibrary.test.jsx` | P0 library captures | Baseline OK |
-| F02 Ranked search/highlight | P2, P5 | Library + switcher | Existing: `scoreProblem.test.js`, `useProblemSearch.test.js` | — | Baseline OK |
-| F03 Category/runnable filters | P2 | Library | Existing: `AlgorithmLibrary.test.jsx` | — | Phone filters below fold (fails gate) |
-| F04 Recents/storage safety | P2 | Library search | Existing: `useProblemSearch.test.js` | — | Baseline OK |
+| F01 Catalogue & metadata | P2 | Library rows beyond first batch | `AlgorithmLibrary.test.jsx` (63 rows, load-more focus) | P2 captures 320–1440px | Done (P2) |
+| F02 Ranked search/highlight | P2, P5 | Library + switcher | `scoreProblem.test.js`, `useProblemSearch.test.js` | P2: fast typing keeps "binary search tree" (8 results) | Library done; switcher P5 |
+| F03 Category/runnable filters | P2 | Library | `AlgorithmLibrary.test.jsx` chips, scoped clear, disclosure, invalid params | P2 phone journey: Filters (1), chip removal | Done (P2) |
+| F04 Recents/storage safety | P2 | Library search | `useProblemSearch.test.js`; denied-storage library test | — | Done (P2) |
 | F05 Search shortcut/keyboard | P5 | One Ctrl/Cmd+K owner | Existing: App command palette tests | — | Two owners today (library + App) |
 | F06 Direct problem links | P1 | `/problem/:id` | `App.session.test.jsx` unknown id; `AppRouter.test.jsx` | P1 probe: unknown id stays on its URL with a not-found state | Done (P1) |
-| F07 Catalogue load/retry/dedup | P2 | `CatalogProvider` | Existing: App catalogue tests | — | Needs lifecycle tests |
+| F07 Catalogue load/retry/dedup | P2 | `CatalogProvider` | Provider lifecycle tests (retained live list, non-array body, abort on unmount); sample-vs-live retry | — | Done (P2) |
 | F08 Default detail/execution | P1 | Problem session | Existing: `useTrace.test.js` | P0 captures | Baseline OK |
 | F09 Custom execution | P1 | Controlled editor | `App.session.test.jsx` (echo, draft survival), `useTrace.session.test.js` | P1 probe: summary says target 18 after the run | Done (P1); shell moves in P3 |
 | F10 Randomize/defaults | P1 | Draft-only actions | Existing: `randomizeInput.test.js`, Reset test | — | Baseline OK |
@@ -80,8 +80,8 @@ feature at its new location.
 | F22 Truncation | P6 | Persistent status | Existing: `useTrace` truncated tests | — | Watched is set even on a truncated run |
 | F23 Offline sample | P3 | Labelled sample state | Existing: `useTrace` offline test | — | Baseline OK |
 | F24 Collapse/focus intent | P3–P5 | Views, split, Focus | Existing: `useLayoutPreferences.test.js` | — | Replaced by views |
-| F25 Theme/reduced motion | P2 | Header theme control | Existing: `useTheme.test.js`, `designTokens.test.js` | P0 both themes | Baseline OK |
-| F26 Continue/daily/streak/starred | P2 | Library learning section | Existing: `Dashboard.test.jsx` | P0 library | Continue hidden in closed disclosure |
+| F25 Theme/reduced motion | P2 | Header theme control | `useTheme.test.js`, `designTokens.test.js` concept palette guard | P2 captures both themes | Tokens done; workspace in P3 |
+| F26 Continue/daily/streak/starred | P2 | Library progress line + learning section | `Dashboard.test.jsx`; Continue-outside-disclosure test | P2 captures | Done (P2) |
 | F27 Watched/starred | P2, P3 | Library + header | Existing: `useProgress.test.jsx` | — | Baseline OK |
 | F28 Curriculum prev/next | P3 | Context header | Existing: `SectionNav.test.jsx` | P0 Graph capture | Baseline OK |
 | F29 Statement/examples | P3 | Disclosure before rail | Existing: `ProblemStatement.test.jsx` | P0 Graph capture | Open by default on desktop |
@@ -135,6 +135,9 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 | 2D DP workspace (LCS) | `82f2808` dev | same | Real backend | `evidence/p0/p0-dp2d-390x844-dark.jpg`; stage 705×355 desktop | Below 440px target → P3 |
 | Horizontal overflow, console errors | `82f2808` dev | all 16 captures | Real backend | `evidence/p0/measurements.json` | None found |
 | Session defects B1–B4 | `82f2808` dev | Chromium 1366×768 | Real backend | Probe script run, recorded in the table above | Confirmed → P1 |
+| P2 library gates | P2 branch dev | Chromium 320×568, 390×844, 768×1024, 1366×768, 1440×900; light + dark | Real backend | `evidence/p2/*.jpg`; search top 280px (1366), 287px (390/320); first row 456–534px at 1366 | Pass: gates ≤360 / ≤320 met; row fully visible; no overflow, 0 errors |
+| P2 keyboard + Back journey | P2 branch dev | Chromium 1366×768 + 390×844 dark | Real backend | journey probe | Ctrl+K focuses search with a 3px ring; tab order search → clear → selects; Back restores query, filters and batch; phone Filters (1) and chip removal work |
+| P2 fast typing | P2 branch dev | Chromium 1366×768 | Real backend | typing probe | Before the fix, "binary search tree" typed fast gave `q=e`. After, the full text and URL are kept, and a filter merges onto it |
 | P1 session journeys | P1 branch dev | Chromium 1366×768, system theme | Real backend | `evidence/p1/session-probe.cjs`, `p1-notfound.jpg`, `p1-badlink.jpg` | Unknown id → not-found; echo target 18; draft 18 after reopen; 400 leaves URL unchanged and focuses the error summary; reload restores step 3/7 + target 18; step=400 and a rejected link explained and cleaned from the URL; 0 page errors |
 
 ### Decision and risk log
@@ -146,6 +149,9 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 | 2026-09-29 / P0 | No browser harness in the repo | Use Playwright 1.63 from the npx cache via `evidence/browser-audit.cjs`; no new dependency | Not in CI; a human must run it | Revisit at P8 if CI browser coverage is required |
 | 2026-09-29 / P0 | HLD comparison | D1–D10 in REFERENCE_DESIGN.md | Keeps Bench palette instead of HLD green/orange | Reviewed at P2/P3 captures |
 | 2026-09-29 / P1 | A link whose input is rejected also carries a step | Do not apply that step to the default run; start at step 1 and say so | A learner loses the position the sender meant, but is never shown a different execution's step N | Revisit only if a link format gains a run identity |
+| 2026-09-29 / P2 | Owner supplied playground-concept.png | Adopt it as the visual target; forest-green chrome accent (revises D1/D2), paper/card surfaces | A second use of green; guarded by a luminance gap from `--settled` | P3 implements the workspace to it |
+| 2026-09-29 / P2 | Router navigations render in transitions, so URL-bound inputs lost keystrokes | One `useLatestSearchParams` hook: synchronous local copy, committed-only adoption of external navigation; used by the library and the share adapter | A small custom hook instead of `useSearchParams` directly | — |
+| 2026-09-29 / P2 | "Clear filters" also cleared the search | Scoped actions: Clear filters (filters only), Clear search (×), Clear search and filters (empty state) | One more button in the empty state | — |
 | 2026-09-29 / P1 | Share links over 4,000 encoded characters | Refuse to encode them, drop `input` and label it | A huge custom input cannot be shared by link (a preset still saves it) | — |
 
 ### Release sign-off
