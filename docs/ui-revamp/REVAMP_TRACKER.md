@@ -10,8 +10,8 @@ its gate and evidence are complete.
 
 | Package | Status | PR / commit | Gate evidence / remaining work |
 | --- | --- | --- | --- |
-| P0 Baseline and reference designs | Review | this PR | Fresh tests, live API, 16 browser captures, manifests and decisions recorded below |
-| P1 Session/input/sharing correctness | Planned | — | Regression-first fixes and existing-shell verification |
+| P0 Baseline and reference designs | Done | #146 / `bc9829f` | Fresh tests, live API, 16 browser captures, manifests and decisions recorded below |
+| P1 Session/input/sharing correctness | Review | this PR | B1–B7 fixed regression-first (29 new tests red on `bc9829f`); existing shell verified in Chromium with the real backend |
 | P2 Foundations/library refinement | Planned | — | Build on #145; phone filters, hierarchy and return navigation |
 | P3 Shell/Playground reference | Planned | — | Array, Graph+Queue, 2D DP; isolated until integration gate |
 | P4 Code/Analysis/integrated route | Planned | — | One session across views; real input and shared-link journeys |
@@ -61,10 +61,10 @@ feature at its new location.
 | F03 Category/runnable filters | P2 | Library | Existing: `AlgorithmLibrary.test.jsx` | — | Phone filters below fold (fails gate) |
 | F04 Recents/storage safety | P2 | Library search | Existing: `useProblemSearch.test.js` | — | Baseline OK |
 | F05 Search shortcut/keyboard | P5 | One Ctrl/Cmd+K owner | Existing: App command palette tests | — | Two owners today (library + App) |
-| F06 Direct problem links | P1 | `/problem/:id` | Existing: `AppRouter.test.jsx` | — | Unknown id substitutes Two Sum (B1) |
+| F06 Direct problem links | P1 | `/problem/:id` | `App.session.test.jsx` unknown id; `AppRouter.test.jsx` | P1 probe: unknown id stays on its URL with a not-found state | Done (P1) |
 | F07 Catalogue load/retry/dedup | P2 | `CatalogProvider` | Existing: App catalogue tests | — | Needs lifecycle tests |
 | F08 Default detail/execution | P1 | Problem session | Existing: `useTrace.test.js` | P0 captures | Baseline OK |
-| F09 Custom execution | P1 | Controlled editor | Existing: App input panel tests | — | Echo is stale after a custom run (B2) |
+| F09 Custom execution | P1 | Controlled editor | `App.session.test.jsx` (echo, draft survival), `useTrace.session.test.js` | P1 probe: summary says target 18 after the run | Done (P1); shell moves in P3 |
 | F10 Randomize/defaults | P1 | Draft-only actions | Existing: `randomizeInput.test.js`, Reset test | — | Baseline OK |
 | F11 Help/bounds/field errors | P1, P7 | Every input form | Existing: field-error integration test | — | Labels not programmatically linked |
 | F12 Play/pause/step/seek/speed | P3 | One controller for all views | Existing: `Controls.test.jsx`, `useTrace.test.js` | — | Baseline OK |
@@ -76,7 +76,7 @@ feature at its new location.
 | F18 Java/active line | P4 | Code view + split | Existing: `CodeViewer.test.jsx` | P0 Graph capture | Baseline OK |
 | F19 Variables/frames/containers | P4 | Analysis | Existing: `MemoryComplexityCard.test.jsx` | — | Behind a toggle |
 | F20 Complexity | P4 | Analysis | Existing: `MemoryComplexityCard.test.jsx` | — | Baseline OK |
-| F21 Error/empty/malformed/unavailable | P1, P3 | Distinct status states | Existing: App trace error surface tests | — | Reruns clear the old run (B7) |
+| F21 Error/empty/malformed/unavailable | P1, P3 | Distinct status states | App trace error surface tests; `useTrace.session.test.js` rerun failures | — | Rerun failures keep the prior run, labelled (P1) |
 | F22 Truncation | P6 | Persistent status | Existing: `useTrace` truncated tests | — | Watched is set even on a truncated run |
 | F23 Offline sample | P3 | Labelled sample state | Existing: `useTrace` offline test | — | Baseline OK |
 | F24 Collapse/focus intent | P3–P5 | Views, split, Focus | Existing: `useLayoutPreferences.test.js` | — | Replaced by views |
@@ -85,9 +85,9 @@ feature at its new location.
 | F27 Watched/starred | P2, P3 | Library + header | Existing: `useProgress.test.jsx` | — | Baseline OK |
 | F28 Curriculum prev/next | P3 | Context header | Existing: `SectionNav.test.jsx` | P0 Graph capture | Baseline OK |
 | F29 Statement/examples | P3 | Disclosure before rail | Existing: `ProblemStatement.test.jsx` | P0 Graph capture | Open by default on desktop |
-| F30 Alternate/saved inputs | P1 | Editor | Existing: `InputPanel.test.jsx` | — | Preset load does not sync draft (B5) |
+| F30 Alternate/saved inputs | P1 | Editor | `InputPanel.test.jsx` preset/other-case sync | — | Done (P1) |
 | F31 Other-case comparison | P6 | On-demand comparison | Existing: App comparison tests | — | Hidden for Graph/Tree/DP |
-| F32 Shared input/step/copy link | P1 | Route adapter | Existing: `useShareableView.test.jsx` | — | Rejected input enters the URL (B4) |
+| F32 Shared input/step/copy link | P1 | Route adapter | `App.session.test.jsx` sharing + restore, `useShareableView.test.jsx` merges | P1 probe: reload restores step 3 of 7 with target 18; bad link explained | Done (P1); `view` is carried but has no UI until P4 |
 | F33 Anchor coverage | P4 | Source inspector | Existing: "branches not taken" test | — | Baseline OK |
 | F34 Welcome/tour/help | P5 | Help + adapted targets | Existing: `TourGuide.test.jsx`, `WelcomeGuide.test.jsx` | — | Targets tied to old layout |
 | F35 Extended keys/speed | P5 | Workspace controls | Existing: speed persistence test | — | Baseline OK |
@@ -135,6 +135,7 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 | 2D DP workspace (LCS) | `82f2808` dev | same | Real backend | `evidence/p0/p0-dp2d-390x844-dark.jpg`; stage 705×355 desktop | Below 440px target → P3 |
 | Horizontal overflow, console errors | `82f2808` dev | all 16 captures | Real backend | `evidence/p0/measurements.json` | None found |
 | Session defects B1–B4 | `82f2808` dev | Chromium 1366×768 | Real backend | Probe script run, recorded in the table above | Confirmed → P1 |
+| P1 session journeys | P1 branch dev | Chromium 1366×768, system theme | Real backend | `evidence/p1/session-probe.cjs`, `p1-notfound.jpg`, `p1-badlink.jpg` | Unknown id → not-found; echo target 18; draft 18 after reopen; 400 leaves URL unchanged and focuses the error summary; reload restores step 3/7 + target 18; step=400 and a rejected link explained and cleaned from the URL; 0 page errors |
 
 ### Decision and risk log
 
@@ -144,6 +145,8 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 | 2026-09-29 / P0 | `/mnt/c` vitest run takes 10+ minutes | Implement in a git worktree on the WSL Linux filesystem (`/home/prem/dsa-ui-revamp`), same repository and branches | One extra worktree entry in `git worktree list` | Remove the worktree after P9 |
 | 2026-09-29 / P0 | No browser harness in the repo | Use Playwright 1.63 from the npx cache via `evidence/browser-audit.cjs`; no new dependency | Not in CI; a human must run it | Revisit at P8 if CI browser coverage is required |
 | 2026-09-29 / P0 | HLD comparison | D1–D10 in REFERENCE_DESIGN.md | Keeps Bench palette instead of HLD green/orange | Reviewed at P2/P3 captures |
+| 2026-09-29 / P1 | A link whose input is rejected also carries a step | Do not apply that step to the default run; start at step 1 and say so | A learner loses the position the sender meant, but is never shown a different execution's step N | Revisit only if a link format gains a run identity |
+| 2026-09-29 / P1 | Share links over 4,000 encoded characters | Refuse to encode them, drop `input` and label it | A huge custom input cannot be shared by link (a preset still saves it) | — |
 
 ### Release sign-off
 

@@ -1,5 +1,5 @@
 import layout from './layout.module.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId, useRef } from 'react';
 import { Play, Shuffle, RotateCcw, GitBranch, Bookmark, X } from 'lucide-react';
 import useInputPresets from '../hooks/useInputPresets';
 import IntArrayField from './IntArrayField';
@@ -13,6 +13,12 @@ import styles from './InputPanel.module.css';
  * input rather than watching a fixed default. One editor per FieldType — no per-problem
  * form code, ever, or this becomes 433 hand-built forms.
  *
+ * Controlled: `values` is the problem session's draft and `onChange` replaces it. The
+ * editor used to own its draft, so closing it threw the edits away, a spec arriving after
+ * mount was never applied, and a loaded preset ran without the fields showing it. Every
+ * action here edits the draft, and the two load-and-run actions (Other case, a saved
+ * input) edit it AND run the very same values, so the fields always show what ran.
+ *
  * `alternateInput` is the second input the tracer itself declares — required of every one
  * of them, and materially different from the defaults by contract. It used to exist only
  * for the test suite, which meant the branches only it reaches were greyed out in the code
@@ -21,26 +27,33 @@ import styles from './InputPanel.module.css';
  * succeeds, and every not-found branch is mutually exclusive with its found branch.
  *
  * Field-level errors come from the server (InputValidator's per-field 400s) via
- * `fieldErrors`, keyed by field name — the same contract useTrace.runInput surfaces.
- * Client-side bounds shown here (min/max on the native inputs, Add/Remove disabling at
- * length caps) are a convenience only; the server remains authoritative.
+ * `fieldErrors`, keyed by field name — the same contract useTrace.runInput surfaces. They
+ * are summarised at the top, and focus moves to that summary when a submission is rejected
+ * so a keyboard or screen-reader user learns what to fix without hunting for it. Client-side
+ * bounds shown here (min/max on the native inputs, Add/Remove disabling at length caps) are
+ * a convenience only; the server remains authoritative.
  *
  * Saved inputs (`useInputPresets`) are what stop a hand-built case from being lost the
  * moment someone navigates away. Loading one runs it immediately, following the "Other
  * case" button's own precedent: the whole point of saving is to remove friction, and
  * loading-without-running would put it straight back.
  */
-export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, onRun }) {
-  const [values, setValues] = useState(() => defaultInput(inputSpec));
+export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, values, onChange, onRun, draftChanged = false }) {
   const { presets, savePreset, removePreset } = useInputPresets(problemId);
   const [savingName, setSavingName] = useState(null);
+  const summaryRef = useRef(null);
+  const summaryId = useId();
+  const draft = values ?? {};
 
-  // A stale value from the previous problem must never appear to belong to this one.
+  // A half-typed preset name belongs to the problem it was typed on.
+  useEffect(() => { setSavingName(null); }, [problemId]);
+
+  const errorEntries = Object.entries(fieldErrors ?? {});
   useEffect(() => {
-    setValues(defaultInput(inputSpec));
-    setSavingName(null);
+    if (errorEntries.length > 0) summaryRef.current?.focus();
+    // Keyed on the error object's identity: each rejected submission produces a new one.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [problemId]);
+  }, [fieldErrors]);
 
   if (!inputSpec?.fields?.length) {
     return (
@@ -50,20 +63,42 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
     );
   }
 
-  const setField = (name, next) => setValues((v) => ({ ...v, [name]: next }));
+  const setField = (name, next) => onChange({ ...draft, [name]: next });
+  const loadAndRun = (next) => {
+    onChange(next);
+    onRun(next);
+  };
+  const labelFor = (name) => inputSpec.fields.find((f) => f.name === name)?.label ?? name;
 
   return (
     <div className={styles.panel}>
+      {errorEntries.length > 0 && (
+        <div
+          ref={summaryRef}
+          role="alert"
+          tabIndex={-1}
+          aria-labelledby={summaryId}
+          className={styles.errorSummary}
+        >
+          <p id={summaryId} className={styles.errorSummaryTitle}>This input could not run</p>
+          <ul className={styles.errorSummaryList}>
+            {errorEntries.map(([name, message]) => (
+              <li key={name}>{labelFor(name)}: {message}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className={styles.actionBar}>
         <button
           type="button"
           className="btn btn-primary"
           disabled={running}
-          onClick={() => onRun(values)}
+          onClick={() => onRun(draft)}
           aria-label="Run with this input"
           style={{ opacity: running ? 0.6 : 1 }}
         >
-          <Play size={12} /> Run
+          <Play size={12} /> {running ? 'Running…' : 'Run'}
         </button>
         {alternateInput && (
           <button
@@ -72,11 +107,7 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
             disabled={running}
             // Loads AND runs: the point is to see the other branch, and making that two
             // clicks is enough friction that most people would never take the second.
-            onClick={() => {
-              const next = { ...defaultInput(inputSpec), ...alternateInput };
-              setValues(next);
-              onRun(next);
-            }}
+            onClick={() => loadAndRun({ ...defaultInput(inputSpec), ...alternateInput })}
             aria-label="Run the other case this problem declares"
             title="A second input chosen to take the branches the default never reaches"
           >
@@ -86,7 +117,7 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
         <button
           type="button"
           className="btn btn-outline"
-          onClick={() => setValues(randomizeInput(inputSpec))}
+          onClick={() => onChange(randomizeInput(inputSpec))}
           aria-label="Randomize input"
         >
           <Shuffle size={12} /> Randomize
@@ -94,7 +125,7 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
         <button
           type="button"
           className="btn btn-outline"
-          onClick={() => setValues(defaultInput(inputSpec))}
+          onClick={() => onChange(defaultInput(inputSpec))}
           aria-label="Reset input to default"
         >
           <RotateCcw size={12} /> Reset
@@ -108,6 +139,7 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
         >
           <Bookmark size={12} /> Save
         </button>
+        {draftChanged && <span className={styles.draftChanged}>Changes not run</span>}
       </div>
 
       {savingName !== null && (
@@ -115,7 +147,7 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
           className={styles.saveForm}
           onSubmit={(e) => {
             e.preventDefault();
-            savePreset(savingName, values);
+            savePreset(savingName, draft);
             setSavingName(null);
           }}
         >
@@ -144,7 +176,8 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
               <button
                 type="button"
                 className={styles.presetLoad}
-                onClick={() => onRun(preset.values)}
+                disabled={running}
+                onClick={() => loadAndRun(preset.values)}
                 aria-label={`Load ${preset.name}`}
                 title={`Run the input saved as "${preset.name}"`}
               >
@@ -176,10 +209,10 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
               <p className={styles.fieldHelp}>{field.help}</p>
             )}
 
-            <FieldEditor field={field} value={values[field.name]} onChange={(v) => setField(field.name, v)} />
+            <FieldEditor field={field} value={draft[field.name]} onChange={(v) => setField(field.name, v)} />
 
             {fieldErrors?.[field.name] && (
-              <p role="alert" className={styles.fieldError}>
+              <p className={styles.fieldError}>
                 {fieldErrors[field.name]}
               </p>
             )}

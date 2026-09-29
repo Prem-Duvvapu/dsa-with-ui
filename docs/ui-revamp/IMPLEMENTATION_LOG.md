@@ -80,3 +80,48 @@ Known limitations / blocked checks: the reference layouts are annotated wirefram
 Rollback boundary: revert this docs-only commit.
 Next unblocked package: P1 session/input/sharing correctness.
 ```
+
+## 2026-09-29 — P1 session, input and sharing correctness
+
+```text
+Package / status: P1 — review
+Base commit / branch / PR / merge commit: bc9829f / fix/ui-revamp-p1-session / (this PR) / —
+Learner outcome and exact behavior changed:
+  - What is on screen, the "Running on" line, the editor and the share link now describe the same
+    run. A custom run updates the echo; the draft survives the editor closing; Load (preset) and
+    Other case show what they ran; "Changes not run" marks a draft that differs from the run.
+  - Only a successful run changes the link. A 400 keeps the run and the URL, lists the field
+    errors in a focused summary, and keeps per-field messages. A network, malformed, empty,
+    untraced or rate-limited rerun keeps the previous result, labelled "Previous result shown.
+    The new run failed: …", with Retry (the failed submission) and Dismiss.
+  - Shared links: the input runs before the step is restored, and nothing is mirrored into the
+    URL until then. An out-of-range step and a rejected input are explained and removed from the
+    URL. Inputs too large for a link are not encoded, and this is labelled.
+  - An unknown /problem/:id shows "No algorithm called …" with a library link. Nothing else runs.
+  - A truncated or offline-sample run no longer marks a problem watched. Unknown ids are no longer
+    recorded as the last visited problem. A hidden tab pauses playback.
+  - Architecture: useTrace commits a run atomically (tagged with its problem id) and returns an
+    explicit outcome. useInputDraft and useProblemSession own the draft and restoration above the
+    views. useShareableView is the single merging writer of step/input/view. InputPanel is
+    controlled.
+F-IDs and renderer/input cases covered: F06, F08, F09, F10, F11 (summary), F21, F22 (watched),
+  F30, F32. No renderer changes.
+Automated commands, results and failure investigation:
+  RED first: the 39 new cases run against bc9829f → 29 failed (B1–B7 behaviours).
+  npx vitest run → 64 files / 507 tests passed (baseline 472, +35).
+  Seven existing integration tests opened /problem/two-sum against catalogues that do not contain
+  it, and had passed only via the unknown-id redirect. They now open their own problem id; their
+  assertions are unchanged. One useTrace assertion ("malformed rerun clears steps") now asserts
+  the handoff's retained-and-labelled behaviour instead.
+  npx vite build → JS 354.46 kB (110.98 kB gzip, +2.4% vs P0); CSS 91.53 kB (16.43 kB gzip).
+Browser, viewport, theme, real backend vs fixture: Chromium (Playwright 1.63) at 1366×768 against
+  the real backend, using docs/ui-revamp/evidence/p1/session-probe.cjs.
+Screenshots/artifacts and measurements: evidence/p1/p1-notfound.jpg, p1-badlink.jpg; probe output
+  recorded in REVAMP_TRACKER.md (browser evidence table).
+Known limitations / blocked checks: the old fixed-height shell still squeezes the canvas when the
+  editor and a notice are both open (baseline behaviour; P3 replaces the shell). The network-failure
+  label was verified with fixtures only; the real backend was not taken down. `view` is carried in
+  the URL but has no UI until P4.
+Rollback boundary: revert the P1 squash commit; no storage keys or API contracts changed.
+Next unblocked package: P2 foundations and library refinement.
+```

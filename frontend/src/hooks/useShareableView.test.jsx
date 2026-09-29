@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 import useShareableView, { encodeInput, decodeInput } from './useShareableView';
 
@@ -59,5 +59,60 @@ describe('useShareableView', () => {
       problemId: 'kadane-algo', stepIndex: 0, totalSteps: 0, onRestore
     });
     expect(onRestore).toHaveBeenCalledWith({ step: null, input: null });
+  });
+
+  it('merges two writes made in the same tick instead of dropping the first', () => {
+    // A view change and an input share in one handler used to race: each started from the
+    // params captured at render time, so the second write erased the first.
+    let location;
+    function Writer() {
+      const { shareInput, setView } = useShareableView({ problemId: 'p', stepIndex: 0, totalSteps: 0 });
+      location = useLocation();
+      return <button onClick={() => { setView('code'); shareInput({ nums: [3] }); }}>both</button>;
+    }
+    render(
+      <MemoryRouter initialEntries={['/problem/p?step=4']}>
+        <Routes><Route path="/problem/:id" element={<Writer />} /></Routes>
+      </MemoryRouter>
+    );
+    fireEvent.click(screen.getByText('both'));
+    const params = new URLSearchParams(location.search);
+    expect(params.get('view')).toBe('code');
+    expect(decodeInput(params.get('input'))).toEqual({ nums: [3] });
+    expect(params.get('step')).toBe('4');
+  });
+
+  it('refuses to put an input that is too long for a link into the URL', () => {
+    let location;
+    let result;
+    function Writer() {
+      const { shareInput } = useShareableView({ problemId: 'p', stepIndex: 0, totalSteps: 0 });
+      location = useLocation();
+      return <button onClick={() => { result = shareInput({ s: 'x'.repeat(5000) }); }}>long</button>;
+    }
+    render(
+      <MemoryRouter initialEntries={['/problem/p']}>
+        <Routes><Route path="/problem/:id" element={<Writer />} /></Routes>
+      </MemoryRouter>
+    );
+    fireEvent.click(screen.getByText('long'));
+    expect(result).toBe(false);
+    expect(new URLSearchParams(location.search).get('input')).toBeNull();
+  });
+
+  it('does not mirror the step while a link is still being restored', () => {
+    let location;
+    function Mirror({ mirror }) {
+      useShareableView({ problemId: 'p', stepIndex: 0, totalSteps: 9, mirror, onRestore: () => {} });
+      location = useLocation();
+      return null;
+    }
+    const tree = (mirror) => (
+      <MemoryRouter initialEntries={['/problem/p?step=7']}>
+        <Routes><Route path="/problem/:id" element={<Mirror mirror={mirror} />} /></Routes>
+      </MemoryRouter>
+    );
+    render(tree(false));
+    expect(new URLSearchParams(location.search).get('step')).toBe('7');
   });
 });

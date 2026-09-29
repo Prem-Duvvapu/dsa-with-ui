@@ -311,7 +311,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    const { container } = renderApp();
+    const { container } = renderApp('/problem/longest-increasing-subsequence');
 
     await waitFor(() =>
       expect(screen.getByRole('table', { name: 'Dynamic programming table' })).toBeInTheDocument()
@@ -349,7 +349,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    renderApp();
+    renderApp('/problem/bfs-traversal');
     await waitFor(() => expect(screen.getByText('seed the queue')).toBeInTheDocument());
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
   });
@@ -373,7 +373,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    renderApp();
+    renderApp('/problem/tree-preorder');
     await waitFor(() => expect(screen.getByText('visit the root')).toBeInTheDocument());
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
   });
@@ -396,7 +396,7 @@ describe('App execution capture', () => {
       return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) });
     }));
 
-    renderApp();
+    renderApp('/problem/unknown-shape');
 
     await waitFor(() =>
       expect(screen.getByText('No visualization for Mystery')).toBeInTheDocument()
@@ -420,7 +420,7 @@ describe('App trace error surface', () => {
       return Promise.resolve(respondTo(url));
     }));
 
-    renderApp();
+    renderApp('/problem/broken-trace');
 
     await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent(message));
     expect(screen.getByLabelText('Playback position')).toHaveTextContent('Step 0 of 0');

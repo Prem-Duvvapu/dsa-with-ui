@@ -120,3 +120,37 @@
 .presetRemove:focus-visible {
   color: var(--probe);
 }
+
+.errorSummary {
+  border: 1px solid var(--bench-rule-strong);
+  border-left: 3px solid var(--probe);
+  background: var(--probe-wash);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--bench-ink);
+  font-size: 0.8rem;
+}
+
+.errorSummary:focus-visible {
+  outline: 2px solid var(--probe);
+  outline-offset: 2px;
+}
+
+.errorSummaryTitle {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.errorSummaryList {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.draftChanged {
+  align-self: center;
+  font: 600 0.72rem var(--font-code);
+  color: var(--bench-ink);
+  border: 1px dashed var(--bench-rule-strong);
+  border-radius: var(--radius-full);
+  padding: 3px 9px;
+}
