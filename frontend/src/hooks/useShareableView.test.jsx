@@ -3,7 +3,7 @@ import { render, screen, act, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
-import useShareableView, { encodeInput, decodeInput } from './useShareableView';
+import useShareableView, { encodeInput, decodeInput, parseSharedInput } from './useShareableView';
 
 function Harness({ problemId, stepIndex, totalSteps, onRestore }) {
   const { shareInput } = useShareableView({ problemId, stepIndex, totalSteps, onRestore });
@@ -22,6 +22,14 @@ describe('useShareableView', () => {
     expect(decodeInput(encodeInput(values))).toEqual(values);
   });
 
+  it('tells an unreadable input apart from an absent one', () => {
+    expect(parseSharedInput(null)).toEqual({ status: 'absent' });
+    expect(parseSharedInput('')).toEqual({ status: 'absent' });
+    expect(parseSharedInput('not-valid-json')).toEqual({ status: 'invalid' });
+    expect(parseSharedInput(encodeInput([1]))).toEqual({ status: 'invalid' });
+    expect(parseSharedInput(encodeInput({ n: 1 }))).toEqual({ status: 'valid', value: { n: 1 } });
+  });
+
   it('refuses anything that is not an input map, rather than half-restoring it', () => {
     expect(decodeInput(encodeInput([1, 2, 3]))).toBeNull();
     expect(decodeInput('not base64 at all !!')).toBeNull();
@@ -35,7 +43,7 @@ describe('useShareableView', () => {
       problemId: 'kadane-algo', stepIndex: 0, totalSteps: 0, onRestore
     });
     // 1-based in the URL, 0-based in the player: step=5 is index 4.
-    expect(onRestore).toHaveBeenCalledWith({ step: 4, input: { nums: [9] } });
+    expect(onRestore).toHaveBeenCalledWith({ step: 4, input: { status: 'valid', value: { nums: [9] } }, samePage: false });
   });
 
   it('restores once per problem, not on every render', () => {
@@ -58,7 +66,7 @@ describe('useShareableView', () => {
     at('/problem/kadane-algo?step=abc', {
       problemId: 'kadane-algo', stepIndex: 0, totalSteps: 0, onRestore
     });
-    expect(onRestore).toHaveBeenCalledWith({ step: null, input: null });
+    expect(onRestore).toHaveBeenCalledWith({ step: null, input: { status: 'absent' }, samePage: false });
   });
 
   it('merges two writes made in the same tick instead of dropping the first', () => {

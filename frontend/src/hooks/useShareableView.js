@@ -64,45 +64,62 @@ export function decodeInput(encoded) {
 }
 
 /**
+ * What a link's `input` parameter holds: nothing, a usable input map, or something that is
+ * not one. "Unreadable" is not the same as "absent" - treating it as absent silently ran
+ * the default in its place and applied the link's step to that different run.
+ */
+export function parseSharedInput(raw) {
+  if (raw === null || raw === undefined || raw === '') return { status: 'absent' };
+  const value = decodeInput(raw);
+  return value ? { status: 'valid', value } : { status: 'invalid' };
+}
+
+/**
  * @param problemId    the problem currently shown; changing it clears the carried input
  * @param stepIndex    the step being shown, mirrored into ?step
  * @param totalSteps   steps in the run that belongs to `problemId`; 0 while none is loaded
  * @param mirror       false while a link is being restored, so nothing overwrites it
- * @param onRestore    called once per problem with {step, input} recovered from the URL
+ * @param onRestore    called with {step, input, samePage} for every URL this hook did not
+ *                     write itself: the first load, a different problem, Back/Forward, or a
+ *                     new link to the same problem. `input` is a parseSharedInput result.
  */
 export default function useShareableView({ problemId, stepIndex, totalSteps, mirror = true, onRestore }) {
   // Every write merges onto the latest URL this hook produced, even while the router's
-  // transition has not delivered it yet (see useLatestSearchParams).
-  const [params, update] = useLatestSearchParams();
-  const latest = useRef(params);
-  latest.current = params;
+  // transition has not delivered it yet; `navigation` counts the URLs it did not produce.
+  const [params, update, navigation] = useLatestSearchParams();
   const onRestoreRef = useRef(onRestore);
   onRestoreRef.current = onRestore;
 
-  const restoredFor = useRef(null);
+  /** The navigation last restored, and the problem it was for. */
+  const restored = useRef(null);
 
-  // Restore once per problem, before any mirroring can overwrite what the link carried.
+  // Restore once per external navigation, before any mirroring can overwrite it. Keyed on
+  // the navigation, not the problem id: the render that switches problems still holds the
+  // previous URL's parameters, and restoring from them ran one problem's shared input on
+  // the next problem. The navigation counter only moves once the new URL is committed.
   useEffect(() => {
-    if (!problemId || restoredFor.current === problemId) return;
-    restoredFor.current = problemId;
+    if (!problemId || restored.current?.navigation === navigation) return;
+    const samePage = restored.current?.problemId === problemId;
+    restored.current = { navigation, problemId };
 
-    const rawStep = Number(latest.current.get(STEP));
+    const rawStep = Number(params.get(STEP));
     onRestoreRef.current?.({
       step: Number.isInteger(rawStep) && rawStep > 0 ? rawStep - 1 : null,
-      input: decodeInput(latest.current.get(INPUT))
+      input: parseSharedInput(params.get(INPUT)),
+      samePage
     });
-  }, [problemId]);
+  }, [problemId, navigation, params]);
 
   // Mirror the step outward. 1-based in the URL: step=1 is the first step, which is what
   // the controls show and what anyone reading the link expects.
   useEffect(() => {
-    if (!mirror || restoredFor.current !== problemId) return;
+    if (!mirror || restored.current?.navigation !== navigation || restored.current?.problemId !== problemId) return;
     if (!Number.isInteger(stepIndex) || totalSteps <= 0) return;
     update((next) => {
       if (stepIndex <= 0) next.delete(STEP);
       else next.set(STEP, String(stepIndex + 1));
     });
-  }, [problemId, stepIndex, totalSteps, mirror, update]);
+  }, [problemId, navigation, stepIndex, totalSteps, mirror, update]);
 
   /**
    * Call after a run on caller-supplied input has SUCCEEDED; pass null to drop it from the
@@ -119,6 +136,11 @@ export default function useShareableView({ problemId, stepIndex, totalSteps, mir
     return values ? fits : true;
   }, [update]);
 
+  /** Removes a step the link carried that cannot be honoured. */
+  const dropStep = useCallback(() => {
+    update((next) => { next.delete(STEP); });
+  }, [update]);
+
   /** Presentation only: the default view is written as no parameter at all. */
   const setView = useCallback((view, defaultView = null) => {
     update((next) => {
@@ -127,5 +149,5 @@ export default function useShareableView({ problemId, stepIndex, totalSteps, mir
     });
   }, [update]);
 
-  return { shareInput, setView, view: params.get(VIEW) };
+  return { shareInput, dropStep, setView, view: params.get(VIEW) };
 }

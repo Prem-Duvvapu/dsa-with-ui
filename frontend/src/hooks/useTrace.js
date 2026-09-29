@@ -309,7 +309,21 @@ export default function useTrace(problemId, problem, options = {}) {
 
   const dismissRerunFailure = useCallback(() => setRerunFailure(null), []);
 
-  const steps = run.steps;
+  // Leaving the page ends its authority: the request in flight is aborted and its
+  // generation retired, so a late answer cannot commit, share or navigate anywhere.
+  useEffect(() => () => {
+    requestIdRef.current += 1;
+    abortRef.current?.abort();
+  }, []);
+
+  // Everything below describes the problem that was ASKED FOR. In the render that switches
+  // problems - before the reset effect runs - the state still holds the previous problem's
+  // run, and handing that out under the new id let consumers pair one problem with another
+  // problem's steps. Until this problem has its own run or its own settled outcome, it is
+  // simply loading.
+  const own = Boolean(problemId) && (run.problemId === problemId || settledFor === problemId);
+  const activeRun = own ? run : EMPTY_RUN;
+  const steps = activeRun.steps;
 
   // ── Playback clock ─────────────────────────────────────────────────────────
   useEffect(() => {
@@ -371,20 +385,20 @@ export default function useTrace(problemId, problem, options = {}) {
   }, []);
 
   return {
-    run,
+    run: activeRun,
     steps,
-    currentStep,
-    currentStepIndex,
-    isPlaying,
+    currentStep: own ? currentStep : null,
+    currentStepIndex: own ? currentStepIndex : 0,
+    isPlaying: own && isPlaying,
     speed,
-    loading,
-    pending,
-    error,
-    rerunFailure,
-    truncated: run.truncated,
-    resolvedInput: run.resolvedInput,
-    anchors: run.anchors,
-    fieldErrors,
+    loading: loading || (Boolean(problemId) && !own),
+    pending: own && pending,
+    error: own ? error : null,
+    rerunFailure: own ? rerunFailure : null,
+    truncated: activeRun.truncated,
+    resolvedInput: activeRun.resolvedInput,
+    anchors: activeRun.anchors,
+    fieldErrors: own ? fieldErrors : {},
     detail: detailState.problemId === problemId ? detailState.value : null,
     settled: settledFor === problemId && Boolean(problemId),
     play,
