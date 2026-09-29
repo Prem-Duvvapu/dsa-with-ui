@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useTrace from './useTrace';
 import useInputDraft, { sameInput } from './useInputDraft';
 import useShareableView from './useShareableView';
+import { defaultInput } from '../input/randomizeInput';
 
 /**
  * One problem's learning session: the trace and its playback, the editable draft, what the
@@ -38,16 +39,29 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
   );
   const inputSpec = problem?.id === problemId ? problem?.inputSpec : null;
   const draft = useInputDraft(problemId, inputSpec);
-  const { replace: replaceDraft } = draft;
+  const { replace: replaceDraft, defaults: draftDefaults } = draft;
 
   const [restoring, setRestoring] = useState(false);
   const [linkNotices, setLinkNotices] = useState([]);
   const [shareNote, setShareNote] = useState(null);
+  /** Bumped per restoration request, so a same-page link (already settled) still restores. */
+  const [restoreRequest, setRestoreRequest] = useState(0);
+  /** The one restoration in progress; replaced (not mutated) so each has an identity. */
   const pendingRestore = useRef(null);
+  const restoreSeq = useRef(0);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
   const problemIdRef = useRef(problemId);
   problemIdRef.current = problemId;
   const inputSpecRef = useRef(inputSpec);
   inputSpecRef.current = inputSpec;
+  const runRef = useRef(run);
+  runRef.current = run;
+  const defaultsRef = useRef(draftDefaults);
+  defaultsRef.current = draftDefaults;
 
   const ownRun = run.problemId === problemId;
   const route = useShareableView({
@@ -56,65 +70,101 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
     totalSteps: ownRun ? steps.length : 0,
     mirror: !restoring,
     onRestore: (view) => {
-      const needed = view.step !== null || Boolean(view.input);
-      pendingRestore.current = needed ? { problemId, ...view, started: false } : null;
+      // A same-page link without input, while a custom run is on screen, describes the
+      // default run - so the default has to run again, not the custom one be kept.
+      const resetToDefault = view.samePage && view.input.status === 'absent'
+        && runRef.current.problemId === problemId && runRef.current.submittedInput !== null;
+      const needed = view.step !== null || view.input.status !== 'absent' || resetToDefault;
+      pendingRestore.current = needed
+        ? { id: ++restoreSeq.current, problemId, ...view, resetToDefault, started: false }
+        : null;
       setRestoring(needed);
+      setRestoreRequest((n) => n + 1);
       setLinkNotices([]);
       setShareNote(null);
+      // Seed the editor with what the link asks for BEFORE it runs, so the fields say what
+      // is running and anything the learner types meanwhile is theirs - nothing the
+      // response does later writes over the draft.
+      const spec = inputSpecRef.current;
+      if (view.input.status === 'valid') {
+        replaceDraft(spec?.fields?.length
+          ? { ...defaultInput(spec), ...specFieldsOf(view.input.value, spec) }
+          : view.input.value);
+      } else if (resetToDefault && spec?.fields?.length) {
+        replaceDraft(defaultInput(spec));
+      }
     }
   });
-  const { shareInput } = route;
+  const { shareInput, dropStep } = route;
 
-  // ── Restore a shared link, in order: its input, then its step ──────────────
+  // ── Restore a link, in order: its input, then its step ─────────────────────
   // Waits for this problem's first load to SETTLE - its own default run, or an error - so
   // a rejected link input still has the default run to fall back on, and a step has a run
-  // to be restored into.
+  // to be restored into. A newer submission or navigation cancels it by replacing
+  // `pendingRestore`; every ending, including cancellation, releases only its own claim.
   useEffect(() => {
     const pending = pendingRestore.current;
     if (!pending || pending.problemId !== problemId || pending.started || !settled) return;
     pending.started = true;
+    const alive = () => mounted.current && pendingRestore.current === pending
+      && problemIdRef.current === pending.problemId;
 
     (async () => {
       const notices = [];
-      let total = ownRun ? steps.length : 0;
+      let total = runRef.current.problemId === pending.problemId ? runRef.current.steps.length : 0;
+      let honoured = true;
 
-      if (pending.input) {
-        const outcome = await runInput(pending.input);
-        if (problemIdRef.current !== pending.problemId || outcome.kind === 'superseded') return;
+      if (pending.input.status === 'invalid') {
+        honoured = false;
+        shareInput(null);
+        notices.push({ kind: 'input', reason: 'unreadable' });
+      } else if (pending.input.status === 'valid' || pending.resetToDefault) {
+        const values = pending.input.status === 'valid' ? pending.input.value : defaultsRef.current;
+        const outcome = await runInput(values ?? {});
+        if (!alive()) return;
         if (outcome.ok) {
           total = outcome.run.steps.length;
-          replaceDraft(outcome.run.submittedInput);
         } else {
-          // Show the learner exactly what was rejected, beside the server's field errors,
-          // and stop the link from claiming an input the screen is not running.
-          replaceDraft({ ...draft.defaults, ...specFieldsOf(pending.input, inputSpecRef.current) });
-          shareInput(null);
+          honoured = false;
+          if (pending.input.status === 'valid') shareInput(null);
           notices.push({ kind: 'input', reason: outcome.kind });
         }
       }
 
-      // A step belongs to the run the link described. When that run could not happen, the
-      // default run's step N is a different moment of a different execution, so playback
-      // starts at the beginning instead and the notice above says why.
-      const inputHonoured = !pending.input || notices.length === 0;
-      if (pending.step !== null && total > 0 && inputHonoured) {
-        if (pending.step < total) seek(pending.step);
-        else notices.push({ kind: 'step', requested: pending.step + 1, total });
-      } else if (pending.step !== null && !inputHonoured) {
-        notices.push({ kind: 'step-dropped', requested: pending.step + 1 });
+      if (pending.step !== null) {
+        if (!honoured) {
+          dropStep();
+          notices.push({ kind: 'step-dropped', requested: pending.step + 1 });
+        } else if (total === 0) {
+          notices.push({ kind: 'step-no-run', requested: pending.step + 1 });
+        } else if (pending.step < total) {
+          seek(pending.step);
+        } else {
+          notices.push({ kind: 'step', requested: pending.step + 1, total });
+        }
       }
 
-      if (pendingRestore.current === pending) pendingRestore.current = null;
+      pendingRestore.current = null;
       setLinkNotices(notices);
       setRestoring(false);
     })();
     // Re-running this effect is harmless: `started` makes it a no-op once claimed.
-  }, [problemId, settled, ownRun, steps.length, runInput, seek, replaceDraft, shareInput, draft.defaults]);
+  }, [problemId, settled, restoreRequest, runInput, seek, shareInput, dropStep]);
 
   // ── Submitting ─────────────────────────────────────────────────────────────
-  /** Runs the given values; on success, and only then, they become the link's input. */
+  /**
+   * Runs the given values; on success, and only then, they become the link's input. A
+   * submission supersedes any link still being restored, and a page that has been left
+   * (or switched to another problem) never shares or navigates on a late answer.
+   */
   const submit = useCallback(async (values) => {
+    if (pendingRestore.current) {
+      pendingRestore.current = null;
+      setRestoring(false);
+    }
+    const forProblem = problemIdRef.current;
     const outcome = await runInput(values);
+    if (!mounted.current || problemIdRef.current !== forProblem) return outcome;
     if (outcome.ok) {
       setShareNote(shareInput(outcome.run.submittedInput) ? null : 'too-long');
       setLinkNotices([]);
@@ -130,10 +180,11 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
 
   const dismissLinkNotices = useCallback(() => setLinkNotices([]), []);
 
-  // What the run on screen was given. The default GET runs the spec's defaults; an offline
+  // What the run on screen was given, with the spec's defaults filling fields a submission
+  // left out (the server does the same). The default GET runs the defaults; an offline
   // sample's input is unknown, so no "changed" claim can be made against it.
   const committedInput = run.id > 0 && ownRun
-    ? (run.submittedInput ?? (run.offline ? null : draft.defaults))
+    ? (run.submittedInput ? { ...(draftDefaults ?? {}), ...run.submittedInput } : (run.offline ? null : draftDefaults))
     : null;
   const draftChanged = Boolean(draft.values && committedInput && !sameInput(draft.values, committedInput));
 

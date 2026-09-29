@@ -53,6 +53,12 @@ const RUN_FAILURE_COPY = Object.freeze({
 
 /** What a shared link asked for that could not be honoured, in the learner's terms. */
 function linkNoticeText(notice) {
+  if (notice.kind === 'input' && notice.reason === 'unreadable') {
+    return 'The input in this link could not be read, so it was not run. Showing the default input.';
+  }
+  if (notice.kind === 'step-no-run') {
+    return `This link pointed to step ${notice.requested}, but there is no run to show it in.`;
+  }
   if (notice.kind === 'input') {
     return notice.reason === 'invalid'
       ? 'The input in this link could not be run: the server rejected it. Showing the default input; the rejected values are in the editor.'

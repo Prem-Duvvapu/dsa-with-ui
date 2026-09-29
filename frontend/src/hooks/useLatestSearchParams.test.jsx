@@ -1,20 +1,23 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import useLatestSearchParams from './useLatestSearchParams';
 
 let location;
+let navigateRef;
 function Harness() {
   const [params, update] = useLatestSearchParams();
   const navigate = useNavigate();
+  navigateRef = navigate;
   location = useLocation();
   return (
     <div>
       <output data-testid="q">{params.get('q') ?? ''}|{params.get('view') ?? ''}</output>
       <button onClick={() => { update((p) => p.set('q', 'tree')); update((p) => p.set('view', 'code')); }}>two writes</button>
       <button onClick={() => navigate('/?q=elsewhere')}>external</button>
+      <button onClick={() => { update((p) => p.set('q', 'b')); update((p) => p.set('q', 'a')); }}>round trip</button>
     </div>
   );
 }
@@ -41,11 +44,21 @@ describe('useLatestSearchParams', () => {
     expect(screen.getByTestId('q')).toHaveTextContent('elsewhere|');
   });
 
-  it('does not treat its own delivered write as external', () => {
+  it('does not treat its own delivered writes as external, however many land', () => {
     mount('/');
-    fireEvent.click(screen.getByText('two writes'));
-    fireEvent.click(screen.getByText('two writes'));
-    expect(screen.getByTestId('q')).toHaveTextContent('tree|code');
-    expect(location.search).toBe('?q=tree&view=code');
+    for (let i = 0; i < 5; i += 1) fireEvent.click(screen.getByText('round trip'));
+    expect(screen.getByTestId('q')).toHaveTextContent('a|');
+    expect(location.search).toBe('?q=a');
+  });
+
+  it('adopts an external navigation even when it matches an earlier write of its own', () => {
+    // The review's sequence: at ?q=a, write q=b then q=a in one tick, then navigate
+    // elsewhere to ?q=b. String equality mistook that navigation for the stale own write.
+    mount('/?q=a');
+    fireEvent.click(screen.getByText('round trip'));
+    expect(screen.getByTestId('q')).toHaveTextContent('a|');
+    act(() => navigateRef('/?q=b'));
+    expect(new URLSearchParams(location.search).get('q')).toBe('b');
+    expect(screen.getByTestId('q')).toHaveTextContent('b|');
   });
 });

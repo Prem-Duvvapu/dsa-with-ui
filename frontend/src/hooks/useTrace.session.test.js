@@ -178,6 +178,39 @@ describe('useTrace run identity', () => {
     expect(result.current.pending).toBe(false);
   });
 
+  it('never hands a newly requested problem the previous problem\'s run, even for one render', async () => {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url === '/api/problems/b/execute') return new Promise(() => {});
+      if (url.endsWith('/execute')) return Promise.resolve(ok(traceFor('a', { n: 1 })));
+      return Promise.resolve(ok({ id: url.split('/').pop() }));
+    }));
+    const seen = [];
+    const { result, rerender } = renderHook(({ id }) => {
+      const value = useTrace(id, null);
+      seen.push({ id, first: value.steps[0]?.description ?? null, echo: value.resolvedInput, loading: value.loading });
+      return value;
+    }, { initialProps: { id: 'a' } });
+    await waitFor(() => expect(result.current.steps).toHaveLength(2));
+
+    rerender({ id: 'b' });
+    const forB = seen.filter((r) => r.id === 'b');
+    expect(forB.every((r) => r.first === null && r.echo === null)).toBe(true);
+    expect(forB.every((r) => r.loading)).toBe(true);
+  });
+
+  it('abandons an in-flight run when it unmounts, so its continuation reports superseded', async () => {
+    let release;
+    stub(() => new Promise((resolve) => { release = () => resolve(ok(traceFor('late', { n: 3 }))); }));
+    const { result, unmount } = await loaded();
+    let pending;
+    act(() => { pending = result.current.runInput({ n: 3 }); });
+    const signal = fetch.mock.calls.at(-1)[1].signal;
+    unmount();
+    expect(signal.aborted).toBe(true);
+    release();
+    await expect(pending).resolves.toMatchObject({ ok: false, kind: 'superseded' });
+  });
+
   it('pauses when the tab is hidden and does not resume by itself', async () => {
     const { result } = await loaded();
     act(() => result.current.play());
