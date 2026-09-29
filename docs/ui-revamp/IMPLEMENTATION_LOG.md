@@ -50,3 +50,33 @@ These features are already implemented upstream; they are not new scope or optio
 - Real-backend browser checks: light/dark at 320, 390, 768, 1366 and 1440px; no horizontal page overflow or page errors. Load-more to 100, search, open and Back preserved query state. Browser artifacts are local in `/tmp/dsa-ui-review` (not permanent release assets).
 - Visual review shortened the hero: first result moved from y840 to y703 at 1366×768. Small-screen filters still require scrolling; further mobile refinement belongs to the responsive pass.
 - R1 catalogue/library work is implemented and awaiting PR checks/merge; comprehensive accessibility and renderer coverage remain pending.
+
+## 2026-09-29 — P0 baseline and reference design
+
+```text
+Package / status: P0 — review (docs-only PR)
+Base commit / branch / PR / merge commit: 82f2808 / docs/ui-revamp-p0-baseline / (this PR) / —
+Learner outcome and exact behavior changed: none. No product code changes. Adds the authoritative
+  handoff and tracker, records the fresh baseline, and adds REFERENCE_DESIGN.md with decisions D1–D10.
+F-IDs and renderer/input cases covered: F01–F35 each have an owner package and destination in
+  REVAMP_TRACKER.md; 17 registry keys and 7 input types have representatives chosen from the live
+  catalogue.
+Automated commands, results and failure investigation:
+  npx vitest run  → 62 files / 472 tests passed (51s in the Linux worktree; 10m23s on /mnt/c, same result)
+  npx vite build  → JS 347.59 kB (108.38 kB gzip), CSS 89.92 kB (16.17 kB gzip)
+  mvn -B test     → 7,784 run, 0 failures, 0 errors, 511 skipped
+  GET /api/problems/stats → 431 catalogued / 431 traced / 0 untraced / no duplicates / no orphans
+Browser, viewport, theme, real backend vs fixture: Chromium (Playwright 1.63.0), 390×844 and 1366×768,
+  light and dark, real Spring backend on 8923 and Vite on 5180.
+Screenshots/artifacts and measurements: docs/ui-revamp/evidence/p0/*.jpg (6 of the 16 captures) and
+  measurements.json. The library search is at y491 (1366) and y549 (390), against targets of ≤360 and
+  ≤320. The desktop stage is 705×223 (Array) and 705×359 (Graph). There is no horizontal overflow and
+  no console errors.
+  A probe confirmed B1–B4: an unknown id redirects to Two Sum; the custom-run echo is stale; the draft
+  is lost when the editor remounts; a rejected input is written into the URL.
+Known limitations / blocked checks: the reference layouts are annotated wireframes, not code
+  prototypes (the first real slice is P3). No second browser engine has been checked. Nothing about
+  accessibility has been verified yet.
+Rollback boundary: revert this docs-only commit.
+Next unblocked package: P1 session/input/sharing correctness.
+```
