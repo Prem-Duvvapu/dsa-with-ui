@@ -125,3 +125,53 @@ Known limitations / blocked checks: the old fixed-height shell still squeezes th
 Rollback boundary: revert the P1 squash commit; no storage keys or API contracts changed.
 Next unblocked package: P2 foundations and library refinement.
 ```
+
+## 2026-09-29 — P2 foundations and library refinement
+
+```text
+Package / status: P2 — review
+Base commit / branch / PR / merge commit: 748b489 / feat/ui-revamp-p2-library / (this PR) / —
+Learner outcome and exact behavior changed:
+  - The library opens on a single heading and one sentence, then the progress line, which carries a
+    visible "Continue: <title>" link when a last-visited problem exists. After that come the "Your
+    learning" disclosure (with an explicit ▸ glyph) and the search. The illustration and the duplicate
+    "Browse" jump are gone.
+  - Phones: the search, the "Filters (N)" disclosure and the result count are visible without
+    scrolling; the disclosure holds the same controls as desktop. Active filters show on every width
+    as removable chips.
+  - Scoped clearing: "Clear filters" keeps the query, the × clears only the search, and the empty
+    state offers "Clear search and filters".
+  - Load more announces "Showing X of Y" (role=status). When it removes itself, focus lands on the
+    first new row instead of <body>.
+  - Catalogue states: an offline sample says it is a sample ("browsing only"); a failed refresh of a
+    live list keeps the list and says so; retry refetches only /api/problems.
+  - Fixed: typing quickly into the search dropped characters ("binary search tree" became q=e).
+    Cause: router navigations render in transitions, and URL state was being read during render.
+    The new useLatestSearchParams keeps a synchronous copy and adopts only committed external
+    navigation. useShareableView uses the same hook.
+  - Foundations: spacing, width, type, target and focus tokens, plus the owner concept's chrome
+    palette (paper, cards, forest-green accent) in all three theme declarations. Dashboard.module.css
+    is deleted (no consumer).
+  - The owner's playground-concept.png is committed and recorded in REFERENCE_DESIGN.md as the P3/P4
+    visual target, with honesty adaptations.
+F-IDs and renderer/input cases covered: F01, F02 (library), F03, F04, F07, F25 (tokens), F26, F27.
+Automated commands, results and failure investigation:
+  RED first: of the 14 new library/provider cases, 8 failed on 748b489 (chips, scoped clear,
+  disclosure, load-more focus, Continue link, sample label, retained live list, source label). The
+  other 6 guard behaviour that was already correct and are recorded as coverage, not as fixes.
+  The palette guard failed on the first dark accent (too close to --settled); the accent was adjusted.
+  npx vitest run → 65 files / 524 tests passed.
+  npx vite build → JS 356.01 kB (111.39 kB gzip, +2.8% vs P0), CSS 93.22 kB.
+Browser, viewport, theme, real backend vs fixture: Chromium 1.63 at 320×568, 390×844, 768×1024,
+  1366×768 and 1440×900, light and dark, real backend.
+Screenshots/artifacts and measurements: evidence/p2/*.jpg. Search top is y280 at 1366 (gate ≤360;
+  P0 was y491) and y287 at 390 (gate ≤320; P0 was y549). The first result row (456–534) is fully
+  visible at 1366×768. No horizontal overflow and 0 errors in any capture. The P1 session probe was
+  re-run on the new adapter and passes.
+Known limitations / blocked checks: no second browser engine; no screen-reader pass. The typing race
+  cannot be reproduced in jsdom (act() flushes transitions), so the browser probe is the evidence and
+  the unit tests cover the merge/adopt contract. The workspace (App) has not been restyled yet; it
+  picks up the new page tokens only where it already used them.
+Rollback boundary: revert the P2 squash commit; storage keys unchanged.
+Next unblocked package: P3 session-backed shell and Playground reference slice, to playground-concept.png.
+```

@@ -342,6 +342,46 @@ describe('design tokens', () => {
     }
   });
 
+  it('defines the concept chrome palette in every theme, and keeps it legible', () => {
+    // docs/ui-revamp/playground-concept.png: paper page, plain cards, one forest-green
+    // accent. A chrome colour defined in only one declaration renders one theme's ground
+    // under the other's ink, so each must exist in all three and change with the theme.
+    const CHROME = ['--surface-page', '--surface-panel', '--surface-recessed', '--rule-subtle',
+      '--rule-strong', '--accent', '--accent-hover', '--accent-ink', '--accent-line',
+      '--accent-soft', '--accent-soft-ink'];
+    const base = baseBlock();
+    const media = rawTokens(lightMediaBlock());
+    const stamped = rawTokens(lightStampedBlock());
+    for (const key of CHROME) {
+      expect(base[key], `${key} missing from :root`).toBeTruthy();
+      expect(media[key], `${key} differs between the light declarations`).toBe(stamped[key]);
+      expect(base[key], `${key} does not change with the theme`).not.toBe(stamped[key]);
+    }
+
+    const themes = {
+      dark: resolveTheme(base),
+      light: resolveTheme({ ...base, ...stamped })
+    };
+    const failures = [];
+    for (const [name, t] of Object.entries(themes)) {
+      const pairs = [
+        ['--accent-ink', '--accent'], ['--accent-soft-ink', '--accent-soft'],
+        ['--bench-ink', '--surface-page'], ['--bench-ink-secondary', '--surface-page'],
+        ['--bench-ink', '--surface-panel'], ['--bench-ink-secondary', '--surface-panel'],
+        ['--accent-line', '--surface-panel']
+      ];
+      for (const [ink, ground] of pairs) {
+        const ratio = contrast(t[ink], t[ground]);
+        if (ratio < 4.5) failures.push(`${name}: ${ink} on ${ground} is ${ratio.toFixed(2)}:1`);
+      }
+      // The chrome accent must not be mistakable for "resolved": clearly separated in
+      // lightness from --settled.
+      const gap = Math.abs(luminance(t['--accent']) - luminance(t['--settled']));
+      if (gap < 0.08) failures.push(`${name}: --accent is too close to --settled (Δluminance ${gap.toFixed(3)})`);
+    }
+    expect(failures).toEqual([]);
+  });
+
   it('keeps a third hue out of the chrome', () => {
     // Bench has two semantic hues - the amber probe and the green settled - and spends
     // them on algorithm state. A violet accent had spread through the chrome (header

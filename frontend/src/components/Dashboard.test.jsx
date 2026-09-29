@@ -58,8 +58,11 @@ describe('Dashboard', () => {
   });
 
   it('always offers a way into the full problem browser', async () => {
+    // The search and the full result list are on the landing page itself now, so there is
+    // no separate "Browse" jump to offer - the browser is what the visitor lands on.
     await renderDashboard();
-    await waitFor(() => expect(screen.getByRole('button', { name: /browse/i })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByRole('link', { name: /Two Sum/ })).toBeInTheDocument());
+    expect(screen.getByRole('textbox', { name: 'Search algorithms' })).toBeInTheDocument();
   });
 
   it('shows an error with a retry when the catalogue cannot be reached', async () => {
