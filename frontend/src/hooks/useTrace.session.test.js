@@ -178,6 +178,20 @@ describe('useTrace run identity', () => {
     expect(result.current.pending).toBe(false);
   });
 
+  it('pauses when the tab is hidden and does not resume by itself', async () => {
+    const { result } = await loaded();
+    act(() => result.current.play());
+    expect(result.current.isPlaying).toBe(true);
+
+    const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(true);
+    act(() => { document.dispatchEvent(new Event('visibilitychange')); });
+    expect(result.current.isPlaying).toBe(false);
+
+    hidden.mockReturnValue(false);
+    act(() => { document.dispatchEvent(new Event('visibilitychange')); });
+    expect(result.current.isPlaying).toBe(false);
+  });
+
   it('reports an unknown id as not found rather than as a network failure', async () => {
     vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) })));
     const { result } = renderHook(() => useTrace('no-such-problem', null));
