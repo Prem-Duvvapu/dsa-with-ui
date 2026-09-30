@@ -24,24 +24,27 @@ export default function useKeyboardShortcuts({
 // but were written down only in two button tooltips, which is not discoverable.
 useEffect(() => {
   const handleKeyDown = (e) => {
+    // Ownership, in order (INDEPENDENT_REVIEW_DB8683B.md S2): a control that already handled
+    // the key owns it - modifier chords included; an open modal dialog owns every key but its
+    // own Escape and `?`; a focused source pane, separator or tab list owns its navigation
+    // keys (see below). The player acts only on what nobody else claimed.
+    if (e.defaultPrevented) return;
+    const dialogOpen = Boolean(document.querySelector('[role="dialog"][aria-modal="true"]'));
+
     // Cmd/Ctrl+K is the one modifier combo this app binds - every other modifier chord is
     // left to the browser - so it is checked before the blanket modifier bail below rather
-    // than folded into the no-modifier switch further down.
+    // than folded into the no-modifier switch further down. It never stacks a second dialog.
     if (e.metaKey || e.ctrlKey || e.altKey) {
-      if ((e.metaKey || e.ctrlKey) && !e.altKey && e.key.toLowerCase() === 'k') {
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && e.key.toLowerCase() === 'k' && !dialogOpen) {
         e.preventDefault();
         setIsPaletteOpen(true);
       }
       return;
     }
 
-    // A control that already handled the key owns it: a tab list moving focus with the
-    // arrows must not also step the trace, and a dialog's own keys must not leak through.
-    if (e.defaultPrevented) return;
-
     const active = document.activeElement;
     const tag = active?.tagName;
-    const inComposite = Boolean(active?.closest?.('[role="tablist"], [role="listbox"], [role="menu"], [role="slider"]'));
+    const inComposite = Boolean(active?.closest?.('[role="tablist"], [role="listbox"], [role="menu"], [role="slider"], [role="separator"]'));
     const isTyping = ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag) || active?.isContentEditable;
 
     // Escape works even while typing - someone in the search field is exactly who needs
@@ -68,6 +71,15 @@ useEffect(() => {
         return;
       }
       if (isTyping) active.blur();
+      return;
+    }
+
+    // Behind an open dialog the trace does not move; `?` still closes the shortcut list.
+    if (dialogOpen) {
+      if (e.key === '?' && isHelpOpen) {
+        e.preventDefault();
+        setIsHelpOpen(false);
+      }
       return;
     }
 

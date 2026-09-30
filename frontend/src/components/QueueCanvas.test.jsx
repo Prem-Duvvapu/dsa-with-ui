@@ -94,4 +94,10 @@ describe('QueueCanvas', () => {
       expect(screen.getByText('empty')).toBeInTheDocument();
     });
   });
+
+  it('makes no front claim for a container whose ordering is unknown', () => {
+    render(<QueueCanvas step={{ queueOrStackState: ['a', 'b'] }} title="Container" ordered={false} />);
+    expect(screen.getByLabelText('Container')).toBeInTheDocument();
+    expect(screen.queryByText('front')).not.toBeInTheDocument();
+  });
 });

@@ -28,7 +28,7 @@ function specFieldsOf(values, inputSpec) {
 export default function useProblemSession({ problemId, catalogEntry, initialSpeed }) {
   const trace = useTrace(problemId, catalogEntry, { initialSpeed });
   const {
-    run, steps, settled, runInput, seek, rerunFailure, currentStepIndex
+    run, steps, settled, runInput, seek, rerunFailure, currentStepIndex, retireSubmission
   } = trace;
 
   // The detail is keyed to its problem inside useTrace, so this merge cannot pair a new
@@ -49,6 +49,8 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
   /** The one restoration in progress; replaced (not mutated) so each has an identity. */
   const pendingRestore = useRef(null);
   const restoreSeq = useRef(0);
+  /** Bumped on every external navigation; a submission only shares for the one it began in. */
+  const navigationSeq = useRef(0);
   const mounted = useRef(true);
   useEffect(() => {
     mounted.current = true;
@@ -70,11 +72,17 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
     totalSteps: ownRun ? steps.length : 0,
     mirror: !restoring,
     onRestore: (view) => {
+      navigationSeq.current += 1;
+      // A same-page navigation is a new identity for the session: whatever the old URL
+      // started must not land on it (INDEPENDENT_REVIEW_DB8683B.md B1).
+      if (view.samePage) retireSubmission();
       // A same-page link without input, while a custom run is on screen, describes the
       // default run - so the default has to run again, not the custom one be kept.
       const resetToDefault = view.samePage && view.input.status === 'absent'
         && runRef.current.problemId === problemId && runRef.current.submittedInput !== null;
-      const needed = view.step !== null || view.input.status !== 'absent' || resetToDefault;
+      // Every same-page navigation is restored, even one with nothing but a step (or no
+      // step at all): its step is applied explicitly rather than left from the old URL.
+      const needed = view.samePage || view.step !== null || view.input.status !== 'absent' || resetToDefault;
       pendingRestore.current = needed
         ? { id: ++restoreSeq.current, problemId, ...view, resetToDefault, started: false }
         : null;
@@ -113,35 +121,40 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       const notices = [];
       let total = runRef.current.problemId === pending.problemId ? runRef.current.steps.length : 0;
       let honoured = true;
+      // When a link cannot be honoured, whatever was on screen stays on screen. If that is a
+      // custom run, saying "showing the default input" - and dropping `input` from the link -
+      // would contradict it (B2): the link is pointed back at the run actually displayed.
+      const refuse = (reason) => {
+        honoured = false;
+        const shown = runRef.current;
+        const keptCustom = shown.problemId === pending.problemId && shown.submittedInput !== null;
+        shareInput(keptCustom ? shown.submittedInput : null);
+        notices.push({ kind: 'input', reason, kept: keptCustom });
+      };
 
       if (pending.input.status === 'invalid') {
-        honoured = false;
-        shareInput(null);
-        notices.push({ kind: 'input', reason: 'unreadable' });
+        refuse('unreadable');
       } else if (pending.input.status === 'valid' || pending.resetToDefault) {
         const values = pending.input.status === 'valid' ? pending.input.value : defaultsRef.current;
         const outcome = await runInput(values ?? {});
         if (!alive()) return;
-        if (outcome.ok) {
-          total = outcome.run.steps.length;
-        } else {
-          honoured = false;
-          if (pending.input.status === 'valid') shareInput(null);
-          notices.push({ kind: 'input', reason: outcome.kind });
-        }
+        if (outcome.ok) total = outcome.run.steps.length;
+        else refuse(outcome.kind);
       }
 
-      if (pending.step !== null) {
-        if (!honoured) {
-          dropStep();
-          notices.push({ kind: 'step-dropped', requested: pending.step + 1 });
-        } else if (total === 0) {
-          notices.push({ kind: 'step-no-run', requested: pending.step + 1 });
-        } else if (pending.step < total) {
-          seek(pending.step);
-        } else {
-          notices.push({ kind: 'step', requested: pending.step + 1, total });
-        }
+      // The step, decided for every restoration: the requested one when it exists in the run
+      // on screen, otherwise step 1 - applied explicitly, never inherited from the old URL.
+      if (pending.step !== null && !honoured) {
+        dropStep();
+        seek(0);
+        notices.push({ kind: 'step-dropped', requested: pending.step + 1 });
+      } else if (pending.step !== null && total === 0) {
+        notices.push({ kind: 'step-no-run', requested: pending.step + 1 });
+      } else if (pending.step !== null && pending.step < total) {
+        seek(pending.step);
+      } else {
+        seek(0);
+        if (pending.step !== null) notices.push({ kind: 'step', requested: pending.step + 1, total });
       }
 
       pendingRestore.current = null;
@@ -163,8 +176,9 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       setRestoring(false);
     }
     const forProblem = problemIdRef.current;
+    const forNavigation = navigationSeq.current;
     const outcome = await runInput(values);
-    if (!mounted.current || problemIdRef.current !== forProblem) return outcome;
+    if (!mounted.current || problemIdRef.current !== forProblem || navigationSeq.current !== forNavigation) return outcome;
     if (outcome.ok) {
       setShareNote(shareInput(outcome.run.submittedInput) ? null : 'too-long');
       setLinkNotices([]);

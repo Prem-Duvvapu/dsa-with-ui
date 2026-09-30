@@ -110,11 +110,10 @@ export default function ProblemWorkspace() {
   const [hasSeenWelcome, setHasSeenWelcome] = usePersistentState('seenWelcome', false, (v) => typeof v === 'boolean');
   // Presentation state that belongs to this problem's session: where the reader left the
   // source, and which Code subview they chose on a narrow screen. A new problem starts fresh.
-  const sourceScroll = useRef({ top: 0, following: true });
+  const sourceScroll = useRef(null);
   const [codeSubview, setCodeSubview] = useState('source');
   useEffect(() => {
     setIsCompareOpen(false);
-    sourceScroll.current = { top: 0, following: true };
   }, [problemId]);
 
   // The tour spotlights regions of the Playground; on a phone most of them are off screen at
@@ -480,9 +479,9 @@ export default function ProblemWorkspace() {
               {notices}
               <CodeWalkthrough
                 diagram={stageNode}
-                source={<SourcePane problem={problem} currentStep={currentStep} anchors={anchors} steps={steps} scrollMemory={sourceScroll} />}
+                source={<SourcePane key={problemId} problemId={problemId} problem={problem} currentStep={currentStep} anchors={anchors} steps={steps} scrollMemory={sourceScroll} />}
                 subview={codeSubview}
-                onSubview={setCodeSubview}
+                onSubview={(next) => { pause(); setCodeSubview(next); }}
               />
               {narration}
               <PlaybackBar session={session} onSpeedChange={changeSpeed} />

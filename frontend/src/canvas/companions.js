@@ -32,8 +32,12 @@ export function getCompanions(heroDsType, step, allSteps) {
   // Array: lru-page-replacement walks a page reference string - the array - while the
   // recency queue it maintains is the thing the algorithm is actually about, emitted on 13
   // of its 16 steps and, before this, drawn nowhere.
+  // Titled neutrally and drawn without a "front": StepEmitter writes queueOrStackState from
+  // both .queue() and .stack(), and these heroes use either - flood-fill (Matrix) and
+  // lru-page-replacement (Array) carry a stack. Calling it a queue taught FIFO for LIFO
+  // (INDEPENDENT_REVIEW_DB8683B.md B3). Precise labels need the backend to say which.
   if ((heroDsType === 'Graph' || heroDsType === 'Matrix' || heroDsType === 'Array') && runHasQueue) {
-    companions.push({ key: 'queue', Component: QueueCanvas, props: { step, title: 'Queue' } });
+    companions.push({ key: 'queue', Component: QueueCanvas, props: { step, title: 'Container', ordered: false } });
   }
 
   const runHasGrid = Array.isArray(allSteps)
