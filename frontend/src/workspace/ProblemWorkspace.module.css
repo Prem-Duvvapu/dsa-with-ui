@@ -1,0 +1,150 @@
+/* The problem workspace, to docs/ui-revamp/playground-concept.png: paper page, plain cards,
+   one forest-green accent, and the page itself scrolling. Only the view rail is sticky. */
+
+.width { width: min(var(--width-workspace), calc(100% - 2 * var(--gutter))); margin-inline: auto; }
+
+/* Header navigation (inside LearningHeader) */
+.headerNav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.headerLink { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target-min); padding: 0 12px; border: 0; border-radius: var(--radius-control); background: transparent; color: var(--ink-strong); font: inherit; font-size: var(--type-control); text-decoration: none; cursor: pointer; }
+.headerLink:hover { background: var(--bench-fill); }
+/* Phone menu: hidden on wider screens, where the inline navigation shows instead. */
+.headerMenu { display: none; position: relative; }
+.headerMenu summary { list-style: none; border: 1px solid var(--control-border); }
+.headerMenu summary::-webkit-details-marker { display: none; }
+.headerMenuList { position: absolute; right: 0; top: calc(100% + 6px); z-index: 40; display: grid; min-width: 220px; padding: 6px; background: var(--surface-panel); border: 1px solid var(--rule-strong); border-radius: 10px; box-shadow: 0 12px 32px rgba(0, 0, 0, .18); }
+.headerMenuList .headerLink { justify-content: flex-start; }
+.kbd { font: 11px var(--font-code); color: var(--ink-secondary); border: 1px solid var(--rule-strong); border-radius: 4px; padding: 1px 5px; }
+
+/* Context */
+.context { padding: var(--space-lg) 0 var(--space-md); }
+.breadcrumb { font-size: var(--type-meta); color: var(--ink-secondary); margin-bottom: 2px; }
+.breadcrumb a { color: inherit; }
+.titleRow { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.title { font-size: var(--type-title); line-height: var(--leading-tight); letter-spacing: -.03em; font-weight: 680; overflow-wrap: anywhere; }
+.titleMeta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.difficulty { font-size: var(--type-meta); font-weight: 600; border: 1px solid var(--control-border); border-radius: 999px; padding: 3px 12px; color: var(--ink-strong); }
+.star { width: var(--target-min); height: var(--target-min); display: grid; place-items: center; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-secondary); cursor: pointer; }
+.star[aria-pressed="true"] { color: var(--ink-strong); }
+.summary { margin-top: 4px; color: var(--ink-secondary); }
+.contextRow { display: flex; align-items: flex-start; gap: 12px; margin-top: var(--space-md); }
+.statement { flex: 1 1 auto; min-width: 0; border: 1px solid var(--rule-subtle); border-radius: 10px; background: var(--surface-panel); }
+.statement summary { min-height: var(--target-min); display: flex; align-items: center; gap: 10px; padding: 0 16px; font-weight: 650; cursor: pointer; list-style: none; }
+.statement summary::-webkit-details-marker { display: none; }
+.statement summary::before { content: '▸'; color: var(--ink-secondary); transition: transform var(--motion-fast) var(--ease-standard); }
+.statement[open] summary::before { transform: rotate(90deg); }
+.statementBody { padding: 0 16px 16px 36px; max-width: calc(var(--width-reading) + 36px); display: grid; gap: 10px; }
+.constraintsLabel { font-size: var(--type-meta); font-weight: 650; }
+.constraintsLabel span { font-weight: 400; color: var(--ink-secondary); }
+.constraints { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.constraints li { font: 13px var(--font-code); border: 1px solid var(--rule-subtle); border-radius: 6px; padding: 3px 8px; background: var(--surface-recessed); }
+.curriculum { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* View rail */
+.rail { position: sticky; top: 0; z-index: 20; background: var(--surface-page); border-bottom: 1px solid var(--rule-subtle); }
+.railInner { width: min(var(--width-workspace), calc(100% - 2 * var(--gutter))); margin-inline: auto; display: flex; gap: 8px; overflow-x: auto; }
+.tab { min-height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--nav-idle-ink); font: inherit; font-size: var(--type-control); font-weight: 600; white-space: nowrap; cursor: pointer; }
+.tab:hover { color: var(--ink-strong); }
+.tab[aria-selected="true"] { color: var(--ink-strong); border-bottom-color: var(--accent-line); }
+
+/* Panels and cards */
+.panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); padding: var(--space-lg) 0 var(--space-4xl); }
+main[role="tabpanel"]:focus { outline: none; }
+.card { background: var(--surface-panel); border: 1px solid var(--rule-subtle); border-radius: 12px; padding: var(--space-xl) var(--space-2xl); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-md); min-width: 0; scroll-margin-top: 64px; }
+.cardHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.cardTitle { font-size: var(--type-heading); letter-spacing: -.02em; font-weight: 680; scroll-margin-top: 72px; }
+.cardTitle:focus { outline: none; }
+.cardTitle:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.cardActions { display: flex; gap: 8px; flex-wrap: wrap; }
+.hint { color: var(--ink-secondary); margin-top: -8px; }
+
+/* Controls shared by the workspace */
+.control { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--target-min); padding: 0 14px; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-strong); font: inherit; font-size: var(--type-control); font-weight: 600; cursor: pointer; white-space: nowrap; }
+.control:hover:not(:disabled) { background: var(--bench-fill); }
+.control:disabled { opacity: .45; cursor: not-allowed; }
+.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); min-width: 104px; }
+.primary:hover:not(:disabled) { background: var(--accent-hover); }
+.quiet { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target-min); padding: 0 10px; border: 0; background: transparent; color: var(--ink-strong); font: inherit; font-size: var(--type-control); font-weight: 600; cursor: pointer; border-radius: var(--radius-control); }
+.quiet:hover { background: var(--bench-fill); }
+.meta { font-size: var(--type-meta); color: var(--ink-secondary); }
+.badge { font: 600 12px var(--font-code); border: 1px dashed var(--control-border); border-radius: 999px; padding: 3px 10px; color: var(--ink-strong); }
+.spacer { flex: 1; }
+.width :is(button, a, input, select, summary, [tabindex]):focus-visible,
+.rail :is(button):focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+
+/* Status */
+.notice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 14px; border: 1px solid var(--rule-subtle); border-left: 3px solid var(--probe); border-radius: 8px; background: var(--surface-recessed); font-size: var(--type-control); }
+.notice > span { flex: 1 1 280px; }
+.pending { display: flex; align-items: center; gap: 8px; color: var(--ink-secondary); font-size: var(--type-meta); }
+.stageState { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 200px; padding: 24px; color: var(--ink-secondary); text-align: center; }
+
+/* The stage: room by diagram family (REFERENCE_DESIGN.md D5), never leftover space */
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }
+.stage :global(.shell) { background: var(--surface-panel); border: 1px solid var(--rule-subtle); border-radius: 10px; grid-template-columns: minmax(0, 1fr); min-width: 0; }
+/* The frame is a grid, and a grid column otherwise grows to its widest child (an SVG, the
+   legend); pinning it to the available width keeps wide diagrams scrolling inside the
+   stage instead of pushing the whole page sideways. */
+.stage :global(.shell-stage) { min-width: 0; grid-template-columns: minmax(0, 1fr); }
+.stage :global(.shell-stage svg) { max-width: 100%; }
+.stage :global(.shell-title) { display: none; }
+.stage :global(.shell-meta) { display: none; }
+.stage :global(.shell-stage) { min-height: 360px; }
+.stage[data-family="spatial"] :global(.shell-stage) { min-height: 440px; }
+
+.narration { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; display: grid; gap: 4px; }
+.narrationLabel { font: 600 12px var(--font-code); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft-ink); }
+.narrationLabel span { letter-spacing: .02em; text-transform: none; }
+.narrationText { font-size: 1.0625rem; font-weight: 600; line-height: 1.5; color: var(--ink-strong); max-width: 80ch; }
+
+.playback { display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; }
+.transport { display: flex; gap: 8px; flex-wrap: wrap; }
+.seek { flex: 1 1 200px; min-width: 160px; accent-color: var(--accent-line); height: var(--target-min); }
+.speed { display: inline-flex; align-items: center; gap: 8px; font-size: var(--type-control); color: var(--ink-secondary); }
+.speed select { min-height: var(--target-min); padding: 0 10px; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-strong); font: inherit; }
+.playbackCompact .seek { flex-basis: 160px; }
+
+.inputUsed { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; padding: 0 4px; font-size: var(--type-meta); color: var(--ink-secondary); }
+
+/* History and comparison */
+.historyRow { display: flex; align-items: flex-start; gap: 12px; }
+.history { flex: 1 1 auto; min-width: 0; border: 1px solid var(--rule-subtle); border-radius: 12px; background: var(--surface-panel); }
+.history summary { min-height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 18px; font-weight: 650; cursor: pointer; list-style: none; }
+.history summary::-webkit-details-marker { display: none; }
+.history summary::before { content: '▸'; color: var(--ink-secondary); transition: transform var(--motion-fast) var(--ease-standard); }
+.history[open] summary::before { transform: rotate(90deg); }
+.history summary span { font-weight: 400; font-size: var(--type-meta); color: var(--ink-secondary); }
+.history[open] { padding-bottom: 16px; }
+.history > :not(summary) { margin: 0 16px; }
+
+/* Code and analysis views */
+.source { min-height: 360px; display: grid; }
+.source :global(.glass-panel) { background: var(--surface-panel); }
+.analysis { display: grid; }
+
+.notFound { width: min(640px, calc(100% - 2 * var(--gutter))); margin: 12vh auto; display: grid; gap: 16px; justify-items: start; }
+.notFound h1 { font-size: var(--type-title); line-height: var(--leading-tight); }
+.notFound p { color: var(--ink-secondary); }
+
+@media (max-width: 900px) {
+  .contextRow { flex-direction: column; align-items: stretch; }
+  .curriculum { justify-content: flex-start; }
+}
+@media (max-width: 640px) {
+  .headerNav { display: none; }
+  .headerMenu { display: block; }
+  .summary { display: none; }
+  .tab { padding: 0 10px; }
+  .stage :global(.stage-with-companions) { flex-direction: column; }
+  .stage :global(.companion-pane) { flex: 0 0 auto; }
+  .context { padding-top: var(--space-md); }
+  .card { padding: var(--space-lg); border-radius: 10px; }
+  .panel { padding-top: var(--space-lg); gap: var(--space-md); }
+  .stage :global(.shell-stage) { min-height: 300px; }
+  .stage[data-family="spatial"] :global(.shell-stage) { min-height: 340px; }
+  .stage :global(.shell-legend) { flex-wrap: wrap; margin-left: 0; }
+  .transport { width: 100%; }
+  .transport .control { flex: 1 1 auto; padding: 0 10px; }
+  .kbd { display: none; }
+  .historyRow { flex-direction: column; align-items: stretch; }
+  .curriculum { display: grid; grid-template-columns: 1fr 1fr; }
+  .curriculum .meta { grid-column: 1 / -1; }
+}

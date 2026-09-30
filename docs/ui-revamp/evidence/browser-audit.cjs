@@ -33,6 +33,7 @@ const LABEL = args.label || 'audit';
 const SURFACES = (args.surfaces || 'library,array,graph,dp2d').split(',');
 const VIEWPORTS = (args.viewports || '390x844,1366x768').split(',');
 const THEMES = (args.themes || 'light,dark').split(',');
+const WORKSPACE = args.workspace || null; // 'next' opts into the flagged workspace
 
 const PATHS = {
   library: '/',
@@ -60,7 +61,8 @@ async function measure(page) {
       search: box('input[aria-label="Search algorithms"]'),
       filtersToggle: box('[data-audit="filters-toggle"]'),
       firstResult: firstRowBox ? { top: Math.round(firstRowBox.top), bottom: Math.round(firstRowBox.bottom) } : null,
-      stage: box('[data-audit="stage"]') || box('.shell-stage'),
+      stage: box('[data-audit="stage"] .shell-stage') || box('.shell-stage'),
+      card: box('[data-audit="stage"]'),
       canvasRegion: box('[data-tour="canvas"]'),
       controls: box('[data-tour="controls"]'),
       narration: box('[role="status"][aria-live="polite"]'),
@@ -80,12 +82,13 @@ async function measure(page) {
     const [width, height] = viewport.split('x').map(Number);
     for (const theme of THEMES) {
       const context = await browser.newContext({ viewport: { width, height }, colorScheme: theme === 'dark' ? 'dark' : 'light' });
-      await context.addInitScript((chosen) => {
+      await context.addInitScript(({ chosen, workspace }) => {
         try {
           localStorage.setItem('dsa-ui:theme', JSON.stringify(chosen));
           localStorage.setItem('dsa-ui:seenWelcome', 'true');
+          if (workspace) localStorage.setItem('dsa-ui:workspace', JSON.stringify(workspace));
         } catch { /* storage denied */ }
-      }, theme);
+      }, { chosen: theme, workspace: WORKSPACE });
       for (const surface of SURFACES) {
         const page = await context.newPage();
         const errors = [];
@@ -107,7 +110,7 @@ async function measure(page) {
   for (const run of results.runs) {
     console.log([run.surface, run.viewport, run.theme,
       `search@${run.search?.top ?? '-'}`, `firstRow@${run.firstResult?.top ?? '-'}-${run.firstResult?.bottom ?? '-'}`,
-      `stage@${run.stage ? `${run.stage.top} ${run.stage.width}x${run.stage.height}` : '-'}`,
+      `card@${run.card?.top ?? '-'}`, `diagram@${run.stage ? `${run.stage.top} ${run.stage.width}x${run.stage.height}` : '-'}`,
       `overflowX=${run.horizontalOverflow}`, `errors=${run.errors.length}`].join('  '));
   }
 })().catch((error) => { console.error(error); process.exit(1); });

@@ -154,3 +154,19 @@
   border-radius: var(--radius-full);
   padding: 3px 9px;
 }
+
+/* --- workspace section variant (docs/ui-revamp/playground-concept.png) --- */
+.section { gap: 18px; height: auto; overflow: visible; }
+.section .fieldsContainer { overflow: visible; gap: 18px; }
+.section .fieldLabel { font-size: var(--type-control); font-weight: 650; text-transform: none; letter-spacing: 0; color: var(--ink-strong); }
+.section .fieldHelp { font-size: var(--type-meta); color: var(--ink-secondary); margin-bottom: 8px; }
+.section .fieldError { font-size: var(--type-meta); color: var(--ink-strong); border-left: 3px solid var(--probe); padding-left: 8px; }
+.section .actionBar { flex-wrap: wrap; gap: 10px; align-items: center; }
+.section .actionBar :global(.btn),
+.section .saveForm :global(.btn) { min-height: var(--target-min); padding: 0 16px; font-size: var(--type-control); gap: 8px; border-radius: var(--radius-control); }
+.section :global(.btn-outline) { border: 1px solid var(--control-border); background: var(--surface-panel); color: var(--ink-strong); }
+.section :global(.btn-primary) { border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); }
+.section :global(.btn-primary:hover:not(:disabled)) { background: var(--accent-hover); }
+.section :global(.ip-input) { min-height: var(--target-min); font-size: var(--type-body); border: 1px solid var(--control-border); background: var(--surface-panel); color: var(--ink-strong); border-radius: var(--radius-control); padding: 0 12px; }
+.section .draftChanged { font-size: var(--type-meta); padding: 6px 12px; }
+.section .presetLoad { min-height: 36px; }

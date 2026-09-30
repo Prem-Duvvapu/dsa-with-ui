@@ -213,3 +213,48 @@ Known limitations / blocked checks:
 Rollback boundary: revert this PR's squash commit, and/or #149's.
 Next unblocked package: P3.
 ```
+
+## 2026-09-30 — P3 session-backed workspace and Playground reference slice
+
+```text
+Package / status: P3 — review (behind the dsa-ui:workspace flag; the public page is unchanged)
+Base commit / branch / PR / merge commit: b9f114e / feat/ui-revamp-p3-workspace / (this PR) / —
+Learner outcome and exact behavior changed (flag on only):
+  - A new problem page built to playground-concept.png: header with All algorithms · Switch problem
+    (opens the existing palette) · Help · theme, and a labelled Menu on phones. Context: breadcrumb,
+    title, one-line summary (first sentence of the real description; hidden on phones), difficulty,
+    star, watched. "Problem & examples" holds the full statement and the original problem's
+    constraints, labelled apart from visualizer limits. Previous/Next follow the authored section.
+  - A sticky rail of manual-activation tabs (Playground / Code walkthrough / Analysis) with roving
+    tabindex. The view lives in ?view and pauses playback on change.
+  - Playground card: stage title by diagram family, Edit input (scrolls to and focuses the editor
+    heading), Show code; run/link/offline/truncated notices; stage sized by family (360/440px desktop,
+    300/340px phone); companions stack on phones; "Current step" narration panel; transport with
+    Restart / Previous / Play / Next, seek and Speed. Then "Input used" with Changes-not-run and Copy
+    link; the "Try your own input" card (InputPanel section variant: fields first, visible-text
+    actions); Execution history (capture strip, same exclusions) and Compare other case.
+  - Code walkthrough and Analysis are real panels reusing CodeViewer and MemoryComplexityCard, sharing
+    the same narration and transport. The split and the analysis layout are P4.
+  - Global player keys no longer act on keys a tab list or dialog already handled.
+F-IDs and renderer/input cases covered: F12, F14, F15 (Array, Graph, DpTable), F16 (queue), F17 (capture in
+  history), F18/F19/F20 (basic panels), F24 (views), F27, F28, F29, F32 (view param), F34 (help,
+  welcome, tour reused). INT, INT_ARRAY, STRING and GRAPH editors exercised in the journey.
+Automated commands, results and failure investigation:
+  npx vitest run → 68 files / 553 tests passed. 14 new workspace tests (flag gating, context,
+  titles, not-found, cross-view continuity with no extra execution, view link restore, tab keys
+  not stepping, tabpanel labelling, Edit input focus, run-success/rejection focus, visible-text
+  action names, spatial stage family, registry coverage of stage sizes, watched at the last step).
+  One full run failed an App.lifecycle case while the browser audit ran concurrently; it passed 3/3
+  in isolation and on a clean full rerun (load-related, as in RCA-053).
+  npx vite build → JS 378.57 kB (117.74 kB gzip, +5.0% vs P2; both shells ship until P4 retires the old one).
+Browser, viewport, theme, real backend vs fixture: Chromium 1.63, real backend, 320/390/1366, both themes.
+Screenshots/artifacts and measurements: evidence/p3/*.jpg; REVAMP_TRACKER.md P3 row.
+Known limitations / blocked checks:
+  - The stage starts at y389 at 1366×768 (target ~280), a documented exception kept for the owner's
+    hierarchy.
+  - Legends are still the generic five keys; WindowCanvas cells are still small. Both are P7.
+  - No Focus mode yet (P5); the tour still points at some old anchors (P5); no split view yet (P4).
+  - No second engine and no screen reader.
+Rollback boundary: revert the P3 squash commit, or clear the flag.
+Next unblocked package: P4 (Code split, Analysis layout, activation as the default route).
+```

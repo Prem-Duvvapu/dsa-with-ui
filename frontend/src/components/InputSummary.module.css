@@ -3,7 +3,10 @@
   align-items: center;
   gap: var(--space-sm);
   padding: 4px var(--space-md);
-  flex-shrink: 0;
+  /* Shrinks with its row: a long input (a graph's edge list) truncates with an ellipsis,
+     full value in its title, instead of pushing the page wider than a phone. */
+  flex: 0 1 auto;
+  max-width: 100%;
   min-width: 0;
 }
 
@@ -68,3 +71,9 @@
   color: var(--text-primary);
   border-color: var(--border-strong);
 }
+
+/* Workspace size: essential text at reading size (IMPLEMENTATION_HANDOFF.md §5), not microtype. */
+.comfortable { padding-inline: 0; gap: var(--space-md); }
+.comfortable .label { font-size: var(--type-meta); letter-spacing: 0; text-transform: none; color: var(--ink-secondary); font-weight: 600; }
+.comfortable .name { font-size: var(--type-meta); color: var(--ink-secondary); }
+.comfortable .value { font-size: var(--type-control); color: var(--ink-strong); max-width: 60ch; }
