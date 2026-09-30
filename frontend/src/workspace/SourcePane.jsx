@@ -12,21 +12,33 @@ const MANUAL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home
  * manual scroll - wheel, touch, or scrolling keys inside the pane - suspends it, and
  * "Return to active line" restores it. Programmatic scrolling never re-enables anything
  * and never moves focus or selection. The scroll position is handed back to the session
- * (`scrollMemory`) on unmount so leaving and re-entering the view keeps the reader's place.
+ * (`scrollMemory`, both axes, tagged with the problem) on unmount so leaving and re-entering
+ * the view keeps the reader's place.
  */
-export default function SourcePane({ problem, currentStep, anchors, steps, scrollMemory }) {
+export default function SourcePane({ problemId, problem, currentStep, anchors, steps, scrollMemory }) {
   const sourceRef = useRef(null);
-  const [following, setFollowing] = useState(scrollMemory.current.following ?? true);
+  // The memory belongs to one problem. The workspace keys this pane by problem too, so a new
+  // problem always starts following, at the top (INDEPENDENT_REVIEW_DB8683B.md S4).
+  const remembered = scrollMemory.current?.problemId === problemId ? scrollMemory.current : null;
+  const [following, setFollowing] = useState(remembered?.following ?? true);
   const activeLine = Number.isInteger(currentStep?.activeLine) ? currentStep.activeLine : null;
   const followingRef = useRef(following);
   followingRef.current = following;
 
-  // Restore where the reader was, once, before the first paint.
+  // Restore where the reader was - both axes - before the first paint; hand it back on unmount.
   useLayoutEffect(() => {
     const node = sourceRef.current;
-    if (node && Number.isFinite(scrollMemory.current.top)) node.scrollTop = scrollMemory.current.top;
+    if (node && remembered) {
+      node.scrollTop = remembered.top ?? 0;
+      node.scrollLeft = remembered.left ?? 0;
+    }
     return () => {
-      scrollMemory.current = { top: node?.scrollTop ?? 0, following: followingRef.current };
+      scrollMemory.current = {
+        problemId,
+        top: node?.scrollTop ?? 0,
+        left: node?.scrollLeft ?? 0,
+        following: followingRef.current
+      };
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -37,11 +49,17 @@ export default function SourcePane({ problem, currentStep, anchors, steps, scrol
     row?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
   }, [following, activeLine, currentStep]);
 
+  // The pane owns its scrolling keys: they scroll the source natively and stop there, so End
+  // or Space inside the code never also moves playback (review S2). They also end following.
   useEffect(() => {
     const node = sourceRef.current;
     if (!node) return undefined;
     const suspend = () => setFollowing(false);
-    const onKey = (event) => { if (MANUAL_KEYS.has(event.key)) suspend(); };
+    const onKey = (event) => {
+      if (!MANUAL_KEYS.has(event.key) || event.target !== node) return;
+      event.stopPropagation();
+      suspend();
+    };
     node.addEventListener('wheel', suspend, { passive: true });
     node.addEventListener('touchmove', suspend, { passive: true });
     node.addEventListener('keydown', onKey);

@@ -20,16 +20,22 @@ export const RUN_FAILURE_COPY = Object.freeze({
 
 /** What a shared link asked for that could not be honoured, in the learner's terms. */
 export function linkNoticeText(notice) {
+  // `kept`: the link could not be honoured and the previous CUSTOM run is still on screen, so
+  // the notice says so - and the link was pointed back at that run - rather than claiming
+  // the default input is shown.
+  const outcome = notice.kept
+    ? 'The previous run is still shown, and the link now points to it.'
+    : 'Showing the default input.';
   if (notice.kind === 'input' && notice.reason === 'unreadable') {
-    return 'The input in this link could not be read, so it was not run. Showing the default input.';
+    return `The input in this link could not be read, so it was not run. ${outcome}`;
   }
   if (notice.kind === 'step-no-run') {
     return `This link pointed to step ${notice.requested}, but there is no run to show it in.`;
   }
   if (notice.kind === 'input') {
     return notice.reason === 'invalid'
-      ? 'The input in this link could not be run: the server rejected it. Showing the default input; the rejected values are in the editor.'
-      : `The input in this link could not be run: ${RUN_FAILURE_COPY[notice.reason] ?? 'the run failed'}. Showing the default input.`;
+      ? `The input in this link could not be run: the server rejected it. ${outcome} The rejected values are in the editor.`
+      : `The input in this link could not be run: ${RUN_FAILURE_COPY[notice.reason] ?? 'the run failed'}. ${outcome}`;
   }
   if (notice.kind === 'step-dropped') {
     return `Its step ${notice.requested} belonged to that run, so playback starts at step 1.`;

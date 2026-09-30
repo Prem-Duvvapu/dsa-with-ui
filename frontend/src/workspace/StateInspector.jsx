@@ -63,15 +63,18 @@ function Sequence({ title, items, marker, order }) {
 }
 
 /**
- * What `queueOrStackState` IS, from the trace's hero dsType. A Stack or Queue hero says so
- * itself; a Graph, Grid or Array hero that carries one is a BFS-style queue, the same reading
- * canvas/companions.js gives its Queue pane. Anything else is labelled neutrally rather than
- * guessed at.
+ * What `queueOrStackState` IS - known only when the hero dsType promises it. StepEmitter
+ * writes that one field from BOTH .queue() and .stack(), so a Graph, Grid or Array hero's
+ * container may be either: flood-fill (Matrix) and lru-page-replacement (Array) emit a
+ * stack. Calling those a queue with a Front taught FIFO for a LIFO structure
+ * (INDEPENDENT_REVIEW_DB8683B.md B3), so anything but a Stack or Queue hero is described
+ * neutrally, in the order the trace lists it. A priority queue's array order is not its
+ * service order either, so it carries no Front/Top claim.
  */
 function containerKind(dsType) {
   if (dsType === 'Stack') return 'stack';
+  if (dsType === 'Queue') return 'queue';
   if (dsType === 'PriorityQueue') return 'heap';
-  if (['Queue', 'Graph', 'Matrix', 'Array'].includes(dsType)) return 'queue';
   return 'other';
 }
 
@@ -90,7 +93,12 @@ export default function StateInspector({ step, steps = [], problem, dsType }) {
   const kind = containerKind(dsType);
   const containerTitle = { queue: 'Queue contents', stack: 'Stack contents', heap: 'Priority queue contents' }[kind]
     || 'Container contents';
-  const containerOrder = { queue: 'Front first; the next to leave is at the front.', stack: 'Bottom first; the top is the most recent.' }[kind];
+  const containerOrder = {
+    queue: 'Front first; the next to leave is at the front.',
+    stack: 'Bottom first; the top is the most recent.',
+    heap: 'In the heap\'s array order, which is not the order items leave.',
+    other: 'Listed in the order the trace lists them. The trace does not say whether this is a queue or a stack.'
+  }[kind];
   const containerMark = (index, length) => {
     if (kind === 'queue') return length === 1 ? 'Front · Back' : index === 0 ? 'Front' : index === length - 1 ? 'Back' : null;
     if (kind === 'stack') return index === length - 1 ? 'Top' : null;

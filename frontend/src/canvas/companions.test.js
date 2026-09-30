@@ -130,4 +130,16 @@ describe('getCompanions', () => {
     expect(getCompanions('Graph', currentStep, allSteps).map((c) => c.key)).toEqual(['queue']);
     expect(getCompanions('Stack', currentStep, allSteps).map((c) => c.key)).toEqual(['grid']);
   });
+
+  it('never calls a Graph, Grid or Array hero\'s container a queue: the payload does not say which', () => {
+    // queueOrStackState is written by BOTH StepEmitter.queue() and .stack(). flood-fill (a
+    // Matrix hero) and lru-page-replacement (an Array hero) emit .stack(); calling those a
+    // queue with a "front" taught FIFO for a LIFO structure (INDEPENDENT_REVIEW_DB8683B.md B3).
+    for (const hero of ['Graph', 'Matrix', 'Array']) {
+      const steps = [{ queueOrStackState: ['(0,0)', '(0,1)'] }];
+      const [pane] = getCompanions(hero, steps[0], steps);
+      expect(pane.props.title, hero).toBe('Container');
+      expect(pane.props.ordered, hero).toBe(false);
+    }
+  });
 });

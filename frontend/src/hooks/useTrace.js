@@ -121,6 +121,8 @@ export default function useTrace(problemId, problem, options = {}) {
   const requestIdRef = useRef(0);
   const abortRef = useRef(null);
   const runIdRef = useRef(0);
+  /** The request id of the latest submission (POST), to tell it apart from a default load. */
+  const submissionRef = useRef(0);
   /** The committed run, readable synchronously by seek() right after a commit. */
   const runRef = useRef(EMPTY_RUN);
   /** Read at failure time only: changing the entry without the id must not refetch. */
@@ -242,6 +244,7 @@ export default function useTrace(problemId, problem, options = {}) {
 
     const submitted = snapshot(inputValues);
     const requestId = ++requestIdRef.current;
+    submissionRef.current = requestId;
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
@@ -308,6 +311,19 @@ export default function useTrace(problemId, problem, options = {}) {
   }, [problemId, commit]);
 
   const dismissRerunFailure = useCallback(() => setRerunFailure(null), []);
+
+  /**
+   * Retires a submission still in flight, so its answer can neither commit nor be shared.
+   * Called when the URL moves on without a problem change (a same-page link, Back/Forward):
+   * the old submission belonged to the old URL. The problem's own default load is not a
+   * submission and is left alone - it is the run the new URL may need.
+   */
+  const retireSubmission = useCallback(() => {
+    if (submissionRef.current !== requestIdRef.current) return;
+    requestIdRef.current += 1;
+    abortRef.current?.abort();
+    setPending(false);
+  }, []);
 
   // Leaving the page ends its authority: the request in flight is aborted and its
   // generation retired, so a late answer cannot commit, share or navigate anywhere.
@@ -410,6 +426,7 @@ export default function useTrace(problemId, problem, options = {}) {
     seek,
     setSpeed,
     runInput,
+    retireSubmission,
     dismissRerunFailure
   };
 }

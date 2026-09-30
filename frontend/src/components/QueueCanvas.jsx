@@ -20,7 +20,12 @@ import { lastPayload } from '../trace/lastPayload';
  * the backend field carries no richer payload. Front-of-queue is always index 0, per
  * StepEmitter.queue()'s contract.
  */
-export default function QueueCanvas({ step, currentStep, title = 'Queue', variant = 'companion', steps, currentStepIndex }) {
+/**
+ * `ordered` is false when the caller cannot know the container is a queue - a companion
+ * beside a Graph, Grid or Array hero, whose `queueOrStackState` may hold a stack. The row
+ * is then drawn without a "front" tag, which would otherwise claim FIFO order.
+ */
+export default function QueueCanvas({ step, currentStep, title = 'Queue', variant = 'companion', steps, currentStepIndex, ordered = true }) {
   // App.jsx passes both props (same object); companions.js passes only `step`.
   const activeStep = currentStep || step;
   // Absence is not emptiness. Tracers restate the queue only on the steps that change it
@@ -41,9 +46,9 @@ export default function QueueCanvas({ step, currentStep, title = 'Queue', varian
             <li
               key={`${idx}-${value}`}
               data-queue-index={idx}
-              className={idx === 0 ? 'queue-cell queue-cell-front' : 'queue-cell'}
+              className={ordered && idx === 0 ? 'queue-cell queue-cell-front' : 'queue-cell'}
             >
-              {idx === 0 && <span className="queue-cell-tag">front</span>}
+              {ordered && idx === 0 && <span className="queue-cell-tag">front</span>}
               <span className="queue-cell-value">{value}</span>
             </li>
           ))}
