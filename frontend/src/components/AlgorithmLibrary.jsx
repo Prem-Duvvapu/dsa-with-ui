@@ -10,6 +10,7 @@ import { useProblemSearch } from '../search/useProblemSearch';
 import { searchProblems, matchRanges } from '../search/scoreProblem';
 import { pickDailyProblem } from '../search/dailyProblem';
 import LearningHeader from './LearningHeader';
+import SiteFooter from './SiteFooter';
 import layout from './LearningLayout.module.css';
 import styles from './AlgorithmLibrary.module.css';
 
@@ -231,7 +232,7 @@ export default function AlgorithmLibrary() {
           {visible.length < results.length && <button ref={loadMoreRef} type="button" className={layout.button} onClick={loadMore}>Load more algorithms <ArrowRight size={16} /></button>}
         </div>}
       </section>
-      <footer className={styles.footer}>Understand the change. Follow the reasoning. Make it your own.</footer>
     </main>
+    <SiteFooter>Understand the change. Follow the reasoning. Make it your own.</SiteFooter>
   </div>;
 }
