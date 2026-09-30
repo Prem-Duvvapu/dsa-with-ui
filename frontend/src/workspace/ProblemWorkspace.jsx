@@ -8,8 +8,6 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import StepStateSummary from '../components/StepStateSummary';
 import InputPanel from '../components/InputPanel';
 import InputSummary from '../components/InputSummary';
-import CodeViewer from '../components/CodeViewer';
-import MemoryComplexityCard from '../components/MemoryComplexityCard';
 import CaptureStrip from '../components/CaptureStrip';
 import CompareStrip from '../components/CompareStrip';
 import ShortcutHelp from '../components/ShortcutHelp';
@@ -29,6 +27,9 @@ import useKeyboardShortcuts from '../hooks/useKeyboardShortcuts';
 import PlaybackBar, { SPEEDS } from './PlaybackBar';
 import ViewRail, { VIEWS, panelId, tabId } from './ViewRail';
 import { stageFor } from './stageFamily';
+import CodeWalkthrough from './CodeWalkthrough';
+import SourcePane from './SourcePane';
+import StateInspector from './StateInspector';
 import { curriculumNeighbours } from './curriculum';
 import { TRACE_ERROR_COPY, linkNoticeText, runFailureText } from './sessionCopy';
 import styles from './ProblemWorkspace.module.css';
@@ -106,7 +107,14 @@ export default function ProblemWorkspace() {
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
   const [hasSeenWelcome, setHasSeenWelcome] = usePersistentState('seenWelcome', false, (v) => typeof v === 'boolean');
-  useEffect(() => { setIsCompareOpen(false); }, [problemId]);
+  // Presentation state that belongs to this problem's session: where the reader left the
+  // source, and which Code subview they chose on a narrow screen. A new problem starts fresh.
+  const sourceScroll = useRef({ top: 0, following: true });
+  const [codeSubview, setCodeSubview] = useState('source');
+  useEffect(() => {
+    setIsCompareOpen(false);
+    sourceScroll.current = { top: 0, following: true };
+  }, [problemId]);
 
   const changeSpeed = useCallback((ms) => { setSpeed(ms); setPersistedSpeed(ms); }, [setSpeed, setPersistedSpeed]);
   const nudgeSpeed = useCallback((direction) => {
@@ -239,6 +247,15 @@ export default function ProblemWorkspace() {
     <div role="alert" className={styles.stageState}>{TRACE_ERROR_COPY[traceError]}</div>
   ) : (
     <ErrorBoundary resetKey={problemId}>{renderCanvas()}</ErrorBoundary>
+  );
+
+  const stageNode = (
+    <div className={styles.stage} data-family={stage.family} data-tour="canvas" data-audit="stage">
+      <StepStateSummary step={currentStep} dsType={dsType} />
+      <CanvasShell title={problem?.title} meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null}>
+        {stageBody}
+      </CanvasShell>
+    </div>
   );
 
   const narration = (
@@ -388,12 +405,7 @@ export default function ProblemWorkspace() {
                   </div>
                 </div>
                 {notices}
-                <div className={styles.stage} data-family={stage.family} data-tour="canvas" data-audit="stage">
-                  <StepStateSummary step={currentStep} dsType={dsType} />
-                  <CanvasShell title={problem?.title} meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null}>
-                    {stageBody}
-                  </CanvasShell>
-                </div>
+                {stageNode}
                 {narration}
                 <PlaybackBar session={session} onSpeedChange={changeSpeed} />
               </section>
@@ -448,9 +460,12 @@ export default function ProblemWorkspace() {
                 <button type="button" className={styles.control} onClick={() => selectView('playground')}>Back to visualization</button>
               </div>
               {notices}
-              <div data-tour="code-panel" className={styles.source}>
-                <CodeViewer problem={problem} currentStep={currentStep} anchors={anchors} steps={steps} />
-              </div>
+              <CodeWalkthrough
+                diagram={stageNode}
+                source={<SourcePane problem={problem} currentStep={currentStep} anchors={anchors} steps={steps} scrollMemory={sourceScroll} />}
+                subview={codeSubview}
+                onSubview={setCodeSubview}
+              />
               {narration}
               <PlaybackBar session={session} onSpeedChange={changeSpeed} />
             </section>
@@ -465,9 +480,7 @@ export default function ProblemWorkspace() {
               {notices}
               {narration}
               <PlaybackBar session={session} onSpeedChange={changeSpeed} compact />
-              <div className={styles.analysis}>
-                <MemoryComplexityCard currentStep={currentStep} problem={problem} />
-              </div>
+              <StateInspector step={currentStep} steps={steps} problem={problem} dsType={dsType} />
             </section>
           )}
         </div>

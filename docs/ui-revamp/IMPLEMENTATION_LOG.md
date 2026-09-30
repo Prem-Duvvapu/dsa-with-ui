@@ -258,3 +258,40 @@ Known limitations / blocked checks:
 Rollback boundary: revert the P3 squash commit, or clear the flag.
 Next unblocked package: P4 (Code split, Analysis layout, activation as the default route).
 ```
+
+## 2026-09-30 — P4a Code walkthrough and Analysis (behind the flag)
+
+```text
+Package / status: P4a — review; P4b (default route, retire the old shell) follows
+Base commit / branch / PR / merge commit: b0da81f / feat/ui-revamp-p4a-code-analysis / (this PR) / —
+Learner outcome and exact behavior changed (flag on):
+  - Code walkthrough shows the diagram and the source side by side when the MEASURED container fits
+    480px + 360px + 24px (not a viewport breakpoint). The separator (role=separator, aria-valuenow/
+    valuetext) resizes by pointer or keyboard (←/→ 5%, Home/End bounds 45–70%, Enter or double-click
+    resets to 60%). The ratio persists as dsa-ui:codeSplit {v:1, ratio}, clamped on read; an unknown
+    version falls back.
+  - Narrower containers get Diagram / Source subviews with the same narration, controls and step.
+  - Source at 14px, scrolling on both axes inside its own pane. Follow execution keeps the active line
+    in view; wheel, touch or scroll keys suspend it; "Return to active line" restores it. Scroll
+    position and follow state survive view changes and reset per problem.
+  - Analysis: reading columns. Variables are shown in full, with null and empty stated explicitly and
+    long values behind a disclosure. The call stack shows its order and marks the current frame.
+    Containers show Front/Back or Top. Complexity comes from the backend and reads "unavailable" when
+    missing. Sections appear only if the run uses the structure. A Graph, Grid or Array run's
+    container reads as its queue, matching canvas/companions.js.
+F-IDs and renderer/input cases covered: F12 (shared transport), F18, F19, F20, F24, F33 (unreached badge
+  kept in the source header).
+Automated commands, results and failure investigation:
+  11 new cases in CodeAnalysis.test.jsx. The first 10 FAILED against the P3 workspace (stashed) and
+  pass now. The 11th (run-level presence and graph-queue semantics) came from browser evidence: BFS
+  showed an empty call stack and an unlabelled queue.
+  npx vitest run → 69 files / 564 tests passed. npx vite build → JS 387.74 kB (121.16 kB gzip).
+Browser, viewport, theme, real backend vs fixture: Chromium 1.63, real backend, 1366×768 and 390×844.
+Screenshots/artifacts and measurements: evidence/p4/*.jpg; REVAMP_TRACKER.md P4a row.
+Known limitations / blocked checks:
+  - In full-page Playwright captures the fixed skip link can appear. In the live page it is hidden
+    (top −66px) until focused.
+  - The split has not been checked with a second engine or at 200% zoom (P8).
+Rollback boundary: revert the P4a squash commit; the flag keeps it off the public page.
+Next unblocked package: P4b.
+```
