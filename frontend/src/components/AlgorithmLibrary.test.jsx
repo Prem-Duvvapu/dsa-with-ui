@@ -161,6 +161,16 @@ describe('Algorithm library', () => {
   });
 });
 
+describe('Library footer', () => {
+  it('ends the library with the author credit', async () => {
+    mount();
+    await screen.findByRole('link', { name: /Algorithm 00/ });
+    const footer = screen.getByRole('contentinfo');
+    expect(footer).toHaveTextContent('developed by Prem Duvvapu');
+    expect(footer).toHaveTextContent('Understand the change. Follow the reasoning. Make it your own.');
+  });
+});
+
 describe('Catalogue provider lifecycle', () => {
   function Probe() {
     const { problems, error, source, loading, retry } = useCatalog();

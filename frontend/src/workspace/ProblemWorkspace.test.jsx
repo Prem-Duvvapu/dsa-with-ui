@@ -111,6 +111,19 @@ describe('Workspace as the problem page', () => {
   });
 });
 
+describe('Page footer', () => {
+  it('ends the problem page, and the not-found page, with the author credit', async () => {
+    await openAlpha();
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('developed by Prem Duvvapu');
+  });
+
+  it('keeps the credit on the not-found page too', async () => {
+    renderAt('/problem/nope');
+    await screen.findByRole('heading', { name: /No algorithm called/ });
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('developed by Prem Duvvapu');
+  });
+});
+
 describe('Workspace: one session above every view', () => {
   it('keeps the run, the step and the draft across views, with no extra execution', async () => {
     await openAlpha();
