@@ -30,13 +30,13 @@ function formatValue(value) {
  * offline or legacy trace with no resolvedInput would hide the summary AND the only way
  * back to the editor.
  */
-export default function InputSummary({ resolvedInput }) {
+export default function InputSummary({ resolvedInput, label = 'Running on', comfortable = false }) {
   const entries = Object.entries(resolvedInput ?? {});
   if (entries.length === 0) return null;
 
   return (
-    <div className={styles.container} data-testid="input-summary">
-      <span className={styles.label}>Running on</span>
+    <div className={`${styles.container}${comfortable ? ` ${styles.comfortable}` : ''}`} data-testid="input-summary">
+      <span className={styles.label}>{label}</span>
 
       <div className={styles.values}>
         {entries.map(([name, value]) => (

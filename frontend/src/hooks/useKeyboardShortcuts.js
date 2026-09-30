@@ -35,8 +35,13 @@ useEffect(() => {
       return;
     }
 
+    // A control that already handled the key owns it: a tab list moving focus with the
+    // arrows must not also step the trace, and a dialog's own keys must not leak through.
+    if (e.defaultPrevented) return;
+
     const active = document.activeElement;
     const tag = active?.tagName;
+    const inComposite = Boolean(active?.closest?.('[role="tablist"], [role="listbox"], [role="menu"], [role="slider"]'));
     const isTyping = ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag) || active?.isContentEditable;
 
     // Escape works even while typing - someone in the search field is exactly who needs
@@ -86,6 +91,7 @@ useEffect(() => {
     // would toggle playback twice; blocking every key while a button has focus - which is
     // what this used to do - meant one click on Play killed the keyboard for good.
     const onButton = tag === 'BUTTON';
+    if (inComposite && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'Space', 'Enter'].includes(e.code)) return;
 
     switch (e.code) {
       case 'Space':

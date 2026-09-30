@@ -38,7 +38,11 @@ import styles from './InputPanel.module.css';
  * case" button's own precedent: the whole point of saving is to remove friction, and
  * loading-without-running would put it straight back.
  */
-export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, values, onChange, onRun, draftChanged = false }) {
+export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, values, onChange, onRun, draftChanged = false, variant = 'panel' }) {
+  // 'section' is the workspace's normal-flow editor (docs/ui-revamp/playground-concept.png):
+  // fields first, then the actions, each named by its visible text so the accessible name
+  // and the label a sighted or voice-control user sees are the same words.
+  const section = variant === 'section';
   const { presets, savePreset, removePreset } = useInputPresets(problemId);
   const [savingName, setSavingName] = useState(null);
   const summaryRef = useRef(null);
@@ -70,8 +74,8 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
   };
   const labelFor = (name) => inputSpec.fields.find((f) => f.name === name)?.label ?? name;
 
-  return (
-    <div className={styles.panel}>
+  const errorSummary = (
+    <>
       {errorEntries.length > 0 && (
         <div
           ref={summaryRef}
@@ -89,16 +93,20 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
         </div>
       )}
 
+    </>
+  );
+  const actions = (
+    <>
       <div className={styles.actionBar}>
         <button
           type="button"
           className="btn btn-primary"
           disabled={running}
           onClick={() => onRun(draft)}
-          aria-label="Run with this input"
+          aria-label={section ? undefined : 'Run with this input'}
           style={{ opacity: running ? 0.6 : 1 }}
         >
-          <Play size={12} /> {running ? 'Running…' : 'Run'}
+          <Play size={section ? 16 : 12} /> {running ? 'Running…' : section ? 'Run input' : 'Run'}
         </button>
         {alternateInput && (
           <button
@@ -108,36 +116,36 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
             // Loads AND runs: the point is to see the other branch, and making that two
             // clicks is enough friction that most people would never take the second.
             onClick={() => loadAndRun({ ...defaultInput(inputSpec), ...alternateInput })}
-            aria-label="Run the other case this problem declares"
+            aria-label={section ? undefined : 'Run the other case this problem declares'}
             title="A second input chosen to take the branches the default never reaches"
           >
-            <GitBranch size={12} /> Other case
+            <GitBranch size={section ? 16 : 12} /> Other case
           </button>
         )}
         <button
           type="button"
           className="btn btn-outline"
           onClick={() => onChange(randomizeInput(inputSpec))}
-          aria-label="Randomize input"
+          aria-label={section ? undefined : 'Randomize input'}
         >
-          <Shuffle size={12} /> Randomize
+          <Shuffle size={section ? 16 : 12} /> Randomize
         </button>
         <button
           type="button"
           className="btn btn-outline"
           onClick={() => onChange(defaultInput(inputSpec))}
-          aria-label="Reset input to default"
+          aria-label={section ? undefined : 'Reset input to default'}
         >
-          <RotateCcw size={12} /> Reset
+          <RotateCcw size={section ? 16 : 12} /> {section ? 'Restore defaults' : 'Reset'}
         </button>
         <button
           type="button"
           className="btn btn-outline"
           onClick={() => setSavingName('')}
-          aria-label="Save this input"
+          aria-label={section ? undefined : 'Save this input'}
           title="Name this input to come back to it later"
         >
-          <Bookmark size={12} /> Save
+          <Bookmark size={section ? 16 : 12} /> {section ? 'Save input' : 'Save'}
         </button>
         {draftChanged && <span className={styles.draftChanged}>Changes not run</span>}
       </div>
@@ -197,6 +205,9 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
         </ul>
       )}
 
+    </>
+  );
+  const fieldList = (
       <div className={styles.fieldsContainer}>
         {inputSpec.fields.map((field) => (
           <div key={field.name}>
@@ -219,6 +230,13 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
           </div>
         ))}
       </div>
+  );
+
+  return (
+    <div className={`${styles.panel}${section ? ` ${styles.section}` : ''}`}>
+      {errorSummary}
+      {section ? fieldList : actions}
+      {section ? actions : fieldList}
     </div>
   );
 }

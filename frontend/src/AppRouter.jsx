@@ -3,6 +3,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import App from './App.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import { CatalogProvider } from './catalog/CatalogProvider';
+import ProblemWorkspace from './workspace/ProblemWorkspace';
+import { isNextWorkspaceEnabled } from './workspace/flags';
+
+/** The legacy shell stays the public page until the new workspace passes its P4 gate. */
+function ProblemRoute() {
+  return isNextWorkspaceEnabled() ? <ProblemWorkspace /> : <App />;
+}
 
 /**
  * Top-level route table.
@@ -20,7 +27,7 @@ import { CatalogProvider } from './catalog/CatalogProvider';
 export default function AppRouter() {
   return (
     <CatalogProvider><Routes>
-      <Route path="/problem/:id" element={<App />} />
+      <Route path="/problem/:id" element={<ProblemRoute />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes></CatalogProvider>
