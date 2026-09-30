@@ -18,13 +18,13 @@ export const SHORTCUTS = [
   { keys: ['R'], label: 'Reset the trace' },
   { keys: ['['], label: 'Slower' },
   { keys: [']'], label: 'Faster' },
-  { keys: ['/'], label: 'Search problems' },
-  { keys: ['⌘K', 'Ctrl+K'], label: 'Open command palette' },
+  { keys: ['/'], label: 'Switch problem' },
+  { keys: ['⌘K', 'Ctrl+K'], label: 'Switch problem or run a command' },
   { keys: ['?'], label: 'Show this list' },
-  { keys: ['Esc'], label: 'Close this list or the sidebar' }
+  { keys: ['Esc'], label: 'Close this list or a dialog' }
 ];
 
-export default function ShortcutHelp({ open, onClose, onReplayWelcome }) {
+export default function ShortcutHelp({ open, onClose, onReplayWelcome, onStartTour }) {
   const closeRef = useRef(null);
 
   // Focus the dialog's own control on open, so Escape and Tab act on the dialog rather
@@ -75,6 +75,12 @@ export default function ShortcutHelp({ open, onClose, onReplayWelcome }) {
         <p className={styles.note}>
           Shortcuts pause while you are typing in an input.
         </p>
+
+        {onStartTour && (
+          <button type="button" onClick={onStartTour} className={styles.replayBtn}>
+            Take the guided tour
+          </button>
+        )}
 
         {onReplayWelcome && (
           <button type="button" onClick={onReplayWelcome} className={styles.replayBtn}>

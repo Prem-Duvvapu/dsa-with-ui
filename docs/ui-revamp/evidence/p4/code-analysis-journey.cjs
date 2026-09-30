@@ -5,7 +5,7 @@ const pos = (p) => p.locator('p[aria-live="polite"]').innerText();
   const errors = [];
   for (const [w, h] of [[1366, 768], [390, 844]]) {
     const ctx = await b.newContext({ viewport: { width: w, height: h } });
-    await ctx.addInitScript(() => { localStorage.setItem('dsa-ui:seenWelcome', 'true'); localStorage.setItem('dsa-ui:workspace', '"next"'); });
+    await ctx.addInitScript(() => { localStorage.setItem('dsa-ui:seenWelcome', 'true');  });
     const p = await ctx.newPage(); p.on('pageerror', (e) => errors.push(String(e)));
     let execs = 0; p.on('request', (r) => { if (r.url().includes('/execute')) execs += 1; });
     await p.goto('http://localhost:5180/problem/bfs-traversal?step=5', { waitUntil: 'networkidle' });

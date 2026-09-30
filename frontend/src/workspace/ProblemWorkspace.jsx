@@ -69,7 +69,7 @@ function prefersReducedMotion() {
 export default function ProblemWorkspace() {
   const { id: problemId } = useParams();
   const navigate = useNavigate();
-  const { problems, loading: catalogLoading, error: catalogError } = useCatalog();
+  const { problems, loading: catalogLoading, error: catalogError, retry: retryCatalog } = useCatalog();
   const catalogEntry = problems.find((p) => p.id === problemId) || null;
 
   const [persistedSpeed, setPersistedSpeed] = usePersistentState(
@@ -116,6 +116,16 @@ export default function ProblemWorkspace() {
     sourceScroll.current = { top: 0, following: true };
   }, [problemId]);
 
+  // The tour spotlights regions of the Playground; on a phone most of them are off screen at
+  // once, so it is offered on wider screens only (as before). Help lists the shortcuts either way.
+  const canTour = typeof window === 'undefined' || window.innerWidth > 768;
+  const startTour = useCallback(() => {
+    setHasSeenWelcome(true);
+    setIsHelpOpen(false);
+    session.setView('playground', 'playground');
+    setIsTourOpen(true);
+  }, [setHasSeenWelcome, session]);
+
   const changeSpeed = useCallback((ms) => { setSpeed(ms); setPersistedSpeed(ms); }, [setSpeed, setPersistedSpeed]);
   const nudgeSpeed = useCallback((direction) => {
     const order = SPEEDS.map((s) => s.ms);
@@ -153,7 +163,7 @@ export default function ProblemWorkspace() {
   const openEditor = () => {
     const heading = inputHeadingRef.current;
     if (!heading) return;
-    heading.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    heading.scrollIntoView?.({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
     heading.focus({ preventScroll: true });
   };
 
@@ -192,7 +202,7 @@ export default function ProblemWorkspace() {
   const navLinks = (
     <>
       <Link to="/" className={styles.headerLink}>All algorithms</Link>
-      <button type="button" className={styles.headerLink} onClick={() => setIsPaletteOpen(true)}>
+      <button type="button" className={styles.headerLink} onClick={() => setIsPaletteOpen(true)} data-tour="switcher">
         <Search size={16} aria-hidden="true" /> Switch problem <kbd className={styles.kbd}>Ctrl K</kbd>
       </button>
       <button type="button" className={styles.headerLink} onClick={() => setIsHelpOpen(true)}>Help</button>
@@ -321,6 +331,12 @@ export default function ProblemWorkspace() {
       {header}
 
       <div className={styles.width}>
+        {catalogError && (
+          <div role="alert" className={`${styles.notice} ${styles.catalogNotice}`}>
+            <span>{catalogError} Switching problems and curriculum navigation are limited until it loads.</span>
+            <button type="button" className={styles.control} onClick={retryCatalog}>Retry loading the catalogue</button>
+          </div>
+        )}
         <header className={styles.context}>
           <p className={styles.breadcrumb}>
             <Link to={`/?category=${encodeURIComponent(problem?.category ?? '')}`}>{problem?.category ?? '…'}</Link>
@@ -378,7 +394,7 @@ export default function ProblemWorkspace() {
         </header>
       </div>
 
-      <ViewRail view={view} onSelect={selectView} />
+      <div data-tour="view-rail" className={styles.railWrap}><ViewRail view={view} onSelect={selectView} /></div>
 
       <main
         id="workspace-view"
@@ -413,7 +429,7 @@ export default function ProblemWorkspace() {
               {inputUsed}
 
               {hasInputSpec && (
-                <section className={styles.card} aria-labelledby="try-input-title" id="try-input">
+                <section className={styles.card} aria-labelledby="try-input-title" id="try-input" data-tour="input-editor">
                   <h2 id="try-input-title" ref={inputHeadingRef} tabIndex={-1} className={styles.cardTitle}>Try your own input</h2>
                   <p className={styles.hint}>Change the input, then run it. The result above stays until your run succeeds.</p>
                   <InputPanel
@@ -487,6 +503,7 @@ export default function ProblemWorkspace() {
       </main>
 
       <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)}
+        onStartTour={canTour ? startTour : null}
         onReplayWelcome={() => { setIsHelpOpen(false); setHasSeenWelcome(false); }} />
       <CommandPalette isOpen={isPaletteOpen} onClose={() => setIsPaletteOpen(false)} problems={problems}
         onSelectProblem={(id) => { setIsPaletteOpen(false); if (id !== problemId) navigate(`/problem/${id}`); }}
@@ -495,7 +512,7 @@ export default function ProblemWorkspace() {
         open={!hasSeenWelcome && !catalogLoading && !catalogError && !isTourOpen}
         onDismiss={() => setHasSeenWelcome(true)}
         onShowShortcuts={() => { setHasSeenWelcome(true); setIsHelpOpen(true); }}
-        onStartTour={() => { setHasSeenWelcome(true); setIsTourOpen(true); }}
+        onStartTour={canTour ? startTour : null}
         totalProblems={problems.length}
       />
       <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} totalProblems={problems.length} />

@@ -3,8 +3,8 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import App from './App';
-import { encodeInput } from './hooks/useShareableView';
+import ProblemWorkspace from './ProblemWorkspace';
+import { encodeInput } from '../hooks/useShareableView';
 
 /**
  * Session and URL lifecycle across navigation (independent review of 3db06a5, findings
@@ -24,7 +24,7 @@ function renderApp(path) {
   return render(
     <MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
-        <Route path="/problem/:id" element={<App />} />
+        <Route path="/problem/:id" element={<ProblemWorkspace />} />
         <Route path="/" element={<p>Library home</p>} />
       </Routes>
       <Probe />
@@ -107,7 +107,7 @@ describe('App lifecycle: leaving while a run is pending (review #2)', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Edit input' }));
     fireEvent.change(screen.getByLabelText('Count'), { target: { value: '9' } });
     holdPosts = true;
-    fireEvent.click(screen.getByRole('button', { name: 'Run with this input' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Run input' }));
     await waitFor(() => expect(released).toHaveLength(1));
 
     act(() => navigateTo('/'));

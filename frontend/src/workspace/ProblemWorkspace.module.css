@@ -40,7 +40,9 @@
 .curriculum { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
 /* View rail */
-.rail { position: sticky; top: 0; z-index: 20; background: var(--surface-page); border-bottom: 1px solid var(--rule-subtle); }
+.railWrap { position: sticky; top: 0; z-index: 20; }
+.catalogNotice { margin-top: var(--space-md); }
+.rail { background: var(--surface-page); border-bottom: 1px solid var(--rule-subtle); }
 .railInner { width: min(var(--width-workspace), calc(100% - 2 * var(--gutter))); margin-inline: auto; display: flex; gap: 8px; overflow-x: auto; }
 .tab { min-height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--nav-idle-ink); font: inherit; font-size: var(--type-control); font-weight: 600; white-space: nowrap; cursor: pointer; }
 .tab:hover { color: var(--ink-strong); }

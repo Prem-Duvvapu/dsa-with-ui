@@ -295,3 +295,54 @@ Known limitations / blocked checks:
 Rollback boundary: revert the P4a squash commit; the flag keeps it off the public page.
 Next unblocked package: P4b.
 ```
+
+## 2026-09-30 — P4b the workspace becomes the problem page
+
+```text
+Package / status: P4b — review (P4 gate: see below)
+Base commit / branch / PR / merge commit: ce99754 / feat/ui-revamp-p4b-activate / (this PR) / —
+Learner outcome and exact behavior changed:
+  - /problem/:id renders the new workspace for everyone. The dsa-ui:workspace flag, App.jsx and
+    App.module.css are removed; two public interfaces are never kept.
+  - Parity added for the retired shell:
+    - a catalogue-failure notice with "Retry loading the catalogue" (the switcher and curriculum depend on it)
+    - a guided tour rewritten for the new anchors (switcher, view rail, canvas, controls, input used,
+      editor, history, theme), started from Help ("Take the guided tour", above 768px as before) or
+      from the welcome screen
+    - shortcut help reworded for the switcher
+  - Robustness: the Edit input scroll no longer throws where scrollIntoView is unavailable.
+P4 gate:
+  all three views show one run/step (journey: 0 extra executions) · all seven input contracts reachable
+  through the unchanged InputPanel editors · direct links, the view/step/input link and Back work ·
+  nothing is stranded in the old shell. Old surfaces and their new homes:
+    sidebar → library + switcher
+    header badge → switcher search
+    code toggle → Code walkthrough
+    memory/complexity → Analysis
+    mobile tab card → views
+    breadcrumb/SectionNav/statement → context header
+    Controls copy link → Input used row
+    speed buttons → Speed menu
+    LiveTraceTicker → narration live region
+Automated commands, results and failure investigation:
+  App.integration.test.jsx (≈60 cases) ported case by case to workspace/Workspace.integration.test.jsx
+  (45 tests, parameterised where the old ones repeated). Every behavioural assertion is kept and reaches
+  the feature at its new location; the retired UI's own mechanics (sidebar drawer, backdrop, header
+  badge) are replaced by tests of their successors (phone Menu → switcher, switcher search).
+  App.session and App.lifecycle moved to workspace/*.integration.test.jsx against the workspace; only
+  selectors changed ("Run input"; editor remount via a view switch instead of "Done editing").
+  AppRouter.test mocks the workspace instead of App.
+  npx vitest run → 69 files / 560 tests passed.
+  npx vite build → JS 337.29 kB (106.91 kB gzip), now BELOW the P0 baseline (108.38 kB) with the old
+  shell gone.
+Browser, viewport, theme, real backend vs fixture: Chromium 1.63, real backend, 320/390/1366, both themes, no flag.
+Screenshots/artifacts and measurements: evidence/p4/p4b-*.jpg; REVAMP_TRACKER.md P4b row.
+Known limitations / blocked checks:
+  - Legacy leaf components are now unused except by their own unit tests, and are left for P9 cleanup:
+    Header, Breadcrumb, SectionNav, ProblemStatement, Controls, LiveTraceTicker, Sidebar, SearchBox,
+    MemoryComplexityCard, useLayoutPreferences, the InputPanel 'panel' variant, App.test.jsx.
+  - README still describes the old layout (P9).
+  - Focus mode and switcher upgrades are P5; history paging and completion are P6.
+Rollback boundary: revert the P4b squash commit (restores App.jsx and the flag route).
+Next unblocked package: P5 switching, focus and guidance.
+```

@@ -8,7 +8,7 @@ import AppRouter from './AppRouter.jsx';
 // Routing is isolated here; catalogue lifecycle is covered by library integration tests.
 vi.mock('./catalog/CatalogProvider', () => ({ CatalogProvider: ({ children }) => children }));
 
-vi.mock('./App.jsx', () => ({
+vi.mock('./workspace/ProblemWorkspace', () => ({
   default: () => {
     const { id } = useParams();
     return <div data-testid="app-route-target">Active Problem: {id}</div>;

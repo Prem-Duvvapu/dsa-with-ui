@@ -31,7 +31,6 @@ let width;
 beforeEach(() => {
   executes = 0;
   width = 1200;
-  window.localStorage.setItem('dsa-ui:workspace', JSON.stringify('next'));
   vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function rect() {
     const w = this.className?.includes?.('codeArea') ? width : 0;
     return { width: w, height: 0, top: 0, left: 0, right: w, bottom: 0, x: 0, y: 0 };

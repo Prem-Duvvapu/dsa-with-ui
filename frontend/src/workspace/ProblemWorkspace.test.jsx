@@ -48,7 +48,6 @@ function trace(id, n, count = 6, extra = {}, dsType = 'Array') {
 let executes;
 beforeEach(() => {
   executes = [];
-  window.localStorage.setItem('dsa-ui:workspace', JSON.stringify('next'));
   vi.stubGlobal('fetch', vi.fn((url, opts = {}) => {
     if (url === '/api/problems') return Promise.resolve(ok([ARRAY, GRAPH]));
     const detail = url.match(/^\/api\/problems\/([^/]+)$/);
@@ -77,12 +76,11 @@ async function openAlpha(path = '/problem/alpha') {
   await screen.findByText('alpha n=3 step 1');
 }
 
-describe('Workspace behind its development flag', () => {
-  it('is only served when the flag is on', async () => {
-    window.localStorage.removeItem('dsa-ui:workspace');
+describe('Workspace as the problem page', () => {
+  it('is the problem page, with no switch to turn it on', async () => {
     renderAt('/problem/alpha');
     await screen.findByText('alpha n=3 step 1');
-    expect(screen.queryByRole('tablist', { name: 'Learning views' })).not.toBeInTheDocument();
+    expect(screen.getByRole('tablist', { name: 'Learning views' })).toBeInTheDocument();
   });
 
   it('shows the concept\'s context: breadcrumb, title, summary, difficulty, statement and curriculum', async () => {
