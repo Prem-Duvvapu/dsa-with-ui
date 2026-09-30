@@ -11,8 +11,8 @@ its gate and evidence are complete.
 | Package | Status | PR / commit | Gate evidence / remaining work |
 | --- | --- | --- | --- |
 | P0 Baseline and reference designs | Done | #146 / `bc9829f` | Fresh tests, live API, 16 browser captures, manifests and decisions recorded below |
-| P1 Session/input/sharing correctness | Done | #147 / `748b489` | B1–B7 fixed regression-first (29 new tests red on `bc9829f`); existing shell verified in Chromium with the real backend |
-| P2 Foundations/library refinement | Review | this PR | Foundation + concept palette tokens; library gates met at 320–1440px in both themes; fast-typing and search-param race fixed; owner concept recorded |
+| P1 Session/input/sharing correctness | Done (reopened, fixed) | #147 / `748b489`; hardening #149 / `de94c1c` | B1–B7 fixed regression-first (29 new tests red on `bc9829f`). An independent review of `3db06a5` found cross-problem, post-unmount, restoration and same-page link defects; fixed in #149 (12 new tests red on `3db06a5`). Re-verified in Chromium against the real backend on the follow-up branch |
+| P2 Foundations/library refinement | Done (reopened, fixed) | #148 / `3db06a5`; follow-ups in this PR | Library gates met at 320–1440px in both themes; fast typing fixed. Review #5 (own-write detection) fixed in #149; #9 (control-boundary contrast) and #10 (44px chips/recents) fixed in this PR |
 | P3 Shell/Playground reference | Planned | — | Array, Graph+Queue, 2D DP; isolated until integration gate |
 | P4 Code/Analysis/integrated route | Planned | — | One session across views; real input and shared-link journeys |
 | P5 Switcher/focus/guidance | Planned | — | Keyboard/focus/modal/tour verification |
@@ -77,7 +77,7 @@ feature at its new location.
 | F19 Variables/frames/containers | P4 | Analysis | Existing: `MemoryComplexityCard.test.jsx` | — | Behind a toggle |
 | F20 Complexity | P4 | Analysis | Existing: `MemoryComplexityCard.test.jsx` | — | Baseline OK |
 | F21 Error/empty/malformed/unavailable | P1, P3 | Distinct status states | App trace error surface tests; `useTrace.session.test.js` rerun failures | — | Rerun failures keep the prior run, labelled (P1) |
-| F22 Truncation | P6 | Persistent status | Existing: `useTrace` truncated tests | — | Watched is set even on a truncated run |
+| F22 Truncation | P1 (watched), P6 (status UI) | Persistent status | `useTrace` truncated tests; `App.session.test.jsx` "does not mark a truncated run as watched" | — | A truncated or offline run no longer marks watched (P1). Persistent status UI remains P6 |
 | F23 Offline sample | P3 | Labelled sample state | Existing: `useTrace` offline test | — | Baseline OK |
 | F24 Collapse/focus intent | P3–P5 | Views, split, Focus | Existing: `useLayoutPreferences.test.js` | — | Replaced by views |
 | F25 Theme/reduced motion | P2 | Header theme control | `useTheme.test.js`, `designTokens.test.js` concept palette guard | P2 captures both themes | Tokens done; workspace in P3 |
@@ -87,7 +87,7 @@ feature at its new location.
 | F29 Statement/examples | P3 | Disclosure before rail | Existing: `ProblemStatement.test.jsx` | P0 Graph capture | Open by default on desktop |
 | F30 Alternate/saved inputs | P1 | Editor | `InputPanel.test.jsx` preset/other-case sync | — | Done (P1) |
 | F31 Other-case comparison | P6 | On-demand comparison | Existing: App comparison tests | — | Hidden for Graph/Tree/DP |
-| F32 Shared input/step/copy link | P1 | Route adapter | `App.session.test.jsx` sharing + restore, `useShareableView.test.jsx` merges | P1 probe: reload restores step 3 of 7 with target 18; bad link explained | Done (P1); `view` is carried but has no UI until P4 |
+| F32 Shared input/step/copy link | P1 + #149 | Route adapter | `App.session.test.jsx`, `App.lifecycle.test.jsx` (cross-problem, same-page, unreadable input, step with no run), `useShareableView.test.jsx`, `useLatestSearchParams.test.jsx` | Session probe (reload restores step 3/7, target 18); review probe (Previous after a restored link sends no POST to the new problem) | Done; `view` is carried but has no UI until P4 |
 | F33 Anchor coverage | P4 | Source inspector | Existing: "branches not taken" test | — | Baseline OK |
 | F34 Welcome/tour/help | P5 | Help + adapted targets | Existing: `TourGuide.test.jsx`, `WelcomeGuide.test.jsx` | — | Targets tied to old layout |
 | F35 Extended keys/speed | P5 | Workspace controls | Existing: speed persistence test | — | Baseline OK |
@@ -138,6 +138,7 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 | P2 library gates | P2 branch dev | Chromium 320×568, 390×844, 768×1024, 1366×768, 1440×900; light + dark | Real backend | `evidence/p2/*.jpg`; search top 280px (1366), 287px (390/320); first row 456–534px at 1366 | Pass: gates ≤360 / ≤320 met; row fully visible; no overflow, 0 errors |
 | P2 keyboard + Back journey | P2 branch dev | Chromium 1366×768 + 390×844 dark | Real backend | journey probe | Ctrl+K focuses search with a 3px ring; tab order search → clear → selects; Back restores query, filters and batch; phone Filters (1) and chip removal work |
 | P2 fast typing | P2 branch dev | Chromium 1366×768 | Real backend | typing probe | Before the fix, "binary search tree" typed fast gave `q=e`. After, the full text and URL are kept, and a filter merges onto it |
+| Review follow-ups (#1, #9, #10) and regressions | `de94c1c` + follow-up branch dev | Chromium 1366×768; 390×844 light + dark; library at 320/390/1366 | Real backend | `evidence/review-probe.cjs`; `evidence/p1/session-probe.cjs`; `evidence/browser-audit.cjs` | #1: after a restored two-sum link, Previous opens the next problem at step 1 with no POST to it. #10: chips measure 44px tall. #9: search border renders `#858176` (light) / `#66757b` (dark), 3.47–4.01:1 on page, card and recessed surfaces. Library gates unchanged (y280 / y287), P1 journeys unchanged, 0 page errors |
 | P1 session journeys | P1 branch dev | Chromium 1366×768, system theme | Real backend | `evidence/p1/session-probe.cjs`, `p1-notfound.jpg`, `p1-badlink.jpg` | Unknown id → not-found; echo target 18; draft 18 after reopen; 400 leaves URL unchanged and focuses the error summary; reload restores step 3/7 + target 18; step=400 and a rejected link explained and cleaned from the URL; 0 page errors |
 
 ### Decision and risk log
@@ -151,6 +152,8 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 | 2026-09-29 / P1 | A link whose input is rejected also carries a step | Do not apply that step to the default run; start at step 1 and say so | A learner loses the position the sender meant, but is never shown a different execution's step N | Revisit only if a link format gains a run identity |
 | 2026-09-29 / P2 | Owner supplied playground-concept.png | Adopt it as the visual target; forest-green chrome accent (revises D1/D2), paper/card surfaces | A second use of green; guarded by a luminance gap from `--settled` | P3 implements the workspace to it |
 | 2026-09-29 / P2 | Router navigations render in transitions, so URL-bound inputs lost keystrokes | One `useLatestSearchParams` hook: synchronous local copy, committed-only adoption of external navigation; used by the library and the share adapter | A small custom hook instead of `useSearchParams` directly | — |
+| 2026-09-30 / review | Independent review of `3db06a5`: 2 blocking, 8 should-fix | Fix all ten before P3 (#149 for #1–#8; this PR for #9/#10 and tracker). Own-write detection moved from query-string equality to a per-write token in location state | A token in history state for every URL write | Record combined-revision verification, not only per-package |
+| 2026-09-30 / review | Border contrast of controls | New `--control-border` (≥3:1 on page, card and recessed surfaces), used for fields, selects and buttons; decorative `--rule-*` stays subtle | One more token in three theme blocks | Workspace controls adopt it in P3 |
 | 2026-09-29 / P2 | "Clear filters" also cleared the search | Scoped actions: Clear filters (filters only), Clear search (×), Clear search and filters (empty state) | One more button in the empty state | — |
 | 2026-09-29 / P1 | Share links over 4,000 encoded characters | Refuse to encode them, drop `input` and label it | A huge custom input cannot be shared by link (a preset still saves it) | — |
 

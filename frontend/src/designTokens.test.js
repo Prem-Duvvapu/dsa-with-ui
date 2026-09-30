@@ -347,7 +347,7 @@ describe('design tokens', () => {
     // accent. A chrome colour defined in only one declaration renders one theme's ground
     // under the other's ink, so each must exist in all three and change with the theme.
     const CHROME = ['--surface-page', '--surface-panel', '--surface-recessed', '--rule-subtle',
-      '--rule-strong', '--accent', '--accent-hover', '--accent-ink', '--accent-line',
+      '--rule-strong', '--control-border', '--accent', '--accent-hover', '--accent-ink', '--accent-line',
       '--accent-soft', '--accent-soft-ink'];
     const base = baseBlock();
     const media = rawTokens(lightMediaBlock());
@@ -373,6 +373,12 @@ describe('design tokens', () => {
       for (const [ink, ground] of pairs) {
         const ratio = contrast(t[ink], t[ground]);
         if (ratio < 4.5) failures.push(`${name}: ${ink} on ${ground} is ${ratio.toFixed(2)}:1`);
+      }
+      // Meaningful boundaries (WCAG 1.4.11): the edge of a field, select or button, on every
+      // surface one can sit on. The decorative --rule-* tokens are exempt and stay subtle.
+      for (const ground of ['--surface-page', '--surface-panel', '--surface-recessed']) {
+        const ratio = contrast(t['--control-border'], t[ground]);
+        if (ratio < 3) failures.push(`${name}: --control-border on ${ground} is ${ratio.toFixed(2)}:1`);
       }
       // The chrome accent must not be mistakable for "resolved": clearly separated in
       // lightness from --settled.
