@@ -175,3 +175,41 @@ Known limitations / blocked checks: no second browser engine; no screen-reader p
 Rollback boundary: revert the P2 squash commit; storage keys unchanged.
 Next unblocked package: P3 session-backed shell and Playground reference slice, to playground-concept.png.
 ```
+
+## 2026-09-29/30 — Independent review of P0–P2 and its fixes
+
+```text
+Package / status: P1/P2 hardening — #149 merged (de94c1c); follow-ups in review
+Base commit / branch / PR / merge commit: 3db06a5 / fix/ui-revamp-session-review / #149 / de94c1c;
+  de94c1c / fix/ui-revamp-review-followups / (this PR) / —
+Learner outcome and exact behavior changed:
+  #149 (review findings 1–8):
+  - A shared link no longer leaks into the next problem: its input ran on the problem opened via
+    Previous/Next.
+  - A page left while its run was pending no longer navigates back when the run finishes.
+  - Edits typed while a link restores are kept; the link's values are seeded into the draft first.
+  - A newer submission cancels restoration cleanly.
+  - A new link to the same problem restores its input and step, or reruns the defaults.
+  - An unreadable input, or a step with no run to restore into, is explained.
+  - The render that switches problems never shows the previous run.
+  Follow-ups (findings 9–10):
+  - Field, select and button borders use --control-border (≥3:1).
+  - Filter chips and recent searches are 44px tall.
+  - The tracker is reconciled.
+F-IDs and renderer/input cases covered: F02–F04 (library controls), F06, F09, F21, F22, F32.
+Automated commands, results and failure investigation:
+  #149: 12 of 13 new cases failed on 3db06a5 (the #1 case POSTed {n:7} to the next problem, exactly as
+  reported). 67 files / 537 tests passed. One lifecycle assertion waits for the router's URL transition.
+  Follow-ups: the new palette guard and the 44px CSS guard fail with the stylesheets reverted and pass
+  with the change. The disclosure-hide guard already passed; it is a guard, not a fix. The "starts at
+  the top" test was renamed to what it actually proves.
+Browser, viewport, theme, real backend vs fixture: Chromium 1.63, real backend.
+  evidence/review-probe.cjs → review #1, #9 and #10 verified; library audit and session probe unchanged.
+Screenshots/artifacts and measurements: see REVAMP_TRACKER.md browser table ("Review follow-ups").
+Known limitations / blocked checks:
+  - Review #2 (leave mid-run) and #3 (edit during restore) are verified in jsdom integration tests only.
+  - No second engine and no screen reader.
+  - The workspace (old App shell) controls do not yet use --control-border; that happens in P3.
+Rollback boundary: revert this PR's squash commit, and/or #149's.
+Next unblocked package: P3.
+```

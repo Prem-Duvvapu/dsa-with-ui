@@ -2,6 +2,9 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import '@testing-library/jest-dom';
 import AlgorithmLibrary from './AlgorithmLibrary';
 import { CatalogProvider, useCatalog } from '../catalog/CatalogProvider';
@@ -125,7 +128,7 @@ describe('Algorithm library', () => {
     raf.mockRestore();
   });
 
-  it('starts a direct visit at the top', async () => {
+  it('does not restore any scroll position on a history entry that saved none', async () => {
     const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
     mount();
     await screen.findByRole('link', { name: /Algorithm 00/ });
@@ -186,5 +189,26 @@ describe('Catalogue provider lifecycle', () => {
     await waitFor(() => expect(signal).toBeDefined());
     unmount();
     expect(signal.aborted).toBe(true);
+  });
+});
+
+describe('Algorithm library responsive rules', () => {
+  // jsdom applies no CSS, so the disclosure test above proves the wiring but not that a
+  // phone actually hides the controls. These read the stylesheet itself: removing the rule
+  // that hides a closed disclosure, or shrinking a touch target, fails here.
+  const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'AlgorithmLibrary.module.css'), 'utf8');
+  const phone = css.slice(css.indexOf('@media (max-width: 640px)'));
+
+  it('hides a closed filter disclosure on phones, and only there', () => {
+    expect(phone).toMatch(/\.filters\[data-open="false"\]\s*\{\s*display:\s*none;/);
+    expect(css.slice(0, css.indexOf('@media'))).not.toMatch(/\.filters\[data-open="false"\]/);
+    expect(phone).toMatch(/\.filtersToggle\s*\{\s*display:\s*inline-flex;/);
+  });
+
+  it('gives chips and recent searches the 44px touch target', () => {
+    for (const selector of ['.chips button', '.recents button']) {
+      const rule = css.slice(css.indexOf(`${selector} {`), css.indexOf('}', css.indexOf(`${selector} {`)));
+      expect(rule, selector).toMatch(/min-height:\s*var\(--target-min\)/);
+    }
   });
 });

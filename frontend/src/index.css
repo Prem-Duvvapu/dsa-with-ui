@@ -116,6 +116,9 @@
   --surface-recessed: #0e1417;
   --rule-subtle: #1f2a2e;
   --rule-strong: #2e3b40;
+  /* The edge of something you operate - a field, a select, a button. Unlike the decorative
+     rules above it must clear 3:1 against the page and card surfaces (WCAG 1.4.11). */
+  --control-border: #66757b;
   --accent: #d2e9d9;
   --accent-hover: #e3f2e8;
   --accent-ink: #0b1012;
@@ -289,6 +292,7 @@
     --surface-recessed: #f3f2ed;
     --rule-subtle: #e6e4de;
     --rule-strong: #c9c6bd;
+    --control-border: #858176;
     --accent: #1b3b29;
     --accent-hover: #26503a;
     --accent-ink: #ffffff;
@@ -368,6 +372,7 @@
   --surface-recessed: #f3f2ed;
   --rule-subtle: #e6e4de;
   --rule-strong: #c9c6bd;
+  --control-border: #858176;
   --accent: #1b3b29;
   --accent-hover: #26503a;
   --accent-ink: #ffffff;
