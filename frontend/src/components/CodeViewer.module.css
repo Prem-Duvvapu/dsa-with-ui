@@ -130,3 +130,15 @@
 @media (prefers-reduced-motion: reduce) {
   .line { transition: none; }
 }
+
+/* Workspace size: source starts at 14px and scrolls on both axes inside its own pane, so a
+   long line never widens the page and the code stays selectable. */
+.comfortable { padding: 0; gap: 10px; background: transparent; border: 0; box-shadow: none; }
+.comfortable .header { border-bottom-color: var(--rule-subtle); }
+.comfortable .headerTitle { font-size: var(--type-control); color: var(--ink-strong); }
+.comfortable .anchorBadge,
+.comfortable .unreachedBadge { font-size: 12px; padding: 2px 8px; }
+.comfortable .source { overflow: auto; font-size: 14px; line-height: 1.65; background: var(--surface-recessed); border-color: var(--rule-subtle); }
+.comfortable .lineNumber { font-size: 12px; width: 34px; min-width: 34px; }
+.comfortable .line { color: var(--ink-secondary); }
+.comfortable .lineActive { color: var(--ink-strong); }

@@ -21,7 +21,7 @@ function unreachedAnchorLines(anchors, steps) {
   return new Set(Object.values(anchors).filter((line) => !visited.has(line)));
 }
 
-export default function CodeViewer({ problem, currentStep, anchors, steps }) {
+export default function CodeViewer({ problem, currentStep, anchors, steps, comfortable = false, sourceRef = null, title = 'Java interview solution' }) {
   const javaCode = typeof problem?.javaCode === 'string' && problem.javaCode.trim()
     ? problem.javaCode
     : null;
@@ -32,11 +32,11 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
   const unreached = unreachedAnchorLines(anchors, steps);
 
   return (
-    <div className={`glass-panel ${styles.panel}`}>
+    <div className={`glass-panel ${styles.panel}${comfortable ? ` ${styles.comfortable}` : ''}`}>
       <div className={styles.header}>
         <div className={styles.headerGroup}>
           <Code2 size={15} color="var(--bench-ink-secondary)" />
-          <span className={styles.headerTitle}>Java interview solution</span>
+          <span className={styles.headerTitle}>{title}</span>
         </div>
         <div className={styles.headerGroup}>
           {unreached.size > 0 && javaCode && (
@@ -57,7 +57,7 @@ export default function CodeViewer({ problem, currentStep, anchors, steps }) {
       </div>
 
       {/* Code Editor Body */}
-      <div className={styles.source}>
+      <div className={styles.source} ref={sourceRef} tabIndex={comfortable ? 0 : undefined} aria-label={comfortable ? 'Java source' : undefined} role={comfortable ? 'region' : undefined}>
         {!javaCode ? (
           <div
             role="status"

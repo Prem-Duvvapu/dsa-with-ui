@@ -115,10 +115,40 @@ main[role="tabpanel"]:focus { outline: none; }
 .history[open] { padding-bottom: 16px; }
 .history > :not(summary) { margin: 0 16px; }
 
-/* Code and analysis views */
-.source { min-height: 360px; display: grid; }
-.source :global(.glass-panel) { background: var(--surface-panel); }
-.analysis { display: grid; }
+/* Code walkthrough: measured split or Diagram / Source subviews */
+.codeArea { min-width: 0; }
+.split { display: grid; align-items: stretch; min-width: 0; }
+.splitPane { min-width: 0; display: grid; }
+.separator { position: relative; cursor: col-resize; touch-action: none; border-radius: 6px; }
+.separator::before { content: ''; position: absolute; inset: 8px 10px; border-radius: 2px; background: var(--rule-strong); }
+.separator:hover::before, .splitDragging .separator::before { background: var(--accent-line); }
+.separator:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: 0; }
+.splitDragging { user-select: none; }
+.codeStack { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
+.subviews { display: inline-flex; justify-self: start; border: 1px solid var(--control-border); border-radius: var(--radius-control); overflow: hidden; }
+.subview { min-height: var(--target-min); padding: 0 18px; border: 0; background: var(--surface-panel); color: var(--ink-secondary); font: inherit; font-size: var(--type-control); font-weight: 600; cursor: pointer; }
+.subview + .subview { border-left: 1px solid var(--control-border); }
+.subview[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.sourcePane { display: grid; grid-template-rows: auto minmax(360px, 70vh); gap: 8px; min-width: 0; }
+.sourcePane > :last-child { min-height: 0; }
+.followBar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; min-height: var(--target-min); }
+
+/* Analysis: reading columns, not four tiny cards */
+.inspector { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--space-2xl); align-items: start; }
+.inspectorColumn { display: grid; gap: var(--space-xl); min-width: 0; }
+.inspectorSection { display: grid; gap: 8px; min-width: 0; }
+.inspectorTitle { font-size: var(--type-control); font-weight: 700; }
+.variables { display: grid; gap: 6px; }
+.variables > div { display: grid; grid-template-columns: minmax(80px, max-content) minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--rule-subtle); }
+.variables dt code { font: 600 14px var(--font-code); color: var(--ink-secondary); }
+.value { font: 14px var(--font-code); color: var(--ink-strong); overflow-wrap: anywhere; }
+.longValue summary { cursor: pointer; list-style: none; }
+.valueFull { font: 13px/1.5 var(--font-code); white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 6px; padding: 10px; border: 1px solid var(--rule-subtle); border-radius: 8px; background: var(--surface-recessed); max-height: 320px; overflow: auto; }
+.sequence { list-style: none; display: grid; gap: 4px; counter-reset: frame; }
+.sequence li { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border: 1px solid var(--rule-subtle); border-radius: 8px; }
+.sequence li.marked { border-color: var(--control-border); background: var(--surface-recessed); }
+.complexity { display: grid; gap: 4px; padding: 12px 0; border-bottom: 1px solid var(--rule-subtle); }
+.reading { max-width: var(--width-reading); color: var(--ink-secondary); }
 
 .notFound { width: min(640px, calc(100% - 2 * var(--gutter))); margin: 12vh auto; display: grid; gap: 16px; justify-items: start; }
 .notFound h1 { font-size: var(--type-title); line-height: var(--leading-tight); }
@@ -146,5 +176,7 @@ main[role="tabpanel"]:focus { outline: none; }
   .kbd { display: none; }
   .historyRow { flex-direction: column; align-items: stretch; }
   .curriculum { display: grid; grid-template-columns: 1fr 1fr; }
+  .inspector { grid-template-columns: minmax(0, 1fr); }
+  .sourcePane { grid-template-rows: auto minmax(300px, 60vh); }
   .curriculum .meta { grid-column: 1 / -1; }
 }
