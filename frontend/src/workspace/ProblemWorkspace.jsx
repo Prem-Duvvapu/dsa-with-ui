@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Code2, Link2, Pencil, RefreshCw, Search, Star } from 'lucide-react';
 import LearningHeader from '../components/LearningHeader';
+import SiteFooter from '../components/SiteFooter';
 import layout from '../components/LearningLayout.module.css';
 import CanvasShell from '../components/CanvasShell';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -227,6 +228,7 @@ export default function ProblemWorkspace() {
           <p>This link does not match any problem in the catalogue, so nothing has been run in its place.</p>
           <Link to="/" className={`${layout.button} ${layout.primary}`}>Browse all algorithms</Link>
         </main>
+        <SiteFooter />
       </div>
     );
   }
@@ -500,6 +502,8 @@ export default function ProblemWorkspace() {
           )}
         </div>
       </main>
+
+      <SiteFooter />
 
       <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)}
         onStartTour={canTour ? startTour : null}
