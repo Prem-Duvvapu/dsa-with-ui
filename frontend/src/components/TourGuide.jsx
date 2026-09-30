@@ -23,10 +23,17 @@ import styles from './TourGuide.module.css';
 // app; only the substitution happens per-render, in the component.
 export const TOUR_STEPS = [
   {
-    target: 'problem-list',
-    title: 'Every problem, one list',
+    target: 'switcher',
+    title: 'Every problem, one search away',
     body: '{{totalProblems}} problems, each with a real execution trace rather than a recording. '
-        + 'Press / from anywhere to jump into the search box.'
+        + 'Switch problem (or Ctrl/⌘ K, or /) jumps to any of them; All algorithms returns to the library.'
+  },
+  {
+    target: 'view-rail',
+    title: 'Three ways to look at one run',
+    body: 'Playground shows the picture, Code walkthrough puts the Java beside it with the '
+        + 'executing line highlighted, and Analysis lists the variables, stack and complexity. '
+        + 'Switching never restarts the run or loses your place.'
   },
   {
     target: 'canvas',
@@ -41,30 +48,24 @@ export const TOUR_STEPS = [
         + 'and [ and ] change the pace without touching the mouse.'
   },
   {
-    target: 'capture-strip',
-    body: 'Every step of the run at once — one column per step, one row per tracked slot. '
-        + 'It shows the shape of the execution before you watch any single frame: how long '
-        + 'the run is, and where the interesting part sits. Click any column to jump there. '
-        + 'Some problems hide it, because for a graph the diagram already says it better.',
-    title: 'The whole run, at a glance'
-  },
-  {
-    target: 'code-panel',
-    title: 'The code keeps pace',
-    body: 'The highlighted line is the one executing in the step you are looking at. '
-        + 'That pairing is the whole point — the picture and the code never drift apart.'
-  },
-  {
     target: 'input-summary',
     title: 'Always know what it is running on',
-    body: 'The input being animated is stated here. Open the editor from the buttons on the '
-        + 'right to try your own.'
+    body: 'The input the run on screen actually used. If you have edited the input without '
+        + 'running it, this says so; Copy link shares exactly this run and step.'
   },
   {
-    target: 'panel-toggles',
-    title: 'Clear the desk',
-    body: 'The input editor and the complexity analysis stay out of the way until you want '
-        + 'them, so the animation gets the room. Your choice is remembered.'
+    target: 'input-editor',
+    title: 'Try your own input',
+    body: 'Change the input and run it, or try the other case the problem declares. '
+        + 'The result above stays until your run succeeds, and a saved input comes back later.'
+  },
+  {
+    target: 'capture-strip',
+    body: 'Every step of the run at once — one column per step, one row per tracked slot. '
+        + 'Open it to see how long the run is and where the interesting part sits, then click '
+        + 'any column to jump there. Graphs, trees and DP tables skip it: their diagram already '
+        + 'shows the whole run.',
+    title: 'The whole run, at a glance'
   },
   {
     target: 'theme',

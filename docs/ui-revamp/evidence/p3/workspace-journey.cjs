@@ -3,7 +3,7 @@ const pos = (p) => p.locator('p[aria-live="polite"]').innerText();
 (async () => {
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: { width: 1366, height: 768 } });
-  await ctx.addInitScript(() => { localStorage.setItem('dsa-ui:seenWelcome', 'true'); localStorage.setItem('dsa-ui:workspace', '"next"'); });
+  await ctx.addInitScript(() => { localStorage.setItem('dsa-ui:seenWelcome', 'true');  });
   const p = await ctx.newPage();
   const errors = []; p.on('pageerror', (e) => errors.push(String(e)));
   const posts = []; p.on('request', (r) => { if (r.method() === 'POST') posts.push(r.url().split('/api/')[1]); });

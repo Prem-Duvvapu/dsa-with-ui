@@ -3,8 +3,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
-import App from './App';
-import { encodeInput, decodeInput } from './hooks/useShareableView';
+import ProblemWorkspace from './ProblemWorkspace';
+import { encodeInput, decodeInput } from '../hooks/useShareableView';
 
 /**
  * Session truth in the running app (IMPLEMENTATION_HANDOFF.md §6, P1): what is on screen,
@@ -23,7 +23,7 @@ function renderApp(path = '/problem/two-sum') {
   return render(
     <MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
-        <Route path="/problem/:id" element={<><App /><LocationProbe /></>} />
+        <Route path="/problem/:id" element={<><ProblemWorkspace /><LocationProbe /></>} />
         <Route path="/" element={<p>Library home</p>} />
       </Routes>
     </MemoryRouter>
@@ -110,7 +110,7 @@ async function openEditor() {
 
 async function runTarget(value) {
   fireEvent.change(screen.getByLabelText('Target sum'), { target: { value: String(value) } });
-  fireEvent.click(screen.getByRole('button', { name: 'Run with this input' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Run input' }));
 }
 
 describe('App session: unknown ids (B1)', () => {
@@ -131,17 +131,17 @@ describe('App session: what ran is what is shown (B2, B3)', () => {
     await runTarget(13);
     await screen.findByText('ran {"nums":[2,7,11,15],"target":13} step 1');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Done editing' }));
     expect(screen.getByTestId('input-summary')).toHaveTextContent(/target\s*13/);
   });
 
-  it('keeps an edited draft when the editor closes and reopens', async () => {
+  it('keeps an edited draft when the editor unmounts and remounts', async () => {
     await openEditor();
     fireEvent.change(screen.getByLabelText('Target sum'), { target: { value: '42' } });
 
-    fireEvent.click(screen.getByRole('button', { name: 'Done editing' }));
+    // The editor unmounts with the Playground view and remounts on return.
+    fireEvent.click(screen.getByRole('tab', { name: 'Analysis' }));
     expect(screen.queryByLabelText('Target sum')).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Edit input' }));
+    fireEvent.click(screen.getByRole('tab', { name: 'Playground' }));
 
     expect(screen.getByLabelText('Target sum')).toHaveValue(42);
   });
@@ -152,7 +152,7 @@ describe('App session: what ran is what is shown (B2, B3)', () => {
     fireEvent.change(screen.getByLabelText('Target sum'), { target: { value: '42' } });
     expect(screen.getByText('Changes not run')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Run with this input' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Run input' }));
     await screen.findByText('ran {"nums":[2,7,11,15],"target":42} step 1');
     expect(screen.queryByText('Changes not run')).not.toBeInTheDocument();
   });
