@@ -111,6 +111,16 @@ describe('Workspace catalogue loading', () => {
     await waitFor(() => expect(calls).toContain('/api/problems'));
   });
 
+  it('knows the whole merged catalogue, not just the problems a search happens to match', async () => {
+    // The retired App suite asserted "11/11 runnable" in the header; the merged total is now
+    // stated by the guided tour, which reads the same catalogue length.
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getAllByRole('button', { name: 'Help' })[0]);
+    fireEvent.click(screen.getByRole('button', { name: 'Take the guided tour' }));
+    expect(await screen.findByText(new RegExp(`^${CATALOG.length} problems, each with a real execution trace`))).toBeInTheDocument();
+  });
+
   it('merges every category into the switcher, including Maths and Basic Recursion', async () => {
     renderApp();
     await screen.findByText('two-sum step one');
@@ -228,10 +238,15 @@ describe('Workspace execution capture', () => {
       }
       return Promise.resolve(notFound());
     }));
-    renderApp('/problem/hero');
+    const { container } = renderApp('/problem/hero');
     await screen.findByText(description);
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    // The hero itself is on the stage, framed once with one legend (restored from the
+    // retired App suite, which asserted the DP table and the single shell explicitly).
+    if (dsType === 'DpTable') expect(screen.getByRole('table', { name: 'Dynamic programming table' })).toBeInTheDocument();
+    expect(screen.getAllByText('happening now')).toHaveLength(1);
+    expect(container.querySelectorAll('.shell-head')).toHaveLength(1);
   });
 
   it('shows an explicit empty state for an unknown dsType instead of an array', async () => {
@@ -499,9 +514,21 @@ describe('Workspace on a phone', () => {
   });
 
   it('still offers the code, the analysis and the editor on a phone', async () => {
+    const spec = { fields: [{ name: 'n', label: 'Count', type: 'INT', defaultValue: 1 }] };
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      calls.push(url);
+      if (url === '/api/problems') return Promise.resolve(ok(CATALOG.map((p) => (p.id === 'two-sum' ? { ...p, inputSpec: spec } : p))));
+      if (url === '/api/problems/two-sum') return Promise.resolve(ok({ ...CATALOG.find((p) => p.id === 'two-sum'), inputSpec: spec }));
+      return Promise.resolve(respondTo(url));
+    }));
     renderApp();
     await screen.findByText('two-sum step one');
-    for (const tab of ['Code walkthrough', 'Analysis']) expect(screen.getByRole('tab', { name: tab })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Try your own input' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Count')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('tab', { name: 'Code walkthrough' }));
+    expect(screen.getByText('int solve() {')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('tab', { name: 'Analysis' }));
+    expect(screen.getByRole('region', { name: 'Algorithm complexity' })).toHaveTextContent('O(N)');
   });
 });
 

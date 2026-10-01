@@ -386,3 +386,35 @@ Known limitations / blocked checks: S7 and S8 open. Precise queue/stack labels n
   code for num-provinces is queued as its own tracer PR. No second engine; no screen reader.
 Rollback boundary: revert this PR's squash commit.
 ```
+
+## 2026-10-01 — Review db8683b: S7, S8, migration assertions, notes (remediation complete)
+
+```text
+Package / status: review remediation — complete with this PR (after #155, #156)
+Dispositions (INDEPENDENT_REVIEW_DB8683B.md):
+  B1 fixed (#155, plus #156 for page-load key collisions)    B2 fixed (#155)    B3 fixed (#155)
+  S1 fixed (#155)   S2 fixed (#155)   S3 fixed (#155)   S4 fixed (#155)   S5 fixed (#156)   S6 fixed (#156)
+  S7 fixed (this PR): load failures are a session-level alert in every view; a rejection that arrives while
+     the editor is unmounted shows "Your input could not run" with "Fix it in the editor".
+  S8 fixed (this PR): the not-found page renders the shared dialogs, so Help and Switch problem work.
+  Weakened tests restored (this PR):
+    - DP/Graph/Tree full-stage case asserts the DP table, one legend and one shell again (proven: it
+      fails when DpTable is routed to ArrayCanvas).
+    - The phone case opens Code and Analysis and checks the editor.
+    - Merged-catalogue cardinality is asserted through the tour's stated total.
+    - The session test asserts URL mirroring.
+    - The tab-panel and CodeAnalysis gaps are covered by the S3–S6 tests.
+  N1 deferred: y389 recorded as an unmet target pending owner acceptance; P8 experiment.
+  N2 documented: single-writer rule in useLatestSearchParams.
+  N3 deferred to P9: groupBySection, normalizeCategory and SearchBox (via the dead Sidebar) added to the
+     cleanup list.
+  Flaky case: the Lifecycle review-#1 URL wait is raised to 4s (same assertion); it failed twice under load.
+Automated: 5 new S7/S8 cases failed before the fix (the Playground case was already correct and is a
+  guard). npx vitest run → 71 files / 593 tests, passed twice consecutively. npx vite build passed.
+Browser: Chromium against the real backend; see the REVAMP_TRACKER.md rows "Review db8683b fixes" and
+  "Review db8683b S7/S8".
+Remaining limits: no second engine, no screen reader, no 200% zoom pass. Precise queue/stack labels need
+  a backend containerKind field.
+Next: Number of Provinces DFS tracer (owner's code), then per-topic batches aligning code to the owner's
+  solutions with own-words statements, then P5.
+```

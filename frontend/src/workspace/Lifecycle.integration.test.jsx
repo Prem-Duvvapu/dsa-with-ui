@@ -95,7 +95,9 @@ describe('App lifecycle: navigating away from a restored link (review #1)', () =
 
     expect(posts.filter((p) => p.id === 'beta')).toEqual([]);
     expect(latestLocation.pathname).toBe('/problem/beta');
-    await waitFor(() => expect(params().get('step')).toBeNull());
+    // The URL write is a router transition; under a loaded full-suite run it has landed after
+    // the default 1s (twice, RCA-053 pattern). The assertion is unchanged - only the wait.
+    await waitFor(() => expect(params().get('step')).toBeNull(), { timeout: 4000 });
     expect(params().get('input')).toBeNull();
   });
 });

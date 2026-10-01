@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import useProblemSession from './useProblemSession';
 import { encodeInput } from './useShareableView';
 
@@ -29,8 +29,10 @@ afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe('useProblemSession restoration lifecycle (review #4)', () => {
   it('releases the restoring state when a newer submission supersedes the link', async () => {
+    let location;
+    function Probe() { location = useLocation(); return null; }
     const wrapper = ({ children }) => (
-      <MemoryRouter initialEntries={[`/problem/alpha?input=${encodeInput({ n: 7 })}&step=2`]}>{children}</MemoryRouter>
+      <MemoryRouter initialEntries={[`/problem/alpha?input=${encodeInput({ n: 7 })}&step=2`]}>{children}<Probe /></MemoryRouter>
     );
     const { result } = renderHook(
       () => useProblemSession({ problemId: 'alpha', catalogEntry: ENTRY, initialSpeed: 1000 }),
@@ -46,8 +48,9 @@ describe('useProblemSession restoration lifecycle (review #4)', () => {
 
     expect(result.current.steps[0].description).toBe('n=9 one');
     expect(result.current.restoring).toBe(false);
-    // Mirroring works again: a step change reaches the run on screen.
+    // Mirroring works again: a step change reaches the URL, not only the local index.
     act(() => result.current.seek(2));
     expect(result.current.currentStepIndex).toBe(2);
+    await waitFor(() => expect(new URLSearchParams(location.search).get('step')).toBe('3'));
   });
 });
