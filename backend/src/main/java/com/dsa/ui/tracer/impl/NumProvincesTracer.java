@@ -21,7 +21,7 @@ import java.util.*;
  * i-j wherever {@code isConnected[i][j] == 1} and {@code i < j}.
  *
  * <p>Distinct from {@code number-of-provinces}, which takes the same count over an
- * edge-list graph and recurses with DFS; this one is the matrix-scanning BFS form.
+ * edge-list graph; this one recurses straight over the matrix rows, as LeetCode 547 is posed.
  */
 @Component
 public class NumProvincesTracer implements AlgorithmTracer {
@@ -55,9 +55,9 @@ public class NumProvincesTracer implements AlgorithmTracer {
     }
 
     /**
-     * Five cities chained 0-1-2-3-4, so the whole map is a single province and one BFS has
-     * to walk the chain end to end - the opposite profile from the default, where the first
-     * BFS settles immediately and a second one has to be started.
+     * Five cities chained 0-1-2-3-4, so the whole map is a single province and one DFS has
+     * to recurse down the chain end to end - the opposite profile from the default, where the
+     * first DFS returns quickly and a second one has to be started.
      */
     @Override
     public Map<String, Object> alternateInput() {
@@ -69,45 +69,44 @@ public class NumProvincesTracer implements AlgorithmTracer {
                 List.of(0, 0, 0, 1, 1)));
     }
 
+    /**
+     * The owner's own accepted LeetCode 547 solution, shown and traced as written: recursive
+     * DFS straight off the matrix row. (It replaced a queue-based BFS so the code on screen is
+     * the code the owner submitted - see docs/ui-revamp REVAMP_TRACKER decision log.)
+     */
     @Override
     public String annotatedCode() {
         return """
-               public int findCircleNum(int[][] isConnected) {
-                   // @a init
-                   int n = isConnected.length;
-                   boolean[] visited = new boolean[n];
-                   int provinces = 0;
+               class Solution {
+                   public int findCircleNum(int[][] isConnected) {
+                       // @a init
+                       int n=isConnected.length;
+                       boolean[] visited=new boolean[n];
+                       int numOfProvinces=0;
 
-                   for (int i = 0; i < n; i++) {
-                       if (visited[i]) {
-                           // @a settled
-                           continue;
-                       }
-                       // @a newProvince
-                       provinces++;
-                       Queue<Integer> queue = new LinkedList<>();
-                       queue.add(i);
-                       visited[i] = true;
-
-                       while (!queue.isEmpty()) {
-                           // @a dequeue
-                           int city = queue.poll();
-                           for (int j = 0; j < n; j++) {
-                               if (isConnected[city][j] == 0) {
-                                   continue;
-                               }
-                               if (visited[j]) {
-                                   // @a already
-                                   continue;
-                               }
-                               // @a enqueue
-                               visited[j] = true;
-                               queue.add(j);
+                       for (int i=0;i<n;i++) {
+                           // @a check
+                           if (!visited[i]) {
+                               // @a newProvince
+                               dfs(i,visited,isConnected,n);
+                               numOfProvinces++;
                            }
                        }
+
+                       // @a done
+                       return numOfProvinces;
                    }
-                   // @a done
-                   return provinces;
+
+                   public void dfs(int currNode,boolean[] visited,int[][] isConnected,int n) {
+                       // @a visit
+                       visited[currNode]=true;
+
+                       for (int j=0;j<n;j++)
+                           // @a recurse
+                           if (isConnected[currNode][j]==1 && !visited[j])
+                               dfs(j,visited,isConnected,n);
+                   // @a return
+                   }
                }""";
     }
 
@@ -123,72 +122,61 @@ public class NumProvincesTracer implements AlgorithmTracer {
         for (int i = 0; i < n; i++) {
             states.put(i, "unvisited");
         }
-
         boolean[] visited = new boolean[n];
         int provinces = 0;
 
-        emit.at("init").say("%d cities. A city's neighbours are found by scanning its own row of "
-                        + "the matrix, so every lookup costs a full row walk.", n)
-                .var("n", n).var("provinces", 0)
+        emit.at("init").say("%d cities and no province counted yet. A city's neighbours are its own "
+                        + "row of isConnected, so each DFS call scans one full row.", n)
+                .var("n", n).var("numOfProvinces", 0)
                 .graph(topology).nodes(states).step();
 
         for (int i = 0; i < n; i++) {
             if (visited[i]) {
-                emit.at("settled").say("City %d already belongs to a counted province - skip it.", i)
-                        .var("i", i).var("provinces", provinces)
+                emit.at("check").say("City %d was already reached by an earlier DFS, so it belongs to a "
+                                + "province that is already counted - skip it.", i)
+                        .var("i", i).var("numOfProvinces", provinces)
                         .graph(topology).nodes(states).step();
                 continue;
             }
-
+            emit.at("newProvince").say("City %d is unvisited, so it starts a new province: run dfs(%d) to "
+                            + "mark every city it can reach.", i, i)
+                    .var("i", i).var("numOfProvinces", provinces)
+                    .graph(topology).nodes(states).step();
+            dfs(i, visited, matrix, n, states, topology, emit);
             provinces++;
-            visited[i] = true;
-            states.put(i, "queued");
-            Deque<Integer> queue = new ArrayDeque<>();
-            queue.add(i);
+        }
 
-            emit.at("newProvince").say("City %d has not been reached yet, so it opens province #%d. "
-                            + "Seed the queue with it.", i, provinces)
-                    .var("i", i).var("provinces", provinces)
-                    .graph(topology).nodes(states).queue(queue).step();
+        emit.at("done").say("Every city has been visited. The cities form %d province%s.", provinces, Narration.s(provinces))
+                .var("numOfProvinces", provinces)
+                .graph(topology).nodes(states).step();
+    }
 
-            while (!queue.isEmpty()) {
-                int city = queue.poll();
-                states.put(city, "visiting");
+    private static void dfs(int currNode, boolean[] visited, int[][] matrix, int n,
+                            Map<Integer, String> states, Inputs.GraphInput topology, StepEmitter emit) {
+        emit.push("dfs(" + currNode + ")");
+        visited[currNode] = true;
+        states.put(currNode, "visiting");
+        emit.at("visit").say("dfs(%d): mark city %d visited, then scan row %d for unvisited neighbours.",
+                        currNode, currNode, currNode)
+                .var("currNode", currNode)
+                .graph(topology).nodes(states).step();
 
-                emit.at("dequeue").say("Walk row %d of isConnected to find every city joined to %d.",
-                                city, city)
-                        .var("city", city).var("provinces", provinces)
-                        .graph(topology).nodes(states).queue(queue).step();
-
-                for (int j = 0; j < n; j++) {
-                    if (matrix[city][j] == 0) {
-                        continue;
-                    }
-                    if (visited[j]) {
-                        emit.at("already").say("isConnected[%d][%d] = 1, but city %d is already in "
-                                        + "province #%d - nothing new.", city, j, j, provinces)
-                                .var("city", city).var("j", j)
-                                .graph(topology).nodes(states).edges(edgeLabel(city, j))
-                                .queue(queue).step();
-                        continue;
-                    }
-                    visited[j] = true;
-                    states.put(j, "queued");
-                    queue.add(j);
-                    emit.at("enqueue").say("isConnected[%d][%d] = 1 and city %d is unseen - it joins "
-                                    + "province #%d.", city, j, j, provinces)
-                            .var("city", city).var("j", j).var("provinces", provinces)
-                            .graph(topology).nodes(states).edges(edgeLabel(city, j))
-                            .queue(queue).step();
-                }
-
-                states.put(city, "visited");
+        for (int j = 0; j < n; j++) {
+            if (matrix[currNode][j] == 1 && !visited[j]) {
+                emit.at("recurse").say("isConnected[%d][%d] = 1 and city %d is unvisited - recurse into dfs(%d).",
+                                currNode, j, j, j)
+                        .var("currNode", currNode).var("j", j)
+                        .graph(topology).nodes(states).edges(edgeLabel(currNode, j)).step();
+                dfs(j, visited, matrix, n, states, topology, emit);
             }
         }
 
-        emit.at("done").say("Every city assigned. The map splits into %d province%s.", provinces, Narration.s(provinces))
-                .var("provinces", provinces)
+        states.put(currNode, "visited");
+        emit.at("return").say("dfs(%d) is done: every unvisited city joined to %d has been reached. "
+                        + "Return to the caller.", currNode, currNode)
+                .var("currNode", currNode)
                 .graph(topology).nodes(states).step();
+        emit.pop();
     }
 
     /** Undirected edges implied by the matrix, self-loops on the diagonal dropped. */
