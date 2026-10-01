@@ -24,6 +24,12 @@ import { useLocation, useSearchParams } from 'react-router-dom';
  * problem - so callers can restore state from a URL someone else produced, and only then.
  * Writes are `replace`, so none of them adds a history entry. After unmount, writes are
  * ignored: a page that has been left no longer owns the URL.
+ *
+ * ONE writer per route. Each instance keeps its own `latest` snapshot, so two instances
+ * writing different parameters in the same tick would each start from a copy without the
+ * other's write and one would be lost (INDEPENDENT_REVIEW_DB8683B.md N2). Today the library
+ * and the problem workspace (via useShareableView) each mount exactly one. A second consumer
+ * that needs to WRITE must share that instance, not create another.
  */
 
 const WRITE_KEY = 'dsaUrlWrite';

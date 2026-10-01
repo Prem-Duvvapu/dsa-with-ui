@@ -159,6 +159,8 @@ export default function ProblemWorkspace() {
   // ── Focus targets ────────────────────────────────────────────────────────
   const stageHeadingRef = useRef(null);
   const inputHeadingRef = useRef(null);
+  /** Set by "Fix it in the editor": focus the editor once the Playground has rendered it. */
+  const editorFocusPending = useRef(false);
 
   const openEditor = () => {
     const heading = inputHeadingRef.current;
@@ -174,6 +176,13 @@ export default function ProblemWorkspace() {
     if (outcome.ok) stageHeadingRef.current?.focus();
     return outcome;
   }, [submit]);
+
+  useEffect(() => {
+    if (view !== 'playground' || !editorFocusPending.current) return;
+    editorFocusPending.current = false;
+    openEditor();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view]);
 
   const [copyState, setCopyState] = useState('idle');
   const copyTimer = useRef(null);
@@ -219,6 +228,27 @@ export default function ProblemWorkspace() {
     </LearningHeader>
   );
 
+  // Dialogs every state of the page shares - the not-found page's Help and Switch problem
+  // controls open these too (INDEPENDENT_REVIEW_DB8683B.md S8).
+  const overlays = (
+    <>
+      <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)}
+        onStartTour={canTour ? startTour : null}
+        onReplayWelcome={() => { setIsHelpOpen(false); setHasSeenWelcome(false); }} />
+      <CommandPalette isOpen={isPaletteOpen} onClose={() => setIsPaletteOpen(false)} problems={problems}
+        onSelectProblem={(id) => { setIsPaletteOpen(false); if (id !== problemId) navigate(`/problem/${id}`); }}
+        onCycleTheme={cycleTheme} />
+      <WelcomeGuide
+        open={!hasSeenWelcome && !catalogLoading && !catalogError && !isTourOpen}
+        onDismiss={() => setHasSeenWelcome(true)}
+        onShowShortcuts={() => { setHasSeenWelcome(true); setIsHelpOpen(true); }}
+        onStartTour={canTour ? startTour : null}
+        totalProblems={problems.length}
+      />
+      <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} totalProblems={problems.length} />
+    </>
+  );
+
   if (notFound) {
     return (
       <div className={layout.page}>
@@ -229,6 +259,7 @@ export default function ProblemWorkspace() {
           <Link to="/" className={`${layout.button} ${layout.primary}`}>Browse all algorithms</Link>
         </main>
         <SiteFooter />
+        {overlays}
       </div>
     );
   }
@@ -253,9 +284,9 @@ export default function ProblemWorkspace() {
   const stageBody = traceLoading ? (
     <div role="status" className={styles.stageState}><RefreshCw size={18} className="spin" aria-hidden="true" /> Loading the trace…</div>
   ) : traceError === 'untraced' ? (
-    <div role="status" className={styles.stageState}>This problem is catalogued but not yet traced.</div>
+    <div className={styles.stageState}>Nothing to draw: this problem is not yet traced.</div>
   ) : TRACE_ERROR_COPY[traceError] && !showingOffline ? (
-    <div role="alert" className={styles.stageState}>{TRACE_ERROR_COPY[traceError]}</div>
+    <div className={styles.stageState}>Nothing to draw: the trace did not load.</div>
   ) : (
     <ErrorBoundary resetKey={problemId}>{renderCanvas()}</ErrorBoundary>
   );
@@ -280,8 +311,26 @@ export default function ProblemWorkspace() {
     </div>
   );
 
+  // Why the run is unavailable belongs to the SESSION, not the diagram: these show in every
+  // view, so opening Code or Analysis never hides the reason (INDEPENDENT_REVIEW_DB8683B.md S7).
+  const loadFailure = TRACE_ERROR_COPY[traceError] && !showingOffline ? TRACE_ERROR_COPY[traceError] : null;
+  const hasFieldErrors = Object.keys(fieldErrors ?? {}).length > 0;
   const notices = (
     <>
+      {loadFailure && (
+        <div role="alert" className={styles.notice}><span>{loadFailure}</span></div>
+      )}
+      {traceError === 'untraced' && (
+        <div role="status" className={styles.notice}><span>This problem is catalogued but not yet traced.</span></div>
+      )}
+      {hasFieldErrors && view !== 'playground' && (
+        <div role="alert" aria-label="Your input could not run" className={styles.notice}>
+          <span>Your input could not run: the server rejected some fields. The run shown is still the previous one.</span>
+          <button type="button" className={styles.control} onClick={() => { editorFocusPending.current = true; selectView('playground'); }}>
+            Fix it in the editor
+          </button>
+        </div>
+      )}
       {linkNotices.length > 0 && (
         <div role="status" aria-label="Shared link" className={styles.notice}>
           <span>{linkNotices.map(linkNoticeText).join(' ')}</span>
@@ -500,20 +549,7 @@ export default function ProblemWorkspace() {
 
       <SiteFooter />
 
-      <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)}
-        onStartTour={canTour ? startTour : null}
-        onReplayWelcome={() => { setIsHelpOpen(false); setHasSeenWelcome(false); }} />
-      <CommandPalette isOpen={isPaletteOpen} onClose={() => setIsPaletteOpen(false)} problems={problems}
-        onSelectProblem={(id) => { setIsPaletteOpen(false); if (id !== problemId) navigate(`/problem/${id}`); }}
-        onCycleTheme={cycleTheme} />
-      <WelcomeGuide
-        open={!hasSeenWelcome && !catalogLoading && !catalogError && !isTourOpen}
-        onDismiss={() => setHasSeenWelcome(true)}
-        onShowShortcuts={() => { setHasSeenWelcome(true); setIsHelpOpen(true); }}
-        onStartTour={canTour ? startTour : null}
-        totalProblems={problems.length}
-      />
-      <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} totalProblems={problems.length} />
+      {overlays}
     </div>
   );
 }
