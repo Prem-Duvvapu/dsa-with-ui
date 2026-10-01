@@ -165,10 +165,26 @@ describe('Workspace: one session above every view', () => {
     expect(narration()).toHaveTextContent('alpha n=3 step 1');
   });
 
-  it('labels the current tab panel by its tab', async () => {
+  it('keeps a main landmark and ties every tab to the one labelled tab panel (review S6)', async () => {
     await openAlpha();
+    expect(screen.getByRole('main')).toBeInTheDocument();
     const panel = screen.getByRole('tabpanel');
     expect(panel).toHaveAttribute('aria-labelledby', 'workspace-tab-playground');
+    for (const tab of screen.getAllByRole('tab')) {
+      expect(document.getElementById(tab.getAttribute('aria-controls'))).toBe(panel);
+    }
+  });
+
+  it('moves the roving tab stop with focus, not with selection (review S6)', async () => {
+    await openAlpha();
+    const playground = screen.getByRole('tab', { name: 'Playground' });
+    playground.focus();
+    fireEvent.keyDown(playground, { key: 'ArrowRight', code: 'ArrowRight' });
+    const code = screen.getByRole('tab', { name: 'Code walkthrough' });
+    expect(document.activeElement).toBe(code);
+    expect(code).toHaveAttribute('tabindex', '0');
+    expect(playground).toHaveAttribute('tabindex', '-1');
+    expect(playground).toHaveAttribute('aria-selected', 'true');
   });
 });
 

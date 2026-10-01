@@ -346,3 +346,43 @@ Known limitations / blocked checks:
 Rollback boundary: revert the P4b squash commit (restores App.jsx and the flag route).
 Next unblocked package: P5 switching, focus and guidance.
 ```
+
+## 2026-10-01 — Remediating docs/ui-revamp/INDEPENDENT_REVIEW_DB8683B.md
+
+```text
+Package / status: review remediation — #155 merged (d40b9cb: B1, B2, B3, S1, S2, S3, S4); this PR: S5, S6
+  and a browser-found identity defect; S7, S8, migration-assertion restoration and N1–N3 dispositions
+  remain
+Learner outcome and exact behavior changed:
+  #155:
+    - A same-page navigation retires an in-flight submission.
+    - A link that cannot be run keeps and re-points to the custom run on screen, and says so.
+    - Every same-page navigation applies its own step.
+    - No queue/stack claims for Graph, Grid or Array containers, in Analysis or in the companion pane.
+    - Explicit shortcut ownership: dialogs, the source pane, the separator, defaultPrevented.
+    - A subview change pauses.
+    - Source memory keeps both axes and is tagged by problem.
+  This PR:
+    - The separator drags with pointer capture (no window listeners; release, cancel and lost capture
+      all end it).
+    - The separator applies and announces the ratio the pane minimums allow at the measured width.
+    - The separator line uses --control-border, with a 44px hit area.
+    - <main> stays the landmark; the tabs control the labelled tabpanel; the roving tab stop follows
+      focus.
+    - URL identity now includes path and query as well as location.key.
+Automated commands, results and failure investigation:
+  RED first: 16 cases on db8683b for #155; 5 for S5/S6 (separator listeners, cancel, geometry; main
+  landmark/tabpanel; roving focus); 1 for the shared-key identity (low-level Router harness).
+  Two older separator tests asserted 70% at a 1200px container, where the pane minimums allow only
+  69%; they now use a 1500px container. The geometry case covers the cap.
+  npx vitest run → 70 files / 586 tests passed; npx vite build passed.
+Browser, viewport, theme, real backend vs fixture: Chromium 1.63, real backend, a POST held via a
+  Playwright route, 1366/1000/390 px. Results are in REVAMP_TRACKER.md ("Review db8683b fixes").
+  The first browser run of B1 FAILED although jsdom passed: the browser gives page-load history entries
+  the key "default", so a navigation between two such entries was invisible. Fixed and re-verified (the
+  POST is aborted and the default stays).
+Known limitations / blocked checks: S7 and S8 open. Precise queue/stack labels need a backend
+  containerKind field. Owner-requested full statements are scheduled after S5–S8. Owner-supplied DFS
+  code for num-provinces is queued as its own tracer PR. No second engine; no screen reader.
+Rollback boundary: revert this PR's squash commit.
+```

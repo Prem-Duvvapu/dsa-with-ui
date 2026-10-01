@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProblemWorkspace.module.css';
 
 export const VIEWS = [
@@ -17,6 +17,11 @@ export const tabId = (view) => `workspace-tab-${view}`;
  */
 export default function ViewRail({ view, onSelect }) {
   const refs = useRef({});
+  // The roving tab stop follows FOCUS, not selection: arrowing to a tab makes it the one Tab
+  // returns to, while selection stays put until Enter, Space or a click. When focus leaves
+  // the rail the stop goes back to the selected tab (INDEPENDENT_REVIEW_DB8683B.md S6).
+  const [focused, setFocused] = useState(view);
+  useEffect(() => { setFocused(view); }, [view]);
 
   const onKeyDown = (event) => {
     const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
@@ -32,7 +37,13 @@ export default function ViewRail({ view, onSelect }) {
 
   return (
     <nav className={styles.rail} aria-label="Learning views">
-      <div className={styles.railInner} role="tablist" aria-label="Learning views" onKeyDown={onKeyDown}>
+      <div
+        className={styles.railInner}
+        role="tablist"
+        aria-label="Learning views"
+        onKeyDown={onKeyDown}
+        onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(view); }}
+      >
         {VIEWS.map((item) => (
           <button
             key={item.id}
@@ -42,7 +53,8 @@ export default function ViewRail({ view, onSelect }) {
             role="tab"
             aria-selected={view === item.id}
             aria-controls={panelId}
-            tabIndex={view === item.id ? 0 : -1}
+            tabIndex={focused === item.id ? 0 : -1}
+            onFocus={() => setFocused(item.id)}
             className={styles.tab}
             onClick={() => onSelect(item.id)}
           >
