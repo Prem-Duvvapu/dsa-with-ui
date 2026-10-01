@@ -72,6 +72,9 @@ describe('Code walkthrough', () => {
   });
 
   it('resizes from the keyboard within its bounds, persists, and resets', async () => {
+    // Wide enough that the 45-70% preference bounds are all reachable; at narrower widths
+    // the pane minimums cap them (see the S5 geometry test below).
+    width = 1500;
     await openCode();
     const separator = screen.getByRole('separator');
     expect(separator).toHaveAttribute('aria-valuenow', '60');
@@ -90,6 +93,7 @@ describe('Code walkthrough', () => {
   });
 
   it('clamps an out-of-range stored ratio and ignores an unknown version', async () => {
+    width = 1500;
     window.localStorage.setItem('dsa-ui:codeSplit', JSON.stringify({ v: 1, ratio: 5 }));
     await openCode();
     expect(screen.getByRole('separator')).toHaveAttribute('aria-valuenow', '70');
@@ -214,6 +218,44 @@ describe('Presentation continuity (review S3, S4)', () => {
     await screen.findByRole('heading', { level: 1, name: 'Fibonacci Two' });
     await waitFor(() => expect(screen.getByText('Following execution')).toBeInTheDocument());
     expect(screen.getByRole('region', { name: 'Java source' }).scrollTop).toBe(0);
+  });
+});
+
+describe('Separator lifecycle and geometry (review S5)', () => {
+  it('leaves no pointer listeners behind when Code view unmounts mid-drag', async () => {
+    const added = [];
+    const removed = [];
+    const add = window.addEventListener.bind(window);
+    const remove = window.removeEventListener.bind(window);
+    vi.spyOn(window, 'addEventListener').mockImplementation((type, fn, o) => { if (type.startsWith('pointer')) added.push(fn); return add(type, fn, o); });
+    vi.spyOn(window, 'removeEventListener').mockImplementation((type, fn, o) => { if (type.startsWith('pointer')) removed.push(fn); return remove(type, fn, o); });
+    await openCode();
+    fireEvent.pointerDown(screen.getByRole('separator'), { clientX: 600, pointerId: 1 });
+    fireEvent.click(screen.getByRole('tab', { name: 'Analysis' }));
+    expect(added.filter((fn) => !removed.includes(fn))).toEqual([]);
+  });
+
+  it('stops resizing when the pointer is cancelled', async () => {
+    await openCode();
+    const separator = screen.getByRole('separator');
+    fireEvent.pointerDown(separator, { clientX: 600, pointerId: 1 });
+    fireEvent.pointerCancel(separator, { pointerId: 1 });
+    fireEvent.pointerMove(separator, { clientX: 200, pointerId: 1 });
+    expect(separator).toHaveAttribute('aria-valuenow', '60');
+  });
+
+  it('announces the split the pane minimums actually allow', async () => {
+    // At a 1000px container the 360px source minimum caps the diagram at 976-360 = 616px,
+    // i.e. 63% - not the 70% preference the old separator announced.
+    width = 1000;
+    await openCode();
+    const separator = screen.getByRole('separator');
+    fireEvent.keyDown(separator, { key: 'End', code: 'End' });
+    expect(separator).toHaveAttribute('aria-valuenow', '63');
+    expect(separator).toHaveAttribute('aria-valuemax', '63');
+    expect(separator).toHaveAttribute('aria-valuetext', 'Diagram 63%, source 37%');
+    fireEvent.keyDown(separator, { key: 'Home', code: 'Home' });
+    expect(separator).toHaveAttribute('aria-valuenow', '49');
   });
 });
 

@@ -397,14 +397,9 @@ export default function ProblemWorkspace() {
 
       <div data-tour="view-rail" className={styles.railWrap}><ViewRail view={view} onSelect={selectView} /></div>
 
-      <main
-        id="workspace-view"
-        className={styles.width}
-        role="tabpanel"
-        aria-labelledby={tabId(view)}
-        tabIndex={-1}
-      >
-        <div id={panelId} className={styles.panel}>
+      {/* <main> keeps its landmark role; the tab panel is the element the tabs point at. */}
+      <main id="workspace-view" className={styles.width} tabIndex={-1}>
+        <div id={panelId} className={styles.panel} role="tabpanel" aria-labelledby={tabId(view)} tabIndex={-1}>
           {view === 'playground' && (
             <>
               <section className={styles.card} aria-labelledby="stage-title">

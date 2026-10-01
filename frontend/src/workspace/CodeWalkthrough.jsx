@@ -24,37 +24,52 @@ export default function CodeWalkthrough({ diagram, source, subview, onSubview })
   const containerRef = useRef(null);
   const width = useElementWidth(containerRef);
   const [pref, setPref] = usePersistentState('codeSplit', { v: 1, ratio: SPLIT.initial }, isSplitPref);
-  const ratio = clamp(pref.ratio);
   const [dragging, setDragging] = useState(false);
+  const drag = useRef(null);
   const split = width >= SPLIT_MIN_WIDTH;
 
-  const setRatio = (next) => setPref({ v: 1, ratio: clamp(Math.round(next * 100) / 100) });
+  // What the panes can ACTUALLY be at this width. The preference may ask for 70%, but at a
+  // 1000px container the 360px source minimum caps the diagram near 63%; the layout and the
+  // announced value both use this effective ratio, so a screen reader is told the geometry
+  // that is on screen (INDEPENDENT_REVIEW_DB8683B.md S5).
+  const available = Math.max(1, width - PANE_MIN.gap);
+  const lo = Math.max(SPLIT.min, PANE_MIN.diagram / available);
+  const hi = Math.max(lo, Math.min(SPLIT.max, 1 - PANE_MIN.source / available));
+  const effective = Math.min(hi, Math.max(lo, clamp(pref.ratio)));
+  const percent = Math.round(effective * 100);
+
+  const setRatio = (next) => setPref({ v: 1, ratio: Math.round(Math.min(hi, Math.max(lo, next)) * 100) / 100 });
 
   const onKeyDown = (event) => {
     const moves = {
-      ArrowLeft: ratio - SPLIT.step,
-      ArrowRight: ratio + SPLIT.step,
-      Home: SPLIT.min,
-      End: SPLIT.max,
-      Enter: SPLIT.initial
+      ArrowLeft: effective - SPLIT.step,
+      ArrowRight: effective + SPLIT.step,
+      Home: lo,
+      End: hi,
+      Enter: SPLIT.initial,
+      ' ': null
     };
     if (!(event.key in moves)) return;
     event.preventDefault();
-    setRatio(moves[event.key]);
+    if (moves[event.key] !== null) setRatio(moves[event.key]);
   };
 
+  // Pointer capture keeps the drag on the separator itself: no window listeners exist to
+  // outlive the view, and release, cancel and lost capture all end it.
   const onPointerDown = (event) => {
     event.preventDefault();
-    const box = event.currentTarget.parentElement.getBoundingClientRect();
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+    drag.current = { pointerId: event.pointerId, box: containerRef.current.getBoundingClientRect() };
     setDragging(true);
-    const move = (e) => setRatio((e.clientX - box.left) / box.width);
-    const up = () => {
-      setDragging(false);
-      window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-    };
-    window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
+  };
+  const onPointerMove = (event) => {
+    const active = drag.current;
+    if (!active || event.pointerId !== active.pointerId || !active.box.width) return;
+    setRatio((event.clientX - active.box.left) / active.box.width);
+  };
+  const endDrag = () => {
+    drag.current = null;
+    setDragging(false);
   };
 
   // One measured element for both layouts, so the observer never watches a removed node.
@@ -73,11 +88,10 @@ export default function CodeWalkthrough({ diagram, source, subview, onSubview })
     );
   }
 
-  const percent = Math.round(ratio * 100);
   return (
     <div ref={containerRef} className={styles.codeArea}><div
       className={`${styles.split}${dragging ? ` ${styles.splitDragging}` : ''}`}
-      style={{ gridTemplateColumns: `minmax(${PANE_MIN.diagram}px, ${percent}fr) ${PANE_MIN.gap}px minmax(${PANE_MIN.source}px, ${100 - percent}fr)` }}
+      style={{ gridTemplateColumns: `minmax(0, ${percent}fr) ${PANE_MIN.gap}px minmax(0, ${100 - percent}fr)` }}
     >
       <div className={styles.splitPane}>{diagram}</div>
       <div
@@ -85,13 +99,17 @@ export default function CodeWalkthrough({ diagram, source, subview, onSubview })
         tabIndex={0}
         aria-orientation="vertical"
         aria-label="Resize diagram and source"
-        aria-valuemin={Math.round(SPLIT.min * 100)}
-        aria-valuemax={Math.round(SPLIT.max * 100)}
+        aria-valuemin={Math.round(lo * 100)}
+        aria-valuemax={Math.round(hi * 100)}
         aria-valuenow={percent}
         aria-valuetext={`Diagram ${percent}%, source ${100 - percent}%`}
         className={styles.separator}
         onKeyDown={onKeyDown}
         onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onLostPointerCapture={endDrag}
         onDoubleClick={() => setRatio(SPLIT.initial)}
         title="Drag, or use the arrow keys. Enter or double-click resets."
       />

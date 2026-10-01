@@ -38,7 +38,11 @@ export default function useLatestSearchParams() {
   const sequence = useRef(0);
   const latest = useRef(routerParams);
   const pending = useRef([]);
-  const committedKey = useRef(location.key);
+  // A committed location's identity is its key AND its path and query: the browser gives the
+  // page-load entry, and any entry the router did not create, the same key ("default"), so
+  // the key alone missed navigations between such entries.
+  const identity = `${location.key}|${location.pathname}|${location.search}`;
+  const committedKey = useRef(identity);
   const [navigation, setNavigation] = useState(0);
   const [, rerender] = useReducer((n) => n + 1, 0);
   const mounted = useRef(true);
@@ -53,8 +57,8 @@ export default function useLatestSearchParams() {
   }, []);
 
   useLayoutEffect(() => {
-    if (location.key === committedKey.current) return;
-    committedKey.current = location.key;
+    if (identity === committedKey.current) return;
+    committedKey.current = identity;
     const token = location.state?.[WRITE_KEY];
     const ours = token ? pending.current.indexOf(token) : -1;
     if (ours >= 0) {
@@ -65,7 +69,7 @@ export default function useLatestSearchParams() {
     pending.current = [];
     latest.current = routerParams;
     setNavigation((n) => n + 1);
-  }, [location.key, location.state, routerParams]);
+  }, [identity, location.state, routerParams]);
 
   const update = useCallback((mutate) => {
     if (!mounted.current) return;

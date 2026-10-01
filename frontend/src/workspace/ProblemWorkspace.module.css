@@ -50,7 +50,7 @@
 
 /* Panels and cards */
 .panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); padding: var(--space-lg) 0 var(--space-4xl); }
-main[role="tabpanel"]:focus { outline: none; }
+#workspace-view:focus, .panel:focus { outline: none; }
 .card { background: var(--surface-panel); border: 1px solid var(--rule-subtle); border-radius: 12px; padding: var(--space-xl) var(--space-2xl); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-md); min-width: 0; scroll-margin-top: 64px; }
 .cardHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .cardTitle { font-size: var(--type-heading); letter-spacing: -.02em; font-weight: 680; scroll-margin-top: 72px; }
@@ -122,7 +122,9 @@ main[role="tabpanel"]:focus { outline: none; }
 .split { display: grid; align-items: stretch; min-width: 0; }
 .splitPane { min-width: 0; display: grid; }
 .separator { position: relative; cursor: col-resize; touch-action: none; border-radius: 6px; }
-.separator::before { content: ''; position: absolute; inset: 8px 10px; border-radius: 2px; background: var(--rule-strong); }
+.separator::before { content: ''; position: absolute; inset: 8px 10px; border-radius: 2px; background: var(--control-border); }
+/* A 44px hit area around the 24px column, without widening the layout gap. */
+.separator::after { content: ''; position: absolute; inset: 0 -10px; }
 .separator:hover::before, .splitDragging .separator::before { background: var(--accent-line); }
 .separator:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: 0; }
 .splitDragging { user-select: none; }

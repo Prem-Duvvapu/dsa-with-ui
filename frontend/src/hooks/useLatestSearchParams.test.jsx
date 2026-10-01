@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { describe, expect, it } from 'vitest';
-import { MemoryRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { MemoryRouter, Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import useLatestSearchParams from './useLatestSearchParams';
 
 let location;
@@ -60,5 +60,27 @@ describe('useLatestSearchParams', () => {
     act(() => navigateRef('/?q=b'));
     expect(new URLSearchParams(location.search).get('q')).toBe('b');
     expect(screen.getByTestId('q')).toHaveTextContent('b|');
+  });
+
+  it('adopts an external navigation that reuses the location key, as page-load entries do', () => {
+    // Browsers start the page-load entry, and any entry React Router did not create, with
+    // location.key "default". Comparing keys alone missed a navigation between two such
+    // entries, so a same-page link went unnoticed and an old run landed (review B1, in Chromium).
+    const navigator = { replace: () => {}, push: () => {}, go: () => {}, createHref: (to) => String(to) };
+    let seen;
+    function Reader() {
+      const [params] = useLatestSearchParams();
+      seen = params.get('q');
+      return null;
+    }
+    const at = (search) => (
+      <Router location={{ pathname: '/', search, hash: '', state: null, key: 'default' }} navigator={navigator}>
+        <Reader />
+      </Router>
+    );
+    const { rerender } = render(at('?q=first'));
+    expect(seen).toBe('first');
+    rerender(at('?q=second'));
+    expect(seen).toBe('second');
   });
 });
