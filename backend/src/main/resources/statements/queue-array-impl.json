@@ -1,0 +1,34 @@
+{
+  "id": "queue-array-impl",
+  "statement": [
+    "Implement a queue on top of a fixed-size circular array with capacity slots. Two indices track it: front, the slot of the oldest value, and rear, the slot of the newest. Both wrap around to slot 0 after the last slot, so freed slots get reused.",
+    "Process the operations in order. They are given as one string, operations, separated by semicolons. \"enqueue V\" adds V at the rear, or is rejected as an overflow if all capacity slots are in use. \"dequeue\" removes the value at the front, or reports an underflow if the queue is empty. \"front\" reads the front value without removing it.",
+    "After the last operation, return the number of values left in the queue."
+  ],
+  "examples": [
+    {
+      "input": {
+        "capacity": 4,
+        "operations": "enqueue 10;enqueue 20;enqueue 30;front;dequeue;dequeue;enqueue 40;enqueue 50;enqueue 60;enqueue 70"
+      },
+      "output": "4",
+      "answerVariable": "size",
+      "explanation": "Two dequeues remove 10 and 20, leaving 30. 40, 50 and 60 wrap around into the freed slots and fill the ring, so enqueue 70 overflows."
+    },
+    {
+      "input": {
+        "capacity": 3,
+        "operations": "front;enqueue 5;dequeue;dequeue;enqueue 6;enqueue 7;front"
+      },
+      "output": "2",
+      "answerVariable": "size",
+      "explanation": "The first front and the second dequeue find the queue empty. It ends holding 6 and 7, with 6 at the front."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/implement-queue-using-array/1"
+    }
+  ]
+}

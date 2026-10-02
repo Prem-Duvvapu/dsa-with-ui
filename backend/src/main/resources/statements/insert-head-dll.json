@@ -1,0 +1,41 @@
+{
+  "id": "insert-head-dll",
+  "statement": [
+    "A doubly linked list is a chain of nodes where each node has a next pointer to the node after it and a prev pointer to the node before it.",
+    "You are given a non-empty doubly linked list, listed head to tail in values, and an integer value. Insert a new node holding value before the current head: its next pointer must point to the old head, the old head's prev pointer must point back to it, and its own prev pointer is null.",
+    "Return the resulting list, read from the new head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          2,
+          4,
+          6
+        ],
+        "value": 1
+      },
+      "output": "[1, 2, 4, 6]",
+      "answerVariable": "result",
+      "explanation": "The node 1 is linked forward to 2, and 2 is linked back to 1, so 1 becomes the head."
+    },
+    {
+      "input": {
+        "values": [
+          10,
+          20
+        ],
+        "value": 5
+      },
+      "output": "[5, 10, 20]",
+      "answerVariable": "result",
+      "explanation": "5 is placed before 10 with links in both directions."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/insert-node-before-head-in-dll"
+    }
+  ]
+}

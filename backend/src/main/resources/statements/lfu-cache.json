@@ -1,0 +1,49 @@
+{
+  "id": "lfu-cache",
+  "statement": [
+    "Design a cache that holds at most capacity key-value pairs and, when full, evicts the least frequently used key. Every key has a use count: put of a new key sets it to 1, and each later get hit or put to that key adds 1. A get miss returns −1 and changes nothing.",
+    "Process the operations in order. They are given as one string, operations, separated by semicolons, each \"put K V\" or \"get K\". When a new key must be inserted into a full cache, evict the key with the smallest use count; if several keys tie, evict the one among them that was used least recently.",
+    "After the last operation, return the cache contents as a string of entries \"K=V (seen Cx)\", where C is the use count, separated by commas. Entries are listed by increasing use count, and by increasing key when counts are equal."
+  ],
+  "examples": [
+    {
+      "input": {
+        "capacity": 2,
+        "operations": "put 1 1;put 2 2;get 1;put 3 3;get 2;get 3"
+      },
+      "output": "1=1 (seen 2x), 3=3 (seen 2x)",
+      "answerVariable": "contents",
+      "explanation": "get 1 raises key 1 to count 2, so put 3 evicts key 2, which has count 1. get 2 then misses, and get 3 raises key 3 to count 2."
+    },
+    {
+      "input": {
+        "capacity": 3,
+        "operations": "put 1 10;put 2 20;put 1 15;get 1;put 3 30;put 4 40;get 2"
+      },
+      "output": "3=30 (seen 1x), 4=40 (seen 1x), 1=15 (seen 3x)",
+      "answerVariable": "contents",
+      "explanation": "Key 1 is used three times. When key 4 arrives, keys 2 and 3 both have count 1, and key 2 was used less recently, so it is evicted."
+    },
+    {
+      "input": {
+        "capacity": 2,
+        "operations": "put 5 5;put 2 2;put 9 9;get 5;get 2"
+      },
+      "output": "9=9 (seen 1x), 2=2 (seen 2x)",
+      "answerVariable": "contents",
+      "explanation": "Keys 5 and 2 tie at count 1 when key 9 arrives. Key 5 was used less recently, so it is evicted even though its number is larger."
+    }
+  ],
+  "constraints": [
+    "1 ≤ capacity ≤ 10⁴",
+    "0 ≤ key ≤ 10⁵",
+    "0 ≤ value ≤ 10⁹",
+    "At most 2 × 10⁵ calls are made to get and put"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 460",
+      "url": "https://leetcode.com/problems/lfu-cache/"
+    }
+  ]
+}

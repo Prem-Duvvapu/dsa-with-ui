@@ -1,0 +1,40 @@
+{
+  "id": "infix-to-prefix",
+  "statement": [
+    "You are given an infix expression, expression, in which each operator sits between its two operands and parentheses may group sub-expressions. Operands are single uppercase letters A to Z. The operators are +, −, *, / and ^, all binary.",
+    "Convert it to prefix notation, where each operator comes before its two operands and no parentheses are needed. Use the usual precedence: ^ binds tightest, then * and /, then + and −. Operators of equal precedence group left to right, except ^, which groups right to left.",
+    "Return the prefix expression as a string with no spaces."
+  ],
+  "examples": [
+    {
+      "input": {
+        "expression": "A+B*C"
+      },
+      "output": "+A*BC",
+      "answerVariable": "answer",
+      "explanation": "B*C binds first and becomes *BC; adding A in front of it gives +A*BC."
+    },
+    {
+      "input": {
+        "expression": "(A-B)*(C+D)"
+      },
+      "output": "*-AB+CD",
+      "answerVariable": "answer",
+      "explanation": "Each parenthesised group becomes its own prefix term, −AB and +CD, and the multiplication applies to both."
+    },
+    {
+      "input": {
+        "expression": "A-B-C"
+      },
+      "output": "--ABC",
+      "answerVariable": "answer",
+      "explanation": "Subtraction groups left to right, so this is (A−B)−C, whose prefix form puts the outer − first: − (−AB) C."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/convert-infix-prefix-notation/"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "pairs-given-sum-dll",
+  "statement": [
+    "You are given a doubly linked list whose values, listed head to tail in values, are sorted in increasing order and distinct, and an integer target.",
+    "Find every pair of nodes whose values add up to target. Because the list is sorted, this can be done with one pointer moving forward from the head and one moving backward from the tail.",
+    "Return the pairs as [smaller, larger], ordered by their smaller value."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "target": 7
+      },
+      "output": "[[1, 6], [2, 5], [3, 4]]",
+      "answerVariable": "result",
+      "explanation": "1 + 6, 2 + 5 and 3 + 4 all equal 7; the two pointers meet after the third pair."
+    },
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "target": 10
+      },
+      "output": "[[2, 8]]",
+      "answerVariable": "result",
+      "explanation": "Only 2 + 8 makes 10: 1 + 8 is too small, and 4 + 8 is too large."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/find-pairs-with-given-sum-in-doubly-linked-list/1"
+    }
+  ]
+}

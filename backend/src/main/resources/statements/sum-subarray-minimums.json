@@ -1,0 +1,46 @@
+{
+  "id": "sum-subarray-minimums",
+  "statement": [
+    "You are given an integer array nums.",
+    "Consider every contiguous subarray of nums and take its minimum element. Add all of these minimums together.",
+    "Return the sum modulo 10⁹ + 7."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          71,
+          55,
+          82,
+          55
+        ]
+      },
+      "output": "593",
+      "answerVariable": "answer",
+      "explanation": "Of the ten subarrays, only [71] and [82] have a minimum other than 55: 71 + 82 + 8 × 55 = 593."
+    },
+    {
+      "input": {
+        "nums": [
+          3,
+          1,
+          2,
+          4
+        ]
+      },
+      "output": "17",
+      "answerVariable": "answer",
+      "explanation": "The single elements give 3 + 1 + 2 + 4 = 10. The pairs give 1 + 1 + 2 = 4, the triples 1 + 1 = 2, and the whole array 1, for 17 in total."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 3 × 10⁴",
+    "1 ≤ nums[i] ≤ 3 × 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 907",
+      "url": "https://leetcode.com/problems/sum-of-subarray-minimums/"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "palindrome-ll",
+  "statement": [
+    "You are given a non-empty singly linked list whose node values, read from head to tail, are listed in values.",
+    "The list is a palindrome if reading the values from tail to head gives the same sequence as reading them from head to tail.",
+    "Return true if the list is a palindrome, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          2,
+          1
+        ]
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "The first half 1, 2 mirrors the second half 2, 1 around the middle value 3."
+    },
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          4,
+          3
+        ]
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "The first value 1 does not equal the last value 3, so the list is not a palindrome."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [1, 10⁵]",
+    "0 ≤ Node.val ≤ 9"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 234",
+      "url": "https://leetcode.com/problems/palindrome-linked-list/"
+    }
+  ]
+}

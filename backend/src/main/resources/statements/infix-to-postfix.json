@@ -1,0 +1,32 @@
+{
+  "id": "infix-to-postfix",
+  "statement": [
+    "You are given an infix expression, expression, in which each operator sits between its two operands and parentheses may group sub-expressions. Operands are single uppercase letters A to Z. The operators are +, −, *, / and ^, all binary.",
+    "Convert it to postfix notation, where each operator comes after its two operands and no parentheses are needed. Use the usual precedence: ^ binds tightest, then * and /, then + and −. Operators of equal precedence group left to right, except ^, which groups right to left.",
+    "Return the postfix expression as a string with no spaces."
+  ],
+  "examples": [
+    {
+      "input": {
+        "expression": "A+B*C-D"
+      },
+      "output": "ABC*+D-",
+      "answerVariable": "answer",
+      "explanation": "B*C is evaluated first, then A is added to it, then D is subtracted, giving A B C * + D −."
+    },
+    {
+      "input": {
+        "expression": "(A+B)*(C-D)"
+      },
+      "output": "AB+CD-*",
+      "answerVariable": "answer",
+      "explanation": "The parentheses make both sums happen before the multiplication, so * comes last."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/infix-to-postfix-1587115620/1"
+    }
+  ]
+}

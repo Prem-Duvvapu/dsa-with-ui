@@ -1,0 +1,41 @@
+{
+  "id": "insert-head-ll",
+  "statement": [
+    "You are given a singly linked list, listed head to tail in values, and an integer value.",
+    "Insert a new node holding value at the front of the list, so that it becomes the new head and its next pointer points to the old head.",
+    "Return the resulting list, read from the new head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          2,
+          3,
+          4
+        ],
+        "value": 1
+      },
+      "output": "[1, 2, 3, 4]",
+      "answerVariable": "result",
+      "explanation": "A node holding 1 is created and pointed at the old head 2; none of the existing nodes move."
+    },
+    {
+      "input": {
+        "values": [
+          8,
+          9
+        ],
+        "value": 7
+      },
+      "output": "[7, 8, 9]",
+      "answerVariable": "result",
+      "explanation": "The new node 7 is linked in front of 8 and becomes the head."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/insertion-at-the-head-of-ll"
+    }
+  ]
+}

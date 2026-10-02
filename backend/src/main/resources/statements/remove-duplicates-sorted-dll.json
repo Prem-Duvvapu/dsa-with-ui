@@ -1,0 +1,45 @@
+{
+  "id": "remove-duplicates-sorted-dll",
+  "statement": [
+    "You are given a doubly linked list whose values, listed head to tail in values, are sorted in non-decreasing order. Each node has a next pointer and a prev pointer.",
+    "Remove nodes so that each value appears only once. Since the list is sorted, equal values sit next to each other: keep the first node of each run and unlink the rest, repairing the links in both directions.",
+    "Return the resulting list, read from its head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          1,
+          2,
+          3,
+          3,
+          4
+        ]
+      },
+      "output": "[1, 2, 3, 4]",
+      "answerVariable": "result",
+      "explanation": "One extra 1 and one extra 3 are unlinked, so two nodes are removed."
+    },
+    {
+      "input": {
+        "values": [
+          2,
+          2,
+          2,
+          5,
+          5
+        ]
+      },
+      "output": "[2, 5]",
+      "answerVariable": "result",
+      "explanation": "Two extra 2s and one extra 5 are removed, leaving one node of each value."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/remove-duplicates-from-a-sorted-doubly-linked-list/1"
+    }
+  ]
+}

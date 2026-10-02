@@ -1,0 +1,119 @@
+{
+  "id": "flattening-ll",
+  "statement": [
+    "You are given a multilevel doubly linked list. Besides next and prev, every node may have a child pointer to the head of a separate list, and nodes in that list may have children of their own.",
+    "The structure is given as a graph in structure. Vertex i is a node holding the value i + 1, and vertex 0 is the head. An edge [from, to, 0] means to is from's next node; an edge [from, to, 1] means to is the head of from's child list.",
+    "Flatten everything into a single-level list. Whenever a node has a child list, the whole flattened child list goes right after that node and before the node's original next. Child pointers are cleared.",
+    "Return the node values of the flattened list in order, as a comma-separated string."
+  ],
+  "examples": [
+    {
+      "input": {
+        "structure": {
+          "vertices": 12,
+          "edges": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              2,
+              0
+            ],
+            [
+              2,
+              3,
+              0
+            ],
+            [
+              3,
+              4,
+              0
+            ],
+            [
+              4,
+              5,
+              0
+            ],
+            [
+              6,
+              7,
+              0
+            ],
+            [
+              7,
+              8,
+              0
+            ],
+            [
+              8,
+              9,
+              0
+            ],
+            [
+              10,
+              11,
+              0
+            ],
+            [
+              2,
+              6,
+              1
+            ],
+            [
+              7,
+              10,
+              1
+            ]
+          ]
+        }
+      },
+      "output": "1,2,3,7,8,11,12,9,10,4,5,6",
+      "answerVariable": "result",
+      "explanation": "The top level is 1 to 6, node 3 has the child list 7 to 10, and node 8 has the child list 11 to 12. Node 8's child goes right after 8, and the whole child list of 3 goes before 4."
+    },
+    {
+      "input": {
+        "structure": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              2,
+              0
+            ],
+            [
+              3,
+              4,
+              0
+            ],
+            [
+              0,
+              3,
+              1
+            ]
+          ]
+        }
+      },
+      "output": "1,4,5,2,3",
+      "answerVariable": "result",
+      "explanation": "The head 1 has the child list 4 → 5, which is spliced in between 1 and its original next, 2."
+    }
+  ],
+  "constraints": [
+    "The number of nodes does not exceed 1000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 430",
+      "url": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "search-ll",
+  "statement": [
+    "You are given a singly linked list, listed head to tail in values, and an integer target.",
+    "Walk the list from the head and compare each node's value with target, stopping at the first match.",
+    "Return the 0-based position of the first node whose value equals target, or −1 if no node holds target."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          10,
+          20,
+          30,
+          40
+        ],
+        "target": 30
+      },
+      "output": "2",
+      "answerVariable": "result",
+      "explanation": "10 and 20 do not match; the node at position 2 holds 30, so the search stops there."
+    },
+    {
+      "input": {
+        "values": [
+          7,
+          8,
+          9
+        ],
+        "target": 6
+      },
+      "output": "-1",
+      "answerVariable": "result",
+      "explanation": "None of 7, 8 or 9 equals 6, so the walk reaches null and the answer is −1."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/search-in-linked-list-1664434326/1"
+    }
+  ]
+}

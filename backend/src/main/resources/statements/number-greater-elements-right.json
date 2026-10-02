@@ -1,0 +1,46 @@
+{
+  "id": "number-greater-elements-right",
+  "statement": [
+    "You are given an integer array nums.",
+    "For each position i, count the elements to the right of i, at positions greater than i, whose value is strictly greater than nums[i]. They do not need to be adjacent or consecutive.",
+    "Return an array of the same length holding that count for every position. The original problem asks this for a list of query positions; here every position is queried."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          3,
+          4,
+          2,
+          7,
+          5,
+          8,
+          10,
+          6
+        ]
+      },
+      "output": "[6, 5, 5, 2, 3, 1, 0, 0]",
+      "answerVariable": "answer",
+      "explanation": "All six values after 3 are larger than it. After 7, only 8 and 10 are larger, and after 8 only 10 is."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          5,
+          5,
+          5
+        ]
+      },
+      "output": "[0, 0, 0, 0]",
+      "answerVariable": "answer",
+      "explanation": "Equal values do not count as greater, so every count is 0."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/number-of-nges-to-the-right/1"
+    }
+  ]
+}

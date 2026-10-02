@@ -1,0 +1,34 @@
+{
+  "id": "stack-array-impl",
+  "statement": [
+    "Implement a stack on top of a fixed-size array with capacity slots. A single index, top, marks the last filled slot; it starts at −1, meaning the stack is empty.",
+    "Process the operations in order. They are given as one string, operations, separated by semicolons. \"push V\" stores V in the next slot, or is rejected as an overflow if all capacity slots are full. \"pop\" removes the top value, or reports an underflow if the stack is empty. \"peek\" reads the top value without removing it.",
+    "After the last operation, return the number of values left on the stack, which is top + 1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "capacity": 4,
+        "operations": "push 10;push 20;push 30;peek;pop;pop;push 40;push 50;push 60;push 70"
+      },
+      "output": "4",
+      "answerVariable": "size",
+      "explanation": "After two pops only 10 remains. 40, 50 and 60 fill the array back to 4 values, so push 70 overflows and is rejected."
+    },
+    {
+      "input": {
+        "capacity": 2,
+        "operations": "peek;push 7;pop;pop;push 8;push 9;peek"
+      },
+      "output": "2",
+      "answerVariable": "size",
+      "explanation": "The first peek and the second pop find the stack empty. It ends holding 8 and 9, with 9 on top."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/implement-stack-using-array/1"
+    }
+  ]
+}

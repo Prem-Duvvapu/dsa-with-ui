@@ -1,0 +1,40 @@
+{
+  "id": "delete-head-ll",
+  "statement": [
+    "You are given a non-empty singly linked list, listed head to tail in values.",
+    "Delete the first node: move the head to the second node and detach the old head. If the list has only one node, the result is empty.",
+    "Return the resulting list, read from the new head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "output": "[2, 3, 4]",
+      "answerVariable": "result",
+      "explanation": "The head 1 is removed, so the list now starts at 2."
+    },
+    {
+      "input": {
+        "values": [
+          9,
+          8
+        ]
+      },
+      "output": "[8]",
+      "answerVariable": "result",
+      "explanation": "Removing 9 leaves the single node 8."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/deletion-of-the-head-of-ll"
+    }
+  ]
+}

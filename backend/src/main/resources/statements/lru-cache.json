@@ -1,0 +1,49 @@
+{
+  "id": "lru-cache",
+  "statement": [
+    "Design a cache that holds at most capacity key-value pairs and evicts the least recently used key when it is full.",
+    "Process the operations in order. They are given as one string, operations, separated by semicolons. \"get K\" returns the value of key K, or −1 if K is not cached, and a hit counts as using K. \"put K V\" stores V under K and also counts as using K. If K is new and the cache is already full, the key that was used least recently is evicted first.",
+    "After the last operation, return the keys still in the cache, ordered from most recently used to least recently used."
+  ],
+  "examples": [
+    {
+      "input": {
+        "capacity": 2,
+        "operations": "put 1 1;put 2 2;get 1;put 3 3;get 2;put 4 4;get 1;get 3;get 4"
+      },
+      "output": "[4, 3]",
+      "answerVariable": "order",
+      "explanation": "put 3 evicts key 2 because key 1 was read more recently, and put 4 then evicts key 1. The final gets touch 3 and then 4, so 4 is the most recent."
+    },
+    {
+      "input": {
+        "capacity": 3,
+        "operations": "put 1 10;put 2 20;put 3 30;get 2;put 4 40;get 1;put 5 50;get 3;get 4;get 5;put 2 99;get 2"
+      },
+      "output": "[2, 5, 4]",
+      "answerVariable": "order",
+      "explanation": "put 4 evicts key 1 and put 5 evicts key 3. put 2 99 updates key 2 in place, which makes it the most recently used."
+    },
+    {
+      "input": {
+        "capacity": 1,
+        "operations": "put 2 1;get 2;put 3 2;get 2;get 3"
+      },
+      "output": "[3]",
+      "answerVariable": "order",
+      "explanation": "With room for one key, put 3 evicts key 2, so the later get 2 misses and only key 3 remains."
+    }
+  ],
+  "constraints": [
+    "1 ≤ capacity ≤ 3000",
+    "0 ≤ key ≤ 10⁴",
+    "0 ≤ value ≤ 10⁵",
+    "At most 2 × 10⁵ calls are made to get and put"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 146",
+      "url": "https://leetcode.com/problems/lru-cache/"
+    }
+  ]
+}

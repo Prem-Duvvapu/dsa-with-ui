@@ -1,0 +1,48 @@
+{
+  "id": "find-starting-point-loop",
+  "statement": [
+    "You are given a singly linked list whose node values, read from head to tail, are listed in values. If loopPos is −1 the tail points to null; otherwise the tail's next pointer goes back to the node at 0-based position loopPos.",
+    "The algorithm sees only the head. If the list has a loop, find the node where the loop begins: the first node you reach from the head that is part of the loop.",
+    "Return the value of that node, or null if the list has no loop."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          3,
+          2,
+          0,
+          -4
+        ],
+        "loopPos": 1
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "The tail −4 links back to the node at position 1, so the loop is 2 → 0 → −4 → 2 and it begins at the node holding 2."
+    },
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3
+        ],
+        "loopPos": -1
+      },
+      "output": "null",
+      "answerVariable": "answer",
+      "explanation": "The tail points to null, so there is no loop and no starting node."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [0, 10⁴]",
+    "−10⁵ ≤ Node.val ≤ 10⁵",
+    "loopPos is −1 or a valid index in the list"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 142",
+      "url": "https://leetcode.com/problems/linked-list-cycle-ii/"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "next-smaller-element",
+  "statement": [
+    "You are given an integer array nums.",
+    "For each element, its next smaller element is the first element to its right that is strictly smaller than it. If there is no such element, the answer for that position is −1.",
+    "Return an array of the same length holding the next smaller element for every position."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          4,
+          5,
+          2,
+          10,
+          8
+        ]
+      },
+      "output": "[2, 2, -1, 8, -1]",
+      "answerVariable": "answer",
+      "explanation": "Both 4 and 5 first meet a smaller value at 2. 10 is followed by the smaller 8. Nothing to the right of 2 or of 8 is smaller."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "output": "[4, 3, 2, 1, -1]",
+      "answerVariable": "answer",
+      "explanation": "The array is strictly decreasing, so each element's answer is its right neighbour; the last element has none."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/next-smaller-element/"
+    }
+  ]
+}

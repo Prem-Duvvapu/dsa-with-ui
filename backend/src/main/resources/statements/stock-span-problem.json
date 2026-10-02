@@ -1,0 +1,49 @@
+{
+  "id": "stock-span-problem",
+  "statement": [
+    "You are given an array prices, where prices[i] is a stock's price on day i.",
+    "The span of day i is the number of consecutive days ending on day i, counting day i itself and going backwards, on which the price was less than or equal to prices[i].",
+    "Return the span of every day."
+  ],
+  "examples": [
+    {
+      "input": {
+        "prices": [
+          100,
+          80,
+          60,
+          70,
+          60,
+          75,
+          85
+        ]
+      },
+      "output": "[1, 1, 1, 2, 1, 4, 6]",
+      "answerVariable": "answer",
+      "explanation": "On day 5 the price 75 is at least the prices of days 2 to 5, giving span 4. On day 6, 85 covers every day back to day 1, giving span 6."
+    },
+    {
+      "input": {
+        "prices": [
+          10,
+          20,
+          30,
+          40
+        ]
+      },
+      "output": "[1, 2, 3, 4]",
+      "answerVariable": "answer",
+      "explanation": "The price rises every day, so each span reaches back to day 0."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/stock-span-problem-1587115621/1"
+    },
+    {
+      "label": "LeetCode 901",
+      "url": "https://leetcode.com/problems/online-stock-span/"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "reverse-ll-recursive",
+  "statement": [
+    "You are given a non-empty singly linked list, listed head to tail in values.",
+    "Reverse the list using recursion: reverse everything after the head first, then, as the calls return, make each node's successor point back to it and clear the node's own next pointer.",
+    "Return the reversed list, read from its new head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "output": "[4, 3, 2, 1]",
+      "answerVariable": "result",
+      "explanation": "The recursion reaches the tail 4, which becomes the new head; each return then flips one link."
+    },
+    {
+      "input": {
+        "values": [
+          7,
+          8,
+          9
+        ]
+      },
+      "output": "[9, 8, 7]",
+      "answerVariable": "result",
+      "explanation": "The tail 9 is the base case and becomes the head; unwinding reverses the links 8→9 and 7→8."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [0, 5000]",
+    "−5000 ≤ Node.val ≤ 5000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 206",
+      "url": "https://leetcode.com/problems/reverse-linked-list/"
+    }
+  ]
+}

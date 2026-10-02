@@ -1,0 +1,48 @@
+{
+  "id": "remove-k-digits",
+  "statement": [
+    "You are given a string num holding a non-negative integer and an integer k.",
+    "Remove exactly k digits from num, keeping the remaining digits in their original order, so that the number left is as small as possible.",
+    "Return that number as a string without leading zeros. If nothing remains, return \"0\"."
+  ],
+  "examples": [
+    {
+      "input": {
+        "num": "1432219",
+        "k": 3
+      },
+      "output": "1219",
+      "answerVariable": "answer",
+      "explanation": "Removing 4, 3 and the first 2 leaves 1219, the smallest number you can get."
+    },
+    {
+      "input": {
+        "num": "12345",
+        "k": 2
+      },
+      "output": "123",
+      "answerVariable": "answer",
+      "explanation": "The digits already increase, so the best choice is to drop the last two."
+    },
+    {
+      "input": {
+        "num": "10200",
+        "k": 1
+      },
+      "output": "200",
+      "answerVariable": "answer",
+      "explanation": "Removing the leading 1 leaves 0200, and the leading zero is dropped."
+    }
+  ],
+  "constraints": [
+    "1 ≤ k ≤ num.length ≤ 10⁵",
+    "num consists of digits only",
+    "num has no leading zeros, except for the number 0 itself"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 402",
+      "url": "https://leetcode.com/problems/remove-k-digits/"
+    }
+  ]
+}

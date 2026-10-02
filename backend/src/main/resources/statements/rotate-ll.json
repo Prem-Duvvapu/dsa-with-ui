@@ -1,0 +1,63 @@
+{
+  "id": "rotate-ll",
+  "statement": [
+    "You are given a non-empty singly linked list, listed head to tail in values, and a non-negative integer k.",
+    "Rotate the list to the right by k places. One rotation moves the tail node to the front. Rotating by the list's length gives back the original list, so only k modulo the length matters.",
+    "Return the rotated list, read from its new head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "k": 2
+      },
+      "output": "[4, 5, 1, 2, 3]",
+      "answerVariable": "result",
+      "explanation": "The last two nodes, 4 and 5, move to the front in their original order."
+    },
+    {
+      "input": {
+        "values": [
+          10,
+          20,
+          30,
+          40
+        ],
+        "k": 1
+      },
+      "output": "[40, 10, 20, 30]",
+      "answerVariable": "result",
+      "explanation": "One rotation moves the tail 40 to the head."
+    },
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3
+        ],
+        "k": 4
+      },
+      "output": "[3, 1, 2]",
+      "answerVariable": "result",
+      "explanation": "The list has 3 nodes, so rotating by 4 is the same as rotating by 4 mod 3 = 1."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [0, 500]",
+    "−100 ≤ Node.val ≤ 100",
+    "0 ≤ k ≤ 2 × 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 61",
+      "url": "https://leetcode.com/problems/rotate-list/"
+    }
+  ]
+}

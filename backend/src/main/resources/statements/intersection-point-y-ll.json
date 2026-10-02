@@ -1,0 +1,55 @@
+{
+  "id": "intersection-point-y-ll",
+  "statement": [
+    "Two singly linked lists merge into a Y shape: they start separately and, from some node on, share every remaining node. The input describes them in three parts. The first list is the nodes of prefixA followed by the nodes of sharedTail. The second list is the nodes of prefixB followed by the same sharedTail nodes, not copies of them.",
+    "The algorithm is given only the two heads. Find the intersection point: the first node that belongs to both lists. Nodes are compared by identity, not by value, so two separate nodes that happen to hold equal values do not count.",
+    "Return the value stored in the intersection node."
+  ],
+  "examples": [
+    {
+      "input": {
+        "prefixA": [
+          4,
+          1
+        ],
+        "prefixB": [
+          5,
+          6,
+          1
+        ],
+        "sharedTail": [
+          8,
+          4,
+          5
+        ]
+      },
+      "output": "8",
+      "answerVariable": "result",
+      "explanation": "The lists are 4 → 1 → 8 → 4 → 5 and 5 → 6 → 1 → 8 → 4 → 5. The node holding 1 appears in both prefixes but as two different nodes; the first shared node is the one holding 8."
+    },
+    {
+      "input": {
+        "prefixA": [
+          2
+        ],
+        "prefixB": [
+          3,
+          7
+        ],
+        "sharedTail": [
+          9,
+          10
+        ]
+      },
+      "output": "9",
+      "answerVariable": "result",
+      "explanation": "The lists are 2 → 9 → 10 and 3 → 7 → 9 → 10, and they first meet at the node holding 9."
+    }
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 160",
+      "url": "https://leetcode.com/problems/intersection-of-two-linked-lists/"
+    }
+  ]
+}

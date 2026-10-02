@@ -1,0 +1,43 @@
+{
+  "id": "next-greater-element-1",
+  "statement": [
+    "You are given an integer array nums.",
+    "For each element, its next greater element is the first element to its right that is strictly greater than it. If no such element exists, the answer for that position is −1.",
+    "Return an array of the same length holding the next greater element for every position."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          4,
+          5,
+          2,
+          10,
+          8
+        ]
+      },
+      "output": "[5, 10, 10, -1, -1]",
+      "answerVariable": "answer",
+      "explanation": "5 is the first value right of 4 that beats it, and 10 is the first that beats 5 and 2. Nothing to the right of 10 or 8 is larger."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "output": "[2, 3, 4, -1]",
+      "answerVariable": "answer",
+      "explanation": "The array is increasing, so each element's answer is its right neighbour; the last element has none."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1"
+    }
+  ]
+}

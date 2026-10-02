@@ -1,0 +1,52 @@
+{
+  "id": "add-two-numbers-ll",
+  "statement": [
+    "You are given two non-negative integers, each stored in a singly linked list with one decimal digit per node. The digits are stored in reverse order: the head holds the least significant digit. Their digits, head to tail, are listed in a and b.",
+    "Add the two numbers, digit by digit with a carry.",
+    "Return the digits of the sum in the same reverse order, least significant digit first."
+  ],
+  "examples": [
+    {
+      "input": {
+        "a": [
+          2,
+          4,
+          3
+        ],
+        "b": [
+          5,
+          6,
+          4
+        ]
+      },
+      "output": "[7, 0, 8]",
+      "answerVariable": "result",
+      "explanation": "The lists stand for 342 and 465. Their sum is 807, which is written in reverse as 7, 0, 8."
+    },
+    {
+      "input": {
+        "a": [
+          9,
+          9
+        ],
+        "b": [
+          1
+        ]
+      },
+      "output": "[0, 0, 1]",
+      "answerVariable": "result",
+      "explanation": "99 + 1 = 100. The carry runs past the end of both lists, so the sum has one more digit than either input."
+    }
+  ],
+  "constraints": [
+    "The number of nodes in each list is in the range [1, 100]",
+    "0 ≤ Node.val ≤ 9",
+    "Neither number has leading zeros"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 2",
+      "url": "https://leetcode.com/problems/add-two-numbers/"
+    }
+  ]
+}

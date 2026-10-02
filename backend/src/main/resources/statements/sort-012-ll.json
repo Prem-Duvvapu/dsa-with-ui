@@ -1,0 +1,44 @@
+{
+  "id": "sort-012-ll",
+  "statement": [
+    "You are given a non-empty singly linked list whose node values, read from head to tail, are listed in values. Every value is 0, 1 or 2.",
+    "Rearrange the list so that all 0s come first, then all 1s, then all 2s.",
+    "Return the rearranged list, read from its head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          0,
+          1,
+          2,
+          0
+        ]
+      },
+      "output": "[0, 0, 1, 1, 2, 2]",
+      "answerVariable": "result",
+      "explanation": "The list holds two of each value, so it becomes two 0s, then two 1s, then two 2s."
+    },
+    {
+      "input": {
+        "values": [
+          2,
+          1,
+          0,
+          2
+        ]
+      },
+      "output": "[0, 1, 2, 2]",
+      "answerVariable": "result",
+      "explanation": "There is one 0, one 1 and two 2s."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1"
+    }
+  ]
+}
