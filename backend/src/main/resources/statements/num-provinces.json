@@ -1,0 +1,34 @@
+{
+  "id": "num-provinces",
+  "statement": [
+    "There are n cities, numbered 0 to n − 1. Some pairs of cities are linked by a direct connection and some are not.",
+    "Connections carry through: if city a is directly connected to city b, and city b is directly connected to city c, then a and c are connected indirectly.",
+    "A province is a group of cities that are all connected to one another, directly or indirectly, and to no city outside the group.",
+    "You are given the n × n matrix isConnected, where isConnected[i][j] is 1 when city i and city j are directly connected and 0 otherwise. Return the number of provinces."
+  ],
+  "examples": [
+    {
+      "input": { "isConnected": [[1, 1, 0], [1, 1, 0], [0, 0, 1]] },
+      "output": "2",
+      "answerVariable": "numOfProvinces",
+      "explanation": "Cities 0 and 1 are connected to each other and form one province. City 2 has no connection to either, so it is a province on its own."
+    },
+    {
+      "input": { "isConnected": [[1, 0, 0], [0, 1, 0], [0, 0, 1]] },
+      "output": "3",
+      "answerVariable": "numOfProvinces",
+      "explanation": "No two cities are connected, so each of the three cities is its own province."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 200",
+    "n == isConnected.length == isConnected[i].length",
+    "isConnected[i][j] is 0 or 1",
+    "isConnected[i][i] == 1",
+    "isConnected[i][j] == isConnected[j][i]"
+  ],
+  "sources": [
+    { "label": "LeetCode 547", "url": "https://leetcode.com/problems/number-of-provinces/" },
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/number-of-provinces/1" }
+  ]
+}

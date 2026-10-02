@@ -124,6 +124,37 @@ describe('Page footer', () => {
   });
 });
 
+describe('Full problem statement', () => {
+  it('shows the written statement, worked examples, constraints and the original problem links', async () => {
+    const withStatement = {
+      ...ARRAY,
+      statement: ['There are n cities. Some are connected.', 'Return the number of provinces.'],
+      examples: [{ input: { isConnected: [[1, 1], [1, 1]] }, output: '1', explanation: 'Both cities are connected.' }],
+      constraints: ['1 ≤ n ≤ 200'],
+      sources: [{ label: 'LeetCode 547', url: 'https://leetcode.com/problems/number-of-provinces/' }, { label: 'Unsafe', url: 'javascript:alert(1)' }]
+    };
+    vi.stubGlobal('fetch', vi.fn((url, opts = {}) => {
+      if (url === '/api/problems') return Promise.resolve(ok([withStatement]));
+      if (url === '/api/problems/alpha') return Promise.resolve(ok(withStatement));
+      return Promise.resolve(ok(trace('alpha', 3)));
+    }));
+    renderAt('/problem/alpha');
+    await screen.findByText('alpha n=3 step 1');
+    expect(screen.getByText('There are n cities.')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Problem & examples'));
+    expect(screen.getByText('Return the number of provinces.')).toBeInTheDocument();
+    const example = screen.getByText('Example 1').closest('figure');
+    expect(example).toHaveTextContent('Input: isConnected = [[1,1],[1,1]]');
+    expect(example).toHaveTextContent('Output: 1');
+    expect(example).toHaveTextContent('Explanation: Both cities are connected.');
+    expect(screen.getByText('1 ≤ n ≤ 200')).toBeInTheDocument();
+    const link = screen.getByRole('link', { name: 'LeetCode 547' });
+    expect(link).toHaveAttribute('href', 'https://leetcode.com/problems/number-of-provinces/');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(screen.queryByRole('link', { name: 'Unsafe' })).not.toBeInTheDocument();
+  });
+});
+
 describe('Workspace: one session above every view', () => {
   it('keeps the run, the step and the draft across views, with no extra execution', async () => {
     await openAlpha();

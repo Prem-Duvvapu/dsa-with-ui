@@ -59,6 +59,11 @@ function firstSentence(text) {
   return match ? match[0] : trimmed;
 }
 
+/** "isConnected = [[1,1,0],[1,1,0],[0,0,1]]" - an example's input as the problem names it. */
+function formatExampleInput(input) {
+  return Object.entries(input ?? {}).map(([name, value]) => `${name} = ${JSON.stringify(value)}`).join(', ');
+}
+
 function prefersReducedMotion() {
   try {
     return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
@@ -197,6 +202,16 @@ export default function ProblemWorkspace() {
     clearTimeout(copyTimer.current);
     copyTimer.current = setTimeout(() => setCopyState('idle'), 2500);
   };
+
+  // The full statement when one has been written (own words, examples proven against the
+  // tracer by StatementContractTest); otherwise the catalogue's short description.
+  const paragraphs = Array.isArray(problem?.statement) && problem.statement.length > 0
+    ? problem.statement
+    : (problem?.description ? [problem.description] : []);
+  const examples = Array.isArray(problem?.examples) ? problem.examples : [];
+  const sources = Array.isArray(problem?.sources)
+    ? problem.sources.filter((source) => typeof source?.url === 'string' && source.url.startsWith('https://'))
+    : [];
 
   const dsType = currentStep?.dsType || problem?.dsType || '';
   const stage = stageFor(dsType);
@@ -408,19 +423,38 @@ export default function ProblemWorkspace() {
               </button>
             </div>
           </div>
-          {firstSentence(problem?.description) && <p className={styles.summary}>{firstSentence(problem.description)}</p>}
+          {firstSentence(paragraphs[0]) && <p className={styles.summary}>{firstSentence(paragraphs[0])}</p>}
 
           <div className={styles.contextRow}>
-            {(problem?.description || problem?.constraints?.length > 0) && (
+            {(paragraphs.length > 0 || problem?.constraints?.length > 0) && (
               <details className={styles.statement}>
                 <summary>Problem &amp; examples</summary>
                 <div className={styles.statementBody}>
-                  {problem?.description && <p>{problem.description}</p>}
+                  {paragraphs.map((text) => <p key={text}>{text}</p>)}
+                  {examples.map((example, index) => (
+                    <figure key={index} className={styles.example}>
+                      <figcaption>Example {index + 1}</figcaption>
+                      <p><strong>Input:</strong> <code>{formatExampleInput(example.input)}</code></p>
+                      <p><strong>Output:</strong> <code>{example.output}</code></p>
+                      {example.explanation && <p><strong>Explanation:</strong> {example.explanation}</p>}
+                    </figure>
+                  ))}
                   {problem?.constraints?.length > 0 && (
                     <>
                       <p className={styles.constraintsLabel}>Problem constraints <span>(the original problem's, not this visualizer's input limits)</span></p>
                       <ul className={styles.constraints}>{problem.constraints.map((c) => <li key={c}>{c}</li>)}</ul>
                     </>
+                  )}
+                  {sources.length > 0 && (
+                    <p className={styles.sources}>
+                      Original problem:{' '}
+                      {sources.map((source, index) => (
+                        <React.Fragment key={source.url}>
+                          {index > 0 && ' · '}
+                          <a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>
+                        </React.Fragment>
+                      ))}
+                    </p>
                   )}
                 </div>
               </details>
