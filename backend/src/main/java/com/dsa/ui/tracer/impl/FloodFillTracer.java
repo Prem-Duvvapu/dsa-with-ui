@@ -10,17 +10,26 @@ import java.util.*;
  * Flood Fill (LeetCode 733): recolour the pixel at (sr, sc) and every pixel reachable from
  * it through 4-directional neighbours that share its ORIGINAL colour.
  *
- * <p>Two details decide whether an implementation is correct, and both are visible here.
- * The colour compared against is the start pixel's colour read once up front - reading
- * {@code image[r][c]} again after painting would compare against the new colour and stop
- * immediately. And when the new colour already equals the start colour there is nothing to
- * do: painting would leave every neighbour still "matching", so the fill would revisit
- * cells forever. That guard is a branch of the algorithm, not an optimisation.
+ * <p>The code is the owner's own accepted submission, traced as written: copy the image into
+ * {@code res}, then a recursive DFS over {@code dRow}/{@code dCol}. It is already optimal -
+ * O(m*n) time, each pixel painted at most once.
+ *
+ * <p>Two details decide whether it is correct, and both are visible. The colour compared
+ * against is the start pixel's colour, passed down once as {@code initialColor} - comparing
+ * against the cell after painting would stop immediately. And when the new colour already
+ * equals the start colour there is nothing to do: painting would leave every neighbour still
+ * "matching", so the DFS would recurse forever. That guard is a branch of the algorithm, not
+ * an optimisation.
+ *
+ * <p>The input field keeps its published name {@code newColor} so shared links still resolve;
+ * the code calls it {@code color}, and the steps use the code's names.
  */
 @Component
 public class FloodFillTracer implements AlgorithmTracer {
 
-    private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    // The code's own direction order: up, right, down, left.
+    private static final int[] D_ROW = {-1, 0, 1, 0};
+    private static final int[] D_COL = {0, 1, 0, -1};
 
     @Override
     public String id() {
@@ -60,7 +69,7 @@ public class FloodFillTracer implements AlgorithmTracer {
                         .defaultValue(1)
                         .build(),
                 InputField.of("newColor", FieldType.INT)
-                        .label("New colour")
+                        .label("New colour (color)")
                         .help("The colour painted over the connected region.")
                         .range(0, 9)
                         .defaultValue(2)
@@ -86,108 +95,118 @@ public class FloodFillTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-                   // @a start
-                   int startColor = image[sr][sc];
-                   if (startColor == newColor) {
-                       // @a alreadyPainted
-                       return image;
+               class Solution {
+                   public static int[] dRow = {-1,0,1,0};
+                   public static int[] dCol = {0,1,0,-1};
+
+                   public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+                       // @a init
+                       int m = image.length;
+                       int n = image[0].length;
+                       int[][] res = new int[m][n];
+
+                       for (int i=0;i<m;i++)
+                           for (int j=0;j<n;j++)
+                               res[i][j] = image[i][j];
+
+                       // @a same
+                       if (image[sr][sc] == color)
+                           return image;
+
+                       // @a start
+                       dfs(sr,sc,res[sr][sc],color,res,m,n);
+
+                       // @a done
+                       return res;
                    }
 
-                   Deque<int[]> stack = new ArrayDeque<>();
-                   stack.push(new int[]{sr, sc});
-                   image[sr][sc] = newColor;
+                   private void dfs(int r,int c,int initialColor,int finalColor,int[][] res,int m,int n) {
+                       // @a paint
+                       res[r][c] = finalColor;
 
-                   while (!stack.isEmpty()) {
-                       // @a pop
-                       int[] pixel = stack.pop();
-                       for (int[] d : DIRECTIONS) {
-                           int r = pixel[0] + d[0], c = pixel[1] + d[1];
-                           if (r < 0 || r >= image.length || c < 0 || c >= image[0].length
-                                   || image[r][c] != startColor) {
-                               // @a reject
-                               continue;
-                           }
-                           // @a paint
-                           image[r][c] = newColor;
-                           stack.push(new int[]{r, c});
+                       for (int i=0;i<4;i++) {
+                           int newRow = r + dRow[i];
+                           int newCol = c + dCol[i];
+
+                           // @a recurse
+                           if (newRow >=0 && newRow < m && newCol >= 0 && newCol < n && res[newRow][newCol] == initialColor)
+                               dfs(newRow,newCol,initialColor,finalColor,res,m,n);
                        }
+                   // @a return
                    }
-                   // @a done
-                   return image;
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[][] image = in.getGrid("image");
-        int rows = image.length;
-        int cols = image[0].length;
+        int m = image.length;
+        int n = image[0].length;
         // The spec bounds sr/sc independently of the image, so a caller can name a pixel a
         // smaller image does not have. Clamping keeps that a nudged start rather than a 500.
-        int sr = Math.min(in.getInt("sr"), rows - 1);
-        int sc = Math.min(in.getInt("sc"), cols - 1);
-        int newColor = in.getInt("newColor");
-        int startColor = image[sr][sc];
+        int sr = Math.min(in.getInt("sr"), m - 1);
+        int sc = Math.min(in.getInt("sc"), n - 1);
+        int color = in.getInt("newColor");
 
-        emit.at("start").say("Start at (%d,%d). Its colour is %d, and every pixel connected to it "
-                        + "through colour %d becomes %d.", sr, sc, startColor, startColor, newColor)
-                .var("start", "(" + sr + "," + sc + ")")
-                .var("startColor", startColor).var("newColor", newColor)
-                .grid(image).step();
+        int[][] res = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            res[i] = image[i].clone();
+        }
 
-        if (startColor == newColor) {
-            emit.at("alreadyPainted").say("The new colour %d is the colour the region already has, "
-                            + "so there is nothing to repaint - and painting anyway would keep "
-                            + "matching its own output forever.", newColor)
-                    .var("painted", 0).grid(image).step();
+        emit.at("init").say("Copy the %dx%d image into res, so the caller's image is left untouched. "
+                        + "The fill starts at (%d,%d), which has colour %d.", m, n, sr, sc, image[sr][sc])
+                .var("sr", sr).var("sc", sc).var("color", color)
+                .grid(res).step();
+
+        if (image[sr][sc] == color) {
+            emit.at("same").say("(%d,%d) is already colour %d, so there is nothing to repaint - and "
+                            + "painting anyway would keep matching its own output forever. Return "
+                            + "the image unchanged.", sr, sc, color)
+                    .var("color", color).var("image", GridText.of(image))
+                    .grid(image).step();
             return;
         }
 
-        Deque<int[]> stack = new ArrayDeque<>();
-        stack.push(new int[]{sr, sc});
-        image[sr][sc] = newColor;
-        int painted = 1;
+        int initialColor = res[sr][sc];
+        emit.at("start").say("(%d,%d) has colour %d, not %d. Start dfs(%d,%d) with initialColor = %d "
+                        + "and finalColor = %d.", sr, sc, initialColor, color, sr, sc, initialColor, color)
+                .var("initialColor", initialColor).var("finalColor", color)
+                .grid(res).step();
 
-        while (!stack.isEmpty()) {
-            int[] pixel = stack.pop();
+        int[] painted = {0};
+        dfs(sr, sc, initialColor, color, res, m, n, painted, emit);
 
-            emit.at("pop").say("Take (%d,%d) off the stack and look at its four neighbours.",
-                            pixel[0], pixel[1])
-                    .var("pixel", "(" + pixel[0] + "," + pixel[1] + ")").var("painted", painted)
-                    .grid(image).stack(pixels(stack)).step();
+        emit.at("done").say("The DFS has returned: %d pixel%s repainted from %d to %d. Return res.",
+                        painted[0], Narration.s(painted[0]), initialColor, color)
+                .var("painted", painted[0]).var("res", GridText.of(res))
+                .grid(res).step();
+    }
 
-            for (int[] d : DIRECTIONS) {
-                int r = pixel[0] + d[0];
-                int c = pixel[1] + d[1];
-                if (r < 0 || r >= rows || c < 0 || c >= cols || image[r][c] != startColor) {
-                    emit.at("reject").say("(%d,%d) is off the image or is not colour %d - the region "
-                                    + "stops here.", r, c, startColor)
-                            .var("pixel", "(" + r + "," + c + ")")
-                            .grid(image).stack(pixels(stack)).step();
-                    continue;
-                }
-                image[r][c] = newColor;
-                painted++;
-                stack.push(new int[]{r, c});
+    private static void dfs(int r, int c, int initialColor, int finalColor, int[][] res, int m, int n,
+                            int[] painted, StepEmitter emit) {
+        emit.push("dfs(" + r + "," + c + ")");
+        res[r][c] = finalColor;
+        painted[0]++;
+        emit.at("paint").say("dfs(%d,%d): paint it %d, then try its four neighbours.", r, c, finalColor)
+                .var("r", r).var("c", c).var("painted", painted[0])
+                .grid(res).step();
 
-                emit.at("paint").say("(%d,%d) still carries the original colour %d, so it belongs to "
-                                + "the region. Paint it %d.", r, c, startColor, newColor)
-                        .var("pixel", "(" + r + "," + c + ")").var("painted", painted)
-                        .grid(image).stack(pixels(stack)).step();
+        for (int i = 0; i < 4; i++) {
+            int newRow = r + D_ROW[i];
+            int newCol = c + D_COL[i];
+            if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && res[newRow][newCol] == initialColor) {
+                emit.at("recurse").say("(%d,%d) is on the image and still colour %d, so it is part of the "
+                                + "region - recurse into dfs(%d,%d).", newRow, newCol, initialColor, newRow, newCol)
+                        .var("r", r).var("c", c).var("newRow", newRow).var("newCol", newCol)
+                        .grid(res).step();
+                dfs(newRow, newCol, initialColor, finalColor, res, m, n, painted, emit);
             }
         }
 
-        emit.at("done").say("The stack is empty: %d pixel%s repainted from %d to %d.",
-                        painted, Narration.s(painted), startColor, newColor)
-                .var("painted", painted).grid(image).step();
-    }
-
-    private static List<String> pixels(Deque<int[]> stack) {
-        List<String> out = new ArrayList<>();
-        for (int[] pixel : stack) {
-            out.add("(" + pixel[0] + "," + pixel[1] + ")");
-        }
-        return out;
+        emit.at("return").say("dfs(%d,%d) is done: none of its neighbours is still colour %d. Return "
+                        + "to the caller.", r, c, initialColor)
+                .var("r", r).var("c", c)
+                .grid(res).step();
+        emit.pop();
     }
 }

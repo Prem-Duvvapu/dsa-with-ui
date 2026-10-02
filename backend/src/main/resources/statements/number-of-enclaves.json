@@ -36,7 +36,7 @@
         ]
       },
       "output": "3",
-      "answerVariable": "enclaves",
+      "answerVariable": "cnt",
       "explanation": "The land cell at (1, 0) sits on the edge, so it can walk off. The other three land cells form a group that touches no edge cell, so all three are trapped."
     },
     {
@@ -66,7 +66,7 @@
         ]
       },
       "output": "0",
-      "answerVariable": "enclaves",
+      "answerVariable": "cnt",
       "explanation": "Both groups of land include a cell on the edge of the grid, so every land cell can walk off."
     }
   ],

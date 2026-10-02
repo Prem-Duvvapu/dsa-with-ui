@@ -1,0 +1,36 @@
+{
+  "id": "surrounded-regions",
+  "statement": [
+    "You are given an m × n board in which every cell is 'X' or 'O'. In this visualizer the board is entered as numbers: 0 for 'X' and 1 for 'O'.",
+    "A region is a group of 'O' cells connected through shared edges (up, down, left or right). A region is surrounded when none of its cells lies on the border of the board, so it is closed in by 'X' cells on every side.",
+    "Capture every surrounded region by turning all of its 'O' cells into 'X'. Regions that reach the border stay as they are. The board is changed in place; return the board after the captures."
+  ],
+  "examples": [
+    {
+      "input": { "board": [[0, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 0], [0, 1, 0, 0]] },
+      "output": "[[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]",
+      "answerVariable": "board",
+      "explanation": "The three 'O's in the middle form one region with no border cell, so all three are captured. The 'O' on the bottom row lies on the border and survives."
+    },
+    {
+      "input": { "board": [[1, 0, 0, 0], [1, 0, 1, 0], [0, 0, 1, 0], [0, 0, 0, 0], [0, 0, 0, 0]] },
+      "output": "[[\"O\",\"X\",\"X\",\"X\"],[\"O\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"]]",
+      "answerVariable": "board",
+      "explanation": "The two 'O's in the left column touch the border and stay. The pair in column 2 never reaches the border, so both are captured."
+    },
+    {
+      "input": { "board": [[1, 1, 1], [1, 0, 1], [1, 1, 1]] },
+      "output": "[[\"O\",\"O\",\"O\"],[\"O\",\"X\",\"O\"],[\"O\",\"O\",\"O\"]]",
+      "answerVariable": "board",
+      "explanation": "Every 'O' sits on the border, so there is nothing to capture and the board is unchanged."
+    }
+  ],
+  "constraints": [
+    "m == board.length, n == board[i].length",
+    "1 ≤ m, n ≤ 200",
+    "board[i][j] is 'X' or 'O'"
+  ],
+  "sources": [
+    { "label": "LeetCode 130", "url": "https://leetcode.com/problems/surrounded-regions/" }
+  ]
+}

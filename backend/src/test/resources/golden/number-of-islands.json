@@ -1,26 +1,28 @@
 {
   "anchors" : {
-    "done" : 11,
-    "found" : 5,
-    "init" : 2,
-    "sink" : 7
+    "done" : 20,
+    "found" : 14,
+    "init" : 6,
+    "recurse" : 30,
+    "return" : 34,
+    "visit" : 24
   },
-  "code" : "public int numIslands(int[][] grid) {\n    int islands = 0;\n    for (int r = 0; r < grid.length; r++) {\n        for (int c = 0; c < grid[0].length; c++) {\n            if (grid[r][c] == 1) {\n                islands++;\n                sink(grid, r, c);\n            }\n        }\n    }\n    return islands;\n}",
+  "code" : "class Solution {\n    private static final int[] dRow = {-1,0,1,0};\n    private static final int[] dCol = {0,1,0,-1};\n\n    public int numIslands(char[][] grid) {\n        int n = grid.length;\n        int m = grid[0].length;\n        boolean[][] visited = new boolean[n][m];\n        int numIslands = 0;\n\n        for (int i=0;i<n;i++) {\n            for (int j=0;j<m;j++) {\n                if (grid[i][j] == '1' && !visited[i][j]) {\n                    numIslands++;\n                    dfs(i,j,visited,grid);\n                }\n            }\n        }\n\n        return numIslands;\n    }\n\n    private void dfs(int r,int c,boolean[][] visited,char[][] grid) {\n        visited[r][c] = true;\n\n        for (int i=0;i<4;i++) {\n            int newRow = r + dRow[i];\n            int newCol = c + dCol[i];\n\n            if (newRow>=0 && newRow<grid.length && newCol>=0 && newCol<grid[0].length && grid[newRow][newCol]=='1' && !visited[newRow][newCol]) {\n                dfs(newRow,newCol,visited,grid);\n            }\n        }\n    }\n}",
   "problemId" : "number-of-islands",
   "resolvedInput" : {
     "grid" : [ [ 1, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ]
   },
-  "stepCount" : 12,
+  "stepCount" : 23,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "Scan a 4x5 grid. Each unvisited land cell starts a new island.",
+    "activeLine" : 6,
+    "description" : "Scan the 4x5 grid row by row. Each land cell that no earlier DFS has visited starts a new island.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "islands" : "0"
+      "numIslands" : "0"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 1, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
@@ -30,16 +32,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 5,
-    "description" : "Land at (0,0) that is not part of a counted island. That makes island #1.",
+    "activeLine" : 14,
+    "description" : "(0,0) is land that no DFS has reached yet, so it belongs to a new island: numIslands = 1. Run dfs(0,0) to mark the whole island.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "c" : "0",
-      "islands" : "1",
-      "r" : "0"
+      "i" : "0",
+      "j" : "0",
+      "numIslands" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 1, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
@@ -49,92 +51,129 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 7,
-    "description" : "Sink (0,0) into island #1. 1 cell claimed, 2 still queued.",
+    "activeLine" : 24,
+    "description" : "dfs(0,0): mark it visited, then try its four neighbours.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "dfs(0,0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "claimed" : "1",
-      "frontier" : "2",
-      "islands" : "1"
+      "c" : "0",
+      "r" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "gridState" : [ [ 2, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
-    "description" : "Sink (0,1) into island #1. 2 cells claimed, 2 still queued.",
+    "activeLine" : 30,
+    "description" : "(0,1) is unvisited land next to (0,0) - the same island. Recurse into dfs(0,1).",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "dfs(0,0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "claimed" : "2",
-      "frontier" : "2",
-      "islands" : "1"
+      "c" : "0",
+      "newCol" : "1",
+      "newRow" : "0",
+      "r" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "gridState" : [ [ 2, 1, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 7,
-    "description" : "Sink (1,1) into island #1. 3 cells claimed, 1 still queued.",
+    "activeLine" : 24,
+    "description" : "dfs(0,1): mark it visited, then try its four neighbours.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "claimed" : "3",
-      "frontier" : "1",
-      "islands" : "1"
+      "c" : "1",
+      "r" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 7,
-    "description" : "Sink (1,0) into island #1. 4 cells claimed, 0 still queued.",
+    "activeLine" : 30,
+    "description" : "(1,1) is unvisited land next to (0,1) - the same island. Recurse into dfs(1,1).",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "claimed" : "4",
-      "frontier" : "0",
-      "islands" : "1"
+      "c" : "1",
+      "newCol" : "1",
+      "newRow" : "1",
+      "r" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 1, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 5,
-    "description" : "Land at (2,2) that is not part of a counted island. That makes island #2.",
+    "activeLine" : 24,
+    "description" : "dfs(1,1): mark it visited, then try its four neighbours.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)", "dfs(1,1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "c" : "2",
-      "islands" : "2",
-      "r" : "2"
+      "c" : "1",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 1, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 30,
+    "description" : "(1,0) is unvisited land next to (1,1) - the same island. Recurse into dfs(1,0).",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)", "dfs(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "1",
+      "newCol" : "0",
+      "newRow" : "1",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 1, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 24,
+    "description" : "dfs(1,0): mark it visited, then try its four neighbours.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)", "dfs(1,1)", "dfs(1,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "0",
+      "r" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
@@ -143,74 +182,200 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 8,
-    "activeLine" : 7,
-    "description" : "Sink (2,2) into island #2. 1 cell claimed, 0 still queued.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "claimed" : "1",
-      "frontier" : "0",
-      "islands" : "2"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 9,
-    "activeLine" : 5,
-    "description" : "Land at (3,3) that is not part of a counted island. That makes island #3.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "c" : "3",
-      "islands" : "3",
-      "r" : "3"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
     "stepNumber" : 10,
-    "activeLine" : 7,
-    "description" : "Sink (3,3) into island #3. 1 cell claimed, 1 still queued.",
+    "activeLine" : 34,
+    "description" : "dfs(1,0) is done: no unvisited land touches it. Return to the caller.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)", "dfs(1,1)", "dfs(1,0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "claimed" : "1",
-      "frontier" : "1",
-      "islands" : "3"
+      "c" : "0",
+      "r" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 7,
-    "description" : "Sink (3,4) into island #3. 2 cells claimed, 0 still queued.",
+    "activeLine" : 34,
+    "description" : "dfs(1,1) is done: no unvisited land touches it. Return to the caller.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)", "dfs(1,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "1",
+      "r" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 34,
+    "description" : "dfs(0,1) is done: no unvisited land touches it. Return to the caller.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)", "dfs(0,1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "1",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 34,
+    "description" : "dfs(0,0) is done: no unvisited land touches it. Return to the caller.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "0",
+      "r" : "0"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 14,
+    "description" : "(2,2) is land that no DFS has reached yet, so it belongs to a new island: numIslands = 2. Run dfs(2,2) to mark the whole island.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "claimed" : "2",
-      "frontier" : "0",
-      "islands" : "3"
+      "i" : "2",
+      "j" : "2",
+      "numIslands" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 24,
+    "description" : "dfs(2,2): mark it visited, then try its four neighbours.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(2,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "2",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 34,
+    "description" : "dfs(2,2) is done: no unvisited land touches it. Return to the caller.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(2,2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "2",
+      "r" : "2"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 14,
+    "description" : "(3,3) is land that no DFS has reached yet, so it belongs to a new island: numIslands = 3. Run dfs(3,3) to mark the whole island.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "3",
+      "numIslands" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 1, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 24,
+    "description" : "dfs(3,3): mark it visited, then try its four neighbours.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(3,3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "3",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 30,
+    "description" : "(3,4) is unvisited land next to (3,3) - the same island. Recurse into dfs(3,4).",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(3,3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "3",
+      "newCol" : "4",
+      "newRow" : "3",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 1 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 24,
+    "description" : "dfs(3,4): mark it visited, then try its four neighbours.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(3,3)", "dfs(3,4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "4",
+      "r" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],
@@ -219,15 +384,51 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 12,
-    "activeLine" : 11,
-    "description" : "Grid fully scanned. 3 islands.",
+    "stepNumber" : 21,
+    "activeLine" : 34,
+    "description" : "dfs(3,4) is done: no unvisited land touches it. Return to the caller.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(3,3)", "dfs(3,4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "4",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 34,
+    "description" : "dfs(3,3) is done: no unvisited land touches it. Return to the caller.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(3,3)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "c" : "3",
+      "r" : "3"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 20,
+    "description" : "Every cell has been scanned. The grid holds 3 islands.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "islands" : "3"
+      "numIslands" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 2, 0, 0, 0 ], [ 2, 2, 0, 0, 0 ], [ 0, 0, 2, 0, 0 ], [ 0, 0, 0, 2, 2 ] ],

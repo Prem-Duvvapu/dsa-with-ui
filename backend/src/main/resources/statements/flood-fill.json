@@ -1,0 +1,31 @@
+{
+  "id": "flood-fill",
+  "statement": [
+    "An image is an m × n grid of integers, image, where each value is the colour of one pixel. You are also given a starting pixel (sr, sc) and a colour newColor.",
+    "Recolour the starting pixel, and every pixel connected to it, with newColor. Two pixels are connected when they share an edge (up, down, left or right) and both have the starting pixel's original colour; connection carries through chains of such pixels. Pixels of any other colour stop the fill.",
+    "Return the image after the fill. If the starting pixel already has colour newColor, nothing changes and the image is returned as it is."
+  ],
+  "examples": [
+    {
+      "input": { "image": [[1, 1, 1], [1, 1, 0], [1, 0, 1]], "sr": 1, "sc": 1, "newColor": 2 },
+      "output": "[[2,2,2],[2,2,0],[2,0,1]]",
+      "answerVariable": "res",
+      "explanation": "The start (1,1) has colour 1. All six 1s joined to it through edges become 2. The 1 in the bottom-right corner touches only 0s, so it is not reached."
+    },
+    {
+      "input": { "image": [[0, 0, 0], [0, 0, 0]], "sr": 0, "sc": 0, "newColor": 0 },
+      "output": "[[0,0,0],[0,0,0]]",
+      "answerVariable": "image",
+      "explanation": "The starting pixel is already colour 0, so the image is returned unchanged."
+    }
+  ],
+  "constraints": [
+    "m == image.length, n == image[i].length",
+    "1 ≤ m, n ≤ 50",
+    "0 ≤ image[i][j], newColor < 2¹⁶",
+    "0 ≤ sr < m, 0 ≤ sc < n"
+  ],
+  "sources": [
+    { "label": "LeetCode 733", "url": "https://leetcode.com/problems/flood-fill/" }
+  ]
+}
