@@ -1,0 +1,50 @@
+{
+  "id": "postorder-1-stack",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return its postorder traversal (left subtree, then right subtree, then the node) without recursion, using a single stack. Walk left, pushing every node you pass. When there is no current node, look at the top of the stack: if it has a right child, continue from that child; otherwise pop it and record it.",
+    "After recording a node, keep popping and recording while the new top of the stack has the node just recorded as its right child: that parent's right subtree is now finished, so the parent is due."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          12,
+          6,
+          18,
+          4,
+          9,
+          15,
+          21
+        ]
+      },
+      "output": "[4, 9, 6, 15, 21, 18, 12]",
+      "answerVariable": "output",
+      "explanation": "6 has children 4 and 9, and 18 has children 15 and 21. Each subtree is finished, children first, before its parent is recorded."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          null,
+          3,
+          4
+        ]
+      },
+      "output": "[3, 4, 2, 1]",
+      "answerVariable": "output",
+      "explanation": "2 is the only child of 1 and has children 3 and 4. 2 cannot be recorded until its right child 4 has been."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 145",
+      "url": "https://leetcode.com/problems/binary-tree-postorder-traversal/"
+    }
+  ]
+}

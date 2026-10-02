@@ -1,0 +1,60 @@
+{
+  "id": "bottom-view-bt",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Give the root column 0; a left child sits one column to the left of its parent (column − 1) and a right child one column to the right (column + 1). Looking up at the tree from below, you see in each column only its lowest node. If two nodes in a column are equally low, the one that comes later in a level-order traversal is the one seen.",
+    "Return the values seen from below, ordered from the leftmost column to the rightmost."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          20,
+          8,
+          22,
+          5,
+          3,
+          null,
+          25
+        ]
+      },
+      "output": "[5, 8, 3, 22, 25]",
+      "answerVariable": "bottomView",
+      "explanation": "3, the right child of 8, sits in column 0 below the root 20, so it is seen instead of 20. Every other column holds a single node."
+    },
+    {
+      "input": {
+        "tree": [
+          4,
+          2,
+          6
+        ]
+      },
+      "output": "[2, 4, 6]",
+      "answerVariable": "bottomView",
+      "explanation": "Each of the three nodes has a column to itself."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "[4, 2, 6, 3, 7]",
+      "answerVariable": "bottomView",
+      "explanation": "5 and 6 are both in column 0 on the bottom level. 6 comes later in level order, so it is the one seen."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1"
+    }
+  ]
+}

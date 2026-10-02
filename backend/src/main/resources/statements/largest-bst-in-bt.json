@@ -1,0 +1,48 @@
+{
+  "id": "largest-bst-in-bt",
+  "statement": [
+    "You are given a binary tree that need not be a binary search tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "A subtree here means a node together with all of its descendants. A subtree is a BST when every value in each node's left subtree is strictly smaller than that node and every value in its right subtree is strictly larger.",
+    "Return the number of nodes in the largest subtree that is a BST. A single node is always a BST, so the answer is at least 1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          10,
+          5,
+          15,
+          1,
+          8,
+          null,
+          7
+        ]
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "7 is the right child of 15 but smaller than it, so neither 15's subtree nor the whole tree is a BST. The subtree rooted at 5, holding 1, 5 and 8, is the largest BST."
+    },
+    {
+      "input": {
+        "tree": [
+          8,
+          4,
+          12,
+          2,
+          6,
+          10,
+          14
+        ]
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "The whole tree is a BST, so all 7 nodes count."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/largest-bst/1"
+    }
+  ]
+}

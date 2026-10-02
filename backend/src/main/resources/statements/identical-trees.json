@@ -1,0 +1,76 @@
+{
+  "id": "identical-trees",
+  "statement": [
+    "You are given two binary trees, p and q. Each is given as an array in level order, indexed from 0: the root is at index 0, and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Two trees are identical when they have exactly the same shape and every pair of nodes in matching positions holds the same value.",
+    "Return true if p and q are identical, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "p": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "q": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The trees agree everywhere except that q has a node 6 as the left child of 3, where p has nothing."
+    },
+    {
+      "input": {
+        "p": [
+          1,
+          2,
+          1
+        ],
+        "q": [
+          1,
+          1,
+          2
+        ]
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The shapes match, but p's left child is 2 while q's left child is 1."
+    },
+    {
+      "input": {
+        "p": [
+          1,
+          2,
+          3
+        ],
+        "q": [
+          1,
+          2,
+          3
+        ]
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Both trees are a root 1 with left child 2 and right child 3."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes in each tree ≤ 100",
+    "-10⁴ ≤ Node.val ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 100",
+      "url": "https://leetcode.com/problems/same-tree/"
+    }
+  ]
+}

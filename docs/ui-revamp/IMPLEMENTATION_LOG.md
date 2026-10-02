@@ -499,3 +499,21 @@ Defects found, not in any example:
     linked list). The statement describes what the tracer does; the catalogue/tracer mismatch is open
     for an owner decision.
 Automated: StatementContractTest passes, re-running every example through TraceRunner.
+
+## Problem statements: Binary Trees, BST and Tries (49 problems)
+
+```text
+Package / status: statements rollout, topic 2 of 8 (after #163). Same method and checks as #163.
+Coverage: 49 of 56. Skipped because the final step holds no answer: construct-bt-pre-in, construct-bt-post-in,
+  construct-bst-preorder (only a node count), bst-insert, bst-delete, correct-bst-swap (no final variables),
+  implement-trie (only the last word inserted).
+Notes:
+  - Tree tracers read `tree` heap-indexed (children of i at 2i+1, 2i+2), not LeetCode's level-order format.
+    Every statement says so. In 8 examples the two formats would build different trees.
+  - Five ids return a multi-part answer. Each example shows one part, and its explanation says which.
+Defects found, not in any example:
+  - bst-validate's final narration claims a parent-vs-child check would miss [5,1,4,null,null,3,6]. It would
+    not: 4 is the root's direct right child.
+  - BinaryTreeLayout draws a grandchild of a missing node, e.g. node 4 in [1,null,2,3,null,null,null,4],
+    though no traversal can reach it.
+Automated: StatementContractTest passes (107 statements).

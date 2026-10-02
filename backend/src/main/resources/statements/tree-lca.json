@@ -1,0 +1,67 @@
+{
+  "id": "tree-lca",
+  "statement": [
+    "You are given a binary tree with distinct values, and two values p and q that are both in the tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "The lowest common ancestor of two nodes is the deepest node that has both of them in its subtree. A node counts as being in its own subtree, so a node can be the ancestor of itself.",
+    "Return the value of the lowest common ancestor of the nodes holding p and q."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        "p": 7,
+        "q": 4
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "7 and 4 are the two children of 2 (indices 9 and 10), so 2 is the deepest node above both."
+    },
+    {
+      "input": {
+        "tree": [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        "p": 5,
+        "q": 4
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "4 lies in the subtree of 5, and 5 is an ancestor of itself, so the answer is 5."
+    }
+  ],
+  "constraints": [
+    "2 ≤ number of nodes ≤ 10⁵",
+    "-10⁹ ≤ Node.val ≤ 10⁹",
+    "All Node.val are unique.",
+    "p ≠ q",
+    "p and q are both in the tree."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 236",
+      "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/"
+    }
+  ]
+}

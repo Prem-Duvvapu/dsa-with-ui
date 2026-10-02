@@ -1,0 +1,68 @@
+{
+  "id": "traversals-in-one-pass",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Compute its preorder, inorder and postorder traversals together, in one pass over the tree, using a single stack that stores each node with a state number. State 1 means the node is visited for the first time: record it in preorder and go to its left child. State 2 means its left subtree is done: record it in inorder and go to its right child. State 3 means both subtrees are done: record it in postorder and pop it.",
+    "Return the three traversals: preorder, inorder and postorder."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "[1, 2, 4, 5, 3, 6, 7]",
+      "answerVariable": "preorder",
+      "explanation": "In this full tree, 2 has children 4 and 5 and 3 has children 6 and 7. Preorder lists each node before its subtrees."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "[4, 2, 5, 1, 6, 3, 7]",
+      "answerVariable": "inorder",
+      "explanation": "The same pass, read at state 2: each node comes between its left and right subtrees."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "[4, 5, 2, 6, 7, 3, 1]",
+      "answerVariable": "postorder",
+      "explanation": "The same pass, read at state 3: each node comes after both subtrees, so the root 1 is last."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/preorder-postorder-and-inorder-traversal-of-a-binary-tree-using-a-single-stack/"
+    },
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/pre%2C-post%2C-inorder-in-one-traversal"
+    }
+  ]
+}

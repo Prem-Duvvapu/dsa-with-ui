@@ -1,0 +1,48 @@
+{
+  "id": "unique-bt-requirements",
+  "statement": [
+    "Two traversals identify a binary tree uniquely only when one of them is inorder: inorder with preorder, or inorder with postorder. Preorder and postorder together are not always enough.",
+    "The reason is a node with exactly one child. Preorder and postorder list that node and its child in the same order whether the child hangs on the left or on the right, so each such node doubles the number of trees that fit. Inorder tells the two sides apart, because a left child comes before its parent and a right child after it.",
+    "You are given a binary tree with distinct values. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too. Return how many different binary trees, this one included, have exactly the same preorder and the same postorder traversal as it."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          null,
+          null,
+          7
+        ]
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "2 has only a left child, 4, and 3 has only a right child, 7. Each of those children could sit on either side without changing preorder or postorder, so 2 × 2 = 4 trees match."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Every node has either two children or none, so there is no choice to make and only this tree matches."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/requirements-needed-to-construct-a-unique-binary-tree"
+    }
+  ]
+}

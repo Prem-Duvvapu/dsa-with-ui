@@ -1,0 +1,46 @@
+{
+  "id": "top-view-bt",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Give the root column 0; a left child sits one column to the left of its parent (column − 1) and a right child one column to the right (column + 1). Looking down on the tree from above, you see in each column only its highest node (the one closest to the root). If two nodes in a column are equally high, the one met first in a level-order traversal, from the left, is the one seen.",
+    "Return the values seen from above, ordered from the leftmost column to the rightmost."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "[4, 2, 1, 3, 7]",
+      "answerVariable": "topView",
+      "explanation": "5 and 6 also fall in column 0, but they are hidden under the root 1. The other columns hold 4, 2, 3 and 7."
+    },
+    {
+      "input": {
+        "tree": [
+          7,
+          3,
+          null,
+          1,
+          5
+        ]
+      },
+      "output": "[1, 3, 7]",
+      "answerVariable": "topView",
+      "explanation": "3 is the only child of 7 and has children 1 and 5. 5 is in column 0, below 7, so it is not seen."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://practice.geeksforgeeks.org/problems/top-view-of-binary-tree/1"
+    }
+  ]
+}

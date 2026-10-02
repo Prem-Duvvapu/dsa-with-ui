@@ -1,0 +1,51 @@
+{
+  "id": "iterative-preorder",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return its preorder traversal (each node, then its left subtree, then its right subtree) without using recursion. Use an explicit stack instead: pop a node, record it, then push its right child before its left child so that the left side is handled first."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          8,
+          3,
+          10,
+          1,
+          6,
+          null,
+          14
+        ]
+      },
+      "output": "[8, 3, 1, 6, 10, 14]",
+      "answerVariable": "output",
+      "explanation": "8 has children 3 and 10; 3 has children 1 and 6; 10 has only a right child, 14. The whole left subtree of 8 is finished before 10 is popped."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          null,
+          2,
+          null,
+          null,
+          null,
+          3
+        ]
+      },
+      "output": "[1, 2, 3]",
+      "answerVariable": "output",
+      "explanation": "Each node has only a right child (2 is at index 2, 3 at index 6), so the stack never holds more than one node and the values come out top to bottom."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 144",
+      "url": "https://leetcode.com/problems/binary-tree-preorder-traversal/"
+    }
+  ]
+}

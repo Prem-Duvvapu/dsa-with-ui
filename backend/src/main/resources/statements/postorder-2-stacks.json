@@ -1,0 +1,48 @@
+{
+  "id": "postorder-2-stacks",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return its postorder traversal (left subtree, then right subtree, then the node) without recursion, using two stacks. Pop a node from the first stack, push it onto the second, and push its left and then its right child onto the first. When the first stack is empty, popping the second stack yields the postorder."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          2,
+          7,
+          5,
+          9,
+          6,
+          null,
+          11
+        ]
+      },
+      "output": "[9, 6, 7, 11, 5, 2]",
+      "answerVariable": "output",
+      "explanation": "7 has children 9 and 6, and 5 has only a right child 11. Both subtrees are listed before the root 2."
+    },
+    {
+      "input": {
+        "tree": [
+          3,
+          2,
+          null,
+          1
+        ]
+      },
+      "output": "[1, 2, 3]",
+      "answerVariable": "output",
+      "explanation": "The tree is a chain of left children 3, 2, 1, so postorder lists the deepest node first."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 145",
+      "url": "https://leetcode.com/problems/binary-tree-postorder-traversal/"
+    }
+  ]
+}

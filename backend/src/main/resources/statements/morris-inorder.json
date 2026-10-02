@@ -1,0 +1,54 @@
+{
+  "id": "morris-inorder",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return its inorder traversal (left subtree, then node, then right subtree) using only O(1) extra space: no recursion and no stack.",
+    "Morris traversal does this by threading. Before going into a node's left subtree, point the right pointer of that subtree's rightmost node back at the current node. When the walk returns along that thread, record the node, remove the thread and move right, so the tree ends up unchanged."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          4,
+          2,
+          6,
+          1,
+          3,
+          5,
+          7
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5, 6, 7]",
+      "answerVariable": "answer",
+      "explanation": "This full tree is a binary search tree, so inorder lists its values in increasing order."
+    },
+    {
+      "input": {
+        "tree": [
+          5,
+          3,
+          8,
+          1,
+          4,
+          7,
+          9,
+          null,
+          2
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5, 7, 8, 9]",
+      "answerVariable": "answer",
+      "explanation": "2 sits at index 8, the right child of 1. It is visited after 1 and before 3, exactly where it belongs in the sorted order."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 94",
+      "url": "https://leetcode.com/problems/binary-tree-inorder-traversal/"
+    }
+  ]
+}

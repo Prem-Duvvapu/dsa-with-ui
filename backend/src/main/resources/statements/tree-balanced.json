@@ -1,0 +1,65 @@
+{
+  "id": "tree-balanced",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "A binary tree is height-balanced when, at every node, the heights of the left and right subtrees differ by at most 1.",
+    "Return true if the tree is height-balanced, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          null,
+          null,
+          null,
+          null,
+          6,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          7
+        ]
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "6 (index 9) is the left child of 5, and 7 (index 19) is the left child of 6. Node 5 then has a left subtree of height 2 and an empty right subtree, a difference of 2."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Every level is full, so at each node the two subtrees have exactly the same height."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 5000",
+    "-10⁴ ≤ Node.val ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 110",
+      "url": "https://leetcode.com/problems/balanced-binary-tree/"
+    }
+  ]
+}
