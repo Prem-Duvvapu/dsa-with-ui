@@ -1,0 +1,35 @@
+{
+  "id": "count-palindromic-subsequences",
+  "statement": [
+    "You are given a string s. A subsequence is formed by deleting zero or more characters of s without changing the order of the rest.",
+    "Count the non-empty subsequences of s that are palindromes. Subsequences are counted by the positions they use, so two subsequences made from different positions count separately even when they spell the same string.",
+    "Return that count. A 2D table dp[i][j], the count for s[i … j], gives it in O(n²) time: dp[i][j] = dp[i + 1][j] + dp[i][j − 1] + 1 when s[i] equals s[j], and dp[i + 1][j] + dp[i][j − 1] − dp[i + 1][j − 1] otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "bccb"
+      },
+      "output": "9",
+      "answerVariable": "answer",
+      "explanation": "There are the four single letters, \"cc\", \"bb\", \"bcb\" twice (once with each c) and \"bccb\": 4 + 1 + 1 + 2 + 1 = 9."
+    },
+    {
+      "input": {
+        "s": "aaa"
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "Every non-empty choice of positions spells only a's and is a palindrome, so all 2³ − 1 = 7 of them count."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 30"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/count-palindromic-subsequences/1"
+    }
+  ]
+}

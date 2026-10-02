@@ -1,0 +1,44 @@
+{
+  "id": "bracket-reversals",
+  "statement": [
+    "You are given a string brackets made only of the characters '{' and '}'.",
+    "One reversal turns a single '{' into '}' or a single '}' into '{'. The string is balanced when every '{' can be paired with a later '}' and no bracket is left unpaired, as in \"{{}}{}\".",
+    "Return the minimum number of reversals that makes brackets balanced. If no number of reversals can balance it, return −1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "brackets": "}{{}}{{{"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "After cancelling the matched pairs, one unmatched '}' and three unmatched '{' remain. The '}' needs one reversal and the three '{' need two, for 3 in total."
+    },
+    {
+      "input": {
+        "brackets": "{{{{"
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Reversing the last two brackets gives \"{{}}\", which is balanced, so 2 reversals are enough."
+    },
+    {
+      "input": {
+        "brackets": "{{{"
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "Three brackets can never all be paired, whatever is reversed, so the answer is −1."
+    }
+  ],
+  "constraints": [
+    "1 ≤ brackets.length ≤ 10⁵",
+    "brackets[i] is '{' or '}'"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/count-the-reversals0401/1"
+    }
+  ]
+}

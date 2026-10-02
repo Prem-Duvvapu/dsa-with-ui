@@ -1,0 +1,37 @@
+{
+  "id": "remove-outermost-parentheses",
+  "statement": [
+    "A valid parentheses string is empty, or \"(\" + A + \")\", or A + B, where A and B are valid parentheses strings. It is primitive when it is non-empty and cannot be split into two non-empty valid parts.",
+    "Every valid string splits in exactly one way into a sequence of primitive strings placed side by side.",
+    "You are given a valid parentheses string s. Split it into its primitive parts, remove the outermost pair of parentheses from each part, and return what remains."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "(()())(())"
+      },
+      "output": "()()()",
+      "answerVariable": "answer",
+      "explanation": "The primitive parts are \"(()())\" and \"(())\". Stripping their outer pairs leaves \"()()\" and \"()\"."
+    },
+    {
+      "input": {
+        "s": "(()())(())(()(()))"
+      },
+      "output": "()()()()(())",
+      "answerVariable": "answer",
+      "explanation": "There are three primitive parts. The last, \"(()(()))\", loses its outer pair and becomes \"()(())\"."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 10⁵",
+    "s[i] is '(' or ')'",
+    "s is a valid parentheses string"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1021",
+      "url": "https://leetcode.com/problems/remove-outermost-parentheses/"
+    }
+  ]
+}

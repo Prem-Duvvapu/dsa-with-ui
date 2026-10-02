@@ -1,0 +1,45 @@
+{
+  "id": "reverse-stack-recursion",
+  "statement": [
+    "You are given a stack of integers, listed from bottom to top: the last element of stack is the top.",
+    "Reverse the stack using recursion and no extra data structure: pop the top, reverse the remaining stack recursively, then insert the popped element at the bottom with a second recursive function that pops everything above the bottom, pushes the element, and pushes the rest back.",
+    "Return the reversed stack, listed from bottom to top."
+  ],
+  "examples": [
+    {
+      "input": {
+        "stack": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "output": "[4, 3, 2, 1]",
+      "answerVariable": "stack",
+      "explanation": "4 was on top and is now at the bottom; 1 was at the bottom and is now on top."
+    },
+    {
+      "input": {
+        "stack": [
+          5,
+          0,
+          12
+        ]
+      },
+      "output": "[12, 0, 5]",
+      "answerVariable": "stack",
+      "explanation": "The order is simply flipped: 12 moves to the bottom and 5 to the top, while 0 stays in the middle."
+    }
+  ],
+  "constraints": [
+    "1 ≤ size of the stack ≤ 100",
+    "0 ≤ each element ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/reverse-a-stack/1"
+    }
+  ]
+}

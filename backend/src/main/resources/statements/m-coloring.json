@@ -1,0 +1,95 @@
+{
+  "id": "m-coloring",
+  "statement": [
+    "You are given an undirected graph, made of a vertex count (vertices numbered 0 to vertices − 1) and a list of edges, together with an integer m.",
+    "Each vertex is to be given one of m colours so that the two ends of every edge get different colours.",
+    "Return true if such a colouring exists, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        },
+        "m": 3
+      },
+      "output": "true",
+      "answerVariable": "possible",
+      "explanation": "With three colours one valid assignment is 1, 2, 3, 2, 1 for vertices 0 to 4: every edge joins two different colours."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        },
+        "m": 2
+      },
+      "output": "false",
+      "answerVariable": "possible",
+      "explanation": "Vertices 0, 1 and 2 are all joined to each other, forming a triangle, and a triangle needs three different colours. Two are not enough."
+    }
+  ],
+  "constraints": [
+    "1 ≤ V ≤ 10, where V is the number of vertices",
+    "1 ≤ number of edges ≤ V × (V − 1) / 2",
+    "1 ≤ m ≤ V"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1"
+    }
+  ]
+}

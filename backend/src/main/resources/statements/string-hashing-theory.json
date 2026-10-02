@@ -1,0 +1,40 @@
+{
+  "id": "string-hashing-theory",
+  "statement": [
+    "A polynomial rolling hash turns a string into a single number, so that two strings can be compared by comparing their numbers. Equal strings always get the same hash; different strings rarely do.",
+    "You are given a string text of lowercase letters, an integer base and an integer modulus. Give each letter a value: a = 1, b = 2, …, z = 26. Start with h = 0 and, for each character c of text from left to right, set h = (h × base + value(c)) mod modulus.",
+    "This is the same as h = (value(text[0]) × base^(n − 1) + value(text[1]) × base^(n − 2) + … + value(text[n − 1])) mod modulus, where n is the length of text. Return the final h."
+  ],
+  "examples": [
+    {
+      "input": {
+        "text": "hash",
+        "base": 31,
+        "modulus": 1000000007
+      },
+      "output": "239886",
+      "answerVariable": "answer",
+      "explanation": "The letter values are 8, 1, 19, 8. The running hash goes 8, 8 × 31 + 1 = 249, 249 × 31 + 19 = 7738, 7738 × 31 + 8 = 239886, which is below the modulus."
+    },
+    {
+      "input": {
+        "text": "rolling",
+        "base": 37,
+        "modulus": 100003
+      },
+      "output": "27984",
+      "answerVariable": "answer",
+      "explanation": "Here the running value passes 100003 several times, so it is reduced modulo 100003 after each step; the final hash is 27984."
+    }
+  ],
+  "sources": [
+    {
+      "label": "cp-algorithms",
+      "url": "https://cp-algorithms.com/string/string-hashing.html"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/rabin-karp-algorithm-for-pattern-searching/"
+    }
+  ]
+}

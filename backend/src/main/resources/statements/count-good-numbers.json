@@ -1,0 +1,35 @@
+{
+  "id": "count-good-numbers",
+  "statement": [
+    "A digit string is good when every digit at an even index (0, 2, 4, …) is even (0, 2, 4, 6 or 8) and every digit at an odd index is a prime (2, 3, 5 or 7). Digit strings may start with 0.",
+    "Given an integer n, return how many good digit strings of length n there are. The number can be very large, so return it modulo 10⁹ + 7.",
+    "A string of length n has ⌈n / 2⌉ even indices with 5 choices each and ⌊n / 2⌋ odd indices with 4 choices each, so the answer is 5^⌈n/2⌉ × 4^⌊n/2⌋ mod 10⁹ + 7, computed with fast modular exponentiation."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 4
+      },
+      "output": "400",
+      "answerVariable": "answer",
+      "explanation": "Indices 0 and 2 have 5 choices each and indices 1 and 3 have 4 choices each, so there are 5² × 4² = 400 good strings."
+    },
+    {
+      "input": {
+        "n": 2
+      },
+      "output": "20",
+      "answerVariable": "answer",
+      "explanation": "Index 0 has 5 choices and index 1 has 4, giving 5 × 4 = 20 good strings, such as \"02\" and \"87\"."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 10¹⁵"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1922",
+      "url": "https://leetcode.com/problems/count-good-numbers/"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "count-and-say",
+  "statement": [
+    "The count-and-say sequence is a sequence of digit strings. Its first term is \"1\".",
+    "Each later term is made by reading the previous term aloud: split it into maximal runs of the same digit, and for each run, left to right, write the length of the run followed by the digit. For example, \"1123\" has the runs 11, 2, 3 and so is read as \"211213\".",
+    "Given an integer n, return the nth term of the sequence."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 5
+      },
+      "output": "111221",
+      "answerVariable": "answer",
+      "explanation": "The terms run \"1\", \"11\", \"21\", \"1211\", \"111221\". The fifth term reads \"1211\" as one 1, one 2, two 1s."
+    },
+    {
+      "input": {
+        "n": 4
+      },
+      "output": "1211",
+      "answerVariable": "answer",
+      "explanation": "The third term \"21\" is one 2 followed by one 1, which is written \"1211\"."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 30"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 38",
+      "url": "https://leetcode.com/problems/count-and-say/"
+    }
+  ]
+}

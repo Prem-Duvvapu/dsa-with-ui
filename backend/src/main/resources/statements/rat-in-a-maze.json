@@ -1,0 +1,70 @@
+{
+  "id": "rat-in-a-maze",
+  "statement": [
+    "A rat starts at the top-left cell (0, 0) of an n × n grid maze and wants to reach the bottom-right cell (n − 1, n − 1). maze[i][j] is 1 when the cell is open and 0 when it is blocked.",
+    "In one move the rat steps to the neighbouring cell below (D), to the left (L), to the right (R) or above (U). It may only stand on open cells, and it may not visit the same cell twice within one path.",
+    "Return every path from start to destination, each written as its string of moves, in lexicographically increasing order. If the start or the destination is blocked, or no path exists, return an empty list."
+  ],
+  "examples": [
+    {
+      "input": {
+        "maze": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "[DDRDRR, DRDDRR]",
+      "answerVariable": "paths",
+      "explanation": "The rat can go down twice, right, down, then right twice, or go down, right, down twice, then right twice. Column 2 is blocked above the last row, so every path has to reach the bottom row before crossing it."
+    },
+    {
+      "input": {
+        "maze": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "[]",
+      "answerVariable": "paths",
+      "explanation": "Both neighbours of the start are blocked and moves are not diagonal, so the destination cannot be reached and the list is empty."
+    }
+  ],
+  "constraints": [
+    "2 ≤ n ≤ 5",
+    "maze[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/rat-in-a-maze-problem/1"
+    }
+  ]
+}

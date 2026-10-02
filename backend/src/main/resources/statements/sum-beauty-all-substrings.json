@@ -1,0 +1,35 @@
+{
+  "id": "sum-beauty-all-substrings",
+  "statement": [
+    "The beauty of a string is the number of times its most frequent character occurs minus the number of times its least frequent character occurs, counting only characters that appear. For example, the beauty of \"abaacc\" is 3 − 1 = 2.",
+    "You are given a string s of lowercase letters. Return the sum of the beauties of all substrings of s, counting each substring by its position."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "aabcb"
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "The substrings with a non-zero beauty are \"aab\", \"aabc\", \"abcb\", \"bcb\" and \"aabcb\", each with beauty 1, so the sum is 5."
+    },
+    {
+      "input": {
+        "s": "aabcbaa"
+      },
+      "output": "17",
+      "answerVariable": "answer",
+      "explanation": "Adding the beauty of every one of the 28 substrings gives 17; the whole string alone contributes 4 − 1 = 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 500",
+    "s consists of lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1781",
+      "url": "https://leetcode.com/problems/sum-of-beauty-of-all-substrings/"
+    }
+  ]
+}

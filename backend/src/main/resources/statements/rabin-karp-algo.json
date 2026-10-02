@@ -1,0 +1,38 @@
+{
+  "id": "rabin-karp-algo",
+  "statement": [
+    "You are given two strings of lowercase letters, text and pattern. Find every position where pattern occurs in text.",
+    "The Rabin–Karp method computes a rolling hash of pattern and of each window of text with the same length. Sliding the window one step updates its hash in constant time: remove the leftmost character's contribution and add the new rightmost character. Only when a window's hash equals the pattern's hash are the characters compared, which rules out false matches from hash collisions.",
+    "Return the list of every starting index i (0-based) such that text[i … i + pattern.length − 1] equals pattern, in increasing order. Occurrences may overlap. Return an empty list if there are none."
+  ],
+  "examples": [
+    {
+      "input": {
+        "text": "abracadabra",
+        "pattern": "abra"
+      },
+      "output": "[0, 7]",
+      "answerVariable": "answer",
+      "explanation": "\"abra\" begins the text at index 0 and appears again at index 7, at the end."
+    },
+    {
+      "input": {
+        "text": "aaaaa",
+        "pattern": "aa"
+      },
+      "output": "[0, 1, 2, 3]",
+      "answerVariable": "answer",
+      "explanation": "Every window of length 2 is \"aa\", so the pattern matches at all four start positions 0 to 3, each overlapping the next."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/rabin-karp-algorithm-for-pattern-searching/"
+    },
+    {
+      "label": "cp-algorithms",
+      "url": "https://cp-algorithms.com/string/rabin-karp.html"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "longest-happy-prefix",
+  "statement": [
+    "A happy prefix of a string is a non-empty prefix that is also a suffix, but is not the whole string.",
+    "You are given a string s of lowercase letters. Return its longest happy prefix, or an empty string if it has none.",
+    "The length of the answer is the last entry of the KMP LPS array of s."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "ababcabab"
+      },
+      "output": "abab",
+      "answerVariable": "answer",
+      "explanation": "\"abab\" opens the string and also closes it. No longer prefix appears at the end, so the answer is \"abab\"."
+    },
+    {
+      "input": {
+        "s": "aabaaab"
+      },
+      "output": "aab",
+      "answerVariable": "answer",
+      "explanation": "\"aab\" is both the first and the last three characters; \"aaba\" and longer prefixes do not end the string."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 10⁵",
+    "s contains only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1392",
+      "url": "https://leetcode.com/problems/longest-happy-prefix/"
+    }
+  ]
+}

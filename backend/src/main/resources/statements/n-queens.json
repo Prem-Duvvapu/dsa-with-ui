@@ -1,0 +1,35 @@
+{
+  "id": "n-queens",
+  "statement": [
+    "You have an n × n chessboard and n queens. A queen attacks every square in its row, its column and both of its diagonals.",
+    "Place all n queens so that no two of them attack each other. Two placements are different if some square holds a queen in one and not in the other.",
+    "Given n, return the number of different placements."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 4
+      },
+      "output": "2",
+      "answerVariable": "solutions",
+      "explanation": "On a 4 × 4 board the only non-attacking placements put the queens in columns 2, 4, 1, 3 of rows 1 to 4, or the mirror image 3, 1, 4, 2."
+    },
+    {
+      "input": {
+        "n": 5
+      },
+      "output": "10",
+      "answerVariable": "solutions",
+      "explanation": "A 5 × 5 board has 10 non-attacking placements; the backtracking search abandons a row as soon as every column in it is attacked."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 9"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 52",
+      "url": "https://leetcode.com/problems/n-queens-ii/"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "longest-palindromic-substring",
+  "statement": [
+    "You are given a string s.",
+    "Return the longest substring of s that reads the same forwards and backwards. If several have the greatest length, any one of them is a correct answer.",
+    "Expanding around each centre, either a single character or the gap between two neighbours, finds it in O(n²) time and O(1) extra space."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "babad"
+      },
+      "output": "bab",
+      "answerVariable": "answer",
+      "explanation": "\"bab\" and \"aba\" are both palindromes of length 3 and either is correct; the expansion finds \"bab\" first."
+    },
+    {
+      "input": {
+        "s": "cbbd"
+      },
+      "output": "bb",
+      "answerVariable": "answer",
+      "explanation": "The longest palindrome is the even-length \"bb\", found by expanding from the gap between the two b's."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 1000",
+    "s consists only of digits and English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 5",
+      "url": "https://leetcode.com/problems/longest-palindromic-substring/"
+    }
+  ]
+}

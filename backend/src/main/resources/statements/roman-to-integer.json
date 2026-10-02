@@ -1,0 +1,37 @@
+{
+  "id": "roman-to-integer",
+  "statement": [
+    "Roman numerals use seven symbols: I = 1, V = 5, X = 10, L = 50, C = 100, D = 500 and M = 1000.",
+    "A numeral is normally written from largest symbol to smallest, and its value is the sum of its symbols. Six exceptions use subtraction, when a smaller symbol is written just before a larger one: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400 and CM = 900.",
+    "Given a valid Roman numeral roman, return its integer value."
+  ],
+  "examples": [
+    {
+      "input": {
+        "roman": "MCMXCIV"
+      },
+      "output": "1994",
+      "answerVariable": "answer",
+      "explanation": "M = 1000, CM = 900, XC = 90 and IV = 4, which add up to 1994."
+    },
+    {
+      "input": {
+        "roman": "LVIII"
+      },
+      "output": "58",
+      "answerVariable": "answer",
+      "explanation": "Every symbol is no smaller than the next, so the value is 50 + 5 + 1 + 1 + 1 = 58."
+    }
+  ],
+  "constraints": [
+    "1 ≤ roman.length ≤ 15",
+    "roman contains only the characters I, V, X, L, C, D and M",
+    "roman is a valid Roman numeral with a value from 1 to 3999"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 13",
+      "url": "https://leetcode.com/problems/roman-to-integer/"
+    }
+  ]
+}

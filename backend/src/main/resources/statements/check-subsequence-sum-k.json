@@ -1,0 +1,46 @@
+{
+  "id": "check-subsequence-sum-k",
+  "statement": [
+    "You are given an integer array nums and an integer k. A subsequence picks any set of positions of nums, keeping their order.",
+    "Return true if at least one subsequence has elements that add up to exactly k, and false otherwise. The empty subsequence has sum 0.",
+    "The pick / not-pick recursion can stop as soon as one branch reports a match, instead of exploring the whole tree."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ],
+        "k": 5
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "Picking 2 and 3 gives 5, so the answer is true."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ],
+        "k": 100
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "Even taking every element gives only 6, so no subsequence reaches 100."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/check-if-there-exists-a-subsequence-with-sum-k/1"
+    },
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/check-if-there-exists-a-subsequence-with-sum-k"
+    }
+  ]
+}

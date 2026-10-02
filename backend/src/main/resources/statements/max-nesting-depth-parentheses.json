@@ -1,0 +1,37 @@
+{
+  "id": "max-nesting-depth-parentheses",
+  "statement": [
+    "You are given expression, a valid parentheses expression: every '(' is closed by a later ')' and the parentheses are properly nested. It may also contain digits and the operators +, −, * and /.",
+    "The nesting depth at a point in the expression is the number of '(' opened before it and not yet closed.",
+    "Return the maximum nesting depth reached anywhere in expression."
+  ],
+  "examples": [
+    {
+      "input": {
+        "expression": "(1+(2*3)+((8)/4))+1"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "The 8 sits inside three open parentheses, the deepest point in the expression."
+    },
+    {
+      "input": {
+        "expression": "(1)+((2))+(((3)))"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "The groups reach depths 1, 2 and 3 one after another; depth does not add up across separate groups, so the answer is 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ expression.length ≤ 100",
+    "expression consists of digits 0-9 and the characters '+', '-', '*', '/', '(' and ')'",
+    "expression is a valid parentheses expression"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1614",
+      "url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/"
+    }
+  ]
+}
