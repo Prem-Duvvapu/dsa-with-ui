@@ -105,7 +105,7 @@ public class UpperBoundTracer implements AlgorithmTracer {
                 .say("Find the leftmost index whose value is strictly greater than %d. No "
                         + "candidate found yet, so ans defaults to %d (one past the end).",
                         target, n)
-                .var("target", target).var("low", low).var("high", high).var("ans", "n")
+                .var("target", target).var("low", low).var("high", high).var("ans", n)
                 .arrayState(window(nums, low, high, -1, -1)).step();
 
         while (low <= high) {
@@ -142,7 +142,7 @@ public class UpperBoundTracer implements AlgorithmTracer {
                         ans == n
                                 ? "Every element is at or below the target, so there is no upper bound."
                                 : "ans=%d is the leftmost index strictly greater than %d.".formatted(ans, target))
-                .var("ans", ans == n ? "n" : String.valueOf(ans))
+                .var("ans", ans)
                 .arrayState(window(nums, 0, -1, -1, ans)).step();
     }
 }

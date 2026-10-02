@@ -5,7 +5,7 @@
     "init" : 2,
     "leader" : 7
   },
-  "code" : "public List<Integer> findLeaders(int[] arr) {\n    List<Integer> ans = new ArrayList<>();\n    int n = arr.length, maxi = Integer.MIN_VALUE;\n\n    for (int i = n - 1; i >= 0; i--) {\n        if (arr[i] > maxi) {\n            ans.add(arr[i]); maxi = arr[i];\n        }\n    }\n    Collections.reverse(ans);\n    return ans;\n}",
+  "code" : "public List<Integer> findLeaders(int[] arr) {\n    List<Integer> ans = new ArrayList<>();\n    int n = arr.length, maxi = Integer.MIN_VALUE;\n\n    for (int i = n - 1; i >= 0; i--) {\n        if (arr[i] >= maxi) {   // nothing to its right is strictly greater\n            ans.add(arr[i]); maxi = arr[i];\n        }\n    }\n    Collections.reverse(ans);\n    return ans;\n}",
   "problemId" : "leaders-in-array",
   "resolvedInput" : {
     "nums" : [ 16, 17, 4, 3, 5, 2 ]
@@ -56,7 +56,7 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 6,
-    "description" : "i=5: arr[5]=2 > maxi (-INF), new leader found.",
+    "description" : "i=5: arr[5]=2 >= maxi (-INF): nothing to its right is greater, so it is a leader.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -142,7 +142,7 @@
   }, {
     "stepNumber" : 4,
     "activeLine" : 6,
-    "description" : "i=4: arr[4]=5 > maxi (2), new leader found.",
+    "description" : "i=4: arr[4]=5 >= maxi (2): nothing to its right is greater, so it is a leader.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -228,7 +228,7 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 6,
-    "description" : "i=3: arr[3]=3 <= maxi (5), not a leader (skip).",
+    "description" : "i=3: arr[3]=3 < maxi (5): something to its right is greater, so it is not a leader.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -271,7 +271,7 @@
   }, {
     "stepNumber" : 7,
     "activeLine" : 6,
-    "description" : "i=2: arr[2]=4 <= maxi (5), not a leader (skip).",
+    "description" : "i=2: arr[2]=4 < maxi (5): something to its right is greater, so it is not a leader.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -314,7 +314,7 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 6,
-    "description" : "i=1: arr[1]=17 > maxi (5), new leader found.",
+    "description" : "i=1: arr[1]=17 >= maxi (5): nothing to its right is greater, so it is a leader.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -400,7 +400,7 @@
   }, {
     "stepNumber" : 10,
     "activeLine" : 6,
-    "description" : "i=0: arr[0]=16 <= maxi (17), not a leader (skip).",
+    "description" : "i=0: arr[0]=16 < maxi (17): something to its right is greater, so it is not a leader.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },

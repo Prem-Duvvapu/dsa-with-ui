@@ -126,9 +126,12 @@ public class MaxProductSubarrayTracer implements AlgorithmTracer {
                     .step();
         }
 
+        // The code returns (int) maxi. Formatting the double instead printed "-0" when the best
+        // product was a zero reached through a negative factor (-2 * 0 is -0.0 in floating point).
+        int result = (int) maxi;
         emit.at("done")
-                .say("Maximum product subarray = %.0f.", maxi)
-                .var("result", String.format("%.0f", maxi))
+                .say("Maximum product subarray = %d.", result)
+                .var("result", result)
                 .array(nums)
                 .step();
     }

@@ -30,8 +30,11 @@ public class SecondLargestElementTracer implements AlgorithmTracer {
         return InputSpec.of(
                 InputField.of("nums", FieldType.INT_ARRAY)
                         .label("Array")
-                        .help("Scan the array tracking both largest and second-largest values in a single pass.")
-                        .length(2, 40).values(-999, 999)
+                        .help("Positive values. The answer is -1 when there is no second largest, so -1 "
+                                + "must not be a value the array can hold.")
+                        // GfG's domain (1 <= arr[i]). With negatives allowed, the -1 "none" sentinel
+                        // collided with real data: [-1, -5] answered -1 instead of -5.
+                        .length(2, 40).values(1, 999)
                         .defaultValue(List.of(12, 35, 1, 10, 34, 1))
                         .build());
     }

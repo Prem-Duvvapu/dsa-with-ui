@@ -1433,3 +1433,37 @@ class, and the reason is worth stating rather than rediscovering.
   opened `/problem/two-sum` against catalogues without it. They now open their own problem.
 - **Lesson:** when a screen describes a run, every part of that description must be read
   from the run itself, never from the component that happened to submit it.
+
+## RCA-055 — Correct-looking traces with wrong answers, found by writing the problem statements
+
+- **Discovered:** 2026-10-02, while writing own-words statements for every problem (#163, #164
+  and the following batches). Each example's tracer output was checked against an independent
+  reference: a hand calculation, a brute force, or a fuzzed reference implementation.
+- **Status:** Fixed in this PR
+- **Symptom:** ten tracers produced a well-formed, numbered, anchored, input-sensitive trace that
+  ended on the wrong answer, or crashed on a valid edge of their own input space:
+  - infix-to-postfix and infix-to-prefix treated `^` as left-associative: `A^B^C` gave `AB^C^` and
+    `^^ABC`.
+  - book-allocation answered 90 for 5 students and 4 books (correct: −1).
+  - row-max-ones answered row 0 for an all-zero matrix (correct: −1).
+  - lower-bound and upper-bound printed the letter `n` instead of the array length.
+  - count-good-numbers swapped its two exponents, so every odd n was wrong (n = 1 gave 4).
+  - max-product-subarray printed `-0`.
+  - second-largest-element answered −1 for `[-1, -5]`.
+  - leaders-in-array dropped an equal leader.
+  - subset-sum, partition-equal, partition-min-diff and target-sum returned HTTP 500 on any 0 item.
+- **Root cause:** no test asserted an answer. `TracerContractTest` proves a trace is structurally
+  sound and responds to its input, and goldens pin the default run. Neither checks that the final
+  value is correct, and every one of these lives off the default input. The DP crash was
+  `Set.of(a, b)` with `a == b`: a zero item makes "skip" and "take" read the same cell.
+- **Fix:** each tracer corrected in its displayed code and its `run()` together, with the
+  narration corrected where it stated the rule backwards (count-good-numbers). second-largest-element
+  now takes the problem's positive domain instead of letting its −1 sentinel collide with data, and
+  book-allocation's alternate input exercises the new no-allocation branch.
+- **Guard (RED first):** `TracerAnswerRegressionTest`, exact input → correct final value. 17 of its
+  20 rows failed against the unfixed code. The other 3 are guards that left-associative operators
+  and even n still work. `StatementContractTest` now pins another answer per statement example, so
+  each statement added is a further correctness check, not just documentation.
+- **Lesson:** a trace can be honest about *what it did* and still be wrong about *the answer*. A
+  correctness check needs an oracle independent of the tracer; the statements now provide one per
+  problem.

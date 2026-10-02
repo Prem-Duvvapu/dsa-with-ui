@@ -48,13 +48,17 @@ public class BookAllocationTracer implements AlgorithmTracer {
     /** One student per book: every split is trivially feasible, so the answer is just the largest single book. */
     @Override
     public Map<String, Object> alternateInput() {
-        return Map.of("pages", List.of(12, 34, 67, 90), "m", 4);
+        // More students than books: every student must get at least one book, so no allocation
+        // exists. The branch the default never reaches.
+        return Map.of("pages", List.of(12, 34, 67, 90), "m", 5);
     }
 
     @Override
     public String annotatedCode() {
         return """
                public int findPages(int[] pages, int m) {
+                   // @a impossible
+                   if (m > pages.length) return -1;
                    int low = max(pages), high = sum(pages), ans = high;
                    // @a init
                    while (low <= high) {
@@ -107,6 +111,15 @@ public class BookAllocationTracer implements AlgorithmTracer {
         for (int p : pages) {
             max = Math.max(max, p);
             sum += p;
+        }
+        if (m > pages.length) {
+            emit.at("impossible")
+                    .say("There are %d students but only %d book%s, and every student must get at "
+                            + "least one whole book - so no allocation exists. Return -1.",
+                            m, pages.length, Narration.s(pages.length))
+                    .var("m", m).var("books", pages.length).var("answer", -1)
+                    .arrayState(pageState(pages, -1, pages.length)).step();
+            return;
         }
         int low = max;
         int high = sum;

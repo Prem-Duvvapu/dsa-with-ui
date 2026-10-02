@@ -77,7 +77,7 @@ class PartitionSetMinAbsDiffRemainingTracer extends RemainingDpTracer {
             boolean reachable = dp[i - 1][s] == 1 || (s >= nums[i - 1] && dp[i - 1][s - nums[i - 1]] == 1);
             dp[i][s] = reachable ? 1 : 0; known[i][s] = true;
             Set<DpTraceSupport.Coord> reads = s >= nums[i - 1]
-                    ? Set.of(new DpTraceSupport.Coord(i - 1, s), new DpTraceSupport.Coord(i - 1, s - nums[i - 1]))
+                    ? Set.copyOf(List.of(new DpTraceSupport.Coord(i - 1, s), new DpTraceSupport.Coord(i - 1, s - nums[i - 1])))  // zero item: same cell twice
                     : Set.of(new DpTraceSupport.Coord(i - 1, s));
             emit.at("fill").say("Using %d value%s, sum %d is %s.", i, Narration.s(i), s,
                             reachable ? "reachable" : "unreachable")
@@ -140,7 +140,7 @@ class TargetSumDpRemainingTracer extends RemainingDpTracer {
                 int plus = col - nums[i - 1], minus = col + nums[i - 1];
                 dp[i][col] = (plus >= 0 ? dp[i - 1][plus] : 0) + (minus < width ? dp[i - 1][minus] : 0); known[i][col] = true;
                 Set<DpTraceSupport.Coord> reads = plus >= 0 && minus < width
-                        ? Set.of(new DpTraceSupport.Coord(i - 1, plus), new DpTraceSupport.Coord(i - 1, minus))
+                        ? Set.copyOf(List.of(new DpTraceSupport.Coord(i - 1, plus), new DpTraceSupport.Coord(i - 1, minus)))  // zero item: plus == minus
                         : plus >= 0 ? Set.of(new DpTraceSupport.Coord(i - 1, plus))
                         : minus < width ? Set.of(new DpTraceSupport.Coord(i - 1, minus)) : Set.of();
                 emit.at("fill").say("After value %d, sum %d has %d assignments.", nums[i - 1], col - total, dp[i][col])

@@ -53,7 +53,7 @@ public class LeadersInArrayTracer implements AlgorithmTracer {
                
                    for (int i = n - 1; i >= 0; i--) {
                        // @a compare
-                       if (arr[i] > maxi) {
+                       if (arr[i] >= maxi) {   // nothing to its right is strictly greater
                            // @a leader
                            ans.add(arr[i]); maxi = arr[i];
                        }
@@ -76,9 +76,11 @@ public class LeadersInArrayTracer implements AlgorithmTracer {
                 .var("maxi", "-INF").var("leaders", ans.toString()).array(arr).step();
 
         for (int i = n - 1; i >= 0; i--) {
-            if (arr[i] > maxi) {
+            // >=, not >: a leader only needs nothing STRICTLY greater on its right, so an equal
+            // value further right does not disqualify it ([10, 4, 2, 4, 1] has leaders 10, 4, 4, 1).
+            if (arr[i] >= maxi) {
                 emit.at("compare")
-                        .say("i=%d: arr[%d]=%d > maxi (%s), new leader found.",
+                        .say("i=%d: arr[%d]=%d >= maxi (%s): nothing to its right is greater, so it is a leader.",
                                 i, i, arr[i], maxi == Integer.MIN_VALUE ? "-INF" : String.valueOf(maxi))
                         .var("i", i).var("maxi", maxi == Integer.MIN_VALUE ? "-INF" : String.valueOf(maxi))
                         .var("leaders", ans.toString())
@@ -92,7 +94,7 @@ public class LeadersInArrayTracer implements AlgorithmTracer {
                         .array(arr, i).step();
             } else {
                 emit.at("compare")
-                        .say("i=%d: arr[%d]=%d <= maxi (%d), not a leader (skip).", i, i, arr[i], maxi)
+                        .say("i=%d: arr[%d]=%d < maxi (%d): something to its right is greater, so it is not a leader.", i, i, arr[i], maxi)
                         .var("i", i).var("maxi", maxi)
                         .var("leaders", ans.toString())
                         .array(arr, i).step();
