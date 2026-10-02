@@ -1,6 +1,18 @@
 import styles from './CodeViewer.module.css';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Code2 } from 'lucide-react';
+import { highlightJavaLines } from '../code/highlightJava';
+
+// Written out rather than indexed by a computed name, so the static className guard
+// (designTokens.test.js) can see each one.
+const TOKEN_CLASS = {
+  keyword: styles.tokKeyword,
+  type: styles.tokType,
+  string: styles.tokString,
+  number: styles.tokNumber,
+  comment: styles.tokComment,
+  annotation: styles.tokNumber
+};
 
 /**
  * Lines the algorithm CAN reach but this particular run did not.
@@ -29,6 +41,7 @@ export default function CodeViewer({ problem, currentStep, anchors, steps, comfo
     ? currentStep.activeLine
     : null;
   const lines = javaCode?.split('\n') || [];
+  const coloured = useMemo(() => (javaCode ? highlightJavaLines(javaCode) : []), [javaCode]);
   const unreached = unreachedAnchorLines(anchors, steps);
 
   return (
@@ -95,7 +108,11 @@ export default function CodeViewer({ problem, currentStep, anchors, steps, comfo
               <span className={`${styles.lineNumber}${isHighlighted ? ` ${styles.lineNumberActive}` : ''}`}>
                 {lineNumber}
               </span>
-              <span className={styles.lineText}>{lineText}</span>
+              <span className={styles.lineText}>
+                {(coloured[idx] || []).map((token, t) => (TOKEN_CLASS[token.type]
+                  ? <span key={t} className={TOKEN_CLASS[token.type]}>{token.text}</span>
+                  : token.text))}
+              </span>
             </div>
           );
         })}
