@@ -1,0 +1,37 @@
+{
+  "id": "reverse-words-string",
+  "statement": [
+    "You are given a string s. A word is a maximal run of characters other than spaces.",
+    "Return the words of s in reverse order, joined by single spaces.",
+    "s may begin or end with spaces and may have several spaces between two words; none of these extra spaces belong in the result."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "  the sky is blue  "
+      },
+      "output": "blue is sky the",
+      "answerVariable": "answer",
+      "explanation": "The four words are written last to first, and the spaces at both ends are dropped."
+    },
+    {
+      "input": {
+        "s": "hello   world"
+      },
+      "output": "world hello",
+      "answerVariable": "answer",
+      "explanation": "The three spaces between the words shrink to one in the result."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 10⁴",
+    "s contains English letters, digits and spaces",
+    "s contains at least one word"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 151",
+      "url": "https://leetcode.com/problems/reverse-words-in-a-string/"
+    }
+  ]
+}

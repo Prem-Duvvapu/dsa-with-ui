@@ -1,0 +1,44 @@
+{
+  "id": "string-to-integer-atoi",
+  "statement": [
+    "Convert a string s into a 32-bit signed integer, the way the C function atoi does.",
+    "First skip any leading spaces. Then an optional '+' or '−' sign sets the sign, positive if there is none. Then read digits until a non-digit character or the end of the string; leading zeros do not change the value, and if no digit is read the value is 0. Everything after that point is ignored.",
+    "Apply the sign. If the result is above 2³¹ − 1 return 2³¹ − 1, and if it is below −2³¹ return −2³¹. Otherwise return the result."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "   -42"
+      },
+      "output": "-42",
+      "answerVariable": "answer",
+      "explanation": "The three spaces are skipped, the '−' makes the number negative, and the digits give 42."
+    },
+    {
+      "input": {
+        "s": "4193 with words"
+      },
+      "output": "4193",
+      "answerVariable": "answer",
+      "explanation": "Reading stops at the space after 4193, so the words are ignored."
+    },
+    {
+      "input": {
+        "s": "-91283472332"
+      },
+      "output": "-2147483648",
+      "answerVariable": "answer",
+      "explanation": "−91283472332 is below −2³¹, so the result is clamped to −2147483648."
+    }
+  ],
+  "constraints": [
+    "0 ≤ s.length ≤ 200",
+    "s consists of English letters, digits, ' ', '+', '-' and '.'"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 8",
+      "url": "https://leetcode.com/problems/string-to-integer-atoi/"
+    }
+  ]
+}

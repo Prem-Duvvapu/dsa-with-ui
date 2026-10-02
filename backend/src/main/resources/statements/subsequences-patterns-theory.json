@@ -1,0 +1,41 @@
+{
+  "id": "subsequences-patterns-theory",
+  "statement": [
+    "A subsequence of an array keeps some of its elements, possibly none or all, in their original order. An array of n elements has 2ⁿ subsequences, because each element is either picked or not picked.",
+    "The pick / not-pick recursion visits all of them: at index i, call once with nums[i] added to the current choice and once without it, and record the choice when i reaches n. Variations of this one pattern print every subsequence, stop at the first one that satisfies a condition, or count the ones that do.",
+    "Here you are given an integer array nums and an integer limit. Use the counting variation: return how many subsequences of nums have a sum of at most limit. The empty subsequence has sum 0, so it counts whenever limit ≥ 0."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ],
+        "limit": 3
+      },
+      "output": "5",
+      "answerVariable": "captured",
+      "explanation": "The subsequences with sum at most 3 are [], [1], [2], [3] and [1, 2]. Every other choice, such as [1, 3], adds up to more than 3."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          4
+        ],
+        "limit": 10
+      },
+      "output": "4",
+      "answerVariable": "captured",
+      "explanation": "Even the largest choice, [2, 4], sums to 6, so all 2² = 4 subsequences count."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/print-subsequences-string/"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "kmp-lps-algo",
+  "statement": [
+    "The Knuth–Morris–Pratt (KMP) string search first preprocesses the pattern into its LPS array (longest proper prefix that is also a suffix).",
+    "You are given a string pattern of length m. For each index i, lps[i] is the length of the longest proper prefix of pattern[0 … i] that is also a suffix of pattern[0 … i]. A proper prefix is shorter than the whole string, so lps[0] = 0.",
+    "Build the array in O(m) time: keep the length len of the current matched prefix, extend it when pattern[i] equals pattern[len], and on a mismatch fall back to len = lps[len − 1] rather than starting over. Return the array lps."
+  ],
+  "examples": [
+    {
+      "input": {
+        "pattern": "abababca"
+      },
+      "output": "[0, 0, 1, 2, 3, 4, 0, 1]",
+      "answerVariable": "lps",
+      "explanation": "For the prefix \"ababab\" (i = 5), \"abab\" is both a prefix and a suffix, so lps[5] = 4. At i = 6 the \"c\" matches no prefix, so the value drops to 0, and the final \"a\" matches the first character, giving lps[7] = 1."
+    },
+    {
+      "input": {
+        "pattern": "abcde"
+      },
+      "output": "[0, 0, 0, 0, 0]",
+      "answerVariable": "lps",
+      "explanation": "All letters are different, so no prefix ever reappears as a suffix and every entry is 0."
+    }
+  ],
+  "sources": [
+    {
+      "label": "cp-algorithms",
+      "url": "https://cp-algorithms.com/string/prefix-function.html"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/kmp-algorithm-for-pattern-searching/"
+    }
+  ]
+}

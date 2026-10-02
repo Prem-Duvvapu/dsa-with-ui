@@ -1,0 +1,39 @@
+{
+  "id": "word-search",
+  "statement": [
+    "You are given a grid of letters board and a string word. In board the rows are written left to right and separated by commas, so \"ABCE,SFCS\" is a grid with two rows of four letters.",
+    "The word is found if it can be spelled by a path of cells where each cell is next to the previous one horizontally or vertically. A cell may be used at most once in the path.",
+    "Return true if word can be found in board, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "board": "ABCE,SFCS,ADEE",
+        "word": "ABCCED"
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "Start at the top-left A, go right through B and C, down to the C below it, down to E and left to D."
+    },
+    {
+      "input": {
+        "board": "ABCE,SFCS,ADEE",
+        "word": "ABCB"
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "A, B, C can be spelled along the top row, but the only B next to that C is the one already used, and a cell may not be reused."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number of rows, number of columns ≤ 6",
+    "1 ≤ word.length ≤ 15",
+    "board and word consist of uppercase and lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 79",
+      "url": "https://leetcode.com/problems/word-search/"
+    }
+  ]
+}

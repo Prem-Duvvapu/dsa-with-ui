@@ -1,0 +1,38 @@
+{
+  "id": "isomorphic-strings",
+  "statement": [
+    "You are given two strings s and t.",
+    "They are isomorphic when the characters of s can be replaced to produce t, under one fixed rule: every occurrence of a character is replaced by the same character, and two different characters are never replaced by the same character. A character may be replaced by itself.",
+    "Return true if s and t are isomorphic, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "egg",
+        "t": "add"
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Replacing e with a and g with d turns \"egg\" into \"add\"."
+    },
+    {
+      "input": {
+        "s": "foo",
+        "t": "bar"
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The two o's of s would have to become both a and r, which one fixed rule cannot do."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 5 × 10⁴",
+    "t.length == s.length"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 205",
+      "url": "https://leetcode.com/problems/isomorphic-strings/"
+    }
+  ]
+}

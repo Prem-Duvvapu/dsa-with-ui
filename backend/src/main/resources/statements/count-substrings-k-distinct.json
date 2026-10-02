@@ -1,0 +1,34 @@
+{
+  "id": "count-substrings-k-distinct",
+  "statement": [
+    "You are given a string s of lowercase letters and an integer k.",
+    "Count the substrings of s that contain exactly k distinct characters. Substrings are counted by position, so equal substrings at different places count separately.",
+    "A sliding window counts the substrings with at most k distinct characters in O(n) time. The answer is that count for k minus the same count for k − 1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "pqpqs",
+        "k": 2
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "The substrings with exactly two distinct letters are \"pq\" (twice), \"qp\", \"pqp\", \"qpq\", \"pqpq\" and \"qs\": 7 in all."
+    },
+    {
+      "input": {
+        "s": "abcbaa",
+        "k": 3
+      },
+      "output": "8",
+      "answerVariable": "answer",
+      "explanation": "There are 21 substrings with at most 3 distinct letters and 13 with at most 2, so exactly 21 − 13 = 8 have three."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/count-number-of-substrings4528/1"
+    }
+  ]
+}

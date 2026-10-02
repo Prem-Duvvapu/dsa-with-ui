@@ -567,3 +567,17 @@ Defects found (fixed separately under RCA-055): max-product-subarray "-0", secon
   sentinel colliding with negative input, leaders-in-array using > instead of >=. These examples were
   also checked against the fixed tracers: all 315 statements pass on that branch too.
 Automated: StatementContractTest passes (315 statements).
+
+## Problem statements: Recursion & Backtracking and Strings (37 problems)
+
+```text
+Package / status: statements rollout, topic 7 of 8 (after #168). Same method; links verified (41/41).
+  Full backend suite run locally before the PR (the #168 lesson: StatementContractTest alone missed
+  ProblemConstraintsTest).
+Coverage: 37 of 49. Skipped: sudoku-solver and eleven generators (subsets, permutations, combination sums,
+  parentheses, binary strings, power set, phone letters, palindrome partitioning) - their final step
+  carries only a count or a flag, not the generated list. n-queens reports a count, so it is written as
+  LeetCode 52 (N-Queens II), which asks for exactly that.
+Defect found (fixed separately under RCA-055): count-good-numbers swapped its exponents for odd n.
+  Examples here use even n only.
+Automated: full backend suite passes (352 statements).

@@ -1,0 +1,36 @@
+{
+  "id": "sort-characters-frequency",
+  "statement": [
+    "You are given a string s.",
+    "Rearrange its characters so that they are in decreasing order of how often they occur in s, with all copies of the same character kept together.",
+    "Return the rearranged string. Characters that occur equally often may come in either order, so more than one answer can be correct."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "tree"
+      },
+      "output": "eert",
+      "answerVariable": "answer",
+      "explanation": "e occurs twice and comes first; r and t occur once each. \"eetr\" would also be correct."
+    },
+    {
+      "input": {
+        "s": "cccaaa"
+      },
+      "output": "aaaccc",
+      "answerVariable": "answer",
+      "explanation": "a and c both occur three times, so either block may come first; \"cccaaa\" is equally correct. Mixing them, as in \"cacaca\", is not."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 5 × 10⁵",
+    "s consists of uppercase and lowercase English letters and digits"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 451",
+      "url": "https://leetcode.com/problems/sort-characters-by-frequency/"
+    }
+  ]
+}

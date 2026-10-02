@@ -1,0 +1,36 @@
+{
+  "id": "z-function-algo",
+  "statement": [
+    "You are given a string s of length n. Its Z array z has one entry per index.",
+    "For each index i from 1 to n − 1, z[i] is the length of the longest substring starting at i that is also a prefix of s; that is, the largest k with s[0 … k − 1] equal to s[i … i + k − 1]. By convention z[0] = 0.",
+    "Compute the Z array in O(n) time, by keeping the rightmost window [l, r) already known to match a prefix and reusing its values instead of comparing from scratch. Return the array z."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "aabxaabxcaabxaabxay"
+      },
+      "output": "[0, 1, 0, 0, 4, 1, 0, 0, 0, 8, 1, 0, 0, 5, 1, 0, 0, 1, 0]",
+      "answerVariable": "z",
+      "explanation": "At index 9 the text \"aabxaabxa…\" matches the first 8 characters \"aabxaabx\"; the next pair, \"a\" against \"c\", differs, so z[9] = 8. At index 4, \"aabx\" matches and then \"c\" differs from \"a\", so z[4] = 4."
+    },
+    {
+      "input": {
+        "s": "aaaaa"
+      },
+      "output": "[0, 4, 3, 2, 1]",
+      "answerVariable": "z",
+      "explanation": "In a string of one repeated letter, the suffix starting at i matches the prefix all the way to the end, so z[i] = n − i."
+    }
+  ],
+  "sources": [
+    {
+      "label": "cp-algorithms",
+      "url": "https://cp-algorithms.com/string/z-function.html"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/z-algorithm-linear-time-pattern-searching-algorithm/"
+    }
+  ]
+}

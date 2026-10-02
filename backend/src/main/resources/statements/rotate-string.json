@@ -1,0 +1,38 @@
+{
+  "id": "rotate-string",
+  "statement": [
+    "You are given two strings s and goal. One shift moves the first character of s to its end; for example, \"abcde\" becomes \"bcdea\".",
+    "Return true if some number of shifts, zero or more, turns s into goal, and false otherwise.",
+    "Equivalently, goal must have the same length as s and appear as a substring of s + s."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "abcde",
+        "goal": "cdeab"
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Two shifts move \"ab\" to the end and give \"cdeab\"."
+    },
+    {
+      "input": {
+        "s": "abcde",
+        "goal": "abced"
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "A shift keeps the letters in the same cyclic order, and \"abced\" swaps d and e, so no number of shifts produces it."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length, goal.length ≤ 100",
+    "s and goal consist of lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 796",
+      "url": "https://leetcode.com/problems/rotate-string/"
+    }
+  ]
+}

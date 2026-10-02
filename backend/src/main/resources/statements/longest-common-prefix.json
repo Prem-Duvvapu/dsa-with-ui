@@ -1,0 +1,36 @@
+{
+  "id": "longest-common-prefix",
+  "statement": [
+    "You are given a list of strings in words, written as one string with the words separated by commas.",
+    "Return the longest string that is a prefix of every word. If the words do not all start with the same character, return an empty string."
+  ],
+  "examples": [
+    {
+      "input": {
+        "words": "flower,flow,flight"
+      },
+      "output": "fl",
+      "answerVariable": "answer",
+      "explanation": "All three words start with \"fl\", but the third letters o, o and i differ."
+    },
+    {
+      "input": {
+        "words": "dog,racecar,car"
+      },
+      "output": "",
+      "answerVariable": "answer",
+      "explanation": "The words start with d, r and c, so they share no prefix at all."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number of words ≤ 200",
+    "0 ≤ length of each word ≤ 200",
+    "the words consist of lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 14",
+      "url": "https://leetcode.com/problems/longest-common-prefix/"
+    }
+  ]
+}

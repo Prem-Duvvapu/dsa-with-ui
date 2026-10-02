@@ -1,0 +1,36 @@
+{
+  "id": "shortest-palindrome",
+  "statement": [
+    "You are given a string s of lowercase letters. You may add characters only to the front of s.",
+    "Return the shortest palindrome that can be made this way.",
+    "The characters to add are the reverse of whatever follows the longest palindromic prefix of s. That prefix can be found with the KMP LPS array of s + \"#\" + reverse(s): its last entry is the prefix's length."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "aacecaaa"
+      },
+      "output": "aaacecaaa",
+      "answerVariable": "answer",
+      "explanation": "The longest palindrome at the start of s is \"aacecaa\" (7 characters). Only the final \"a\" lies outside it, so one \"a\" is added to the front."
+    },
+    {
+      "input": {
+        "s": "abcd"
+      },
+      "output": "dcbabcd",
+      "answerVariable": "answer",
+      "explanation": "Only the single character \"a\" is a palindromic prefix, so the reverse of \"bcd\", which is \"dcb\", is added to the front."
+    }
+  ],
+  "constraints": [
+    "0 ≤ s.length ≤ 5 × 10⁴",
+    "s consists of lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 214",
+      "url": "https://leetcode.com/problems/shortest-palindrome/"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "largest-odd-number-string",
+  "statement": [
+    "You are given a string number that holds a large non-negative integer.",
+    "Return the substring of number, as a string, whose value is the largest odd integer among all non-empty substrings. Return an empty string if no odd integer appears.",
+    "Since a number is odd exactly when its last digit is odd, the answer is the prefix of number that ends at its rightmost odd digit."
+  ],
+  "examples": [
+    {
+      "input": {
+        "number": "35427000"
+      },
+      "output": "35427",
+      "answerVariable": "answer",
+      "explanation": "The rightmost odd digit is the 7. Everything after it is a 0, so the longest odd substring is \"35427\"."
+    },
+    {
+      "input": {
+        "number": "4206"
+      },
+      "output": "",
+      "answerVariable": "answer",
+      "explanation": "Every digit is even, so no substring is an odd number and the answer is empty."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number.length ≤ 10⁵",
+    "number consists only of digits and has no leading zeros"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1903",
+      "url": "https://leetcode.com/problems/largest-odd-number-in-string/"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "word-break",
+  "statement": [
+    "You are given a string s and a dictionary of words wordDict, written as one string with the words separated by commas.",
+    "Return true if s can be split into a sequence of one or more dictionary words, and false otherwise. A dictionary word may be used any number of times."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "leetcode",
+        "wordDict": "leet,code"
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "s splits into \"leet\" followed by \"code\", and both are in the dictionary."
+    },
+    {
+      "input": {
+        "s": "catsandog",
+        "wordDict": "cats,dog,sand,and,cat"
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "Both \"cats\" + \"and\" and \"cat\" + \"sand\" cover the first seven letters, but that leaves \"og\", which no word matches."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 300",
+    "1 ≤ number of words in wordDict ≤ 1000",
+    "1 ≤ length of each word ≤ 20",
+    "s and the words consist of lowercase English letters",
+    "the words in wordDict are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 139",
+      "url": "https://leetcode.com/problems/word-break/"
+    }
+  ]
+}
