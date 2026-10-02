@@ -2,6 +2,7 @@ package com.dsa.ui.controller;
 
 import com.dsa.ui.catalog.CatalogEntry;
 import com.dsa.ui.catalog.ProblemCatalog;
+import com.dsa.ui.catalog.StatementCatalog;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.tracer.AlgorithmTracer;
 import com.dsa.ui.tracer.ExecutionTrace;
@@ -41,11 +42,14 @@ public class ProblemsController {
     private final ProblemCatalog catalog;
     private final TracerRegistry tracers;
     private final TraceRunner runner;
+    private final StatementCatalog statements;
 
-    public ProblemsController(ProblemCatalog catalog, TracerRegistry tracers, TraceRunner runner) {
+    public ProblemsController(ProblemCatalog catalog, TracerRegistry tracers, TraceRunner runner,
+                              StatementCatalog statements) {
         this.catalog = catalog;
         this.tracers = tracers;
         this.runner = runner;
+        this.statements = statements;
     }
 
     /**
@@ -154,6 +158,21 @@ public class ProblemsController {
         // The SOURCE problem's constraints. Distinct from the inputSpec field constraints
         // below, which are this visualiser's own caps; the UI labels them apart.
         out.put("constraints", p.getConstraints());
+        // The full statement, when one has been written: own-words paragraphs, examples whose
+        // outputs StatementContractTest proves against the tracer, the source's constraints
+        // (which then replace the shorter ProblemConstraints list) and links to the original.
+        statements.find(id).ifPresent(st -> {
+            out.put("statement", st.statement());
+            out.put("examples", st.examples().stream().map(e -> {
+                Map<String, Object> example = new LinkedHashMap<>();
+                example.put("input", e.input());
+                example.put("output", e.output());
+                example.put("explanation", e.explanation());
+                return example;
+            }).toList());
+            if (st.constraints() != null && !st.constraints().isEmpty()) out.put("constraints", st.constraints());
+            out.put("sources", st.sources());
+        });
         out.put("complexity", p.getComplexity());
         out.put("defaultArray", p.getDefaultArray());
         out.put("defaultGrid", p.getDefaultGrid());

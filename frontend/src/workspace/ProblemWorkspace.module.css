@@ -33,6 +33,11 @@
 .statement summary::before { content: '▸'; color: var(--ink-secondary); transition: transform var(--motion-fast) var(--ease-standard); }
 .statement[open] summary::before { transform: rotate(90deg); }
 .statementBody { padding: 0 16px 16px 36px; max-width: calc(var(--width-reading) + 36px); display: grid; gap: 10px; }
+.example { margin: 0; padding: 12px 14px; border: 1px solid var(--rule-subtle); border-radius: 8px; background: var(--surface-recessed); display: grid; gap: 4px; }
+.example figcaption { font-weight: 650; }
+.example code { font: 14px var(--font-code); overflow-wrap: anywhere; }
+.sources { font-size: var(--type-meta); color: var(--ink-secondary); }
+.sources a { color: var(--ink-strong); }
 .constraintsLabel { font-size: var(--type-meta); font-weight: 650; }
 .constraintsLabel span { font-weight: 400; color: var(--ink-secondary); }
 .constraints { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
