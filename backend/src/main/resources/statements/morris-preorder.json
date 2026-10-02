@@ -1,0 +1,50 @@
+{
+  "id": "morris-preorder",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return its preorder traversal (node, then left subtree, then right subtree) using only O(1) extra space: no recursion and no stack.",
+    "Morris traversal does this by threading. Before going into a node's left subtree, find that subtree's rightmost node and point its right pointer back at the current node. Coming back along that thread later tells you the left subtree is finished, and the thread is removed so the tree ends up unchanged."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          10,
+          5,
+          15,
+          3,
+          7,
+          null,
+          18
+        ]
+      },
+      "output": "[10, 5, 3, 7, 15, 18]",
+      "answerVariable": "answer",
+      "explanation": "5 has children 3 and 7, and 15 has only a right child 18. The left subtree of 10 is listed in full before 15."
+    },
+    {
+      "input": {
+        "tree": [
+          6,
+          4,
+          null,
+          2,
+          5
+        ]
+      },
+      "output": "[6, 4, 2, 5]",
+      "answerVariable": "answer",
+      "explanation": "4 is the only child of 6 and has children 2 and 5. The threads from 5 back to 6 and from 2 back to 4 are each used once and then removed."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 144",
+      "url": "https://leetcode.com/problems/binary-tree-preorder-traversal/"
+    }
+  ]
+}

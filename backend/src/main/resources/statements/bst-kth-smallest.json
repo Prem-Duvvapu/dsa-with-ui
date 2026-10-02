@@ -1,0 +1,53 @@
+{
+  "id": "bst-kth-smallest",
+  "statement": [
+    "You are given a binary search tree and an integer k. In a binary search tree (BST), every value in a node's left subtree is smaller than the node's value, and every value in its right subtree is larger. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return the kth smallest value in the tree, counting from 1. An inorder traversal visits a BST's values in increasing order, so the answer is the kth value it visits."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          8,
+          4,
+          12,
+          2,
+          6,
+          10,
+          14
+        ],
+        "k": 3
+      },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "Inorder visits 2, 4, 6, 8, 10, 12, 14, and the third of these is 6."
+    },
+    {
+      "input": {
+        "tree": [
+          8,
+          4,
+          12,
+          2,
+          6,
+          10,
+          14
+        ],
+        "k": 7
+      },
+      "output": "14",
+      "answerVariable": "answer",
+      "explanation": "The tree has 7 nodes, so the 7th smallest is the largest value, 14."
+    }
+  ],
+  "constraints": [
+    "1 ≤ k ≤ n ≤ 10⁴, where n is the number of nodes",
+    "0 ≤ Node.val ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 230",
+      "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"
+    }
+  ]
+}

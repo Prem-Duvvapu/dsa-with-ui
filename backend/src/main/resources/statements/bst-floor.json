@@ -1,0 +1,67 @@
+{
+  "id": "bst-floor",
+  "statement": [
+    "You are given a binary search tree and an integer target. In a binary search tree (BST), every value in a node's left subtree is smaller than the node's value, and every value in its right subtree is larger. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "The floor of target is the largest value in the tree that is less than or equal to target.",
+    "Return the floor of target, or none if every value in the tree is larger than target."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          15,
+          10,
+          20,
+          8,
+          12,
+          17,
+          25
+        ],
+        "target": 13
+      },
+      "output": "12",
+      "answerVariable": "answer",
+      "explanation": "13 is not in the tree. The values below it are 8, 10 and 12, and the largest of them is 12."
+    },
+    {
+      "input": {
+        "tree": [
+          15,
+          10,
+          20,
+          8,
+          12,
+          17,
+          25
+        ],
+        "target": 12
+      },
+      "output": "12",
+      "answerVariable": "answer",
+      "explanation": "12 is in the tree, and a value equal to the target is its own floor."
+    },
+    {
+      "input": {
+        "tree": [
+          15,
+          10,
+          20,
+          8,
+          12,
+          17,
+          25
+        ],
+        "target": 5
+      },
+      "output": "none",
+      "answerVariable": "answer",
+      "explanation": "The smallest value in the tree is 8, which is already larger than 5, so 5 has no floor."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/floor-in-binary-search-tree-bst/"
+    }
+  ]
+}

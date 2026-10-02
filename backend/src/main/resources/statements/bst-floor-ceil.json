@@ -1,0 +1,71 @@
+{
+  "id": "bst-floor-ceil",
+  "statement": [
+    "You are given a binary search tree and an integer target. In a binary search tree (BST), every value in a node's left subtree is smaller than the node's value, and every value in its right subtree is larger. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "The floor of target is the largest value in the tree that is less than or equal to target. The ceil of target is the smallest value in the tree that is greater than or equal to target. When no value qualifies, report -1.",
+    "Find both: floor holds the floor and ceil holds the ceil."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          5,
+          3,
+          8,
+          1,
+          4,
+          7,
+          9
+        ],
+        "target": 6
+      },
+      "output": "5",
+      "answerVariable": "floor",
+      "explanation": "6 is not in the tree. The values just around it are 5 and 7, so the floor is 5 (and the ceil is 7)."
+    },
+    {
+      "input": {
+        "tree": [
+          5,
+          3,
+          8,
+          1,
+          4,
+          7,
+          9
+        ],
+        "target": 6
+      },
+      "output": "7",
+      "answerVariable": "ceil",
+      "explanation": "Same tree and target: the smallest value that is at least 6 is 7."
+    },
+    {
+      "input": {
+        "tree": [
+          5,
+          3,
+          8,
+          1,
+          4,
+          7,
+          9
+        ],
+        "target": 10
+      },
+      "output": "-1",
+      "answerVariable": "ceil",
+      "explanation": "Every value in the tree is smaller than 10, so there is no ceil. The floor is the largest value, 9."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/floor-in-binary-search-tree-bst/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/floor-and-ceil-from-a-bst/"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "tree-postorder",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "A postorder traversal traverses a node's left subtree in postorder, then its right subtree in postorder, and visits the node itself last.",
+    "Return the node values in the order a postorder traversal visits them."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          null,
+          6
+        ]
+      },
+      "output": "[4, 5, 2, 6, 3, 1]",
+      "answerVariable": "output",
+      "explanation": "The root 1 has children 2 and 3; 2 has children 4 and 5; 3 has only a right child, 6. Every child is listed before its parent, so the root 1 comes last."
+    },
+    {
+      "input": {
+        "tree": [
+          5,
+          3,
+          8,
+          1,
+          null,
+          7,
+          9
+        ]
+      },
+      "output": "[1, 3, 7, 9, 8, 5]",
+      "answerVariable": "output",
+      "explanation": "3 has only a left child 1, and 8 has children 7 and 9. The left subtree gives 1, 3, the right subtree gives 7, 9, 8, and the root 5 closes the list."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 145",
+      "url": "https://leetcode.com/problems/binary-tree-postorder-traversal/"
+    }
+  ]
+}

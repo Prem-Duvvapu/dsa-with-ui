@@ -1,0 +1,49 @@
+{
+  "id": "tree-inorder",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "An inorder traversal first traverses a node's left subtree in inorder, then visits the node itself, then traverses its right subtree in inorder.",
+    "Return the node values in the order an inorder traversal visits them."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          null,
+          6
+        ]
+      },
+      "output": "[4, 2, 5, 1, 3, 6]",
+      "answerVariable": "output",
+      "explanation": "The root 1 has children 2 and 3; 2 has children 4 and 5; 3 has only a right child, 6. The left subtree gives 4, 2, 5; then comes the root 1; then the right subtree gives 3, 6 (3 has no left child, so it comes before 6)."
+    },
+    {
+      "input": {
+        "tree": [
+          10,
+          20,
+          30,
+          40
+        ]
+      },
+      "output": "[40, 20, 10, 30]",
+      "answerVariable": "output",
+      "explanation": "40 is the left child of 20, which is the left child of 10, so the walk starts at 40 and works back up before moving to 30."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 94",
+      "url": "https://leetcode.com/problems/binary-tree-inorder-traversal/"
+    }
+  ]
+}

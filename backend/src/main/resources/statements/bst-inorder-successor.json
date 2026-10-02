@@ -1,0 +1,91 @@
+{
+  "id": "bst-inorder-successor",
+  "statement": [
+    "You are given a binary search tree with distinct values and the value target of one of its nodes. In a binary search tree (BST), every value in a node's left subtree is smaller than the node's value, and every value in its right subtree is larger. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "The inorder successor of target is the node that comes right after it in an inorder traversal, which for a BST is the smallest value larger than target.",
+    "Return the successor's value, or none if target is the largest value in the tree."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          8,
+          4,
+          12,
+          2,
+          6,
+          10,
+          14,
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ],
+        "target": 8
+      },
+      "output": "9",
+      "answerVariable": "answer",
+      "explanation": "8 has a right subtree, so its successor is the leftmost node in that subtree: 12 → 10 → 9."
+    },
+    {
+      "input": {
+        "tree": [
+          8,
+          4,
+          12,
+          2,
+          6,
+          10,
+          14,
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ],
+        "target": 7
+      },
+      "output": "8",
+      "answerVariable": "answer",
+      "explanation": "7 is a leaf with no right subtree. The successor is the nearest ancestor that 7 lies to the left of, which is the root 8."
+    },
+    {
+      "input": {
+        "tree": [
+          8,
+          4,
+          12,
+          2,
+          6,
+          10,
+          14,
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ],
+        "target": 15
+      },
+      "output": "none",
+      "answerVariable": "answer",
+      "explanation": "15 is the largest value in the tree, so nothing comes after it."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/inorder-successor-in-bst/1"
+    }
+  ]
+}

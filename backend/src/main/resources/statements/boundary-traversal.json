@@ -1,0 +1,57 @@
+{
+  "id": "boundary-traversal",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return the boundary of the tree, read anti-clockwise starting at the root, as one list made of four parts in this order:",
+    "(1) the root. (2) The left boundary, top to bottom, leaving out leaves: start at the root's left child and keep moving to the left child, or to the right child when there is no left child. It is empty when the root has no left child. (3) Every leaf of the tree, from left to right. (4) The right boundary, built the same way from the root's right child but preferring right children, leaving out leaves, and listed bottom to top.",
+    "A node is listed only once, even if it belongs to more than one part."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          null,
+          null,
+          8,
+          9,
+          null,
+          null,
+          10,
+          11
+        ]
+      },
+      "output": "[1, 2, 4, 8, 9, 6, 10, 11, 7, 3]",
+      "answerVariable": "boundary",
+      "explanation": "The left boundary is just 2, because its left child 4 is a leaf. The leaves are 4, 8, 9, 6, 10 and 11 (8 and 9 hang under 5, 10 and 11 under 7). The right boundary 3, 7 is added bottom to top."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          null,
+          2,
+          null,
+          null,
+          3,
+          4
+        ]
+      },
+      "output": "[1, 3, 4, 2]",
+      "answerVariable": "boundary",
+      "explanation": "The root has no left child, so the left boundary is empty. 2 is the root's right child and has children 3 and 4, which are the leaves. The right boundary is 2 alone."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/boundary-traversal-of-binary-tree/"
+    }
+  ]
+}

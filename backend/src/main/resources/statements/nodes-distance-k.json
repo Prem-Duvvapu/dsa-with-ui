@@ -1,0 +1,67 @@
+{
+  "id": "nodes-distance-k",
+  "statement": [
+    "You are given a binary tree with distinct values, the value target of one of its nodes, and an integer k. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "The distance between two nodes is the number of edges on the path between them; the path may go up through parents as well as down through children.",
+    "Return the values of all nodes at distance exactly k from the target. Any order is correct; here they are listed in the order a breadth-first search outward from the target reaches them, trying the left child, then the right child, then the parent of each node."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        "target": 5,
+        "k": 2
+      },
+      "output": "[7, 4, 1]",
+      "answerVariable": "answer",
+      "explanation": "Two steps down from 5, through its child 2, reach 7 and 4. Going up to 3 and then down the other side reaches 1."
+    },
+    {
+      "input": {
+        "tree": [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        "target": 3,
+        "k": 1
+      },
+      "output": "[5, 1]",
+      "answerVariable": "answer",
+      "explanation": "3 is the root, so the nodes one edge away are just its two children."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number of nodes ≤ 500",
+    "0 ≤ Node.val ≤ 500",
+    "All Node.val are unique.",
+    "target is the value of a node in the tree.",
+    "0 ≤ k ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 863",
+      "url": "https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/"
+    }
+  ]
+}

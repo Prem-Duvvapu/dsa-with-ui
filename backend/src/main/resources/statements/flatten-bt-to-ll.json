@@ -1,0 +1,52 @@
+{
+  "id": "flatten-bt-to-ll",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Flatten the tree in place into a chain that uses only right pointers. Every node's left pointer must become null, and following right pointers from the root must visit the nodes in preorder (node, then left subtree, then right subtree).",
+    "Return the values in the order they appear when following the right pointers from the root."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          5,
+          3,
+          4,
+          null,
+          6
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5, 6]",
+      "answerVariable": "chain",
+      "explanation": "2 has children 3 and 4, and 5 has only a right child, 6. The whole left subtree 2, 3, 4 is spliced between 1 and 5."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          null,
+          2,
+          null,
+          null,
+          null,
+          3
+        ]
+      },
+      "output": "[1, 2, 3]",
+      "answerVariable": "chain",
+      "explanation": "Each node already has only a right child, so the tree is already a flat chain and stays as it is."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 2000",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 114",
+      "url": "https://leetcode.com/problems/flatten-binary-tree-to-linked-list/"
+    }
+  ]
+}

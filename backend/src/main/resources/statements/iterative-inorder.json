@@ -1,0 +1,48 @@
+{
+  "id": "iterative-inorder",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return its inorder traversal (left subtree, then the node, then right subtree) without using recursion. Use an explicit stack: keep pushing nodes while moving left, then pop a node, record it, and continue from its right child. The walk ends when there is no current node and the stack is empty."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          4,
+          2,
+          7,
+          1,
+          3,
+          6,
+          9
+        ]
+      },
+      "output": "[1, 2, 3, 4, 6, 7, 9]",
+      "answerVariable": "output",
+      "explanation": "This full tree is a binary search tree, so its inorder traversal lists the values in increasing order."
+    },
+    {
+      "input": {
+        "tree": [
+          5,
+          4,
+          null,
+          3
+        ]
+      },
+      "output": "[3, 4, 5]",
+      "answerVariable": "output",
+      "explanation": "The tree is a chain of left children 5, 4, 3. All three are pushed on the way down and popped in reverse, giving 3, 4, 5."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 100",
+    "-100 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 94",
+      "url": "https://leetcode.com/problems/binary-tree-inorder-traversal/"
+    }
+  ]
+}

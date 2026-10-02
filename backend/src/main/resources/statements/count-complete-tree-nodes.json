@@ -1,0 +1,51 @@
+{
+  "id": "count-complete-tree-nodes",
+  "statement": [
+    "You are given a complete binary tree: every level is full except possibly the last, and the nodes on the last level are packed to the left. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return the number of nodes in the tree. Visiting every node takes O(n) time; the complete shape lets you do better. When the leftmost and rightmost paths below a node have the same length h, that subtree is perfect and holds 2^h − 1 nodes without being visited."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "The last level holds 4, 5 and 6, packed to the left, so the tree has 6 nodes."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "The tree is perfect: the leftmost and rightmost paths from the root both have 3 nodes, so the count is 2³ − 1 = 7."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 5 × 10⁴",
+    "0 ≤ Node.val ≤ 5 × 10⁴",
+    "The tree is complete."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 222",
+      "url": "https://leetcode.com/problems/count-complete-tree-nodes/"
+    }
+  ]
+}

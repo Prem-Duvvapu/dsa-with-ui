@@ -1,0 +1,67 @@
+{
+  "id": "bst-lca",
+  "statement": [
+    "You are given a binary search tree with distinct values, and two values p and q that are both in the tree. In a binary search tree (BST), every value in a node's left subtree is smaller than the node's value, and every value in its right subtree is larger. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "The lowest common ancestor of two nodes is the deepest node that has both of them in its subtree, where a node counts as being in its own subtree.",
+    "Return the value of the lowest common ancestor of p and q. In a BST you can find it on a single walk down from the root: go left while both values are smaller than the current node, go right while both are larger, and stop at the first node where they split (or that equals one of them)."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          6,
+          2,
+          8,
+          0,
+          4,
+          7,
+          9,
+          null,
+          null,
+          3,
+          5
+        ],
+        "p": 0,
+        "q": 3
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Both values are smaller than 6, so the walk moves to 2. There 0 goes left and 3 goes right, so 2 is the answer."
+    },
+    {
+      "input": {
+        "tree": [
+          6,
+          2,
+          8,
+          0,
+          4,
+          7,
+          9,
+          null,
+          null,
+          3,
+          5
+        ],
+        "p": 7,
+        "q": 9
+      },
+      "output": "8",
+      "answerVariable": "answer",
+      "explanation": "Both values are larger than 6, so the walk moves to 8, whose children are 7 and 9."
+    }
+  ],
+  "constraints": [
+    "2 ≤ number of nodes ≤ 10⁵",
+    "-10⁹ ≤ Node.val ≤ 10⁹",
+    "All Node.val are unique.",
+    "p ≠ q",
+    "p and q are both in the BST."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 235",
+      "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/"
+    }
+  ]
+}

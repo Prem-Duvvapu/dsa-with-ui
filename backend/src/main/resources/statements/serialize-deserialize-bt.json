@@ -1,0 +1,50 @@
+{
+  "id": "serialize-deserialize-bt",
+  "statement": [
+    "You are given a binary tree. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Design two functions. serialize turns the tree into a string, and deserialize turns that string back into the same tree.",
+    "Use this format: visit the nodes breadth-first from the root. For each real node, write its value and queue both of its child slots; for an empty slot, write null. Join everything with commas. The nulls written for the children of the last level are kept.",
+    "Return the serialized string. Deserializing it must rebuild a tree that matches the original node for node."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          3,
+          9,
+          20,
+          null,
+          null,
+          15,
+          7
+        ]
+      },
+      "output": "3,9,20,null,null,15,7,null,null,null,null",
+      "answerVariable": "data",
+      "explanation": "9 is a leaf, so it contributes two nulls. 20's children 15 and 7 follow, and the four nulls at the end are the empty children of 15 and 7."
+    },
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "output": "1,2,3,4,null,null,null,null,null",
+      "answerVariable": "data",
+      "explanation": "4 is the left child of 2, so 2 contributes 4 and null. Then 3's two empty children and 4's two empty children add four more nulls."
+    }
+  ],
+  "constraints": [
+    "0 ≤ number of nodes ≤ 10⁴",
+    "-1000 ≤ Node.val ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 297",
+      "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
+    }
+  ]
+}

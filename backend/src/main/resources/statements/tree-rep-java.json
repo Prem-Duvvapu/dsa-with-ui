@@ -1,0 +1,49 @@
+{
+  "id": "tree-rep-java",
+  "statement": [
+    "In Java a binary tree is usually stored as linked objects: a TreeNode class with an int val and two references, left and right, which are null when that child is absent.",
+    "You are given the values of a tree as the array tree in level order, indexed from 0. The left and right children of the value at index i are at indices 2i + 1 and 2i + 2, and null marks a position with no node.",
+    "Turn the array into linked TreeNode objects. Create the root from tree[0]; for every later non-null value, create a node and attach it as the left child (odd index) or right child (even index) of the node at index (i − 1) / 2. A value whose parent position never got a node has nothing to attach to, so it is not part of the tree.",
+    "Return the number of TreeNode objects that end up linked into the tree."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          1,
+          2,
+          3,
+          null,
+          4,
+          5,
+          6
+        ]
+      },
+      "output": "6",
+      "answerVariable": "nodesCreated",
+      "explanation": "Index 3 is null, so 2 has no left child. 4 becomes 2's right child, and 5 and 6 become the children of 3. All six values are linked."
+    },
+    {
+      "input": {
+        "tree": [
+          9,
+          8,
+          null,
+          7,
+          6,
+          5,
+          4
+        ]
+      },
+      "output": "4",
+      "answerVariable": "nodesCreated",
+      "explanation": "Index 2 is null, so no node exists there. 5 and 4, at indices 5 and 6, would be its children, but they have no parent to attach to. Only 9, 8, 7 and 6 are linked."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/java/implementing-a-binary-tree-in-java/"
+    }
+  ]
+}

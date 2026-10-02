@@ -1,0 +1,56 @@
+{
+  "id": "two-sum-bst",
+  "statement": [
+    "You are given a binary search tree and an integer k. In a binary search tree (BST), every value in a node's left subtree is smaller than the node's value, and every value in its right subtree is larger. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Return true if two different nodes in the tree have values that add up to k, and false otherwise.",
+    "One way uses two BST iterators: one returns values in increasing order (next), the other in decreasing order (before). Move the smaller side up when the sum is too small and the larger side down when it is too big, until the two cursors meet."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          5,
+          3,
+          6,
+          2,
+          4,
+          null,
+          7
+        ],
+        "k": 5
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "The tree holds 2, 3, 4, 5, 6 and 7, and 2 + 3 = 5."
+    },
+    {
+      "input": {
+        "tree": [
+          5,
+          3,
+          6,
+          2,
+          4,
+          null,
+          7
+        ],
+        "k": 28
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The two largest values, 6 and 7, add up to only 13, so no pair can reach 28."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number of nodes ≤ 10⁴",
+    "-10⁴ ≤ Node.val ≤ 10⁴",
+    "The tree is a valid binary search tree.",
+    "-10⁵ ≤ k ≤ 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 653",
+      "url": "https://leetcode.com/problems/two-sum-iv-input-is-a-bst/"
+    }
+  ]
+}

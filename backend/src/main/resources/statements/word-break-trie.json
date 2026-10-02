@@ -1,0 +1,41 @@
+{
+  "id": "word-break-trie",
+  "statement": [
+    "You are given a string s and a dictionary of words wordDict, written as one comma-separated string.",
+    "Return true if s can be split into a sequence of one or more dictionary words, with nothing left over. A word may be used more than once.",
+    "This version stores the dictionary in a trie. dp[i] records whether the first i letters of s can be split. From every position i where dp[i] is true, walk the trie along s[i], s[i + 1], …; each time the walk reaches the end of a word at position j, set dp[j + 1] to true. The answer is dp[n], where n is the length of s."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "leetcode",
+        "wordDict": "leet,code"
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "s splits into \"leet\" and \"code\", both in the dictionary."
+    },
+    {
+      "input": {
+        "s": "catsandog",
+        "wordDict": "cats,dog,sand,and,cat"
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "\"cats\" or \"cat\" can start the split, followed by \"and\" or \"sand\", but that leaves \"og\", which no word matches."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 300",
+    "1 ≤ number of dictionary words ≤ 1000",
+    "1 ≤ length of each dictionary word ≤ 20",
+    "s and the dictionary words consist of lowercase English letters.",
+    "All dictionary words are distinct."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 139",
+      "url": "https://leetcode.com/problems/word-break/"
+    }
+  ]
+}

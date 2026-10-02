@@ -1,0 +1,47 @@
+{
+  "id": "children-sum-property",
+  "statement": [
+    "You are given a binary tree of non-negative values. The tree is given as the array tree in level order, indexed from 0: the root is tree[0], and the left and right children of the node at index i are at indices 2i + 1 and 2i + 2. null marks a position with no node, and every position below a null must be null too.",
+    "Change the values so that the tree satisfies the children sum property: every node that has at least one child holds exactly the sum of its children's values, where a missing child counts as 0. You may only increase values, never decrease them, and you may not change the shape.",
+    "Many trees can satisfy this, so here is the method whose result is returned. Going down, if a node's children add up to at least the node's value, set the node to that sum; otherwise raise each existing child to the node's value. Fix both subtrees the same way, then, on the way back up, set the node to the sum of its children.",
+    "Return the resulting tree, in the same level-order format as the input."
+  ],
+  "examples": [
+    {
+      "input": {
+        "tree": [
+          20,
+          7,
+          2,
+          3,
+          5,
+          1,
+          30
+        ]
+      },
+      "output": "[71, 40, 31, 20, 20, 1, 30]",
+      "answerVariable": "tree",
+      "explanation": "7 + 2 is less than 20, so both children are raised to 20. Below the left 20, 3 and 5 are raised to 20, so that node becomes 40. Below the right 20, 1 + 30 = 31 is already enough. The root ends as 40 + 31 = 71."
+    },
+    {
+      "input": {
+        "tree": [
+          10,
+          4,
+          null,
+          2,
+          3
+        ]
+      },
+      "output": "[20, 20, null, 10, 10]",
+      "answerVariable": "tree",
+      "explanation": "4 is raised to 10, then its children 2 and 3 are raised to 10 each, so 4's node becomes 20, and the root, whose only child is now 20, becomes 20 too."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/convert-an-arbitrary-binary-tree-to-a-tree-that-holds-children-sum-property/"
+    }
+  ]
+}
