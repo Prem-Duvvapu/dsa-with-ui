@@ -1,0 +1,31 @@
+{
+  "id": "sum-first-n",
+  "statement": [
+    "You are given a non-negative integer n.",
+    "Return 1 + 2 + … + n, the sum of the first n natural numbers, computed recursively: the sum for n is n plus the sum for n − 1, and the sum for 0 is 0."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 5
+      },
+      "output": "15",
+      "answerVariable": "total",
+      "explanation": "1 + 2 + 3 + 4 + 5 = 15."
+    },
+    {
+      "input": {
+        "n": 8
+      },
+      "output": "36",
+      "answerVariable": "total",
+      "explanation": "1 + 2 + … + 8 = 36, which matches the formula 8 × 9 / 2."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/sum-of-first-n-numbers"
+    }
+  ]
+}

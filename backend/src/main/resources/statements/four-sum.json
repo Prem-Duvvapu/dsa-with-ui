@@ -1,0 +1,54 @@
+{
+  "id": "four-sum",
+  "statement": [
+    "You are given an integer array nums and an integer target.",
+    "Find every quadruplet of values taken from four different indices of nums whose sum equals target.",
+    "Return each distinct quadruplet once. Two quadruplets with the same four values count as one."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          0,
+          -1,
+          0,
+          -2,
+          2
+        ],
+        "target": 0
+      },
+      "output": "[[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]",
+      "answerVariable": "answer",
+      "explanation": "Three distinct combinations of values add up to 0: -2 − 1 + 1 + 2, -2 + 0 + 0 + 2 and -1 + 0 + 0 + 1."
+    },
+    {
+      "input": {
+        "nums": [
+          -3,
+          -3,
+          -3,
+          -3,
+          -2,
+          3,
+          3
+        ],
+        "target": -6
+      },
+      "output": "[[-3, -3, -3, 3]]",
+      "answerVariable": "answer",
+      "explanation": "-3 − 3 − 3 + 3 = -6. The many copies of -3 and 3 all give that same quadruplet, so it is listed once."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 200",
+    "-10⁹ ≤ nums[i] ≤ 10⁹",
+    "-10⁹ ≤ target ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 18",
+      "url": "https://leetcode.com/problems/4sum/"
+    }
+  ]
+}

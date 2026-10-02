@@ -1,0 +1,66 @@
+{
+  "id": "count-subarrays-given-sum",
+  "statement": [
+    "You are given an integer array nums, whose elements may be negative, and an integer k.",
+    "A subarray is a non-empty run of adjacent elements. Return how many subarrays have elements adding up to exactly k. Subarrays at different positions are counted separately even if they hold the same values."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          1,
+          1
+        ],
+        "k": 2
+      },
+      "output": "2",
+      "answerVariable": "cnt",
+      "explanation": "[1, 1] at indices 0 to 1 and [1, 1] at indices 1 to 2 both sum to 2."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          -3,
+          1,
+          1,
+          1,
+          4,
+          2,
+          -3
+        ],
+        "k": 3
+      },
+      "output": "8",
+      "answerVariable": "cnt",
+      "explanation": "Eight subarrays sum to 3, among them [1, 2], [3], [1, 1, 1] and [4, 2, -3]. The negative values let some longer ones, such as [1, 2, 3, -3], reach 3 as well."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "output": "2",
+      "answerVariable": "cnt",
+      "explanation": "[1, 2] and [3] both sum to 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 2 × 10⁴",
+    "-1000 ≤ nums[i] ≤ 1000",
+    "-10⁷ ≤ k ≤ 10⁷"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 560",
+      "url": "https://leetcode.com/problems/subarray-sum-equals-k/"
+    }
+  ]
+}

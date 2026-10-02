@@ -1,0 +1,50 @@
+{
+  "id": "count-subarrays-xor-k",
+  "statement": [
+    "You are given an array nums of non-negative integers and an integer k.",
+    "A subarray is a non-empty run of adjacent elements; its XOR is the bitwise exclusive-or of all its elements. Return how many subarrays have XOR equal to k."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          4,
+          2,
+          2,
+          6,
+          4
+        ],
+        "k": 6
+      },
+      "output": "4",
+      "answerVariable": "cnt",
+      "explanation": "Four subarrays have XOR 6: [4, 2], [2, 2, 6], [6] and the whole array, where the pairs of 4s and 2s cancel and leave 6."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "k": 5
+      },
+      "output": "2",
+      "answerVariable": "cnt",
+      "explanation": "[5] has XOR 5, and so does the whole array, because 6 ^ 7 ^ 8 ^ 9 = 0. No other subarray does."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "0 ≤ nums[i] ≤ 10⁵",
+    "0 ≤ k ≤ 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/count-subarray-with-given-xor/1"
+    }
+  ]
+}

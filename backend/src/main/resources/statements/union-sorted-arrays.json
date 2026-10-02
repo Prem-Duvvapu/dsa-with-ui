@@ -1,0 +1,75 @@
+{
+  "id": "union-sorted-arrays",
+  "statement": [
+    "You are given two integer arrays a and b, each sorted in non-decreasing order. Either array may contain repeated values.",
+    "The union of a and b is the set of distinct values that appear in at least one of them.",
+    "Return the union as a list in increasing order, with each value listed once."
+  ],
+  "examples": [
+    {
+      "input": {
+        "a": [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "b": [
+          2,
+          3,
+          5
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5, 6]",
+      "answerVariable": "union",
+      "explanation": "2 and 3 occur in both arrays but are listed once; 5 comes only from b."
+    },
+    {
+      "input": {
+        "a": [
+          1,
+          2,
+          3
+        ],
+        "b": [
+          2,
+          4,
+          5,
+          6
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5, 6]",
+      "answerVariable": "union",
+      "explanation": "Only 2 is shared. Every other value appears in exactly one of the arrays."
+    },
+    {
+      "input": {
+        "a": [
+          1,
+          1,
+          2
+        ],
+        "b": [
+          2,
+          2,
+          3
+        ]
+      },
+      "output": "[1, 2, 3]",
+      "answerVariable": "union",
+      "explanation": "Repeats inside each array collapse too, leaving the distinct values 1, 2 and 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ a.length, b.length ≤ 10⁵",
+    "-10⁹ ≤ a[i], b[i] ≤ 10⁹",
+    "a and b are sorted in non-decreasing order"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/union-of-two-sorted-arrays-1587115621/1"
+    }
+  ]
+}

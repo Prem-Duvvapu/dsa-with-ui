@@ -1,0 +1,32 @@
+{
+  "id": "count-digits",
+  "statement": [
+    "You are given a positive integer n.",
+    "Return how many digits n has when written in base 10.",
+    "Count them arithmetically: each integer division by 10 removes the last digit, so count the divisions until nothing is left."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 74295
+      },
+      "output": "5",
+      "answerVariable": "count",
+      "explanation": "Dividing by 10 five times takes 74295 → 7429 → 742 → 74 → 7 → 0, so it has 5 digits."
+    },
+    {
+      "input": {
+        "n": 7
+      },
+      "output": "1",
+      "answerVariable": "count",
+      "explanation": "A single division by 10 reaches 0, so 7 has 1 digit."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/count-digits-in-a-number"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "check-sorted-ii",
+  "statement": [
+    "You are given an integer array nums of length n.",
+    "Decide whether nums could have been produced by taking an array sorted in non-decreasing order and rotating it: moving some number of elements, possibly zero, from the front to the back while keeping their order. Duplicate values are allowed.",
+    "Return true if such a sorted array and rotation exist, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          3,
+          4,
+          5,
+          1,
+          2
+        ]
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "Moving the first two elements of the sorted array [1, 2, 3, 4, 5] to the back gives [3, 4, 5, 1, 2]."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          1,
+          3,
+          4
+        ]
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "Read circularly, the values drop twice: from 2 to 1, and from 4 back round to 2. A rotated sorted array can drop at most once, so the answer is false."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ]
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "The array is already sorted, which is a rotation by zero positions."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 100",
+    "1 ≤ nums[i] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1752",
+      "url": "https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/"
+    }
+  ]
+}

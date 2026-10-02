@@ -1,0 +1,66 @@
+{
+  "id": "left-rotate-k",
+  "statement": [
+    "You are given an integer array nums of length n and a non-negative integer k.",
+    "Rotate nums to the left by k positions in place: each element moves k places towards the front, and elements that pass the front wrap around to the back. Rotating by n positions restores the original array, so only k mod n positions actually matter.",
+    "Return the rotated array."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "k": 2
+      },
+      "output": "[3, 4, 5, 6, 7, 1, 2]",
+      "answerVariable": "result",
+      "explanation": "The first two elements, 1 and 2, wrap around to the back."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "k": 4
+      },
+      "output": "[5, 6, 1, 2, 3, 4]",
+      "answerVariable": "result",
+      "explanation": "The first four elements, 1 to 4, move behind 5 and 6."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "k": 9
+      },
+      "output": "[3, 4, 5, 6, 7, 1, 2]",
+      "answerVariable": "result",
+      "explanation": "With 7 elements, 9 mod 7 = 2, so this gives the same result as rotating by 2."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/rotate-array-by-n-elements-1587115621/1"
+    }
+  ]
+}

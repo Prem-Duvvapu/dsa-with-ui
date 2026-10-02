@@ -1,0 +1,49 @@
+{
+  "id": "leaders-in-array",
+  "statement": [
+    "You are given an integer array nums.",
+    "An element is a leader if no element to its right is strictly greater than it. The last element is always a leader, since nothing follows it.",
+    "Return all leaders in the order they appear in nums, from left to right."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          16,
+          17,
+          4,
+          3,
+          5,
+          2
+        ]
+      },
+      "output": "[17, 5, 2]",
+      "answerVariable": "leaders",
+      "explanation": "Nothing to the right of 17 is greater than it, and the same holds for 5 and for 2, the last element. 16, 4 and 3 each have a larger value somewhere to their right."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "output": "[5, 4, 3, 2, 1]",
+      "answerVariable": "leaders",
+      "explanation": "The values decrease from left to right, so every element is greater than everything after it and all five are leaders."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/leaders-in-an-array"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/leaders-in-an-array-1587115620/1"
+    }
+  ]
+}

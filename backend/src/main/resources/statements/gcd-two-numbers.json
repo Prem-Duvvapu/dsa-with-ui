@@ -1,0 +1,37 @@
+{
+  "id": "gcd-two-numbers",
+  "statement": [
+    "You are given two positive integers a and b.",
+    "Return their greatest common divisor (GCD, also called HCF): the largest integer that divides both a and b with no remainder.",
+    "The Euclidean algorithm finds it quickly, because GCD(a, b) = GCD(b, a mod b), and GCD(x, 0) = x."
+  ],
+  "examples": [
+    {
+      "input": {
+        "a": 52,
+        "b": 12
+      },
+      "output": "4",
+      "answerVariable": "gcd",
+      "explanation": "52 = 2² × 13 and 12 = 2² × 3. The only common factor is 2² = 4."
+    },
+    {
+      "input": {
+        "a": 17,
+        "b": 5
+      },
+      "output": "1",
+      "answerVariable": "gcd",
+      "explanation": "17 and 5 are both prime and different, so 1 is their only common divisor."
+    }
+  ],
+  "constraints": [
+    "1 ≤ a, b ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/gcd-of-two-numbers3459/1"
+    }
+  ]
+}

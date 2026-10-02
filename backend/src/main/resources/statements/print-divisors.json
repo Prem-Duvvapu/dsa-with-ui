@@ -1,0 +1,35 @@
+{
+  "id": "print-divisors",
+  "statement": [
+    "You are given a positive integer n.",
+    "Return every positive integer that divides n with no remainder, in increasing order.",
+    "Divisors come in pairs i and n / i, so it is enough to test values of i up to √n."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 36
+      },
+      "output": "[1, 2, 3, 4, 6, 9, 12, 18, 36]",
+      "answerVariable": "divisors",
+      "explanation": "Testing i = 1 to 6 finds the pairs (1, 36), (2, 18), (3, 12), (4, 9) and (6, 6). The 6 is listed once."
+    },
+    {
+      "input": {
+        "n": 17
+      },
+      "output": "[1, 17]",
+      "answerVariable": "divisors",
+      "explanation": "17 is prime, so its only divisors are 1 and itself."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/all-divisors-of-a-number/1"
+    }
+  ]
+}

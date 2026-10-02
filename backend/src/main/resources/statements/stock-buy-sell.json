@@ -1,0 +1,48 @@
+{
+  "id": "stock-buy-sell",
+  "statement": [
+    "You are given an array prices, where prices[i] is the price of a stock on day i.",
+    "You may buy one share on one day and sell it on a later day. Return the largest profit (selling price minus buying price) you can make.",
+    "If no later price is higher than an earlier one, make no trade and return 0."
+  ],
+  "examples": [
+    {
+      "input": {
+        "prices": [
+          7,
+          1,
+          5,
+          3,
+          6,
+          4
+        ]
+      },
+      "output": "5",
+      "answerVariable": "best",
+      "explanation": "Buy on day 1 at price 1 and sell on day 4 at price 6, for a profit of 5."
+    },
+    {
+      "input": {
+        "prices": [
+          9,
+          7,
+          4,
+          1
+        ]
+      },
+      "output": "0",
+      "answerVariable": "best",
+      "explanation": "The price falls every day, so any trade would lose money and the answer is 0."
+    }
+  ],
+  "constraints": [
+    "1 ≤ prices.length ≤ 10⁵",
+    "0 ≤ prices[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 121",
+      "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"
+    }
+  ]
+}

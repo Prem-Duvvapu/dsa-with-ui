@@ -1,0 +1,66 @@
+{
+  "id": "longest-subarray-sum-k-positives",
+  "statement": [
+    "You are given an array nums of positive integers and an integer k.",
+    "A subarray is a non-empty run of adjacent elements. Return the length of the longest subarray whose elements add up to exactly k, or 0 if no subarray does.",
+    "Because every element is positive, extending a subarray always increases its sum, which is what lets a two-pointer window solve this in one pass."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          1,
+          1,
+          1,
+          1,
+          4,
+          2,
+          3
+        ],
+        "k": 5
+      },
+      "output": "3",
+      "answerVariable": "maxLen",
+      "explanation": "[3, 1, 1] at indices 2 to 4 adds up to 5. The other subarrays with sum 5, [2, 3] and [1, 4], are shorter."
+    },
+    {
+      "input": {
+        "nums": [
+          4,
+          1,
+          1,
+          1,
+          2,
+          3,
+          5
+        ],
+        "k": 3
+      },
+      "output": "3",
+      "answerVariable": "maxLen",
+      "explanation": "The three 1s at indices 1 to 3 add up to 3. [1, 2] and [3] also sum to 3 but are shorter."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ],
+        "k": 10
+      },
+      "output": "0",
+      "answerVariable": "maxLen",
+      "explanation": "The whole array adds up to only 6, so no subarray reaches 10."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1"
+    }
+  ]
+}

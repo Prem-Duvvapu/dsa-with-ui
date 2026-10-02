@@ -1,0 +1,71 @@
+{
+  "id": "merge-intervals",
+  "statement": [
+    "You are given an array intervals, where intervals[i] = [start, end] describes a closed range with start ≤ end. The intervals may come in any order.",
+    "Two intervals overlap if they share at least one point, including when one ends exactly where the other starts. Merge every group of overlapping intervals into a single interval that covers the whole group.",
+    "Return the merged intervals, which no longer overlap, ordered by start."
+  ],
+  "examples": [
+    {
+      "input": {
+        "intervals": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            15,
+            18
+          ]
+        ]
+      },
+      "output": "[[1,6], [8,10], [15,18]]",
+      "answerVariable": "result",
+      "explanation": "[1, 3] and [2, 6] overlap and merge into [1, 6]. [8, 10] and [15, 18] touch nothing else."
+    },
+    {
+      "input": {
+        "intervals": [
+          [
+            1,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            10,
+            12
+          ]
+        ]
+      },
+      "output": "[[1,5], [10,12]]",
+      "answerVariable": "result",
+      "explanation": "After sorting by start, [2, 3] lies inside [1, 4], and [4, 5] touches it at 4, so all three become [1, 5]. [10, 12] stays separate."
+    }
+  ],
+  "constraints": [
+    "1 ≤ intervals.length ≤ 10⁴",
+    "intervals[i].length == 2",
+    "0 ≤ start ≤ end ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 56",
+      "url": "https://leetcode.com/problems/merge-intervals/"
+    }
+  ]
+}

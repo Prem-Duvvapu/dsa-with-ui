@@ -1,0 +1,50 @@
+{
+  "id": "three-sum",
+  "statement": [
+    "You are given an integer array nums.",
+    "Find every triplet of values taken from three different indices of nums whose sum is 0.",
+    "Return each distinct triplet once. Two triplets with the same three values count as one, even if they use different indices."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          -1,
+          0,
+          1,
+          2,
+          -1,
+          -4
+        ]
+      },
+      "output": "[[-1, -1, 2], [-1, 0, 1]]",
+      "answerVariable": "answer",
+      "explanation": "-1 + -1 + 2 = 0 and -1 + 0 + 1 = 0. The two -1s produce [-1, 0, 1] twice, but it is reported once."
+    },
+    {
+      "input": {
+        "nums": [
+          -4,
+          0,
+          0,
+          1,
+          4,
+          4
+        ]
+      },
+      "output": "[[-4, 0, 4]]",
+      "answerVariable": "answer",
+      "explanation": "-4 + 0 + 4 = 0 is the only zero-sum combination of values. The repeated 0s and 4s do not create new triplets."
+    }
+  ],
+  "constraints": [
+    "3 ≤ nums.length ≤ 3000",
+    "-10⁵ ≤ nums[i] ≤ 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 15",
+      "url": "https://leetcode.com/problems/3sum/"
+    }
+  ]
+}

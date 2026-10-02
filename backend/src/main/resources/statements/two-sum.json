@@ -1,0 +1,61 @@
+{
+  "id": "two-sum",
+  "statement": [
+    "You are given an integer array nums and an integer target.",
+    "Find two different indices i and j such that nums[i] + nums[j] == target. The same element may not be used twice, although two elements with equal values at different indices are fine.",
+    "Each input has exactly one such pair. Return its two indices, [i, j]."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          2,
+          7,
+          11,
+          15
+        ],
+        "target": 9
+      },
+      "output": "[0, 1]",
+      "answerVariable": "answer",
+      "explanation": "nums[0] + nums[1] = 2 + 7 = 9."
+    },
+    {
+      "input": {
+        "nums": [
+          3,
+          2,
+          4
+        ],
+        "target": 6
+      },
+      "output": "[1, 2]",
+      "answerVariable": "answer",
+      "explanation": "nums[1] + nums[2] = 2 + 4 = 6. Using the 3 at index 0 twice is not allowed."
+    },
+    {
+      "input": {
+        "nums": [
+          3,
+          3
+        ],
+        "target": 6
+      },
+      "output": "[0, 1]",
+      "answerVariable": "answer",
+      "explanation": "The two 3s are different elements, so indices 0 and 1 form the pair."
+    }
+  ],
+  "constraints": [
+    "2 ≤ nums.length ≤ 10⁴",
+    "-10⁹ ≤ nums[i] ≤ 10⁹",
+    "-10⁹ ≤ target ≤ 10⁹",
+    "Exactly one valid answer exists"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1",
+      "url": "https://leetcode.com/problems/two-sum/"
+    }
+  ]
+}

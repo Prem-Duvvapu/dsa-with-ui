@@ -1,0 +1,68 @@
+{
+  "id": "spiral-matrix",
+  "statement": [
+    "You are given an m × n integer matrix grid.",
+    "Visit every cell in spiral order: go along the top row from left to right, down the right column, back along the bottom row from right to left, up the left column, and then repeat on the smaller matrix that remains inside, until every cell has been visited once.",
+    "Return the values in the order they were visited."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            5,
+            6,
+            7,
+            8
+          ],
+          [
+            9,
+            10,
+            11,
+            12
+          ]
+        ]
+      },
+      "output": "[1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]",
+      "answerVariable": "result",
+      "explanation": "The outer ring gives 1, 2, 3, 4, 8, 12, 11, 10, 9, 5. The remaining inner row gives 6 and 7."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ]
+        ]
+      },
+      "output": "[1, 2, 3, 6, 5, 4]",
+      "answerVariable": "result",
+      "explanation": "The top row goes 1, 2, 3, then 6 down the right side, and the bottom row comes back as 5, 4."
+    }
+  ],
+  "constraints": [
+    "m == grid.length",
+    "n == grid[i].length",
+    "1 ≤ m, n ≤ 10",
+    "-100 ≤ grid[i][j] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 54",
+      "url": "https://leetcode.com/problems/spiral-matrix/"
+    }
+  ]
+}

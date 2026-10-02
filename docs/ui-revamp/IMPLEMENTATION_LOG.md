@@ -554,3 +554,16 @@ Defect found (fixed separately under RCA-055): subset-sum, partition-equal, part
 Notes: mcm-cost-eval is titled "Mining Diamonds / MCM Cost Eval" but traces plain matrix-chain cost - its
   statement describes the tracer; the title is an open catalogue question.
 Automated: StatementContractTest passes (266 statements).
+
+## Problem statements: Arrays, Learn the Basics and Sorting (49 problems)
+
+```text
+Package / status: statements rollout, topic 6 of 8 (after #167). Same method; links verified (58/58).
+Coverage: 49 of 59. Skipped because no final variable holds the answer: set-matrix-zeroes,
+  rotate-matrix-90, merge-two-sorted-arrays, reverse-array-recursion (no final variables), pascals-triangle,
+  print-1-to-n, print-n-to-1 (input echoed only), left-rotate-one, move-zeros-end (a helper only),
+  repeating-missing-number (answer split in two).
+Defects found (fixed separately under RCA-055): max-product-subarray "-0", second-largest-element's -1
+  sentinel colliding with negative input, leaders-in-array using > instead of >=. These examples were
+  also checked against the fixed tracers: all 315 statements pass on that branch too.
+Automated: StatementContractTest passes (315 statements).

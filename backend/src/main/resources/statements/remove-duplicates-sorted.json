@@ -1,0 +1,54 @@
+{
+  "id": "remove-duplicates-sorted",
+  "statement": [
+    "You are given an integer array nums sorted in non-decreasing order.",
+    "Rearrange nums in place so that each distinct value appears exactly once, in the original order, at the front of the array. What remains after those positions does not matter.",
+    "Return k, the number of distinct values; after the call, nums[0..k − 1] must hold them."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          4
+        ]
+      },
+      "output": "5",
+      "answerVariable": "uniqueCount",
+      "explanation": "The distinct values are 0, 1, 2, 3 and 4, so k = 5 and they occupy nums[0..4]."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "output": "5",
+      "answerVariable": "uniqueCount",
+      "explanation": "No value repeats, so every element stays where it is and k = 5."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 3 × 10⁴",
+    "-100 ≤ nums[i] ≤ 100",
+    "nums is sorted in non-decreasing order"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 26",
+      "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"
+    }
+  ]
+}

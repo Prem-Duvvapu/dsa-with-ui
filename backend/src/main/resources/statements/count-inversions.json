@@ -1,0 +1,48 @@
+{
+  "id": "count-inversions",
+  "statement": [
+    "You are given an integer array nums.",
+    "An inversion is a pair of indices (i, j) with i < j and nums[i] > nums[j]: a larger value that comes before a smaller one. The count measures how far the array is from sorted order.",
+    "Return the number of inversions, in O(n log n) time."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          5,
+          3,
+          2,
+          4,
+          1
+        ]
+      },
+      "output": "8",
+      "answerVariable": "answer",
+      "explanation": "5 is ahead of 4 smaller values, 3 ahead of 2, 2 ahead of 1, and 4 ahead of 1: 4 + 2 + 1 + 1 = 8."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "The array is in strictly decreasing order, so every one of the 5 × 4 / 2 = 10 pairs is an inversion."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "1 ≤ nums[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "reverse-pairs",
+  "statement": [
+    "You are given an integer array nums.",
+    "A reverse pair is a pair of indices (i, j) with i < j and nums[i] > 2 × nums[j].",
+    "Return the number of reverse pairs."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          3,
+          2,
+          3,
+          1
+        ]
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "The pairs are (1, 4), since 3 > 2 × 1, and (3, 4), since 3 > 2 × 1 again."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "Every element is smaller than anything after it, so no element can be more than twice a later one."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          4,
+          3,
+          5,
+          1
+        ]
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Only the final 1 is small enough: 4, 3 and 5 are each greater than 2 × 1, but 2 is not."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 5 × 10⁴",
+    "-2³¹ ≤ nums[i] ≤ 2³¹ − 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 493",
+      "url": "https://leetcode.com/problems/reverse-pairs/"
+    }
+  ]
+}
