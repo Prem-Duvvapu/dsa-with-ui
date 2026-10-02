@@ -1,0 +1,61 @@
+{
+  "id": "target-sum-dp",
+  "statement": [
+    "You are given an array nums and an integer target. Put a + or a − sign in front of every element of nums, then add them all up.",
+    "Return the number of different ways to choose the signs so that the result equals target."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          1
+        ],
+        "target": 0
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "+1 − 1 and −1 + 1 both give 0."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          1
+        ],
+        "target": 0
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "+1 − 2 + 1 and −1 + 2 − 1 both give 0. Every other choice of signs gives a non-zero result."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 3
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "To reach 3, exactly one of the five 1s must be negative, and there are 5 choices for which one."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 20",
+    "0 ≤ nums[i] ≤ 1000",
+    "0 ≤ sum(nums) ≤ 1000",
+    "−1000 ≤ target ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 494",
+      "url": "https://leetcode.com/problems/target-sum/"
+    }
+  ]
+}

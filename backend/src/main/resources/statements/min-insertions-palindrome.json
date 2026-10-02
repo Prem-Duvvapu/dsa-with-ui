@@ -1,0 +1,35 @@
+{
+  "id": "min-insertions-palindrome",
+  "statement": [
+    "You are given a string text. In one step you may insert any single character at any position in the string.",
+    "Return the smallest number of steps needed to turn text into a palindrome, a string that reads the same forwards and backwards."
+  ],
+  "examples": [
+    {
+      "input": {
+        "text": "mbadm"
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Its longest palindromic subsequence, such as \"mam\", has length 3. The other 2 letters each need a partner inserted, giving for example \"mbdadbm\"."
+    },
+    {
+      "input": {
+        "text": "leetcode"
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "The longest palindromic subsequence has length 3 (for example \"ete\"), so 8 − 3 = 5 characters need partners."
+    }
+  ],
+  "constraints": [
+    "1 ≤ text.length ≤ 500",
+    "text contains only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1312",
+      "url": "https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/"
+    }
+  ]
+}

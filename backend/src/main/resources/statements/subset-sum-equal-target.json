@@ -1,0 +1,51 @@
+{
+  "id": "subset-sum-equal-target",
+  "statement": [
+    "You are given an array nums of non-negative integers and an integer target.",
+    "Decide whether some subset of nums adds up to exactly target. A subset can use each element at most once and need not be contiguous.",
+    "Return true if such a subset exists and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "target": 6
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "1 + 2 + 3 = 6."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          4
+        ],
+        "target": 3
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The only subset sums are 0, 2, 4 and 6, and none of them is 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 100",
+    "1 ≤ nums[i] ≤ 100",
+    "0 ≤ target ≤ 5 × 10³"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/subset-sum-equals-to-target"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1"
+    }
+  ]
+}

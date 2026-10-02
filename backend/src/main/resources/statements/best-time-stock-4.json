@@ -1,0 +1,51 @@
+{
+  "id": "best-time-stock-4",
+  "statement": [
+    "You are given an array prices, where prices[i] is the price of a stock on day i. You are also given an integer k.",
+    "You may make at most k trades, each a buy followed by a later sell. You can hold at most one share at a time.",
+    "Return the largest total profit you can make."
+  ],
+  "examples": [
+    {
+      "input": {
+        "prices": [
+          3,
+          2,
+          6,
+          5,
+          0,
+          3
+        ],
+        "k": 2
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "Buy at 2 and sell at 6 (+4), then buy at 0 and sell at 3 (+3), for 7 in total."
+    },
+    {
+      "input": {
+        "prices": [
+          2,
+          4,
+          1,
+          7
+        ],
+        "k": 1
+      },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "With one trade allowed, buying at 1 and selling at 7 beats every other single trade."
+    }
+  ],
+  "constraints": [
+    "1 ≤ k ≤ 100",
+    "1 ≤ prices.length ≤ 1000",
+    "0 ≤ prices[i] ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 188",
+      "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/"
+    }
+  ]
+}

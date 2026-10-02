@@ -1,0 +1,37 @@
+{
+  "id": "longest-string-chain",
+  "statement": [
+    "You are given a list of words, written in words as a single comma-separated string.",
+    "Word a is a predecessor of word b if inserting exactly one letter anywhere in a, without changing the order of its other letters, produces b. A chain is a sequence of words in which each word is a predecessor of the next.",
+    "Return the length of the longest chain that can be built from the given words. A single word is a chain of length 1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "words": "a,b,ba,bca,bda,bdca"
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "a → ba → bca → bdca: each step inserts one letter."
+    },
+    {
+      "input": {
+        "words": "xbc,pcxbcf,xb,cxbc,pcxbc"
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "All five words form one chain: xb → xbc → cxbc → pcxbc → pcxbcf."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number of words ≤ 1000",
+    "1 ≤ length of each word ≤ 16",
+    "Words contain only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1048",
+      "url": "https://leetcode.com/problems/longest-string-chain/"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "knapsack-01",
+  "statement": [
+    "There are n items. Item i has weight weights[i] and value values[i]. A knapsack can carry a total weight of at most capacity.",
+    "Each item is either packed whole or left out; it cannot be split or packed twice.",
+    "Return the largest total value of a set of items whose total weight is at most capacity."
+  ],
+  "examples": [
+    {
+      "input": {
+        "weights": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "values": [
+          5,
+          4,
+          8,
+          6
+        ],
+        "capacity": 5
+      },
+      "output": "13",
+      "answerVariable": "answer",
+      "explanation": "Pack the items of weight 1 and 4: weight 5, value 5 + 8 = 13. No other choice that fits is worth more."
+    },
+    {
+      "input": {
+        "weights": [
+          2,
+          3
+        ],
+        "values": [
+          4,
+          5
+        ],
+        "capacity": 4
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "The two items together weigh 5, which is too much. The better single item is the one worth 5."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "largest-divisible-subset",
+  "statement": [
+    "You are given an array nums of distinct positive integers.",
+    "Find the largest subset in which, for every pair of elements, the larger one is divisible by the smaller one.",
+    "Return the subset. If several subsets have the largest size, any one of them is correct."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          4,
+          8
+        ]
+      },
+      "output": "[1, 2, 4, 8]",
+      "answerVariable": "subset",
+      "explanation": "Each value divides the next one, so every pair works and the whole array is the answer."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ]
+      },
+      "output": "[1, 2]",
+      "answerVariable": "subset",
+      "explanation": "2 and 3 do not divide each other, so the largest size is 2. [1, 3] would be equally correct."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 1000",
+    "1 ≤ nums[i] ≤ 2 × 10⁹",
+    "All values in nums are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 368",
+      "url": "https://leetcode.com/problems/largest-divisible-subset/"
+    }
+  ]
+}

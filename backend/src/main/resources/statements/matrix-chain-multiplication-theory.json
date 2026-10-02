@@ -1,0 +1,47 @@
+{
+  "id": "matrix-chain-multiplication-theory",
+  "statement": [
+    "This entry introduces partition DP, the pattern behind Matrix Chain Multiplication. The input is an array dimensions of length n + 1: matrix i, for 1 ≤ i ≤ n, is dimensions[i − 1] × dimensions[i]. Multiplying an a × b matrix by a b × c matrix costs a × b × c scalar multiplications.",
+    "Let f(i, j) be the cheapest cost of multiplying matrices i to j. A single matrix costs nothing, so f(i, i) = 0. Otherwise try every split point k with i ≤ k < j: multiply i..k, multiply k + 1..j, then join the two results for dimensions[i − 1] × dimensions[k] × dimensions[j].",
+    "f(i, j) is the smallest of those totals, and the answer is f(1, n), the smallest cost of multiplying the whole chain."
+  ],
+  "examples": [
+    {
+      "input": {
+        "dimensions": [
+          10,
+          30,
+          5,
+          60
+        ]
+      },
+      "output": "4500",
+      "answerVariable": "answer",
+      "explanation": "(A × B) × C costs 10·30·5 + 10·5·60 = 1500 + 3000 = 4500. The other order, A × (B × C), costs 9000 + 18000 = 27000."
+    },
+    {
+      "input": {
+        "dimensions": [
+          5,
+          10,
+          3,
+          12,
+          5
+        ]
+      },
+      "output": "405",
+      "answerVariable": "answer",
+      "explanation": "The best split is in the middle, (A × B) × (C × D): 150 + 180 for the halves plus 5·3·5 = 75 to join them, 405 in total."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/matrix-chain-multiplication-dp-8/"
+    },
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/matrix-chain-multiplication"
+    }
+  ]
+}

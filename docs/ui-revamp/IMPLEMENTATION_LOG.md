@@ -543,3 +543,14 @@ Coverage: 48 of 57 (num-provinces from #159 makes 49 graph statements). Skipped 
   alignment of the grid problems will emit properly.
 No wrong answers found; the earlier "null variables" skips were a probe artifact (delta encoding), now fixed.
 Automated: StatementContractTest passes (211 statements).
+
+## Problem statements: Dynamic Programming (55 problems)
+
+```text
+Package / status: statements rollout, topic 5 of 8 (after #166). Same method; links verified (68/68).
+Coverage: 55 of 55. Each tracer was also fuzzed (~10 random inputs) against an independent reference.
+Defect found (fixed separately under RCA-055): subset-sum, partition-equal, partition-min-diff and
+  target-sum returned HTTP 500 on any zero-valued item. No example uses a zero.
+Notes: mcm-cost-eval is titled "Mining Diamonds / MCM Cost Eval" but traces plain matrix-chain cost - its
+  statement describes the tracer; the title is an open catalogue question.
+Automated: StatementContractTest passes (266 statements).

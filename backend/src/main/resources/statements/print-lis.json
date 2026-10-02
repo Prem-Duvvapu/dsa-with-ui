@@ -1,0 +1,55 @@
+{
+  "id": "print-lis",
+  "statement": [
+    "You are given an integer array nums. A subsequence keeps some of the elements in their original order, and it is strictly increasing if each element is larger than the one before it.",
+    "Return a longest strictly increasing subsequence itself, as a list of its values.",
+    "If more than one exists, return the one whose positions in nums come first: compare the index lists element by element, and the first index that differs must be smaller."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          10,
+          9,
+          2,
+          5,
+          3,
+          7,
+          101,
+          18
+        ]
+      },
+      "output": "[2, 5, 7, 101]",
+      "answerVariable": "lis",
+      "explanation": "Several subsequences of length 4 exist, such as 2, 3, 7, 18. The one at indices 2, 3, 5, 6 comes first, so it is the answer."
+    },
+    {
+      "input": {
+        "nums": [
+          3,
+          1,
+          4,
+          1,
+          5
+        ]
+      },
+      "output": "[3, 4, 5]",
+      "answerVariable": "lis",
+      "explanation": "Both 3, 4, 5 and 1, 4, 5 have length 3. The first one starts at index 0, earlier than index 1, so it wins."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10³",
+    "−10⁶ ≤ nums[i] ≤ 10⁶"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/print-longest-increasing-subsequence"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/printing-longest-increasing-subsequence/1"
+    }
+  ]
+}

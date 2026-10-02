@@ -1,0 +1,38 @@
+{
+  "id": "shortest-common-supersequence",
+  "statement": [
+    "You are given two strings, first and second. A string is a supersequence of a string t if t can be obtained from it by deleting some characters, without reordering the rest.",
+    "Return a shortest string that is a supersequence of both first and second.",
+    "When several shortest answers exist, any one of them is correct."
+  ],
+  "examples": [
+    {
+      "input": {
+        "first": "abac",
+        "second": "cab"
+      },
+      "output": "cabac",
+      "answerVariable": "answer",
+      "explanation": "Deleting the first \"c\" of \"cabac\" leaves \"abac\", and deleting its last two letters leaves \"cab\". Its length 5 = 4 + 3 − 2, where 2 is the length of the longest common subsequence."
+    },
+    {
+      "input": {
+        "first": "geek",
+        "second": "eke"
+      },
+      "output": "gekek",
+      "answerVariable": "answer",
+      "explanation": "\"gekek\" contains g, e, e, k in order and e, k, e in order. The strings share a common subsequence of length 2, so 4 + 3 − 2 = 5 letters are needed."
+    }
+  ],
+  "constraints": [
+    "1 ≤ first.length, second.length ≤ 1000",
+    "Both strings contain only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1092",
+      "url": "https://leetcode.com/problems/shortest-common-supersequence/"
+    }
+  ]
+}

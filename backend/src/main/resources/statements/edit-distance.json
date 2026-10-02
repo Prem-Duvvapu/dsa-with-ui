@@ -1,0 +1,37 @@
+{
+  "id": "edit-distance",
+  "statement": [
+    "You are given two strings, word1 and word2. You may change word1 using three operations: insert a character, delete a character, or replace a character with another.",
+    "Return the smallest number of operations that turns word1 into word2."
+  ],
+  "examples": [
+    {
+      "input": {
+        "word1": "horse",
+        "word2": "ros"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Replace \"h\" with \"r\" (rorse), delete the second \"r\" (rose), then delete \"e\" (ros)."
+    },
+    {
+      "input": {
+        "word1": "intention",
+        "word2": "execution"
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "The two words share the ending \"tion\", but turning \"inten\" into \"execu\" still needs 5 operations."
+    }
+  ],
+  "constraints": [
+    "0 ≤ word1.length, word2.length ≤ 500",
+    "Both strings contain only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 72",
+      "url": "https://leetcode.com/problems/edit-distance/"
+    }
+  ]
+}

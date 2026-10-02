@@ -1,0 +1,36 @@
+{
+  "id": "longest-palindromic-subsequence",
+  "statement": [
+    "You are given a string text. A subsequence is what remains after deleting zero or more characters without changing the order of the rest.",
+    "A palindrome reads the same forwards and backwards.",
+    "Return the length of the longest subsequence of text that is a palindrome."
+  ],
+  "examples": [
+    {
+      "input": {
+        "text": "bbbab"
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "Dropping the \"a\" leaves \"bbbb\", a palindrome of length 4."
+    },
+    {
+      "input": {
+        "text": "cbbd"
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "\"bb\" is the longest palindromic subsequence. No three of the letters read the same in both directions."
+    }
+  ],
+  "constraints": [
+    "1 ≤ text.length ≤ 1000",
+    "text contains only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 516",
+      "url": "https://leetcode.com/problems/longest-palindromic-subsequence/"
+    }
+  ]
+}

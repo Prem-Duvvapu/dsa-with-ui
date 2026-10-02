@@ -1,0 +1,43 @@
+{
+  "id": "evaluate-boolean-expression",
+  "statement": [
+    "You are given a boolean expression as a string expression. It alternates operands and operators: each operand is T (true) or F (false), and each operator is & (AND), | (OR) or ^ (XOR).",
+    "Add parentheses so that the expression is evaluated one operator at a time, in some order. Count the different ways to fully parenthesise it so that the result is true.",
+    "Return that count."
+  ],
+  "examples": [
+    {
+      "input": {
+        "expression": "T|F&T^T"
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Of the 5 ways to parenthesise it, only T|((F&T)^T) and T|(F&(T^T)) are true. Both keep the leading T| as the last operation."
+    },
+    {
+      "input": {
+        "expression": "T^F|F"
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "(T^F)|F = T|F = true, and T^(F|F) = T^F = true, so both ways work."
+    },
+    {
+      "input": {
+        "expression": "F|T&F"
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "(F|T)&F = T&F = false, and F|(T&F) = F|F = false, so no way works."
+    }
+  ],
+  "constraints": [
+    "1 ≤ expression.length ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/boolean-parenthesization5610/1"
+    }
+  ]
+}

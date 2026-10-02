@@ -1,0 +1,38 @@
+{
+  "id": "print-longest-common-subsequence",
+  "statement": [
+    "You are given two strings, first and second. A subsequence is what remains after deleting zero or more characters without changing the order of the rest.",
+    "Find a longest string that is a subsequence of both first and second, and return the string itself rather than its length.",
+    "When several different longest common subsequences exist, any one of them is a correct answer."
+  ],
+  "examples": [
+    {
+      "input": {
+        "first": "abcde",
+        "second": "bdgek"
+      },
+      "output": "bde",
+      "answerVariable": "answer",
+      "explanation": "b, d and e appear in this order in both strings. The longest common subsequence has length 3, and \"bde\" is the only one."
+    },
+    {
+      "input": {
+        "first": "abac",
+        "second": "cab"
+      },
+      "output": "ab",
+      "answerVariable": "answer",
+      "explanation": "The length is 2, and \"ab\" is the only common subsequence of that length: \"ca\" and \"cb\" do not appear in order in \"abac\"."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/printing-longest-common-subsequence/"
+    },
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/print-longest-common-subsequence"
+    }
+  ]
+}

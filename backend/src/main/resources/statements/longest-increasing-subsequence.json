@@ -1,0 +1,50 @@
+{
+  "id": "longest-increasing-subsequence",
+  "statement": [
+    "You are given an integer array nums. A subsequence keeps some of the elements in their original order, and it is strictly increasing if each element is larger than the one before it.",
+    "Return the length of the longest strictly increasing subsequence of nums."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          10,
+          9,
+          2,
+          5,
+          3,
+          7,
+          101,
+          18
+        ]
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "One longest increasing subsequence is 2, 3, 7, 18, with length 4."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "The values only decrease, so any single element is a longest increasing subsequence."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 2500",
+    "−10⁴ ≤ nums[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 300",
+      "url": "https://leetcode.com/problems/longest-increasing-subsequence/"
+    }
+  ]
+}

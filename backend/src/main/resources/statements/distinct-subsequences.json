@@ -1,0 +1,37 @@
+{
+  "id": "distinct-subsequences",
+  "statement": [
+    "You are given two strings, source and target. A subsequence is what remains after deleting zero or more characters without changing the order of the rest.",
+    "Count the ways to choose positions in source whose characters, read in order, spell target. Two ways are different if they use a different set of positions.",
+    "Return that count."
+  ],
+  "examples": [
+    {
+      "input": {
+        "source": "rabbbit",
+        "target": "rabbit"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "source has three b's and target needs two, so any one of the three b's can be left out."
+    },
+    {
+      "input": {
+        "source": "babgbag",
+        "target": "bag"
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "There are 5 different ways to pick a \"b\", then a later \"a\", then a later \"g\"."
+    }
+  ],
+  "constraints": [
+    "1 ≤ source.length, target.length ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 115",
+      "url": "https://leetcode.com/problems/distinct-subsequences/"
+    }
+  ]
+}

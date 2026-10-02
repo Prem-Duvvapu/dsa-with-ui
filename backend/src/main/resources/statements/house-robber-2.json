@@ -1,0 +1,47 @@
+{
+  "id": "house-robber-2",
+  "statement": [
+    "Houses stand in a circle, and nums[i] is the amount of money in house i. Because the street is a circle, house 0 and house n − 1 are neighbours.",
+    "You may not take money from two neighbouring houses.",
+    "Return the largest total you can collect."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          2,
+          7,
+          9,
+          3,
+          1
+        ]
+      },
+      "output": "11",
+      "answerVariable": "answer",
+      "explanation": "Take houses 0 and 2 for 2 + 9 = 11. Adding house 4 is not allowed, because house 4 is next to house 0 in the circle."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          1,
+          1
+        ]
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Take houses 1 and 3 for 2 + 1 = 3. They are not neighbours, and neither of them is house 0."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 100",
+    "0 ≤ nums[i] ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 213",
+      "url": "https://leetcode.com/problems/house-robber-ii/"
+    }
+  ]
+}

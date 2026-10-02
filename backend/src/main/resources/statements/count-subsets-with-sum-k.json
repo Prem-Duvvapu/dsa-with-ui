@@ -1,0 +1,51 @@
+{
+  "id": "count-subsets-with-sum-k",
+  "statement": [
+    "You are given an array nums of positive integers and an integer k.",
+    "Count the subsets of nums whose elements add up to exactly k. Subsets are told apart by the positions they use, so two equal values at different indices give different subsets.",
+    "Return that count. The original problem asks for it modulo 10⁹ + 7; the inputs here are small enough that this never matters."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "The subsets are {1, first 2}, {1, second 2} and {3}."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          10
+        ],
+        "k": 3
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "Both values are larger than 3, so only the empty subset fits, and it sums to 0."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 100",
+    "1 ≤ nums[i] ≤ 10³",
+    "1 ≤ k ≤ 10³"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/count-subsets-with-sum-k"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1"
+    }
+  ]
+}
