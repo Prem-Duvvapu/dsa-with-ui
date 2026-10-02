@@ -1,0 +1,25 @@
+{
+  "id": "painters-partition",
+  "statement": [
+    "There are n boards in a row; boards[i] is the length of board i. You have painters painters, and any painter paints 1 unit of length in 1 unit of time.",
+    "Each painter paints one contiguous run of boards, and a board cannot be shared between painters. All painters work at the same time, so the job finishes when the busiest painter does.",
+    "Return the minimum time in which all the boards can be painted. The answer lies between max(boards) and the total length; for a candidate time, assigning boards greedily tells you how many painters it needs, so binary search for the smallest time that needs at most painters painters."
+  ],
+  "examples": [
+    {
+      "input": { "boards": [10, 20, 30, 40], "painters": 2 },
+      "output": "60",
+      "answerVariable": "answer",
+      "explanation": "One painter takes [10, 20, 30] (60 units) and the other takes [40]. Any other split leaves one painter with more: [10, 20] / [30, 40] gives 70."
+    },
+    {
+      "input": { "boards": [5, 5, 5, 5], "painters": 4 },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "Each of the four painters paints one board, so everything is done in 5 units of time."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/the-painters-partition-problem1535/1" }
+  ]
+}

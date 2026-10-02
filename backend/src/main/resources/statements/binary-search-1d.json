@@ -1,0 +1,32 @@
+{
+  "id": "binary-search-1d",
+  "statement": [
+    "You are given an array nums of distinct integers sorted in ascending order, and an integer target.",
+    "Find the index at which target appears in nums. If target does not appear anywhere in the array, the answer is −1.",
+    "The search should take O(log n) time, so instead of scanning every element, repeatedly compare target with the middle of the remaining range and discard the half that cannot contain it."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 3, 5, 7, 9, 11, 13], "target": 5 },
+      "output": "2",
+      "answerVariable": "result",
+      "explanation": "nums[2] is 5, so the answer is index 2."
+    },
+    {
+      "input": { "nums": [2, 4, 6, 8, 10, 12, 14, 16], "target": 15 },
+      "output": "-1",
+      "answerVariable": "result",
+      "explanation": "15 would sit between 14 and 16, but neither neighbour equals it, so it is not in the array and the answer is −1."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁴",
+    "−10⁴ < nums[i], target < 10⁴",
+    "All values in nums are distinct",
+    "nums is sorted in ascending order"
+  ],
+  "sources": [
+    { "label": "LeetCode 704", "url": "https://leetcode.com/problems/binary-search/" },
+    { "label": "takeUforward", "url": "https://takeuforward.org/practice/dsa/search-x-in-sorted-array" }
+  ]
+}

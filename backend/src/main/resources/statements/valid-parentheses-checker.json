@@ -1,0 +1,35 @@
+{
+  "id": "valid-parentheses-checker",
+  "statement": [
+    "You are given a string s made of the characters '(', ')' and '*'.",
+    "Each '*' may be read as '(', as ')' or as nothing at all. Return true if some choice for the stars makes s a valid parenthesis string, one in which every '(' is closed by a later ')' and no ')' appears without an earlier unmatched '('. Otherwise return false.",
+    "Track the range of possible unmatched '(' counts while scanning: low is the fewest and high is the most. A '(' raises both, a ')' lowers both, and a '*' lowers low and raises high. If high ever drops below 0 the string fails; low never goes below 0. At the end, s is valid exactly when low is 0."
+  ],
+  "examples": [
+    {
+      "input": { "s": "(*))" },
+      "output": "true",
+      "answerVariable": "valid",
+      "explanation": "Reading the star as '(' gives \"(())\", which is balanced."
+    },
+    {
+      "input": { "s": "(*)" },
+      "output": "true",
+      "answerVariable": "valid",
+      "explanation": "Reading the star as nothing leaves \"()\", which is balanced."
+    },
+    {
+      "input": { "s": "(((*" },
+      "output": "false",
+      "answerVariable": "valid",
+      "explanation": "There are three '(' and only one star after them that could close one, so at least two '(' always stay unmatched."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 100",
+    "s[i] is '(', ')' or '*'"
+  ],
+  "sources": [
+    { "label": "LeetCode 678", "url": "https://leetcode.com/problems/valid-parenthesis-string/" }
+  ]
+}

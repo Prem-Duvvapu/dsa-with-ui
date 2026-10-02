@@ -1,0 +1,25 @@
+{
+  "id": "lru-page-replacement",
+  "statement": [
+    "Memory has room for capacity pages. A program requests pages in the order given by pages.",
+    "When a requested page is already in memory, nothing needs to happen, though it becomes the most recently used page. When it is not, that is a page fault: the page is loaded, and if memory is already full, the page that was used least recently is evicted to make room.",
+    "Return the total number of page faults for the whole sequence of requests."
+  ],
+  "examples": [
+    {
+      "input": { "pages": [1, 2, 3, 1, 4, 5], "capacity": 3 },
+      "output": "5",
+      "answerVariable": "faults",
+      "explanation": "1, 2 and 3 fault while memory fills up. The second request for 1 is a hit. 4 faults and evicts 2, the least recently used, and 5 faults and evicts 3. That is 5 faults."
+    },
+    {
+      "input": { "pages": [1, 2, 1, 3, 1, 2, 4], "capacity": 2 },
+      "output": "5",
+      "answerVariable": "faults",
+      "explanation": "1 and 2 fault, then 1 hits. 3 faults and evicts 2; 1 hits again; 2 faults and evicts 3; 4 faults and evicts 1. That is 5 faults and 2 hits."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/page-faults-in-lru5603/1" }
+  ]
+}

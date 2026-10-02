@@ -1,0 +1,30 @@
+{
+  "id": "count-nice-subarrays",
+  "statement": [
+    "You are given an array of integers nums and an integer k. A subarray, a contiguous piece of nums, is nice if it contains exactly k odd numbers.",
+    "Return the number of nice subarrays.",
+    "Only whether each number is odd matters, so this is the binary-subarray count in disguise. A sliding window counts subarrays with at most x odd numbers, and the answer is atMost(k) − atMost(k − 1)."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 1, 2, 1, 1], "k": 3 },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Only [1, 1, 2, 1] and [1, 2, 1, 1] contain exactly three odd numbers."
+    },
+    {
+      "input": { "nums": [2, 2, 2, 1, 2, 2, 1, 2, 2, 2], "k": 2 },
+      "output": "16",
+      "answerVariable": "answer",
+      "explanation": "A nice subarray must contain both 1s. It can start anywhere from index 0 to 3 (4 choices) and end anywhere from index 6 to 9 (4 choices), giving 4 × 4 = 16."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 50000",
+    "1 ≤ nums[i] ≤ 10⁵",
+    "1 ≤ k ≤ nums.length"
+  ],
+  "sources": [
+    { "label": "LeetCode 1248", "url": "https://leetcode.com/problems/count-number-of-nice-subarrays/" }
+  ]
+}

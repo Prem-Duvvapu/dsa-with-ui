@@ -1,0 +1,31 @@
+{
+  "id": "square-root-number",
+  "statement": [
+    "You are given a positive integer n.",
+    "Return the integer square root of n: the largest integer x with x × x ≤ n, which is ⌊√n⌋. When n is a perfect square this is its exact square root; otherwise the fractional part is dropped.",
+    "Do not use a built-in square-root function. Binary search over the candidates 1 to n: if mid × mid ≤ n, mid is a possible answer and a larger one may exist; otherwise the answer is smaller."
+  ],
+  "examples": [
+    {
+      "input": { "n": 28 },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "5 × 5 = 25 ≤ 28 but 6 × 6 = 36 > 28, so ⌊√28⌋ = 5."
+    },
+    {
+      "input": { "n": 36 },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "36 is a perfect square: 6 × 6 = 36 exactly."
+    },
+    {
+      "input": { "n": 1 },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "1 × 1 = 1, so the square root of 1 is 1."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/square-root/1" }
+  ]
+}

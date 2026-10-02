@@ -1,0 +1,34 @@
+{
+  "id": "search-2d-matrix-2",
+  "statement": [
+    "You are given an m × n integer matrix in which every row is sorted in ascending order from left to right and every column is sorted in ascending order from top to bottom. Unlike the stricter version, a row may start below the end of the row above it.",
+    "Given an integer target, return true if target appears in the matrix and false otherwise.",
+    "Start at the top-right corner. If the value there is larger than target, everything below it in that column is larger too, so move left; if it is smaller, everything to its left in that row is smaller too, so move down. Each step discards a row or a column, so the search takes at most m + n steps."
+  ],
+  "examples": [
+    {
+      "input": { "matrix": [[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16], [10, 13, 14, 17]], "target": 5 },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "From 11 the walk moves left to 7 and 4, then down to 5 at row 1, column 1."
+    },
+    {
+      "input": { "matrix": [[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16], [10, 13, 14, 17]], "target": 0 },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "0 is smaller than every value, so the walk moves left along the top row and falls off the matrix without finding it."
+    }
+  ],
+  "constraints": [
+    "m == matrix.length",
+    "n == matrix[i].length",
+    "1 ≤ n, m ≤ 300",
+    "−10⁹ ≤ matrix[i][j] ≤ 10⁹",
+    "All the integers in each row are sorted in ascending order",
+    "All the integers in each column are sorted in ascending order",
+    "−10⁹ ≤ target ≤ 10⁹"
+  ],
+  "sources": [
+    { "label": "LeetCode 240", "url": "https://leetcode.com/problems/search-a-2d-matrix-ii/" }
+  ]
+}

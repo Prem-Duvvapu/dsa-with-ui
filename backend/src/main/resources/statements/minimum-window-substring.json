@@ -1,0 +1,37 @@
+{
+  "id": "minimum-window-substring",
+  "statement": [
+    "You are given two strings s and t.",
+    "Return the shortest substring of s that contains every character of t, counting repeats: if t has two 'a's, the window needs at least two 'a's. If no substring of s qualifies, return the empty string. When an answer exists it is unique.",
+    "Expand a window to the right until it covers t, then shrink it from the left for as long as it still covers t, recording the shortest window seen. Tracking how many required characters are still missing makes each step O(1), for O(|s| + |t|) overall."
+  ],
+  "examples": [
+    {
+      "input": { "s": "ADOBECODEBANC", "t": "ABC" },
+      "output": "BANC",
+      "answerVariable": "answer",
+      "explanation": "\"BANC\" contains an A, a B and a C, and no shorter substring does. Longer windows such as \"ADOBEC\" also cover t but are not minimal."
+    },
+    {
+      "input": { "s": "a", "t": "a" },
+      "output": "a",
+      "answerVariable": "answer",
+      "explanation": "The whole of s is the only window, and it contains t's single 'a'."
+    },
+    {
+      "input": { "s": "a", "t": "aa" },
+      "output": "",
+      "answerVariable": "answer",
+      "explanation": "t needs two 'a's but s has only one, so no window works and the answer is the empty string."
+    }
+  ],
+  "constraints": [
+    "m == s.length",
+    "n == t.length",
+    "1 ≤ m, n ≤ 10⁵",
+    "s and t consist of uppercase and lowercase English letters"
+  ],
+  "sources": [
+    { "label": "LeetCode 76", "url": "https://leetcode.com/problems/minimum-window-substring/" }
+  ]
+}

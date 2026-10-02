@@ -1,0 +1,29 @@
+{
+  "id": "single-element-sorted",
+  "statement": [
+    "You are given a sorted array nums in which every value appears exactly twice, except for one value that appears only once.",
+    "Return the value that appears once.",
+    "The solution must run in O(log n) time and O(1) extra space. Before the single element, each pair starts at an even index; after it, each pair starts at an odd index. Checking which pattern holds at the midpoint tells you which side the single element is on."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 1, 2, 3, 3, 4, 4, 8, 8] },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Every value except 2 appears as a pair. 2, at index 2, matches neither of its neighbours."
+    },
+    {
+      "input": { "nums": [1, 1, 2, 2, 3, 3, 4, 5, 5] },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "1, 2, 3 and 5 each appear twice. 4 appears only once, at index 6."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "0 ≤ nums[i] ≤ 10⁵"
+  ],
+  "sources": [
+    { "label": "LeetCode 540", "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/" }
+  ]
+}

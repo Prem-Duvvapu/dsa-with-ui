@@ -1,0 +1,32 @@
+{
+  "id": "find-peak-element-2d",
+  "statement": [
+    "You are given an m × n matrix in which no two adjacent cells hold the same value. A peak is a cell strictly greater than each of its neighbours above, below, left and right. Treat everything outside the matrix as −1, so border cells only have to beat the neighbours they actually have.",
+    "Find any peak and return its position as [row, column]. If there are several peaks, any one of them is accepted.",
+    "The search should run in O(m log n) or O(n log m) time. Binary search over the columns: in the middle column take the row of its largest value, then compare that cell with its left and right neighbours. If a neighbour is larger, a peak must exist on that side; otherwise the cell is a peak."
+  ],
+  "examples": [
+    {
+      "input": { "matrix": [[1, 4, 3], [2, 5, 6], [7, 8, 9]] },
+      "output": "[2, 2]",
+      "answerVariable": "answer",
+      "explanation": "9, at row 2, column 2, is larger than 6 above it and 8 to its left, so it is a peak."
+    },
+    {
+      "input": { "matrix": [[10, 20, 15], [21, 30, 14], [7, 16, 32]] },
+      "output": "[1, 1]",
+      "answerVariable": "answer",
+      "explanation": "30 beats 20, 16, 21 and 14, so [1, 1] is a peak. 32 at [2, 2] is also a peak, and either answer would be accepted."
+    }
+  ],
+  "constraints": [
+    "m == matrix.length",
+    "n == matrix[i].length",
+    "1 ≤ m, n ≤ 500",
+    "1 ≤ matrix[i][j] ≤ 10⁵",
+    "No two adjacent cells are equal"
+  ],
+  "sources": [
+    { "label": "LeetCode 1901", "url": "https://leetcode.com/problems/find-a-peak-element-ii/" }
+  ]
+}

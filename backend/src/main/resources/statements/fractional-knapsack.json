@@ -1,0 +1,25 @@
+{
+  "id": "fractional-knapsack",
+  "statement": [
+    "You have n items; item i has value values[i] and weight weights[i]. A knapsack can carry a total weight of at most capacity.",
+    "Unlike 0/1 knapsack, an item may be split: taking a fraction f of item i, with 0 ≤ f ≤ 1, adds f × weights[i] to the load and f × values[i] to the value.",
+    "Return the largest total value the knapsack can hold. Greedily, take items in decreasing order of value per unit weight, each one whole while it fits, and then the fraction of the next item that fills the remaining capacity."
+  ],
+  "examples": [
+    {
+      "input": { "values": [60, 100, 120], "weights": [10, 20, 30], "capacity": 50 },
+      "output": "240",
+      "answerVariable": "totalValue",
+      "explanation": "The value-per-weight ratios are 6, 5 and 4. The first two items fit whole (weight 30, value 160); the remaining 20 units take 2/3 of the third item, worth 80. The total is 240."
+    },
+    {
+      "input": { "values": [500, 400, 300], "weights": [30, 20, 10], "capacity": 25 },
+      "output": "600",
+      "answerVariable": "totalValue",
+      "explanation": "The item of weight 10 has the best ratio (30 per unit) and goes in whole for 300. The remaining 15 units take 3/4 of the weight-20 item, worth 300. The total is 600."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1" }
+  ]
+}

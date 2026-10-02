@@ -1,0 +1,25 @@
+{
+  "id": "nth-root-number",
+  "statement": [
+    "You are given two positive integers: n, the value, and m, the degree of the root.",
+    "Find the integer x such that x raised to the power m equals n exactly. If no integer has that property, return −1.",
+    "Binary search over the candidates 1 to n. Compare midᵐ with n, and stop raising to the power as soon as the product passes n, so the value never overflows."
+  ],
+  "examples": [
+    {
+      "input": { "n": 27, "m": 3 },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "3 × 3 × 3 = 27, so the 3rd root of 27 is 3."
+    },
+    {
+      "input": { "n": 37, "m": 3 },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "3³ = 27 is too small and 4³ = 64 is too large, so 37 has no integer cube root and the answer is −1."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/find-nth-root-of-m5843/1" }
+  ]
+}

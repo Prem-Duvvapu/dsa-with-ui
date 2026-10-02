@@ -1,0 +1,38 @@
+{
+  "id": "find-min-rotated-sorted",
+  "statement": [
+    "An array of n distinct integers was sorted in ascending order and then rotated between 1 and n times. Rotating once moves the last element to the front, so [0, 1, 2, 4, 5, 6, 7] rotated 4 times becomes [4, 5, 6, 7, 0, 1, 2], and rotated n times it is back where it started.",
+    "Given the rotated array nums, return its minimum element.",
+    "The search must run in O(log n) time. At each step one half of the range is sorted, and the smallest value of a sorted half is its first element; record it and continue in the other half."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [6, 7, 1, 2, 3, 4, 5] },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "The array is [1, 2, 3, 4, 5, 6, 7] rotated so that 6 and 7 come first. The minimum is 1, right after the drop from 7."
+    },
+    {
+      "input": { "nums": [4, 5, 6, 7, 0, 1, 2] },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The values fall from 7 to 0 at index 4, and 0 is the smallest element."
+    },
+    {
+      "input": { "nums": [1, 2, 3, 4, 5] },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "This array was rotated a full n times, so it is fully sorted and the minimum is its first element, 1."
+    }
+  ],
+  "constraints": [
+    "n == nums.length",
+    "1 ≤ n ≤ 5000",
+    "−5000 ≤ nums[i] ≤ 5000",
+    "All the integers of nums are unique",
+    "nums is sorted and rotated between 1 and n times"
+  ],
+  "sources": [
+    { "label": "LeetCode 153", "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "minimum-window-subsequence",
+  "statement": [
+    "You are given two strings s1 and s2.",
+    "Find the shortest substring of s1 that contains s2 as a subsequence: the characters of s2 must all appear in the window, in the same order, though not necessarily next to each other. If several windows share the shortest length, return the one that starts first. If there is none, return the empty string.",
+    "Scan forward through s1 matching s2 one character at a time. When the whole of s2 has been matched, walk backwards from that point to find the latest start that still matches s2 in reverse; this gives the shortest window ending there. Record it, then resume the forward scan from just after that start."
+  ],
+  "examples": [
+    {
+      "input": { "s1": "abcdebdde", "s2": "bde" },
+      "output": "bcde",
+      "answerVariable": "answer",
+      "explanation": "\"bcde\" and \"bdde\" both contain b, d, e in order and have length 4. \"bcde\" starts earlier, so it wins. \"deb\" is not valid because the letters are out of order."
+    },
+    {
+      "input": { "s1": "fgrqmstsfvfreokqmstsf", "s2": "kmt" },
+      "output": "kqmst",
+      "answerVariable": "answer",
+      "explanation": "The only 'k' is at index 14. From there the nearest 'm' and then 't' end the window at \"kqmst\", of length 5."
+    },
+    {
+      "input": { "s1": "abc", "s2": "cb" },
+      "output": "",
+      "answerVariable": "answer",
+      "explanation": "s1 has a 'b' and a 'c', but the 'b' comes first, so \"cb\" never appears in order and the answer is empty."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/minimum-window-subsequence/1" }
+  ]
+}

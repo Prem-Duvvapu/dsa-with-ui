@@ -1,0 +1,26 @@
+{
+  "id": "shortest-job-first",
+  "statement": [
+    "A CPU has n tasks to run; bursts[i] is how long task i takes. All tasks arrive at time 0, and the CPU runs one task at a time without interrupting it.",
+    "Under Shortest Job First scheduling, the CPU always runs the shortest task that is still waiting. A task's waiting time is the time from 0 until it starts running.",
+    "Return the average waiting time over all tasks, written to two decimal places. Since everything arrives at once, this means sorting the bursts in increasing order: each task waits for the sum of the bursts before it."
+  ],
+  "examples": [
+    {
+      "input": { "bursts": [6, 8, 7, 3] },
+      "output": "7.00",
+      "answerVariable": "average",
+      "explanation": "The run order is 3, 6, 7, 8, so the tasks wait 0, 3, 9 and 16. The total is 28, and 28 / 4 = 7.00."
+    },
+    {
+      "input": { "bursts": [9, 2, 5, 1, 4] },
+      "output": "4.60",
+      "answerVariable": "average",
+      "explanation": "The run order is 1, 2, 4, 5, 9, so the waits are 0, 1, 3, 7 and 12. They add up to 23, and 23 / 5 = 4.60."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/shortest-job-first/1" },
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/dsa/program-for-shortest-job-first-or-sjf-cpu-scheduling-set-1-non-preemptive/" }
+  ]
+}

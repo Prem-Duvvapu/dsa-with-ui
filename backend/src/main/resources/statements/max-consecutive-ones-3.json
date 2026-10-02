@@ -1,0 +1,30 @@
+{
+  "id": "max-consecutive-ones-3",
+  "statement": [
+    "You are given a binary array nums and an integer k.",
+    "You may flip at most k of the 0s to 1s. Return the length of the longest run of consecutive 1s you can end up with.",
+    "Equivalently, find the longest subarray that contains at most k zeros. Grow a window to the right, and whenever it holds more than k zeros, move its left edge forward until it holds k again."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], "k": 2 },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "Flipping the zeros at indices 4 and 5 joins them to the four 1s that follow, giving 1s from index 4 to 9: six in a row."
+    },
+    {
+      "input": { "nums": [0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1], "k": 3 },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "Indices 2 to 11 contain exactly three zeros (at 4, 5 and 9). Flipping them gives a run of 10 ones, and no window holding at most three zeros is longer."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "nums[i] is 0 or 1",
+    "0 ≤ k ≤ nums.length"
+  ],
+  "sources": [
+    { "label": "LeetCode 1004", "url": "https://leetcode.com/problems/max-consecutive-ones-iii/" }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "aggressive-cows",
+  "statement": [
+    "A barn has a row of stalls; stalls holds their positions on a line, in sorted order. You have k cows to put in the stalls, at most one cow per stall.",
+    "The cows fight when they are close together, so place them to make the smallest distance between any two cows as large as possible.",
+    "Return that largest possible minimum distance. For a candidate distance d, placing cows greedily from the leftmost stall, each at the first stall at least d past the previous cow, tells you whether k cows fit. If d works, every smaller distance works too, so binary search for the largest d that works."
+  ],
+  "examples": [
+    {
+      "input": { "stalls": [1, 2, 4, 8, 9], "k": 3 },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Cows at 1, 4 and 8 are at least 3 apart. A minimum distance of 4 is impossible: after 1 and 8 (or 1 and 9) there is no room for a third cow 4 away."
+    },
+    {
+      "input": { "stalls": [1, 2, 3, 4, 5], "k": 2 },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "With only two cows, put them in the two end stalls, 1 and 5, which are 4 apart."
+    },
+    {
+      "input": { "stalls": [0, 3, 4, 7, 9, 10], "k": 4 },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Cows at 0, 3, 7 and 10 are pairwise at least 3 apart. Asking for 4 places cows at 0, 4 and 9 only, one short."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/aggressive-cows/1" }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "find-peak-element",
+  "statement": [
+    "You are given an array nums in which no two adjacent elements are equal. A peak is an element that is strictly greater than each of its neighbours.",
+    "Treat the positions just outside the array as −∞, so nums[0] only needs to beat nums[1], and nums[n − 1] only needs to beat nums[n − 2].",
+    "Return the index of a peak. If the array has several peaks, the index of any one of them is accepted. The search must run in O(log n) time: if nums[mid] < nums[mid + 1], the values rise to the right and a peak must exist there; otherwise one exists at mid or to its left."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 2, 3, 1] },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "nums[2] = 3 is greater than both 2 and 1, so index 2 is a peak."
+    },
+    {
+      "input": { "nums": [1, 2, 1, 3, 5, 6, 4] },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "nums[5] = 6 is greater than 5 and 4, so index 5 is a peak. Index 1 (value 2) is also a peak, and either answer would be accepted."
+    },
+    {
+      "input": { "nums": [5, 4, 3, 2, 1] },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The values only fall, so the only peak is the first element: 5 beats its single neighbour 4 and the −∞ on its left."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 1000",
+    "−2³¹ ≤ nums[i] ≤ 2³¹ − 1",
+    "nums[i] ≠ nums[i + 1] for every valid i"
+  ],
+  "sources": [
+    { "label": "LeetCode 162", "url": "https://leetcode.com/problems/find-peak-element/" }
+  ]
+}

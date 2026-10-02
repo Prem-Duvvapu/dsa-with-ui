@@ -1,0 +1,30 @@
+{
+  "id": "binary-subarrays-with-sum",
+  "statement": [
+    "You are given a binary array nums and an integer goal.",
+    "Return the number of non-empty subarrays, contiguous pieces of nums, whose elements add up to exactly goal.",
+    "Counting subarrays with sum at most x is easy with a sliding window, because every window ending at index r that fits contributes its length. The number with sum exactly goal is then atMost(goal) − atMost(goal − 1)."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 0, 1, 0, 1], "goal": 2 },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "The subarrays with sum 2 are [1, 0, 1] at indices 0–2, [1, 0, 1, 0] at 0–3, [0, 1, 0, 1] at 1–4 and [1, 0, 1] at 2–4. 14 subarrays have sum at most 2 and 10 have sum at most 1, and 14 − 10 = 4."
+    },
+    {
+      "input": { "nums": [0, 0, 0, 0, 0], "goal": 0 },
+      "output": "15",
+      "answerVariable": "answer",
+      "explanation": "Every subarray sums to 0, and an array of length 5 has 5 × 6 / 2 = 15 non-empty subarrays."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 3 × 10⁴",
+    "nums[i] is 0 or 1",
+    "0 ≤ goal ≤ nums.length"
+  ],
+  "sources": [
+    { "label": "LeetCode 930", "url": "https://leetcode.com/problems/binary-subarrays-with-sum/" }
+  ]
+}

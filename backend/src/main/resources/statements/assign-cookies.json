@@ -1,0 +1,30 @@
+{
+  "id": "assign-cookies",
+  "statement": [
+    "You want to hand out cookies to children, giving each child at most one cookie. Child i has a greed factor g[i]: the smallest cookie that will satisfy them. Cookie j has size s[j].",
+    "A child is satisfied when they get a cookie of size at least their greed factor. Each cookie can go to at most one child.",
+    "Return the largest number of children that can be satisfied. Greedily, sort both arrays and walk through them together, giving each child the smallest remaining cookie that is big enough."
+  ],
+  "examples": [
+    {
+      "input": { "g": [1, 2, 3], "s": [1, 1] },
+      "output": "1",
+      "answerVariable": "count",
+      "explanation": "Both cookies have size 1, which satisfies only the child with greed 1. The other two children need bigger cookies."
+    },
+    {
+      "input": { "g": [1, 2], "s": [1, 2, 3] },
+      "output": "2",
+      "answerVariable": "count",
+      "explanation": "The cookie of size 1 satisfies the first child and the cookie of size 2 satisfies the second, so both children are satisfied."
+    }
+  ],
+  "constraints": [
+    "1 ≤ g.length ≤ 3 × 10⁴",
+    "0 ≤ s.length ≤ 3 × 10⁴",
+    "1 ≤ g[i], s[j] ≤ 2³¹ − 1"
+  ],
+  "sources": [
+    { "label": "LeetCode 455", "url": "https://leetcode.com/problems/assign-cookies/" }
+  ]
+}

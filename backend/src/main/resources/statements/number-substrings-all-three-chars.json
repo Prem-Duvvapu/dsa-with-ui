@@ -1,0 +1,29 @@
+{
+  "id": "number-substrings-all-three-chars",
+  "statement": [
+    "You are given a string s made only of the characters 'a', 'b' and 'c'.",
+    "Return the number of substrings that contain at least one 'a', at least one 'b' and at least one 'c'.",
+    "Scan s once, remembering the last index at which each letter appeared. For a substring ending at index i to contain all three, it must start at or before the smallest of those three indices, so index i contributes min(last a, last b, last c) + 1 substrings once all three have been seen."
+  ],
+  "examples": [
+    {
+      "input": { "s": "abcabc" },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "Substrings ending at indices 2, 3, 4 and 5 contribute 1, 2, 3 and 4 respectively, for a total of 10. Examples are \"abc\", \"bca\" and the whole string."
+    },
+    {
+      "input": { "s": "aaacb" },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Every valid substring must include the final \"cb\" and at least one 'a' before it: \"acb\", \"aacb\" and \"aaacb\"."
+    }
+  ],
+  "constraints": [
+    "3 ≤ s.length ≤ 5 × 10⁴",
+    "s consists only of 'a', 'b' and 'c'"
+  ],
+  "sources": [
+    { "label": "LeetCode 1358", "url": "https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/" }
+  ]
+}

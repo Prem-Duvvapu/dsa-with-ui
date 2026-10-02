@@ -1,0 +1,26 @@
+{
+  "id": "count-occurrences",
+  "statement": [
+    "You are given an array nums sorted in non-decreasing order and an integer target.",
+    "Return how many times target appears in nums. If it does not appear, the answer is 0.",
+    "Because the array is sorted, every copy of target sits in one contiguous block. Find where that block starts (the lower bound) and where it ends (the upper bound) with binary search; the count is the difference, found in O(log n) time."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 2, 2, 2, 2, 3, 4], "target": 2 },
+      "output": "4",
+      "answerVariable": "count",
+      "explanation": "The 2s occupy indices 1 to 4, a block of 4 elements."
+    },
+    {
+      "input": { "nums": [1, 2, 2, 2, 2, 3, 4], "target": 5 },
+      "output": "0",
+      "answerVariable": "count",
+      "explanation": "Every element is smaller than 5, so 5 never appears and the count is 0."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/number-of-occurrence2259/1" },
+    { "label": "takeUforward", "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/count-occurrences-in-a-sorted-array" }
+  ]
+}
