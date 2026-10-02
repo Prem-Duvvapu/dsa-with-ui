@@ -1,0 +1,48 @@
+{
+  "id": "merge-sort",
+  "statement": [
+    "You are given an integer array nums. Sort it into non-decreasing order with merge sort.",
+    "Split the range in half at its midpoint and sort each half recursively; a range of one element is already sorted. Then merge the two sorted halves with two pointers, repeatedly taking the smaller front element (the left one on a tie).",
+    "Return the sorted array."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          5,
+          2,
+          8,
+          1,
+          9
+        ]
+      },
+      "output": "[1, 2, 5, 8, 9]",
+      "answerVariable": "result",
+      "explanation": "[5, 2, 8] is split and merged into [2, 5, 8], and [1, 9] stays [1, 9]. The final merge interleaves them."
+    },
+    {
+      "input": {
+        "nums": [
+          9,
+          7,
+          5,
+          3,
+          1
+        ]
+      },
+      "output": "[1, 3, 5, 7, 9]",
+      "answerVariable": "result",
+      "explanation": "A reversed input sorts the same way: the halves are sorted, then merged back together."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/merge-sort/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/merge-sort/1"
+    }
+  ]
+}

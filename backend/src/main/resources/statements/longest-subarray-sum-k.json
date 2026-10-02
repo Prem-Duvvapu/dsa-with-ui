@@ -1,0 +1,64 @@
+{
+  "id": "longest-subarray-sum-k",
+  "statement": [
+    "You are given an integer array nums, whose elements may be positive, negative or zero, and an integer k.",
+    "A subarray is a non-empty run of adjacent elements. Return the length of the longest subarray whose elements add up to exactly k, or 0 if no subarray does.",
+    "Negative values mean a longer subarray can have a smaller sum, so a sliding window does not work here; prefix sums do."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          -1,
+          2,
+          3,
+          -2,
+          1
+        ],
+        "k": 3
+      },
+      "output": "5",
+      "answerVariable": "maxLen",
+      "explanation": "The whole array adds up to -1 + 2 + 3 − 2 + 1 = 3, so the longest subarray is all 5 elements."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          -1,
+          5,
+          -2,
+          3
+        ],
+        "k": 6
+      },
+      "output": "5",
+      "answerVariable": "maxLen",
+      "explanation": "1 − 1 + 5 − 2 + 3 = 6, so the entire array is the answer, of length 5."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ],
+        "k": 10
+      },
+      "output": "0",
+      "answerVariable": "maxLen",
+      "explanation": "No subarray adds up to 10, so the answer is 0."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "-10⁴ ≤ nums[i] ≤ 10⁴",
+    "-10⁹ ≤ k ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "reverse-number",
+  "statement": [
+    "You are given a positive integer n.",
+    "Return the number formed by writing the digits of n in reverse order. Zeros that end up at the front of the reversed number are dropped."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 12345
+      },
+      "output": "54321",
+      "answerVariable": "rev",
+      "explanation": "Read from right to left, the digits of 12345 are 5, 4, 3, 2, 1."
+    },
+    {
+      "input": {
+        "n": 900
+      },
+      "output": "9",
+      "answerVariable": "rev",
+      "explanation": "Reversing the digits gives 009, and dropping the leading zeros leaves 9."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 10⁶"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/reverse-digit0316/1"
+    }
+  ]
+}

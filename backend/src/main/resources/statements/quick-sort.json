@@ -1,0 +1,48 @@
+{
+  "id": "quick-sort",
+  "statement": [
+    "You are given an integer array nums. Sort it into non-decreasing order with quick sort.",
+    "Pick the first element of the range as the pivot. Partition the range so that the elements smaller than the pivot come before it, then swap the pivot into its final position between the two parts. Recurse on the left and right parts; ranges with fewer than two elements need no work.",
+    "Return the sorted array."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          5,
+          2,
+          8,
+          1,
+          9
+        ]
+      },
+      "output": "[1, 2, 5, 8, 9]",
+      "answerVariable": "result",
+      "explanation": "Pivot 5 sends 2 and 1 to its left and lands at index 2. The parts [1, 2] and [8, 9] are then partitioned around 1 and 8."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5]",
+      "answerVariable": "result",
+      "explanation": "On sorted input every pivot is the smallest value in its range, so each partition peels off a single element. This is quick sort's worst case."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/quick-sort/1"
+    }
+  ]
+}

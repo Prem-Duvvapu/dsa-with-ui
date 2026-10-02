@@ -1,0 +1,40 @@
+{
+  "id": "check-prime",
+  "statement": [
+    "You are given an integer n ≥ 2.",
+    "n is prime if its only positive divisors are 1 and n itself. Checking divisors up to √n is enough, since any larger divisor pairs with a smaller one.",
+    "Decide whether n is prime. The visualizer reports the result as PRIME or NOT PRIME."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 29
+      },
+      "output": "PRIME",
+      "answerVariable": "result",
+      "explanation": "No integer from 2 to 5 (the integer part of √29) divides 29, so its only divisors are 1 and 29."
+    },
+    {
+      "input": {
+        "n": 100
+      },
+      "output": "NOT PRIME",
+      "answerVariable": "result",
+      "explanation": "100 has nine divisors, 2, 4, 5 and 10 among them, so it is not prime."
+    },
+    {
+      "input": {
+        "n": 2
+      },
+      "output": "PRIME",
+      "answerVariable": "result",
+      "explanation": "2 is divisible only by 1 and 2. It is the smallest prime."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/prime-number2314/1"
+    }
+  ]
+}

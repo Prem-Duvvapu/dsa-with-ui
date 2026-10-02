@@ -1,0 +1,58 @@
+{
+  "id": "second-largest-element",
+  "statement": [
+    "You are given an integer array nums with at least two elements.",
+    "The second largest element is the greatest value in nums that is strictly smaller than the maximum. Copies of the maximum do not count as the second largest.",
+    "Return the second largest element, or -1 if every element equals the maximum and no such value exists."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          12,
+          35,
+          1,
+          10,
+          34,
+          1
+        ]
+      },
+      "output": "34",
+      "answerVariable": "secondLargest",
+      "explanation": "The maximum is 35. Among the remaining values, 34 is the greatest."
+    },
+    {
+      "input": {
+        "nums": [
+          10,
+          10,
+          5
+        ]
+      },
+      "output": "5",
+      "answerVariable": "secondLargest",
+      "explanation": "The maximum is 10. The second 10 is equal to it and does not count, so the answer is 5."
+    },
+    {
+      "input": {
+        "nums": [
+          7,
+          7
+        ]
+      },
+      "output": "-1",
+      "answerVariable": "secondLargest",
+      "explanation": "Both elements equal the maximum 7, so no second largest value exists and the answer is -1."
+    }
+  ],
+  "constraints": [
+    "2 ≤ nums.length ≤ 10⁵",
+    "1 ≤ nums[i] ≤ 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/second-largest3735/1"
+    }
+  ]
+}

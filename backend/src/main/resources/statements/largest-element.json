@@ -1,0 +1,50 @@
+{
+  "id": "largest-element",
+  "statement": [
+    "You are given an integer array nums with at least one element.",
+    "Return the largest value stored in nums. If the largest value occurs more than once, it is still returned once, as a single number."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          7,
+          2,
+          35,
+          4,
+          18
+        ]
+      },
+      "output": "35",
+      "answerVariable": "best",
+      "explanation": "35 is greater than each of the other four values."
+    },
+    {
+      "input": {
+        "nums": [
+          9,
+          8,
+          7,
+          6
+        ]
+      },
+      "output": "9",
+      "answerVariable": "best",
+      "explanation": "The values only decrease from left to right, so the first element, 9, is the largest."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁶",
+    "0 ≤ nums[i] ≤ 10⁶"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1"
+    },
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/find-the-largest-element-in-an-array"
+    }
+  ]
+}

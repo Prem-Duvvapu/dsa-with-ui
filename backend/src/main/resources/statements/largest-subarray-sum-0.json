@@ -1,0 +1,61 @@
+{
+  "id": "largest-subarray-sum-0",
+  "statement": [
+    "You are given an integer array nums containing positive and negative values.",
+    "A subarray is a non-empty run of adjacent elements. Return the length of the longest subarray whose elements add up to 0, or 0 if there is none."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          15,
+          -2,
+          2,
+          -8,
+          1,
+          7,
+          10,
+          23
+        ]
+      },
+      "output": "5",
+      "answerVariable": "maxi",
+      "explanation": "[-2, 2, -8, 1, 7] at indices 1 to 5 adds up to 0 and is the longest such subarray."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          -3,
+          3
+        ]
+      },
+      "output": "3",
+      "answerVariable": "maxi",
+      "explanation": "[1, 2, -3] adds up to 0 and has length 3. [-3, 3] also sums to 0 but is shorter."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          10,
+          4
+        ]
+      },
+      "output": "0",
+      "answerVariable": "maxi",
+      "explanation": "Every element is positive, so no subarray can add up to 0."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁶",
+    "-10³ ≤ nums[i] ≤ 10³"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/largest-subarray-with-0-sum/1"
+    }
+  ]
+}

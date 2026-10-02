@@ -1,0 +1,51 @@
+{
+  "id": "find-missing-number",
+  "statement": [
+    "You are given an array nums of n distinct integers, each taken from the range 0 to n.",
+    "The range 0..n holds n + 1 values but nums holds only n of them, so exactly one value is absent. Return that missing value."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          9,
+          6,
+          4,
+          2,
+          3,
+          5,
+          7,
+          0,
+          1
+        ]
+      },
+      "output": "8",
+      "answerVariable": "missing",
+      "explanation": "n = 9, so the values should be 0 to 9. Every one of them is present except 8."
+    },
+    {
+      "input": {
+        "nums": [
+          0,
+          1,
+          2
+        ]
+      },
+      "output": "3",
+      "answerVariable": "missing",
+      "explanation": "n = 3, so the values should be 0 to 3. 0, 1 and 2 are present, so 3 is missing."
+    }
+  ],
+  "constraints": [
+    "n == nums.length",
+    "1 ≤ n ≤ 10⁴",
+    "0 ≤ nums[i] ≤ n",
+    "All values in nums are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 268",
+      "url": "https://leetcode.com/problems/missing-number/"
+    }
+  ]
+}

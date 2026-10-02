@@ -1,0 +1,34 @@
+{
+  "id": "factorial-number",
+  "statement": [
+    "You are given a non-negative integer n.",
+    "Return n!, the product 1 × 2 × … × n, computed recursively: n! = n × (n − 1)!, with 0! = 1 as the base case."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 5
+      },
+      "output": "120",
+      "answerVariable": "result",
+      "explanation": "5! = 5 × 4 × 3 × 2 × 1 = 120."
+    },
+    {
+      "input": {
+        "n": 7
+      },
+      "output": "5040",
+      "answerVariable": "result",
+      "explanation": "7! = 7 × 6! = 7 × 720 = 5040."
+    }
+  ],
+  "constraints": [
+    "0 ≤ n ≤ 12"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/factorial5739/1"
+    }
+  ]
+}

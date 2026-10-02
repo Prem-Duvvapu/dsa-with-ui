@@ -1,0 +1,32 @@
+{
+  "id": "palindrome-string-recursion",
+  "statement": [
+    "You are given a string s.",
+    "s is a palindrome if it reads the same forwards and backwards. Uppercase and lowercase letters count as different characters.",
+    "Decide recursively whether s is a palindrome: compare s[i] with s[n − 1 − i], and if they match, check the next pair inwards. Return true or false."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "MADAM"
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "M matches M and A matches A, which leaves only the middle D, so the string is a palindrome."
+    },
+    {
+      "input": {
+        "s": "HELLO"
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "The first character, H, differs from the last, O, so the check stops at once with false."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/palindrome-string0817/1"
+    }
+  ]
+}

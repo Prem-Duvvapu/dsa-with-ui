@@ -1,0 +1,40 @@
+{
+  "id": "armstrong-check",
+  "statement": [
+    "You are given a positive integer n with d digits.",
+    "n is an Armstrong number if raising each of its digits to the power d and adding the results gives n back.",
+    "Decide whether n is an Armstrong number. The visualizer reports the result as ARMSTRONG or NOT ARMSTRONG."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 153
+      },
+      "output": "ARMSTRONG",
+      "answerVariable": "result",
+      "explanation": "153 has 3 digits and 1³ + 5³ + 3³ = 1 + 125 + 27 = 153."
+    },
+    {
+      "input": {
+        "n": 123
+      },
+      "output": "NOT ARMSTRONG",
+      "answerVariable": "result",
+      "explanation": "1³ + 2³ + 3³ = 1 + 8 + 27 = 36, which is not 123."
+    },
+    {
+      "input": {
+        "n": 9474
+      },
+      "output": "ARMSTRONG",
+      "answerVariable": "result",
+      "explanation": "9474 has 4 digits, so each one is raised to the fourth power: 6561 + 256 + 2401 + 256 = 9474."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/armstrong-number"
+    }
+  ]
+}

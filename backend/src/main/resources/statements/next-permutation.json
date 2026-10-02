@@ -1,0 +1,58 @@
+{
+  "id": "next-permutation",
+  "statement": [
+    "You are given an integer array nums, read as one arrangement of its values.",
+    "List every arrangement of these values in lexicographic (dictionary) order. Rearrange nums in place into the arrangement that comes right after it in that list. If nums is already the last arrangement (sorted in non-increasing order), wrap round to the first one, which is the values in non-decreasing order.",
+    "Use only constant extra memory. Return the rearranged array."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5]",
+      "answerVariable": "result",
+      "explanation": "[5, 4, 3, 2, 1] is the largest arrangement of these values, so the next one wraps round to the smallest, [1, 2, 3, 4, 5]."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          3,
+          1
+        ]
+      },
+      "output": "[3, 1, 2]",
+      "answerVariable": "result",
+      "explanation": "Ordered lexicographically, the arrangements of 1, 2 and 3 run [2, 1, 3], [2, 3, 1], [3, 1, 2], so [3, 1, 2] follows."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          1,
+          5
+        ]
+      },
+      "output": "[1, 5, 1]",
+      "answerVariable": "result",
+      "explanation": "The distinct arrangements are [1, 1, 5], [1, 5, 1] and [5, 1, 1], so the next one is [1, 5, 1]."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 100",
+    "0 ≤ nums[i] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 31",
+      "url": "https://leetcode.com/problems/next-permutation/"
+    }
+  ]
+}

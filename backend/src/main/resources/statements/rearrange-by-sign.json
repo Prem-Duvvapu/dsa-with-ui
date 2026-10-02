@@ -1,0 +1,50 @@
+{
+  "id": "rearrange-by-sign",
+  "statement": [
+    "You are given an integer array nums of even length, containing equally many positive and negative integers and no zeros.",
+    "Rearrange the elements so that signs alternate, starting with a positive number at index 0, and so that the positives keep their original relative order, as do the negatives.",
+    "Return the rearranged array."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          3,
+          1,
+          -2,
+          -5,
+          2,
+          -4
+        ]
+      },
+      "output": "[3, -2, 1, -5, 2, -4]",
+      "answerVariable": "result",
+      "explanation": "The positives in order are 3, 1, 2 and the negatives are -2, -5, -4. Interleaving them, positive first, gives the answer."
+    },
+    {
+      "input": {
+        "nums": [
+          -1,
+          2,
+          -3,
+          4
+        ]
+      },
+      "output": "[2, -1, 4, -3]",
+      "answerVariable": "result",
+      "explanation": "The array starts with a negative, but the result must start with the first positive, 2, followed by the first negative, -1."
+    }
+  ],
+  "constraints": [
+    "2 ≤ nums.length ≤ 2 × 10⁵",
+    "nums.length is even",
+    "1 ≤ |nums[i]| ≤ 10⁵",
+    "nums contains equally many positive and negative integers"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 2149",
+      "url": "https://leetcode.com/problems/rearrange-array-elements-by-sign/"
+    }
+  ]
+}

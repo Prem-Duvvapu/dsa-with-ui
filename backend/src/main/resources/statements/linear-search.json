@@ -1,0 +1,62 @@
+{
+  "id": "linear-search",
+  "statement": [
+    "You are given an integer array nums and an integer target.",
+    "Examine the elements one at a time from index 0 onwards and return the index of the first element equal to target. If no element equals target, return -1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "target": 3
+      },
+      "output": "2",
+      "answerVariable": "result",
+      "explanation": "nums[2] is 3, and no earlier element matches."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "target": 9
+      },
+      "output": "-1",
+      "answerVariable": "result",
+      "explanation": "All five elements were checked and none is 9."
+    },
+    {
+      "input": {
+        "nums": [
+          4,
+          7,
+          4
+        ],
+        "target": 4
+      },
+      "output": "0",
+      "answerVariable": "result",
+      "explanation": "4 appears at indices 0 and 2; the first occurrence, index 0, is returned."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/search-an-element-in-an-array-1587115621/1"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/linear-search/"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "palindrome-number",
+  "statement": [
+    "You are given a non-negative integer n.",
+    "n is a palindrome if its decimal digits read the same from left to right as from right to left.",
+    "Decide whether n is a palindrome. The visualizer reports the result as PALINDROME or NOT PALINDROME."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 12321
+      },
+      "output": "PALINDROME",
+      "answerVariable": "result",
+      "explanation": "Reversing the digits of 12321 gives 12321 again."
+    },
+    {
+      "input": {
+        "n": 1234
+      },
+      "output": "NOT PALINDROME",
+      "answerVariable": "result",
+      "explanation": "Reversing the digits gives 4321, which differs from 1234."
+    }
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 9",
+      "url": "https://leetcode.com/problems/palindrome-number/"
+    }
+  ]
+}

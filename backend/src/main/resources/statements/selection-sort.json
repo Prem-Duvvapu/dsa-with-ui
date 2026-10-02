@@ -1,0 +1,48 @@
+{
+  "id": "selection-sort",
+  "statement": [
+    "You are given an integer array nums. Sort it into non-decreasing order with selection sort.",
+    "The array is split into a sorted prefix and an unsorted rest. On each pass, scan the unsorted part for its smallest element and swap it into the first unsorted position, which grows the sorted prefix by one. After n − 1 passes the array is sorted.",
+    "Return the sorted array."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          5,
+          2,
+          8,
+          1,
+          9
+        ]
+      },
+      "output": "[1, 2, 5, 8, 9]",
+      "answerVariable": "result",
+      "explanation": "Pass 1 swaps the minimum 1 to the front, and pass 3 swaps 5 into index 2. Passes 2 and 4 find the minimum already in place."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5]",
+      "answerVariable": "result",
+      "explanation": "The array is already sorted, so every pass finds its minimum in place and makes no swap."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/selection-sort-algorithm-2/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/selection-sort/1"
+    }
+  ]
+}

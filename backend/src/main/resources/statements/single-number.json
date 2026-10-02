@@ -1,0 +1,46 @@
+{
+  "id": "single-number",
+  "statement": [
+    "You are given a non-empty integer array nums. Every value in nums occurs exactly twice, except for one value that occurs only once.",
+    "Return the value that occurs once. Aim for linear time and constant extra space."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          4,
+          1,
+          2,
+          1,
+          2
+        ]
+      },
+      "output": "4",
+      "answerVariable": "result",
+      "explanation": "1 and 2 each appear twice; 4 appears once."
+    },
+    {
+      "input": {
+        "nums": [
+          7,
+          3,
+          7
+        ]
+      },
+      "output": "3",
+      "answerVariable": "result",
+      "explanation": "7 appears twice and 3 once."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 3 × 10⁴",
+    "-3 × 10⁴ ≤ nums[i] ≤ 3 × 10⁴",
+    "Every element appears twice except for one element, which appears once"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 136",
+      "url": "https://leetcode.com/problems/single-number/"
+    }
+  ]
+}

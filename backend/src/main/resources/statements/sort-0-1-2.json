@@ -1,0 +1,52 @@
+{
+  "id": "sort-0-1-2",
+  "statement": [
+    "You are given an array nums whose every element is 0, 1 or 2.",
+    "Sort nums in place into non-decreasing order, so that all 0s come first, then all 1s, then all 2s, without calling a library sort.",
+    "Return the sorted array. A single pass with constant extra space is possible."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          2,
+          0,
+          2,
+          1,
+          1,
+          0
+        ]
+      },
+      "output": "[0, 0, 1, 1, 2, 2]",
+      "answerVariable": "result",
+      "explanation": "There are two of each value, so the sorted array is two 0s, two 1s and two 2s."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          0,
+          1
+        ]
+      },
+      "output": "[0, 1, 2]",
+      "answerVariable": "result",
+      "explanation": "One of each value, placed in order."
+    }
+  ],
+  "constraints": [
+    "n == nums.length",
+    "1 ≤ n ≤ 300",
+    "nums[i] is 0, 1 or 2"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 75",
+      "url": "https://leetcode.com/problems/sort-colors/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/sort-an-array-of-0s-1s-and-2s4231/1"
+    }
+  ]
+}

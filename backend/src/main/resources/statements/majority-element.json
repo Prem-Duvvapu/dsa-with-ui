@@ -1,0 +1,64 @@
+{
+  "id": "majority-element",
+  "statement": [
+    "You are given an integer array nums of length n.",
+    "The majority element is the value that occurs more than ⌊n / 2⌋ times. The input always contains one.",
+    "Return the majority element. Aim for linear time and constant extra space."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          2,
+          2,
+          1,
+          1,
+          1,
+          2,
+          2
+        ]
+      },
+      "output": "2",
+      "answerVariable": "majorityElement",
+      "explanation": "n = 7, so the majority must appear more than 3 times. 2 appears 4 times."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          5,
+          5,
+          3,
+          3
+        ]
+      },
+      "output": "5",
+      "answerVariable": "majorityElement",
+      "explanation": "n = 5 and 5 appears 3 times, which is more than 2."
+    },
+    {
+      "input": {
+        "nums": [
+          3,
+          2,
+          3
+        ]
+      },
+      "output": "3",
+      "answerVariable": "majorityElement",
+      "explanation": "n = 3 and 3 appears twice, which is more than 1."
+    }
+  ],
+  "constraints": [
+    "n == nums.length",
+    "1 ≤ n ≤ 5 × 10⁴",
+    "-10⁹ ≤ nums[i] ≤ 10⁹",
+    "A majority element always exists"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 169",
+      "url": "https://leetcode.com/problems/majority-element/"
+    }
+  ]
+}

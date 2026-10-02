@@ -1,0 +1,48 @@
+{
+  "id": "insertion-sort",
+  "statement": [
+    "You are given an integer array nums. Sort it into non-decreasing order with insertion sort.",
+    "Treat nums[0] as a sorted prefix. For each later element, hold it aside as the key, shift every larger element of the prefix one place to the right, and drop the key into the gap. The prefix then covers one more element.",
+    "Return the sorted array."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          5,
+          2,
+          8,
+          1,
+          9
+        ]
+      },
+      "output": "[1, 2, 5, 8, 9]",
+      "answerVariable": "result",
+      "explanation": "2 is inserted before 5, and 8 stays put. 1 shifts 8, 5 and 2 to the right and lands at index 0. 9 stays at the end."
+    },
+    {
+      "input": {
+        "nums": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "output": "[4, 4, 4, 4, 4]",
+      "answerVariable": "result",
+      "explanation": "All values are equal, so no element is larger than any key and nothing ever shifts."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/insertion-sort-algorithm/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/insertion-sort/1"
+    }
+  ]
+}

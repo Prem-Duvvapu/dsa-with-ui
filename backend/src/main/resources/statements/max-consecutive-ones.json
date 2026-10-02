@@ -1,0 +1,50 @@
+{
+  "id": "max-consecutive-ones",
+  "statement": [
+    "You are given a binary array nums, in which every element is 0 or 1.",
+    "Return the length of the longest run of adjacent elements that are all 1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      },
+      "output": "3",
+      "answerVariable": "best",
+      "explanation": "The 1s at indices 3 to 5 form a run of three. The other runs have lengths 2 and 1."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          0,
+          1,
+          0,
+          1
+        ]
+      },
+      "output": "1",
+      "answerVariable": "best",
+      "explanation": "Every 1 is separated from the next by a 0, so the longest run has length 1."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "nums[i] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 485",
+      "url": "https://leetcode.com/problems/max-consecutive-ones/"
+    }
+  ]
+}
