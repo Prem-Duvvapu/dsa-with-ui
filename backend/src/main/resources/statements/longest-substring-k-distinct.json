@@ -1,0 +1,31 @@
+{
+  "id": "longest-substring-k-distinct",
+  "statement": [
+    "You are given a string s and an integer k.",
+    "Return the length of the longest substring of s that contains at most k distinct characters.",
+    "Slide a window over s while counting each character inside it. Extend the window to the right, and whenever it holds more than k distinct characters, drop characters from the left until it is valid again. The longest valid window is the answer."
+  ],
+  "examples": [
+    {
+      "input": { "s": "eceba", "k": 2 },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "\"ece\" uses only 'e' and 'c'. Every substring of length 4 contains three different letters."
+    },
+    {
+      "input": { "s": "aa", "k": 1 },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "The whole string uses the single letter 'a', so its full length, 2, is allowed."
+    },
+    {
+      "input": { "s": "aabacbebebe", "k": 3 },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "\"cbebebe\" uses 'c', 'b' and 'e'. Extending it left adds an 'a', a fourth letter."
+    }
+  ],
+  "sources": [
+    { "label": "takeUforward", "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/longest-substring-with-at-most-k-distinct-characters" }
+  ]
+}

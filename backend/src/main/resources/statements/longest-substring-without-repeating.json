@@ -1,0 +1,35 @@
+{
+  "id": "longest-substring-without-repeating",
+  "statement": [
+    "You are given a string s.",
+    "Return the length of the longest substring of s, a contiguous run of characters, in which no character appears more than once.",
+    "Slide a window over s, remembering the last index at which each character was seen. When the next character already occurs inside the window, move the window's left edge to just past that earlier occurrence. The longest window seen is the answer, found in one pass."
+  ],
+  "examples": [
+    {
+      "input": { "s": "abcabcbb" },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "\"abc\" has no repeated character, and every substring of length 4 repeats one, so the answer is 3."
+    },
+    {
+      "input": { "s": "pwwkew" },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "\"wke\" is the longest run without repeats. \"pwke\" does not count: it is a subsequence, not a contiguous substring."
+    },
+    {
+      "input": { "s": "bbbbb" },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Every character is 'b', so any substring longer than one character repeats it."
+    }
+  ],
+  "constraints": [
+    "0 ≤ s.length ≤ 5 × 10⁴",
+    "s consists of English letters, digits, symbols and spaces"
+  ],
+  "sources": [
+    { "label": "LeetCode 3", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/" }
+  ]
+}

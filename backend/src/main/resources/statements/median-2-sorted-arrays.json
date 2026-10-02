@@ -1,0 +1,39 @@
+{
+  "id": "median-2-sorted-arrays",
+  "statement": [
+    "You are given two arrays nums1 and nums2, each sorted in ascending order, of lengths m and n.",
+    "Return the median of all m + n values taken together. When m + n is odd, the median is the middle value of the combined sorted order; when it is even, it is the average of the two middle values.",
+    "The required running time is O(log(m + n)), so the arrays cannot simply be merged. Binary search on how many elements the shorter array contributes to the left half of the combined order: a split is right when every value on the left is at most every value on the right."
+  ],
+  "examples": [
+    {
+      "input": { "nums1": [1, 2, 3, 5, 6, 10], "nums2": [4, 7, 11, 12] },
+      "output": "5.5",
+      "answerVariable": "answer",
+      "explanation": "Together the values are 1, 2, 3, 4, 5, 6, 7, 10, 11, 12. There are 10 of them, so the median is the average of the 5th and 6th: (5 + 6) / 2 = 5.5."
+    },
+    {
+      "input": { "nums1": [-6, -4, -1, 1, 3, 8], "nums2": [1, 4, 7, 8] },
+      "output": "2.0",
+      "answerVariable": "answer",
+      "explanation": "The combined order is −6, −4, −1, 1, 1, 3, 4, 7, 8, 8. The two middle values are 1 and 3, so the median is 2.0."
+    },
+    {
+      "input": { "nums1": [1, 3], "nums2": [2] },
+      "output": "2.0",
+      "answerVariable": "answer",
+      "explanation": "The combined order is 1, 2, 3. With an odd count the median is the single middle value, 2."
+    }
+  ],
+  "constraints": [
+    "nums1.length == m",
+    "nums2.length == n",
+    "0 ≤ m ≤ 1000",
+    "0 ≤ n ≤ 1000",
+    "1 ≤ m + n ≤ 2000",
+    "−10⁶ ≤ nums1[i], nums2[i] ≤ 10⁶"
+  ],
+  "sources": [
+    { "label": "LeetCode 4", "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/" }
+  ]
+}

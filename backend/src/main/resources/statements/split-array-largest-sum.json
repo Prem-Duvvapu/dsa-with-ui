@@ -1,0 +1,30 @@
+{
+  "id": "split-array-largest-sum",
+  "statement": [
+    "You are given an integer array nums and an integer m.",
+    "Split nums into exactly m non-empty subarrays, each a contiguous piece of the array. Each split has a largest subarray sum; make that largest sum as small as possible.",
+    "Return the minimised largest sum. The answer lies between max(nums) and the sum of nums. For a candidate cap, cutting greedily whenever the running sum would pass it gives the fewest pieces possible, so binary search for the smallest cap that needs at most m pieces."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [7, 2, 5, 10, 8], "m": 2 },
+      "output": "18",
+      "answerVariable": "answer",
+      "explanation": "Splitting into [7, 2, 5] and [10, 8] gives sums 14 and 18. No split into two pieces keeps both sums below 18."
+    },
+    {
+      "input": { "nums": [1, 2, 3, 4, 5], "m": 3 },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "[1, 2, 3], [4], [5] has largest sum 6. A cap of 5 would force four pieces: [1, 2], [3], [4], [5]."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 1000",
+    "0 ≤ nums[i] ≤ 10⁶",
+    "1 ≤ m ≤ min(50, nums.length)"
+  ],
+  "sources": [
+    { "label": "LeetCode 410", "url": "https://leetcode.com/problems/split-array-largest-sum/" }
+  ]
+}

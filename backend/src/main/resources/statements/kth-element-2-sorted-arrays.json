@@ -1,0 +1,25 @@
+{
+  "id": "kth-element-2-sorted-arrays",
+  "statement": [
+    "You are given two arrays nums1 and nums2, each sorted in ascending order, and an integer k between 1 and the total number of elements.",
+    "Imagine merging the two arrays into one sorted array. Return the element at position k of that merged array, counting from 1.",
+    "Do it without merging, in O(log(min(m, n))) time: binary search on how many of the first k elements come from the shorter array, and accept the split when every element taken is at most every element left behind."
+  ],
+  "examples": [
+    {
+      "input": { "nums1": [9, 10, 14, 17, 20, 24], "nums2": [1, 2, 4, 13], "k": 7 },
+      "output": "14",
+      "answerVariable": "answer",
+      "explanation": "The merged order begins 1, 2, 4, 9, 10, 13, 14, …, so the 7th element is 14."
+    },
+    {
+      "input": { "nums1": [-7, -5, -3, 0, 6, 12], "nums2": [-13, 0, 2, 9, 12], "k": 4 },
+      "output": "-3",
+      "answerVariable": "answer",
+      "explanation": "The merged order begins −13, −7, −5, −3, …, so the 4th element is −3."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/k-th-element-of-two-sorted-array1317/1" }
+  ]
+}

@@ -517,3 +517,17 @@ Defects found, not in any example:
   - BinaryTreeLayout draws a grandchild of a missing node, e.g. node 4 in [1,null,2,3,null,null,null,4],
     though no traversal can reach it.
 Automated: StatementContractTest passes (107 statements).
+
+## Problem statements: Binary Search, Sliding Window and Greedy (56 problems)
+
+```text
+Package / status: statements rollout, topic 3 of 8 (after #164). Same method and checks.
+Coverage: 56 of 58. Skipped: jump-game-1 (no true/false result variable) and floor-ceil-sorted-array
+  (the answer is split across floor and ceil).
+Source links: every source in the repo was re-verified mechanically. LeetCode links were checked through
+  LeetCode's GraphQL API (scripted page fetches get 403), including that each "LeetCode N" label is that
+  problem's real number; every other link must return HTTP 200. 168/168 pass. One dead takeUforward
+  link (first-last-occurrence) was removed; that statement keeps its verified LeetCode 34 source.
+Tracer defects found here (book-allocation, row-max-ones, lower/upper-bound) are fixed separately, with
+  the others, under RCA-055. No example here uses an affected input.
+Automated: StatementContractTest passes (163 statements).

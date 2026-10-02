@@ -1,0 +1,25 @@
+{
+  "id": "book-allocation",
+  "statement": [
+    "There are n books in a row; pages[i] is the number of pages in book i. They are to be shared among m students.",
+    "Every student gets at least one book, every book goes to exactly one student, and each student's books form a contiguous run of the row, kept in order.",
+    "Among all valid allocations, minimise the largest number of pages any one student has to read, and return that number. If there are more students than books the allocation is impossible and the answer is −1. Binary search the page cap between max(pages) and the total, checking each cap by handing out books greedily."
+  ],
+  "examples": [
+    {
+      "input": { "pages": [12, 34, 67, 90], "m": 2 },
+      "output": "113",
+      "answerVariable": "answer",
+      "explanation": "Giving [12, 34, 67] to one student and [90] to the other makes the heavier load 113. Every other split is worse: [12, 34] / [67, 90] gives 157, and [12] / [34, 67, 90] gives 191."
+    },
+    {
+      "input": { "pages": [12, 34, 67, 90], "m": 4 },
+      "output": "90",
+      "answerVariable": "answer",
+      "explanation": "With one student per book, the largest load is the largest book, 90."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1" }
+  ]
+}

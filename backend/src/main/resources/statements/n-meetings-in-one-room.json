@@ -1,0 +1,31 @@
+{
+  "id": "n-meetings-in-one-room",
+  "statement": [
+    "There is one meeting room and n meetings. Meeting i starts at start[i] and ends at end[i].",
+    "The room can hold only one meeting at a time, and a meeting can be chosen only if it starts strictly after the previously chosen meeting ends: a meeting starting at the very moment another ends does not fit.",
+    "Return the largest number of meetings that can be held in the room. Greedily, sort the meetings by end time and take each one that starts after the last meeting taken ends, since finishing early leaves the most room for the rest."
+  ],
+  "examples": [
+    {
+      "input": { "start": [1, 3, 0, 5, 8, 5], "end": [2, 4, 6, 7, 9, 9] },
+      "output": "4",
+      "answerVariable": "count",
+      "explanation": "Meetings (1, 2), (3, 4), (5, 7) and (8, 9) follow one another without overlapping, so 4 meetings fit. The other two overlap with these."
+    },
+    {
+      "input": { "start": [1, 2, 3, 4, 5], "end": [6, 7, 8, 9, 10] },
+      "output": "1",
+      "answerVariable": "count",
+      "explanation": "Every meeting is still running when the next one starts, so only one of them can use the room."
+    },
+    {
+      "input": { "start": [1, 2, 4], "end": [2, 3, 5] },
+      "output": "2",
+      "answerVariable": "count",
+      "explanation": "The second meeting starts at 2, the same moment the first ends, so it cannot follow it. The first and third meetings fit, giving 2."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/n-meetings-in-one-room-1587115620/1" }
+  ]
+}

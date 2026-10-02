@@ -1,0 +1,38 @@
+{
+  "id": "insert-interval",
+  "statement": [
+    "You are given a list of intervals, each [start, end], sorted by start and with no two overlapping. You are also given one more interval, [newStart, newEnd].",
+    "Insert the new interval into the list so that the list is still sorted by start and still has no overlapping intervals, merging the new interval with every existing interval it overlaps. Intervals that share an endpoint count as overlapping.",
+    "Return the resulting list. One pass is enough: copy the intervals that end before newStart, merge every interval that overlaps the new one into a single interval, then copy the rest."
+  ],
+  "examples": [
+    {
+      "input": { "intervals": [[1, 3], [6, 9]], "newStart": 2, "newEnd": 5 },
+      "output": "[[1,5], [6,9]]",
+      "answerVariable": "result",
+      "explanation": "[2, 5] overlaps [1, 3], and together they become [1, 5]. [6, 9] starts after 5 and is unchanged."
+    },
+    {
+      "input": { "intervals": [[1, 2], [3, 5], [6, 7], [8, 10], [15, 18]], "newStart": 4, "newEnd": 8 },
+      "output": "[[1,2], [3,10], [15,18]]",
+      "answerVariable": "result",
+      "explanation": "[4, 8] overlaps [3, 5], [6, 7] and [8, 10], so all four merge into [3, 10]. [1, 2] and [15, 18] are untouched."
+    },
+    {
+      "input": { "intervals": [[1, 2], [5, 6]], "newStart": 3, "newEnd": 4 },
+      "output": "[[1,2], [3,4], [5,6]]",
+      "answerVariable": "result",
+      "explanation": "[3, 4] fits in the gap between the two intervals without touching either, so it is simply placed between them."
+    }
+  ],
+  "constraints": [
+    "0 ≤ intervals.length ≤ 10⁴",
+    "intervals[i].length == 2",
+    "0 ≤ startᵢ ≤ endᵢ ≤ 10⁵",
+    "intervals is sorted by startᵢ in ascending order",
+    "0 ≤ newStart ≤ newEnd ≤ 10⁵"
+  ],
+  "sources": [
+    { "label": "LeetCode 57", "url": "https://leetcode.com/problems/insert-interval/" }
+  ]
+}

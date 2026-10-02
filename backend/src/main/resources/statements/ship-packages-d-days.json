@@ -1,0 +1,29 @@
+{
+  "id": "ship-packages-d-days",
+  "statement": [
+    "Packages on a conveyor belt must be shipped within days days. weights[i] is the weight of the i-th package.",
+    "Each day the ship is loaded with packages in the order they appear on the belt, and the total weight loaded in one day may not exceed the ship's capacity. Packages cannot be reordered or skipped, so each day takes a contiguous run of the belt.",
+    "Return the smallest capacity that ships every package within days days. The capacity must be at least max(weights) and never needs to exceed the sum of weights, and a larger capacity never needs more days, so binary search between those limits."
+  ],
+  "examples": [
+    {
+      "input": { "weights": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "days": 5 },
+      "output": "15",
+      "answerVariable": "answer",
+      "explanation": "Capacity 15 works: [1, 2, 3, 4, 5], [6, 7], [8], [9], [10]. With capacity 14 the same greedy loading needs 6 days."
+    },
+    {
+      "input": { "weights": [3, 2, 2, 4, 1, 4], "days": 3 },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "Capacity 6 ships [3, 2], [2, 4], [1, 4] in 3 days. Capacity 5 would need 4 days: [3, 2], [2], [4, 1], [4]."
+    }
+  ],
+  "constraints": [
+    "1 ≤ days ≤ weights.length ≤ 5 × 10⁴",
+    "1 ≤ weights[i] ≤ 500"
+  ],
+  "sources": [
+    { "label": "LeetCode 1011", "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/" }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "search-2d-matrix",
+  "statement": [
+    "You are given an m × n integer matrix with two properties: each row is sorted in ascending order, and the first value of each row is greater than the last value of the row above it. Read row by row, the matrix is therefore one long sorted list.",
+    "Given an integer target, return true if target is in the matrix and false otherwise.",
+    "The search must run in O(log(m × n)) time. Binary search over positions 0 to m × n − 1 and turn each position p into the cell (p / n, p mod n)."
+  ],
+  "examples": [
+    {
+      "input": { "matrix": [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], "target": 5 },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "5 is at row 0, column 2."
+    },
+    {
+      "input": { "matrix": [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], "target": 13 },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "13 would fall between 11 and 16 in the middle row, but it is not there, so the answer is false."
+    }
+  ],
+  "constraints": [
+    "m == matrix.length",
+    "n == matrix[i].length",
+    "1 ≤ m, n ≤ 100",
+    "−10⁴ ≤ matrix[i][j], target ≤ 10⁴"
+  ],
+  "sources": [
+    { "label": "LeetCode 74", "url": "https://leetcode.com/problems/search-a-2d-matrix/" }
+  ]
+}

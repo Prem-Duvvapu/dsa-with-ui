@@ -1,0 +1,30 @@
+{
+  "id": "smallest-divisor",
+  "statement": [
+    "You are given an array of positive integers nums and an integer threshold.",
+    "Choose a positive integer divisor d. Divide every element of nums by d, rounding each result up to the next whole number, and add the results together.",
+    "Return the smallest d for which that sum is at most threshold. A larger divisor never makes the sum bigger, so binary search for d between 1 and max(nums). An answer always exists, because threshold is at least nums.length."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 2, 5, 9], "threshold": 6 },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "With d = 5 the rounded-up quotients are 1 + 1 + 1 + 2 = 5 ≤ 6. With d = 4 they are 1 + 1 + 2 + 3 = 7, which is over the threshold."
+    },
+    {
+      "input": { "nums": [44, 22, 33, 11, 1], "threshold": 5 },
+      "output": "44",
+      "answerVariable": "answer",
+      "explanation": "The threshold equals the number of elements, so every quotient must be 1. That needs d ≥ 44, the largest element; d = 43 already gives 2 for 44."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 5 × 10⁴",
+    "1 ≤ nums[i] ≤ 10⁶",
+    "nums.length ≤ threshold ≤ 10⁶"
+  ],
+  "sources": [
+    { "label": "LeetCode 1283", "url": "https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/" }
+  ]
+}

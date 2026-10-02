@@ -1,0 +1,31 @@
+{
+  "id": "kth-missing-positive",
+  "statement": [
+    "You are given an array arr of positive integers in strictly increasing order, and an integer k.",
+    "List the positive integers 1, 2, 3, … that do not appear in arr. Return the k-th number on that list.",
+    "Before index i, exactly arr[i] − (i + 1) positive integers are missing. Binary search for the first index where that count reaches k; if it lands at index low, the answer is low + k. This takes O(log n) instead of walking the numbers one by one."
+  ],
+  "examples": [
+    {
+      "input": { "arr": [2, 3, 4, 7, 11], "k": 5 },
+      "output": "9",
+      "answerVariable": "answer",
+      "explanation": "The missing positive integers are 1, 5, 6, 8, 9, 10, 12, …; the 5th of them is 9."
+    },
+    {
+      "input": { "arr": [1, 2, 3, 4], "k": 2 },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "Nothing is missing before 4, so the missing numbers are 5, 6, 7, …; the 2nd is 6."
+    }
+  ],
+  "constraints": [
+    "1 ≤ arr.length ≤ 1000",
+    "1 ≤ arr[i] ≤ 1000",
+    "1 ≤ k ≤ 1000",
+    "arr[i] < arr[j] for 1 ≤ i < j ≤ arr.length"
+  ],
+  "sources": [
+    { "label": "LeetCode 1539", "url": "https://leetcode.com/problems/kth-missing-positive-number/" }
+  ]
+}

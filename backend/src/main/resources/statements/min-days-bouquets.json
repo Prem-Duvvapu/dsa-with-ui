@@ -1,0 +1,38 @@
+{
+  "id": "min-days-bouquets",
+  "statement": [
+    "A garden has n flowers in a row. Flower i blooms on day bloomDay[i] and stays bloomed after that.",
+    "You want to make m bouquets. Each bouquet uses exactly k flowers that are adjacent in the row and have all bloomed, and a flower can go into only one bouquet.",
+    "Return the smallest number of days you have to wait before m bouquets can be made. If it can never be done, because m × k is more than n, return −1. The number of bouquets you can make only grows as the day increases, so binary search on the day."
+  ],
+  "examples": [
+    {
+      "input": { "bloomDay": [1, 10, 3, 10, 2], "m": 3, "k": 1 },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Each bouquet needs one flower. By day 3 the flowers at indices 0, 2 and 4 have bloomed, which makes 3 bouquets. On day 2 only two have bloomed."
+    },
+    {
+      "input": { "bloomDay": [1, 10, 3, 10, 2], "m": 4, "k": 2 },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "4 bouquets of 2 flowers need 8 flowers, but the garden has only 5, so it is impossible."
+    },
+    {
+      "input": { "bloomDay": [7, 7, 7, 7, 12, 7, 7], "m": 2, "k": 3 },
+      "output": "12",
+      "answerVariable": "answer",
+      "explanation": "On day 7 the bloomed flowers form runs of 4 and 2, which give only one group of 3. On day 12 all seven have bloomed, and indices 0–2 and 3–5 make two bouquets."
+    }
+  ],
+  "constraints": [
+    "bloomDay.length == n",
+    "1 ≤ n ≤ 10⁵",
+    "1 ≤ bloomDay[i] ≤ 10⁹",
+    "1 ≤ m ≤ 10⁶",
+    "1 ≤ k ≤ n"
+  ],
+  "sources": [
+    { "label": "LeetCode 1482", "url": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/" }
+  ]
+}

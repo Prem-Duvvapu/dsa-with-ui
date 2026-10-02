@@ -1,0 +1,103 @@
+{
+  "id": "job-sequencing",
+  "statement": [
+    "You are given a list of jobs, where jobs[i] = [deadline, profit]. Every job takes exactly one unit of time, only one job can be done at a time, and time starts at 0.",
+    "A job earns its profit only if it is finished by its deadline, which means it must occupy one of the time slots 1 to deadline. Jobs that are not scheduled earn nothing.",
+    "Return the maximum total profit that can be earned. Greedily, take the jobs from most to least profitable and give each one the latest free slot no later than its deadline, skipping it if every such slot is taken."
+  ],
+  "examples": [
+    {
+      "input": {
+        "jobs": [
+          [
+            2,
+            100
+          ],
+          [
+            1,
+            19
+          ],
+          [
+            2,
+            27
+          ],
+          [
+            1,
+            25
+          ],
+          [
+            3,
+            15
+          ]
+        ]
+      },
+      "output": "142",
+      "answerVariable": "profit",
+      "explanation": "The job worth 100 takes slot 2 and the job worth 27 takes slot 1. The jobs worth 25 and 19 also need slot 1, which is taken, and the job worth 15 fills slot 3. The total is 100 + 27 + 15 = 142."
+    },
+    {
+      "input": {
+        "jobs": [
+          [
+            1,
+            35
+          ],
+          [
+            3,
+            30
+          ],
+          [
+            2,
+            25
+          ],
+          [
+            1,
+            40
+          ],
+          [
+            3,
+            20
+          ],
+          [
+            2,
+            10
+          ]
+        ]
+      },
+      "output": "95",
+      "answerVariable": "profit",
+      "explanation": "The job worth 40 takes slot 1, the job worth 30 takes slot 3 and the job worth 25 takes slot 2, for 95. The job worth 35 also needs slot 1, which is already used."
+    },
+    {
+      "input": {
+        "jobs": [
+          [
+            4,
+            20
+          ],
+          [
+            1,
+            10
+          ],
+          [
+            1,
+            40
+          ],
+          [
+            1,
+            30
+          ]
+        ]
+      },
+      "output": "60",
+      "answerVariable": "profit",
+      "explanation": "Three jobs compete for slot 1; the one worth 40 wins it. The job worth 20 can run in slot 4, so the best total is 40 + 20 = 60."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/job-sequencing-problem-1587115620/1"
+    }
+  ]
+}

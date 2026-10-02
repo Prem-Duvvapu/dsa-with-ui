@@ -1,0 +1,26 @@
+{
+  "id": "jump-game-2",
+  "statement": [
+    "You are given an array nums of non-negative integers and start at index 0. From index i you may jump forward to any index from i + 1 up to i + nums[i].",
+    "Return the minimum number of jumps needed to reach the last index, n − 1. If the last index cannot be reached at all, return −1.",
+    "Think of it as a breadth-first search done in place: the indices reachable with j jumps form a contiguous range, and the next range ends at the farthest point any index in the current range can jump to. Count the ranges until one contains n − 1, which takes O(n) time."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [2, 3, 1, 1, 4] },
+      "output": "2",
+      "answerVariable": "jumps",
+      "explanation": "Jump from index 0 to index 1, then from index 1 (value 3) straight to the last index. One jump is not enough, because index 0 reaches only as far as index 2."
+    },
+    {
+      "input": { "nums": [3, 2, 1, 0, 4] },
+      "output": "-1",
+      "answerVariable": "jumps",
+      "explanation": "Every path lands on index 3, whose value is 0, and nothing gets past it, so the last index is unreachable."
+    }
+  ],
+  "sources": [
+    { "label": "LeetCode 45", "url": "https://leetcode.com/problems/jump-game-ii/" },
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/dsa/minimum-number-of-jumps-to-reach-end-of-a-given-array/" }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "search-rotated-sorted-2",
+  "statement": [
+    "An array sorted in non-decreasing order, possibly with repeated values, was rotated at some unknown pivot. You are given the rotated array nums and an integer target.",
+    "Return true if target appears anywhere in nums, and false otherwise.",
+    "Duplicates are what make this harder than the distinct version: when nums[low], nums[mid] and nums[high] are all equal, there is no way to tell which half is sorted. In that case shrink the range by one from each end and try again, which can degrade the search to O(n) in the worst case."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [1, 0, 1, 1, 1], "target": 0 },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "0 is at index 1, so the answer is true."
+    },
+    {
+      "input": { "nums": [2, 5, 6, 0, 0, 1, 2], "target": 3 },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "The array holds 0, 1, 2, 5 and 6 but no 3, so the answer is false."
+    },
+    {
+      "input": { "nums": [3, 1, 2, 3, 3, 3, 3], "target": 2 },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "The first, middle and last values are all 3, so neither half can be ruled out at first. After the ends are trimmed the search finds 2 at index 2."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 5000",
+    "−10⁴ ≤ nums[i] ≤ 10⁴",
+    "nums is guaranteed to be rotated at some pivot",
+    "−10⁴ ≤ target ≤ 10⁴"
+  ],
+  "sources": [
+    { "label": "LeetCode 81", "url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/" }
+  ]
+}

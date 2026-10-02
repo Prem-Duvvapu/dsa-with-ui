@@ -1,0 +1,31 @@
+{
+  "id": "matrix-median",
+  "statement": [
+    "You are given an n × m integer matrix in which every row is sorted in ascending order. The total number of cells, n × m, is odd.",
+    "Return the median of all the values in the matrix: the value that would sit in the middle if every cell were written into one sorted list.",
+    "Avoid building that list. Binary search on the value instead, between the smallest first element and the largest last element. For a candidate x, count the cells ≤ x by doing an upper-bound search in each row; the median is the smallest x for which that count is greater than (n × m) / 2."
+  ],
+  "examples": [
+    {
+      "input": { "matrix": [[1, 3, 5], [2, 6, 9], [3, 6, 9]] },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "The nine values in order are 1, 2, 3, 3, 5, 6, 6, 9, 9. The 5th, in the middle, is 5."
+    },
+    {
+      "input": { "matrix": [[1, 3, 8], [2, 3, 4], [1, 2, 5]] },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "In order the values are 1, 1, 2, 2, 3, 3, 4, 5, 8, and the middle one is 3."
+    },
+    {
+      "input": { "matrix": [[7]] },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "A single cell is its own median."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/median-in-a-row-wise-sorted-matrix1527/1" }
+  ]
+}

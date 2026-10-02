@@ -1,0 +1,35 @@
+{
+  "id": "fruit-into-baskets",
+  "statement": [
+    "A row of fruit trees stands from left to right; fruits[i] is the type of fruit that tree i grows.",
+    "You have two baskets, and each basket holds only one type of fruit, in any amount. Starting at any tree you like, you move right and pick exactly one fruit from every tree you pass, including the first. As soon as you reach a tree whose fruit fits neither basket, you stop.",
+    "Return the most fruit you can pick. This is the length of the longest subarray of fruits with at most two distinct values, found with a sliding window that shrinks from the left whenever a third type enters."
+  ],
+  "examples": [
+    {
+      "input": { "fruits": [1, 2, 3, 2, 2] },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "Starting at index 1 you pick types 2, 3, 2, 2, which fit in two baskets: 4 fruits. Starting at index 0 you would have to stop at the type-3 tree after only two."
+    },
+    {
+      "input": { "fruits": [1, 1, 1, 1] },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "Only one type of fruit grows here, so one basket takes all 4."
+    },
+    {
+      "input": { "fruits": [0, 1, 2, 2] },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Starting at index 1 gives types 1, 2, 2: 3 fruits. Starting at index 0 you must stop at the type-2 tree after two."
+    }
+  ],
+  "constraints": [
+    "1 ≤ fruits.length ≤ 10⁵",
+    "0 ≤ fruits[i] < fruits.length"
+  ],
+  "sources": [
+    { "label": "LeetCode 904", "url": "https://leetcode.com/problems/fruit-into-baskets/" }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "count-rotations",
+  "statement": [
+    "An array of distinct integers was sorted in ascending order and then rotated to the right some number of times k. One right rotation moves the last element to the front.",
+    "Given the rotated array nums, return k, the number of right rotations that were applied.",
+    "After k right rotations the smallest element sits at index k, so the task is to find the index of the minimum. Do it with binary search in O(log n) time."
+  ],
+  "examples": [
+    {
+      "input": { "nums": [5, 6, 7, 1, 2, 3, 4] },
+      "output": "3",
+      "answerVariable": "rotations",
+      "explanation": "The minimum, 1, is at index 3. Rotating [1, 2, 3, 4, 5, 6, 7] right three times gives exactly this array."
+    },
+    {
+      "input": { "nums": [1, 2, 3, 4, 5] },
+      "output": "0",
+      "answerVariable": "rotations",
+      "explanation": "The array is already sorted and its minimum is at index 0, so it was rotated 0 times."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/rotation4723/1" }
+  ]
+}

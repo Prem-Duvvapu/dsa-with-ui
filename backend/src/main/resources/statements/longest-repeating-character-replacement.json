@@ -1,0 +1,30 @@
+{
+  "id": "longest-repeating-character-replacement",
+  "statement": [
+    "You are given a string s of uppercase English letters and an integer k.",
+    "You may change at most k characters of s, each into any uppercase letter. Return the length of the longest substring that can be made to consist of a single repeated letter.",
+    "A window can be made uniform when its length minus the count of its most frequent letter is at most k. Slide a window over s, shrinking it from the left whenever it needs more than k changes, and keep the longest valid length."
+  ],
+  "examples": [
+    {
+      "input": { "s": "AABABBA", "k": 1 },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "The window \"BABB\" (indices 2 to 5) has three B's and one A. Changing that A gives \"BBBB\", length 4. No window of length 5 has only one letter out of place."
+    },
+    {
+      "input": { "s": "ABBBAAAB", "k": 0 },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "With no changes allowed, the answer is the longest existing run of one letter: \"BBB\" or \"AAA\", both of length 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ s.length ≤ 10⁵",
+    "s consists of only uppercase English letters",
+    "0 ≤ k ≤ s.length"
+  ],
+  "sources": [
+    { "label": "LeetCode 424", "url": "https://leetcode.com/problems/longest-repeating-character-replacement/" }
+  ]
+}

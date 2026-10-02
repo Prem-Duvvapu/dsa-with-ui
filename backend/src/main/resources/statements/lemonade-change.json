@@ -1,0 +1,35 @@
+{
+  "id": "lemonade-change",
+  "statement": [
+    "A lemonade stand sells each lemonade for $5. Customers queue up and buy one lemonade each, in the order given by bills, paying with a single $5, $10 or $20 bill.",
+    "You start with no money at all, so any change you give must come from bills that earlier customers paid with. Every customer must receive exactly the right change: nothing for $5, $5 back for $10, and $15 back for $20.",
+    "Return true if you can give every customer correct change, and false otherwise. Greedily, when making $15 prefer one $10 and one $5 over three $5s, because $5 bills are the only ones that can change a $10."
+  ],
+  "examples": [
+    {
+      "input": { "bills": [5, 5, 5, 10, 20] },
+      "output": "true",
+      "answerVariable": "ok",
+      "explanation": "After three $5s, the $10 customer gets a $5 back. The $20 customer then gets the $10 and a $5. Everyone was served."
+    },
+    {
+      "input": { "bills": [10, 20] },
+      "output": "false",
+      "answerVariable": "ok",
+      "explanation": "The first customer pays $10 while the till is empty, so there is no $5 to give back."
+    },
+    {
+      "input": { "bills": [5, 5, 10, 10, 20] },
+      "output": "false",
+      "answerVariable": "ok",
+      "explanation": "Both $10 customers take a $5 in change, which leaves two $10s and no $5. The $20 customer needs $15 and it cannot be made."
+    }
+  ],
+  "constraints": [
+    "1 ≤ bills.length ≤ 10⁵",
+    "bills[i] is 5, 10 or 20"
+  ],
+  "sources": [
+    { "label": "LeetCode 860", "url": "https://leetcode.com/problems/lemonade-change/" }
+  ]
+}

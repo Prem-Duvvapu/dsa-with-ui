@@ -1,0 +1,31 @@
+{
+  "id": "minimum-platforms",
+  "statement": [
+    "A railway station serves n trains in one day. Train i arrives at time arrival[i] and departs at time departure[i]; times are written as numbers such as 900 for 9:00.",
+    "A train occupies a platform from its arrival to its departure, inclusive. A platform cannot be used for one train's departure and another train's arrival at the same moment, so two trains whose times touch need different platforms.",
+    "Return the minimum number of platforms needed so that no train has to wait. Sort the arrival times and the departure times separately and sweep through both in time order: an arrival takes a platform and a departure frees one. The most platforms in use at once is the answer."
+  ],
+  "examples": [
+    {
+      "input": { "arrival": [900, 940, 950, 1100, 1500, 1800], "departure": [910, 1120, 1130, 1200, 1900, 2000] },
+      "output": "3",
+      "answerVariable": "maxPlatforms",
+      "explanation": "Between 11:00 and 11:20 the trains that arrived at 9:40, 9:50 and 11:00 are all at the station, so 3 platforms are needed. No moment has more than three."
+    },
+    {
+      "input": { "arrival": [100, 300, 500], "departure": [200, 400, 600] },
+      "output": "1",
+      "answerVariable": "maxPlatforms",
+      "explanation": "Each train leaves before the next arrives, so one platform serves them all."
+    },
+    {
+      "input": { "arrival": [100, 200], "departure": [200, 300] },
+      "output": "2",
+      "answerVariable": "maxPlatforms",
+      "explanation": "The second train arrives at 200, the same moment the first departs. That counts as an overlap, so two platforms are needed."
+    }
+  ],
+  "sources": [
+    { "label": "GeeksforGeeks", "url": "https://www.geeksforgeeks.org/problems/minimum-platforms-1587115620/1" }
+  ]
+}

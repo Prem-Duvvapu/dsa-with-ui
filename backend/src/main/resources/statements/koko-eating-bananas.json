@@ -1,0 +1,30 @@
+{
+  "id": "koko-eating-bananas",
+  "statement": [
+    "Koko has n piles of bananas; piles[i] is the number of bananas in pile i. She has h hours before the guards come back.",
+    "She picks an eating speed k, in bananas per hour. Each hour she chooses one pile and eats k bananas from it. If the pile has fewer than k left, she finishes it and does nothing else that hour. Pile i therefore takes ⌈piles[i] / k⌉ hours.",
+    "Return the smallest integer k that lets her finish every pile within h hours. The answer lies between 1 and max(piles), and a faster speed never takes longer, so binary search on k."
+  ],
+  "examples": [
+    {
+      "input": { "piles": [3, 6, 7, 11], "h": 8 },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "At 4 per hour the piles take 1 + 2 + 2 + 3 = 8 hours, which fits. At 3 per hour they take 1 + 2 + 3 + 4 = 10 hours, which is too many."
+    },
+    {
+      "input": { "piles": [30, 11, 23, 4, 20], "h": 5 },
+      "output": "30",
+      "answerVariable": "answer",
+      "explanation": "With 5 piles and 5 hours she has exactly one hour per pile, so k must cover the largest pile in one go: 30."
+    }
+  ],
+  "constraints": [
+    "1 ≤ piles.length ≤ 10⁴",
+    "piles.length ≤ h ≤ 10⁹",
+    "1 ≤ piles[i] ≤ 10⁹"
+  ],
+  "sources": [
+    { "label": "LeetCode 875", "url": "https://leetcode.com/problems/koko-eating-bananas/" }
+  ]
+}

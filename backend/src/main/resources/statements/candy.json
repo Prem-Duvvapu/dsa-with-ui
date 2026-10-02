@@ -1,0 +1,30 @@
+{
+  "id": "candy",
+  "statement": [
+    "n children stand in a line, and child i has rating ratings[i]. You are handing out candies under two rules: every child gets at least one candy, and a child with a higher rating than a neighbour must get more candies than that neighbour.",
+    "Return the smallest total number of candies that satisfies both rules.",
+    "Do it in two passes. Left to right, give each child one more than the left neighbour when their rating is higher, and 1 otherwise. Right to left, raise a child to one more than the right neighbour when their rating is higher. Each child keeps the larger of the two requirements. Equal ratings impose no rule in either direction."
+  ],
+  "examples": [
+    {
+      "input": { "ratings": [1, 0, 2, 2, 3, 1] },
+      "output": "9",
+      "answerVariable": "total",
+      "explanation": "The candies come out as [2, 1, 2, 1, 2, 1]. The two children rated 2 stand next to each other, so the second needs no more than the first and can have 1. The total is 9."
+    },
+    {
+      "input": { "ratings": [1, 2, 2] },
+      "output": "4",
+      "answerVariable": "total",
+      "explanation": "Giving [1, 2, 1] works: the middle child out-rates the first and gets more, and the last child ties the middle one, so 1 is enough. The total is 4."
+    }
+  ],
+  "constraints": [
+    "n == ratings.length",
+    "1 ≤ n ≤ 2 × 10⁴",
+    "0 ≤ ratings[i] ≤ 2 × 10⁴"
+  ],
+  "sources": [
+    { "label": "LeetCode 135", "url": "https://leetcode.com/problems/candy/" }
+  ]
+}
