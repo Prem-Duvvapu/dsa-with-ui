@@ -1,0 +1,100 @@
+{
+  "id": "swim-in-rising-water",
+  "statement": [
+    "You are given an n × n grid where grid[r][c] is the elevation of cell (r, c). All elevations are distinct.",
+    "Rain makes the water level rise: at time t the water is t deep everywhere. You can swim from a cell to the cell directly above, below, left or right of it only when both elevations are at most t, and swimming itself takes no time.",
+    "Starting at the top-left cell (0, 0), return the earliest time at which you can reach the bottom-right cell."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            24,
+            23,
+            22,
+            21,
+            5
+          ],
+          [
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          [
+            11,
+            17,
+            18,
+            19,
+            20
+          ],
+          [
+            10,
+            9,
+            8,
+            7,
+            6
+          ]
+        ]
+      },
+      "output": "16",
+      "answerVariable": "answer",
+      "explanation": "To get past row 1 a route must step on one of 21 to 24, or on the 5 at its right end, and the only way on from that 5 is the 16 below it. Going 0 → … → 5 → 16, then left along row 2, down the left column and right along the bottom row never exceeds 16, so 16 is the answer."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "The destination itself has elevation 3, so you cannot be standing on it before time 3, and at time 3 every cell is open."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Going down through the cell of height 2 avoids the 3, so the route 0 → 2 → 1 is open at time 2."
+    }
+  ],
+  "constraints": [
+    "n == grid.length == grid[i].length",
+    "1 ≤ n ≤ 50",
+    "0 ≤ grid[r][c] < n²",
+    "all values in grid are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 778",
+      "url": "https://leetcode.com/problems/swim-in-rising-water/"
+    }
+  ]
+}

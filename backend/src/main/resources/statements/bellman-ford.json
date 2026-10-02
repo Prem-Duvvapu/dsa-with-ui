@@ -1,0 +1,110 @@
+{
+  "id": "bellman-ford",
+  "statement": [
+    "You are given a weighted directed graph: a vertex count n (vertices numbered 0 to n − 1), a list of edges [u, v, w] from u to v with weight w, and a source vertex start. Weights may be negative.",
+    "Find the shortest distance from start to every vertex with the Bellman–Ford algorithm: relax every edge n − 1 times, where relaxing [u, v, w] lowers dist[v] to dist[u] + w if that is smaller. One more round that still lowers a distance would reveal a negative cycle reachable from start, in which case shortest distances are undefined.",
+    "When there is no such cycle, return the distances as a list indexed by vertex, using ∞ for a vertex that cannot be reached."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1,
+              4
+            ],
+            [
+              0,
+              2,
+              1
+            ],
+            [
+              2,
+              1,
+              -2
+            ],
+            [
+              1,
+              3,
+              2
+            ],
+            [
+              2,
+              3,
+              5
+            ],
+            [
+              3,
+              4,
+              1
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, -1, 1, 1, 2]",
+      "answerVariable": "dist",
+      "explanation": "The negative edge makes 0 → 2 → 1 cost 1 − 2 = −1, cheaper than the direct edge of 4. Vertex 3 then costs −1 + 2 = 1, and 4 costs 1 + 1 = 2."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1,
+              5
+            ],
+            [
+              1,
+              2,
+              -3
+            ],
+            [
+              0,
+              2,
+              4
+            ],
+            [
+              2,
+              3,
+              2
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, 5, 2, 4]",
+      "answerVariable": "dist",
+      "explanation": "Going 0 → 1 → 2 costs 5 − 3 = 2, which beats the direct edge of 4, so 3 is reached at 2 + 2 = 4."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 3,
+          "edges": [
+            [
+              0,
+              1,
+              -2
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, -2, ∞]",
+      "answerVariable": "dist",
+      "explanation": "Vertex 1 is reached by its negative edge at −2. No edge leads to vertex 2, so it stays at ∞."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/bellman-ford-algorithm"
+    }
+  ]
+}

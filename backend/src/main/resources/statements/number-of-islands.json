@@ -1,0 +1,83 @@
+{
+  "id": "number-of-islands",
+  "statement": [
+    "You are given a grid of 0s and 1s, where 1 is land and 0 is water.",
+    "An island is a group of land cells joined to each other horizontally or vertically. Cells that touch only at a corner are not joined. Everything outside the grid is water.",
+    "Return the number of islands."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "3",
+      "answerVariable": "islands",
+      "explanation": "The 2 × 2 block in the top-left is one island, the single cell (2, 2) is another, and the pair in the bottom row is the third. (2, 2) and (3, 3) touch only at a corner."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "4",
+      "answerVariable": "islands",
+      "explanation": "Each corner cell is land with water all around it, so there are four separate islands."
+    }
+  ],
+  "constraints": [
+    "m == grid.length",
+    "n == grid[i].length",
+    "1 ≤ m, n ≤ 300",
+    "grid[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 200",
+      "url": "https://leetcode.com/problems/number-of-islands/"
+    }
+  ]
+}

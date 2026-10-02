@@ -1,0 +1,76 @@
+{
+  "id": "kosaraju-scc",
+  "statement": [
+    "You are given a directed graph: a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v], each an edge from u to v.",
+    "A strongly connected component (SCC) is a largest possible set of vertices in which every vertex can reach every other along directed edges. Every vertex belongs to exactly one SCC.",
+    "Find the SCCs with Kosaraju's algorithm: run a DFS to record vertices by finishing time, reverse every edge, then run DFS on the reversed graph in decreasing finishing time; each of those searches collects one SCC. Return the SCCs as lists of vertices, in the order the second pass finds them."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      },
+      "output": "[[0, 2, 1], [3], [4]]",
+      "answerVariable": "sccs",
+      "explanation": "Vertices 0, 1 and 2 lie on the cycle 0 → 1 → 2 → 0, so they form one SCC. From 3 and 4 there is no way back, so each of them is an SCC on its own."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ]
+        }
+      },
+      "output": "[[0, 3, 2, 1]]",
+      "answerVariable": "sccs",
+      "explanation": "The edges form one directed cycle through all four vertices, so the whole graph is a single SCC."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/kosarajus-algorithm"
+    }
+  ]
+}

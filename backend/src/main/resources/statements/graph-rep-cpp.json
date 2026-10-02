@@ -1,0 +1,84 @@
+{
+  "id": "graph-rep-cpp",
+  "statement": [
+    "You are given an undirected graph: a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v].",
+    "Store it as an adjacency list, the way it is usually written in C++: a vector<int> adj[n], one vector per vertex. For each edge [u, v], in list order, push v onto adj[u] and u onto adj[v], so that every undirected edge is stored twice.",
+    "Return the adjacency list."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      },
+      "output": "[[1, 4], [0, 2, 3], [1], [1, 4], [0, 3]]",
+      "answerVariable": "adj",
+      "explanation": "Vertex 1 appears in the edges 0 − 1, 1 − 2 and 1 − 3, so its list is [0, 2, 3]. The 5 edges give 10 entries in total."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              0,
+              5
+            ]
+          ]
+        }
+      },
+      "output": "[[2, 5], [3], [0, 4], [1, 5], [2, 5], [4, 3, 0]]",
+      "answerVariable": "adj",
+      "explanation": "Each list keeps the order its edges were read in. Vertex 5 is met in 4 − 5, then 3 − 5, then 0 − 5, so its list is [4, 3, 0]."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/graph-and-its-representations/"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "course-schedule-2",
+  "statement": [
+    "There are n courses, numbered 0 to n − 1. You are given graph, made of the vertex count n and a list of edges [a, b], each meaning course a must be finished before course b can be taken.",
+    "Return an order in which all n courses can be taken while respecting every prerequisite. If several orders work, any of them is accepted; the one shown here is produced by Kahn's algorithm, which starts from courses with no prerequisites in increasing order.",
+    "If no such order exists, because the prerequisites form a cycle, return an empty list."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "[0, 1, 2, 3]",
+      "answerVariable": "order",
+      "explanation": "Course 0 has no prerequisites. Taking it unlocks 1 and 2, and taking both of those unlocks 3. The order [0, 2, 1, 3] would also be valid."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 3,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ]
+        }
+      },
+      "output": "[] (cycle - no valid order)",
+      "answerVariable": "order",
+      "explanation": "Courses 0 and 1 each require the other, so neither can ever be taken. Course 2 is free, but a full schedule is impossible, so the answer is an empty list."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 2000",
+    "0 ≤ edges.length ≤ n × (n − 1)",
+    "0 ≤ a, b < n",
+    "a ≠ b",
+    "all pairs [a, b] are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 210",
+      "url": "https://leetcode.com/problems/course-schedule-ii/"
+    }
+  ]
+}

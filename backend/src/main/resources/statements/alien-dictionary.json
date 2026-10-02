@@ -1,0 +1,32 @@
+{
+  "id": "alien-dictionary",
+  "statement": [
+    "You are given words, a comma-separated list of words from an alien language. The list is already sorted in that language's alphabetical order, which uses some of the lowercase letters in an unknown order.",
+    "Compare each pair of neighbouring words: the first position where they differ shows that the letter in the earlier word comes before the letter in the later word. These facts form a directed graph on the letters, and a topological sort of that graph (here Kahn's algorithm) gives an order of the letters consistent with the dictionary.",
+    "Return the letters that appear in the words, as one string in alien alphabetical order. If the facts contradict each other, no order exists."
+  ],
+  "examples": [
+    {
+      "input": {
+        "words": "wrt,wrf,er,ett,rftt"
+      },
+      "output": "wertf",
+      "answerVariable": "order",
+      "explanation": "The neighbouring pairs give t before f, w before e, r before t and e before r. Chaining them gives w, e, r, t, f, the only order that fits."
+    },
+    {
+      "input": {
+        "words": "baa,abcd,abca,cab,cad"
+      },
+      "output": "bdac",
+      "answerVariable": "order",
+      "explanation": "The pairs give b before a, d before a, a before c and b before d, so the order is b, d, a, c."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/plus/dsa/problems/alient-dictionary"
+    }
+  ]
+}

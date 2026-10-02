@@ -1,0 +1,110 @@
+{
+  "id": "mst-theory",
+  "statement": [
+    "A spanning tree of a connected undirected graph with n vertices is a set of n − 1 of its edges that keeps every vertex connected with no cycle. A minimum spanning tree (MST) is a spanning tree whose edge weights add up to the smallest possible total. When the graph is not connected, the same idea gives a minimum spanning forest: one minimum spanning tree per connected component.",
+    "You are given a weighted undirected graph: a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v, w]. Grow each tree by always adding the cheapest edge that joins the tree built so far to a vertex not yet in it.",
+    "Return the total weight of the minimum spanning forest."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1,
+              4
+            ],
+            [
+              0,
+              2,
+              3
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              1,
+              3,
+              2
+            ],
+            [
+              2,
+              3,
+              4
+            ],
+            [
+              3,
+              4,
+              2
+            ],
+            [
+              4,
+              5,
+              6
+            ],
+            [
+              3,
+              5,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "11",
+      "answerVariable": "weight",
+      "explanation": "The graph is connected, so the forest is a single tree. Its 5 edges are 1 − 2 (1), 1 − 3 (2), 3 − 4 (2), 0 − 2 (3) and 3 − 5 (3), for a total of 11."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 7,
+          "edges": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              5
+            ],
+            [
+              0,
+              2,
+              4
+            ],
+            [
+              3,
+              4,
+              1
+            ],
+            [
+              4,
+              5,
+              2
+            ],
+            [
+              3,
+              5,
+              6
+            ]
+          ]
+        }
+      },
+      "output": "9",
+      "answerVariable": "weight",
+      "explanation": "There are three components. {0, 1, 2} uses 0 − 1 and 0 − 2 (2 + 4), {3, 4, 5} uses 3 − 4 and 4 − 5 (1 + 2), and vertex 6 is a tree with no edges. The total is 6 + 3 = 9."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/what-is-minimum-spanning-tree-mst/"
+    }
+  ]
+}

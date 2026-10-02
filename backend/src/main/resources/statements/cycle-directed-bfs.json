@@ -1,0 +1,100 @@
+{
+  "id": "cycle-directed-bfs",
+  "statement": [
+    "You are given a directed graph, made of a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v], each an edge from u to v.",
+    "Decide whether the graph contains a directed cycle. Use Kahn's algorithm: repeatedly remove a vertex with no incoming edges and delete its outgoing edges. A vertex on a cycle never runs out of incoming edges, so if fewer than n vertices are removed, a cycle exists.",
+    "Return true if the graph has a directed cycle and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        }
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Vertices 0 and 1 can be removed, but 2 and 3 point at each other, so neither ever loses its last incoming edge. Only 2 of 4 vertices are removed."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "All 4 vertices are removed in turn (0, then 1 and 2, then 3), so the graph has no cycle."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "The chain 0 → 1 → 2 is removed completely, but the pair 3 ⇄ 4 forms a cycle in a separate part of the graph."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1"
+    }
+  ]
+}

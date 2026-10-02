@@ -1,0 +1,85 @@
+{
+  "id": "number-of-enclaves",
+  "statement": [
+    "You are given a grid of 0s and 1s, where 1 is land and 0 is sea.",
+    "A move takes you from a land cell to a land cell directly above, below, left or right of it. Walking off the grid is possible only from a land cell on its outer edge.",
+    "Return the number of land cells from which no sequence of moves can lead off the grid."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "output": "3",
+      "answerVariable": "enclaves",
+      "explanation": "The land cell at (1, 0) sits on the edge, so it can walk off. The other three land cells form a group that touches no edge cell, so all three are trapped."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "0",
+      "answerVariable": "enclaves",
+      "explanation": "Both groups of land include a cell on the edge of the grid, so every land cell can walk off."
+    }
+  ],
+  "constraints": [
+    "m == grid.length",
+    "n == grid[i].length",
+    "1 ≤ m, n ≤ 500",
+    "grid[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1020",
+      "url": "https://leetcode.com/problems/number-of-enclaves/"
+    }
+  ]
+}

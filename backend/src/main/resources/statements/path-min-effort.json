@@ -1,0 +1,68 @@
+{
+  "id": "path-min-effort",
+  "statement": [
+    "You are given heights, a grid where heights[r][c] is the height of cell (r, c). You start at the top-left cell (0, 0) and want to reach the bottom-right cell, moving one cell up, down, left or right at a time.",
+    "The effort of a route is the largest absolute difference in height between two consecutive cells along it.",
+    "Return the minimum effort over all routes from the top-left to the bottom-right cell."
+  ],
+  "examples": [
+    {
+      "input": {
+        "heights": [
+          [
+            1,
+            2,
+            2
+          ],
+          [
+            3,
+            8,
+            2
+          ],
+          [
+            5,
+            3,
+            5
+          ]
+        ]
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "The route 1 → 3 → 5 → 3 → 5 down the left side and along the bottom never changes height by more than 2. Every route has some step of at least 2, so 2 is the minimum."
+    },
+    {
+      "input": {
+        "heights": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            8,
+            4
+          ],
+          [
+            5,
+            3,
+            5
+          ]
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Going along the top and down the right side, 1 → 2 → 3 → 4 → 5, every step changes height by exactly 1."
+    }
+  ],
+  "constraints": [
+    "1 ≤ rows, columns ≤ 100",
+    "1 ≤ heights[r][c] ≤ 10⁶"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1631",
+      "url": "https://leetcode.com/problems/path-with-minimum-effort/"
+    }
+  ]
+}

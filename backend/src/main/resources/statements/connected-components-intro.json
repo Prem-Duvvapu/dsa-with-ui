@@ -1,0 +1,80 @@
+{
+  "id": "connected-components-intro",
+  "statement": [
+    "You are given an undirected graph, made of a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v].",
+    "Two vertices are in the same connected component when a path of edges leads from one to the other. A component is as large as possible: no edge leaves it. A vertex with no edges is a component by itself.",
+    "Return the number of connected components. Scan the vertices in order and start a depth-first search from each vertex that no earlier search has reached; each such start discovers one new component."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 7,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        }
+      },
+      "output": "3",
+      "answerVariable": "components",
+      "explanation": "The components are {0, 1, 2}, {3, 4, 5} and the isolated vertex {6}."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              0
+            ]
+          ]
+        }
+      },
+      "output": "1",
+      "answerVariable": "components",
+      "explanation": "The edges form one ring through all six vertices, so a single search from vertex 0 reaches everything."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/plus/dsa/problems/connected-components"
+    }
+  ]
+}

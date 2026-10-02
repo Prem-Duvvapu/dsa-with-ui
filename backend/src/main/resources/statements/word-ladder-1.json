@@ -1,0 +1,45 @@
+{
+  "id": "word-ladder-1",
+  "statement": [
+    "You are given two words, beginWord and endWord, and a dictionary wordList, written as one comma-separated string.",
+    "A transformation sequence starts at beginWord and ends at endWord. Each step changes exactly one letter, and every word after beginWord, including endWord, must appear in wordList.",
+    "Return the number of words in the shortest such sequence, counting beginWord and endWord. If no sequence exists, return 0."
+  ],
+  "examples": [
+    {
+      "input": {
+        "beginWord": "hit",
+        "endWord": "cog",
+        "wordList": "hot,dot,dog,lot,log,cog"
+      },
+      "output": "5",
+      "answerVariable": "length",
+      "explanation": "One shortest sequence is hit → hot → dot → dog → cog, which has 5 words. No shorter chain of one-letter changes reaches cog."
+    },
+    {
+      "input": {
+        "beginWord": "hot",
+        "endWord": "dog",
+        "wordList": "dot,dog,hog"
+      },
+      "output": "3",
+      "answerVariable": "length",
+      "explanation": "hot → dot → dog takes two changes, so the sequence has 3 words. The route through hog is equally short."
+    }
+  ],
+  "constraints": [
+    "1 ≤ beginWord.length ≤ 10",
+    "endWord.length == beginWord.length",
+    "1 ≤ number of words in wordList ≤ 5000",
+    "every word in wordList has the same length as beginWord",
+    "all words consist of lowercase English letters",
+    "beginWord ≠ endWord",
+    "the words in wordList are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 127",
+      "url": "https://leetcode.com/problems/word-ladder/"
+    }
+  ]
+}

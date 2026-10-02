@@ -1,0 +1,83 @@
+{
+  "id": "tarjan-bridges",
+  "statement": [
+    "You are given an undirected graph: a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v].",
+    "An edge is a bridge (a critical connection) when deleting it leaves some pair of vertices that used to be connected with no path between them. An edge that lies on a cycle is never a bridge, because the rest of the cycle still joins its endpoints.",
+    "Return all bridges, in any order, or none if there are no bridges."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      },
+      "output": "3-4, 0-3",
+      "answerVariable": "bridges",
+      "explanation": "Vertices 0, 1 and 2 form a triangle, so none of its edges is a bridge. The edges 0 − 3 and 3 − 4 are the only links to 3 and 4, so deleting either one cuts part of the graph off."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ]
+        }
+      },
+      "output": "none",
+      "answerVariable": "bridges",
+      "explanation": "Every edge lies on the cycle 0 − 1 − 2 − 3 − 0, so no single deletion disconnects the graph."
+    }
+  ],
+  "constraints": [
+    "2 ≤ n ≤ 10⁵",
+    "n − 1 ≤ edges.length ≤ 10⁵",
+    "0 ≤ u, v ≤ n − 1",
+    "u ≠ v",
+    "no edge is repeated"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1192",
+      "url": "https://leetcode.com/problems/critical-connections-in-a-network/"
+    }
+  ]
+}

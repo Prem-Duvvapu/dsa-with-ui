@@ -1,0 +1,73 @@
+{
+  "id": "floyd-warshall",
+  "statement": [
+    "You are given a directed graph with n vertices as an n × n matrix. matrix[i][j] is the weight of the edge from i to j, or −1 when there is no such edge. The distance from a vertex to itself is 0.",
+    "Compute the shortest distance between every ordered pair of vertices using the Floyd–Warshall algorithm: for each vertex k in turn, allow paths to pass through k, and replace dist[i][j] with dist[i][k] + dist[k][j] whenever that is shorter.",
+    "Return the resulting n × n matrix, keeping −1 for every pair with no path at all."
+  ],
+  "examples": [
+    {
+      "input": {
+        "matrix": [
+          [
+            0,
+            4,
+            -1,
+            5
+          ],
+          [
+            -1,
+            0,
+            1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            0,
+            3
+          ],
+          [
+            -1,
+            -1,
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "[[0, 4, 5, 5], [-1, 0, 1, 4], [-1, -1, 0, 3], [-1, -1, 1, 0]]",
+      "answerVariable": "result",
+      "explanation": "There is no direct edge 0 → 2, but 0 → 1 → 2 costs 4 + 1 = 5. Likewise 1 → 2 → 3 gives 1 → 3 a distance of 4. No edge enters vertex 0, so every other row keeps −1 in column 0."
+    },
+    {
+      "input": {
+        "matrix": [
+          [
+            0,
+            3,
+            -1
+          ],
+          [
+            -1,
+            0,
+            -1
+          ],
+          [
+            4,
+            -1,
+            0
+          ]
+        ]
+      },
+      "output": "[[0, 3, -1], [-1, 0, -1], [4, 7, 0]]",
+      "answerVariable": "result",
+      "explanation": "The only new route is 2 → 0 → 1 with length 4 + 3 = 7. Vertex 1 has no outgoing edge, so its row stays −1 except for itself."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/plus/dsa/problems/floyd-warshall-algorithm"
+    }
+  ]
+}

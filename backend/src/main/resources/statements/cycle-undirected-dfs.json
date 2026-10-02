@@ -1,0 +1,84 @@
+{
+  "id": "cycle-undirected-dfs",
+  "statement": [
+    "You are given an undirected graph: a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v].",
+    "Search for a cycle with depth-first search, remembering each vertex's parent (the vertex it was reached from). If the search meets an already visited vertex that is not the current vertex's parent, that edge is a back edge and closes a cycle. Following the parent links back from the current vertex to the visited vertex recovers the cycle.",
+    "Return the vertices of the first cycle found, listed along the cycle from the vertex the back edge points to. The examples below all contain a cycle; a graph without one is a forest and has no cycle to return."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        }
+      },
+      "output": "[1, 2, 3]",
+      "answerVariable": "cycle",
+      "explanation": "The search goes 0 → 1 → 2 → 3, and from 3 it sees 1, which is visited and is not 3's parent. Walking the parent links from 3 back to 1 gives the triangle 1, 2, 3; vertex 0 is a tail hanging off it."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              1
+            ]
+          ]
+        }
+      },
+      "output": "[1, 2, 3, 4]",
+      "answerVariable": "cycle",
+      "explanation": "The search runs 0 → 1 → 2 → 3 → 4, and the edge 4 − 1 closes the loop, so the cycle is the four vertices 1, 2, 3, 4."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/plus/dsa/problems/detect-a-cycle-in-an-undirected-graph"
+    }
+  ]
+}

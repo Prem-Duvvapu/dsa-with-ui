@@ -1,0 +1,82 @@
+{
+  "id": "dfs-traversal",
+  "statement": [
+    "You are given an undirected graph, made of a vertex count n (vertices numbered 0 to n − 1) and a list of edges, and a vertex start. Each vertex's neighbours are kept in the order their edges appear in the list.",
+    "Run a recursive depth-first search from start: mark the current vertex visited, then call the search on each unvisited neighbour in order, finishing each call completely before trying the next neighbour.",
+    "Return the order in which the vertices are first visited. Vertices that cannot be reached from start do not appear."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, 1, 3, 2, 4, 5]",
+      "answerVariable": "order",
+      "explanation": "From 0 the search goes to 1, then 3. Vertex 3's first unvisited neighbour is 2, which leads nowhere new, so the search returns to 3 and continues to 4 and 5."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        },
+        "start": 2
+      },
+      "output": "[2, 1, 0, 3, 4]",
+      "answerVariable": "order",
+      "explanation": "Starting in the middle of the path 0 − 1 − 2 − 3 − 4, the search runs all the way to 0 first, then unwinds back to 2 and visits 3 and 4."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1"
+    }
+  ]
+}

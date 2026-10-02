@@ -1,0 +1,96 @@
+{
+  "id": "cheapest-flights-k-stops",
+  "statement": [
+    "There are n cities, numbered 0 to n − 1. graph holds the vertex count n and a list of one-way flights [from, to, price]. You are also given a departure city src, a destination city dst and an integer k.",
+    "A route may stop in at most k intermediate cities, so it uses at most k + 1 flights.",
+    "Return the lowest total price of a route from src to dst that respects this limit, or −1 if there is none."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1,
+              100
+            ],
+            [
+              1,
+              2,
+              100
+            ],
+            [
+              2,
+              0,
+              100
+            ],
+            [
+              1,
+              3,
+              600
+            ],
+            [
+              2,
+              3,
+              200
+            ]
+          ]
+        },
+        "src": 0,
+        "dst": 3,
+        "k": 1
+      },
+      "output": "700",
+      "answerVariable": "answer",
+      "explanation": "0 → 1 → 3 has one stop and costs 100 + 600 = 700. The cheaper route 0 → 1 → 2 → 3 (400) needs two stops, which is more than k allows."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 3,
+          "edges": [
+            [
+              0,
+              1,
+              100
+            ],
+            [
+              1,
+              2,
+              100
+            ],
+            [
+              0,
+              2,
+              500
+            ]
+          ]
+        },
+        "src": 0,
+        "dst": 2,
+        "k": 0
+      },
+      "output": "500",
+      "answerVariable": "answer",
+      "explanation": "With k = 0 only direct flights count, so the 200 route through city 1 is not allowed and the direct flight at 500 is the answer."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 100",
+    "0 ≤ number of flights ≤ n × (n − 1) / 2",
+    "0 ≤ from, to < n",
+    "from ≠ to",
+    "1 ≤ price ≤ 10⁴",
+    "there is at most one flight between any ordered pair of cities",
+    "0 ≤ src, dst, k < n",
+    "src ≠ dst"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 787",
+      "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/"
+    }
+  ]
+}
