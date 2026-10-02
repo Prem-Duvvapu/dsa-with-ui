@@ -50,6 +50,10 @@ import styles from './ProblemWorkspace.module.css';
 // Graph, Tree and DP heroes already show the whole run's shape; see RCA-002 and
 // PROMPT-F-visual-fidelity.md. The capture strip (and its comparison) stays off for them.
 const CAPTURE_STRIP_REDUNDANT_FOR = new Set(['DpTable', 'Graph', 'Tree']);
+// The shell's five-state key (happening now / read / has a value / resolved / untouched)
+// explains marks that only the DP table draws on its cells. On every other canvas it was a
+// key to symbols that never appear, so it is shown only where it describes the stage.
+const SHELL_LEGEND_DRAWN_BY = new Set(['DpTable']);
 const DIFFICULTIES = new Set(['Easy', 'Medium', 'Hard']);
 
 function firstSentence(text) {
@@ -309,7 +313,7 @@ export default function ProblemWorkspace() {
   const stageNode = (
     <div className={styles.stage} data-family={stage.family} data-tour="canvas" data-audit="stage">
       <StepStateSummary step={currentStep} dsType={dsType} />
-      <CanvasShell title={problem?.title} meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null}>
+      <CanvasShell title={problem?.title} meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null} legend={SHELL_LEGEND_DRAWN_BY.has(dsType)}>
         {stageBody}
       </CanvasShell>
     </div>

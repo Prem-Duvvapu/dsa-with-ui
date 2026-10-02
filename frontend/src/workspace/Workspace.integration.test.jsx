@@ -199,10 +199,10 @@ describe('Workspace execution capture', () => {
     expect(screen.getAllByRole('button', { name: /^Step \d+ of 2$/ })).toHaveLength(2);
   });
 
-  it('frames the canvas in the shared shell, with one legend', async () => {
+  it('frames the canvas in the shared shell, without a key to marks it does not draw', async () => {
     const { container } = renderApp('/problem/valid-anagram');
     await screen.findByText('valid-anagram step one');
-    expect(screen.getAllByText('happening now')).toHaveLength(1);
+    expect(screen.queryByText('happening now')).not.toBeInTheDocument();
     expect(container.querySelectorAll('.shell-head')).toHaveLength(1);
   });
 
@@ -242,10 +242,11 @@ describe('Workspace execution capture', () => {
     await screen.findByText(description);
     expect(screen.queryByLabelText('Execution capture')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
-    // The hero itself is on the stage, framed once with one legend (restored from the
-    // retired App suite, which asserted the DP table and the single shell explicitly).
+    // The hero itself is on the stage, framed once (restored from the retired App suite,
+    // which asserted the DP table and the single shell explicitly). The five-state key
+    // appears only on the DP table, the one canvas that draws those marks.
     if (dsType === 'DpTable') expect(screen.getByRole('table', { name: 'Dynamic programming table' })).toBeInTheDocument();
-    expect(screen.getAllByText('happening now')).toHaveLength(1);
+    expect(screen.queryAllByText('happening now')).toHaveLength(dsType === 'DpTable' ? 1 : 0);
     expect(container.querySelectorAll('.shell-head')).toHaveLength(1);
   });
 
