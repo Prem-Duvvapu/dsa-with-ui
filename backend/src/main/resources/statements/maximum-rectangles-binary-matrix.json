@@ -1,0 +1,76 @@
+{
+  "id": "maximum-rectangles-binary-matrix",
+  "statement": [
+    "You are given a binary matrix, matrix, filled with 0s and 1s.",
+    "Find the largest axis-aligned rectangle that contains only 1s.",
+    "Return its area, the number of cells it covers."
+  ],
+  "examples": [
+    {
+      "input": {
+        "matrix": [
+          [
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "Rows 1 and 2, columns 2 to 4, form a 2 × 3 block of 1s, which is the largest."
+    },
+    {
+      "input": {
+        "matrix": [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "The 2 × 2 block in the first two columns beats the full bottom row, which has area 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ rows, cols ≤ 200",
+    "matrix[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 85",
+      "url": "https://leetcode.com/problems/maximal-rectangle/"
+    }
+  ]
+}

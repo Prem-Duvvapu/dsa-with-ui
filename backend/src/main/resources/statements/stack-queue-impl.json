@@ -1,0 +1,40 @@
+{
+  "id": "stack-queue-impl",
+  "statement": [
+    "Implement a last-in, first-out stack using only a first-in, first-out queue and its standard operations: add at the back, remove from the front, look at the front, and size.",
+    "Process the operations in order. They are given as one string, operations, separated by semicolons. \"push V\" puts V on top of the stack. \"pop\" removes the top value, and \"top\" reads it without removing it. pop and top do nothing on an empty stack.",
+    "After the last operation, return the number of values left on the stack."
+  ],
+  "examples": [
+    {
+      "input": {
+        "operations": "push 1;push 2;push 3;top;pop;pop;push 4;pop;pop"
+      },
+      "output": "0",
+      "answerVariable": "size",
+      "explanation": "top reads 3. The pops then remove 3, 2, 4 and 1 in that order, which is last-in, first-out, and leave the stack empty."
+    },
+    {
+      "input": {
+        "operations": "pop;push 9;top;pop;top;push 8;push 7;top"
+      },
+      "output": "2",
+      "answerVariable": "size",
+      "explanation": "The first pop and the second top find the stack empty. It ends holding 8 and 7, with 7 on top."
+    },
+    {
+      "input": {
+        "operations": "push 1;push 2;push 3;top;pop;push 4"
+      },
+      "output": "3",
+      "answerVariable": "size",
+      "explanation": "pop removes 3, the most recent push, so the stack ends as 4, 2, 1 from the top down."
+    }
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 225",
+      "url": "https://leetcode.com/problems/implement-stack-using-queues/"
+    }
+  ]
+}

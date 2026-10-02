@@ -1,0 +1,47 @@
+{
+  "id": "sort-ll",
+  "statement": [
+    "You are given a non-empty singly linked list whose node values, read from head to tail, are listed in values.",
+    "Sort the list in non-decreasing order of value by relinking its nodes. The intended approach is merge sort: split the list at its middle, sort each half, and merge the two sorted halves, for O(n log n) time.",
+    "Return the sorted list, read from its head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          4,
+          2,
+          1,
+          3
+        ]
+      },
+      "output": "[1, 2, 3, 4]",
+      "answerVariable": "result",
+      "explanation": "The list is split into [4, 2] and [1, 3], each half is sorted, and merging [2, 4] with [1, 3] gives [1, 2, 3, 4]."
+    },
+    {
+      "input": {
+        "values": [
+          5,
+          1,
+          4,
+          2,
+          3
+        ]
+      },
+      "output": "[1, 2, 3, 4, 5]",
+      "answerVariable": "result",
+      "explanation": "Repeated splitting and merging places all five nodes in ascending order."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [0, 5 × 10⁴]",
+    "−10⁵ ≤ Node.val ≤ 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 148",
+      "url": "https://leetcode.com/problems/sort-list/"
+    }
+  ]
+}

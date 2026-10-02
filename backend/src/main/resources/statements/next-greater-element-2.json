@@ -1,0 +1,46 @@
+{
+  "id": "next-greater-element-2",
+  "statement": [
+    "You are given a circular integer array nums: the element after the last one is the first one again.",
+    "For each position, its next greater element is the first element you meet that is strictly greater than it, searching forward and wrapping around past the end. If no element in the whole array is greater, the answer for that position is −1.",
+    "Return an array of the same length holding the next greater element for every position."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          1
+        ]
+      },
+      "output": "[2, -1, 2]",
+      "answerVariable": "answer",
+      "explanation": "The first 1 sees 2 right away. Nothing beats 2. The last 1 wraps around past the end and finds 2."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          4,
+          3
+        ]
+      },
+      "output": "[2, 3, 4, -1, 4]",
+      "answerVariable": "answer",
+      "explanation": "4 is the maximum, so its answer is −1. The final 3 wraps around and reaches 4 after passing 1, 2 and 3, none of which is greater."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁴",
+    "−10⁹ ≤ nums[i] ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 503",
+      "url": "https://leetcode.com/problems/next-greater-element-ii/"
+    }
+  ]
+}

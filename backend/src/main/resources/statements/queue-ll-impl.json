@@ -1,0 +1,32 @@
+{
+  "id": "queue-ll-impl",
+  "statement": [
+    "Implement a queue as a singly linked list with two pointers: head, the front of the queue, and tail, its rear. New nodes are linked after the tail and removals happen at the head, so both operations take constant time and there is no fixed capacity.",
+    "Process the operations in order. They are given as one string, operations, separated by semicolons. \"enqueue V\" appends a node holding V after the tail. \"dequeue\" removes the head node, or reports an underflow if the queue is empty. \"front\" reads the head value without removing it.",
+    "After the last operation, return the number of nodes left in the queue."
+  ],
+  "examples": [
+    {
+      "input": {
+        "operations": "dequeue;front;enqueue 7;dequeue;enqueue 8;enqueue 9;front"
+      },
+      "output": "2",
+      "answerVariable": "size",
+      "explanation": "The first dequeue and front find the queue empty. 7 is added and removed again, and the queue ends as 8 → 9, with 8 at the head."
+    },
+    {
+      "input": {
+        "operations": "enqueue 10;enqueue 20;enqueue 30;front;dequeue;enqueue 40"
+      },
+      "output": "3",
+      "answerVariable": "size",
+      "explanation": "dequeue removes 10, the oldest value, so the queue ends as 20 → 30 → 40."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/implement-queue-using-linked-list/1"
+    }
+  ]
+}

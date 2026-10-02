@@ -1,0 +1,50 @@
+{
+  "id": "remove-nth-from-back",
+  "statement": [
+    "You are given a singly linked list whose node values, read from head to tail, are listed in values, and an integer n.",
+    "Remove the n-th node counting from the end of the list, where n = 1 means the tail.",
+    "Return the resulting list, read from its head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "n": 2
+      },
+      "output": "[1, 2, 3, 5]",
+      "answerVariable": "result",
+      "explanation": "The second node from the end holds 4, so it is unlinked."
+    },
+    {
+      "input": {
+        "values": [
+          7,
+          8,
+          9
+        ],
+        "n": 1
+      },
+      "output": "[7, 8]",
+      "answerVariable": "result",
+      "explanation": "n = 1 removes the tail, 9."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is sz",
+    "1 ≤ sz ≤ 30",
+    "0 ≤ Node.val ≤ 100",
+    "1 ≤ n ≤ sz"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 19",
+      "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
+    }
+  ]
+}

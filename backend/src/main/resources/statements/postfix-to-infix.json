@@ -1,0 +1,32 @@
+{
+  "id": "postfix-to-infix",
+  "statement": [
+    "You are given a postfix expression, expression, in which every operator comes after its two operands. Operands are single uppercase letters A to Z. The operators are +, −, *, / and ^, all binary, and the expression is valid.",
+    "Convert it to infix notation, writing every operation fully parenthesised as (left operator right).",
+    "Return the infix expression as a string with no spaces."
+  ],
+  "examples": [
+    {
+      "input": {
+        "expression": "ABC*+"
+      },
+      "output": "(A+(B*C))",
+      "answerVariable": "answer",
+      "explanation": "BC* is (B*C), and the + that follows adds A to it."
+    },
+    {
+      "input": {
+        "expression": "AB+CD-*"
+      },
+      "output": "((A+B)*(C-D))",
+      "answerVariable": "answer",
+      "explanation": "AB+ and CD− become (A+B) and (C−D), and * joins them."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/postfix-to-infix-conversion/1"
+    }
+  ]
+}

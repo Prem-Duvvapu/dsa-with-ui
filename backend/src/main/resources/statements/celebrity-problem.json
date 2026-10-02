@@ -1,0 +1,97 @@
+{
+  "id": "celebrity-problem",
+  "statement": [
+    "There are n people at a party, numbered 0 to n − 1. You are given the n × n matrix matrix, where matrix[i][j] is 1 if person i knows person j and 0 otherwise. matrix[i][i] is 0.",
+    "A celebrity is someone who is known by everyone else but knows no one. There is at most one celebrity.",
+    "Return the number of the celebrity, or −1 if there is none."
+  ],
+  "examples": [
+    {
+      "input": {
+        "matrix": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Persons 0 and 2 both know person 1, and person 1 knows nobody."
+    },
+    {
+      "input": {
+        "matrix": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "Persons 0 and 1 know each other, so neither can be the celebrity, and nobody knows person 2."
+    },
+    {
+      "input": {
+        "matrix": [
+          [
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Everyone else knows person 1 and person 1's row is all 0s. Many other people know each other, but that does not matter."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/the-celebrity-problem/1"
+    }
+  ]
+}

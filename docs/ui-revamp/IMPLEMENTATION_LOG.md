@@ -478,3 +478,24 @@ Browser: Chromium with the real backend; num-provinces and rotting-oranges code 
   1440, dark at 390. Keyword colour resolves per theme (rgb(130,170,255) / rgb(29,78,216)). Overflow 0, no
   errors. Evidence: docs/ui-revamp/evidence/syntax/.
 ```
+
+## Problem statements: Linked List and Stack & Queue (57 problems)
+
+```text
+Package / status: statements rollout, topic 1 of 8. Pilot: #159 (num-provinces).
+Method:
+  - Own-words statements. LeetCode, GfG and the owner's solutions-repo READMEs were used only as fact sources.
+  - Every example is a real tracer run, and its answer was checked independently (by hand or by brute force).
+  - Constraints are the original problem's, and only where certain; otherwise omitted.
+  - Every GfG/takeUforward link was fetched or found by search. LeetCode numbers are public ids (the
+    solutions-repo folder numbers are internal ids and differ).
+Coverage: 57 of 61. Skipped because the tracer's final step holds no answer: intro-doubly-ll,
+  clone-ll-random-pointer, min-stack, queue-stack-impl. A tracer change is needed before they can carry
+  checked examples.
+Defects found, not in any example:
+  - InfixToPostfixTracer and InfixToPrefixTracer treat ^ as left-associative. A^B^C gives AB^C^ and ^^ABC,
+    where ABC^^ and ^A^BC are correct. Fix to follow in its own PR.
+  - flattening-ll is titled as GfG "Flattening a Linked List" but traces LeetCode 430 (multilevel doubly
+    linked list). The statement describes what the tracer does; the catalogue/tracer mismatch is open
+    for an owner decision.
+Automated: StatementContractTest passes, re-running every example through TraceRunner.

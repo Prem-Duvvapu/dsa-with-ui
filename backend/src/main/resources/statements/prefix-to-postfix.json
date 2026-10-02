@@ -1,0 +1,32 @@
+{
+  "id": "prefix-to-postfix",
+  "statement": [
+    "You are given a prefix expression, expression, in which every operator comes before its two operands. Operands are single uppercase letters A to Z. The operators are +, −, *, / and ^, all binary, and the expression is valid.",
+    "Convert it to postfix notation, where every operator comes after its two operands.",
+    "Return the postfix expression as a string with no spaces."
+  ],
+  "examples": [
+    {
+      "input": {
+        "expression": "+A*BC"
+      },
+      "output": "ABC*+",
+      "answerVariable": "answer",
+      "explanation": "*BC becomes BC*, and + then follows its operands A and BC*."
+    },
+    {
+      "input": {
+        "expression": "*-AB+CD"
+      },
+      "output": "AB-CD+*",
+      "answerVariable": "answer",
+      "explanation": "−AB becomes AB− and +CD becomes CD+; the * moves after both."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/prefix-to-postfix-conversion/1"
+    }
+  ]
+}

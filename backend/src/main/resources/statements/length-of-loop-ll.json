@@ -1,0 +1,61 @@
+{
+  "id": "length-of-loop-ll",
+  "statement": [
+    "You are given a singly linked list whose node values, read from head to tail, are listed in values. The tail's next pointer goes back to the node at 0-based position cycleIndex, so the list always contains a loop.",
+    "The algorithm sees only the head. Find the loop and count how many distinct nodes lie on it.",
+    "Return the number of nodes in the loop."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "cycleIndex": 2
+      },
+      "output": "4",
+      "answerVariable": "result",
+      "explanation": "The tail 6 links back to the node holding 3, so the loop is 3 → 4 → 5 → 6 → 3, which has 4 nodes."
+    },
+    {
+      "input": {
+        "values": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "cycleIndex": 0
+      },
+      "output": "4",
+      "answerVariable": "result",
+      "explanation": "The tail links back to the head, so every one of the 4 nodes is on the loop."
+    },
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "cycleIndex": 4
+      },
+      "output": "1",
+      "answerVariable": "result",
+      "explanation": "The tail 5 points to itself, so the loop holds a single node."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/find-length-of-loop/1"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "delete-middle-node-ll",
+  "statement": [
+    "You are given a non-empty singly linked list whose node values, read from head to tail, are listed in values. Let n be the number of nodes.",
+    "The middle node is the one at 0-based position ⌊n / 2⌋. For an even n this is the second of the two central nodes. Delete it.",
+    "Return the resulting list, read from its head. A list with one node becomes empty."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "output": "[1, 2, 4, 5]",
+      "answerVariable": "result",
+      "explanation": "n = 5, so the node at position 2, holding 3, is removed."
+    },
+    {
+      "input": {
+        "values": [
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      "output": "[7, 8, 10]",
+      "answerVariable": "result",
+      "explanation": "n = 4, so the node at position 2, holding 9, is removed."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [1, 10⁵]",
+    "1 ≤ Node.val ≤ 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 2095",
+      "url": "https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/"
+    }
+  ]
+}

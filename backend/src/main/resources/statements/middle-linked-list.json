@@ -1,0 +1,47 @@
+{
+  "id": "middle-linked-list",
+  "statement": [
+    "You are given a non-empty singly linked list whose node values, read from head to tail, are listed in values.",
+    "Find the middle node of the list. When the list has an even number of nodes there are two middle nodes; take the second one.",
+    "Return the value stored in the middle node."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "output": "3",
+      "answerVariable": "result",
+      "explanation": "With five nodes the middle is the third node, which holds 3."
+    },
+    {
+      "input": {
+        "values": [
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "output": "10",
+      "answerVariable": "result",
+      "explanation": "With four nodes the two middle nodes hold 9 and 10; the second of them, 10, is the answer."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [1, 100]",
+    "1 ≤ Node.val ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 876",
+      "url": "https://leetcode.com/problems/middle-of-the-linked-list/"
+    }
+  ]
+}

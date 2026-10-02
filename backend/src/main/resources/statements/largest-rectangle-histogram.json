@@ -1,0 +1,46 @@
+{
+  "id": "largest-rectangle-histogram",
+  "statement": [
+    "You are given an array heights of non-negative integers describing a histogram: bar i has width 1 and height heights[i], and the bars stand side by side.",
+    "A rectangle inside the histogram covers a run of consecutive bars, and its height can be at most the shortest bar in that run.",
+    "Return the area of the largest such rectangle."
+  ],
+  "examples": [
+    {
+      "input": {
+        "heights": [
+          2,
+          1,
+          5,
+          6,
+          2,
+          3
+        ]
+      },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "The bars of height 5 and 6 together support a rectangle of height 5 and width 2, with area 10."
+    },
+    {
+      "input": {
+        "heights": [
+          2,
+          4
+        ]
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "Either the bar of height 4 alone or both bars at height 2 gives area 4."
+    }
+  ],
+  "constraints": [
+    "1 ≤ heights.length ≤ 10⁵",
+    "0 ≤ heights[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 84",
+      "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
+    }
+  ]
+}

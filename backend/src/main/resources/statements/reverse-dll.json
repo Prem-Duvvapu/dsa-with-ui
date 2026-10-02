@@ -1,0 +1,41 @@
+{
+  "id": "reverse-dll",
+  "statement": [
+    "You are given a non-empty doubly linked list, listed head to tail in values. Each node has a next pointer and a prev pointer.",
+    "Reverse the list in place by rewiring every node's next and prev pointers, so the old tail becomes the new head.",
+    "Return the reversed list, read from its new head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "output": "[4, 3, 2, 1]",
+      "answerVariable": "result",
+      "explanation": "Each node is detached in turn and placed in front of the reversed part, so the former tail 4 ends up as the head."
+    },
+    {
+      "input": {
+        "values": [
+          5,
+          6,
+          7
+        ]
+      },
+      "output": "[7, 6, 5]",
+      "answerVariable": "result",
+      "explanation": "After all three nodes are rewired, 7 is the head and 5 is the tail."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/reverse-a-doubly-linked-list/1"
+    }
+  ]
+}

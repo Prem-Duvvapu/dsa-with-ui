@@ -1,0 +1,45 @@
+{
+  "id": "sum-subarray-ranges",
+  "statement": [
+    "You are given an integer array nums. The range of a subarray is its largest element minus its smallest element.",
+    "Consider every contiguous subarray of nums and add up their ranges.",
+    "Return that sum."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ]
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "The single elements have range 0, [1, 2] and [2, 3] have range 1 each, and [1, 2, 3] has range 2, so the total is 4."
+    },
+    {
+      "input": {
+        "nums": [
+          4,
+          -2,
+          7,
+          1
+        ]
+      },
+      "output": "48",
+      "answerVariable": "answer",
+      "explanation": "The sum of all subarray maximums is 49 and the sum of all subarray minimums is 1, so the ranges add up to 49 − 1 = 48."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 1000",
+    "−10⁹ ≤ nums[i] ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 2104",
+      "url": "https://leetcode.com/problems/sum-of-subarray-ranges/"
+    }
+  ]
+}

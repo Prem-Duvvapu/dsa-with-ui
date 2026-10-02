@@ -1,0 +1,41 @@
+{
+  "id": "intro-singly-ll",
+  "statement": [
+    "A singly linked list is a chain of nodes. Each node stores one value and a next pointer to the node after it; the last node, the tail, points to null.",
+    "You are given an array values. Build a singly linked list that holds these values in the same order: create one node per value and link each node to the next one.",
+    "Return the head of the new list. The examples show the value stored in the head node."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          4,
+          8,
+          15,
+          16
+        ]
+      },
+      "output": "4",
+      "answerVariable": "head",
+      "explanation": "The head holds 4. Following next pointers from it visits 8, 15 and 16, and the tail, 16, points to null."
+    },
+    {
+      "input": {
+        "values": [
+          2,
+          7,
+          1
+        ]
+      },
+      "output": "2",
+      "answerVariable": "head",
+      "explanation": "The head holds 2, then 7, then the tail 1, whose next pointer is null."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/introduction-to-linked-list/1"
+    }
+  ]
+}

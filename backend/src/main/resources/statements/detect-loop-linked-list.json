@@ -1,0 +1,50 @@
+{
+  "id": "detect-loop-linked-list",
+  "statement": [
+    "You are given a singly linked list whose node values, read from head to tail, are listed in values. The tail's next pointer is set by cycleIndex: if cycleIndex is −1 the tail points to null, otherwise it points back to the node at 0-based position cycleIndex, forming a loop.",
+    "cycleIndex only describes how the list is built; the algorithm sees just the head and must discover a loop by following next pointers.",
+    "Return true if the list contains a loop, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "cycleIndex": 1
+      },
+      "output": "true",
+      "answerVariable": "result",
+      "explanation": "The tail 5 links back to the node holding 2, so a slow pointer and a fast pointer moving through the list eventually land on the same node."
+    },
+    {
+      "input": {
+        "values": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "cycleIndex": -1
+      },
+      "output": "false",
+      "answerVariable": "result",
+      "explanation": "The tail points to null, so the fast pointer runs off the end and there is no loop."
+    }
+  ],
+  "constraints": [
+    "The number of nodes is in the range [0, 10⁴]",
+    "−10⁵ ≤ Node.val ≤ 10⁵",
+    "cycleIndex is −1 or a valid index in the list"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 141",
+      "url": "https://leetcode.com/problems/linked-list-cycle/"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "stack-ll-impl",
+  "statement": [
+    "Implement a stack as a singly linked list. The head node is the top of the stack, so push and pop only touch the head and there is no fixed capacity.",
+    "Process the operations in order. They are given as one string, operations, separated by semicolons. \"push V\" adds a new head node holding V. \"pop\" removes the head node, or reports an underflow if the stack is empty. \"peek\" reads the head value without removing it.",
+    "After the last operation, return the number of nodes left on the stack."
+  ],
+  "examples": [
+    {
+      "input": {
+        "operations": "push 10;push 20;push 30;peek;pop;pop;push 40;pop;pop"
+      },
+      "output": "0",
+      "answerVariable": "size",
+      "explanation": "peek reads 30. The pops then remove 30, 20, 40 and 10, so the chain ends empty."
+    },
+    {
+      "input": {
+        "operations": "pop;peek;push 5;pop;push 6;push 7;peek"
+      },
+      "output": "2",
+      "answerVariable": "size",
+      "explanation": "The first pop and the first peek find the stack empty. It ends as 7 → 6, with 7 at the head."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/implement-stack-using-linked-list/1"
+    }
+  ]
+}

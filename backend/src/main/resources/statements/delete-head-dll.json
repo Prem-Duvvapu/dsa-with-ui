@@ -1,0 +1,40 @@
+{
+  "id": "delete-head-dll",
+  "statement": [
+    "You are given a non-empty doubly linked list, listed head to tail in values. Each node has a next pointer and a prev pointer.",
+    "Delete the head node: the second node becomes the new head, its prev pointer is set to null, and the old head is detached. If the list has only one node, the result is empty.",
+    "Return the resulting list, read from the new head."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "output": "[2, 3, 4]",
+      "answerVariable": "result",
+      "explanation": "Node 1 is unlinked in both directions and 2 becomes the head with a null prev pointer."
+    },
+    {
+      "input": {
+        "values": [
+          7,
+          8
+        ]
+      },
+      "output": "[8]",
+      "answerVariable": "result",
+      "explanation": "Removing 7 leaves the single node 8."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/delete-head-of-dll"
+    }
+  ]
+}

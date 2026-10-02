@@ -1,0 +1,40 @@
+{
+  "id": "balanced-parentheses",
+  "statement": [
+    "You are given a string expression made only of the bracket characters (, ), [, ], { and }.",
+    "The string is balanced when every opening bracket is closed by a bracket of the same type, brackets close in the reverse order they were opened, and no closing bracket appears without a matching opening bracket before it.",
+    "Return true if expression is balanced, and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "expression": "{[()]}()"
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Each closer matches the most recent unmatched opener, and nothing is left open at the end."
+    },
+    {
+      "input": {
+        "expression": "([)]"
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The ) at index 2 arrives while [ is the most recently opened bracket, so the pairs cross instead of nesting."
+    }
+  ],
+  "constraints": [
+    "1 ≤ expression.length ≤ 10⁴",
+    "expression consists only of the characters ()[]{}"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 20",
+      "url": "https://leetcode.com/problems/valid-parentheses/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/parenthesis-checker2744/1"
+    }
+  ]
+}
