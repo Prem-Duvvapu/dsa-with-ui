@@ -1,0 +1,48 @@
+{
+  "id": "divide-two-numbers-bitwise",
+  "statement": [
+    "You are given two integers, dividend and divisor, where divisor is not 0. Return the quotient dividend / divisor without using multiplication, division or the modulo operator.",
+    "The quotient is truncated toward zero: any fractional part is dropped, so 7.9 becomes 7 and −5.4 becomes −5.",
+    "A standard approach works on magnitudes: repeatedly find the largest divisor × 2ᵏ (built with left shifts) that still fits into what remains of the dividend, subtract it and add 2ᵏ to the quotient. The sign of the answer is negative exactly when the inputs have opposite signs.",
+    "If the true quotient is larger than 2³¹ − 1, return 2³¹ − 1; if it is smaller than −2³¹, return −2³¹."
+  ],
+  "examples": [
+    {
+      "input": {
+        "dividend": 22,
+        "divisor": 3
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "22 / 3 = 7.33…, which truncates to 7. With shifts: 12 (3 × 4) fits, leaving 10; 6 (3 × 2) fits, leaving 4; 3 (3 × 1) fits, leaving 1. The quotient is 4 + 2 + 1 = 7."
+    },
+    {
+      "input": {
+        "dividend": -43,
+        "divisor": 8
+      },
+      "output": "-5",
+      "answerVariable": "answer",
+      "explanation": "−43 / 8 = −5.375. The magnitudes give 43 / 8 = 5, and the signs differ, so the answer is −5 (truncated toward zero, not rounded down to −6)."
+    },
+    {
+      "input": {
+        "dividend": -15,
+        "divisor": -4
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Both inputs are negative, so the quotient is positive: 15 / 4 = 3.75, which truncates to 3."
+    }
+  ],
+  "constraints": [
+    "−2³¹ ≤ dividend, divisor ≤ 2³¹ − 1",
+    "divisor ≠ 0"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 29",
+      "url": "https://leetcode.com/problems/divide-two-integers/"
+    }
+  ]
+}

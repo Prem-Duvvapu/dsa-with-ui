@@ -1,0 +1,39 @@
+{
+  "id": "prime-factorisation-queries",
+  "statement": [
+    "You are given a positive integer n. Return its prime factorisation: the list of primes, in non-decreasing order and with repeats, whose product is n. For n = 1 the list is empty.",
+    "The method is built for answering many such queries quickly. First precompute, with a sieve, the smallest prime factor spf[x] of every x up to the limit. Then factorise n by repeatedly appending spf[n] and dividing n by it until n reaches 1. Each division at least halves n, so one query takes O(log n) steps."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 30
+      },
+      "output": "[2, 3, 5]",
+      "answerVariable": "factors",
+      "explanation": "spf[30] = 2 leaves 15, spf[15] = 3 leaves 5, and spf[5] = 5 leaves 1. So 30 = 2 × 3 × 5."
+    },
+    {
+      "input": {
+        "n": 1
+      },
+      "output": "[]",
+      "answerVariable": "factors",
+      "explanation": "1 is already 1, so there is nothing to divide out and the list is empty."
+    },
+    {
+      "input": {
+        "n": 360
+      },
+      "output": "[2, 2, 2, 3, 3, 5]",
+      "answerVariable": "factors",
+      "explanation": "Repeated primes appear once per occurrence: 360 → 180 → 90 → 45 (three 2s), 45 → 15 → 5 (two 3s), then 5 → 1. So 360 = 2³ × 3² × 5."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/prime-factorization-using-sieve-olog-n-multiple-queries/"
+    }
+  ]
+}

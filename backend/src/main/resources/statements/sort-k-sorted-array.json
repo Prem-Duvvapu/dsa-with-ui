@@ -1,0 +1,64 @@
+{
+  "id": "sort-k-sorted-array",
+  "statement": [
+    "You are given an array values that is k-sorted: every element is at most k positions away from where it belongs in sorted order. Return the array sorted in ascending order.",
+    "Because of that guarantee, the smallest remaining element is always among the next k + 1 unplaced elements. So keep a min-heap of size k + 1: fill it with the first k + 1 elements, then repeatedly pop the minimum into the next output slot and push the next unread element. This takes O(n log k) time instead of O(n log n)."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          6,
+          5,
+          3,
+          2,
+          8,
+          10,
+          9
+        ],
+        "k": 3
+      },
+      "output": "[2, 3, 5, 6, 8, 9, 10]",
+      "answerVariable": "result",
+      "explanation": "No element is more than 3 places from its sorted position; 6 and 2, for example, each move exactly 3. A heap of 4 elements is enough to emit the values in order."
+    },
+    {
+      "input": {
+        "values": [
+          3,
+          1,
+          2,
+          5,
+          4,
+          7,
+          6,
+          8
+        ],
+        "k": 2
+      },
+      "output": "[1, 2, 3, 4, 5, 6, 7, 8]",
+      "answerVariable": "result",
+      "explanation": "Every element is within 2 places of its sorted position, so a heap of 3 elements always holds the next value to output."
+    },
+    {
+      "input": {
+        "values": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "k": 3
+      },
+      "output": "[1, 2, 3, 4]",
+      "answerVariable": "result",
+      "explanation": "A fully reversed array of 4 elements is 3-sorted, since 4 and 1 each move 3 places. Here the heap holds the whole array at once."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/nearly-sorted-1587115620/1"
+    }
+  ]
+}

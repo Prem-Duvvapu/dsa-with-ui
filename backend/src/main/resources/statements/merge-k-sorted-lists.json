@@ -1,0 +1,80 @@
+{
+  "id": "merge-k-sorted-lists",
+  "statement": [
+    "You are given three singly linked lists, list1, list2 and list3, each sorted in ascending order. Merge them into one linked list sorted in ascending order and return it.",
+    "With a min-heap this works for any number of lists: put the head of every list in the heap, then repeatedly take the smallest node out, append it to the result and push that node's successor (if it has one). The merge ends when the heap is empty.",
+    "The result is shown as its node values joined by \" -> \"."
+  ],
+  "examples": [
+    {
+      "input": {
+        "list1": [
+          1,
+          4,
+          5
+        ],
+        "list2": [
+          1,
+          3,
+          4
+        ],
+        "list3": [
+          2,
+          6
+        ]
+      },
+      "output": "1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6",
+      "answerVariable": "answer",
+      "explanation": "All eight nodes appear once in the output, in ascending order. Equal values from different lists, such as the two 1s and the two 4s, both appear."
+    },
+    {
+      "input": {
+        "list1": [
+          2,
+          6
+        ],
+        "list2": [
+          1,
+          3,
+          4,
+          7
+        ],
+        "list3": [
+          5
+        ]
+      },
+      "output": "1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7",
+      "answerVariable": "answer",
+      "explanation": "The lists have different lengths. Once list3's only node, 5, has been used, the merge carries on with the nodes left in the other two lists."
+    },
+    {
+      "input": {
+        "list1": [
+          -3,
+          0
+        ],
+        "list2": [
+          -3
+        ],
+        "list3": [
+          1,
+          1,
+          2
+        ]
+      },
+      "output": "-3 -> -3 -> 0 -> 1 -> 1 -> 2",
+      "answerVariable": "answer",
+      "explanation": "Negative values merge in the same way. The two −3s come first, then 0, then the whole of list3."
+    }
+  ],
+  "constraints": [
+    "−10⁴ ≤ node value ≤ 10⁴",
+    "Each list is sorted in ascending order."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 23",
+      "url": "https://leetcode.com/problems/merge-k-sorted-lists/"
+    }
+  ]
+}

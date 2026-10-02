@@ -1,0 +1,37 @@
+{
+  "id": "min-bit-flips",
+  "statement": [
+    "A bit flip changes one bit of a number, from 0 to 1 or from 1 to 0, at any position, including leading zeros.",
+    "You are given two non-negative integers, start and goal. Return the smallest number of bit flips needed to turn start into goal.",
+    "Each position where the two numbers disagree needs exactly one flip, and no other position needs any, so the answer is the number of 1 bits in start ^ goal."
+  ],
+  "examples": [
+    {
+      "input": {
+        "start": 10,
+        "goal": 7
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "10 is 1010 and 7 is 0111. They differ in bits 0, 2 and 3 (10 ^ 7 = 1101), so three flips are needed."
+    },
+    {
+      "input": {
+        "start": 10,
+        "goal": 10
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The numbers are already equal, so start ^ goal = 0 and no flips are needed."
+    }
+  ],
+  "constraints": [
+    "0 ≤ start, goal ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 2220",
+      "url": "https://leetcode.com/problems/minimum-bit-flips-to-convert-number/"
+    }
+  ]
+}

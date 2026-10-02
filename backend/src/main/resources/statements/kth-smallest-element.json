@@ -1,0 +1,66 @@
+{
+  "id": "kth-smallest-element",
+  "statement": [
+    "You are given an integer array nums and an integer k. Return the k-th smallest value in nums, counting repeated values separately.",
+    "A max-heap of size k gives the answer in O(n log k): push each value, and whenever the heap holds more than k values remove its largest. After the last value, the heap holds the k smallest values and its root, the largest of them, is the answer."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          7,
+          10,
+          4,
+          3,
+          20,
+          15
+        ],
+        "k": 3
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "Sorted, the values are 3, 4, 7, 10, 15, 20, so the 3rd smallest is 7. The final heap holds 3, 4 and 7, with 7 at the root."
+    },
+    {
+      "input": {
+        "nums": [
+          15,
+          5,
+          20,
+          1,
+          8
+        ],
+        "k": 2
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "The two smallest values are 1 and 5, so the 2nd smallest is 5."
+    },
+    {
+      "input": {
+        "nums": [
+          9,
+          9,
+          1,
+          1,
+          5
+        ],
+        "k": 3
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "Sorted, the values are 1, 1, 5, 9, 9. Both 1s count, so the 3rd smallest is 5."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "1 ≤ nums[i] ≤ 10⁵",
+    "1 ≤ k ≤ nums.length"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/kth-smallest-element5635/1"
+    }
+  ]
+}

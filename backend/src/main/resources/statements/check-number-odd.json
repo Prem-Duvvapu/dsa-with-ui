@@ -1,0 +1,31 @@
+{
+  "id": "check-number-odd",
+  "statement": [
+    "You are given an integer n. Return true if n is odd and false if it is even.",
+    "Do it with a bit test instead of the % operator: the lowest bit of an integer is 1 exactly when the integer is odd, so the answer is whether n & 1 equals 1. In two's complement this also holds for negative numbers."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 13
+      },
+      "output": "true",
+      "answerVariable": "isOdd",
+      "explanation": "13 is 1101 in binary. Its lowest bit is 1, so 13 & 1 = 1 and 13 is odd."
+    },
+    {
+      "input": {
+        "n": 8
+      },
+      "output": "false",
+      "answerVariable": "isOdd",
+      "explanation": "8 is 1000 in binary. Its lowest bit is 0, so 8 & 1 = 0 and 8 is even."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/check-if-a-number-is-odd-or-even-using-bitwise-operators/"
+    }
+  ]
+}

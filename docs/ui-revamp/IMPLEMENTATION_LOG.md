@@ -581,3 +581,15 @@ Coverage: 37 of 49. Skipped: sudoku-solver and eleven generators (subsets, permu
 Defect found (fixed separately under RCA-055): count-good-numbers swapped its exponents for odd n.
   Examples here use even n only.
 Automated: full backend suite passes (352 statements).
+
+## Problem statements: Bit Manipulation and Heaps (31 problems) - rollout complete
+
+```text
+Package / status: statements rollout, topic 8 of 8 (after #169). Same method; links verified (32/32);
+  full backend suite run locally.
+Coverage: 31 of 35. Skipped: single-number-3 and swap-two-numbers (answer split across two variables),
+  power-set-bitwise (only a count), min-to-max-heap (only the root).
+Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 48 without one are the
+  tracers whose final step never states the answer; each is listed in its batch entry above, and each
+  becomes writable when its tracer emits the result. Ten wrong-answer/crash defects found along the way
+  are fixed under RCA-055.

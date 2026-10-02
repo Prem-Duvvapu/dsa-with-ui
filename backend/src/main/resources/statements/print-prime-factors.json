@@ -1,0 +1,39 @@
+{
+  "id": "print-prime-factors",
+  "statement": [
+    "You are given an integer n ≥ 2. Return its prime factors in non-decreasing order, listing each prime as many times as it divides n, so that the product of the list is n.",
+    "Trial division up to √n is enough: for each candidate d starting at 2, while d divides n, record d and divide n by d. Once d × d > n, whatever is left of n, if it is greater than 1, is itself a prime and is the last factor."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 60
+      },
+      "output": "[2, 2, 3, 5]",
+      "answerVariable": "factors",
+      "explanation": "60 = 2 × 30 = 2 × 2 × 15 = 2 × 2 × 3 × 5. The prime 2 divides 60 twice, so it is listed twice."
+    },
+    {
+      "input": {
+        "n": 17
+      },
+      "output": "[17]",
+      "answerVariable": "factors",
+      "explanation": "No d with d × d ≤ 17 (that is, 2, 3 or 4) divides 17, so 17 is prime and is its own only factor."
+    },
+    {
+      "input": {
+        "n": 97
+      },
+      "output": "[97]",
+      "answerVariable": "factors",
+      "explanation": "97 is prime. None of 2 to 9 divides it, so the leftover value 97 is the single factor."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/print-all-prime-factors-of-a-given-number/"
+    }
+  ]
+}

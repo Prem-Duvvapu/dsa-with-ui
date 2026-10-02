@@ -1,0 +1,59 @@
+{
+  "id": "check-min-heap",
+  "statement": [
+    "An array can be read as a complete binary tree: the element at index i has its left child at index 2i + 1 and its right child at index 2i + 2, whenever those indices are inside the array.",
+    "You are given an array values. Return true if this tree is a min-heap, meaning no parent is larger than any of its children, and false otherwise.",
+    "Only the internal nodes, indices 0 to ⌊n / 2⌋ − 1, have children, so it is enough to compare each of them with its one or two children."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          8,
+          10
+        ]
+      },
+      "output": "true",
+      "answerVariable": "valid",
+      "explanation": "1 is at most 3 and 5, 3 is at most 7 and 9, and 5 is at most 8 and 10. Every parent-child pair is in order."
+    },
+    {
+      "input": {
+        "values": [
+          1,
+          4,
+          2,
+          8,
+          3,
+          6,
+          7
+        ]
+      },
+      "output": "false",
+      "answerVariable": "valid",
+      "explanation": "Index 1 holds 4, but its right child at index 4 holds 3, which is smaller. That single bad edge is enough to answer false."
+    },
+    {
+      "input": {
+        "values": [
+          2,
+          1
+        ]
+      },
+      "output": "false",
+      "answerVariable": "valid",
+      "explanation": "The root 2 is larger than its only child, 1."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/introduction-to-min-heap-data-structure/"
+    }
+  ]
+}

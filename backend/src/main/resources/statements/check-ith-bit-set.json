@@ -1,0 +1,38 @@
+{
+  "id": "check-ith-bit-set",
+  "statement": [
+    "You are given a non-negative integer n and a bit index i, where index 0 is the least significant bit.",
+    "Return true if the bit at index i in the binary form of n is 1, and false if it is 0.",
+    "One way is to build a mask with only bit i set, 1 << i, and test whether n & (1 << i) is non-zero."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 13,
+        "i": 2
+      },
+      "output": "true",
+      "answerVariable": "isSet",
+      "explanation": "13 is 1101 in binary. Reading from the right, bit 2 is 1, so 13 & (1 << 2) = 4, which is non-zero."
+    },
+    {
+      "input": {
+        "n": 13,
+        "i": 1
+      },
+      "output": "false",
+      "answerVariable": "isSet",
+      "explanation": "Bit 1 of 1101 is 0, so 13 & (1 << 1) = 0."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 10⁹",
+    "0 ≤ i ≤ 31"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/check-whether-k-th-bit-is-set-or-not-1587115620/1"
+    }
+  ]
+}
