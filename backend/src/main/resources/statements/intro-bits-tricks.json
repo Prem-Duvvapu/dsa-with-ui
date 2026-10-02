@@ -1,0 +1,36 @@
+{
+  "id": "intro-bits-tricks",
+  "statement": [
+    "This is a tour of the six bitwise operators, applied to concrete numbers so you can watch what each one does to the individual bits.",
+    "You are given two non-negative integers n and m and a shift amount shift. Compute n & m (AND), n | m (OR), n ^ m (XOR), ~n (NOT), n << shift (left shift) and n >> shift (right shift), using 32-bit two's-complement integers.",
+    "Report all six results in the form \"AND=… OR=… XOR=… NOT=… L=… R=…\", where L is the left shift and R is the right shift."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 12,
+        "m": 10,
+        "shift": 2
+      },
+      "output": "AND=8 OR=14 XOR=6 NOT=-13 L=48 R=3",
+      "answerVariable": "summary",
+      "explanation": "12 is 1100 and 10 is 1010: they share only bit 3 (AND = 8), cover bits 1 to 3 (OR = 14) and differ in bits 1 and 2 (XOR = 6). ~12 flips every bit, giving −13. Shifting 12 left by 2 multiplies it by 4 (48); shifting right by 2 drops the two low bits (3)."
+    },
+    {
+      "input": {
+        "n": 5,
+        "m": 3,
+        "shift": 1
+      },
+      "output": "AND=1 OR=7 XOR=6 NOT=-6 L=10 R=2",
+      "answerVariable": "summary",
+      "explanation": "5 is 101 and 3 is 011: only bit 0 is common (AND = 1), together they fill 111 (OR = 7), and they disagree in bits 1 and 2 (XOR = 6). ~5 = −6, 5 << 1 = 10 and 5 >> 1 = 2."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/introduction-to-bitwise-algorithms-data-structures-and-algorithms-tutorial/"
+    }
+  ]
+}

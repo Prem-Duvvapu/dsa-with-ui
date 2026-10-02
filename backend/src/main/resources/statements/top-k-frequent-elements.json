@@ -1,0 +1,56 @@
+{
+  "id": "top-k-frequent-elements",
+  "statement": [
+    "You are given an integer array nums and an integer k. Return the k values that occur most often in nums. The input guarantees the answer is unique, so there is never a tie at the cut-off.",
+    "First count how often each value occurs with a hash map. Then keep a min-heap of at most k values ordered by count: push each distinct value and pop the least frequent whenever the heap holds more than k. The values left in the heap are the answer."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 2
+      },
+      "output": "[1, 2]",
+      "answerVariable": "answer",
+      "explanation": "1 occurs 3 times, 2 occurs twice and 3 once. The two most frequent values are 1 and 2."
+    },
+    {
+      "input": {
+        "nums": [
+          4,
+          4,
+          4,
+          6,
+          6,
+          7,
+          7,
+          7,
+          7
+        ],
+        "k": 2
+      },
+      "output": "[7, 4]",
+      "answerVariable": "answer",
+      "explanation": "7 occurs 4 times, 4 occurs 3 times and 6 twice, so 6 is dropped and the answer is 7 and 4."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "−10⁴ ≤ nums[i] ≤ 10⁴",
+    "1 ≤ k ≤ number of distinct values in nums",
+    "The answer is unique."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 347",
+      "url": "https://leetcode.com/problems/top-k-frequent-elements/"
+    }
+  ]
+}

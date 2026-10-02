@@ -1,0 +1,65 @@
+{
+  "id": "kth-largest-stream",
+  "statement": [
+    "Numbers arrive one at a time, and after each arrival you must report the k-th largest number seen so far, counting duplicates separately.",
+    "You are given an integer k, an array initial of numbers that are already present, and an array additions of numbers that arrive afterwards, in order. Return, for each number in additions, the k-th largest of all numbers seen once it has arrived.",
+    "Keep a min-heap of the k largest numbers seen so far: push each arrival, drop the root if the heap has more than k numbers, and read the answer off the root."
+  ],
+  "examples": [
+    {
+      "input": {
+        "initial": [
+          4,
+          5,
+          8,
+          2
+        ],
+        "additions": [
+          3,
+          5,
+          10,
+          9,
+          4
+        ],
+        "k": 3
+      },
+      "output": "[4, 5, 5, 8, 8]",
+      "answerVariable": "answers",
+      "explanation": "After 3 arrives, the three largest numbers are 8, 5 and 4, so the answer is 4. Adding 5 makes them 8, 5, 5 (answer 5); 10 gives 10, 8, 5 (5); 9 gives 10, 9, 8 (8); and 4 changes nothing (8)."
+    },
+    {
+      "input": {
+        "initial": [
+          7,
+          1,
+          6,
+          4
+        ],
+        "additions": [
+          8,
+          2,
+          10,
+          5,
+          11,
+          3
+        ],
+        "k": 2
+      },
+      "output": "[7, 7, 8, 8, 10, 10]",
+      "answerVariable": "answers",
+      "explanation": "With k = 2 the answer is the second-largest number so far. It rises only when a new number beats it: 8 makes it 7, 10 makes it 8 and 11 makes it 10, while 2, 5 and 3 leave it unchanged."
+    }
+  ],
+  "constraints": [
+    "0 ≤ initial.length ≤ 10⁴",
+    "1 ≤ k ≤ initial.length + 1",
+    "−10⁴ ≤ initial[i], additions[j] ≤ 10⁴",
+    "At most 10⁴ additions."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 703",
+      "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/"
+    }
+  ]
+}

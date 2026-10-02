@@ -1,0 +1,60 @@
+{
+  "id": "min-cost-connect-sticks",
+  "statement": [
+    "You are given an array sticks of positive stick lengths. You can join any two sticks of lengths x and y into a single stick of length x + y, which costs x + y.",
+    "Keep joining until only one stick is left, and return the smallest possible total cost.",
+    "Greedy is optimal here: every stick's length is paid again each time the stick it belongs to is joined, so the shortest sticks should be joined first. Keep the lengths in a min-heap, repeatedly pop the two smallest, add their sum to the cost and push the sum back."
+  ],
+  "examples": [
+    {
+      "input": {
+        "sticks": [
+          2,
+          4,
+          3
+        ]
+      },
+      "output": "14",
+      "answerVariable": "answer",
+      "explanation": "Join 2 and 3 for a cost of 5, leaving [4, 5]. Then join 4 and 5 for a cost of 9. The total is 5 + 9 = 14."
+    },
+    {
+      "input": {
+        "sticks": [
+          1,
+          8,
+          3,
+          5
+        ]
+      },
+      "output": "30",
+      "answerVariable": "answer",
+      "explanation": "Join 1 and 3 (cost 4), then 4 and 5 (cost 9), then 9 and 8 (cost 17). The total is 4 + 9 + 17 = 30."
+    },
+    {
+      "input": {
+        "sticks": [
+          5,
+          5
+        ]
+      },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "With two sticks there is only one possible join, and it costs 10."
+    }
+  ],
+  "constraints": [
+    "1 ≤ sticks.length ≤ 10⁴",
+    "1 ≤ sticks[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1167",
+      "url": "https://leetcode.com/problems/minimum-cost-to-connect-sticks/"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/minimum-cost-of-ropes-1587115620/1"
+    }
+  ]
+}

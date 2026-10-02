@@ -1,0 +1,42 @@
+{
+  "id": "check-power-of-2",
+  "statement": [
+    "You are given an integer n. Return true if n equals 2ˣ for some integer x ≥ 0, and false otherwise.",
+    "A positive power of two has exactly one 1 bit. Subtracting 1 turns that bit off and every lower bit on, so for n > 0 the test n & (n − 1) == 0 is true exactly when n is a power of two."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 16
+      },
+      "output": "true",
+      "answerVariable": "isPowerOfTwo",
+      "explanation": "16 is 10000 and 15 is 01111. They share no bits, so 16 & 15 = 0 and 16 is a power of two."
+    },
+    {
+      "input": {
+        "n": 18
+      },
+      "output": "false",
+      "answerVariable": "isPowerOfTwo",
+      "explanation": "18 is 10010 and 17 is 10001. Bit 4 survives the AND, so 18 & 17 = 16, which is not 0."
+    },
+    {
+      "input": {
+        "n": 1
+      },
+      "output": "true",
+      "answerVariable": "isPowerOfTwo",
+      "explanation": "1 = 2⁰. It has a single 1 bit, and 1 & 0 = 0."
+    }
+  ],
+  "constraints": [
+    "−2³¹ ≤ n ≤ 2³¹ − 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 231",
+      "url": "https://leetcode.com/problems/power-of-two/"
+    }
+  ]
+}

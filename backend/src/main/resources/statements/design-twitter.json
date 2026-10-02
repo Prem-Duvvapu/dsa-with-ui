@@ -1,0 +1,40 @@
+{
+  "id": "design-twitter",
+  "statement": [
+    "Design a small version of Twitter. Users post tweets, follow and unfollow other users, and ask for a news feed: the 10 most recent tweets posted by the user or by anyone they currently follow, newest first.",
+    "The operations arrive as one string, operations, with commands separated by semicolons: \"post U T\" (user U posts tweet T), \"follow U V\" (U starts following V), \"unfollow U V\" (U stops following V) and \"feed U\" (return U's news feed). Run them in order. A tweet's recency is the order in which it was posted.",
+    "A feed is built by merging the users' tweet lists, each newest first, with a max-heap keyed on posting time, and stopping after 10 tweets.",
+    "Return, for every user who asked for a feed, the feed from their last feed request, written as {user=[tweet ids, newest first], …}."
+  ],
+  "examples": [
+    {
+      "input": {
+        "operations": "post 1 101;post 2 201;post 2 202;follow 1 2;feed 1;unfollow 1 2;feed 1"
+      },
+      "output": "{1=[101]}",
+      "answerVariable": "feeds",
+      "explanation": "User 1's first feed, while following user 2, is [202, 201, 101]. After unfollowing, user 2's tweets drop out, so the last feed user 1 asks for is just [101]."
+    },
+    {
+      "input": {
+        "operations": "post 1 11;post 2 21;post 3 31;follow 1 2;follow 1 3;post 2 22;feed 1;unfollow 1 2;post 3 32;feed 1;feed 2"
+      },
+      "output": "{1=[32, 31, 11], 2=[22, 21]}",
+      "answerVariable": "feeds",
+      "explanation": "User 1's last feed comes after unfollowing user 2, so it holds only tweets from users 1 and 3, newest first: 32, 31, 11. User 2 follows nobody and sees only their own tweets, 22 and 21."
+    }
+  ],
+  "constraints": [
+    "1 ≤ user ids ≤ 500",
+    "0 ≤ tweet id ≤ 10⁴",
+    "All tweet ids are unique.",
+    "At most 3 × 10⁴ operations.",
+    "A user never follows themselves."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 355",
+      "url": "https://leetcode.com/problems/design-twitter/"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "count-primes-range-sieve",
+  "statement": [
+    "You are given an integer n. Return how many prime numbers are strictly less than n.",
+    "The Sieve of Eratosthenes does this efficiently: assume every number from 2 to n − 1 is prime, then for each p that is still marked prime, cross out its multiples starting from p × p. The numbers left unmarked are the primes."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 10
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "The primes below 10 are 2, 3, 5 and 7."
+    },
+    {
+      "input": {
+        "n": 1
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "There are no primes below 1, since the smallest prime is 2."
+    },
+    {
+      "input": {
+        "n": 30
+      },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "The primes below 30 are 2, 3, 5, 7, 11, 13, 17, 19, 23 and 29."
+    }
+  ],
+  "constraints": [
+    "0 ≤ n ≤ 5 × 10⁶"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 204",
+      "url": "https://leetcode.com/problems/count-primes/"
+    }
+  ]
+}

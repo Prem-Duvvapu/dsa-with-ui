@@ -1,0 +1,47 @@
+{
+  "id": "implement-min-heap",
+  "statement": [
+    "Implement a min-heap on top of an array, supporting two operations: insert, which appends a value and sifts it up while it is smaller than its parent, and extractMin, which removes the root, moves the last element into its place and sifts that element down, swapping it with its smaller child while it is larger than that child.",
+    "You are given an array values and an integer extractCount, with extractCount ≤ values.length. Insert every value in order, then call extractMin extractCount times.",
+    "Return the list of extracted values, in the order they came out."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          5,
+          3,
+          8,
+          1,
+          2
+        ],
+        "extractCount": 2
+      },
+      "output": "[1, 2]",
+      "answerVariable": "extracted",
+      "explanation": "The two smallest values come out first, smallest first: 1, then 2. The heap left behind is [3, 5, 8]."
+    },
+    {
+      "input": {
+        "values": [
+          9,
+          4,
+          7,
+          1,
+          0,
+          3
+        ],
+        "extractCount": 3
+      },
+      "output": "[0, 1, 3]",
+      "answerVariable": "extracted",
+      "explanation": "Each extractMin returns the current minimum, so three calls give 0, 1 and 3 in ascending order. The heap left behind is [4, 9, 7]."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/introduction-to-min-heap-data-structure/"
+    }
+  ]
+}

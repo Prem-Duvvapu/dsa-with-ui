@@ -1,0 +1,43 @@
+{
+  "id": "pow-x-n-math",
+  "statement": [
+    "You are given a positive integer base x and a non-negative integer exponent n. Return xⁿ.",
+    "Multiplying x by itself n times takes n steps. Binary exponentiation takes O(log n): look at the bits of n from lowest to highest, squaring the base at each step and multiplying it into the result whenever the current bit of n is 1. This works because xⁿ is the product of x^(2ᵏ) over the bits k that are set in n.",
+    "This is the integer form of the problem. The LeetCode version also allows a fractional base and a negative exponent."
+  ],
+  "examples": [
+    {
+      "input": {
+        "x": 2,
+        "n": 10
+      },
+      "output": "1024",
+      "answerVariable": "result",
+      "explanation": "10 is 1010 in binary, so 2¹⁰ = 2⁸ × 2². The squares 2, 4, 16, 256 are formed, and the ones for bits 1 and 3 (4 and 256) are multiplied together to give 1024."
+    },
+    {
+      "input": {
+        "x": 3,
+        "n": 5
+      },
+      "output": "243",
+      "answerVariable": "result",
+      "explanation": "5 is 101 in binary, so 3⁵ = 3⁴ × 3¹ = 81 × 3 = 243."
+    },
+    {
+      "input": {
+        "x": 5,
+        "n": 0
+      },
+      "output": "1",
+      "answerVariable": "result",
+      "explanation": "Any base raised to the power 0 is 1. The exponent has no set bits, so the result keeps its starting value of 1."
+    }
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 50",
+      "url": "https://leetcode.com/problems/powx-n/"
+    }
+  ]
+}

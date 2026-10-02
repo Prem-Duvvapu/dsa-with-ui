@@ -1,0 +1,31 @@
+{
+  "id": "count-set-bits",
+  "statement": [
+    "You are given a non-negative integer n. Return how many bits in its binary form are 1.",
+    "Brian Kernighan's trick does this in one step per set bit: n & (n − 1) clears the lowest 1 bit of n, so repeat it and count the steps until n becomes 0."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 29
+      },
+      "output": "4",
+      "answerVariable": "totalSetBits",
+      "explanation": "29 is 11101 in binary. Clearing the lowest 1 bit each time gives 28, 24, 16 and then 0, so it takes four steps: 29 has four set bits."
+    },
+    {
+      "input": {
+        "n": 0
+      },
+      "output": "0",
+      "answerVariable": "totalSetBits",
+      "explanation": "0 has no 1 bits, so the loop never runs and the count is 0."
+    }
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 191",
+      "url": "https://leetcode.com/problems/number-of-1-bits/"
+    }
+  ]
+}

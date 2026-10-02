@@ -1,0 +1,39 @@
+{
+  "id": "set-unset-rightmost-bit",
+  "statement": [
+    "You are given a non-negative integer n and an operation, which is either \"set\" or \"unset\".",
+    "For \"set\", turn the lowest-positioned 0 bit of n into a 1. The answer is n | (n + 1), because adding 1 turns that bit on and only clears 1 bits below it, which the OR puts back.",
+    "For \"unset\", turn the lowest-positioned 1 bit of n into a 0. The answer is n & (n − 1), because subtracting 1 turns that bit off and only sets 0 bits below it, which the AND removes. When n is 0 there is no 1 bit to clear and the result is 0.",
+    "Return the resulting integer."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 12,
+        "operation": "set"
+      },
+      "output": "13",
+      "answerVariable": "result",
+      "explanation": "12 is 1100. Its lowest 0 bit is bit 0, so the result is 1101: 12 | 13 = 13."
+    },
+    {
+      "input": {
+        "n": 12,
+        "operation": "unset"
+      },
+      "output": "8",
+      "answerVariable": "result",
+      "explanation": "12 is 1100. Its lowest 1 bit is bit 2, so the result is 1000: 12 & 11 = 8."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/set-the-rightmost-unset-bit4436/1"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/turn-off-the-rightmost-set-bit/"
+    }
+  ]
+}

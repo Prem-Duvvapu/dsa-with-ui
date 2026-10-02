@@ -1,0 +1,65 @@
+{
+  "id": "replace-rank-array",
+  "statement": [
+    "You are given an integer array values. Replace every element with its rank and return the resulting array.",
+    "Ranks start at 1 for the smallest value and grow by 1 for each next larger distinct value. Equal elements get the same rank, so the ranks have no gaps.",
+    "One approach: pop the values from a min-heap (or sort them), give each new distinct value the next rank in a map, then look up every original element in that map."
+  ],
+  "examples": [
+    {
+      "input": {
+        "values": [
+          20,
+          15,
+          26,
+          2,
+          98,
+          6,
+          2
+        ]
+      },
+      "output": "[4, 3, 5, 1, 6, 2, 1]",
+      "answerVariable": "result",
+      "explanation": "The distinct values in order are 2, 6, 15, 20, 26 and 98, which get ranks 1 to 6. Both 2s get rank 1."
+    },
+    {
+      "input": {
+        "values": [
+          40,
+          10,
+          20,
+          30,
+          20,
+          10,
+          50,
+          40
+        ]
+      },
+      "output": "[4, 1, 2, 3, 2, 1, 5, 4]",
+      "answerVariable": "result",
+      "explanation": "There are five distinct values, 10 to 50 in steps of 10, so they get ranks 1 to 5. Each repeated value keeps its rank, so the largest rank is 5, not 8."
+    },
+    {
+      "input": {
+        "values": [
+          -5,
+          -5,
+          -5
+        ]
+      },
+      "output": "[1, 1, 1]",
+      "answerVariable": "result",
+      "explanation": "All elements are equal, so they all share rank 1."
+    }
+  ],
+  "constraints": [
+    "0 ≤ values.length ≤ 10⁵",
+    "−10⁹ ≤ values[i] ≤ 10⁹"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1331",
+      "url": "https://leetcode.com/problems/rank-transform-of-an-array/"
+    }
+  ]
+}

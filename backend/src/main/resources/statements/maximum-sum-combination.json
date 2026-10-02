@@ -1,0 +1,79 @@
+{
+  "id": "maximum-sum-combination",
+  "statement": [
+    "You are given two integer arrays a and b of the same length and an integer count. A sum combination is a[i] + b[j] for one index i of a and one index j of b, and each pair of indices (i, j) may be used at most once.",
+    "Return the count largest sum combinations, in non-increasing order.",
+    "Rather than forming all a.length × b.length sums, sort both arrays in descending order and start a max-heap with the pair (0, 0), which gives the largest sum. Each time you pop a pair (i, j), record its sum and push (i + 1, j) and (i, j + 1) if they have not been pushed before."
+  ],
+  "examples": [
+    {
+      "input": {
+        "a": [
+          1,
+          4,
+          2,
+          3
+        ],
+        "b": [
+          2,
+          5,
+          1,
+          6
+        ],
+        "count": 4
+      },
+      "output": "[10, 9, 9, 8]",
+      "answerVariable": "answer",
+      "explanation": "The largest sum is 4 + 6 = 10. Next come 4 + 5 = 9 and 3 + 6 = 9, then 8, which both 3 + 5 and 2 + 6 reach; only one of them is needed to make up four sums."
+    },
+    {
+      "input": {
+        "a": [
+          3,
+          2,
+          4,
+          1,
+          8
+        ],
+        "b": [
+          4,
+          3,
+          1,
+          7,
+          2
+        ],
+        "count": 6
+      },
+      "output": "[15, 12, 11, 11, 10, 10]",
+      "answerVariable": "answer",
+      "explanation": "8 + 7 = 15, 8 + 4 = 12, 8 + 3 = 11, 4 + 7 = 11, 8 + 2 = 10 and 3 + 7 = 10. Equal sums from different index pairs each count."
+    },
+    {
+      "input": {
+        "a": [
+          1,
+          1
+        ],
+        "b": [
+          1,
+          1
+        ],
+        "count": 3
+      },
+      "output": "[2, 2, 2]",
+      "answerVariable": "answer",
+      "explanation": "All four index pairs give the sum 2. They are different pairs, so three of them can be used."
+    }
+  ],
+  "constraints": [
+    "1 ≤ a.length = b.length ≤ 10⁵",
+    "1 ≤ count ≤ a.length",
+    "1 ≤ a[i], b[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/maximum-sum-combination/1"
+    }
+  ]
+}

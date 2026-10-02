@@ -1,0 +1,51 @@
+{
+  "id": "single-number-1",
+  "statement": [
+    "You are given a non-empty integer array nums. Every value in it occurs exactly two times, except for one value that occurs only once.",
+    "Return the value that occurs once. Aim for linear time and constant extra space.",
+    "XOR is the natural tool: x ^ x = 0 and x ^ 0 = x, and XOR is order-independent, so XOR-ing the whole array cancels every pair and leaves only the lone value."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          2,
+          2,
+          3,
+          3,
+          7
+        ]
+      },
+      "output": "7",
+      "answerVariable": "result",
+      "explanation": "The pairs of 2 and of 3 cancel to 0 under XOR, leaving 7."
+    },
+    {
+      "input": {
+        "nums": [
+          8,
+          8,
+          15,
+          1,
+          1,
+          15,
+          42
+        ]
+      },
+      "output": "42",
+      "answerVariable": "result",
+      "explanation": "The two copies of 15 are not next to each other, but XOR does not care about order: 8, 15 and 1 all cancel and 42 remains."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 3 × 10⁴",
+    "−3 × 10⁴ ≤ nums[i] ≤ 3 × 10⁴",
+    "Every value occurs exactly twice except one, which occurs exactly once."
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 136",
+      "url": "https://leetcode.com/problems/single-number/"
+    }
+  ]
+}

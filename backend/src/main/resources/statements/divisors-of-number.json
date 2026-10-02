@@ -1,0 +1,39 @@
+{
+  "id": "divisors-of-number",
+  "statement": [
+    "You are given a positive integer n. Return every positive integer that divides n exactly, in increasing order.",
+    "Divisors come in pairs: if d divides n then so does n / d, and one of the two is at most √n. So it is enough to try d from 1 to √n, keeping d and n / d for each hit (only once when d × d = n), and then put the results in order."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 36
+      },
+      "output": "[1, 2, 3, 4, 6, 9, 12, 18, 36]",
+      "answerVariable": "divisors",
+      "explanation": "The pairs are 1 × 36, 2 × 18, 3 × 12, 4 × 9 and 6 × 6. Since 36 is a perfect square, 6 is listed only once, giving 9 divisors."
+    },
+    {
+      "input": {
+        "n": 1
+      },
+      "output": "[1]",
+      "answerVariable": "divisors",
+      "explanation": "1 has a single divisor, itself."
+    },
+    {
+      "input": {
+        "n": 12
+      },
+      "output": "[1, 2, 3, 4, 6, 12]",
+      "answerVariable": "divisors",
+      "explanation": "The pairs are 1 × 12, 2 × 6 and 3 × 4, giving six divisors."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/find-all-factors-of-a-natural-number-in-sorted-order/"
+    }
+  ]
+}

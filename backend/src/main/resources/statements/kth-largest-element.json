@@ -1,0 +1,66 @@
+{
+  "id": "kth-largest-element",
+  "statement": [
+    "You are given an integer array nums and an integer k. Return the k-th largest value in nums.",
+    "This means the k-th value when nums is sorted from largest to smallest, so repeated values count separately; it is not the k-th largest distinct value.",
+    "A min-heap of size k solves it without sorting everything: push each value, and whenever the heap grows past k values remove its smallest. After the last value, the heap holds the k largest values and its root is the answer."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          3,
+          2,
+          1,
+          5,
+          6,
+          4
+        ],
+        "k": 2
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "From largest to smallest the values are 6, 5, 4, 3, 2, 1, so the 2nd largest is 5. The final heap holds 5 and 6, with 5 at the root."
+    },
+    {
+      "input": {
+        "nums": [
+          7,
+          10,
+          4,
+          3,
+          20,
+          15
+        ],
+        "k": 3
+      },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "The three largest values are 20, 15 and 10. The smallest of them, 10, is the 3rd largest."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          5,
+          5,
+          1
+        ],
+        "k": 2
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "Duplicates count individually: in order the values are 5, 5, 5, 1, so the 2nd largest is still 5."
+    }
+  ],
+  "constraints": [
+    "1 ≤ k ≤ nums.length ≤ 10⁵",
+    "−10⁴ ≤ nums[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 215",
+      "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/"
+    }
+  ]
+}
