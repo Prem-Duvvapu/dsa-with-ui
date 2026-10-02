@@ -32,6 +32,9 @@ class ProblemConstraintsTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private StatementCatalog statements;
+
     @Test
     @DisplayName("Constraints survive the wire, not just the catalogue object")
     void constraintsReachTheApiResponse() throws Exception {
@@ -39,9 +42,26 @@ class ProblemConstraintsTest {
         // ProblemDetail is not automatically served. This asserts the JSON a browser
         // actually receives - the first version of this feature populated the catalogue
         // correctly and shipped an endpoint that dropped the field.
-        mockMvc.perform(get("/api/problems/kadane-algo"))
+        //
+        // The served list is the problem statement's when it has one (the original problem's
+        // constraints, written in the statement), else the catalogue's. Both paths are checked
+        // against an id chosen from the data, so the test keeps working as statements grow.
+        String withStatement = statements.all().entrySet().stream()
+                .filter(e -> e.getValue().constraints() != null && !e.getValue().constraints().isEmpty())
+                .map(java.util.Map.Entry::getKey).sorted().findFirst().orElseThrow();
+        mockMvc.perform(get("/api/problems/" + withStatement))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.constraints", hasItem("1 <= nums.length <= 10^5")));
+                .andExpect(jsonPath("$.constraints",
+                        hasItem(statements.find(withStatement).orElseThrow().constraints().get(0))));
+
+        CatalogEntry catalogueOnly = catalog.all().stream()
+                .filter(e -> e.getProblem().getConstraints() != null && !e.getProblem().getConstraints().isEmpty())
+                .filter(e -> statements.find(e.getProblem().getId())
+                        .map(st -> st.constraints() == null || st.constraints().isEmpty()).orElse(true))
+                .min(java.util.Comparator.comparing(e -> e.getProblem().getId())).orElseThrow();
+        mockMvc.perform(get("/api/problems/" + catalogueOnly.getProblem().getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.constraints", hasItem(catalogueOnly.getProblem().getConstraints().get(0))));
     }
 
     @Test
