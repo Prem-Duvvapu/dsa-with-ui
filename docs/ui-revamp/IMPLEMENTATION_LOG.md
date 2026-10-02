@@ -418,3 +418,37 @@ Remaining limits: no second engine, no screen reader, no 200% zoom pass. Precise
 Next: Number of Provinces DFS tracer (owner's code), then per-topic batches aligning code to the owner's
   solutions with own-words statements, then P5.
 ```
+
+## Dark mode: one neutral, layered palette (owner request, after #160)
+
+```text
+Package / status: owner-requested theme pass — complete with this PR
+Problem (measured before the change, evidence/dark-mode/before-*.png):
+  - Three dark families were in use at once: body on --bg-page #090d16 (navy), the redesigned
+    surfaces on --surface-page #0b1012 (green-black), and the canvas on --bench-fill/--canvas-* navy-slate.
+  - Page and card were about 2% apart in lightness, so cards barely lifted off the page.
+  - Idle graph nodes and edges were drawn in --bench-rule (a decorative hairline), so a #333-ish rim sat on a
+    near-identical fill and the nodes nearly vanished.
+  - No color-scheme was declared, so native checkboxes, selects and scrollbars rendered light in dark mode.
+  - The welcome and tour primary buttons and the .btn focus ring were still violet (a third chrome hue).
+  - Four modal scrims each hardcoded a navy rgba.
+Change (index.css dark :root only, unless stated):
+  - Neutral layered greys, LeetCode-style: page #1a1a1a, card #262626, well #202020, hairlines #333/#444.
+  - Ink #e8e8e8 / #a8a8a8 / #8f8f8f.
+  - Legacy --bg-*, --text-*, --border-* and the --canvas-* roles now alias the same family.
+  - color-scheme: dark on :root, and light in both light declarations.
+  - .btn-primary uses the one chrome accent (--accent / --accent-ink); .btn:focus-visible uses --focus-ring.
+  - A --scrim token is defined in all three theme blocks and used by the four dialogs.
+  - GraphCanvas: idle node rim and idle edge are --canvas-edge, and the visited rim is --bench-ink-dim, so
+    untouched, reached and current stay distinct in both themes.
+  - Light values are unchanged apart from the scrim (one value, previously 0.62–0.68).
+Automated: designTokens.test.js (15/15, including every 4.5:1 ink role, the 3:1 control edge and the
+  accent/settled separation) passes on the new values. npx vitest run → 71 files / 594 tests. vite build OK.
+Browser: Chromium against the real backend.
+  - Dark at 1440 and 390, light at 1440: library, Graph (step 5), DP table, Code walkthrough, welcome dialog.
+  - Body is rgb(26,26,26) with color-scheme dark (light: rgb(238,241,244) with light).
+  - Horizontal overflow is 0 on every page; no console or page errors.
+  - Evidence: docs/ui-revamp/evidence/dark-mode/.
+Not done: syntax colouring in the source pane (a feature, not a palette fix — offered separately); no
+  second engine; no 200% zoom pass for this change.
+```

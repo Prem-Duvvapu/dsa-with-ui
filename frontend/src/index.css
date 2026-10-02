@@ -3,11 +3,14 @@
    ========================================== */
 
 :root {
+  /* Native controls, scrollbars and form widgets follow the theme too (flipped in both
+     light declarations below). */
+  color-scheme: dark;
   /* Surface & Layering System */
-  --bg-page: #090d16;
-  --bg-elevated: #0f172a;
-  --bg-panel: rgba(15, 23, 42, 0.75);
-  --bg-panel-2: rgba(30, 41, 59, 0.5);
+  --bg-page: #1a1a1a;
+  --bg-elevated: #262626;
+  --bg-panel: rgba(38, 38, 38, 0.85);
+  --bg-panel-2: rgba(255, 255, 255, 0.04);
 
   /* Brand Accent */
   --accent-violet: #7c6df2;
@@ -23,8 +26,8 @@
   --state-target: #7c6df2;        /* Violet */
   --state-target-glow: 0 0 14px rgba(124, 109, 242, 0.5);
 
-  --state-visited: #64748b;       /* Slate */
-  --state-visited-bg: #334155;
+  --state-visited: #8f8f8f;       /* Slate */
+  --state-visited-bg: #3a3a3a;
 
   --state-done: var(--settled);
   --state-done-glow: 0 0 14px rgba(61, 220, 151, 0.5);
@@ -59,9 +62,9 @@
   --text-xs: 0.72rem;
   --text-sm: 0.8rem;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #ececec;
+  --text-secondary: #a8a8a8;
+  --text-muted: #8f8f8f;
 
   /* Spacing Scale */
   --space-2xs: 2px;
@@ -111,19 +114,19 @@
      theme) or paler (dark theme) than --settled, so "a primary button" never reads as
      "this value is resolved". Amber stays exclusively --probe. Redefined in both light
      declarations below. */
-  --surface-page: #0b1012;
-  --surface-panel: #11181b;
-  --surface-recessed: #0e1417;
-  --rule-subtle: #1f2a2e;
-  --rule-strong: #2e3b40;
+  --surface-page: #1a1a1a;
+  --surface-panel: #262626;
+  --surface-recessed: #202020;
+  --rule-subtle: #333333;
+  --rule-strong: #444444;
   /* The edge of something you operate - a field, a select, a button. Unlike the decorative
      rules above it must clear 3:1 against the page and card surfaces (WCAG 1.4.11). */
-  --control-border: #66757b;
+  --control-border: #7a7a7a;
   --accent: #d2e9d9;
   --accent-hover: #e3f2e8;
-  --accent-ink: #0b1012;
+  --accent-ink: #1a1a1a;
   --accent-line: #b9dcc5;
-  --accent-soft: #132019;
+  --accent-soft: #1f2b24;
   --accent-soft-ink: #c3e2cd;
   --nav-selected-bg: var(--accent);
   --nav-selected-ink: var(--accent-ink);
@@ -141,8 +144,8 @@
   --glow-rose: 0 0 20px rgba(239, 68, 68, 0.4);
 
   /* Borders & Dividers */
-  --border-default: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
   --border-accent: rgba(124, 109, 242, 0.4);
 
   /* Radius System */
@@ -170,20 +173,20 @@
      surface, every role clears 4.5:1. See the contrast table in designTokens.test.js.
      ========================================================================== */
 
-  --bench-ground: #0a0e13;
-  --bench-recessed: #0e141b;
-  --bench-panel: #111820;
-  --bench-rule: #1e2a35;
-  --bench-rule-strong: #2c3a47;
-  --bench-fill: #16202a;
+  --bench-ground: #1a1a1a;
+  --bench-recessed: #202020;
+  --bench-panel: #262626;
+  --bench-rule: #333333;
+  --bench-rule-strong: #454545;
+  --bench-fill: #2d2d2d;
 
-  --bench-ink-dim: #718293;
-  --bench-ink-secondary: #8b9dab;
-  --bench-ink: #cfdce7;
+  --bench-ink-dim: #8f8f8f;
+  --bench-ink-secondary: #a8a8a8;
+  --bench-ink: #e8e8e8;
 
   --probe: #ffb000;
-  --probe-on: #0a0e13;
-  --probe-wash: #1a1508;
+  --probe-on: #1a1a1a;
+  --probe-wash: #2b2412;
   --settled: #3ddc97;
   --settled-on: #06120d;
 
@@ -198,12 +201,12 @@
      recessed ground they sit on". Each flips with the theme like every other
      token here, so a canvas inherits the theme instead of opting out of it.
      ========================================================================== */
-  --canvas-ground-inner: rgba(15, 23, 42, 0.6);
-  --canvas-ground-outer: rgba(9, 13, 22, 0.9);
-  --canvas-well: rgba(0, 0, 0, 0.25);
-  --canvas-node-fill: #1e293b;
-  --canvas-node-fill-2: #334155;
-  --canvas-edge: #475569;
+  --canvas-ground-inner: rgba(38, 38, 38, 0.6);
+  --canvas-ground-outer: rgba(26, 26, 26, 0.9);
+  --canvas-well: rgba(0, 0, 0, 0.2);
+  --canvas-node-fill: #303030;
+  --canvas-node-fill-2: #3d3d3d;
+  --canvas-edge: #6b6b6b;
   --canvas-wash: rgba(255, 255, 255, 0.035);
 
   /* Algorithm roles. What a node MEANS during a run, as opposed to what surface it sits on.
@@ -234,7 +237,7 @@
      near-black to be readable on them - white on #3b82f6 is 3.68:1 and fails. Light mode
      darkens the fills instead, so the label goes white. Same rule as Bench: the mark and
      its ground move together, and neither is assumed. */
-  --role-ink: #0a0e13;
+  --role-ink: #141414;
 
   /* Deeper stops, used as the far end of a node's gradient. */
   --state-target-deep: #5b46e0;
@@ -259,8 +262,10 @@
   /* Elevation. Bench is a flat instrument face; depth comes from hairlines and
      ground, so these are restrained on purpose. */
   --elevation-raised: 0 1px 0 rgba(255, 255, 255, 0.04);
-  --elevation-panel: 0 2px 12px rgba(0, 0, 0, 0.35);
-  --elevation-overlay: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --elevation-panel: 0 2px 12px rgba(0, 0, 0, 0.45);
+  --elevation-overlay: 0 12px 40px rgba(0, 0, 0, 0.6);
+  /* Behind a modal dialog. Four dialogs each wrote their own navy rgba here. */
+  --scrim: rgba(0, 0, 0, 0.62);
 }
 
 
@@ -287,6 +292,7 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
+    color-scheme: light;
     --surface-page: #f9f8f4;
     --surface-panel: #ffffff;
     --surface-recessed: #f3f2ed;
@@ -363,10 +369,12 @@
     --elevation-raised: 0 1px 0 rgba(16, 22, 28, 0.04);
     --elevation-panel: 0 2px 12px rgba(16, 22, 28, 0.08);
     --elevation-overlay: 0 8px 32px rgba(16, 22, 28, 0.14);
+    --scrim: rgba(2, 6, 23, 0.64);
   }
 }
 
 :root[data-theme="light"] {
+  color-scheme: light;
   --surface-page: #f9f8f4;
   --surface-panel: #ffffff;
   --surface-recessed: #f3f2ed;
@@ -441,6 +449,7 @@
   --elevation-raised: 0 1px 0 rgba(16, 22, 28, 0.04);
   --elevation-panel: 0 2px 12px rgba(16, 22, 28, 0.08);
   --elevation-overlay: 0 8px 32px rgba(16, 22, 28, 0.14);
+  --scrim: rgba(2, 6, 23, 0.64);
 }
 
 /* Global Resets & Base Styles */
@@ -482,16 +491,17 @@ body {
   user-select: none;
 }
 
+/* The one chrome accent (see --accent), not a third hue: the input panel already drew its
+   primary action this way, and the welcome and tour dialogs were the last violet buttons. */
 .btn-primary {
-  background: var(--accent-violet);
-  color: #ffffff;
-  border: 1px solid var(--accent-violet);
-  box-shadow: var(--accent-violet-glow);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
 }
 
 .btn-primary:hover {
-  background: var(--accent-violet-hover);
-  border-color: var(--accent-violet-hover);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .btn-outline {
@@ -509,8 +519,8 @@ body {
 /* .btn sets outline:none above; this is the replacement every other focusable class in
    this file already gets (.sb-toggle, .sb-cat, .cs-col, ...) — .btn itself never had one. */
 .btn:focus-visible {
-  outline: 2px solid var(--accent-violet);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 /* Custom Scrollbar Styling */

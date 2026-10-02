@@ -44,14 +44,17 @@ function nodeStyle(state) {
       return { fill: 'var(--bench-fill)', stroke: 'var(--probe)', glow: false };
     case 'visited':
     case 'processed':
-      return { fill: 'var(--bench-fill)', stroke: 'var(--bench-rule-strong)', glow: false };
+      // A brighter rim than an untouched node, so "reached" and "not yet" stay apart.
+      return { fill: 'var(--bench-fill)', stroke: 'var(--bench-ink-dim)', glow: false };
     case 'done':
     case 'placed':
     case 'safe':
     case 'sorted':
       return { fill: 'var(--settled)', stroke: 'var(--settled)', glow: true };
     default:
-      return { fill: 'var(--bench-fill)', stroke: 'var(--bench-rule)', glow: false };
+      // --canvas-edge, not the decorative --bench-rule hairline: a node is a mark the reader
+      // must find, and a hairline rim on a near-identical fill vanished in the dark theme.
+      return { fill: 'var(--bench-fill)', stroke: 'var(--canvas-edge)', glow: false };
   }
 }
 
@@ -115,7 +118,7 @@ export default function GraphCanvas({ problem, currentStep, step, steps, current
               <line
                 x1={u.x} y1={u.y}
                 x2={v.x} y2={v.y}
-                stroke={isActive ? 'var(--probe)' : 'var(--bench-rule)'}
+                stroke={isActive ? 'var(--probe)' : 'var(--canvas-edge)'}
                 strokeWidth={isActive ? 3 : 2}
                 strokeDasharray={isActive ? '5,5' : 'none'}
                 markerEnd={edge.directed ? (isActive ? 'url(#arrowhead-active)' : 'url(#arrowhead)') : ''}
