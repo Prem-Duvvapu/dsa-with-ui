@@ -1,0 +1,78 @@
+{
+  "id": "ninjas-training",
+  "statement": [
+    "A ninja trains for n days. Each day he does exactly one of three activities, numbered 0, 1 and 2.",
+    "The n × 3 matrix points gives the merit points: points[i][j] is what activity j earns on day i. He may not do the same activity on two days in a row.",
+    "Return the largest total number of merit points he can earn over the n days."
+  ],
+  "examples": [
+    {
+      "input": {
+        "points": [
+          [
+            10,
+            40,
+            70
+          ],
+          [
+            20,
+            50,
+            80
+          ],
+          [
+            30,
+            10,
+            20
+          ]
+        ]
+      },
+      "output": "150",
+      "answerVariable": "answer",
+      "explanation": "Do activity 2 on day 0 (70), activity 1 on day 1 (50) and activity 0 on day 2 (30): 70 + 50 + 30 = 150. The 80 on day 1 needs activity 2 again, so it cannot follow the 70."
+    },
+    {
+      "input": {
+        "points": [
+          [
+            1,
+            2,
+            5
+          ],
+          [
+            3,
+            1,
+            1
+          ],
+          [
+            3,
+            3,
+            3
+          ],
+          [
+            5,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "16",
+      "answerVariable": "answer",
+      "explanation": "Do activities 2, 0, 1, 0 on days 0 to 3: 5 + 3 + 3 + 5 = 16. No activity repeats on consecutive days."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 10⁴",
+    "points[i].length == 3",
+    "0 ≤ points[i][j] ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/ninja%27s-training"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/geeks-training/1"
+    }
+  ]
+}

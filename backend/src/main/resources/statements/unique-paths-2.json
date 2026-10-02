@@ -1,0 +1,61 @@
+{
+  "id": "unique-paths-2",
+  "statement": [
+    "A robot stands in the top-left cell of an m × n grid and wants to reach the bottom-right cell. At each move it goes one cell right or one cell down.",
+    "Each cell of grid is 0 (free) or 1 (an obstacle). The robot can never enter a cell that holds an obstacle.",
+    "Return the number of different paths from the top-left cell to the bottom-right cell that avoid every obstacle."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "The obstacle in the centre blocks every path through it. Only two paths are left: along the top row then down the right column, or down the left column then along the bottom row."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The starting cell itself is an obstacle, so there is no path at all."
+    }
+  ],
+  "constraints": [
+    "1 ≤ m, n ≤ 100",
+    "grid[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 63",
+      "url": "https://leetcode.com/problems/unique-paths-ii/"
+    }
+  ]
+}

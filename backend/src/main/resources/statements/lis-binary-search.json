@@ -1,0 +1,50 @@
+{
+  "id": "lis-binary-search",
+  "statement": [
+    "You are given an integer array nums. A subsequence keeps some of the elements in their original order, and it is strictly increasing if each element is larger than the one before it.",
+    "Return the length of the longest strictly increasing subsequence of nums, in O(n log n) time.",
+    "The usual method keeps a sorted list tails, where tails[k] is the smallest value that can end an increasing subsequence of length k + 1. Each element either extends tails or replaces the first entry that is ≥ it, found by binary search, and the final size of tails is the answer."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          10,
+          9,
+          2,
+          5,
+          3,
+          7,
+          101,
+          18
+        ]
+      },
+      "output": "4",
+      "answerVariable": "size",
+      "explanation": "tails ends as [2, 3, 7, 18]. Its size, 4, is the length of the longest increasing subsequence."
+    },
+    {
+      "input": {
+        "nums": [
+          9,
+          6,
+          4,
+          2
+        ]
+      },
+      "output": "1",
+      "answerVariable": "size",
+      "explanation": "Every element is smaller than the one before, so each one replaces the only entry and tails never grows past size 1."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 2500",
+    "−10⁴ ≤ nums[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 300",
+      "url": "https://leetcode.com/problems/longest-increasing-subsequence/"
+    }
+  ]
+}

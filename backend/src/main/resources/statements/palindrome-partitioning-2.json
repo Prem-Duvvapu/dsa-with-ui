@@ -1,0 +1,35 @@
+{
+  "id": "palindrome-partitioning-2",
+  "statement": [
+    "You are given a string text. Cut it into pieces so that every piece is a palindrome, a string that reads the same forwards and backwards.",
+    "Return the smallest number of cuts needed. A string that is already a palindrome needs 0 cuts."
+  ],
+  "examples": [
+    {
+      "input": {
+        "text": "aab"
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "One cut gives \"aa\" | \"b\", and both pieces are palindromes."
+    },
+    {
+      "input": {
+        "text": "abccbc"
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Two cuts give \"a\" | \"bccb\" | \"c\". The string is not a palindrome and cannot be split into two palindromes, so 2 is the minimum."
+    }
+  ],
+  "constraints": [
+    "1 ≤ text.length ≤ 2000",
+    "text contains only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 132",
+      "url": "https://leetcode.com/problems/palindrome-partitioning-ii/"
+    }
+  ]
+}

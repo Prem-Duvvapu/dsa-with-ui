@@ -1,0 +1,51 @@
+{
+  "id": "mcm-cost-eval",
+  "statement": [
+    "You are given an array dimensions of length n + 1 describing a chain of n matrices: matrix i, for 1 ≤ i ≤ n, has dimensions dimensions[i − 1] × dimensions[i].",
+    "Multiplying an a × b matrix by a b × c matrix costs a × b × c scalar multiplications. Choosing where to put the parentheses changes the total cost.",
+    "Return the smallest total cost of multiplying the whole chain. This entry evaluates the same partition recurrence as Matrix Chain Multiplication: the best cost of a range is its cheapest split point plus the cost of joining the two halves."
+  ],
+  "examples": [
+    {
+      "input": {
+        "dimensions": [
+          40,
+          20,
+          30,
+          10,
+          30
+        ]
+      },
+      "output": "26000",
+      "answerVariable": "answer",
+      "explanation": "The best order is (A × (B × C)) × D: 20·30·10 = 6000, then 40·20·10 = 8000, then 40·10·30 = 12000, for 26000 in total."
+    },
+    {
+      "input": {
+        "dimensions": [
+          10,
+          20,
+          30,
+          40
+        ]
+      },
+      "output": "18000",
+      "answerVariable": "answer",
+      "explanation": "(A × B) × C costs 10·20·30 + 10·30·40 = 6000 + 12000 = 18000, cheaper than A × (B × C) at 24000 + 8000 = 32000."
+    }
+  ],
+  "constraints": [
+    "2 ≤ dimensions.length ≤ 100",
+    "1 ≤ dimensions[i] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/matrix-chain-multiplication"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1"
+    }
+  ]
+}

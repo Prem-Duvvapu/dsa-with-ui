@@ -1,0 +1,39 @@
+{
+  "id": "wildcard-matching",
+  "statement": [
+    "You are given a string s and a pattern p. Besides ordinary letters, p may contain two wildcards: \"?\" matches exactly one character, and \"*\" matches any run of characters, including an empty one.",
+    "The pattern must match the whole of s, not just part of it.",
+    "Return true if p matches s and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "s": "adceb",
+        "p": "*a*b"
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "The first \"*\" matches nothing, \"a\" matches \"a\", the second \"*\" matches \"dce\", and \"b\" matches the final \"b\"."
+    },
+    {
+      "input": {
+        "s": "acdcb",
+        "p": "a*c?b"
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The pattern ends in \"c?b\", so the third-last character of s would have to be \"c\". In \"acdcb\" it is \"d\"."
+    }
+  ],
+  "constraints": [
+    "0 ≤ s.length, p.length ≤ 2000",
+    "s contains only lowercase English letters",
+    "p contains only lowercase English letters, \"?\" or \"*\""
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 44",
+      "url": "https://leetcode.com/problems/wildcard-matching/"
+    }
+  ]
+}

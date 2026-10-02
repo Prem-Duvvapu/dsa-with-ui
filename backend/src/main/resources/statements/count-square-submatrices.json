@@ -1,0 +1,70 @@
+{
+  "id": "count-square-submatrices",
+  "statement": [
+    "You are given a grid of 0s and 1s.",
+    "Count the square submatrices of every size that contain only 1s, and return that count."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "15",
+      "answerVariable": "total",
+      "explanation": "There are 10 squares of size 1 (the 1s themselves), 4 of size 2 and 1 of size 3: 10 + 4 + 1 = 15."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "5",
+      "answerVariable": "total",
+      "explanation": "No two 1s are side by side, so only the five 1 × 1 squares count."
+    }
+  ],
+  "constraints": [
+    "1 ≤ rows, cols ≤ 300",
+    "grid[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1277",
+      "url": "https://leetcode.com/problems/count-square-submatrices-with-all-ones/"
+    }
+  ]
+}

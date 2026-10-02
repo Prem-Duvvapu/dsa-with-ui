@@ -1,0 +1,51 @@
+{
+  "id": "rod-cutting-problem",
+  "statement": [
+    "You have a rod of length n, where n is the length of the array prices. A piece of length L sells for prices[L − 1].",
+    "You may cut the rod into pieces of whole-number lengths, as many cuts as you like or none at all, and sell every piece.",
+    "Return the most money you can get for the whole rod."
+  ],
+  "examples": [
+    {
+      "input": {
+        "prices": [
+          2,
+          5,
+          7,
+          8,
+          10
+        ]
+      },
+      "output": "12",
+      "answerVariable": "answer",
+      "explanation": "The rod has length 5. Cutting it into lengths 2 and 3 gives 5 + 7 = 12; selling it whole gives only 10."
+    },
+    {
+      "input": {
+        "prices": [
+          3,
+          5,
+          8,
+          9
+        ]
+      },
+      "output": "12",
+      "answerVariable": "answer",
+      "explanation": "The rod has length 4. Four pieces of length 1 give 4 × 3 = 12, better than any other cut."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 1000",
+    "1 ≤ prices[i] ≤ 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/rod-cutting-problem"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/rod-cutting0840/1"
+    }
+  ]
+}

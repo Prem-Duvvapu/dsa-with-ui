@@ -1,0 +1,46 @@
+{
+  "id": "partition-equal-subset-sum",
+  "statement": [
+    "You are given an array nums of integers.",
+    "Decide whether nums can be split into two groups with equal sums, where every element goes into exactly one of the groups.",
+    "Return true if such a split exists and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          5,
+          11,
+          5
+        ]
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Split it into [1, 5, 5] and [11]. Both groups sum to 11."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          5
+        ]
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The total is 11, which is odd, so it cannot be divided into two equal integer halves."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 200",
+    "1 ≤ nums[i] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 416",
+      "url": "https://leetcode.com/problems/partition-equal-subset-sum/"
+    }
+  ]
+}

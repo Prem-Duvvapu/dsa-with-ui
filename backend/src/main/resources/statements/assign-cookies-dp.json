@@ -1,0 +1,53 @@
+{
+  "id": "assign-cookies-dp",
+  "statement": [
+    "Each child has a greed factor: greed[i] is the smallest cookie size that will make child i content. Each cookie has a size given in cookies.",
+    "Each child can get at most one cookie, and each cookie can go to at most one child. A child is content if the cookie they get has size ≥ their greed factor.",
+    "Return the largest number of children that can be made content."
+  ],
+  "examples": [
+    {
+      "input": {
+        "greed": [
+          1,
+          2,
+          3
+        ],
+        "cookies": [
+          1,
+          1
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Both cookies have size 1, so only the child with greed 1 can be made content."
+    },
+    {
+      "input": {
+        "greed": [
+          1,
+          2
+        ],
+        "cookies": [
+          1,
+          2,
+          3
+        ]
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Give the size-1 cookie to the child with greed 1 and the size-2 cookie to the child with greed 2. Both children are content."
+    }
+  ],
+  "constraints": [
+    "1 ≤ greed.length ≤ 3 × 10⁴",
+    "0 ≤ cookies.length ≤ 3 × 10⁴",
+    "1 ≤ greed[i], cookies[j] ≤ 2³¹ − 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 455",
+      "url": "https://leetcode.com/problems/assign-cookies/"
+    }
+  ]
+}

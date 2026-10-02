@@ -1,0 +1,35 @@
+{
+  "id": "climbing-stairs",
+  "statement": [
+    "You are at the bottom of a staircase with n steps and want to reach the top. Each move takes you up either 1 step or 2 steps.",
+    "Two ways are different if their sequences of moves differ, so 1 + 2 and 2 + 1 count separately.",
+    "Given n, return the number of distinct ways to reach the top."
+  ],
+  "examples": [
+    {
+      "input": {
+        "n": 5
+      },
+      "output": "8",
+      "answerVariable": "answer",
+      "explanation": "The last move onto step 5 comes from step 4 or step 3, so the count is ways(4) + ways(3) = 5 + 3 = 8."
+    },
+    {
+      "input": {
+        "n": 12
+      },
+      "output": "233",
+      "answerVariable": "answer",
+      "explanation": "Continuing the same sum, ways(10) = 89 and ways(11) = 144, so ways(12) = 89 + 144 = 233."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 45"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 70",
+      "url": "https://leetcode.com/problems/climbing-stairs/"
+    }
+  ]
+}

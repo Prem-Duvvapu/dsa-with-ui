@@ -1,0 +1,74 @@
+{
+  "id": "max-rectangle-area-all-ones",
+  "statement": [
+    "You are given a grid of 0s and 1s.",
+    "Return the area of the largest rectangle, with sides along the grid lines, that contains only 1s."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "6",
+      "answerVariable": "best",
+      "explanation": "Rows 1 and 2, columns 2 to 4, are all 1s. That is a 2 × 3 rectangle of area 6."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "output": "3",
+      "answerVariable": "best",
+      "explanation": "The whole 3 × 1 column is 1s, so the area is 3."
+    }
+  ],
+  "constraints": [
+    "1 ≤ rows, cols ≤ 200",
+    "grid[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 85",
+      "url": "https://leetcode.com/problems/maximal-rectangle/"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "triangle-min-path-sum",
+  "statement": [
+    "A triangle of numbers has one value in row 0, two in row 1, and in general i + 1 values in row i. A path starts at the top and goes down one row at a time.",
+    "From position j in one row, the path may move to position j or position j + 1 in the next row. Return the smallest possible sum of the values along a path from the top row to the bottom row.",
+    "Here the triangle is given as a square grid: row i of triangle uses only columns 0 to i, and the remaining entries are padding that is ignored."
+  ],
+  "examples": [
+    {
+      "input": {
+        "triangle": [
+          [
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            4,
+            0,
+            0
+          ],
+          [
+            6,
+            5,
+            7,
+            0
+          ],
+          [
+            4,
+            1,
+            8,
+            3
+          ]
+        ]
+      },
+      "output": "11",
+      "answerVariable": "answer",
+      "explanation": "The triangle is 2 / 3 4 / 6 5 7 / 4 1 8 3. The path 2 → 3 → 5 → 1 has sum 11, the smallest."
+    },
+    {
+      "input": {
+        "triangle": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            2,
+            3,
+            0
+          ],
+          [
+            1,
+            -1,
+            -3
+          ]
+        ]
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "The triangle is −1 / 2 3 / 1 −1 −3. The path −1 → 3 → −3 has sum −1, which beats −1 → 2 → −1 = 0."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number of rows ≤ 200",
+    "−10⁴ ≤ each value ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 120",
+      "url": "https://leetcode.com/problems/triangle/"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "unbounded-knapsack",
+  "statement": [
+    "There are n kinds of items. An item of kind i has weight weights[i] and value values[i], and you may pack as many items of each kind as you like.",
+    "A knapsack can carry a total weight of at most capacity.",
+    "Return the largest total value you can pack without going over capacity."
+  ],
+  "examples": [
+    {
+      "input": {
+        "weights": [
+          2,
+          4,
+          6
+        ],
+        "values": [
+          5,
+          11,
+          13
+        ],
+        "capacity": 10
+      },
+      "output": "27",
+      "answerVariable": "answer",
+      "explanation": "Pack two items of weight 4 and one of weight 2: weight 10, value 11 + 11 + 5 = 27."
+    },
+    {
+      "input": {
+        "weights": [
+          3
+        ],
+        "values": [
+          10
+        ],
+        "capacity": 8
+      },
+      "output": "20",
+      "answerVariable": "answer",
+      "explanation": "Two items of weight 3 fit (weight 6). A third would make 9, which is over 8."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 500",
+    "1 ≤ capacity ≤ 1000",
+    "1 ≤ weights[i] ≤ 500",
+    "1 ≤ values[i] ≤ 500"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/unbounded-knapsack"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1"
+    }
+  ]
+}

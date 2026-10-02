@@ -1,0 +1,49 @@
+{
+  "id": "minimum-coins-dp",
+  "statement": [
+    "You are given coin values coins and a target amount. You have as many coins of each value as you want.",
+    "Return the smallest number of coins whose values add up to exactly amount.",
+    "If no combination of coins makes amount, return −1."
+  ],
+  "examples": [
+    {
+      "input": {
+        "coins": [
+          1,
+          2,
+          5
+        ],
+        "amount": 11
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "5 + 5 + 1 = 11 uses 3 coins, and no 2 coins can reach 11."
+    },
+    {
+      "input": {
+        "coins": [
+          2
+        ],
+        "amount": 3
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "Coins of value 2 only make even amounts, so 3 cannot be made."
+    }
+  ],
+  "constraints": [
+    "1 ≤ coins.length ≤ 12",
+    "1 ≤ coins[i] ≤ 2³¹ − 1",
+    "0 ≤ amount ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 322",
+      "url": "https://leetcode.com/problems/coin-change/"
+    },
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/minimum-coins"
+    }
+  ]
+}

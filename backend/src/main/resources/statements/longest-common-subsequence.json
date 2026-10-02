@@ -1,0 +1,38 @@
+{
+  "id": "longest-common-subsequence",
+  "statement": [
+    "You are given two strings, first and second. A subsequence is what remains after deleting zero or more characters without changing the order of the rest.",
+    "A common subsequence is a string that is a subsequence of both first and second.",
+    "Return the length of the longest common subsequence. If the strings share no character, return 0."
+  ],
+  "examples": [
+    {
+      "input": {
+        "first": "abcde",
+        "second": "ace"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "\"ace\" is a subsequence of both strings, and no longer common subsequence exists."
+    },
+    {
+      "input": {
+        "first": "aggtab",
+        "second": "gxtxayb"
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "\"gtab\" appears in order in both strings."
+    }
+  ],
+  "constraints": [
+    "1 ≤ first.length, second.length ≤ 1000",
+    "Both strings contain only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1143",
+      "url": "https://leetcode.com/problems/longest-common-subsequence/"
+    }
+  ]
+}

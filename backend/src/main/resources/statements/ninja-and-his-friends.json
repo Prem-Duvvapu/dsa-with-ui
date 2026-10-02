@@ -1,0 +1,76 @@
+{
+  "id": "ninja-and-his-friends",
+  "statement": [
+    "A rows × cols grid holds chocolates: grid[i][j] is the number in cell (i, j). Two friends start in the top row, one at column 0 and the other at column cols − 1.",
+    "At each step both friends move down one row together. Each of them moves to the column directly below, or one column left or right, staying inside the grid.",
+    "Every cell a friend visits gives up its chocolates. If both friends stand on the same cell, its chocolates are counted only once. Return the largest number of chocolates the two can collect by the time they reach the bottom row."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            3,
+            1,
+            1
+          ],
+          [
+            2,
+            5,
+            1
+          ],
+          [
+            1,
+            5,
+            5
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "24",
+      "answerVariable": "answer",
+      "explanation": "One friend takes 3, 2, 5, 2 (columns 0, 0, 1, 0) and the other takes 1, 5, 5, 1 (columns 2, 1, 2, 2). That is 12 each, 24 in total."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            5,
+            6,
+            7,
+            8
+          ],
+          [
+            9,
+            10,
+            11,
+            12
+          ]
+        ]
+      },
+      "output": "42",
+      "answerVariable": "answer",
+      "explanation": "The left friend moves diagonally through 1, 6, 11 while the right friend stays in the last column for 4, 8, 12: 18 + 24 = 42."
+    }
+  ],
+  "constraints": [
+    "2 ≤ rows, cols ≤ 70",
+    "0 ≤ grid[i][j] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1463",
+      "url": "https://leetcode.com/problems/cherry-pickup-ii/"
+    }
+  ]
+}

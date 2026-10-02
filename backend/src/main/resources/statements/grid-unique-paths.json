@@ -1,0 +1,37 @@
+{
+  "id": "grid-unique-paths",
+  "statement": [
+    "A robot stands in the top-left cell of a grid with rows rows and cols columns. It wants to reach the bottom-right cell.",
+    "At each move the robot goes one cell right or one cell down.",
+    "Return the number of different paths from the top-left cell to the bottom-right cell."
+  ],
+  "examples": [
+    {
+      "input": {
+        "rows": 3,
+        "cols": 3
+      },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "Every path makes 2 down moves and 2 right moves, and there are 6 ways to order those 4 moves."
+    },
+    {
+      "input": {
+        "rows": 4,
+        "cols": 3
+      },
+      "output": "10",
+      "answerVariable": "answer",
+      "explanation": "Every path makes 3 down moves and 2 right moves. Choosing where the 2 right moves go among 5 gives 10 paths."
+    }
+  ],
+  "constraints": [
+    "1 ≤ rows, cols ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 62",
+      "url": "https://leetcode.com/problems/unique-paths/"
+    }
+  ]
+}

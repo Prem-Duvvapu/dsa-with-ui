@@ -1,0 +1,49 @@
+{
+  "id": "best-time-stock-2",
+  "statement": [
+    "You are given an array prices, where prices[i] is the price of a stock on day i.",
+    "You may make as many trades as you like, but you can hold at most one share at a time: you must sell before you buy again. Buying and selling on the same day is allowed.",
+    "Return the largest total profit you can make."
+  ],
+  "examples": [
+    {
+      "input": {
+        "prices": [
+          7,
+          1,
+          5,
+          3,
+          6,
+          4
+        ]
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "Buy at 1 and sell at 5 (+4), then buy at 3 and sell at 6 (+3), for 7 in total."
+    },
+    {
+      "input": {
+        "prices": [
+          7,
+          6,
+          4,
+          3,
+          1
+        ]
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The price never rises from one day to the next, so no trade makes money."
+    }
+  ],
+  "constraints": [
+    "1 ≤ prices.length ≤ 3 × 10⁴",
+    "0 ≤ prices[i] ≤ 10⁴"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 122",
+      "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "partition-array-max-sum",
+  "statement": [
+    "You are given an integer array nums and an integer k. Split nums into contiguous pieces, each of length at most k.",
+    "After splitting, every element of a piece is replaced by the largest value in that piece.",
+    "Return the largest possible sum of the array after this replacement."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          15,
+          7,
+          9,
+          2,
+          5,
+          10
+        ],
+        "k": 3
+      },
+      "output": "84",
+      "answerVariable": "answer",
+      "explanation": "Split it as [1, 15, 7] [9] [2, 5, 10]. The pieces become 15, 15, 15, then 9, then 10, 10, 10, which sum to 84."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          4,
+          1,
+          5,
+          7,
+          3,
+          6,
+          1,
+          9,
+          9,
+          3
+        ],
+        "k": 4
+      },
+      "output": "83",
+      "answerVariable": "answer",
+      "explanation": "Split it as [1] [4, 1, 5, 7] [3, 6, 1, 9] [9, 3]. That gives 1 + 4·7 + 4·9 + 2·9 = 1 + 28 + 36 + 18 = 83."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 500",
+    "0 ≤ nums[i] ≤ 10⁹",
+    "1 ≤ k ≤ nums.length"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1043",
+      "url": "https://leetcode.com/problems/partition-array-for-maximum-sum/"
+    }
+  ]
+}

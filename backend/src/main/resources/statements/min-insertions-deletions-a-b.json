@@ -1,0 +1,38 @@
+{
+  "id": "min-insertions-deletions-a-b",
+  "statement": [
+    "You are given two strings, first and second. You want to turn first into second.",
+    "In one operation you may delete one character from first or insert one character anywhere in it.",
+    "Return the smallest number of operations that turns first into second."
+  ],
+  "examples": [
+    {
+      "input": {
+        "first": "heap",
+        "second": "pea"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Keep \"ea\", the longest common subsequence. Delete \"h\" and \"p\" (2 operations), then insert \"p\" at the front (1 operation)."
+    },
+    {
+      "input": {
+        "first": "abac",
+        "second": "cab"
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Keep \"ab\". Delete the last \"a\" and the \"c\", then insert \"c\" at the front: 2 deletions and 1 insertion."
+    }
+  ],
+  "constraints": [
+    "1 ≤ first.length, second.length ≤ 1000",
+    "Both strings contain only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/minimum-number-of-deletions-and-insertions0209/1"
+    }
+  ]
+}

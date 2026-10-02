@@ -1,0 +1,62 @@
+{
+  "id": "minimum-falling-path-sum",
+  "statement": [
+    "You are given a grid of integers, matrix. A falling path starts at any cell in the top row and moves down one row at a time until it reaches the bottom row.",
+    "From cell (r, c) the next cell must be (r + 1, c − 1), (r + 1, c) or (r + 1, c + 1), staying inside the grid.",
+    "Return the smallest possible sum of the values along a falling path."
+  ],
+  "examples": [
+    {
+      "input": {
+        "matrix": [
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            6,
+            5,
+            4
+          ],
+          [
+            7,
+            8,
+            9
+          ]
+        ]
+      },
+      "output": "13",
+      "answerVariable": "answer",
+      "explanation": "Start at the 1, move straight down to the 5, then diagonally to the 7: 1 + 5 + 7 = 13."
+    },
+    {
+      "input": {
+        "matrix": [
+          [
+            100,
+            100
+          ],
+          [
+            1,
+            100
+          ]
+        ]
+      },
+      "output": "101",
+      "answerVariable": "answer",
+      "explanation": "Every path takes one 100 from the top row. Following it with the 1 below gives the minimum, 101."
+    }
+  ],
+  "constraints": [
+    "n == matrix.length == matrix[i].length",
+    "1 ≤ n ≤ 100",
+    "−100 ≤ matrix[i][j] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 931",
+      "url": "https://leetcode.com/problems/minimum-falling-path-sum/"
+    }
+  ]
+}

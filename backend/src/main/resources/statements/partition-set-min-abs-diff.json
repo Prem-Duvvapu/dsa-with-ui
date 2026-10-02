@@ -1,0 +1,45 @@
+{
+  "id": "partition-set-min-abs-diff",
+  "statement": [
+    "You are given an array nums of non-negative integers.",
+    "Split nums into two groups so that every element goes into exactly one group. Either group may be empty.",
+    "Return the smallest possible absolute difference between the sums of the two groups."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          2
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "The best split is [1] and [2], with sums 1 and 2."
+    },
+    {
+      "input": {
+        "nums": [
+          3,
+          1,
+          4,
+          2,
+          2
+        ]
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The total is 12. The split [4, 2] and [3, 1, 2] gives 6 and 6, a difference of 0."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/minimum-sum-partition3317/1"
+    },
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/partition-a-set-into-two-subsets-with-minimum-absolute-sum-difference"
+    }
+  ]
+}

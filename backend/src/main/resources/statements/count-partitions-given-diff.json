@@ -1,0 +1,52 @@
+{
+  "id": "count-partitions-given-diff",
+  "statement": [
+    "You are given an array nums of non-negative integers and an integer d.",
+    "Split nums into two groups S1 and S2 so that every element goes into exactly one group. Count the splits where sum(S1) ≥ sum(S2) and sum(S1) − sum(S2) = d. Splits are told apart by which positions go into S1.",
+    "Return that count. The original problem asks for it modulo 10⁹ + 7; the inputs here are small enough that this never matters."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          1,
+          1,
+          2,
+          3
+        ],
+        "d": 1
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "The total is 7, so S1 must sum to 4 and S2 to 3. S1 can be {first 1, 3}, {second 1, 3} or {1, 1, 2}."
+    },
+    {
+      "input": {
+        "nums": [
+          1,
+          2,
+          3
+        ],
+        "d": 1
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The total is 6, so S1 would have to sum to (6 + 1) / 2 = 3.5. No group of integers can, so there is no valid split."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 200",
+    "0 ≤ d ≤ 10⁴",
+    "0 ≤ nums[i] ≤ 50"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/count-partitions-with-given-difference"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/partitions-with-given-difference/1"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "max-sum-non-adjacent",
+  "statement": [
+    "You are given an array nums of non-negative integers. Choose some of its elements, with the rule that no two chosen elements may sit next to each other in the array.",
+    "Return the largest possible sum of the chosen elements. Choosing nothing is allowed and gives 0.",
+    "This is the same task as robbing a row of houses where two neighbouring houses cannot both be robbed."
+  ],
+  "examples": [
+    {
+      "input": {
+        "nums": [
+          2,
+          1,
+          4,
+          9,
+          4,
+          1,
+          8
+        ]
+      },
+      "output": "19",
+      "answerVariable": "answer",
+      "explanation": "Pick indices 0, 3 and 6: 2 + 9 + 8 = 19. No two of them are neighbours."
+    },
+    {
+      "input": {
+        "nums": [
+          5,
+          5,
+          10,
+          100,
+          10,
+          5
+        ]
+      },
+      "output": "110",
+      "answerVariable": "answer",
+      "explanation": "Pick indices 0, 3 and 5: 5 + 100 + 5 = 110. Taking 100 rules out both 10s beside it, and that is still the best trade."
+    }
+  ],
+  "constraints": [
+    "1 ≤ nums.length ≤ 10⁵",
+    "0 ≤ nums[i] ≤ 1000"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/maximum-sum-of-non-adjacent-elements"
+    },
+    {
+      "label": "LeetCode 198",
+      "url": "https://leetcode.com/problems/house-robber/"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "longest-common-substring",
+  "statement": [
+    "You are given two strings, first and second. A substring is a run of consecutive characters inside a string.",
+    "Return the length of the longest string that is a substring of both first and second, or 0 if they share no character."
+  ],
+  "examples": [
+    {
+      "input": {
+        "first": "abcd",
+        "second": "abzd"
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "\"ab\" appears in both. The shared \"d\" is a separate run of length 1, because \"c\" and \"z\" differ."
+    },
+    {
+      "input": {
+        "first": "zxabcdezy",
+        "second": "yzabcdezx"
+      },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "\"abcdez\" appears in both strings as one unbroken run."
+    }
+  ],
+  "constraints": [
+    "1 ≤ first.length, second.length ≤ 10³",
+    "Both strings contain only lowercase English letters"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/longest-common-substring"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/longest-common-substring1452/1"
+    }
+  ]
+}

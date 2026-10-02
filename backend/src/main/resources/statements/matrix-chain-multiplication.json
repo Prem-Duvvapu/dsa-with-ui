@@ -1,0 +1,50 @@
+{
+  "id": "matrix-chain-multiplication",
+  "statement": [
+    "You are given an array dims of length n + 1 describing a chain of n matrices: matrix i, for 1 ≤ i ≤ n, has dimensions dims[i − 1] × dims[i].",
+    "Multiplying an a × b matrix by a b × c matrix costs a × b × c scalar multiplications. The product of the whole chain is the same however it is parenthesised, but the cost is not.",
+    "Return the smallest total number of scalar multiplications needed to multiply the whole chain."
+  ],
+  "examples": [
+    {
+      "input": {
+        "dims": [
+          10,
+          20,
+          30,
+          40,
+          30
+        ]
+      },
+      "output": "30000",
+      "answerVariable": "answer",
+      "explanation": "Multiplying left to right, ((A × B) × C) × D, costs 6000 + 12000 + 12000 = 30000, the cheapest order for these four matrices."
+    },
+    {
+      "input": {
+        "dims": [
+          10,
+          20,
+          30
+        ]
+      },
+      "output": "6000",
+      "answerVariable": "answer",
+      "explanation": "There are only two matrices, 10 × 20 and 20 × 30, so the one product costs 10 × 20 × 30 = 6000."
+    }
+  ],
+  "constraints": [
+    "2 ≤ dims.length ≤ 100",
+    "1 ≤ dims[i] ≤ 100"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/matrix-chain-multiplication"
+    },
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1"
+    }
+  ]
+}

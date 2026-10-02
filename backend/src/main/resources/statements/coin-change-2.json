@@ -1,0 +1,46 @@
+{
+  "id": "coin-change-2",
+  "statement": [
+    "You are given distinct coin values coins and a target amount. You have as many coins of each value as you want.",
+    "Count the combinations of coins that add up to exactly amount. A combination is a multiset of coins, so the order of the coins does not matter: 1 + 2 and 2 + 1 are the same combination.",
+    "Return that count, or 0 if amount cannot be made."
+  ],
+  "examples": [
+    {
+      "input": {
+        "coins": [
+          1,
+          2,
+          5
+        ],
+        "amount": 5
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "The combinations are 5, 2 + 2 + 1, 2 + 1 + 1 + 1 and 1 + 1 + 1 + 1 + 1."
+    },
+    {
+      "input": {
+        "coins": [
+          3
+        ],
+        "amount": 5
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "Coins of value 3 make only multiples of 3, and 5 is not one."
+    }
+  ],
+  "constraints": [
+    "1 ≤ coins.length ≤ 300",
+    "1 ≤ coins[i] ≤ 5000",
+    "All values in coins are distinct",
+    "0 ≤ amount ≤ 5000"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 518",
+      "url": "https://leetcode.com/problems/coin-change-ii/"
+    }
+  ]
+}
