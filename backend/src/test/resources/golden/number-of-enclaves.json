@@ -1,30 +1,29 @@
 {
   "anchors" : {
-    "boundary" : 10,
-    "done" : 37,
-    "follow" : 24,
-    "init" : 2,
-    "stuck" : 22,
-    "trapped" : 33,
-    "walk" : 17
+    "border" : 14,
+    "count" : 21,
+    "done" : 25,
+    "init" : 6,
+    "recurse" : 35,
+    "return" : 38,
+    "visit" : 29
   },
-  "code" : "public int numEnclaves(int[][] grid) {\n    int n = grid.length, m = grid[0].length;\n    boolean[][] escapes = new boolean[n][m];\n    Queue<int[]> queue = new LinkedList<>();\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            boolean edge = i == 0 || i == n - 1 || j == 0 || j == m - 1;\n            if (edge && grid[i][j] == 1 && !escapes[i][j]) {\n                escapes[i][j] = true;\n                queue.add(new int[]{i, j});\n            }\n        }\n    }\n\n    while (!queue.isEmpty()) {\n        int[] cell = queue.poll();\n        for (int[] d : DIRECTIONS) {\n            int r = cell[0] + d[0], c = cell[1] + d[1];\n            if (r < 0 || r >= n || c < 0 || c >= m\n                    || grid[r][c] == 0 || escapes[r][c]) {\n                continue;\n            }\n            escapes[r][c] = true;\n            queue.add(new int[]{r, c});\n        }\n    }\n\n    int enclaves = 0;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            if (grid[i][j] == 1 && !escapes[i][j]) {\n                enclaves++;\n            }\n        }\n    }\n    return enclaves;\n}",
+  "code" : "class Solution {\n    public static int[] dRow = {-1, 0, 1, 0};\n    public static int[] dCol = {0, 1, 0, -1};\n\n    public int numEnclaves(int[][] grid) {\n        int m = grid.length;\n        int n = grid[0].length;\n        int cnt = 0;\n        boolean[][] visited = new boolean[m][n];\n\n        for (int i=0;i<m;i++) {\n            for (int j=0;j<n;j++) {\n                if ((i == 0 || i == m-1 || j == 0 || j == n-1) && grid[i][j] == 1 && !visited[i][j])\n                    dfs(i, j, visited, grid, m, n);\n            }\n        }\n\n        for (int i=1;i<m-1;i++) {\n            for (int j=1;j<n-1;j++) {\n                if (grid[i][j] == 1 && !visited[i][j])\n                    cnt++;\n            }\n        }\n\n        return cnt;\n    }\n\n    private void dfs(int r,int c,boolean[][] visited,int[][] grid,int m,int n) {\n        visited[r][c] = true;\n\n        for (int i=0;i<4;i++) {\n            int newRow = r + dRow[i];\n            int newCol = c + dCol[i];\n\n            if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && grid[newRow][newCol] == 1 && !visited[newRow][newCol])\n                dfs(newRow, newCol, visited, grid, m, n);\n        }\n    }\n}",
   "problemId" : "number-of-enclaves",
   "resolvedInput" : {
     "grid" : [ [ 0, 0, 0, 0 ], [ 1, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ]
   },
-  "stepCount" : 11,
+  "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "A 4x4 map. Instead of asking which land is trapped, flood from the boundary and see which land escapes; the rest is the answer.",
+    "activeLine" : 6,
+    "description" : "Land on the border can walk straight off the grid, and so can any land joined to it. Mark all of that first with a DFS from each border land cell; whatever interior land is left unmarked is an enclave.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cols" : "4",
-      "rows" : "4"
+      "cnt" : "0"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
@@ -34,33 +33,33 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 10,
-    "description" : "(1,0) is land on the boundary - one step and you are off the map. Seed the flood there.",
-    "queueOrStackState" : [ "(1,0)" ],
+    "activeLine" : 14,
+    "description" : "(1,0) is unvisited land on the border - it can walk off. dfs(1,0) marks everything joined to it.",
+    "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,0)",
-      "seeds" : "1"
+      "i" : "1",
+      "j" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
+    "gridState" : [ [ 0, 0, 0, 0 ], [ 1, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 17,
-    "description" : "Walk out from (1,0): any land next to it can reach the boundary the same way.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
+    "activeLine" : 29,
+    "description" : "dfs(1,0): mark it visited - it can reach the border.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(1,0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,0)",
-      "escaped" : "1"
+      "c" : "0",
+      "r" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
@@ -70,14 +69,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 22,
-    "description" : "(0,0) is off the map, sea, or already known to escape - nothing to add.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
+    "activeLine" : 38,
+    "description" : "dfs(1,0) is done. Return to the caller.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(1,0)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,0)"
+      "c" : "0",
+      "r" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
@@ -87,66 +87,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 22,
-    "description" : "(2,0) is off the map, sea, or already known to escape - nothing to add.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 6,
-    "activeLine" : 22,
-    "description" : "(1,-1) is off the map, sea, or already known to escape - nothing to add.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,-1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 7,
-    "activeLine" : 22,
-    "description" : "(1,1) is off the map, sea, or already known to escape - nothing to add.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 1, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 8,
-    "activeLine" : 33,
-    "description" : "(1,2) is land the boundary flood never reached - enclave cell #1.",
+    "activeLine" : 21,
+    "description" : "(1,2) is interior land no border DFS reached, so it cannot walk off: an enclave cell. cnt = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,2)",
-      "enclaves" : "1"
+      "cnt" : "1",
+      "i" : "1",
+      "j" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 1, 1, 0 ], [ 0, 0, 0, 0 ] ],
@@ -155,16 +105,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 9,
-    "activeLine" : 33,
-    "description" : "(2,1) is land the boundary flood never reached - enclave cell #2.",
+    "stepNumber" : 6,
+    "activeLine" : 21,
+    "description" : "(2,1) is interior land no border DFS reached, so it cannot walk off: an enclave cell. cnt = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,1)",
-      "enclaves" : "2"
+      "cnt" : "2",
+      "i" : "2",
+      "j" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 3, 1, 0 ], [ 0, 0, 0, 0 ] ],
@@ -173,16 +124,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 10,
-    "activeLine" : 33,
-    "description" : "(2,2) is land the boundary flood never reached - enclave cell #3.",
+    "stepNumber" : 7,
+    "activeLine" : 21,
+    "description" : "(2,2) is interior land no border DFS reached, so it cannot walk off: an enclave cell. cnt = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,2)",
-      "enclaves" : "3"
+      "cnt" : "3",
+      "i" : "2",
+      "j" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 3, 3, 0 ], [ 0, 0, 0, 0 ] ],
@@ -191,16 +143,15 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 11,
-    "activeLine" : 37,
-    "description" : "1 land cell can walk off the map and 3 cannot. Answer: 3.",
+    "stepNumber" : 8,
+    "activeLine" : 25,
+    "description" : "3 land cells cannot reach the border.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "enclaves" : "3",
-      "escaped" : "1"
+      "cnt" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 0, 0, 0 ], [ 2, 0, 3, 0 ], [ 0, 3, 3, 0 ], [ 0, 0, 0, 0 ] ],
