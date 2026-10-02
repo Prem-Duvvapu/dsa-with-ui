@@ -1,0 +1,45 @@
+{
+  "id": "word-ladder-2",
+  "statement": [
+    "You are given two words, beginWord and endWord, and a dictionary wordList, written as one comma-separated string.",
+    "A transformation sequence starts at beginWord and ends at endWord. Each step changes exactly one letter, and every word after beginWord, including endWord, must appear in wordList.",
+    "Return every transformation sequence of the shortest possible length, each as its list of words. The sequences can be listed in any order. If no sequence exists, return an empty list."
+  ],
+  "examples": [
+    {
+      "input": {
+        "beginWord": "hit",
+        "endWord": "cog",
+        "wordList": "hot,dot,dog,lot,log,cog"
+      },
+      "output": "hit -> hot -> dot -> dog -> cog; hit -> hot -> lot -> log -> cog",
+      "answerVariable": "answer",
+      "explanation": "The shortest sequences have 5 words, and there are exactly two of them: one passes through dot and dog, the other through lot and log."
+    },
+    {
+      "input": {
+        "beginWord": "hot",
+        "endWord": "dog",
+        "wordList": "dot,dog,hog"
+      },
+      "output": "hot -> dot -> dog; hot -> hog -> dog",
+      "answerVariable": "answer",
+      "explanation": "Changing either the first or the middle letter of hot gives a word one step from dog, so there are two shortest sequences of 3 words."
+    }
+  ],
+  "constraints": [
+    "1 ≤ beginWord.length ≤ 5",
+    "endWord.length == beginWord.length",
+    "1 ≤ number of words in wordList ≤ 500",
+    "every word in wordList has the same length as beginWord",
+    "all words consist of lowercase English letters",
+    "beginWord ≠ endWord",
+    "the words in wordList are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 126",
+      "url": "https://leetcode.com/problems/word-ladder-ii/"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "id": "city-smallest-neighbors",
+  "statement": [
+    "There are n cities, numbered 0 to n − 1. graph holds the vertex count n and a list of roads [from, to, distance]; each road can be travelled in both directions. You are also given an integer threshold.",
+    "For each city, count the other cities it can reach by a route whose total distance is at most threshold. Use the shortest route between each pair, for example by computing all-pairs shortest distances with Floyd–Warshall.",
+    "Return the city with the smallest count. If several cities tie, return the one with the largest number."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1,
+              3
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              1,
+              3,
+              4
+            ],
+            [
+              2,
+              3,
+              1
+            ]
+          ]
+        },
+        "threshold": 4
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Within distance 4, cities 0 and 3 each reach 2 other cities, while 1 and 2 each reach 3. Cities 0 and 3 tie on the fewest, and 3 is the larger number."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              4,
+              8
+            ],
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              1,
+              4,
+              2
+            ],
+            [
+              2,
+              3,
+              1
+            ],
+            [
+              3,
+              4,
+              1
+            ]
+          ]
+        },
+        "threshold": 2
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "With threshold 2, city 0 reaches only city 1. Every other city reaches at least 2 cities, so city 0 is the unique answer."
+    }
+  ],
+  "constraints": [
+    "2 ≤ n ≤ 100",
+    "1 ≤ number of roads ≤ n × (n − 1) / 2",
+    "0 ≤ from < to < n",
+    "1 ≤ distance, threshold ≤ 10⁴",
+    "all pairs (from, to) are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1334",
+      "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/"
+    }
+  ]
+}

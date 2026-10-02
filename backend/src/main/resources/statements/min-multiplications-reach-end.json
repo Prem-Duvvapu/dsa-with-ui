@@ -1,0 +1,61 @@
+{
+  "id": "min-multiplications-reach-end",
+  "statement": [
+    "You are given an array arr of multipliers and two integers start and end.",
+    "In one step you may replace the current value x with (x × arr[i]) mod 100000, for any i. Values therefore always stay between 0 and 99999.",
+    "Return the minimum number of steps needed to turn start into end, or −1 if end can never be reached."
+  ],
+  "examples": [
+    {
+      "input": {
+        "arr": [
+          3,
+          4,
+          65
+        ],
+        "start": 7,
+        "end": 66175
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "7 × 3 = 21, 21 × 3 = 63, 63 × 65 = 4095, and 4095 × 65 = 266175, which is 66175 mod 100000. No sequence of three or fewer steps reaches 66175."
+    },
+    {
+      "input": {
+        "arr": [
+          5
+        ],
+        "start": 5,
+        "end": 7
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "Multiplying by 5 keeps every value a multiple of 5, so 7 can never appear."
+    },
+    {
+      "input": {
+        "arr": [
+          2,
+          5,
+          7
+        ],
+        "start": 3,
+        "end": 30
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "No single multiplier turns 3 into 30, but 3 × 2 = 6 and 6 × 5 = 30 does it in two steps."
+    }
+  ],
+  "constraints": [
+    "1 ≤ arr.length ≤ 10⁴",
+    "1 ≤ arr[i] ≤ 10⁴",
+    "1 ≤ start, end < 10⁵"
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/minimum-multiplications-to-reach-end"
+    }
+  ]
+}

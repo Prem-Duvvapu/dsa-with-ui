@@ -1,0 +1,107 @@
+{
+  "id": "network-connected-ops",
+  "statement": [
+    "There are n computers, numbered 0 to n − 1. graph holds the count n and a list of cables [a, b], each directly joining two computers. Computers can reach each other through chains of cables.",
+    "In one operation you may unplug any existing cable and use it to join any two computers that were not joined directly.",
+    "Return the minimum number of operations needed to make every computer reachable from every other, or −1 if it cannot be done."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Computers 0, 1 and 2 form a triangle, so one of its three cables is spare. Moving it to computer 3 connects everything."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "Connecting 6 computers takes at least 5 cables, and only 3 exist, so it is impossible."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 7,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "There are three groups, {0, 1, 2}, {3, 4, 5} and {6}. Each triangle has a spare cable, and two moves are enough to join the three groups."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 10⁵",
+    "1 ≤ number of cables ≤ min(n × (n − 1) / 2, 10⁵)",
+    "0 ≤ a, b < n",
+    "a ≠ b",
+    "no two computers are joined by more than one cable"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 1319",
+      "url": "https://leetcode.com/problems/number-of-operations-to-make-network-connected/"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "id": "kahn-algo-bfs",
+  "statement": [
+    "You are given a directed acyclic graph, made of a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v], each meaning an edge from u to v.",
+    "A topological order lists every vertex so that for each edge [u, v], u comes before v. Build it with Kahn's algorithm: count each vertex's in-degree (incoming edges), put every vertex with in-degree 0 into a queue in increasing order, then repeatedly take the front vertex, append it to the order, and lower the in-degree of each of its out-neighbours, in edge-list order, enqueuing any neighbour that reaches 0.",
+    "Return the order the vertices leave the queue."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              5,
+              2
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        }
+      },
+      "output": "[4, 5, 2, 0, 3, 1]",
+      "answerVariable": "order",
+      "explanation": "Only 4 and 5 start with in-degree 0. Removing 4 leaves 0 and 1 still waiting on other edges; removing 5 frees 2 and then 0. Removing 2 frees 3, and removing 3 finally frees 1."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "[0, 1, 2, 3]",
+      "answerVariable": "order",
+      "explanation": "The graph is a single chain, so each removal frees exactly the next vertex and only one order is possible."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/plus/dsa/problems/topological-sort-or-kahns-algorithm"
+    }
+  ]
+}

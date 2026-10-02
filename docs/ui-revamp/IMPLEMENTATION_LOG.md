@@ -531,3 +531,15 @@ Source links: every source in the repo was re-verified mechanically. LeetCode li
 Tracer defects found here (book-allocation, row-max-ones, lower/upper-bound) are fixed separately, with
   the others, under RCA-055. No example here uses an affected input.
 Automated: StatementContractTest passes (163 statements).
+
+## Problem statements: Graphs (48 problems, plus the num-provinces pilot)
+
+```text
+Package / status: statements rollout, topic 4 of 8 (after #165). Same method; links verified (45/45).
+Coverage: 48 of 57 (num-provinces from #159 makes 49 graph statements). Skipped because no final variable
+  holds the answer: bipartite-graph-dfs, cycle-directed-dfs, undirected-cycle-bfs, undirected-cycle-dfs,
+  directed-cycle-dfs (no true/false result), distance-nearest-1, nearest-cell-1 (no distance grid),
+  flood-fill, surrounded-regions (counts only, not the image/board). These are the ones the owner-code
+  alignment of the grid problems will emit properly.
+No wrong answers found; the earlier "null variables" skips were a probe artifact (delta encoding), now fixed.
+Automated: StatementContractTest passes (211 statements).

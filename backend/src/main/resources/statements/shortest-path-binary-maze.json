@@ -1,0 +1,67 @@
+{
+  "id": "shortest-path-binary-maze",
+  "statement": [
+    "You are given a grid of 0s and 1s. A 1 is an open cell and a 0 is a wall.",
+    "Start at the top-left cell (0, 0) and try to reach the bottom-right cell. Each move goes one cell up, down, left or right, and may only land on an open cell.",
+    "Return the minimum number of moves needed. Return −1 if the destination cannot be reached, including when the start or the destination is a wall."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "5",
+      "answerVariable": "answer",
+      "explanation": "The only way down is through the open cell (1, 2): right, right, down, down, right reaches (2, 3) in 5 moves."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "The start cell is boxed in by walls on its right and below, so no move is possible and the destination is unreachable."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/shortest-path-in-a-binary-maze-1655453161/1"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "making-large-island",
+  "statement": [
+    "You are given an n × n grid of 0s and 1s, where 1 is land and 0 is water. An island is a group of land cells joined horizontally or vertically.",
+    "You may change at most one 0 into a 1.",
+    "Return the size of the largest island that can exist after that change."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "7",
+      "answerVariable": "answer",
+      "explanation": "There are two islands of 3 cells each. Turning (0, 2) into land touches both of them, giving one island of 3 + 3 + 1 = 7 cells. Flipping (1, 1) gives the same size."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "4",
+      "answerVariable": "answer",
+      "explanation": "There is no water to change, so the largest island is the whole 4-cell grid."
+    }
+  ],
+  "constraints": [
+    "n == grid.length == grid[i].length",
+    "1 ≤ n ≤ 500",
+    "grid[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 827",
+      "url": "https://leetcode.com/problems/making-a-large-island/"
+    }
+  ]
+}

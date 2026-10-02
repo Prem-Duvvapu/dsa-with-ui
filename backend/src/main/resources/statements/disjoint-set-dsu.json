@@ -1,0 +1,64 @@
+{
+  "id": "disjoint-set-dsu",
+  "statement": [
+    "A disjoint set union (DSU, also called union–find) keeps elements in separate groups and supports two operations: find(x), which returns the representative of x's group, and union(u, v), which merges the groups of u and v. Union by rank attaches the shorter tree under the taller one, and path compression points each visited element straight at its representative.",
+    "You are given dsu: its vertex count is n + 1, for the elements 1 to n (index 0 is unused), and its edges are union(u, v) operations to apply in order.",
+    "Apply every union and return the final groups, each listed in increasing order."
+  ],
+  "examples": [
+    {
+      "input": {
+        "dsu": {
+          "vertices": 6,
+          "edges": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      },
+      "output": "{1, 2}, {3, 4}, {5}",
+      "answerVariable": "Disjoint Sets",
+      "explanation": "The two unions build the groups {1, 2} and {3, 4}. Element 5 is never mentioned, so it stays alone."
+    },
+    {
+      "input": {
+        "dsu": {
+          "vertices": 8,
+          "edges": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              5,
+              6
+            ]
+          ]
+        }
+      },
+      "output": "{1, 2, 3, 4}, {5, 6}, {7}",
+      "answerVariable": "Disjoint Sets",
+      "explanation": "union(2, 4) joins the two groups built by the first two unions into {1, 2, 3, 4}. union(5, 6) makes a separate pair, and 7 is untouched."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/disjoint-set-union"
+    }
+  ]
+}

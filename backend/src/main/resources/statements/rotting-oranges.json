@@ -1,0 +1,82 @@
+{
+  "id": "rotting-oranges",
+  "statement": [
+    "You are given a grid where each cell is 0 (empty), 1 (a fresh orange) or 2 (a rotten orange).",
+    "Every minute, each fresh orange that is directly above, below, left or right of a rotten orange becomes rotten.",
+    "Return the number of minutes that pass until no fresh orange is left. If some fresh orange can never rot, return −1. If there are no fresh oranges to begin with, the answer is 0."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            2,
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      "output": "3",
+      "answerVariable": "answer",
+      "explanation": "Rot spreads from both corners at once. After 2 minutes only (2, 1) is still fresh, and it rots in minute 3, so all 9 fresh oranges are gone after 3 minutes."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            2,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            0,
+            0
+          ]
+        ]
+      },
+      "output": "-1",
+      "answerVariable": "answer",
+      "explanation": "Only the orange at (0, 1) is next to the rotten one. The oranges at (1, 3), (2, 0) and (2, 1) are cut off by empty cells and never rot."
+    }
+  ],
+  "constraints": [
+    "m == grid.length",
+    "n == grid[i].length",
+    "1 ≤ m, n ≤ 10",
+    "grid[i][j] is 0, 1 or 2"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 994",
+      "url": "https://leetcode.com/problems/rotting-oranges/"
+    }
+  ]
+}

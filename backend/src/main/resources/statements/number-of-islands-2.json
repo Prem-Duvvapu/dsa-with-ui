@@ -1,0 +1,89 @@
+{
+  "id": "number-of-islands-2",
+  "statement": [
+    "You are given a grid of rows × cols cells that starts as all water, and a list operations of [row, col] positions. Each operation turns that cell into land.",
+    "An island is a group of land cells joined horizontally or vertically. After each operation, count the islands.",
+    "Return the list of island counts, one per operation, in order."
+  ],
+  "examples": [
+    {
+      "input": {
+        "rows": 3,
+        "cols": 3,
+        "operations": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      "output": "[1, 1, 2, 3]",
+      "answerVariable": "answer",
+      "explanation": "(0, 1) joins the island at (0, 0). (1, 2) and (2, 1) touch no land on any side, so each starts a new island."
+    },
+    {
+      "input": {
+        "rows": 3,
+        "cols": 3,
+        "operations": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "[1, 2, 1, 1]",
+      "answerVariable": "answer",
+      "explanation": "(0, 0) and (1, 1) touch only at a corner, so there are 2 islands. (0, 1) is next to both and merges them into 1, and (1, 0) just joins that island."
+    },
+    {
+      "input": {
+        "rows": 2,
+        "cols": 2,
+        "operations": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "[1, 2]",
+      "answerVariable": "answer",
+      "explanation": "The two land cells are diagonal neighbours, which do not connect, so the count rises to 2."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/practice/dsa/number-of-islands-ii"
+    }
+  ]
+}

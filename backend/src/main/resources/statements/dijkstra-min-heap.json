@@ -1,0 +1,92 @@
+{
+  "id": "dijkstra-min-heap",
+  "statement": [
+    "You are given a weighted undirected graph: a vertex count n (vertices numbered 0 to n − 1), a list of edges [u, v, w] with non-negative weights, and a source vertex start.",
+    "Find the shortest distance from start to every vertex using Dijkstra's algorithm with a min-heap: repeatedly take the closest pending vertex from the heap, and for each neighbour, if going through this vertex is shorter than the neighbour's best known distance, update it and push it onto the heap.",
+    "Return the distances as a list indexed by vertex."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1,
+              4
+            ],
+            [
+              0,
+              2,
+              1
+            ],
+            [
+              2,
+              1,
+              2
+            ],
+            [
+              1,
+              3,
+              1
+            ],
+            [
+              2,
+              3,
+              5
+            ],
+            [
+              3,
+              4,
+              3
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, 3, 1, 4, 7]",
+      "answerVariable": "dist",
+      "explanation": "Vertex 1 is reached more cheaply through 2 (1 + 2 = 3) than directly (4). Vertex 3 then costs 3 + 1 = 4, beating 1 + 5 = 6, and 4 costs 4 + 3 = 7."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              2
+            ],
+            [
+              2,
+              3,
+              2
+            ],
+            [
+              0,
+              3,
+              10
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, 2, 4, 6]",
+      "answerVariable": "dist",
+      "explanation": "The three short edges reach vertex 3 at cost 6, which beats the direct edge of weight 10."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/dijkstras-algorithm"
+    }
+  ]
+}

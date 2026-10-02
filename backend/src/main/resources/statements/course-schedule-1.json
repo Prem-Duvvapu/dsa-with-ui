@@ -1,0 +1,73 @@
+{
+  "id": "course-schedule-1",
+  "statement": [
+    "There are n courses, numbered 0 to n − 1. You are given graph, made of the vertex count n and a list of edges [a, b], each meaning course a must be finished before course b can be taken.",
+    "Return true if it is possible to finish all n courses, and false otherwise. It is impossible exactly when the prerequisites form a cycle."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "The courses can be taken in the order 0, 1, 2, 3, which respects every prerequisite."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 3,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ]
+          ]
+        }
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "Each course waits on another in the loop 0 → 1 → 2 → 0, so none of them can be started."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 2000",
+    "0 ≤ edges.length ≤ 5000",
+    "0 ≤ a, b < n",
+    "all pairs [a, b] are distinct"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 207",
+      "url": "https://leetcode.com/problems/course-schedule/"
+    }
+  ]
+}

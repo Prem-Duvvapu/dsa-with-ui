@@ -1,0 +1,38 @@
+{
+  "id": "accounts-merge",
+  "statement": [
+    "You are given a list of accounts. Each account has a person's name followed by one or more email addresses. In accounts it is written as one string: accounts are separated by ';', and each account is Name:email,email,…",
+    "Two accounts belong to the same person exactly when they share at least one email address, and this carries through: if account A shares an email with B, and B with C, all three are one person. Two accounts with the same name but no email in common may belong to different people. All accounts of one person have the same name.",
+    "Merge the accounts of each person. Return one entry per person: the name, then all of that person's emails with no repeats, sorted in ascending character order. The merged accounts can be listed in any order."
+  ],
+  "examples": [
+    {
+      "input": {
+        "accounts": "John:johnsmith@mail.com,john_newyork@mail.com;John:johnsmith@mail.com,john00@mail.com;Mary:mary@mail.com;John:johnnybravo@mail.com"
+      },
+      "output": "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
+      "answerVariable": "Merged",
+      "explanation": "The first two accounts share johnsmith@mail.com, so they merge into one with three emails. The last John shares no email with them, so he stays a separate person."
+    },
+    {
+      "input": {
+        "accounts": "Gabe:Gabe0@m.co,Gabe3@m.co,Gabe1@m.co;Kevin:Kevin3@m.co,Kevin5@m.co,Kevin0@m.co;Ethan:Ethan5@m.co,Ethan4@m.co,Ethan0@m.co;Hanzo:Hanzo3@m.co,Hanzo1@m.co,Hanzo0@m.co;Fern:Fern5@m.co,Fern1@m.co,Fern0@m.co"
+      },
+      "output": "[Gabe: Gabe0@m.co, Gabe1@m.co, Gabe3@m.co]; [Kevin: Kevin0@m.co, Kevin3@m.co, Kevin5@m.co]; [Ethan: Ethan0@m.co, Ethan4@m.co, Ethan5@m.co]; [Hanzo: Hanzo0@m.co, Hanzo1@m.co, Hanzo3@m.co]; [Fern: Fern0@m.co, Fern1@m.co, Fern5@m.co]",
+      "answerVariable": "Merged",
+      "explanation": "No email appears in two accounts, so nothing merges; each account just has its emails sorted."
+    }
+  ],
+  "constraints": [
+    "1 ≤ number of accounts ≤ 1000",
+    "each account has a name and 1 to 9 emails",
+    "1 ≤ length of each name or email ≤ 30",
+    "names consist of English letters"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 721",
+      "url": "https://leetcode.com/problems/accounts-merge/"
+    }
+  ]
+}

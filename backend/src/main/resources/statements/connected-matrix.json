@@ -1,0 +1,102 @@
+{
+  "id": "connected-matrix",
+  "statement": [
+    "You are given a grid of 0s and 1s. A 1 is a filled cell and a 0 is an empty one.",
+    "Two filled cells belong to the same connected component when you can walk from one to the other through filled cells, moving one step up, down, left or right at a time. Diagonal neighbours are not connected.",
+    "Return the number of connected components of filled cells."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            0
+          ]
+        ]
+      },
+      "output": "2",
+      "answerVariable": "components",
+      "explanation": "The three filled cells in the top-left corner form one component. The other five filled cells form a chain from (1, 3) down to (3, 1), which is the second."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "1",
+      "answerVariable": "components",
+      "explanation": "Every cell is filled, so the whole grid is one component."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "2",
+      "answerVariable": "components",
+      "explanation": "The two filled cells touch only at a corner, which does not connect them, so each is its own component."
+    }
+  ],
+  "constraints": [
+    "m == grid.length",
+    "n == grid[i].length",
+    "1 ≤ m, n ≤ 300",
+    "grid[i][j] is 0 or 1"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 200",
+      "url": "https://leetcode.com/problems/number-of-islands/"
+    }
+  ]
+}

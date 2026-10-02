@@ -1,0 +1,112 @@
+{
+  "id": "articulation-points",
+  "statement": [
+    "You are given an undirected graph, made of a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v].",
+    "A vertex is an articulation point (a cut vertex) when deleting it, together with its edges, splits its connected component into more pieces than before.",
+    "Return all articulation points in increasing order, or none if the graph has no such vertex."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 7,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              1,
+              6
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        }
+      },
+      "output": "[1]",
+      "answerVariable": "articulation points",
+      "explanation": "Deleting 1 leaves three pieces: {0, 2}, {3, 4, 5} and {6}. Every other vertex lies on a cycle or at the end of a single edge, so deleting it disconnects nothing."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ]
+          ]
+        }
+      },
+      "output": "[0]",
+      "answerVariable": "articulation points",
+      "explanation": "This is a star: the four leaves are joined only through the centre 0, so 0 is the only cut vertex."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 3,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ]
+          ]
+        }
+      },
+      "output": "none",
+      "answerVariable": "articulation points",
+      "explanation": "In a triangle each vertex has a route around every other vertex, so no single deletion disconnects the graph."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/articulation-points-in-graph"
+    }
+  ]
+}

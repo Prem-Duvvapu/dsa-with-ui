@@ -1,0 +1,80 @@
+{
+  "id": "graph-intro",
+  "statement": [
+    "A graph is a set of vertices joined by edges. Here the graph is undirected: an edge [u, v] links u and v in both directions.",
+    "You are given graph, made of a vertex count n (vertices numbered 0 to n − 1) and a list of edges. Store each edge in the adjacency list of both of its endpoints, then walk every adjacency list.",
+    "The degree of a vertex is the number of edges touching it. Return the degree of every vertex, as a list indexed by vertex. Because each undirected edge appears in two adjacency lists, the degrees always add up to twice the number of edges."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      },
+      "output": "[2, 2, 3, 2, 1]",
+      "answerVariable": "degrees",
+      "explanation": "Vertex 2 touches the edges to 0, 1 and 3, so its degree is 3; vertex 4 touches only the edge to 3. The degrees sum to 10, twice the 5 edges."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        }
+      },
+      "output": "[2, 2, 2, 1, 2, 1]",
+      "answerVariable": "degrees",
+      "explanation": "Vertices 0, 1 and 2 form a triangle, so each has degree 2. In the chain 3 − 4 − 5 the middle vertex has degree 2 and the two ends have degree 1."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/introduction-to-graph"
+    }
+  ]
+}

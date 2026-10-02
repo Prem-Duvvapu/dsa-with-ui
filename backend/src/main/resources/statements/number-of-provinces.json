@@ -1,0 +1,50 @@
+{
+  "id": "number-of-provinces",
+  "statement": [
+    "There are n cities, numbered 0 to n − 1. graph holds the count n and a list of edges [a, b], each a direct connection between two cities.",
+    "Connections carry through: if a is connected to b and b to c, then a and c are connected too. A province is a group of cities connected to one another, directly or indirectly, and to no city outside the group.",
+    "Return the number of provinces."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "2",
+      "answerVariable": "provinces",
+      "explanation": "Cities 0 and 1 form one province and cities 2 and 3 form another; nothing links the two pairs."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": []
+        }
+      },
+      "output": "6",
+      "answerVariable": "provinces",
+      "explanation": "There are no connections at all, so each of the six cities is its own province."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 200"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 547",
+      "url": "https://leetcode.com/problems/number-of-provinces/"
+    }
+  ]
+}

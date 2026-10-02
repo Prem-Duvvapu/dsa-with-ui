@@ -1,0 +1,82 @@
+{
+  "id": "shortest-path-dag",
+  "statement": [
+    "You are given a weighted directed acyclic graph: a vertex count n (vertices numbered 0 to n − 1), a list of edges [u, v, w] from u to v with weight w (weights may be negative), and a source vertex start.",
+    "Find the shortest distance from start to every vertex. Because the graph has no cycle, you can process the vertices in topological order and relax each vertex's outgoing edges once.",
+    "Return the distances as a list indexed by vertex, using ∞ for a vertex that cannot be reached from start."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 5,
+          "edges": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              2,
+              4
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              1,
+              3,
+              7
+            ],
+            [
+              2,
+              3,
+              3
+            ],
+            [
+              3,
+              4,
+              2
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, 2, 3, 6, 8]",
+      "answerVariable": "dist",
+      "explanation": "Going 0 → 1 → 2 costs 2 + 1 = 3, cheaper than the direct edge of 4. From 2, vertex 3 costs 3 + 3 = 6 (better than 2 + 7 = 9 through 1), and 4 costs 6 + 2 = 8."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1,
+              5
+            ],
+            [
+              1,
+              2,
+              3
+            ]
+          ]
+        },
+        "start": 0
+      },
+      "output": "[0, 5, 8, ∞]",
+      "answerVariable": "dist",
+      "explanation": "The chain 0 → 1 → 2 gives distances 5 and 8. No edge leads to vertex 3, so it is unreachable."
+    }
+  ],
+  "sources": [
+    {
+      "label": "takeUforward",
+      "url": "https://takeuforward.org/blogs/data-structure-and-algorithm/shortest-path-in-a-directed-acyclic-graph-dag"
+    }
+  ]
+}

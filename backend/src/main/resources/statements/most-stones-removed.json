@@ -1,0 +1,104 @@
+{
+  "id": "most-stones-removed",
+  "statement": [
+    "You are given stones, a list of [x, y] positions on a grid, with at most one stone per position.",
+    "A stone may be removed if at least one other stone that has not been removed shares its row or its column.",
+    "Return the largest number of stones that can be removed. Here the answer is reported as \"Done: k removable\", where k is that number."
+  ],
+  "examples": [
+    {
+      "input": {
+        "stones": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      },
+      "output": "Done: 5 removable",
+      "answerVariable": "Operation",
+      "explanation": "All six stones are linked into one group through shared rows and columns, and every group can be cleared down to a single stone, so 5 can be removed."
+    },
+    {
+      "input": {
+        "stones": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      },
+      "output": "Done: 3 removable",
+      "answerVariable": "Operation",
+      "explanation": "The four corner stones form one group and the centre stone (1, 1) shares no row or column with any of them. Each group keeps one stone, so 5 − 2 = 3 are removed."
+    },
+    {
+      "input": {
+        "stones": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      },
+      "output": "Done: 0 removable",
+      "answerVariable": "Operation",
+      "explanation": "The stones lie on a diagonal, so no two share a row or a column and none can be removed."
+    }
+  ],
+  "constraints": [
+    "1 ≤ stones.length ≤ 1000",
+    "0 ≤ x, y ≤ 10⁴",
+    "no two stones are at the same position"
+  ],
+  "sources": [
+    {
+      "label": "LeetCode 947",
+      "url": "https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/"
+    }
+  ]
+}

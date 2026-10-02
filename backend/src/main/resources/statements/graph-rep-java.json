@@ -1,0 +1,76 @@
+{
+  "id": "graph-rep-java",
+  "statement": [
+    "You are given an undirected graph: a vertex count n (vertices numbered 0 to n − 1) and a list of edges [u, v].",
+    "Store it as an adjacency list, the way it is usually written in Java: an ArrayList<ArrayList<Integer>> with one empty inner list created for each vertex. Then, for each edge [u, v] in list order, add v to u's list and u to v's list.",
+    "Return the adjacency list."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "[[1, 3], [0, 2], [1, 3], [2, 0]]",
+      "answerVariable": "adj",
+      "explanation": "The edges form a square 0 − 1 − 2 − 3 − 0, so every vertex has two neighbours. Vertex 3 meets 2 before 0 in the edge list, so its list is [2, 0]."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              5
+            ]
+          ]
+        }
+      },
+      "output": "[[1, 2, 3], [0], [0], [0, 4, 5], [3], [3]]",
+      "answerVariable": "adj",
+      "explanation": "Vertices 0 and 3 are hubs with three neighbours each, and the four leaves each list only the hub they hang from."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/dsa/graph-and-its-representations/"
+    }
+  ]
+}
