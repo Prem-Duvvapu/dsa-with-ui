@@ -70,7 +70,8 @@ public class InfixToPostfixTracer implements AlgorithmTracer {
                            }
                            stack.pop();
                        } else {
-                           while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(c)) {
+                           while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)
+                                   || (precedence(stack.peek()) == precedence(c) && c != '^'))) {
                                // @a higherPrec
                                result.append(stack.pop());
                            }
@@ -85,6 +86,16 @@ public class InfixToPostfixTracer implements AlgorithmTracer {
                    // @a done
                    return result.toString();
                }""";
+    }
+
+    /**
+     * Does the operator on the stack leave before {@code arriving} is pushed? Higher precedence
+     * always does. Equal precedence does only for a left-associative operator: '^' is
+     * right-associative, so A^B^C is A^(B^C) and becomes ABC^^, not AB^C^.
+     */
+    private static boolean popsBefore(char top, char arriving) {
+        return precedence(top) > precedence(arriving)
+                || (precedence(top) == precedence(arriving) && arriving != '^');
     }
 
     private static int precedence(char op) {
@@ -135,7 +146,7 @@ public class InfixToPostfixTracer implements AlgorithmTracer {
                     stack.pop(); // remove '('
                 }
             } else {
-                while (!stack.isEmpty() && stack.peek() != '(' && precedence(stack.peek()) >= precedence(c)) {
+                while (!stack.isEmpty() && stack.peek() != '(' && popsBefore(stack.peek(), c)) {
                     char popped = stack.pop();
                     result.append(popped);
                     emit.at("higherPrec")

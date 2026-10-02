@@ -50,7 +50,7 @@ public class RowMaxOnesTracer implements AlgorithmTracer {
     public String annotatedCode() {
         return """
                public int rowWithMax1s(int[][] matrix) {
-                   int bestRow = -1, bestCount = -1;
+                   int bestRow = -1, bestCount = 0;   // only a row with at least one 1 can win
                    for (int r = 0; r < matrix.length; r++) {
                        // @a rowSearch
                        int firstOne = lowerBoundOfOne(matrix[r]);
@@ -78,7 +78,8 @@ public class RowMaxOnesTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[][] matrix = in.getGrid("matrix");
-        int bestRow = -1, bestCount = -1;
+        // Seeded at 0, not -1: a row of all 0s must not become the answer (GfG: -1 when no row has a 1).
+        int bestRow = -1, bestCount = 0;
 
         for (int r = 0; r < matrix.length; r++) {
             int[] row = matrix[r];
@@ -102,13 +103,14 @@ public class RowMaxOnesTracer implements AlgorithmTracer {
                         .say("Row %d's %d %s %s the previous best (%s) — new best row.", r, count,
                                 Narration.plural(count, "one", "ones"),
                                 Narration.plural(count, "beats", "beat"),
-                                previousBest == -1 ? "none" : String.valueOf(previousBest))
+                                previousBest == 0 ? "none" : String.valueOf(previousBest))
                         .var("bestRow", bestRow).var("bestCount", bestCount).grid(matrix).step();
             }
         }
 
         emit.at("done")
-                .say("Row %d has the most 1s (%d).", bestRow, bestCount)
+                .say(bestRow == -1 ? "No row contains a 1, so the answer is -1."
+                        : "Row " + bestRow + " has the most 1s (" + bestCount + ").")
                 .var("answer", bestRow).grid(matrix).step();
     }
 }

@@ -4,7 +4,7 @@
     "newBest" : 7,
     "rowSearch" : 4
   },
-  "code" : "public int rowWithMax1s(int[][] matrix) {\n    int bestRow = -1, bestCount = -1;\n    for (int r = 0; r < matrix.length; r++) {\n        int firstOne = lowerBoundOfOne(matrix[r]);\n        int count = matrix[r].length - firstOne;\n        if (count > bestCount) {\n            bestCount = count;\n            bestRow = r;\n        }\n    }\n    return bestRow;\n}\n\nprivate int lowerBoundOfOne(int[] row) {\n    int low = 0, high = row.length;\n    while (low < high) {\n        int mid = (low + high) / 2;\n        if (row[mid] == 1) high = mid; else low = mid + 1;\n    }\n    return low;\n}",
+  "code" : "public int rowWithMax1s(int[][] matrix) {\n    int bestRow = -1, bestCount = 0;   // only a row with at least one 1 can win\n    for (int r = 0; r < matrix.length; r++) {\n        int firstOne = lowerBoundOfOne(matrix[r]);\n        int count = matrix[r].length - firstOne;\n        if (count > bestCount) {\n            bestCount = count;\n            bestRow = r;\n        }\n    }\n    return bestRow;\n}\n\nprivate int lowerBoundOfOne(int[] row) {\n    int low = 0, high = row.length;\n    while (low < high) {\n        int mid = (low + high) / 2;\n        if (row[mid] == 1) high = mid; else low = mid + 1;\n    }\n    return low;\n}",
   "problemId" : "row-max-ones",
   "resolvedInput" : {
     "matrix" : [ [ 0, 0, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ] ]

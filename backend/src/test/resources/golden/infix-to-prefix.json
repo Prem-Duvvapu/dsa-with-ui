@@ -1,15 +1,15 @@
 {
   "anchors" : {
     "closeParen" : 12,
-    "done" : 25,
-    "flush" : 23,
-    "higherPrec" : 17,
+    "done" : 26,
+    "flush" : 24,
+    "higherPrec" : 18,
     "init" : 2,
     "openParen" : 9,
     "operand" : 7,
-    "pushOp" : 19
+    "pushOp" : 20
   },
-  "code" : "public String infixToPrefix(String s) {\n    String reversed = reverseAndSwapParens(s);\n    StringBuilder result = new StringBuilder();\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : reversed.toCharArray()) {\n        if (Character.isLetter(c)) {\n            result.append(c);\n        } else if (c == '(') {\n            stack.push(c);\n        } else if (c == ')') {\n            while (stack.peek() != '(') {\n                result.append(stack.pop());\n            }\n            stack.pop();\n        } else {\n            while (!stack.isEmpty() && precedence(stack.peek()) > precedence(c)) {\n                result.append(stack.pop());\n            }\n            stack.push(c);\n        }\n    }\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n    }\n    return result.reverse().toString();\n}",
+  "code" : "public String infixToPrefix(String s) {\n    String reversed = reverseAndSwapParens(s);\n    StringBuilder result = new StringBuilder();\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : reversed.toCharArray()) {\n        if (Character.isLetter(c)) {\n            result.append(c);\n        } else if (c == '(') {\n            stack.push(c);\n        } else if (c == ')') {\n            while (stack.peek() != '(') {\n                result.append(stack.pop());\n            }\n            stack.pop();\n        } else {\n            while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)\n                    || (precedence(stack.peek()) == precedence(c) && c == '^'))) {\n                result.append(stack.pop());\n            }\n            stack.push(c);\n        }\n    }\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n    }\n    return result.reverse().toString();\n}",
   "problemId" : "infix-to-prefix",
   "resolvedInput" : {
     "expression" : "A+B*C"
@@ -103,7 +103,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Push operator '*' (precedence 2).",
     "queueOrStackState" : [ "*" ],
     "callStack" : [ ],
@@ -188,7 +188,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 17,
+    "activeLine" : 18,
     "description" : "'+' (prec 1) < '*' (prec 2) on top — pop '*'.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -231,7 +231,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Push operator '+' (precedence 1).",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -316,7 +316,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 23,
+    "activeLine" : 24,
     "description" : "Flush '+' from remaining stack.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -359,7 +359,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 25,
+    "activeLine" : 26,
     "description" : "Reverse intermediate \"CB*A+\" → prefix: \"+A*BC\".",
     "queueOrStackState" : [ ],
     "callStack" : [ ],

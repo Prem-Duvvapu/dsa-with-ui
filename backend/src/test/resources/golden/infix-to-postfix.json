@@ -1,15 +1,15 @@
 {
   "anchors" : {
     "closeParen" : 11,
-    "done" : 24,
-    "flush" : 22,
-    "higherPrec" : 16,
+    "done" : 25,
+    "flush" : 23,
+    "higherPrec" : 17,
     "init" : 2,
     "openParen" : 8,
     "operand" : 6,
-    "pushOp" : 18
+    "pushOp" : 19
   },
-  "code" : "public String infixToPostfix(String s) {\n    StringBuilder result = new StringBuilder();\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (Character.isLetter(c)) {\n            result.append(c);\n        } else if (c == '(') {\n            stack.push(c);\n        } else if (c == ')') {\n            while (stack.peek() != '(') {\n                result.append(stack.pop());\n            }\n            stack.pop();\n        } else {\n            while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(c)) {\n                result.append(stack.pop());\n            }\n            stack.push(c);\n        }\n    }\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n    }\n    return result.toString();\n}",
+  "code" : "public String infixToPostfix(String s) {\n    StringBuilder result = new StringBuilder();\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (Character.isLetter(c)) {\n            result.append(c);\n        } else if (c == '(') {\n            stack.push(c);\n        } else if (c == ')') {\n            while (stack.peek() != '(') {\n                result.append(stack.pop());\n            }\n            stack.pop();\n        } else {\n            while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)\n                    || (precedence(stack.peek()) == precedence(c) && c != '^'))) {\n                result.append(stack.pop());\n            }\n            stack.push(c);\n        }\n    }\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n    }\n    return result.toString();\n}",
   "problemId" : "infix-to-postfix",
   "resolvedInput" : {
     "expression" : "A+B*C-D"
@@ -123,7 +123,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 18,
+    "activeLine" : 19,
     "description" : "Push operator '+' (precedence 1) onto the stack.",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -229,7 +229,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 18,
+    "activeLine" : 19,
     "description" : "Push operator '*' (precedence 2) onto the stack.",
     "queueOrStackState" : [ "*", "+" ],
     "callStack" : [ ],
@@ -335,7 +335,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 16,
+    "activeLine" : 17,
     "description" : "'-' (precedence 1) is not higher than '*' (precedence 2) on top — pop '*' to output.",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -388,7 +388,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 16,
+    "activeLine" : 17,
     "description" : "'-' (precedence 1) is not higher than '+' (precedence 1) on top — pop '+' to output.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -441,7 +441,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 18,
+    "activeLine" : 19,
     "description" : "Push operator '-' (precedence 1) onto the stack.",
     "queueOrStackState" : [ "-" ],
     "callStack" : [ ],
@@ -547,7 +547,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Flush remaining operator '-' from the stack to output.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -600,7 +600,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 24,
+    "activeLine" : 25,
     "description" : "Conversion complete. Postfix: \"ABC*+D-\".",
     "queueOrStackState" : [ ],
     "callStack" : [ ],

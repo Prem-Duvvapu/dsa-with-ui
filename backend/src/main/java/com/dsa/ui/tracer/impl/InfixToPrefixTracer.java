@@ -69,7 +69,8 @@ public class InfixToPrefixTracer implements AlgorithmTracer {
                            }
                            stack.pop();
                        } else {
-                           while (!stack.isEmpty() && precedence(stack.peek()) > precedence(c)) {
+                           while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)
+                                   || (precedence(stack.peek()) == precedence(c) && c == '^'))) {
                                // @a higherPrec
                                result.append(stack.pop());
                            }
@@ -84,6 +85,16 @@ public class InfixToPrefixTracer implements AlgorithmTracer {
                    // @a done
                    return result.reverse().toString();
                }""";
+    }
+
+    /**
+     * The reverse-scan method mirrors associativity. Higher precedence always pops. Equal precedence
+     * pops only for '^': scanning right to left, the left-associative operators must stay stacked
+     * (A-B-C becomes --ABC) while the right-associative '^' must leave (A^B^C becomes ^A^BC).
+     */
+    private static boolean popsBefore(char top, char arriving) {
+        return precedence(top) > precedence(arriving)
+                || (precedence(top) == precedence(arriving) && arriving == '^');
     }
 
     private static int precedence(char op) {
@@ -145,8 +156,8 @@ public class InfixToPrefixTracer implements AlgorithmTracer {
                 }
                 if (!stack.isEmpty()) stack.pop();
             } else {
-                // Strictly greater (not >=) for right-to-left associativity in reverse pass
-                while (!stack.isEmpty() && stack.peek() != '(' && precedence(stack.peek()) > precedence(c)) {
+                // The reverse pass mirrors associativity: equal precedence pops only for '^'.
+                while (!stack.isEmpty() && stack.peek() != '(' && popsBefore(stack.peek(), c)) {
                     char popped = stack.pop();
                     result.append(popped);
                     emit.at("higherPrec")

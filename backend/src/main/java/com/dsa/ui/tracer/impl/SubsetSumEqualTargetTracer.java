@@ -123,8 +123,9 @@ public class SubsetSumEqualTargetTracer implements AlgorithmTracer {
                 boolean chosen = skip || take;
 
                 Set<SubsetSumDpTable.Coord> reads = canTake
-                        ? Set.of(new SubsetSumDpTable.Coord(i - 1, s),
-                                new SubsetSumDpTable.Coord(i - 1, s - value))
+                        // A zero-valued item makes both cells the same one; Set.of would throw on the duplicate.
+                        ? Set.copyOf(List.of(new SubsetSumDpTable.Coord(i - 1, s),
+                                new SubsetSumDpTable.Coord(i - 1, s - value)))
                         : Set.of(new SubsetSumDpTable.Coord(i - 1, s));
 
                 String reasoning;
