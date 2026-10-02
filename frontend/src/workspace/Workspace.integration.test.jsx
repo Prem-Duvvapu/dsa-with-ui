@@ -527,7 +527,8 @@ describe('Workspace on a phone', () => {
     expect(screen.getByRole('region', { name: 'Try your own input' })).toBeInTheDocument();
     expect(screen.getByLabelText('Count')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('tab', { name: 'Code walkthrough' }));
-    expect(screen.getByText('int solve() {')).toBeInTheDocument();
+    // The line is split into syntax-coloured spans, so assert the source's text, not one node.
+    expect(screen.getByRole('region', { name: 'Java source' })).toHaveTextContent('int solve() {');
     fireEvent.click(screen.getByRole('tab', { name: 'Analysis' }));
     expect(screen.getByRole('region', { name: 'Algorithm complexity' })).toHaveTextContent('O(N)');
   });

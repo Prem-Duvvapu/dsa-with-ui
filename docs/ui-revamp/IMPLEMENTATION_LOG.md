@@ -452,3 +452,29 @@ Browser: Chromium against the real backend.
 Not done: syntax colouring in the source pane (a feature, not a palette fix — offered separately); no
   second engine; no 200% zoom pass for this change.
 ```
+
+## Syntax colouring in the source pane (owner request, after #161)
+
+```text
+Package / status: owner-requested — complete with this PR
+Change:
+  - code/highlightJava.js: a dependency-free Java tokenizer. It reads the whole source before splitting
+    into lines, so block comments and text blocks spanning lines are coloured correctly.
+  - CodeViewer renders keyword / type / string / number / comment tokens as spans. Plain runs stay text.
+  - Five --syntax-* tokens are defined in all three theme blocks. Amber and green are deliberately not
+    used: they mean "running now" and "resolved", and a coloured string or comment would compete with the
+    execution highlight.
+Guards:
+  - highlightJava.test.js: the tokens re-join to the exact source. It also covers spanning comments and
+    text blocks, a "//" inside a string, classification, and termination on unterminated input.
+  - CodeViewer.test.jsx: rendered line text equals the source, and tokens carry their classes. Proven RED
+    against the old CodeViewer.
+  - designTokens.test.js: each syntax colour is ≥4.5:1 on the code ground (--bg-page) and on the active
+    line (--probe-wash), in both themes. It caught the light comment colour at 4.08:1, which is now its
+    own #5c6672.
+  - The phone integration case asserts the source region's text (the line is now several spans).
+Automated: npx vitest run → 72 files / 601 tests. vite build OK.
+Browser: Chromium with the real backend; num-provinces and rotting-oranges code views; dark and light at
+  1440, dark at 390. Keyword colour resolves per theme (rgb(130,170,255) / rgb(29,78,216)). Overflow 0, no
+  errors. Evidence: docs/ui-revamp/evidence/syntax/.
+```

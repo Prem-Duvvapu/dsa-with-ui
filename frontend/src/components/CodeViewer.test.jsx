@@ -21,6 +21,23 @@ describe('CodeViewer', () => {
     expect(screen.queryByText(/Active line:/)).not.toBeInTheDocument();
   });
 
+  it('colours Java syntax without changing a character of the code', () => {
+    const javaCode = 'class Solution {\n    int n = 42; // count\n    String s = "x";\n}';
+    const { container } = render(<CodeViewer problem={{ javaCode }} currentStep={{ activeLine: 2 }} />);
+
+    const lineTexts = [...container.querySelectorAll('[class*="lineText"]')].map((el) => el.textContent);
+    expect(lineTexts).toEqual(javaCode.split('\n'));
+
+    const coloured = (cls) => [...container.querySelectorAll(`[class*="${cls}"]`)].map((el) => el.textContent);
+    expect(coloured('tokKeyword')).toEqual(['class']);
+    expect(coloured('tokType')).toEqual(['Solution', 'int', 'String']);
+    expect(coloured('tokNumber')).toEqual(['42']);
+    expect(coloured('tokComment')).toEqual(['// count']);
+    expect(coloured('tokString')).toEqual(['"x"']);
+    // The executing line keeps its colours; its highlight is the wash, not a recolour.
+    expect(container.querySelector('[data-active-line="true"] [class*="tokNumber"]')).toHaveTextContent('42');
+  });
+
   it('paints the executing line in the probe wash, the token Bench assigns to it', () => {
     // The palette gives --probe-wash exactly one job - "active code line" - and the probe
     // hue one meaning: happening right now. This line used to be violet-tinted, a third

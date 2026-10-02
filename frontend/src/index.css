@@ -266,6 +266,15 @@
   --elevation-overlay: 0 12px 40px rgba(0, 0, 0, 0.6);
   /* Behind a modal dialog. Four dialogs each wrote their own navy rgba here. */
   --scrim: rgba(0, 0, 0, 0.62);
+  /* Java syntax colours for the source pane (code/highlightJava.js). Amber and green are
+     NOT used: amber is the line running now and green is "resolved", so a string or a
+     comment in either hue would compete with the execution highlight. Each clears 4.5:1 on
+     the code ground and on the active line's --probe-wash (designTokens.test.js). */
+  --syntax-keyword: #82aaff;
+  --syntax-type: #7fd3e6;
+  --syntax-string: #f4a6b8;
+  --syntax-number: #c3a6ff;
+  --syntax-comment: var(--bench-ink-dim);
 }
 
 
@@ -370,6 +379,11 @@
     --elevation-panel: 0 2px 12px rgba(16, 22, 28, 0.08);
     --elevation-overlay: 0 8px 32px rgba(16, 22, 28, 0.14);
     --scrim: rgba(2, 6, 23, 0.64);
+    --syntax-keyword: #1d4ed8;
+    --syntax-type: #0e7490;
+    --syntax-string: #be123c;
+    --syntax-number: #6d28d9;
+    --syntax-comment: #5c6672;
   }
 }
 
@@ -450,6 +464,11 @@
   --elevation-panel: 0 2px 12px rgba(16, 22, 28, 0.08);
   --elevation-overlay: 0 8px 32px rgba(16, 22, 28, 0.14);
   --scrim: rgba(2, 6, 23, 0.64);
+  --syntax-keyword: #1d4ed8;
+  --syntax-type: #0e7490;
+  --syntax-string: #be123c;
+  --syntax-number: #6d28d9;
+  --syntax-comment: #5c6672;
 }
 
 /* Global Resets & Base Styles */

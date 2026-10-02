@@ -327,6 +327,24 @@ describe('design tokens', () => {
     expect(failures, 'measured, not eyeballed — recalculate before changing a value').toEqual([]);
   });
 
+  it('keeps every syntax colour readable on the code ground and the active line, in both themes', () => {
+    const themes = {
+      dark: resolveTheme(baseBlock()),
+      light: resolveTheme({ ...baseBlock(), ...rawTokens(lightStampedBlock()) })
+    };
+    const failures = [];
+    for (const [name, t] of Object.entries(themes)) {
+      for (const token of ['--syntax-keyword', '--syntax-type', '--syntax-string', '--syntax-number', '--syntax-comment']) {
+        // CodeViewer.module.css: the source sits on --bg-page; the running line on --probe-wash.
+        for (const ground of ['--bg-page', '--probe-wash']) {
+          const ratio = contrast(t[token], t[ground]);
+          if (!(ratio >= 4.5)) failures.push(`${name}: ${token} ${t[token]} on ${ground} is ${ratio.toFixed(2)}:1`);
+        }
+      }
+    }
+    expect(failures).toEqual([]);
+  });
+
   it('keeps compact text readable on the brand accent in both themes', () => {
     const themes = {
       dark: resolveTheme(baseBlock()),

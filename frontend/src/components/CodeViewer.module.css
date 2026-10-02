@@ -127,6 +127,13 @@
 
 .lineText { white-space: pre; }
 
+/* Java syntax colours (code/highlightJava.js). Theme tokens, so both themes are measured. */
+.tokKeyword { color: var(--syntax-keyword); }
+.tokType { color: var(--syntax-type); }
+.tokString { color: var(--syntax-string); }
+.tokNumber { color: var(--syntax-number); }
+.tokComment { color: var(--syntax-comment); font-style: italic; }
+
 @media (prefers-reduced-motion: reduce) {
   .line { transition: none; }
 }
