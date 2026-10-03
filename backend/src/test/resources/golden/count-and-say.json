@@ -1,146 +1,99 @@
 {
   "anchors" : {
-    "done" : 13,
-    "group" : 8,
-    "term" : 11
+    "base" : 4,
+    "call" : 6,
+    "done" : 22,
+    "group" : 17
   },
-  "code" : "public String countAndSay(int n) {\n    String term = \"1\";\n    for (int round = 2; round <= n; round++) {\n        StringBuilder next = new StringBuilder();\n        for (int i = 0; i < term.length();) {\n            int end = i + 1;\n            while (end < term.length() && term.charAt(end) == term.charAt(i)) end++;\n            next.append(end - i).append(term.charAt(i));\n            i = end;\n        }\n        term = next.toString();\n    }\n    return term;\n}",
+  "code" : "class Solution {\n    public String countAndSay(int n) {\n        if (n==1)\n            return \"1\";\n\n        String prev=countAndSay(n-1);\n        StringBuilder curr=new StringBuilder();\n        int i=0;\n\n        while (i<prev.length()) {\n            char ch=prev.charAt(i);\n            int j=i+1;\n\n            while (j<prev.length() && prev.charAt(j)==ch)\n                j++;\n\n            int cnt=j-i;\n            curr.append(cnt).append(ch);\n            i=j;\n        }\n\n        return curr.toString();\n    }\n}",
   "problemId" : "count-and-say",
   "resolvedInput" : {
     "n" : 5
   },
-  "stepCount" : 12,
+  "stepCount" : 13,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 8,
-    "description" : "Round 2 reads 1 consecutive '1' character, appending \"11\".",
+    "activeLine" : 6,
+    "description" : "countAndSay(5) is read off term 4, so compute that first.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "1",
-      "next" : "11",
-      "round" : "2"
+      "n" : "5"
     },
     "dsType" : "String",
     "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 49,
-      "state" : "current",
-      "label" : "1"
-    } ],
+    "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 11,
-    "description" : "Round 2 is complete: \"11\".",
+    "activeLine" : 6,
+    "description" : "countAndSay(4) is read off term 3, so compute that first.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "round" : "2",
-      "term" : "11"
+      "n" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    }, {
-      "index" : 1,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    } ],
+    "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 8,
-    "description" : "Round 3 reads 2 consecutive '1' characters, appending \"21\".",
+    "activeLine" : 6,
+    "description" : "countAndSay(3) is read off term 2, so compute that first.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)", "countAndSay(3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "2",
-      "next" : "21",
-      "round" : "3"
+      "n" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 49,
-      "state" : "current",
-      "label" : "1"
-    }, {
-      "index" : 1,
-      "value" : 49,
-      "state" : "target",
-      "label" : "1"
-    } ],
+    "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 11,
-    "description" : "Round 3 is complete: \"21\".",
+    "activeLine" : 6,
+    "description" : "countAndSay(2) is read off term 1, so compute that first.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)", "countAndSay(3)", "countAndSay(2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "round" : "3",
-      "term" : "21"
+      "n" : "2"
     },
     "dsType" : "String",
     "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 50,
-      "state" : "default",
-      "label" : "2"
-    }, {
-      "index" : 1,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    } ],
+    "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 8,
-    "description" : "Round 4 reads 1 consecutive '2' character, appending \"12\".",
+    "activeLine" : 4,
+    "description" : "countAndSay(1) is \"1\" by definition.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)", "countAndSay(3)", "countAndSay(2)", "countAndSay(1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "1",
-      "next" : "12",
-      "round" : "4"
+      "n" : "1"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 50,
-      "state" : "current",
-      "label" : "2"
-    }, {
-      "index" : 1,
       "value" : 49,
       "state" : "default",
       "label" : "1"
@@ -150,26 +103,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 8,
-    "description" : "Round 4 reads 1 consecutive '1' character, appending \"11\".",
+    "activeLine" : 17,
+    "description" : "Term 1 has 1 '1' in a row: say \"11\". curr = \"11\".",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)", "countAndSay(3)", "countAndSay(2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "1",
-      "next" : "1211",
-      "round" : "4"
+      "curr" : "11",
+      "n" : "2",
+      "prev" : "1"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 50,
-      "state" : "default",
-      "label" : "2"
-    }, {
-      "index" : 1,
       "value" : 49,
       "state" : "current",
       "label" : "1"
@@ -179,54 +127,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 11,
-    "description" : "Round 4 is complete: \"1211\".",
+    "activeLine" : 17,
+    "description" : "Term 2 has 2 '1's in a row: say \"21\". curr = \"21\".",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)", "countAndSay(3)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "round" : "4",
-      "term" : "1211"
-    },
-    "dsType" : "String",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    }, {
-      "index" : 1,
-      "value" : 50,
-      "state" : "default",
-      "label" : "2"
-    }, {
-      "index" : 2,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    }, {
-      "index" : 3,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 8,
-    "activeLine" : 8,
-    "description" : "Round 5 reads 1 consecutive '1' character, appending \"11\".",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "count" : "1",
-      "next" : "11",
-      "round" : "5"
+      "curr" : "21",
+      "n" : "3",
+      "prev" : "11"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -237,16 +147,35 @@
       "label" : "1"
     }, {
       "index" : 1,
+      "value" : 49,
+      "state" : "target",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 17,
+    "description" : "Term 3 has 1 '2' in a row: say \"12\". curr = \"12\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "12",
+      "n" : "4",
+      "prev" : "21"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
       "value" : 50,
-      "state" : "default",
+      "state" : "current",
       "label" : "2"
     }, {
-      "index" : 2,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    }, {
-      "index" : 3,
+      "index" : 1,
       "value" : 49,
       "state" : "default",
       "label" : "1"
@@ -256,16 +185,84 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 8,
-    "description" : "Round 5 reads 1 consecutive '2' character, appending \"12\".",
+    "activeLine" : 17,
+    "description" : "Term 3 has 1 '1' in a row: say \"11\". curr = \"1211\".",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)", "countAndSay(4)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "1",
-      "next" : "1112",
-      "round" : "5"
+      "curr" : "1211",
+      "n" : "4",
+      "prev" : "21"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 1,
+      "value" : 49,
+      "state" : "current",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 17,
+    "description" : "Term 4 has 1 '1' in a row: say \"11\". curr = \"11\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "countAndSay(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "11",
+      "n" : "5",
+      "prev" : "1211"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 49,
+      "state" : "current",
+      "label" : "1"
+    }, {
+      "index" : 1,
+      "value" : 50,
+      "state" : "default",
+      "label" : "2"
+    }, {
+      "index" : 2,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    }, {
+      "index" : 3,
+      "value" : 49,
+      "state" : "default",
+      "label" : "1"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 17,
+    "description" : "Term 4 has 1 '2' in a row: say \"12\". curr = \"1112\".",
+    "queueOrStackState" : null,
+    "callStack" : [ "countAndSay(5)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1112",
+      "n" : "5",
+      "prev" : "1211"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -294,17 +291,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 10,
-    "activeLine" : 8,
-    "description" : "Round 5 reads 2 consecutive '1' characters, appending \"21\".",
+    "stepNumber" : 12,
+    "activeLine" : 17,
+    "description" : "Term 4 has 2 '1's in a row: say \"21\". curr = \"111221\".",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "countAndSay(5)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "2",
-      "next" : "111221",
-      "round" : "5"
+      "curr" : "111221",
+      "n" : "5",
+      "prev" : "1211"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -333,64 +330,15 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 11,
-    "activeLine" : 11,
-    "description" : "Round 5 is complete: \"111221\".",
+    "stepNumber" : 13,
+    "activeLine" : 22,
+    "description" : "Term 5 is \"111221\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "round" : "5",
-      "term" : "111221"
-    },
-    "dsType" : "String",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    }, {
-      "index" : 1,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    }, {
-      "index" : 2,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    }, {
-      "index" : 3,
-      "value" : 50,
-      "state" : "default",
-      "label" : "2"
-    }, {
-      "index" : 4,
-      "value" : 50,
-      "state" : "default",
-      "label" : "2"
-    }, {
-      "index" : 5,
-      "value" : 49,
-      "state" : "default",
-      "label" : "1"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 12,
-    "activeLine" : 13,
-    "description" : "The count-and-say term at n=5 is \"111221\".",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "answer" : "111221",
-      "n" : "5"
+      "answer" : "111221"
     },
     "dsType" : "String",
     "gridState" : null,

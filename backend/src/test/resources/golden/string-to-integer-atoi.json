@@ -1,9 +1,13 @@
 {
   "anchors" : {
-    "done" : 10,
-    "scan" : 4
+    "clamp" : 40,
+    "digit" : 33,
+    "done" : 48,
+    "sign" : 16,
+    "spaces" : 9,
+    "zeros" : 26
   },
-  "code" : "public int myAtoi(String s) {\n    int i = 0, sign = 1;\n    long value = 0;\n    while (i < s.length() && s.charAt(i) == ' ') i++;\n    if (i < s.length() && (s.charAt(i) == '+' || s.charAt(i) == '-'))\n        sign = s.charAt(i++) == '-' ? -1 : 1;\n    while (i < s.length() && Character.isDigit(s.charAt(i))) {\n        value = Math.min((long) Integer.MAX_VALUE + 1, value * 10 + s.charAt(i++) - '0');\n    }\n    return clamp(sign * value);\n}",
+  "code" : "class Solution {\n    public int myAtoi(String s) {\n        int n=s.length();\n        long res=0;\n        int i=0;\n        boolean isPositive=true;\n\n        //skip whitespaces\n        while (i<n && s.charAt(i)==' ')\n            i++;\n\n        if (i==n)\n            return 0;\n\n        //check sign\n        if (s.charAt(i)=='-') {\n            isPositive=false;\n            i++;\n        } else if (s.charAt(i)=='+') {\n            isPositive=true;\n            i++;\n        } else if (!Character.isDigit(s.charAt(i)))\n            return 0;\n\n        //check zeroes\n        while (i<n && s.charAt(i)=='0')\n            i++;\n\n        if (i==n || !Character.isDigit(s.charAt(i)))\n            return 0;\n\n        while (i<n && Character.isDigit(s.charAt(i))) {\n            res=(res*10+(s.charAt(i)-'0'));\n            i++;\n\n            if (res>(long)Integer.MAX_VALUE)\n                break;\n        }\n\n        if (!isPositive)\n            res*=-1;\n\n        if (res>(long)Integer.MAX_VALUE)\n            return Integer.MAX_VALUE;\n        else if (res<(long)Integer.MIN_VALUE)\n            return Integer.MIN_VALUE;\n\n        return (int)res;\n    }\n}",
   "problemId" : "string-to-integer-atoi",
   "resolvedInput" : {
     "s" : "   -42"
@@ -11,22 +15,21 @@
   "stepCount" : 7,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 4,
-    "description" : "Index 0 is leading whitespace; skip it.",
+    "activeLine" : 9,
+    "description" : "Skip 3 leading spaces; reading starts at index 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "0",
-      "phase" : "whitespace"
+      "i" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 32,
-      "state" : "current",
+      "state" : "default",
       "label" : " "
     }, {
       "index" : 1,
@@ -41,7 +44,7 @@
     }, {
       "index" : 3,
       "value" : 45,
-      "state" : "default",
+      "state" : "current",
       "label" : "-"
     }, {
       "index" : 4,
@@ -59,15 +62,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 4,
-    "description" : "Index 1 is leading whitespace; skip it.",
+    "activeLine" : 16,
+    "description" : "'-': the number is negative.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "1",
-      "phase" : "whitespace"
+      "i" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -79,7 +81,7 @@
     }, {
       "index" : 1,
       "value" : 32,
-      "state" : "current",
+      "state" : "default",
       "label" : " "
     }, {
       "index" : 2,
@@ -89,7 +91,7 @@
     }, {
       "index" : 3,
       "value" : 45,
-      "state" : "default",
+      "state" : "current",
       "label" : "-"
     }, {
       "index" : 4,
@@ -107,15 +109,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 4,
-    "description" : "Index 2 is leading whitespace; skip it.",
+    "activeLine" : 26,
+    "description" : "No leading zeros to skip.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "2",
-      "phase" : "whitespace"
+      "i" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -132,7 +133,7 @@
     }, {
       "index" : 2,
       "value" : 32,
-      "state" : "current",
+      "state" : "default",
       "label" : " "
     }, {
       "index" : 3,
@@ -142,7 +143,7 @@
     }, {
       "index" : 4,
       "value" : 52,
-      "state" : "default",
+      "state" : "current",
       "label" : "4"
     }, {
       "index" : 5,
@@ -155,16 +156,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 4,
-    "description" : "Index 3 supplies sign '-'; sign=-1.",
+    "activeLine" : 33,
+    "description" : "Digit '4': res = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "3",
-      "phase" : "sign",
-      "sign" : "-1"
+      "i" : "5",
+      "res" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -186,12 +186,12 @@
     }, {
       "index" : 3,
       "value" : 45,
-      "state" : "current",
+      "state" : "default",
       "label" : "-"
     }, {
       "index" : 4,
       "value" : 52,
-      "state" : "default",
+      "state" : "current",
       "label" : "4"
     }, {
       "index" : 5,
@@ -204,16 +204,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 4,
-    "description" : "Consume digit 4 at index 4; magnitude=4.",
+    "activeLine" : 33,
+    "description" : "Digit '2': res = 42.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "4",
-      "magnitude" : "4",
-      "phase" : "digits"
+      "i" : "6",
+      "res" : "42"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -240,12 +239,12 @@
     }, {
       "index" : 4,
       "value" : 52,
-      "state" : "current",
+      "state" : "default",
       "label" : "4"
     }, {
       "index" : 5,
       "value" : 50,
-      "state" : "default",
+      "state" : "current",
       "label" : "2"
     } ],
     "listState" : null,
@@ -253,16 +252,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 4,
-    "description" : "Consume digit 2 at index 5; magnitude=42.",
+    "activeLine" : 40,
+    "description" : "Apply the minus sign: res = -42, within int range.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "5",
-      "magnitude" : "42",
-      "phase" : "digits"
+      "res" : "-42"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -294,7 +291,7 @@
     }, {
       "index" : 5,
       "value" : 50,
-      "state" : "current",
+      "state" : "default",
       "label" : "2"
     } ],
     "listState" : null,
@@ -302,15 +299,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 10,
-    "description" : "Parsing stops at index 6; clamped 32-bit result is -42.",
+    "activeLine" : 48,
+    "description" : "Return -42.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "answer" : "-42",
-      "stopIndex" : "6"
+      "res" : "-42"
     },
     "dsType" : "String",
     "gridState" : null,

@@ -95,6 +95,9 @@ class TracerAnswerRegressionTest {
         AlgorithmTracer window = tracers.find("minimum-window-substring").orElseThrow();
         assertThatThrownBy(() -> runner.run(window, Map.of("s", "a\u20ac", "t", "a")))
                 .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer atoi = tracers.find("string-to-integer-atoi").orElseThrow();
+        assertThatThrownBy(() -> runner.run(atoi, Map.of("s", "\u0663")))
+                .isInstanceOf(InputValidationException.class);
         AlgorithmTracer cards = tracers.find("maximum-points-cards").orElseThrow();
         assertThatThrownBy(() -> runner.run(cards, Map.of("cardPoints", List.of(1, 2), "k", 3)))
                 .isInstanceOf(InputValidationException.class);
@@ -183,6 +186,14 @@ class TracerAnswerRegressionTest {
             longest-common-prefix  | {"words":"flower,flow"}                    | answer        | flow
             roman-to-integer       | {"roman":"MCDXLIV"}                        | answer        | 1444
             largest-odd-number-string | {"number":"52"}                         | answer        | 5
+            # atoi edge cases on the owner's code: two signs, zeros then a sign, both int limits, only spaces.
+            string-to-integer-atoi | {"s":"+-12"}                               | answer        | 0
+            string-to-integer-atoi | {"s":"00000-42a1234"}                      | answer        | 0
+            string-to-integer-atoi | {"s":"2147483648"}                         | answer        | 2147483647
+            string-to-integer-atoi | {"s":"-2147483648"}                        | answer        | -2147483648
+            string-to-integer-atoi | {"s":"   "}                                | answer        | 0
+            count-and-say          | {"n":1}                                    | answer        | 1
+            sum-beauty-all-substrings | {"s":"ab"}                              | answer        | 0
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

@@ -1,34 +1,33 @@
 {
   "anchors" : {
-    "done" : 10,
-    "extend" : 7
+    "add" : 26,
+    "done" : 30,
+    "init" : 3,
+    "start" : 10
   },
-  "code" : "public int beautySum(String s) {\n    int total = 0;\n    for (int left = 0; left < s.length(); left++) {\n        int[] frequency = new int[26];\n        for (int right = left; right < s.length(); right++) {\n            frequency[s.charAt(right) - 'a']++;\n            total += maximum(frequency) - minimumPositive(frequency);\n        }\n    }\n    return total;\n}",
+  "code" : "class Solution {\n    public int beautySum(String s) {\n        int n=s.length();\n        int totalSum=0;\n        int[] freq=new int[26];\n        int minFreq=Integer.MAX_VALUE;\n        int maxFreq=Integer.MIN_VALUE;\n\n        for (int i=0;i<n;i++) {\n            Arrays.fill(freq,0);\n\n            for (int j=i;j<n;j++) {\n                int pos=s.charAt(j)-'a';\n                freq[pos]++;\n\n                minFreq=Integer.MAX_VALUE;\n                maxFreq=Integer.MIN_VALUE;\n\n                for (int k=0;k<26;k++) {\n                    if (freq[k]!=0 && freq[k]<minFreq)\n                        minFreq=Math.min(minFreq,freq[k]);\n\n                    maxFreq=Math.max(maxFreq,freq[k]);\n                }\n\n                totalSum+=(maxFreq-minFreq);\n            }\n        }\n\n        return totalSum;\n    }\n}",
   "problemId" : "sum-beauty-all-substrings",
   "resolvedInput" : {
     "s" : "aabcb"
   },
-  "stepCount" : 16,
+  "stepCount" : 22,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 7,
-    "description" : "Substring [0,0] \"a\": max frequency 1 − min positive 1 = 0; total=0.",
+    "activeLine" : 3,
+    "description" : "Beauty = (most frequent count) - (least frequent count, among letters present). Sum it over every substring.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "0",
-      "right" : "0",
-      "total" : "0"
+      "totalSum" : "0"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "current",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -56,17 +55,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
-    "description" : "Substring [0,1] \"aa\": max frequency 2 − min positive 2 = 0; total=0.",
+    "activeLine" : 10,
+    "description" : "Substrings starting at 0: reset the counts.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "0",
-      "right" : "1",
-      "total" : "0"
+      "i" : "0",
+      "totalSum" : "0"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -78,7 +75,7 @@
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 2,
@@ -101,17 +98,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 7,
-    "description" : "Substring [0,2] \"aab\": max frequency 2 − min positive 1 = 1; total=1.",
+    "activeLine" : 26,
+    "description" : "\"a\": most frequent 1, least 1, beauty 0. totalSum = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "1",
-      "left" : "0",
-      "right" : "2",
-      "total" : "1"
+      "i" : "0",
+      "j" : "0",
+      "totalSum" : "0"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -128,7 +124,7 @@
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "target",
+      "state" : "default",
       "label" : "b"
     }, {
       "index" : 3,
@@ -146,17 +142,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
-    "description" : "Substring [0,3] \"aabc\": max frequency 2 − min positive 1 = 1; total=2.",
+    "activeLine" : 26,
+    "description" : "\"aa\": most frequent 2, least 2, beauty 0. totalSum = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "1",
-      "left" : "0",
-      "right" : "3",
-      "total" : "2"
+      "i" : "0",
+      "j" : "1",
+      "totalSum" : "0"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -168,7 +163,7 @@
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "default",
+      "state" : "target",
       "label" : "a"
     }, {
       "index" : 2,
@@ -178,7 +173,7 @@
     }, {
       "index" : 3,
       "value" : 99,
-      "state" : "target",
+      "state" : "default",
       "label" : "c"
     }, {
       "index" : 4,
@@ -191,17 +186,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 7,
-    "description" : "Substring [0,4] \"aabcb\": max frequency 2 − min positive 1 = 1; total=3.",
+    "activeLine" : 26,
+    "description" : "\"aab\": most frequent 2, least 1, beauty 1. totalSum = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "1",
-      "left" : "0",
-      "right" : "4",
-      "total" : "3"
+      "i" : "0",
+      "j" : "2",
+      "totalSum" : "1"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -218,7 +212,7 @@
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "default",
+      "state" : "target",
       "label" : "b"
     }, {
       "index" : 3,
@@ -228,7 +222,7 @@
     }, {
       "index" : 4,
       "value" : 98,
-      "state" : "target",
+      "state" : "default",
       "label" : "b"
     } ],
     "listState" : null,
@@ -236,29 +230,28 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 7,
-    "description" : "Substring [1,1] \"a\": max frequency 1 − min positive 1 = 0; total=3.",
+    "activeLine" : 26,
+    "description" : "\"aabc\": most frequent 2, least 1, beauty 1. totalSum = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "1",
-      "right" : "1",
-      "total" : "3"
+      "i" : "0",
+      "j" : "3",
+      "totalSum" : "2"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "current",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 2,
@@ -268,7 +261,7 @@
     }, {
       "index" : 3,
       "value" : 99,
-      "state" : "default",
+      "state" : "target",
       "label" : "c"
     }, {
       "index" : 4,
@@ -281,34 +274,33 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 7,
-    "description" : "Substring [1,2] \"ab\": max frequency 1 − min positive 1 = 0; total=3.",
+    "activeLine" : 26,
+    "description" : "\"aabcb\": most frequent 2, least 1, beauty 1. totalSum = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "1",
-      "right" : "2",
-      "total" : "3"
+      "i" : "0",
+      "j" : "4",
+      "totalSum" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "current",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "target",
+      "state" : "default",
       "label" : "b"
     }, {
       "index" : 3,
@@ -318,7 +310,7 @@
     }, {
       "index" : 4,
       "value" : 98,
-      "state" : "default",
+      "state" : "target",
       "label" : "b"
     } ],
     "listState" : null,
@@ -326,17 +318,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 7,
-    "description" : "Substring [1,3] \"abc\": max frequency 1 − min positive 1 = 0; total=3.",
+    "activeLine" : 10,
+    "description" : "Substrings starting at 1: reset the counts.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "1",
-      "right" : "3",
-      "total" : "3"
+      "i" : "1",
+      "totalSum" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -358,7 +348,7 @@
     }, {
       "index" : 3,
       "value" : 99,
-      "state" : "target",
+      "state" : "default",
       "label" : "c"
     }, {
       "index" : 4,
@@ -371,17 +361,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 7,
-    "description" : "Substring [1,4] \"abcb\": max frequency 2 − min positive 1 = 1; total=4.",
+    "activeLine" : 26,
+    "description" : "\"a\": most frequent 1, least 1, beauty 0. totalSum = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "1",
-      "left" : "1",
-      "right" : "4",
-      "total" : "4"
+      "i" : "1",
+      "j" : "1",
+      "totalSum" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -408,7 +397,7 @@
     }, {
       "index" : 4,
       "value" : 98,
-      "state" : "target",
+      "state" : "default",
       "label" : "b"
     } ],
     "listState" : null,
@@ -416,17 +405,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 7,
-    "description" : "Substring [2,2] \"b\": max frequency 1 − min positive 1 = 0; total=4.",
+    "activeLine" : 26,
+    "description" : "\"ab\": most frequent 1, least 1, beauty 0. totalSum = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "2",
-      "right" : "2",
-      "total" : "4"
+      "i" : "1",
+      "j" : "2",
+      "totalSum" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -438,12 +426,12 @@
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "current",
+      "state" : "target",
       "label" : "b"
     }, {
       "index" : 3,
@@ -461,17 +449,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 7,
-    "description" : "Substring [2,3] \"bc\": max frequency 1 − min positive 1 = 0; total=4.",
+    "activeLine" : 26,
+    "description" : "\"abc\": most frequent 1, least 1, beauty 0. totalSum = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "2",
-      "right" : "3",
-      "total" : "4"
+      "i" : "1",
+      "j" : "3",
+      "totalSum" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -483,12 +470,12 @@
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "current",
+      "state" : "default",
       "label" : "b"
     }, {
       "index" : 3,
@@ -506,17 +493,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 7,
-    "description" : "Substring [2,4] \"bcb\": max frequency 2 − min positive 1 = 1; total=5.",
+    "activeLine" : 26,
+    "description" : "\"abcb\": most frequent 2, least 1, beauty 1. totalSum = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "1",
-      "left" : "2",
-      "right" : "4",
-      "total" : "5"
+      "i" : "1",
+      "j" : "4",
+      "totalSum" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -528,12 +514,12 @@
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "current",
+      "state" : "default",
       "label" : "b"
     }, {
       "index" : 3,
@@ -551,17 +537,190 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 7,
-    "description" : "Substring [3,3] \"c\": max frequency 1 − min positive 1 = 0; total=5.",
+    "activeLine" : 10,
+    "description" : "Substrings starting at 2: reset the counts.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "3",
-      "right" : "3",
-      "total" : "5"
+      "i" : "2",
+      "totalSum" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 26,
+    "description" : "\"b\": most frequent 1, least 1, beauty 0. totalSum = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "2",
+      "totalSum" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 26,
+    "description" : "\"bc\": most frequent 1, least 1, beauty 0. totalSum = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "3",
+      "totalSum" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "target",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 26,
+    "description" : "\"bcb\": most frequent 2, least 1, beauty 1. totalSum = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "4",
+      "totalSum" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "target",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 10,
+    "description" : "Substrings starting at 3: reset the counts.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "totalSum" : "5"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -595,18 +754,61 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 14,
-    "activeLine" : 7,
-    "description" : "Substring [3,4] \"cb\": max frequency 1 − min positive 1 = 0; total=5.",
+    "stepNumber" : 18,
+    "activeLine" : 26,
+    "description" : "\"c\": most frequent 1, least 1, beauty 0. totalSum = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "3",
-      "right" : "4",
-      "total" : "5"
+      "i" : "3",
+      "j" : "3",
+      "totalSum" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 26,
+    "description" : "\"cb\": most frequent 1, least 1, beauty 0. totalSum = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "4",
+      "totalSum" : "5"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -640,18 +842,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 15,
-    "activeLine" : 7,
-    "description" : "Substring [4,4] \"b\": max frequency 1 − min positive 1 = 0; total=5.",
+    "stepNumber" : 20,
+    "activeLine" : 10,
+    "description" : "Substrings starting at 4: reset the counts.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "beauty" : "0",
-      "left" : "4",
-      "right" : "4",
-      "total" : "5"
+      "i" : "4",
+      "totalSum" : "5"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -685,15 +885,60 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 16,
-    "activeLine" : 10,
-    "description" : "Sum of beauty over every substring of \"aabcb\" is 5.",
+    "stepNumber" : 21,
+    "activeLine" : 26,
+    "description" : "\"b\": most frequent 1, least 1, beauty 0. totalSum = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "5"
+      "i" : "4",
+      "j" : "4",
+      "totalSum" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 30,
+    "description" : "Return 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "5",
+      "totalSum" : "5"
     },
     "dsType" : "String",
     "gridState" : null,
