@@ -1,121 +1,39 @@
 {
   "anchors" : {
-    "done" : 9,
-    "evict" : 4,
-    "push" : 2,
-    "report" : 6
+    "add" : 19,
+    "answer" : 24,
+    "evict" : 22,
+    "init" : 8,
+    "trim" : 14
   },
-  "code" : "public int add(int value) {\n    heap.offer(value);\n    if (heap.size() > k) {\n        heap.poll();\n    }\n    return heap.peek();\n}\n\n// heap contains the k largest values seen\n",
+  "code" : "// Changed from your submission: the constructor now trims the heap to k as well, so it\n// never holds more than k values (O(k) memory). add() is unchanged.\nclass KthLargest {\n    int k;\n    PriorityQueue<Integer> pq;\n\n    public KthLargest(int k, int[] nums) {\n        this.k=k;\n        pq=new PriorityQueue<>((a,b) -> Integer.compare(a,b)); //min heap\n\n        for (int val: nums) {\n            pq.add(val);\n            if (pq.size()>k)\n                pq.poll();\n        }\n    }\n\n    public int add(int val) {\n        pq.add(val);\n\n        while (pq.size()>k)\n            pq.poll();\n\n        return pq.peek();\n    }\n}",
   "problemId" : "kth-largest-stream",
   "resolvedInput" : {
     "additions" : [ 3, 5, 10, 9, 4 ],
     "initial" : [ 4, 5, 8, 2 ],
     "k" : 3
   },
-  "stepCount" : 21,
+  "stepCount" : 20,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "Seed 4; the min-heap temporarily contains 1 value.",
+    "activeLine" : 8,
+    "description" : "Build the stream with k = 3 from [4, 5, 8, 2]. A min-heap of the k largest values has the k-th largest on top.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "size" : "1",
-      "value" : "4"
+      "k" : "3"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 2,
-    "activeLine" : 2,
-    "description" : "Seed 5; the min-heap temporarily contains 2 values.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "size" : "2",
-      "value" : "5"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 5,
-      "state" : "default"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 3,
-    "activeLine" : 2,
-    "description" : "Seed 8; the min-heap temporarily contains 3 values.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "size" : "3",
-      "value" : "8"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
-    }, {
-      "index" : 1,
-      "value" : 5,
-      "state" : "default"
-    }, {
-      "index" : 2,
-      "value" : 8,
-      "state" : "default"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 4,
-    "activeLine" : 2,
-    "description" : "Seed 2; the min-heap temporarily contains 4 values.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "size" : "4",
-      "value" : "2"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 2,
-      "state" : "target",
-      "label" : "kth largest"
-    }, {
-      "index" : 1,
-      "value" : 4,
       "state" : "default"
     }, {
       "index" : 2,
@@ -123,22 +41,67 @@
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 5,
+      "value" : 2,
       "state" : "default"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 5,
-    "activeLine" : 4,
-    "description" : "Remove smallest 2 so only the 3 largest values seen remain.",
+    "stepNumber" : 2,
+    "activeLine" : 8,
+    "description" : "Add 4 to the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "removed" : "2",
+      "size" : "1"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 3,
+    "activeLine" : 8,
+    "description" : "Add 5 to the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "size" : "2"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 8,
+    "description" : "Add 8 to the heap.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
       "size" : "3"
     },
     "dsType" : "PriorityQueue",
@@ -146,8 +109,36 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 5,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 14,
+    "description" : "Adding 2 makes 4 values; drop the smallest, 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "size" : "3"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 4,
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 5,
@@ -162,23 +153,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 2,
-    "description" : "Add 3; the min-heap temporarily contains 4 values.",
+    "activeLine" : 19,
+    "description" : "add(3): push it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "size" : "4",
-      "value" : "3"
+      "val" : "3"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 3,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 4,
@@ -197,23 +186,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 4,
-    "description" : "Remove smallest 3 so only the 3 largest values seen remain.",
+    "activeLine" : 22,
+    "description" : "More than 3 values: drop the smallest, 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "removed" : "3",
-      "size" : "3"
+      "evicted" : "3"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 5,
@@ -228,23 +215,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 6,
-    "description" : "After adding 3, the 3rd largest stream value is 4.",
+    "activeLine" : 24,
+    "description" : "The top, 4, is the 3rd largest so far. add(3) returns 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "3",
-      "answer" : "4"
+      "answers" : "[4]"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 5,
@@ -259,23 +244,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 2,
-    "description" : "Add 5; the min-heap temporarily contains 4 values.",
+    "activeLine" : 19,
+    "description" : "add(5): push it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "size" : "4",
-      "value" : "5"
+      "val" : "5"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 5,
@@ -287,30 +270,28 @@
     }, {
       "index" : 3,
       "value" : 5,
-      "state" : "default"
+      "state" : "current"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 4,
-    "description" : "Remove smallest 4 so only the 3 largest values seen remain.",
+    "activeLine" : 22,
+    "description" : "More than 3 values: drop the smallest, 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "removed" : "4",
-      "size" : "3"
+      "evicted" : "4"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 5,
@@ -325,23 +306,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 6,
-    "description" : "After adding 5, the 3rd largest stream value is 5.",
+    "activeLine" : 24,
+    "description" : "The top, 5, is the 3rd largest so far. add(5) returns 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "5",
-      "answer" : "5"
+      "answers" : "[4, 5]"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 5,
@@ -356,23 +335,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 2,
-    "description" : "Add 10; the min-heap temporarily contains 4 values.",
+    "activeLine" : 19,
+    "description" : "add(10): push it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "size" : "4",
-      "value" : "10"
+      "val" : "10"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 5,
@@ -384,30 +361,28 @@
     }, {
       "index" : 3,
       "value" : 10,
-      "state" : "default"
+      "state" : "current"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 4,
-    "description" : "Remove smallest 5 so only the 3 largest values seen remain.",
+    "activeLine" : 22,
+    "description" : "More than 3 values: drop the smallest, 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "removed" : "5",
-      "size" : "3"
+      "evicted" : "5"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 10,
@@ -422,23 +397,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 6,
-    "description" : "After adding 10, the 3rd largest stream value is 5.",
+    "activeLine" : 24,
+    "description" : "The top, 5, is the 3rd largest so far. add(10) returns 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "10",
-      "answer" : "5"
+      "answers" : "[4, 5, 5]"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 10,
@@ -453,27 +426,25 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 2,
-    "description" : "Add 9; the min-heap temporarily contains 4 values.",
+    "activeLine" : 19,
+    "description" : "add(9): push it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "size" : "4",
-      "value" : "9"
+      "val" : "9"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 9,
-      "state" : "default"
+      "state" : "current"
     }, {
       "index" : 2,
       "value" : 8,
@@ -488,23 +459,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 4,
-    "description" : "Remove smallest 5 so only the 3 largest values seen remain.",
+    "activeLine" : 22,
+    "description" : "More than 3 values: drop the smallest, 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "removed" : "5",
-      "size" : "3"
+      "evicted" : "5"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 8,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 9,
@@ -519,23 +488,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 6,
-    "description" : "After adding 9, the 3rd largest stream value is 8.",
+    "activeLine" : 24,
+    "description" : "The top, 8, is the 3rd largest so far. add(9) returns 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "9",
-      "answer" : "8"
+      "answers" : "[4, 5, 5, 8]"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 8,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 9,
@@ -550,23 +517,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 2,
-    "description" : "Add 4; the min-heap temporarily contains 4 values.",
+    "activeLine" : 19,
+    "description" : "add(4): push it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "size" : "4",
-      "value" : "4"
+      "val" : "4"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 4,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 8,
@@ -585,23 +550,21 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 4,
-    "description" : "Remove smallest 4 so only the 3 largest values seen remain.",
+    "activeLine" : 22,
+    "description" : "More than 3 values: drop the smallest, 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "removed" : "4",
-      "size" : "3"
+      "evicted" : "4"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 8,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 9,
@@ -616,39 +579,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 6,
-    "description" : "After adding 4, the 3rd largest stream value is 8.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "added" : "4",
-      "answer" : "8"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 8,
-      "state" : "target",
-      "label" : "kth largest"
-    }, {
-      "index" : 1,
-      "value" : 9,
-      "state" : "default"
-    }, {
-      "index" : 2,
-      "value" : 10,
-      "state" : "default"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 21,
-    "activeLine" : 9,
-    "description" : "Kth-largest answers for all additions: [4, 5, 5, 8, 8].",
+    "activeLine" : 24,
+    "description" : "The top, 8, is the 3rd largest so far. add(4) returns 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -661,8 +593,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 8,
-      "state" : "target",
-      "label" : "kth largest"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 9,
