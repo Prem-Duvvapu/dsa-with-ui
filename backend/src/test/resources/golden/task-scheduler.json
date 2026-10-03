@@ -1,83 +1,1141 @@
 {
   "anchors" : {
-    "done" : 25,
-    "idle" : 19,
-    "release" : 21,
-    "schedule" : 16,
-    "seed" : 7
+    "count" : 6,
+    "formula" : 19,
+    "sort" : 8,
+    "tie" : 15
   },
-  "code" : "public int leastInterval(int[] tasks, int n) {\n    Map<Integer, Integer> freq = new LinkedHashMap<>();\n    for (int t : tasks) freq.merge(t, 1, Integer::sum);\n\n    List<Integer> heap = new ArrayList<>();\n    for (int count : freq.values()) {\n        heap.add(count);\n        siftUp(heap, heap.size() - 1);\n    }\n\n    Deque<int[]> cooling = new ArrayDeque<>(); // {remainingCount, availableAtTime}\n    int time = 0;\n    while (!heap.isEmpty() || !cooling.isEmpty()) {\n        time++;\n        if (!heap.isEmpty()) {\n            int remaining = removeMax(heap) - 1;\n            if (remaining > 0) cooling.addLast(new int[]{remaining, time + n});\n        } else {\n        }\n        if (!cooling.isEmpty() && cooling.peekFirst()[1] == time) {\n            heap.add(cooling.pollFirst()[0]);\n            siftUp(heap, heap.size() - 1);\n        }\n    }\n    return time;\n}\n\nprivate int removeMax(List<Integer> heap) {\n    int max = heap.get(0);\n    int last = heap.remove(heap.size() - 1);\n    if (!heap.isEmpty()) {\n        heap.set(0, last);\n        siftDown(heap, 0);\n    }\n    return max;\n}\n\nprivate int siftUp(List<Integer> heap, int i) {\n    while (i > 0 && heap.get(i) > heap.get((i - 1) / 2)) {\n        swap(heap, i, (i - 1) / 2);\n        i = (i - 1) / 2;\n    }\n    return i;\n}\n\nprivate int siftDown(List<Integer> heap, int i) {\n    int n = heap.size();\n    while (true) {\n        int l = 2 * i + 1, r = 2 * i + 2, largest = i;\n        if (l < n && heap.get(l) > heap.get(largest)) largest = l;\n        if (r < n && heap.get(r) > heap.get(largest)) largest = r;\n        if (largest == i) return i;\n        swap(heap, i, largest);\n        i = largest;\n    }\n}\n\nprivate void swap(List<Integer> heap, int i, int j) {\n    Integer tmp = heap.get(i);\n    heap.set(i, heap.get(j));\n    heap.set(j, tmp);\n}",
+  "code" : "class Solution {\n    public int leastInterval(char[] tasks, int n) {\n        int[] freq=new int[26];\n\n        for (char ch: tasks)\n            freq[ch-'A']++;\n\n        Arrays.sort(freq);\n\n        int maxFreq=freq[25];\n        int maxFreqCnt=1;\n        int i=24;\n\n        while (i>=0 && freq[i]==freq[i+1]) {\n            maxFreqCnt++;\n            i--;\n        }\n\n        int minIntervals=tasks.length; //Min possible result\n        int currIntervals=(n+1)*(maxFreq-1)+maxFreqCnt;\n        int res=Math.max(minIntervals,currIntervals);\n\n        return res;\n    }\n}",
   "problemId" : "task-scheduler",
   "resolvedInput" : {
     "n" : 2,
     "tasks" : [ 0, 0, 0, 1, 1, 1 ]
   },
-  "stepCount" : 15,
+  "stepCount" : 9,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 7,
-    "description" : "A task type with count 3 joins the max-heap (size now 1).",
+    "activeLine" : 6,
+    "description" : "Task A: freq['A'] becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "3",
-      "heapSize" : "1"
+      "ch" : "A",
+      "freq" : "{A=1}"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 3,
-      "state" : "current"
+      "value" : 1,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "F"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "G"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "H"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "I"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "J"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "L"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "M"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "P"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Q"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "R"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "S"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "T"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "U"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "V"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "W"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "X"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Y"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Z"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
-    "description" : "A task type with count 3 joins the max-heap (size now 2).",
+    "activeLine" : 6,
+    "description" : "Task A: freq['A'] becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "count" : "3",
-      "heapSize" : "2"
+      "ch" : "A",
+      "freq" : "{A=2}"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 3,
-      "state" : "default"
+      "value" : 2,
+      "state" : "current",
+      "label" : "A"
     }, {
       "index" : 1,
-      "value" : 3,
-      "state" : "current"
+      "value" : 0,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "F"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "G"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "H"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "I"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "J"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "L"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "M"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "P"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Q"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "R"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "S"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "T"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "U"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "V"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "W"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "X"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Y"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Z"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 16,
-    "description" : "Time 1: run the most frequent remaining task type (2 instances left after this run - cools down until t=3).",
+    "activeLine" : 6,
+    "description" : "Task A: freq['A'] becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cooling" : "1",
-      "heapSize" : "1",
-      "time" : "1"
+      "ch" : "A",
+      "freq" : "{A=3}"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
+      "value" : 3,
+      "state" : "current",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "F"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "G"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "H"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "I"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "J"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "L"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "M"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "P"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Q"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "R"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "S"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "T"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "U"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "V"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "W"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "X"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Y"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Z"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 6,
+    "description" : "Task B: freq['B'] becomes 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ch" : "B",
+      "freq" : "{A=3, B=1}"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 1,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "F"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "G"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "H"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "I"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "J"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "L"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "M"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "P"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Q"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "R"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "S"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "T"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "U"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "V"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "W"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "X"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Y"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Z"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 6,
+    "description" : "Task B: freq['B'] becomes 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ch" : "B",
+      "freq" : "{A=3, B=2}"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "F"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "G"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "H"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "I"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "J"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "L"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "M"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "P"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Q"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "R"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "S"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "T"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "U"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "V"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "W"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "X"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Y"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Z"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 6,
+    "description" : "Task B: freq['B'] becomes 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ch" : "B",
+      "freq" : "{A=3, B=3}"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 3,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 3,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default",
+      "label" : "F"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default",
+      "label" : "G"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default",
+      "label" : "H"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default",
+      "label" : "I"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default",
+      "label" : "J"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default",
+      "label" : "K"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default",
+      "label" : "L"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default",
+      "label" : "M"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default",
+      "label" : "P"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Q"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default",
+      "label" : "R"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default",
+      "label" : "S"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default",
+      "label" : "T"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default",
+      "label" : "U"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default",
+      "label" : "V"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default",
+      "label" : "W"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default",
+      "label" : "X"
+    }, {
+      "index" : 24,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Y"
+    }, {
+      "index" : 25,
+      "value" : 0,
+      "state" : "default",
+      "label" : "Z"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 8,
+    "description" : "Sort the counts. The most frequent task occurs maxFreq = 3 times.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxFreq" : "3"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 24,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 25,
+      "value" : 3,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 15,
+    "description" : "freq[24] = 3 ties the maximum: maxFreqCnt = 2 tasks share it.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "maxFreqCnt" : "2"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 24,
+      "value" : 3,
+      "state" : "current"
+    }, {
+      "index" : 25,
       "value" : 3,
       "state" : "default"
     } ],
@@ -85,238 +1143,125 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 4,
-    "activeLine" : 16,
-    "description" : "Time 2: run the most frequent remaining task type (2 instances left after this run - cools down until t=4).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cooling" : "2",
-      "heapSize" : "0",
-      "time" : "2"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 5,
-    "activeLine" : 19,
-    "description" : "Time 3: nothing is schedulable - every remaining task is still cooling down. The CPU sits idle.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cooling" : "2",
-      "time" : "3"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 6,
-    "activeLine" : 21,
-    "description" : "Time 3: a task type's cooldown ends - 2 instances rejoin the heap.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "released" : "2",
-      "time" : "3"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 2,
-      "state" : "current"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 7,
-    "activeLine" : 16,
-    "description" : "Time 4: run the most frequent remaining task type (1 instance left after this run - cools down until t=6).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cooling" : "2",
-      "heapSize" : "0",
-      "time" : "4"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 8,
-    "activeLine" : 21,
-    "description" : "Time 4: a task type's cooldown ends - 2 instances rejoin the heap.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "released" : "2",
-      "time" : "4"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 2,
-      "state" : "current"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
     "stepNumber" : 9,
-    "activeLine" : 16,
-    "description" : "Time 5: run the most frequent remaining task type (1 instance left after this run - cools down until t=7).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cooling" : "2",
-      "heapSize" : "0",
-      "time" : "5"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 10,
     "activeLine" : 19,
-    "description" : "Time 6: nothing is schedulable - every remaining task is still cooling down. The CPU sits idle.",
+    "description" : "(n+1)*(maxFreq-1) + maxFreqCnt = 3*2 + 2 = 8 slots. There are 6 tasks, so the answer is max(6, 8) = 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cooling" : "2",
-      "time" : "6"
+      "answer" : "8",
+      "currIntervals" : "8",
+      "minIntervals" : "6"
     },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 11,
-    "activeLine" : 21,
-    "description" : "Time 6: a task type's cooldown ends - 1 instance rejoin the heap.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "released" : "1",
-      "time" : "6"
-    },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 7,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 8,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 9,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 10,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 11,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 12,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 13,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 14,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 15,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 16,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 17,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 18,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 19,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 20,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 21,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 22,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 23,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 24,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 25,
+      "value" : 3,
       "state" : "current"
     } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 12,
-    "activeLine" : 16,
-    "description" : "Time 7: run the most frequent remaining task type (0 instances left after this run).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cooling" : "1",
-      "heapSize" : "0",
-      "time" : "7"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 13,
-    "activeLine" : 21,
-    "description" : "Time 7: a task type's cooldown ends - 1 instance rejoin the heap.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "released" : "1",
-      "time" : "7"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "current"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 14,
-    "activeLine" : 16,
-    "description" : "Time 8: run the most frequent remaining task type (0 instances left after this run).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cooling" : "0",
-      "heapSize" : "0",
-      "time" : "8"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 15,
-    "activeLine" : 25,
-    "description" : "The CPU finished at time 8 - the minimum number of intervals needed.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "answer" : "8"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null

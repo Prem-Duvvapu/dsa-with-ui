@@ -1,10 +1,12 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.ArrayElement;
 import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedHashMap;
@@ -12,11 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A max-heap of remaining per-task-type counts, plus a cooldown queue holding tasks that
- * just ran and cannot be scheduled again for {@code n} ticks. Each simulated CPU tick either
- * schedules the currently-most-frequent task type, or idles when everything schedulable is
- * still cooling down - idling is the branch every naive "just divide by n+1" formula misses.
- * The array shown is the heap of remaining counts, the actual bookkeeping structure.
+ * Task Scheduler (LeetCode 621), traced on the owner's own accepted submission - a counting formula,
+ * not a simulation. The most frequent task (count maxFreq) needs maxFreq - 1 full rounds of n + 1
+ * slots, plus one last slot for each task that ties it (maxFreqCnt). If other tasks overflow those
+ * gaps there is no idle time at all, so the answer is the larger of that and the number of tasks.
+ * O(N), no heap.
+ *
+ * <p>Tasks are entered as numbers 0..25 for the letters A..Z; the code reads them as letters.
  */
 @Component
 public class TaskSchedulerTracer implements AlgorithmTracer {
@@ -28,7 +32,7 @@ public class TaskSchedulerTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.HEAP;
+        return DsType.ARRAY;
     }
 
     @Override
@@ -57,186 +61,86 @@ public class TaskSchedulerTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int leastInterval(int[] tasks, int n) {
-                   Map<Integer, Integer> freq = new LinkedHashMap<>();
-                   for (int t : tasks) freq.merge(t, 1, Integer::sum);
+               class Solution {
+                   public int leastInterval(char[] tasks, int n) {
+                       int[] freq=new int[26];
 
-                   List<Integer> heap = new ArrayList<>();
-                   for (int count : freq.values()) {
-                       // @a seed
-                       heap.add(count);
-                       siftUp(heap, heap.size() - 1);
-                   }
+                       for (char ch: tasks)
+                           // @a count
+                           freq[ch-'A']++;
 
-                   Deque<int[]> cooling = new ArrayDeque<>(); // {remainingCount, availableAtTime}
-                   int time = 0;
-                   while (!heap.isEmpty() || !cooling.isEmpty()) {
-                       time++;
-                       if (!heap.isEmpty()) {
-                           // @a schedule
-                           int remaining = removeMax(heap) - 1;
-                           if (remaining > 0) cooling.addLast(new int[]{remaining, time + n});
-                       } else {
-                           // @a idle
+                       // @a sort
+                       Arrays.sort(freq);
+
+                       int maxFreq=freq[25];
+                       int maxFreqCnt=1;
+                       int i=24;
+
+                       while (i>=0 && freq[i]==freq[i+1]) {
+                           // @a tie
+                           maxFreqCnt++;
+                           i--;
                        }
-                       if (!cooling.isEmpty() && cooling.peekFirst()[1] == time) {
-                           // @a release
-                           heap.add(cooling.pollFirst()[0]);
-                           siftUp(heap, heap.size() - 1);
-                       }
-                   }
-                   // @a done
-                   return time;
-               }
 
-               private int removeMax(List<Integer> heap) {
-                   int max = heap.get(0);
-                   int last = heap.remove(heap.size() - 1);
-                   if (!heap.isEmpty()) {
-                       heap.set(0, last);
-                       siftDown(heap, 0);
-                   }
-                   return max;
-               }
+                       // @a formula
+                       int minIntervals=tasks.length; //Min possible result
+                       int currIntervals=(n+1)*(maxFreq-1)+maxFreqCnt;
+                       int res=Math.max(minIntervals,currIntervals);
 
-               private int siftUp(List<Integer> heap, int i) {
-                   while (i > 0 && heap.get(i) > heap.get((i - 1) / 2)) {
-                       swap(heap, i, (i - 1) / 2);
-                       i = (i - 1) / 2;
+                       return res;
                    }
-                   return i;
-               }
-
-               private int siftDown(List<Integer> heap, int i) {
-                   int n = heap.size();
-                   while (true) {
-                       int l = 2 * i + 1, r = 2 * i + 2, largest = i;
-                       if (l < n && heap.get(l) > heap.get(largest)) largest = l;
-                       if (r < n && heap.get(r) > heap.get(largest)) largest = r;
-                       if (largest == i) return i;
-                       swap(heap, i, largest);
-                       i = largest;
-                   }
-               }
-
-               private void swap(List<Integer> heap, int i, int j) {
-                   Integer tmp = heap.get(i);
-                   heap.set(i, heap.get(j));
-                   heap.set(j, tmp);
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
-        int[] tasks = in.getIntArray("tasks");
+        int[] taskIds = in.getIntArray("tasks");
         int n = in.getInt("n");
-
-        Map<Integer, Integer> freq = new LinkedHashMap<>();
-        for (int t : tasks) {
-            freq.merge(t, 1, Integer::sum);
+        int[] freq = new int[26];
+        for (int t : taskIds) {
+            freq[t]++;
+            emit.at("count").say("Task %c: freq['%c'] becomes %d.", (char) ('A' + t), (char) ('A' + t), freq[t])
+                    .var("ch", String.valueOf((char) ('A' + t))).var("freq", counts(freq)).arrayState(letters(freq, t)).step();
         }
-
-        List<Integer> heap = new ArrayList<>();
-        for (int count : freq.values()) {
-            heap.add(count);
-            int at = siftUp(heap, heap.size() - 1);
-            emit.at("seed")
-                    .say("A task type with count %d joins the max-heap (size now %d).",
-                            count, heap.size())
-                    .var("count", count).var("heapSize", heap.size())
-                    .array(toArray(heap), at).step();
+        Arrays.sort(freq);
+        int maxFreq = freq[25];
+        emit.at("sort").say("Sort the counts. The most frequent task occurs maxFreq = %d time%s.", maxFreq, Narration.s(maxFreq))
+                .var("maxFreq", maxFreq).array(freq, 25).step();
+        int maxFreqCnt = 1;
+        int i = 24;
+        while (i >= 0 && freq[i] == freq[i + 1]) {
+            maxFreqCnt++;
+            emit.at("tie").say("freq[%d] = %d ties the maximum: maxFreqCnt = %d tasks share it.", i, freq[i], maxFreqCnt)
+                    .var("maxFreqCnt", maxFreqCnt).array(freq, i).step();
+            i--;
         }
-
-        Deque<int[]> cooling = new ArrayDeque<>();
-        int time = 0;
-        while (!heap.isEmpty() || !cooling.isEmpty()) {
-            time++;
-            if (!heap.isEmpty()) {
-                int remaining = removeMax(heap) - 1;
-                if (remaining > 0) {
-                    cooling.addLast(new int[]{remaining, time + n});
-                }
-                emit.at("schedule")
-                        .say("Time %d: run the most frequent remaining task type (%d instance%s "
-                                        + "left after this run%s).",
-                                time, remaining, remaining == 1 ? "" : "s",
-                                remaining > 0 ? " - cools down until t=" + (time + n) : "")
-                        .var("time", time).var("heapSize", heap.size()).var("cooling", cooling.size())
-                        .array(toArray(heap)).step();
-            } else {
-                emit.at("idle")
-                        .say("Time %d: nothing is schedulable - every remaining task is still "
-                                        + "cooling down. The CPU sits idle.",
-                                time)
-                        .var("time", time).var("cooling", cooling.size())
-                        .array(toArray(heap)).step();
-            }
-
-            if (!cooling.isEmpty() && cooling.peekFirst()[1] == time) {
-                int[] freed = cooling.pollFirst();
-                heap.add(freed[0]);
-                int at = siftUp(heap, heap.size() - 1);
-                emit.at("release")
-                        .say("Time %d: a task type's cooldown ends - %d instance%s rejoin the heap.",
-                                time, freed[0], freed[0] == 1 ? "" : "s")
-                        .var("time", time).var("released", freed[0])
-                        .array(toArray(heap), at).step();
-            }
-        }
-
-        emit.at("done")
-                .say("The CPU finished at time %d - the minimum number of intervals needed.", time)
-                .var("answer", time)
-                .array(toArray(heap)).step();
+        int minIntervals = taskIds.length;
+        int currIntervals = (n + 1) * (maxFreq - 1) + maxFreqCnt;
+        int res = Math.max(minIntervals, currIntervals);
+        emit.at("formula").say("(n+1)*(maxFreq-1) + maxFreqCnt = %d*%d + %d = %d slots. There are %d tasks, so the "
+                        + "answer is max(%d, %d) = %d.", n + 1, maxFreq - 1, maxFreqCnt, currIntervals,
+                        minIntervals, minIntervals, currIntervals, res)
+                .var("currIntervals", currIntervals).var("minIntervals", minIntervals).var("answer", res)
+                .array(freq, 25).step();
     }
 
-    private static int[] toArray(List<Integer> heap) {
-        int[] out = new int[heap.size()];
-        for (int i = 0; i < out.length; i++) {
-            out[i] = heap.get(i);
+    /** The non-zero counts by letter. */
+    /** freq before sorting, each cell labelled with its task letter; the task just counted is current. */
+    private static List<ArrayElement> letters(int[] freq, int current) {
+        List<ArrayElement> out = new ArrayList<>(26);
+        for (int c = 0; c < 26; c++) {
+            out.add(new ArrayElement(c, freq[c], c == current ? "current" : "default", String.valueOf((char) ('A' + c))));
         }
         return out;
     }
 
-    private static int removeMax(List<Integer> heap) {
-        int max = heap.get(0);
-        int last = heap.remove(heap.size() - 1);
-        if (!heap.isEmpty()) {
-            heap.set(0, last);
-            siftDown(heap, 0);
+    private static String counts(int[] freq) {
+        StringBuilder sb = new StringBuilder("{");
+        for (int c = 0; c < 26; c++) {
+            if (freq[c] == 0) continue;
+            if (sb.length() > 1) sb.append(", ");
+            sb.append((char) ('A' + c)).append('=').append(freq[c]);
         }
-        return max;
-    }
-
-    private static int siftUp(List<Integer> heap, int i) {
-        while (i > 0) {
-            int parent = (i - 1) / 2;
-            if (heap.get(i) > heap.get(parent)) {
-                swap(heap, i, parent);
-                i = parent;
-            } else {
-                break;
-            }
-        }
-        return i;
-    }
-
-    private static int siftDown(List<Integer> heap, int i) {
-        int n = heap.size();
-        while (true) {
-            int l = 2 * i + 1, r = 2 * i + 2, largest = i;
-            if (l < n && heap.get(l) > heap.get(largest)) largest = l;
-            if (r < n && heap.get(r) > heap.get(largest)) largest = r;
-            if (largest == i) break;
-            swap(heap, i, largest);
-            i = largest;
-        }
-        return i;
-    }
-
-    private static void swap(List<Integer> heap, int i, int j) {
-        Integer tmp = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, tmp);
+        return sb.append('}').toString();
     }
 }

@@ -1,243 +1,162 @@
 {
   "anchors" : {
-    "insert" : 5,
-    "median" : 13,
-    "rebalance" : 8
+    "evenMedian" : 28,
+    "init" : 7,
+    "oddMedian" : 32,
+    "viaMax" : 14,
+    "viaMin" : 17
   },
-  "code" : "PriorityQueue<Integer> small = new PriorityQueue<>(Collections.reverseOrder());\nPriorityQueue<Integer> large = new PriorityQueue<>();\n\npublic void addNum(int num) {\n    if (small.isEmpty() || num <= small.peek()) small.add(num);\n    else large.add(num);\n\n    if (small.size() > large.size() + 1) large.add(small.poll());\n    else if (large.size() > small.size()) small.add(large.poll());\n}\n\npublic double findMedian() {\n    if (small.size() > large.size()) return small.peek();\n    return (small.peek() + large.peek()) / 2.0;\n}",
+  "code" : "class MedianFinder {\n    PriorityQueue<Integer> minHeap;\n    PriorityQueue<Integer> maxHeap;\n    boolean isEven;\n\n    public MedianFinder() {\n        minHeap=new PriorityQueue<>();\n        maxHeap=new PriorityQueue<>((x,y) -> Integer.compare(y,x));\n        isEven=true;\n    }\n\n    public void addNum(int num) {\n        if (isEven) { //curr size is even\n            maxHeap.add(num);\n            minHeap.add(maxHeap.poll());\n        } else { //curr size is odd\n            minHeap.add(num);\n            maxHeap.add(minHeap.poll());\n        }\n\n        isEven=!isEven;\n    }\n\n    public double findMedian() {\n        double median=0.0;\n\n        if (isEven) {\n            int first=maxHeap.peek();\n            int second=minHeap.peek();\n            median=(first+second)/2.0;\n        } else {\n            median=(double)minHeap.peek();\n        }\n\n        return median;\n    }\n}",
   "problemId" : "median-data-stream",
   "resolvedInput" : {
     "nums" : [ 5, 15, 1, 3 ]
   },
-  "stepCount" : 9,
+  "stepCount" : 6,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 5,
-    "description" : "Insert 5 into the smaller half.",
+    "activeLine" : 7,
+    "description" : "maxHeap keeps the smaller half (largest on top), minHeap the larger half (smallest on top).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "inserted" : "5",
-      "largeSize" : "0",
-      "smallSize" : "1"
-    },
-    "dsType" : "PriorityQueue",
+    "variables" : { },
+    "dsType" : "Array",
     "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 5,
-      "state" : "known"
-    } ],
+    "arrayState" : [ ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 13,
-    "description" : "Both tops are now the only values that matter. Median so far: 5.",
+    "activeLine" : 14,
+    "description" : "addNum(5): the count was even. Push it into maxHeap, then move maxHeap's top, 5, to minHeap - minHeap now holds the extra value.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "median" : "5.0"
+      "maxHeap" : "[]",
+      "minHeap" : "[5]",
+      "num" : "5"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "known"
+      "state" : "current",
+      "label" : "min"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 5,
-    "description" : "Insert 15 into the larger half.",
+    "activeLine" : 17,
+    "description" : "addNum(15): the count was odd. Push it into minHeap, then move minHeap's top, 5, to maxHeap - the halves are equal again.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "inserted" : "15",
-      "largeSize" : "1",
-      "smallSize" : "1"
+      "maxHeap" : "[5]",
+      "minHeap" : "[15]",
+      "num" : "15"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 5,
-      "state" : "known"
+      "state" : "known",
+      "label" : "max"
     }, {
       "index" : 1,
       "value" : 15,
-      "state" : "current"
+      "state" : "current",
+      "label" : "min"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 13,
-    "description" : "Both tops are now the only values that matter. Median so far: 10.",
+    "activeLine" : 14,
+    "description" : "addNum(1): the count was even. Push it into maxHeap, then move maxHeap's top, 5, to minHeap - minHeap now holds the extra value.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "median" : "10.0"
+      "maxHeap" : "[1]",
+      "minHeap" : "[5, 15]",
+      "num" : "1"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 5,
-      "state" : "known"
+      "value" : 1,
+      "state" : "known",
+      "label" : "max"
     }, {
       "index" : 1,
+      "value" : 5,
+      "state" : "current",
+      "label" : "min"
+    }, {
+      "index" : 2,
       "value" : 15,
-      "state" : "current"
+      "state" : "current",
+      "label" : "min"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 5,
-    "description" : "Insert 1 into the smaller half.",
+    "activeLine" : 17,
+    "description" : "addNum(3): the count was odd. Push it into minHeap, then move minHeap's top, 3, to maxHeap - the halves are equal again.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "inserted" : "1",
-      "largeSize" : "1",
-      "smallSize" : "2"
+      "maxHeap" : "[3, 1]",
+      "minHeap" : "[5, 15]",
+      "num" : "3"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "known"
+      "state" : "known",
+      "label" : "max"
     }, {
       "index" : 1,
-      "value" : 5,
-      "state" : "known"
+      "value" : 3,
+      "state" : "known",
+      "label" : "max"
     }, {
       "index" : 2,
+      "value" : 5,
+      "state" : "current",
+      "label" : "min"
+    }, {
+      "index" : 3,
       "value" : 15,
-      "state" : "current"
+      "state" : "current",
+      "label" : "min"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 13,
-    "description" : "Both tops are now the only values that matter. Median so far: 5.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "median" : "5.0"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "known"
-    }, {
-      "index" : 1,
-      "value" : 5,
-      "state" : "known"
-    }, {
-      "index" : 2,
-      "value" : 15,
-      "state" : "current"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 7,
-    "activeLine" : 5,
-    "description" : "Insert 3 into the smaller half.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "inserted" : "3",
-      "largeSize" : "1",
-      "smallSize" : "3"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "known"
-    }, {
-      "index" : 1,
-      "value" : 3,
-      "state" : "known"
-    }, {
-      "index" : 2,
-      "value" : 5,
-      "state" : "known"
-    }, {
-      "index" : 3,
-      "value" : 15,
-      "state" : "current"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 8,
-    "activeLine" : 8,
-    "description" : "Smaller half outgrew the larger half by more than one - move its top (5) across.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "moved" : "5"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "known"
-    }, {
-      "index" : 1,
-      "value" : 3,
-      "state" : "known"
-    }, {
-      "index" : 2,
-      "value" : 5,
-      "state" : "current"
-    }, {
-      "index" : 3,
-      "value" : 15,
-      "state" : "current"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 9,
-    "activeLine" : 13,
-    "description" : "Both tops are now the only values that matter. Median so far: 4.",
+    "activeLine" : 28,
+    "description" : "An even count: the median is the average of the two middle values, (3 + 5) / 2 = 4.0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -245,24 +164,28 @@
     "variables" : {
       "median" : "4.0"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "known"
+      "state" : "known",
+      "label" : "max"
     }, {
       "index" : 1,
       "value" : 3,
-      "state" : "known"
+      "state" : "known",
+      "label" : "max"
     }, {
       "index" : 2,
       "value" : 5,
-      "state" : "current"
+      "state" : "current",
+      "label" : "min"
     }, {
       "index" : 3,
       "value" : 15,
-      "state" : "current"
+      "state" : "current",
+      "label" : "min"
     } ],
     "listState" : null,
     "trieState" : null,
