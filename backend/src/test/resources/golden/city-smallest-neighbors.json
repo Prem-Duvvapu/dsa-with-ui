@@ -1,13 +1,13 @@
 {
   "anchors" : {
-    "answer" : 31,
-    "count" : 22,
-    "init" : 2,
-    "newBest" : 27,
-    "roundDone" : 18,
-    "viaK" : 14
+    "best" : 40,
+    "count" : 39,
+    "done" : 45,
+    "init" : 3,
+    "relax" : 26,
+    "via" : 24
   },
-  "code" : "public int findTheCity(int n, int[][] edges, int distanceThreshold) {\n    int[][] dist = new int[n][n];\n    for (int[] row : dist) Arrays.fill(row, INF);\n    for (int i = 0; i < n; i++) dist[i][i] = 0;\n    for (int[] e : edges) {\n        dist[e[0]][e[1]] = Math.min(dist[e[0]][e[1]], e[2]);\n        dist[e[1]][e[0]] = Math.min(dist[e[1]][e[0]], e[2]);\n    }\n\n    for (int k = 0; k < n; k++) {\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < n; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j]) {\n                    dist[i][j] = dist[i][k] + dist[k][j];\n                }\n            }\n        }\n    }\n\n    int best = -1, fewest = n + 1;\n    for (int city = 0; city < n; city++) {\n        int reachable = 0;\n        for (int j = 0; j < n; j++) {\n            if (j != city && dist[city][j] <= distanceThreshold) reachable++;\n        }\n        if (reachable <= fewest) {\n            fewest = reachable;\n            best = city;\n        }\n    }\n    return best;\n}",
+  "code" : "class Solution {\n    public int findTheCity(int n, int[][] edges, int distanceThreshold) {\n        int res = -1;\n        int minCitiesCnt = n+1;\n        int[][] dist = new int[n][n];\n\n        for (int i=0;i<n;i++) {\n            for (int j=0;j<n;j++) {\n                if (i != j)\n                    dist[i][j] = (int)1e8;\n            }\n        }\n\n        for (int[] e: edges) {\n            int u = e[0];\n            int v = e[1];\n            int wt = e[2];\n\n            dist[u][v] = wt;\n            dist[v][u] = wt;\n        }\n\n        for (int k=0;k<n;k++) {\n            for (int i=0;i<n;i++) {\n                for (int j=0;j<n;j++) {\n                    dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);\n                }\n            }\n        }\n\n        for (int i=0;i<n;i++) {\n            int currCitiesCnt = 0;\n            for (int j=0;j<n;j++) {\n                if (i != j && dist[i][j] <= distanceThreshold) {\n                    currCitiesCnt++;\n                }\n            }\n\n            if (currCitiesCnt <= minCitiesCnt) {\n                minCitiesCnt = currCitiesCnt;\n                res = i;\n            }\n        }\n\n        return res;\n    }\n}",
   "problemId" : "city-smallest-neighbors",
   "resolvedInput" : {
     "graph" : {
@@ -19,15 +19,15 @@
   "stepCount" : 20,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "4 cities, 4 roads, threshold 4. Seed the distance table with the roads themselves; -1 marks a pair with no route known yet. Floyd-Warshall will fill in the rest before any counting happens.",
+    "activeLine" : 3,
+    "description" : "dist[i][j] starts as the direct road between i and j (-1 on the canvas when there is none). Floyd-Warshall then lets each city in turn act as a stop in the middle.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "n" : "4",
-      "threshold" : "4"
+      "distanceThreshold" : "4",
+      "n" : "4"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, -1, -1 ], [ 3, 0, 1, 4 ], [ -1, 1, 0, 1 ], [ -1, 4, 1, 0 ] ],
@@ -37,8 +37,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 18,
-    "description" : "City 0 has been offered as a waypoint to every pair. The table now holds the shortest routes that use only cities 0..0 in between.",
+    "activeLine" : 24,
+    "description" : "Allow city 0 as a stop: any pair i, j may now go i -> 0 -> j if that is shorter.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -54,14 +54,30 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 14,
-    "description" : "Routing 0 to 2 through city 1 costs 3 + 1 = 4, better than no route.",
+    "activeLine" : 24,
+    "description" : "Allow city 1 as a stop: any pair i, j may now go i -> 1 -> j if that is shorter.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "4",
+      "k" : "1"
+    },
+    "dsType" : "Matrix",
+    "gridState" : [ [ 0, 3, -1, -1 ], [ 3, 0, 1, 4 ], [ -1, 1, 0, 1 ], [ -1, 4, 1, 0 ] ],
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 26,
+    "description" : "0 -> 1 -> 2 costs 3 + 1 = 4, better than no route: dist[0][2] = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
       "i" : "0",
       "j" : "2",
       "k" : "1"
@@ -73,15 +89,14 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 4,
-    "activeLine" : 14,
-    "description" : "Routing 0 to 3 through city 1 costs 3 + 4 = 7, better than no route.",
+    "stepNumber" : 5,
+    "activeLine" : 26,
+    "description" : "0 -> 1 -> 3 costs 3 + 4 = 7, better than no route: dist[0][3] = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "7",
       "i" : "0",
       "j" : "3",
       "k" : "1"
@@ -93,15 +108,14 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 5,
-    "activeLine" : 14,
-    "description" : "Routing 2 to 0 through city 1 costs 1 + 3 = 4, better than no route.",
+    "stepNumber" : 6,
+    "activeLine" : 26,
+    "description" : "2 -> 1 -> 0 costs 1 + 3 = 4, better than no route: dist[2][0] = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "4",
       "i" : "2",
       "j" : "0",
       "k" : "1"
@@ -113,15 +127,14 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 6,
-    "activeLine" : 14,
-    "description" : "Routing 3 to 0 through city 1 costs 4 + 3 = 7, better than no route.",
+    "stepNumber" : 7,
+    "activeLine" : 26,
+    "description" : "3 -> 1 -> 0 costs 4 + 3 = 7, better than no route: dist[3][0] = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "7",
       "i" : "3",
       "j" : "0",
       "k" : "1"
@@ -133,15 +146,15 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 7,
-    "activeLine" : 18,
-    "description" : "City 1 has been offered as a waypoint to every pair. The table now holds the shortest routes that use only cities 0..1 in between.",
+    "stepNumber" : 8,
+    "activeLine" : 24,
+    "description" : "Allow city 2 as a stop: any pair i, j may now go i -> 2 -> j if that is shorter.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "k" : "1"
+      "k" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 7 ], [ 3, 0, 1, 4 ], [ 4, 1, 0, 1 ], [ 7, 4, 1, 0 ] ],
@@ -150,15 +163,14 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 8,
-    "activeLine" : 14,
-    "description" : "Routing 0 to 3 through city 2 costs 4 + 1 = 5, better than 7.",
+    "stepNumber" : 9,
+    "activeLine" : 26,
+    "description" : "0 -> 2 -> 3 costs 4 + 1 = 5, better than 7: dist[0][3] = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "5",
       "i" : "0",
       "j" : "3",
       "k" : "2"
@@ -170,15 +182,14 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 9,
-    "activeLine" : 14,
-    "description" : "Routing 1 to 3 through city 2 costs 1 + 1 = 2, better than 4.",
+    "stepNumber" : 10,
+    "activeLine" : 26,
+    "description" : "1 -> 2 -> 3 costs 1 + 1 = 2, better than 4: dist[1][3] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "2",
       "i" : "1",
       "j" : "3",
       "k" : "2"
@@ -190,15 +201,14 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 10,
-    "activeLine" : 14,
-    "description" : "Routing 3 to 0 through city 2 costs 1 + 4 = 5, better than 7.",
+    "stepNumber" : 11,
+    "activeLine" : 26,
+    "description" : "3 -> 2 -> 0 costs 1 + 4 = 5, better than 7: dist[3][0] = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "5",
       "i" : "3",
       "j" : "0",
       "k" : "2"
@@ -210,15 +220,14 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 11,
-    "activeLine" : 14,
-    "description" : "Routing 3 to 1 through city 2 costs 1 + 1 = 2, better than 4.",
+    "stepNumber" : 12,
+    "activeLine" : 26,
+    "description" : "3 -> 2 -> 1 costs 1 + 1 = 2, better than 4: dist[3][1] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distance" : "2",
       "i" : "3",
       "j" : "1",
       "k" : "2"
@@ -230,26 +239,9 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 12,
-    "activeLine" : 18,
-    "description" : "City 2 has been offered as a waypoint to every pair. The table now holds the shortest routes that use only cities 0..2 in between.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "k" : "2"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
     "stepNumber" : 13,
-    "activeLine" : 18,
-    "description" : "City 3 has been offered as a waypoint to every pair. The table now holds the shortest routes that use only cities 0..3 in between.",
+    "activeLine" : 24,
+    "description" : "Allow city 3 as a stop: any pair i, j may now go i -> 3 -> j if that is shorter.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -265,16 +257,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 22,
-    "description" : "City 0 reaches 2 other city/cities within 4: 1 at 3, 2 at 4.",
+    "activeLine" : 39,
+    "description" : "City 0 reaches 2 other cities within 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "city" : "0",
-      "counts" : "[2, 0, 0, 0]",
-      "reachable" : "2"
+      "currCitiesCnt" : "2",
+      "i" : "0",
+      "minCitiesCnt" : "5"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],
@@ -284,16 +276,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 27,
-    "description" : "City 0 becomes the answer so far: 2 is fewer than the previous best of nothing yet.",
+    "activeLine" : 40,
+    "description" : "That is the fewest so far: res = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "best" : "0",
-      "counts" : "[2, 0, 0, 0]",
-      "fewest" : "2"
+      "minCitiesCnt" : "2",
+      "res" : "0"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],
@@ -303,16 +294,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 22,
-    "description" : "City 1 reaches 3 other city/cities within 4: 0 at 3, 2 at 1, 3 at 2.",
+    "activeLine" : 39,
+    "description" : "City 1 reaches 3 other cities within 4. More than the best so far (2), so it is not the answer.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "city" : "1",
-      "counts" : "[2, 3, 0, 0]",
-      "reachable" : "3"
+      "currCitiesCnt" : "3",
+      "i" : "1",
+      "minCitiesCnt" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],
@@ -322,16 +313,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 22,
-    "description" : "City 2 reaches 3 other city/cities within 4: 0 at 4, 1 at 1, 3 at 1.",
+    "activeLine" : 39,
+    "description" : "City 2 reaches 3 other cities within 4. More than the best so far (2), so it is not the answer.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "city" : "2",
-      "counts" : "[2, 3, 3, 0]",
-      "reachable" : "3"
+      "currCitiesCnt" : "3",
+      "i" : "2",
+      "minCitiesCnt" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],
@@ -341,16 +332,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 22,
-    "description" : "City 3 reaches 2 other city/cities within 4: 1 at 2, 2 at 1.",
+    "activeLine" : 39,
+    "description" : "City 3 reaches 2 other cities within 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "city" : "3",
-      "counts" : "[2, 3, 3, 2]",
-      "reachable" : "2"
+      "currCitiesCnt" : "2",
+      "i" : "3",
+      "minCitiesCnt" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],
@@ -360,16 +351,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 27,
-    "description" : "City 3 becomes the answer so far: 2 ties the previous best, and a tie goes to the larger city number.",
+    "activeLine" : 40,
+    "description" : "That ties the fewest so far, and the problem breaks ties toward the larger city number - which is 3 (that is what <= does). res = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "best" : "3",
-      "counts" : "[2, 3, 3, 2]",
-      "fewest" : "2"
+      "minCitiesCnt" : "2",
+      "res" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],
@@ -379,15 +369,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 31,
-    "description" : "Neighbour counts are [2, 3, 3, 2]. 2 cities tie on the fewest (2), and the rule breaks the tie towards the largest index, so city 3 is the answer.",
+    "activeLine" : 45,
+    "description" : "Return res = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "answer" : "3",
-      "counts" : "[2, 3, 3, 2]"
+      "res" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 0, 3, 4, 5 ], [ 3, 0, 1, 2 ], [ 4, 1, 0, 1 ], [ 5, 2, 1, 0 ] ],

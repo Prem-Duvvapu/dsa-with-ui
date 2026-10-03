@@ -7,15 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Fewest multiplications turning {@code start} into {@code end}, where each step multiplies
- * the current value by one of the given numbers and keeps the result modulo 100000.
- *
- * <p>There is no graph to look at here — the graph is implicit, one vertex per residue
- * 0..99999 and one edge per multiplier — which is exactly why the queue IS the picture.
- * Because every edge costs the same single multiplication, plain BFS is optimal: the first
- * time a value is produced, it is produced in the fewest possible steps, so a value already
- * seen is never worth queueing again. That "already seen" rule is what keeps a space of
- * 100000 residues from exploding, and it is narrated rather than assumed.
+ * Minimum Multiplications to Reach End (GfG), traced on the owner's own accepted submission: a
+ * BFS over the 100000 possible remainders. Every multiplication is one step, so the first time
+ * BFS reaches {@code end} is the fewest steps; {@code opsCnt} doubles as the visited check.
+ * O(100000 * arr.length).
  */
 @Component
 public class MinMultiplicationsReachEndTracer implements AlgorithmTracer {
@@ -69,37 +64,47 @@ public class MinMultiplicationsReachEndTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int minimumMultiplications(int[] arr, int start, int end) {
-                   // @a init
-                   int mod = 100000;
-                   if (start == end) return 0;
-                   int[] steps = new int[mod];
-                   Arrays.fill(steps, -1);
-                   steps[start] = 0;
-                   Queue<Integer> queue = new ArrayDeque<>();
-                   queue.add(start);
+               class Solution {
+                   int minimumMultiplications(int[] arr, int start, int end) {
+                       // @a init
+                       int mod=(int)(1e5);
+                       int[] opsCnt=new int[mod];
+                       for (int i=0;i<mod;i++)
+                           opsCnt[i]=(int)(1e9);
 
-                   while (!queue.isEmpty()) {
-                       // @a dequeue
-                       int value = queue.poll();
-                       for (int multiplier : arr) {
-                           int next = (int) ((long) value * multiplier % mod);
-                           if (next == end) {
-                               // @a reached
-                               return steps[value] + 1;
-                           }
-                           if (steps[next] == -1) {
-                               // @a enqueue
-                               steps[next] = steps[value] + 1;
-                               queue.add(next);
-                           } else {
-                               // @a seen
-                               continue;
+                       Queue<Integer> q=new ArrayDeque<>();
+                       q.add(start);
+                       opsCnt[start]=0;
+
+                       if (start==end)
+                           return 0;
+
+                       while (!q.isEmpty())
+                       {
+                           // @a poll
+                           int front=q.poll();
+
+                           for (int i=0;i<arr.length;i++)
+                           {
+                               int currVal=(front*arr[i])%mod;
+
+                               if (opsCnt[currVal]>opsCnt[front]+1)
+                               {
+                                   // @a discover
+                                   opsCnt[currVal]=opsCnt[front]+1;
+
+                                   if (currVal==end)
+                                       // @a reached
+                                       return opsCnt[currVal];
+
+                                   q.add(currVal);
+                               }
                            }
                        }
+
+                       // @a none
+                       return -1;
                    }
-                   // @a exhausted
-                   return -1;
                }""";
     }
 
@@ -108,93 +113,61 @@ public class MinMultiplicationsReachEndTracer implements AlgorithmTracer {
         int[] arr = in.getIntArray("arr");
         int start = in.getInt("start");
         int end = in.getInt("end");
+        int mod = (int) 1e5;
+        int[] opsCnt = new int[mod];
+        Arrays.fill(opsCnt, (int) 1e9);
+        Deque<Integer> q = new ArrayDeque<>();
+        q.add(start);
+        opsCnt[start] = 0;
 
-        int[] steps = new int[MODULUS];
-        Arrays.fill(steps, -1);
-        steps[start] = 0;
-
-        Deque<Integer> queue = new ArrayDeque<>();
-        queue.add(start);
+        emit.at("init").say("Every value is a remainder mod 100000, so there are at most 100000 states. BFS from "
+                        + "%d: each multiplication by one of %s is one step.", start, Arrays.toString(arr))
+                .var("start", start).var("end", end).array(arr).queue(labels(q, opsCnt)).step();
 
         if (start == end) {
-            emit.at("init").say("Start %d already equals the target, so zero multiplications are needed.",
-                            start)
-                    .var("start", start).var("end", end).var("answer", 0)
-                    .queue(labels(queue, steps)).step();
+            // Neither contract input has start == end, so this branch carries no highlight of its own.
+            emit.at("init").say("start is already end, so the check right after the setup returns 0: no "
+                            + "multiplication is needed.")
+                    .var("answer", 0).array(arr).queue(labels(q, opsCnt)).step();
             return;
         }
 
-        emit.at("init").say(
-                        "Breadth-first search over the values 0..%d. Seed the queue with %d at depth 0; "
-                                + "every multiplier costs one step, so the first time a value appears it "
-                                + "appears at its minimum step count. Target: %d.",
-                        MODULUS - 1, start, end)
-                .var("start", start).var("end", end).var("multipliers", Arrays.toString(arr))
-                .var("discovered", 1)
-                .queue(labels(queue, steps)).step();
+        while (!q.isEmpty()) {
+            int front = q.poll();
+            emit.at("poll").say("Take %d, reached in %d step%s. Multiply it by each value in arr.",
+                            front, opsCnt[front], Narration.s(opsCnt[front]))
+                    .var("front", front).var("steps", opsCnt[front]).array(arr).queue(labels(q, opsCnt)).step();
 
-        int discovered = 1;
-
-        while (!queue.isEmpty()) {
-            int value = queue.poll();
-            int depth = steps[value];
-
-            emit.at("dequeue").say(
-                            "Dequeue %d, reached in %d multiplication%s. Try every multiplier on it.",
-                            value, depth, Narration.s(depth))
-                    .var("value", value).var("steps", depth).var("discovered", discovered)
-                    .queue(labels(queue, steps)).step();
-
-            for (int multiplier : arr) {
-                int next = (int) ((long) value * multiplier % MODULUS);
-
-                if (next == end) {
-                    emit.at("reached").say(
-                                    "%d x %d = %d (mod %d) - that is the target. It was produced from a value "
-                                            + "at depth %d, so the answer is %d multiplication%s.",
-                                    value, multiplier, next, MODULUS, depth, depth + 1, Narration.s(depth + 1))
-                            .var("value", value).var("multiplier", multiplier).var("product", next)
-                            .var("answer", depth + 1).var("discovered", discovered)
-                            .queue(labels(queue, steps)).step();
-                    return;
-                }
-
-                if (steps[next] == -1) {
-                    steps[next] = depth + 1;
-                    queue.add(next);
-                    discovered++;
-                    emit.at("enqueue").say(
-                                    "%d x %d = %d (mod %d), a value never produced before. Record it at depth "
-                                            + "%d and queue it.",
-                                    value, multiplier, next, MODULUS, steps[next])
-                            .var("value", value).var("multiplier", multiplier).var("product", next)
-                            .var("steps", steps[next]).var("discovered", discovered)
-                            .queue(labels(queue, steps)).step();
-                } else {
-                    emit.at("seen").say(
-                                    "%d x %d = %d (mod %d), but %d was already produced at depth %d - no later "
-                                            + "route to it can be shorter, so it is not queued again.",
-                                    value, multiplier, next, MODULUS, next, steps[next])
-                            .var("value", value).var("multiplier", multiplier).var("product", next)
-                            .var("discovered", discovered)
-                            .queue(labels(queue, steps)).step();
+            for (int i = 0; i < arr.length; i++) {
+                int currVal = (int) (((long) front * arr[i]) % mod);
+                if (opsCnt[currVal] > opsCnt[front] + 1) {
+                    opsCnt[currVal] = opsCnt[front] + 1;
+                    if (currVal == end) {
+                        emit.at("reached").say("%d x %d mod 100000 = %d, which is end, reached in %d step%s. BFS "
+                                        + "found it first, so that is the minimum. Return %d.",
+                                        front, arr[i], currVal, opsCnt[currVal], Narration.s(opsCnt[currVal]), opsCnt[currVal])
+                                .var("currVal", currVal).var("answer", opsCnt[currVal])
+                                .array(arr, i).queue(labels(q, opsCnt)).step();
+                        return;
+                    }
+                    q.add(currVal);
+                    emit.at("discover").say("%d x %d mod 100000 = %d, new: it takes %d step%s. Queue it.",
+                                    front, arr[i], currVal, opsCnt[currVal], Narration.s(opsCnt[currVal]))
+                            .var("currVal", currVal).var("steps", opsCnt[currVal])
+                            .array(arr, i).queue(labels(q, opsCnt)).step();
                 }
             }
         }
 
-        emit.at("exhausted").say(
-                        "The queue is empty after producing %d distinct value%s, and %d was never among "
-                                + "them. Multiplying %d by %s can never reach it: the answer is -1.",
-                        discovered, Narration.s(discovered), end, start, Arrays.toString(arr))
-                .var("discovered", discovered).var("answer", -1)
-                .queue(labels(queue, steps)).step();
+        emit.at("none").say("The queue is empty: every reachable value has been tried and %d was never produced. "
+                        + "Return -1.", end)
+                .var("answer", -1).array(arr).step();
     }
 
-    /** Queue contents as "value (depth)", front first — the order {@code poll()} will use. */
-    private static List<String> labels(Deque<Integer> queue, int[] steps) {
-        List<String> out = new ArrayList<>(queue.size());
-        for (int value : queue) {
-            out.add(value + " (" + steps[value] + ")");
+    private static List<String> labels(Deque<Integer> q, int[] opsCnt) {
+        List<String> out = new ArrayList<>();
+        for (int v : q) {
+            out.add(v + " (" + opsCnt[v] + ")");
         }
         return out;
     }

@@ -7,19 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * The city that can reach the fewest other cities within a distance threshold
- * (LeetCode 1334), ties going to the largest city number.
+ * Find the City With the Smallest Number of Neighbors at a Threshold Distance (LeetCode 1334),
+ * traced on the owner's own accepted submission: Floyd-Warshall for every pair's shortest
+ * distance, then count, for each city, the others within the threshold. {@code <=} in the final
+ * comparison keeps the LARGEST-numbered city on a tie, as the problem asks. O(n^3), the expected
+ * answer for n up to 100.
  *
- * <p>The question is about every city at once, not about one source, which is what makes
- * all-pairs Floyd-Warshall the natural engine rather than n separate Dijkstra runs. Once
- * the distance table is complete the answer is a single scan: count, per row, how many
- * other cities sit at or under the threshold.
- *
- * <p>Two details decide right from wrong here and are narrated as such: the threshold is
- * compared against the SHORTEST distance, not against any single road, so a city with one
- * long road may still be well connected through a chain of short ones; and the tie-break
- * wants the LARGEST index, which is why the scan keeps accepting a count equal to the best
- * so far instead of only a strictly smaller one.
+ * <p>The canvas is the {@code dist} matrix; -1 marks a pair with no route yet (the code's 1e8).
  */
 @Component
 public class CitySmallestNeighborsTracer implements AlgorithmTracer {
@@ -80,162 +74,130 @@ public class CitySmallestNeighborsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int findTheCity(int n, int[][] edges, int distanceThreshold) {
-                   // @a init
-                   int[][] dist = new int[n][n];
-                   for (int[] row : dist) Arrays.fill(row, INF);
-                   for (int i = 0; i < n; i++) dist[i][i] = 0;
-                   for (int[] e : edges) {
-                       dist[e[0]][e[1]] = Math.min(dist[e[0]][e[1]], e[2]);
-                       dist[e[1]][e[0]] = Math.min(dist[e[1]][e[0]], e[2]);
-                   }
+               class Solution {
+                   public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+                       // @a init
+                       int res = -1;
+                       int minCitiesCnt = n+1;
+                       int[][] dist = new int[n][n];
 
-                   for (int k = 0; k < n; k++) {
-                       for (int i = 0; i < n; i++) {
-                           for (int j = 0; j < n; j++) {
-                               if (dist[i][k] + dist[k][j] < dist[i][j]) {
-                                   // @a viaK
-                                   dist[i][j] = dist[i][k] + dist[k][j];
+                       for (int i=0;i<n;i++) {
+                           for (int j=0;j<n;j++) {
+                               if (i != j)
+                                   dist[i][j] = (int)1e8;
+                           }
+                       }
+
+                       for (int[] e: edges) {
+                           int u = e[0];
+                           int v = e[1];
+                           int wt = e[2];
+
+                           dist[u][v] = wt;
+                           dist[v][u] = wt;
+                       }
+
+                       for (int k=0;k<n;k++) {
+                           // @a via
+                           for (int i=0;i<n;i++) {
+                               for (int j=0;j<n;j++) {
+                                   // @a relax
+                                   dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
                                }
                            }
                        }
-                       // @a roundDone
-                   }
 
-                   int best = -1, fewest = n + 1;
-                   for (int city = 0; city < n; city++) {
-                       // @a count
-                       int reachable = 0;
-                       for (int j = 0; j < n; j++) {
-                           if (j != city && dist[city][j] <= distanceThreshold) reachable++;
+                       for (int i=0;i<n;i++) {
+                           int currCitiesCnt = 0;
+                           for (int j=0;j<n;j++) {
+                               if (i != j && dist[i][j] <= distanceThreshold) {
+                                   currCitiesCnt++;
+                               }
+                           }
+
+                           // @a count
+                           if (currCitiesCnt <= minCitiesCnt) {
+                               // @a best
+                               minCitiesCnt = currCitiesCnt;
+                               res = i;
+                           }
                        }
-                       if (reachable <= fewest) {
-                           // @a newBest
-                           fewest = reachable;
-                           best = city;
-                       }
+
+                       // @a done
+                       return res;
                    }
-                   // @a answer
-                   return best;
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
-        int threshold = in.getInt("threshold");
+        int distanceThreshold = in.getInt("threshold");
         int n = graph.vertices();
-
+        int res = -1;
+        int minCitiesCnt = n + 1;
         int[][] dist = new int[n][n];
-        for (int[] row : dist) {
-            Arrays.fill(row, INF);
-        }
         for (int i = 0; i < n; i++) {
-            dist[i][i] = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j) dist[i][j] = INF;
+            }
         }
         for (int[] e : graph.edges()) {
-            dist[e[0]][e[1]] = Math.min(dist[e[0]][e[1]], e[2]);
-            dist[e[1]][e[0]] = Math.min(dist[e[1]][e[0]], e[2]);
+            dist[e[0]][e[1]] = e[2];
+            dist[e[1]][e[0]] = e[2];
         }
 
-        emit.at("init").say(
-                        "%d cities, %d road%s, threshold %d. Seed the distance table with the roads "
-                                + "themselves; -1 marks a pair with no route known yet. Floyd-Warshall will "
-                                + "fill in the rest before any counting happens.",
-                        n, graph.edges().length, Narration.s(graph.edges().length), threshold)
-                .var("n", n).var("threshold", threshold)
-                .grid(display(dist)).step();
+        emit.at("init").say("dist[i][j] starts as the direct road between i and j (-1 on the canvas when there is "
+                        + "none). Floyd-Warshall then lets each city in turn act as a stop in the middle.")
+                .var("n", n).var("distanceThreshold", distanceThreshold).grid(display(dist)).step();
 
         for (int k = 0; k < n; k++) {
+            emit.at("via").say("Allow city %d as a stop: any pair i, j may now go i -> %d -> j if that is shorter.", k, k)
+                    .var("k", k).grid(display(dist)).step();
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    int candidate = dist[i][k] + dist[k][j];
-                    if (candidate < dist[i][j]) {
-                        String old = label(dist[i][j]);
-                        int toWaypoint = dist[i][k];
-                        int fromWaypoint = dist[k][j];
-                        dist[i][j] = candidate;
-                        emit.at("viaK").say(
-                                        "Routing %d to %d through city %d costs %d + %d = %d, better than %s.",
-                                        i, j, k, toWaypoint, fromWaypoint, candidate, old)
-                                .var("k", k).var("i", i).var("j", j).var("distance", candidate)
-                                .grid(display(dist)).step();
+                    int through = dist[i][k] + dist[k][j];
+                    if (through < dist[i][j]) {
+                        String before = dist[i][j] >= INF ? "no route" : String.valueOf(dist[i][j]);
+                        dist[i][j] = through;
+                        emit.at("relax").say("%d -> %d -> %d costs %d + %d = %d, better than %s: dist[%d][%d] = %d.",
+                                        i, k, j, dist[i][k], dist[k][j], through, before, i, j, through)
+                                .var("k", k).var("i", i).var("j", j).grid(display(dist)).step();
                     }
                 }
             }
-            emit.at("roundDone").say(
-                            "City %d has been offered as a waypoint to every pair. The table now holds the "
-                                    + "shortest routes that use only cities 0..%d in between.",
-                            k, k)
-                    .var("k", k)
-                    .grid(display(dist)).step();
         }
 
-        int best = -1;
-        int fewest = n + 1;
-        int[] counts = new int[n];
-
-        for (int city = 0; city < n; city++) {
-            int reachable = 0;
-            StringBuilder within = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            int currCitiesCnt = 0;
             for (int j = 0; j < n; j++) {
-                if (j != city && dist[city][j] <= threshold) {
-                    reachable++;
-                    if (within.length() > 0) {
-                        within.append(", ");
-                    }
-                    within.append(j).append(" at ").append(dist[city][j]);
+                if (i != j && dist[i][j] <= distanceThreshold) {
+                    currCitiesCnt++;
                 }
             }
-            counts[city] = reachable;
-
-            emit.at("count").say(
-                            "City %d reaches %d other city/cities within %d: %s.",
-                            city, reachable, threshold,
-                            reachable == 0 ? "none" : within.toString())
-                    .var("city", city).var("reachable", reachable).var("counts", Arrays.toString(counts))
+            boolean better = currCitiesCnt <= minCitiesCnt;
+            emit.at("count").say("City %d reaches %d other cit%s within %d.%s", i, currCitiesCnt,
+                            currCitiesCnt == 1 ? "y" : "ies", distanceThreshold,
+                            better ? "" : " More than the best so far (" + minCitiesCnt + "), so it is not the answer.")
+                    .var("i", i).var("currCitiesCnt", currCitiesCnt).var("minCitiesCnt", minCitiesCnt)
                     .grid(display(dist)).step();
-
-            if (reachable <= fewest) {
-                String why = reachable < fewest
-                        ? String.format("%d is fewer than the previous best of %s", reachable,
-                                fewest > n ? "nothing yet" : String.valueOf(fewest))
-                        : String.format("%d ties the previous best, and a tie goes to the larger city number",
-                                reachable);
-                fewest = reachable;
-                best = city;
-                emit.at("newBest").say("City %d becomes the answer so far: %s.", city, why)
-                        .var("best", best).var("fewest", fewest).var("counts", Arrays.toString(counts))
-                        .grid(display(dist)).step();
+            if (better) {
+                boolean tie = currCitiesCnt == minCitiesCnt;
+                minCitiesCnt = currCitiesCnt;
+                res = i;
+                emit.at("best").say(tie
+                                ? "That ties the fewest so far, and the problem breaks ties toward the larger city "
+                                        + "number - which is " + i + " (that is what <= does). res = " + i + "."
+                                : "That is the fewest so far: res = " + i + ".")
+                        .var("res", res).var("minCitiesCnt", minCitiesCnt).grid(display(dist)).step();
             }
         }
 
-        // The tie matters and the sentence used to hide it: with counts [2, 3, 3, 2] both
-        // city 0 and city 3 reach the fewest, and "city 3 has the smallest count" reads as
-        // though it were alone. The loop uses <= so a later city wins, which is the
-        // problem's own rule - so say that, rather than claiming a uniqueness that is not
-        // there.
-        int tied = 0;
-        for (int c : counts) {
-            if (c == fewest) {
-                tied++;
-            }
-        }
-        emit.at("answer").say(
-                        tied > 1
-                                ? "Neighbour counts are %s. %d cities tie on the fewest (%d), and the rule "
-                                        + "breaks the tie towards the largest index, so city %d is the answer."
-                                : "Neighbour counts are %s. City %d is alone on the fewest (%d), so it is "
-                                        + "the answer.",
-                        Arrays.toString(counts),
-                        tied > 1 ? tied : best,
-                        fewest,
-                        best)
-                .var("answer", best).var("counts", Arrays.toString(counts))
-                .grid(display(dist)).step();
+        emit.at("done").say("Return res = %d.", res)
+                .var("res", res).var("answer", res).grid(display(dist)).step();
     }
 
-    /** Unreachable pairs render as -1 rather than as the sentinel. */
+    /** -1 for "no route", which the code holds as 1e8. */
     private static int[][] display(int[][] dist) {
         int n = dist.length;
         int[][] out = new int[n][n];
@@ -245,9 +207,5 @@ public class CitySmallestNeighborsTracer implements AlgorithmTracer {
             }
         }
         return out;
-    }
-
-    private static String label(int value) {
-        return value >= INF ? "no route" : String.valueOf(value);
     }
 }

@@ -111,6 +111,14 @@ class TracerAnswerRegressionTest {
             shortest-path-dag      | {"graph":{"vertices":4,"edges":[[0,1,1],[1,2,2],[2,3,3]]},"start":1} | distance | [-1, 0, 2, 5]
             network-delay-time     | {"graph":{"vertices":4,"edges":[[0,1,1],[0,2,4],[1,2,1],[2,3,1]]},"source":0} | answer | 3
             path-min-effort        | {"heights":[[1,10,1],[1,10,1],[1,1,1]]}    | answer        | 0
+            # Second shortest-path batch on the owner's code: stops limit (k = 0 forces the direct flight);
+            # tied shortest routes add up; ties go to the larger city; start == end needs no step.
+            cheapest-flights-k-stops | {"graph":{"vertices":3,"edges":[[0,1,100],[1,2,100],[0,2,500]]},"src":0,"dst":2,"k":0} | answer | 500
+            cheapest-flights-k-stops | {"graph":{"vertices":3,"edges":[[0,1,100],[1,2,100],[0,2,500]]},"src":0,"dst":2,"k":1} | answer | 200
+            number-of-ways-destination | {"graph":{"vertices":4,"edges":[[0,1,1],[0,2,1],[1,3,1],[2,3,1]]}} | answer | 2
+            city-smallest-neighbors | {"graph":{"vertices":3,"edges":[[0,1,1],[1,2,1]]},"threshold":1} | answer | 2
+            min-multiplications-reach-end | {"arr":[2],"start":5,"end":5}       | answer        | 0
+            min-multiplications-reach-end | {"arr":[2,3],"start":1,"end":6}     | answer        | 2
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));
