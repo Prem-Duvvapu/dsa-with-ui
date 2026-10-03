@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Max Consecutive Ones III — sliding window with at most K zero flips.
- * Expand the right pointer. When the count of zeroes in the window exceeds K,
- * shrink the left pointer until zero count is at most K again.
+ * Max Consecutive Ones III (LeetCode 1004), traced on the owner's own accepted submission: a window
+ * that never shrinks. When it holds more than k zeroes it slides one step (left and right both move),
+ * keeping its length; it only grows when it is valid, so maxLen ends as the longest valid window.
+ * O(n).
  */
 @Component
 public class MaxConsecutiveOnes3Tracer implements AlgorithmTracer {
@@ -55,21 +56,38 @@ public class MaxConsecutiveOnes3Tracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int longestOnes(int[] nums, int k) {
-                   int left = 0, zeroes = 0, maxLen = 0;
-                   for (int right = 0; right < nums.length; right++) {
-                       // @a expand
-                       if (nums[right] == 0) zeroes++;
-                       while (zeroes > k) {
-                           // @a shrink
-                           if (nums[left] == 0) zeroes--;
-                           left++;
+               class Solution {
+                   public int longestOnes(int[] nums, int k) {
+                       // @a init
+                       int n=nums.length;
+                       int maxLen=0;
+                       int left=0;
+                       int right=0;
+                       int zeroesCnt=0;
+
+                       while (right<n) {
+                           if (nums[right]==0)
+                               // @a zero
+                               zeroesCnt++;
+
+                           if (zeroesCnt > k) {
+                               if (nums[left]==0)
+                                   zeroesCnt--;
+
+                               // @a slide
+                               left++;
+                           } else {
+                               // @a valid
+                               int currLen=right-left+1;
+                               maxLen=Math.max(maxLen,currLen);
+                           }
+
+                           right++;
                        }
-                       // @a windowComplete
-                       maxLen = Math.max(maxLen, right - left + 1);
+
+                       // @a done
+                       return maxLen;
                    }
-                   // @a done
-                   return maxLen;
                }""";
     }
 
@@ -77,55 +95,44 @@ public class MaxConsecutiveOnes3Tracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
         int k = in.getInt("k");
-        int left = 0, zeroes = 0, maxLen = 0;
+        int n = nums.length;
+        int maxLen = 0;
+        int left = 0;
+        int right = 0;
+        int zeroesCnt = 0;
 
-        for (int right = 0; right < nums.length; right++) {
-            if (nums[right] == 0) zeroes++;
-            emit.at("expand")
-                    .say("Expand right to %d (value %d). Zeroes in window: %d (budget K=%d).",
-                            right, nums[right], zeroes, k)
-                    .var("left", left).var("right", right).var("zeroes", zeroes).var("k", k)
-                    .arrayState(windowState(nums, left, right))
-                    .step();
+        emit.at("init").say("Flip at most k = %d zeroes. The window nums[left..right] may hold at most %d zero%s.",
+                        k, k, Narration.s(k))
+                .var("k", k).var("maxLen", 0).arrayState(WindowCells.of(nums, -1, -1)).step();
 
-            while (zeroes > k) {
-                boolean droppedZero = (nums[left] == 0);
-                if (droppedZero) zeroes--;
-                left++;
-                emit.at("shrink")
-                        .say("Zeroes (%d) exceeded budget %d → shrink left past %d (value %d). Left is now %d.",
-                                zeroes + (droppedZero ? 1 : 0), k, left - 1, droppedZero ? 0 : 1, left)
-                        .var("left", left).var("right", right).var("zeroes", zeroes)
-                        .arrayState(windowState(nums, left, right))
-                        .step();
+        while (right < n) {
+            if (nums[right] == 0) {
+                zeroesCnt++;
+                emit.at("zero").say("nums[%d] is 0: the window now holds %d zero%s.", right, zeroesCnt, Narration.s(zeroesCnt))
+                        .var("left", left).var("right", right).var("zeroesCnt", zeroesCnt).var("maxLen", maxLen)
+                        .arrayState(WindowCells.of(nums, left, right)).step();
             }
-
-            maxLen = Math.max(maxLen, right - left + 1);
-            emit.at("windowComplete")
-                    .say("Window [%d,%d] is valid with %d %s. Current length: %d (max: %d).",
-                            left, right, zeroes, Narration.plural(zeroes, "zero", "zeroes"),
-                            right - left + 1, maxLen)
-                    .var("left", left).var("right", right).var("windowLen", right - left + 1).var("maxLen", maxLen)
-                    .arrayState(windowState(nums, left, right))
-                    .step();
+            if (zeroesCnt > k) {
+                boolean droppedZero = nums[left] == 0;
+                if (droppedZero) zeroesCnt--;
+                left++;
+                emit.at("slide").say("%d zeros is more than k = %d. Slide the window instead of growing it: drop "
+                                + "nums[%d]%s. Its length stays %d.", zeroesCnt + (droppedZero ? 1 : 0), k, left - 1,
+                                droppedZero ? " (a zero, so zeroesCnt = " + zeroesCnt + ")" : "", right - left + 1)
+                        .var("left", left).var("right", right).var("zeroesCnt", zeroesCnt).var("maxLen", maxLen)
+                        .arrayState(WindowCells.of(nums, left, right)).step();
+            } else {
+                int currLen = right - left + 1;
+                maxLen = Math.max(maxLen, currLen);
+                emit.at("valid").say("The window [%d, %d] holds %d zero%s, within k: length %d. maxLen = %d.",
+                                left, right, zeroesCnt, Narration.s(zeroesCnt), currLen, maxLen)
+                        .var("left", left).var("right", right).var("zeroesCnt", zeroesCnt).var("maxLen", maxLen)
+                        .arrayState(WindowCells.of(nums, left, right)).step();
+            }
+            right++;
         }
 
-        emit.at("done")
-                .say("Scan complete. Longest contiguous subarray of 1s after flipping at most %d zeroes: %d.", k, maxLen)
-                .var("answer", maxLen)
-                .arrayState(windowState(nums, -1, -1))
-                .step();
-    }
-
-    private static List<ArrayElement> windowState(int[] nums, int left, int right) {
-        List<ArrayElement> state = new ArrayList<>(nums.length);
-        for (int i = 0; i < nums.length; i++) {
-            String st = (i == right) ? "current"
-                    : (i == left) ? "target"
-                    : (i > left && i < right) ? "active"
-                    : "default";
-            state.add(new ArrayElement(i, nums[i], st));
-        }
-        return state;
+        emit.at("done").say("The longest run of 1s with at most %d zero%s flipped is %d.", k, Narration.s(k), maxLen)
+                .var("maxLen", maxLen).var("answer", maxLen).arrayState(WindowCells.of(nums, -1, -1)).step();
     }
 }

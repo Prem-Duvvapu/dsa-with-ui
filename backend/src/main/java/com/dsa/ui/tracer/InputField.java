@@ -119,6 +119,12 @@ public final class InputField {
          * InputValidator; TracerContractTest's grower builds grids that satisfy it.
          */
         public Builder squarePermutation() { return constraint("square", true).constraint("squarePermutation", true); }
+        /**
+         * The algorithm's work depends on the named INT field, not on this collection's length
+         * (Maximum Points from Cards is O(k)). TracerContractTest's growth check then grows that
+         * field along with this one, instead of expecting more steps from a longer array alone.
+         */
+        public Builder workScalesWith(String field) { return constraint("workScalesWith", field); }
         public Builder directed() { return constraint("directed", true); }
         public Builder weighted() { return constraint("weighted", true); }
 

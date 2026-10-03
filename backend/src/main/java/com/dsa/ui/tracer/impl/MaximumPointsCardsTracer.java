@@ -10,11 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Maximum Points You Can Obtain from Cards — O(N) sliding window.
- * Picking K cards from either end leaves a contiguous subarray of size (N - K) in the middle.
- * Maximizing the sum of the K picked cards is mathematically equivalent to minimizing
- * the sum of the unpicked (N - K) contiguous cards:
- * {@code maxScore = totalSum - minSubarraySum(size N - K)}.
+ * Maximum Points You Can Obtain from Cards (LeetCode 1423), traced on the owner's own accepted
+ * submission: start with the first k cards, then k times give back the last front card and take
+ * one more from the back - {@code i} wraps around to the end with (i + n) % n. Every split of k
+ * cards between the two ends is tried once. O(k).
+ *
+ * <p>The cards taken are not one contiguous run - they wrap around the end - so the canvas marks
+ * each taken card, the one just taken in brightest.
  */
 @Component
 public class MaximumPointsCardsTracer implements AlgorithmTracer {
@@ -37,6 +39,7 @@ public class MaximumPointsCardsTracer implements AlgorithmTracer {
                         .help("Points for each card in row.")
                         .length(1, 30).values(1, 1000)
                         .defaultValue(List.of(1, 2, 3, 4, 5, 6, 1))
+                        .workScalesWith("k")
                         .build(),
                 InputField.of("k", FieldType.INT)
                         .label("K (cards to take)")
@@ -55,29 +58,36 @@ public class MaximumPointsCardsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int maxScore(int[] cardPoints, int k) {
-                   int n = cardPoints.length;
-                   int totalSum = 0;
-                   for (int pt : cardPoints) totalSum += pt;
+               class Solution {
+                   public int maxScore(int[] cardPoints, int k) {
+                       // @a init
+                       int n = cardPoints.length;
+                       int maxSum = 0;
+                       int currSum = 0;
 
-                   int windowSize = n - k;
-                   int windowSum = 0;
-                   for (int i = 0; i < windowSize; i++) {
-                       // @a buildWindow
-                       windowSum += cardPoints[i];
+                       for (int i=0;i<k;i++) {
+                           currSum += cardPoints[i];
+                       }
+
+                       maxSum = currSum;
+
+                       int i = 0;
+                       int j = k-1;
+
+                       while (j>=0) {
+                           // @a swap
+                           currSum -= cardPoints[j];
+                           j--;
+                           i--;
+
+                           i = (i+n)%n;
+                           currSum += cardPoints[i];
+                           maxSum = Math.max(currSum, maxSum);
+                       }
+
+                       // @a done
+                       return maxSum;
                    }
-
-                   int minWindowSum = windowSum;
-                   // @a initialWindow
-
-                   for (int right = windowSize; right < n; right++) {
-                       // @a slideWindow
-                       int left = right - windowSize;
-                       windowSum += cardPoints[right] - cardPoints[left];
-                       minWindowSum = Math.min(minWindowSum, windowSum);
-                   }
-                   // @a done
-                   return totalSum - minWindowSum;
                }""";
     }
 
@@ -86,70 +96,49 @@ public class MaximumPointsCardsTracer implements AlgorithmTracer {
         int[] cardPoints = in.getIntArray("cardPoints");
         int k = in.getInt("k");
         int n = cardPoints.length;
+        if (k > n) {
+            throw new InputValidationException(Map.of("k", "can take at most all " + n + " cards"));
+        }
+        int currSum = 0;
+        for (int i = 0; i < k; i++) {
+            currSum += cardPoints[i];
+        }
+        int maxSum = currSum;
+        int i = 0;
+        int j = k - 1;
+        boolean[] taken = new boolean[n];
+        for (int t = 0; t < k; t++) taken[t] = true;
 
-        // Clamp k to n if larger
-        k = Math.min(k, n);
-        int totalSum = 0;
-        for (int pt : cardPoints) totalSum += pt;
+        emit.at("init").say("Take the first %d card%s from the front: currSum = %d. That is one way to split the "
+                        + "%d cards between the two ends.", k, Narration.s(k), currSum, k)
+                .var("currSum", currSum).var("maxSum", maxSum).arrayState(cards(cardPoints, taken, -1)).step();
 
-        int windowSize = n - k;
-        int windowSum = 0;
-
-        for (int i = 0; i < windowSize; i++) {
-            windowSum += cardPoints[i];
-            emit.at("buildWindow")
-                    .say("Initial unpicked window (size %d = N - K): add cardPoints[%d]=%d → sum is %d.",
-                            windowSize, i, cardPoints[i], windowSum)
-                    .var("i", i).var("windowSum", windowSum).var("windowSize", windowSize)
-                    .arrayState(windowState(cardPoints, 0, i))
-                    .step();
+        while (j >= 0) {
+            currSum -= cardPoints[j];
+            taken[j] = false;
+            int gaveBack = j;
+            j--;
+            i--;
+            i = (i + n) % n;
+            currSum += cardPoints[i];
+            taken[i] = true;
+            maxSum = Math.max(currSum, maxSum);
+            emit.at("swap").say("Give back front card %d (%d) and take back card %d (%d): currSum = %d. maxSum = %d.",
+                            gaveBack, cardPoints[gaveBack], i, cardPoints[i], currSum, maxSum)
+                    .var("i", i).var("j", j).var("currSum", currSum).var("maxSum", maxSum)
+                    .arrayState(cards(cardPoints, taken, i)).step();
         }
 
-        int minWindowSum = windowSum;
-        emit.at("initialWindow")
-                .say("Initial unpicked window [0,%d] has sum %d. Picked card score: %d - %d = %d.",
-                        Math.max(0, windowSize - 1), minWindowSum, totalSum, minWindowSum, totalSum - minWindowSum)
-                .var("minWindowSum", minWindowSum).var("currentScore", totalSum - minWindowSum)
-                .arrayState(windowState(cardPoints, 0, Math.max(0, windowSize - 1)))
-                .step();
-
-        for (int right = windowSize; right < n; right++) {
-            int left = right - windowSize;
-            windowSum += cardPoints[right] - cardPoints[left];
-            minWindowSum = Math.min(minWindowSum, windowSum);
-            int score = totalSum - minWindowSum;
-
-            emit.at("slideWindow")
-                    .say("Slide window: drop cardPoints[%d]=%d, add cardPoints[%d]=%d. Window sum: %d (min: %d, maxScore: %d).",
-                            left, cardPoints[left], right, cardPoints[right], windowSum, minWindowSum, score)
-                    .var("left", left + 1).var("right", right).var("windowSum", windowSum)
-                    .var("minWindowSum", minWindowSum).var("maxScore", score)
-                    .arrayState(windowState(cardPoints, left + 1, right))
-                    .step();
-        }
-
-        int answer = totalSum - minWindowSum;
-        emit.at("done")
-                .say("All unpicked window positions checked. Maximum points from taking %d cards: %d.", k, answer)
-                .var("answer", answer)
-                .arrayState(windowState(cardPoints, -1, -1))
-                .step();
+        emit.at("done").say("Every split has been tried. The best total is %d.", maxSum)
+                .var("maxSum", maxSum).var("answer", maxSum).arrayState(cards(cardPoints, taken, -1)).step();
     }
 
-    private static List<ArrayElement> windowState(int[] cardPoints, int left, int right) {
-        List<ArrayElement> state = new ArrayList<>(cardPoints.length);
-        for (int i = 0; i < cardPoints.length; i++) {
-            // Cards inside [left, right] are unpicked (active/target/current); cards outside
-            // MUST be "default". WindowCanvas derives the window from exactly this - any
-            // non-default state reads as inside - so the old "sorted" for "already picked"
-            // put every card in the window on every step and drew a motionless window
-            // spanning the whole array while the narration described it sliding. The
-            // picked/unpicked distinction survives in the label below, where it belongs.
-            String st = (left >= 0 && right >= 0 && i >= left && i <= right)
-                    ? (i == right ? "current" : i == left ? "target" : "active")
-                    : "default";
-            state.add(new ArrayElement(i, cardPoints[i], st, (left >= 0 && i >= left && i <= right) ? "unpicked" : "picked"));
+    /** Taken cards are "active", the one just taken "current", the rest "default". */
+    private static List<ArrayElement> cards(int[] a, boolean[] taken, int justTaken) {
+        List<ArrayElement> out = new ArrayList<>(a.length);
+        for (int t = 0; t < a.length; t++) {
+            out.add(new ArrayElement(t, a[t], t == justTaken ? "current" : taken[t] ? "active" : "default"));
         }
-        return state;
+        return out;
     }
 }
