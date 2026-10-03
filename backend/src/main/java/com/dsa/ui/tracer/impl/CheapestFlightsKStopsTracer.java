@@ -7,20 +7,14 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Cheapest route from src to dst using at most k stops (LeetCode 787).
+ * Cheapest Flights Within K Stops (LeetCode 787), traced on the owner's own accepted submission.
+ * The queue is ordered by the number of flights taken, not by price, so routes are explored in
+ * layers of 1, 2, ... flights; a route that already used k + 1 flights is not extended. Each
+ * queue entry carries its own price, so a cheaper route found later with more flights never
+ * corrupts a route with fewer. O(E * K).
  *
- * <p>Dijkstra is the wrong tool here, and this trace is built to show why. Dijkstra
- * finalizes a vertex the moment it is popped at its cheapest price, but "cheapest so far"
- * is not the only thing that matters once hops are rationed: a dearer route reaching the
- * same city in fewer hops can still be the only one that finishes within budget. The
- * greedy exchange argument Dijkstra rests on simply does not hold.
- *
- * <p>So this relaxes every edge in Bellman-Ford fashion, but only k + 1 times — one round
- * per flight the route is allowed to take. The load-bearing detail is the array copy at
- * the top of each round: relaxations write into {@code next} while reading {@code dist},
- * the previous round's snapshot. Relax in place instead and a price found this round is
- * immediately extendable in the same round, chaining two flights where the budget allowed
- * one, and the hop cap silently stops meaning anything.
+ * <p>The priority queue is a real {@link PriorityQueue} with the submission's comparator, so
+ * entries with equal stop counts come out in the same order the submission's would.
  */
 @Component
 public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
@@ -92,31 +86,74 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-                   // @a init
-                   int[] dist = new int[n];
-                   Arrays.fill(dist, Integer.MAX_VALUE);
-                   dist[src] = 0;
+               class Pair {
+                   int price;
+                   int node;
 
-                   for (int round = 0; round <= k; round++) {
-                       // @a roundStart
-                       int[] next = dist.clone();
-                       for (int[] flight : flights) {
-                           int from = flight[0], to = flight[1], price = flight[2];
-                           if (dist[from] != Integer.MAX_VALUE
-                                   && dist[from] + price < next[to]) {
-                               // @a relax
-                               next[to] = dist[from] + price;
-                           } else {
-                               // @a noImprovement
+                   Pair(int price,int node) {
+                       this.price = price;
+                       this.node = node;
+                   }
+               }
+
+               class Tuple {
+                   int stops;
+                   int price;
+                   int node;
+
+                   Tuple(int stops,int price,int node) {
+                       this.stops = stops;
+                       this.price = price;
+                       this.node = node;
+                   }
+               }
+
+               class Solution {
+                   public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+                       // @a init
+                       List<List<Pair>>  adjList = new ArrayList<>();
+                       PriorityQueue<Tuple> pq = new PriorityQueue<>((x,y) -> Integer.compare(x.stops,y.stops));
+                       int[] priceArr = new int[n];
+
+                       Arrays.fill(priceArr, Integer.MAX_VALUE);
+
+                       for (int i=0;i<n;i++)
+                           adjList.add(new ArrayList<>());
+
+                       for (int[] e: flights) {
+                           int u = e[0];
+                           int v = e[1];
+                           int p = e[2];
+
+                           adjList.get(u).add(new Pair(p,v));
+                       }
+
+                       pq.add(new Tuple(0,0,src));
+                       priceArr[src] = 0;
+
+                       while (!pq.isEmpty()) {
+                           // @a poll
+                           Tuple curr = pq.poll();
+                           int currStops = curr.stops;
+                           int currPrice = curr.price;
+                           int currNode = curr.node;
+
+                           if (currStops > k)
+                               // @a tooMany
                                continue;
+
+                           for (Pair ngbr: adjList.get(currNode)) {
+                               if (currPrice + ngbr.price < priceArr[ngbr.node]) {
+                                   // @a relax
+                                   priceArr[ngbr.node] = currPrice + ngbr.price;
+                                   pq.add(new Tuple(currStops+1,priceArr[ngbr.node],ngbr.node));
+                               }
                            }
                        }
-                       // @a roundEnd
-                       dist = next;
+
+                       // @a done
+                       return (priceArr[dst] != Integer.MAX_VALUE) ? priceArr[dst] : -1;
                    }
-                   // @a done
-                   return dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];
                }""";
     }
 
@@ -127,7 +164,6 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
         int dst = in.getInt("dst");
         int k = in.getInt("k");
         int n = graph.vertices();
-
         Map<String, String> errors = new LinkedHashMap<>();
         if (src >= n) {
             errors.put("src", "This network only has cities 0.." + (n - 1) + ".");
@@ -139,101 +175,95 @@ public class CheapestFlightsKStopsTracer implements AlgorithmTracer {
             throw new InputValidationException(errors);
         }
 
+        List<List<int[]>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] e : graph.edges()) {
+            adjList.get(e[0]).add(new int[]{e[2], e[1]});
+        }
+        int[] priceArr = new int[n];
+        Arrays.fill(priceArr, Integer.MAX_VALUE);
+        // {stops, price, node}
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x, y) -> Integer.compare(x[0], y[0]));
+        pq.add(new int[]{0, 0, src});
+        priceArr[src] = 0;
+
         GraphLayout.Layout layout = GraphLayout.directed(graph);
         Map<Integer, String> states = new LinkedHashMap<>();
         for (int i = 0; i < n; i++) {
             states.put(i, "unvisited");
         }
-        states.put(src, "visiting");
+        states.put(src, "queued");
         states.put(dst, "target");
+        emit.at("init").say("Fly from %d to %d with at most %d stop%s, which means at most %d flight%s. The queue "
+                        + "hands back routes with the fewest flights first.",
+                        src, dst, k, Narration.s(k), k + 1, Narration.s(k + 1))
+                .var("priceArr", show(priceArr)).graph(layout.nodes(), layout.edges()).nodes(states)
+                .queue(entries(pq)).step();
 
-        int[] dist = new int[n];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[src] = 0;
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int currStops = curr[0];
+            int currPrice = curr[1];
+            int currNode = curr[2];
+            emit.at("poll").say("Poll city %d, reached with %d flight%s for %d.",
+                            currNode, currStops, Narration.s(currStops), currPrice)
+                    .var("currNode", currNode).var("currStops", currStops).var("currPrice", currPrice)
+                    .var("priceArr", show(priceArr)).graph(layout.nodes(), layout.edges()).nodes(states)
+                    .queue(entries(pq)).step();
 
-        emit.at("init").say(
-                        "%d cities, %d flights. dist[%d] = 0 and every other city is unreachable. "
-                                + "At most %d stop%s means at most %d flights, so the relaxation gets exactly %d rounds.",
-                        n, graph.edges().length, src, k, Narration.s(k), k + 1, k + 1)
-                .var("src", src).var("dst", dst).var("k", k).var("dist", priceString(dist))
-                .graph(layout.nodes(), layout.edges()).nodes(states).step();
-
-        for (int round = 0; round <= k; round++) {
-            int[] next = dist.clone();
-
-            emit.at("roundStart").say(
-                            "Round %d of %d: copy dist into next. Every relaxation below reads the "
-                                    + "frozen dist, so a price discovered in this round cannot be extended "
-                                    + "again until the next one - that copy is the whole hop cap.",
-                            round + 1, k + 1)
-                    .var("round", round + 1).var("dist", priceString(dist)).var("next", priceString(next))
-                    .graph(layout.nodes(), layout.edges()).nodes(states).step();
-
-            for (int[] flight : graph.edges()) {
-                int from = flight[0], to = flight[1], price = flight[2];
-                String edgeKey = from + "-" + to;
-
-                if (dist[from] != Integer.MAX_VALUE && dist[from] + price < next[to]) {
-                    String old = priceLabel(next[to]);
-                    next[to] = dist[from] + price;
-                    if (to != src && to != dst) {
-                        states.put(to, "queued");
-                    }
-                    emit.at("relax").say(
-                                    "Flight %d -> %d costs %d. Reaching %d for %d and paying %d gets to %d "
-                                            + "for %d, beating %s within this round's budget.",
-                                    from, to, price, from, dist[from], price, to, next[to], old)
-                            .var("round", round + 1).var("flight", edgeKey)
-                            .var("dist", priceString(dist)).var("next", priceString(next))
-                            .graph(layout.nodes(), layout.edges()).nodes(states)
-                            .edges(List.of(edgeKey)).step();
-                } else {
-                    String reason = dist[from] == Integer.MAX_VALUE
-                            ? String.format("city %d is not reachable in %d flight%s yet",
-                                    from, round, Narration.s(round))
-                            : String.format("%d + %d = %d does not beat next[%d] = %s",
-                                    dist[from], price, dist[from] + price, to, priceLabel(next[to]));
-                    emit.at("noImprovement").say("Flight %d -> %d costs %d, but %s. Leave next[%d] alone.",
-                                    from, to, price, reason, to)
-                            .var("round", round + 1).var("flight", edgeKey)
-                            .var("dist", priceString(dist)).var("next", priceString(next))
-                            .graph(layout.nodes(), layout.edges()).nodes(states)
-                            .edges(List.of(edgeKey)).step();
-                }
+            if (currStops > k) {
+                emit.at("tooMany").say("That route already used %d flights; one more would mean more than %d "
+                                + "stop%s. Do not extend it.", currStops, k, Narration.s(k))
+                        .var("currStops", currStops).graph(layout.nodes(), layout.edges()).nodes(states)
+                        .queue(entries(pq)).step();
+                continue;
             }
 
-            dist = next;
-            emit.at("roundEnd").say(
-                            "Round %d done. dist = %s - these are the cheapest prices using at most %d flight%s.",
-                            round + 1, priceString(dist), round + 1, Narration.s(round + 1))
-                    .var("round", round + 1).var("dist", priceString(dist))
-                    .graph(layout.nodes(), layout.edges()).nodes(states).step();
+            for (int[] ngbr : adjList.get(currNode)) {
+                if (currPrice + ngbr[0] < priceArr[ngbr[1]]) {
+                    int before = priceArr[ngbr[1]];
+                    priceArr[ngbr[1]] = currPrice + ngbr[0];
+                    pq.add(new int[]{currStops + 1, priceArr[ngbr[1]], ngbr[1]});
+                    if (ngbr[1] != dst) {
+                        states.put(ngbr[1], "queued");
+                    }
+                    emit.at("relax").say("Flight %d -> %d costs %d + %d = %d, cheaper than %s. Queue it with %d "
+                                    + "flight%s.", currNode, ngbr[1], currPrice, ngbr[0], priceArr[ngbr[1]],
+                                    before == Integer.MAX_VALUE ? "any route so far" : String.valueOf(before),
+                                    currStops + 1, Narration.s(currStops + 1))
+                            .var("priceArr", show(priceArr)).graph(layout.nodes(), layout.edges()).nodes(states)
+                            .edges(List.of(currNode + "-" + ngbr[1])).queue(entries(pq)).step();
+                }
+            }
         }
 
-        int answer = dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];
-        if (answer >= 0) {
-            states.put(dst, "done");
-        }
-        String verdict = answer < 0
-                ? String.format("%d is not reachable from %d within %d stop%s, so the answer is -1",
-                        dst, src, k, Narration.s(k))
-                : String.format("the cheapest %d -> %d route within %d stop%s costs %d",
-                        src, dst, k, Narration.s(k), answer);
-        emit.at("done").say("All %d round%s complete. dist = %s, so %s.", k + 1, Narration.s(k + 1), priceString(dist), verdict)
-                .var("answer", answer).var("dist", priceString(dist))
+        int answer = priceArr[dst] != Integer.MAX_VALUE ? priceArr[dst] : -1;
+        emit.at("done").say(answer == -1
+                        ? "No route reaches " + dst + " within " + k + " stop" + Narration.s(k) + ". Return -1."
+                        : "The cheapest price found for " + dst + " is " + answer + ". Return it.")
+                .var("priceArr", show(priceArr)).var("answer", answer)
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
     }
 
-    private static String priceLabel(int value) {
-        return value == Integer.MAX_VALUE ? "unreachable" : String.valueOf(value);
-    }
-
-    private static String priceString(int[] dist) {
+    private static String show(int[] a) {
         StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < dist.length; i++) {
+        for (int i = 0; i < a.length; i++) {
             if (i > 0) sb.append(", ");
-            sb.append(dist[i] == Integer.MAX_VALUE ? "-" : String.valueOf(dist[i]));
+            sb.append(a[i] == Integer.MAX_VALUE ? "inf" : String.valueOf(a[i]));
         }
         return sb.append(']').toString();
+    }
+
+    /** The queue, fewest flights first, as "city (flights, price)". */
+    private static List<String> entries(PriorityQueue<int[]> pq) {
+        List<int[]> items = new ArrayList<>(pq);
+        items.sort((x, y) -> Integer.compare(x[0], y[0]));
+        List<String> out = new ArrayList<>();
+        for (int[] t : items) {
+            out.add(t[2] + " (" + t[0] + " fl, " + t[1] + ")");
+        }
+        return out;
     }
 }
