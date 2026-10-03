@@ -10,11 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Two heaps split the stream in half: a max-heap holds the smaller half (its top is the
- * largest of the small values), a min-heap holds the larger half (its top is the smallest
- * of the large values), and the two tops are the only values ever compared to find the
- * median - the rest of each heap never needs to be looked at. Shown as one sorted array
- * with the split point marked, since that is the multiset the two heaps together represent.
+ * Find Median from Data Stream (LeetCode 295), traced on the owner's own accepted submission: a
+ * max-heap holds the smaller half and a min-heap the larger half. Each number passes through one heap
+ * and its top moves to the other, so the halves stay ordered; isEven decides which way. With an odd
+ * count the min-heap holds the extra value and its top is the median. O(log n) per add.
+ *
+ * <p>The canvas shows the two halves side by side - the max-heap's values then the min-heap's - with
+ * the heaps themselves kept as {@link ArrayHeap}s, which sift as java.util.PriorityQueue does.
  */
 @Component
 public class MedianDataStreamTracer implements AlgorithmTracer {
@@ -26,7 +28,7 @@ public class MedianDataStreamTracer implements AlgorithmTracer {
 
     @Override
     public DsType dsType() {
-        return DsType.HEAP;
+        return DsType.ARRAY;
     }
 
     @Override
@@ -39,105 +41,123 @@ public class MedianDataStreamTracer implements AlgorithmTracer {
                         .build());
     }
 
-    /** A longer stream with a different value shape, not a permutation of the defaults. */
+    /** A stream of equal values, odd in length, so the median is read off minHeap alone. */
     @Override
     public Map<String, Object> alternateInput() {
-        return Map.of("nums", List.of(2, 2, 2, 2, 2, 2));
+        return Map.of("nums", List.of(2, 2, 2, 2, 2));
     }
 
     @Override
     public String annotatedCode() {
         return """
-               PriorityQueue<Integer> small = new PriorityQueue<>(Collections.reverseOrder());
-               PriorityQueue<Integer> large = new PriorityQueue<>();
+               class MedianFinder {
+                   PriorityQueue<Integer> minHeap;
+                   PriorityQueue<Integer> maxHeap;
+                   boolean isEven;
 
-               public void addNum(int num) {
-                   // @a insert
-                   if (small.isEmpty() || num <= small.peek()) small.add(num);
-                   else large.add(num);
+                   public MedianFinder() {
+                       // @a init
+                       minHeap=new PriorityQueue<>();
+                       maxHeap=new PriorityQueue<>((x,y) -> Integer.compare(y,x));
+                       isEven=true;
+                   }
 
-                   // @a rebalance
-                   if (small.size() > large.size() + 1) large.add(small.poll());
-                   else if (large.size() > small.size()) small.add(large.poll());
-               }
+                   public void addNum(int num) {
+                       if (isEven) { //curr size is even
+                           // @a viaMax
+                           maxHeap.add(num);
+                           minHeap.add(maxHeap.poll());
+                       } else { //curr size is odd
+                           // @a viaMin
+                           minHeap.add(num);
+                           maxHeap.add(minHeap.poll());
+                       }
 
-               public double findMedian() {
-                   // @a median
-                   if (small.size() > large.size()) return small.peek();
-                   return (small.peek() + large.peek()) / 2.0;
+                       isEven=!isEven;
+                   }
+
+                   public double findMedian() {
+                       double median=0.0;
+
+                       if (isEven) {
+                           // @a evenMedian
+                           int first=maxHeap.peek();
+                           int second=minHeap.peek();
+                           median=(first+second)/2.0;
+                       } else {
+                           // @a oddMedian
+                           median=(double)minHeap.peek();
+                       }
+
+                       return median;
+                   }
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
-
-        List<Integer> small = new ArrayList<>(); // max-heap, kept sorted descending
-        List<Integer> large = new ArrayList<>(); // min-heap, kept sorted ascending
-
+        ArrayHeap<Integer> minHeap = ArrayHeap.minHeap();
+        ArrayHeap<Integer> maxHeap = new ArrayHeap<>((x, y) -> Integer.compare(y, x));
+        boolean isEven = true;
+        emit.at("init").say("maxHeap keeps the smaller half (largest on top), minHeap the larger half (smallest on top).")
+                .arrayState(render(maxHeap, minHeap)).step();
         for (int num : nums) {
-            boolean intoSmall = small.isEmpty() || num <= small.get(0);
-            if (intoSmall) {
-                insertDescending(small, num);
+            if (isEven) {
+                maxHeap.offer(num);
+                int moved = maxHeap.poll();
+                minHeap.offer(moved);
+                emit.at("viaMax").say("addNum(%d): the count was even. Push it into maxHeap, then move maxHeap's top, %d, "
+                                + "to minHeap - minHeap now holds the extra value.", num, moved)
+                        .var("num", num).var("maxHeap", sorted(maxHeap, true)).var("minHeap", sorted(minHeap, false))
+                        .arrayState(render(maxHeap, minHeap)).step();
             } else {
-                insertAscending(large, num);
+                minHeap.offer(num);
+                int moved = minHeap.poll();
+                maxHeap.offer(moved);
+                emit.at("viaMin").say("addNum(%d): the count was odd. Push it into minHeap, then move minHeap's top, %d, "
+                                + "to maxHeap - the halves are equal again.", num, moved)
+                        .var("num", num).var("maxHeap", sorted(maxHeap, true)).var("minHeap", sorted(minHeap, false))
+                        .arrayState(render(maxHeap, minHeap)).step();
             }
-            emit.at("insert")
-                    .say("Insert %d into the %s half.", num, intoSmall ? "smaller" : "larger")
-                    .var("inserted", num).var("smallSize", small.size()).var("largeSize", large.size())
-                    .arrayState(render(small, large)).step();
-
-            if (small.size() > large.size() + 1) {
-                int moved = small.remove(0);
-                insertAscending(large, moved);
-                emit.at("rebalance")
-                        .say("Smaller half outgrew the larger half by more than one - move its top "
-                                        + "(%d) across.", moved)
-                        .var("moved", moved)
-                        .arrayState(render(small, large)).step();
-            } else if (large.size() > small.size()) {
-                int moved = large.remove(0);
-                insertDescending(small, moved);
-                emit.at("rebalance")
-                        .say("Larger half outgrew the smaller half - move its top (%d) across.", moved)
-                        .var("moved", moved)
-                        .arrayState(render(small, large)).step();
-            }
-
-            double median = small.size() > large.size()
-                    ? small.get(0)
-                    : (small.get(0) + large.get(0)) / 2.0;
-            emit.at("median")
-                    .say("Both tops are now the only values that matter. Median so far: %s.",
-                            median == Math.floor(median) ? String.valueOf((int) median) : String.valueOf(median))
-                    .var("median", median)
-                    .arrayState(render(small, large)).step();
+            isEven = !isEven;
+        }
+        double median;
+        if (isEven) {
+            int first = maxHeap.peek();
+            int second = minHeap.peek();
+            median = (first + second) / 2.0;
+            emit.at("evenMedian").say("An even count: the median is the average of the two middle values, (%d + %d) / 2 = %s.",
+                            first, second, median)
+                    .var("median", String.valueOf(median)).arrayState(render(maxHeap, minHeap)).step();
+        } else {
+            median = (double) minHeap.peek();
+            emit.at("oddMedian").say("An odd count: minHeap holds the extra value, so its top, %d, is the median.", minHeap.peek())
+                    .var("median", String.valueOf(median)).arrayState(render(maxHeap, minHeap)).step();
         }
     }
 
-    private static void insertDescending(List<Integer> heap, int value) {
+    /**
+     * The two halves side by side, each sorted: maxHeap's values labelled "max", then minHeap's
+     * labelled "min". The heap canvas draws one heap, and two heaps drawn as one tree would be wrong.
+     */
+    private static List<ArrayElement> render(ArrayHeap<Integer> maxHeap, ArrayHeap<Integer> minHeap) {
+        List<ArrayElement> state = new ArrayList<>();
         int i = 0;
-        while (i < heap.size() && heap.get(i) > value) i++;
-        heap.add(i, value);
-    }
-
-    private static void insertAscending(List<Integer> heap, int value) {
-        int i = 0;
-        while (i < heap.size() && heap.get(i) < value) i++;
-        heap.add(i, value);
-    }
-
-    /** small (descending) reversed, then large (ascending) - one ascending run, split marked. */
-    private static List<ArrayElement> render(List<Integer> small, List<Integer> large) {
-        List<Integer> combined = new ArrayList<>();
-        for (int i = small.size() - 1; i >= 0; i--) combined.add(small.get(i));
-        combined.addAll(large);
-
-        List<ArrayElement> state = new ArrayList<>(combined.size());
-        for (int i = 0; i < combined.size(); i++) {
-            String s = i < small.size() ? "known" : "current";
-            state.add(new ArrayElement(i, combined.get(i), s));
-        }
+        for (int v : sortedList(maxHeap)) state.add(new ArrayElement(i++, v, "known", "max"));
+        for (int v : sortedList(minHeap)) state.add(new ArrayElement(i++, v, "current", "min"));
         return state;
+    }
+
+    private static List<Integer> sortedList(ArrayHeap<Integer> heap) {
+        List<Integer> out = new ArrayList<>(heap.slots());
+        java.util.Collections.sort(out);
+        return out;
+    }
+
+    private static String sorted(ArrayHeap<Integer> heap, boolean descending) {
+        List<Integer> out = sortedList(heap);
+        if (descending) java.util.Collections.reverse(out);
+        return out.toString();
     }
 }

@@ -211,6 +211,15 @@ class TracerAnswerRegressionTest {
             kth-largest-element    | {"nums":[2,1],"k":2}                       | answer        | 1
             kth-smallest-element   | {"nums":[4,4,4],"k":2}                     | answer        | 4
             top-k-frequent-elements | {"nums":[5,5,6],"k":2}                    | answer        | [5, 6]
+            # Owner's formula / TreeMap / two-heap code: no idle time, ties, n = 0, k = 1, n % k != 0, one and two values.
+            task-scheduler         | {"tasks":[0,1,2,3,4,5],"n":2}              | answer        | 6
+            task-scheduler         | {"tasks":[0,0,1,1,2,2],"n":2}              | answer        | 6
+            task-scheduler         | {"tasks":[0,0,0,1],"n":0}                  | answer        | 4
+            hand-of-straights      | {"hand":[1,1,2,2,3,3],"groupSize":3} | answer        | true
+            hand-of-straights      | {"hand":[1,2,3,4],"groupSize":3} | answer        | false
+            hand-of-straights      | {"hand":[9,4],"groupSize":1} | answer        | true
+            median-data-stream     | {"nums":[7]}                               | median        | 7.0
+            median-data-stream     | {"nums":[-1,-2]}                           | median        | -1.5
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

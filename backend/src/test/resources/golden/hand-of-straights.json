@@ -1,64 +1,57 @@
 {
   "anchors" : {
-    "checkConsecutive" : 8,
-    "done" : 13,
-    "pickSmallest" : 6
+    "check" : 18,
+    "close" : 30,
+    "count" : 3,
+    "done" : 33,
+    "open" : 24
   },
-  "code" : "public boolean isNStraightHand(int[] hand, int groupSize) {\n    TreeMap<Integer, Integer> count = new TreeMap<>();\n    for (int card : hand) count.merge(card, 1, Integer::sum);\n\n    while (!count.isEmpty()) {\n        int start = count.firstKey();\n        for (int card = start; card < start + groupSize; card++) {\n            if (!count.containsKey(card)) return false;\n            int remaining = count.merge(card, -1, Integer::sum);\n            if (remaining == 0) count.remove(card);\n        }\n    }\n    return true;\n}",
+  "code" : "class Solution {\n    public boolean isNStraightHand(int[] hand, int groupSize) {\n        int n=hand.length;\n\n        Map<Integer,Integer> map=new TreeMap<>();\n\n        for (int card: hand)\n            map.put(card,map.getOrDefault(card,0)+1);\n\n        Queue<Integer> groupStartQ=new LinkedList<>();\n        int lastCard=-1;\n        int currOpenGroups=0;\n\n        for (Map.Entry<Integer,Integer> m: map.entrySet()) {\n            int currCard=m.getKey();\n            int currCardFreq=m.getValue();\n\n            if (currOpenGroups>0 && currCard>lastCard+1)\n                return false;\n\n            if (currCardFreq<currOpenGroups)\n                return false;\n\n            groupStartQ.add(currCardFreq-currOpenGroups);\n\n            lastCard=currCard;\n            currOpenGroups=currCardFreq;\n\n            if (groupStartQ.size()==groupSize)\n                currOpenGroups-=groupStartQ.poll();\n        }\n\n        return currOpenGroups==0;\n    }\n}",
   "problemId" : "hand-of-straights",
   "resolvedInput" : {
     "groupSize" : 3,
     "hand" : [ 1, 2, 3, 6, 2, 3, 4, 7, 8 ]
   },
-  "stepCount" : 13,
+  "stepCount" : 21,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 6,
-    "description" : "Smallest remaining card is 1 - start a new group of 3 there.",
-    "queueOrStackState" : null,
+    "activeLine" : 3,
+    "description" : "Count the cards in value order: {1=1, 2=2, 3=2, 4=1, 6=1, 7=1, 8=1}.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "groupSize" : "3",
-      "groupStart" : "1"
+      "map" : "{1=1, 2=2, 3=2, 4=1, 6=1, 7=1, 8=1}"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 2,
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -67,17 +60,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 8,
-    "description" : "Card 1 used for this group (0 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 18,
+    "description" : "Card 1 (x1): no group is open, so nothing needs it yet.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "1",
-      "remainingOfCard" : "0"
+      "currOpenGroups" : "0"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -89,30 +81,22 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -121,52 +105,43 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 8,
-    "description" : "Card 2 used for this group (1 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 24,
+    "description" : "1 new group starts at 1; 1 group now runs through it.",
+    "queueOrStackState" : [ "1" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "2",
-      "remainingOfCard" : "1"
+      "currOpenGroups" : "1"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "default"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -175,17 +150,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 8,
-    "description" : "Card 3 used for this group (1 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 18,
+    "description" : "Card 2 (x2) is enough to extend the 1 open group.",
+    "queueOrStackState" : [ "1" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "3",
-      "remainingOfCard" : "1"
+      "currOpenGroups" : "1"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -194,33 +168,25 @@
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default"
+      "state" : "current"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "current"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -229,17 +195,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 6,
-    "description" : "Smallest remaining card is 2 - start a new group of 3 there.",
-    "queueOrStackState" : null,
+    "activeLine" : 24,
+    "description" : "1 new group starts at 2; 2 groups now run through it.",
+    "queueOrStackState" : [ "1", "1" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "groupSize" : "3",
-      "groupStart" : "2"
+      "currOpenGroups" : "2"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -251,30 +216,22 @@
       "state" : "current"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -283,17 +240,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 8,
-    "description" : "Card 2 used for this group (0 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 18,
+    "description" : "Card 3 (x2) is enough to extend all 2 open groups.",
+    "queueOrStackState" : [ "1", "1" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "2",
-      "remainingOfCard" : "0"
+      "currOpenGroups" : "2"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -302,33 +258,25 @@
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
-      "state" : "default"
+      "value" : 3,
+      "state" : "current"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -337,17 +285,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 8,
-    "description" : "Card 3 used for this group (0 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 24,
+    "description" : "No new group starts at 3; 2 groups now run through it.",
+    "queueOrStackState" : [ "1", "1", "0" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "3",
-      "remainingOfCard" : "0"
+      "currOpenGroups" : "2"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -359,30 +306,22 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
-      "state" : "default"
-    }, {
-      "index" : 3,
       "value" : 3,
       "state" : "current"
     }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
+      "index" : 3,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -391,17 +330,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 8,
-    "description" : "Card 4 used for this group (0 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 30,
+    "description" : "The 1 group that started at 1 now has 3 cards - complete. 1 still open.",
+    "queueOrStackState" : [ "1", "0" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "4",
-      "remainingOfCard" : "0"
+      "currOpenGroups" : "1"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -413,30 +351,22 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
-      "state" : "default"
+      "value" : 3,
+      "state" : "current"
     }, {
       "index" : 3,
-      "value" : 3,
+      "value" : 4,
       "state" : "default"
     }, {
       "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
-      "value" : 4,
-      "state" : "current"
-    }, {
-      "index" : 6,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -445,17 +375,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 6,
-    "description" : "Smallest remaining card is 6 - start a new group of 3 there.",
-    "queueOrStackState" : null,
+    "activeLine" : 18,
+    "description" : "Card 4 (x1) is enough to extend the 1 open group.",
+    "queueOrStackState" : [ "1", "0" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "groupSize" : "3",
-      "groupStart" : "6"
+      "currOpenGroups" : "1"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -467,30 +396,22 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
+      "value" : 4,
+      "state" : "current"
     }, {
       "index" : 4,
-      "value" : 3,
+      "value" : 6,
       "state" : "default"
     }, {
       "index" : 5,
-      "value" : 4,
-      "state" : "default"
-    }, {
-      "index" : 6,
-      "value" : 6,
-      "state" : "current"
-    }, {
-      "index" : 7,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -499,17 +420,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 8,
-    "description" : "Card 6 used for this group (0 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 24,
+    "description" : "No new group starts at 4; 1 group now runs through it.",
+    "queueOrStackState" : [ "1", "0", "0" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "6",
-      "remainingOfCard" : "0"
+      "currOpenGroups" : "1"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -521,30 +441,22 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
+      "value" : 4,
+      "state" : "current"
     }, {
       "index" : 4,
-      "value" : 3,
+      "value" : 6,
       "state" : "default"
     }, {
       "index" : 5,
-      "value" : 4,
-      "state" : "default"
-    }, {
-      "index" : 6,
-      "value" : 6,
-      "state" : "current"
-    }, {
-      "index" : 7,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -553,17 +465,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 8,
-    "description" : "Card 7 used for this group (0 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 30,
+    "description" : "The 1 group that started at 2 now has 3 cards - complete. 0 still open.",
+    "queueOrStackState" : [ "0", "0" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "7",
-      "remainingOfCard" : "0"
+      "currOpenGroups" : "0"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -575,30 +486,22 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
+      "value" : 4,
+      "state" : "current"
     }, {
       "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
-      "value" : 4,
-      "state" : "default"
-    }, {
-      "index" : 6,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
-      "state" : "current"
+      "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
@@ -607,17 +510,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 8,
-    "description" : "Card 8 used for this group (0 left of that value).",
-    "queueOrStackState" : null,
+    "activeLine" : 18,
+    "description" : "Card 6 (x1): no group is open, so nothing needs it yet.",
+    "queueOrStackState" : [ "0", "0" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "card" : "8",
-      "remainingOfCard" : "0"
+      "currOpenGroups" : "0"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -629,30 +531,292 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
-      "state" : "default"
+      "state" : "current"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 24,
+    "description" : "1 new group starts at 6; 1 group now runs through it.",
+    "queueOrStackState" : [ "0", "0", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currOpenGroups" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 30,
+    "description" : "No group started at 3, so none closes here. 1 still open.",
+    "queueOrStackState" : [ "0", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currOpenGroups" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "current"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 18,
+    "description" : "Card 7 (x1) is enough to extend the 1 open group.",
+    "queueOrStackState" : [ "0", "1" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currOpenGroups" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 24,
+    "description" : "No new group starts at 7; 1 group now runs through it.",
+    "queueOrStackState" : [ "0", "1", "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currOpenGroups" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 30,
+    "description" : "No group started at 4, so none closes here. 1 still open.",
+    "queueOrStackState" : [ "1", "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currOpenGroups" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "current"
+    }, {
+      "index" : 6,
+      "value" : 8,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 18,
+    "description" : "Card 8 (x1) is enough to extend the 1 open group.",
+    "queueOrStackState" : [ "1", "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currOpenGroups" : "1"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
       "value" : 8,
       "state" : "current"
     } ],
@@ -660,17 +824,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 13,
-    "activeLine" : 13,
-    "description" : "Every card consumed into a complete group of 3 - the hand can be arranged.",
-    "queueOrStackState" : null,
+    "stepNumber" : 19,
+    "activeLine" : 24,
+    "description" : "No new group starts at 8; 1 group now runs through it.",
+    "queueOrStackState" : [ "1", "0", "0" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "true"
+      "currOpenGroups" : "1"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
@@ -682,30 +846,112 @@
       "state" : "default"
     }, {
       "index" : 2,
-      "value" : 2,
+      "value" : 3,
       "state" : "default"
     }, {
       "index" : 3,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 4,
-      "value" : 3,
-      "state" : "default"
-    }, {
-      "index" : 5,
       "value" : 4,
       "state" : "default"
     }, {
-      "index" : 6,
+      "index" : 4,
       "value" : 6,
       "state" : "default"
     }, {
-      "index" : 7,
+      "index" : 5,
       "value" : 7,
       "state" : "default"
     }, {
-      "index" : 8,
+      "index" : 6,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 30,
+    "description" : "The 1 group that started at 6 now has 3 cards - complete. 0 still open.",
+    "queueOrStackState" : [ "0", "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currOpenGroups" : "0"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
+      "value" : 8,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 33,
+    "description" : "Every group closed with exactly groupSize cards. Return true.",
+    "queueOrStackState" : [ "0", "0" ],
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "true"
+    },
+    "dsType" : "Array",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 2,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 3,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 4,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 6,
+      "state" : "default"
+    }, {
+      "index" : 5,
+      "value" : 7,
+      "state" : "default"
+    }, {
+      "index" : 6,
       "value" : 8,
       "state" : "default"
     } ],
