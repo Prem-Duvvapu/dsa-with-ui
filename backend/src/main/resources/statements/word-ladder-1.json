@@ -13,7 +13,7 @@
         "wordList": "hot,dot,dog,lot,log,cog"
       },
       "output": "5",
-      "answerVariable": "length",
+      "answerVariable": "res",
       "explanation": "One shortest sequence is hit → hot → dot → dog → cog, which has 5 words. No shorter chain of one-letter changes reaches cog."
     },
     {
@@ -23,8 +23,18 @@
         "wordList": "dot,dog,hog"
       },
       "output": "3",
-      "answerVariable": "length",
+      "answerVariable": "res",
       "explanation": "hot → dot → dog takes two changes, so the sequence has 3 words. The route through hog is equally short."
+    },
+    {
+      "input": {
+        "beginWord": "hit",
+        "endWord": "cog",
+        "wordList": "hot,dot,dog,lot,log"
+      },
+      "output": "0",
+      "answerVariable": "res",
+      "explanation": "cog is not in the list, so no sequence can end there."
     }
   ],
   "constraints": [

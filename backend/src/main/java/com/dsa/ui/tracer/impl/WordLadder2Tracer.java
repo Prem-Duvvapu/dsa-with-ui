@@ -1,28 +1,17 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.DsType;
-import com.dsa.ui.model.GraphEdge;
-import com.dsa.ui.model.GraphNode;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 /**
- * Every SHORTEST transformation sequence, not just one. A plain BFS that records a single
- * parent per word finds one ladder and silently discards the rest, so this keeps a LIST of
- * predecessors per word and fills it layer by layer: a word discovered for the first time in
- * layer L+1 records the layer-L word that found it, and any other layer-L word that also
- * reaches it appends itself as an additional predecessor. Words already settled in an earlier
- * layer are never re-recorded - that is what keeps the reconstructed paths shortest.
- *
- * <p>BFS stops at the end of the layer that first reaches endWord; going further would collect
- * predecessors for longer ladders. The answers are then read out by DFS backtracking from
- * endWord through the predecessor lists, which branches exactly where two words tie.
- *
- * <p>The word list travels as one comma-separated {@link FieldType#STRING}, matching
- * {@code word-ladder-1}: a comma cannot appear inside a lowercase word, and the bounded
- * regex repetition caps both the word length and the word count.
+ * Word Ladder II (LeetCode 126), traced on the owner's own accepted submission. A BFS records each
+ * word's level in {@code map} and stops when endWord is polled ({@code minSteps}). Then
+ * {@code solve} walks back from endWord, only ever stepping to a word with a smaller level; a list
+ * that reaches {@code minSteps} words has strictly decreasing levels from minSteps, so it can only
+ * be minSteps, ..., 2, 1 - a shortest ladder ending at beginWord - and is reversed into res.
  */
 @Component
 public class WordLadder2Tracer implements AlgorithmTracer {
@@ -82,62 +71,78 @@ public class WordLadder2Tracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public List<List<String>> findLadders(String beginWord, String endWord,
-                                                      Map<String, List<String>> adjacency) {
-                   Map<String, Integer> level = new HashMap<>();
-                   Map<String, List<String>> preds = new HashMap<>();
-                   List<String> layer = List.of(beginWord);
-                   level.put(beginWord, 0);
-                   // @a init
+               class Solution {
+                   List<List<String>> res = new ArrayList<>();
+                   Set<String> set = new HashSet<>();
+                   Map<String,Integer> map = new HashMap<>();
+                   int minSteps = -1;
 
-                   int depth = 0;
-                   boolean found = false;
-                   while (!layer.isEmpty() && !found) {
-                       // @a layerStart
-                       List<String> next = new ArrayList<>();
-                       for (String word : layer) {
-                           for (String nb : adjacency.getOrDefault(word, List.of())) {
-                               if (!level.containsKey(nb)) {
-                                   // @a expand
-                                   level.put(nb, depth + 1);
-                                   preds.computeIfAbsent(nb, k -> new ArrayList<>()).add(word);
-                                   next.add(nb);
-                               } else if (level.get(nb) == depth + 1) {
-                                   // @a altPred
-                                   preds.get(nb).add(word);   // a tie, not a longer route
+                   public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+                       // @a init
+                       Queue<String> q = new LinkedList<>();
+                       for (String word: wordList)
+                           set.add(word);
+
+                       int level = 1;
+                       map.put(beginWord, level);
+                       q.add(beginWord);
+                       set.remove(beginWord);
+
+                       while (!q.isEmpty()) {
+                           // @a poll
+                           String curr = q.poll();
+
+                           if (curr.equals(endWord)) {
+                               // @a reached
+                               minSteps = map.get(curr);
+                               break;
+                           }
+
+                           level = map.get(curr)+1;
+                           for (int i=0;i<curr.length();i++) {
+                               for (char ch='a';ch<='z';ch++) {
+                                   String newWord= curr.substring(0,i)+ch+curr.substring(i+1);
+                                   if (set.contains(newWord)) {
+                                       // @a discover
+                                       q.add(newWord);
+                                       map.put(newWord,level);
+                                       set.remove(newWord);
+                                   }
                                }
                            }
                        }
-                       depth++;
-                       layer = next;
-                       found = level.containsKey(endWord);
+
+                       List<String> currList = new ArrayList<>();
+                       currList.add(endWord);
+                       solve(endWord,currList);
+
+                       // @a done
+                       return res;
                    }
 
-                   if (!found) {
-                       // @a unreachable
-                       return List.of();
-                   }
-                   // @a found
-                   List<List<String>> ladders = new ArrayList<>();
-                   backtrack(endWord, new ArrayDeque<>(), preds, beginWord, ladders);
-                   // @a done
-                   return ladders;
-               }
+                   private void solve(String word,List<String> currList) {
+                       // @a enter
+                       if (currList.size() == minSteps) {
+                           List<String> temp = new ArrayList<>(currList);
+                           Collections.reverse(temp);
+                           // @a record
+                           res.add(temp);
+                           return;
+                       }
 
-               private void backtrack(String word, Deque<String> path,
-                                       Map<String, List<String>> preds,
-                                       String beginWord, List<List<String>> ladders) {
-                   path.addFirst(word);
-                   if (word.equals(beginWord)) {
-                       // @a pathFound
-                       ladders.add(new ArrayList<>(path));
-                   } else {
-                       for (String p : preds.get(word)) {
-                           // @a buildPath
-                           backtrack(p, path, preds, beginWord, ladders);
+                       String curr = word;
+                       for (int i=0;i<curr.length();i++) {
+                           for (char ch='a';ch<='z';ch++) {
+                               String newWord= curr.substring(0,i)+ch+curr.substring(i+1);
+                               if (map.containsKey(newWord) && map.get(newWord) < map.getOrDefault(curr, -1)) {
+                                   // @a back
+                                   currList.add(newWord);
+                                   solve(newWord, currList);
+                                   currList.remove(currList.size()-1);
+                               }
+                           }
                        }
                    }
-                   path.removeFirst();
                }""";
     }
 
@@ -145,208 +150,130 @@ public class WordLadder2Tracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         String beginWord = in.getString("beginWord");
         String endWord = in.getString("endWord");
-        String[] listed = in.getString("wordList").split(",");
+        List<String> wordList = List.of(in.getString("wordList").split(","));
+        Walk w = new Walk(beginWord, endWord, wordList, emit);
+        w.findLadders();
+    }
 
-        LinkedHashMap<String, Integer> wordToId = new LinkedHashMap<>();
-        wordToId.put(beginWord, 0);
-        for (String w : listed) {
-            wordToId.putIfAbsent(w, wordToId.size());
-        }
-        int n = wordToId.size();
-        String[] idToWord = new String[n];
-        for (Map.Entry<String, Integer> e : wordToId.entrySet()) {
-            idToWord[e.getValue()] = e.getKey();
+    private static final class Walk {
+        final List<List<String>> res = new ArrayList<>();
+        final Set<String> set = new HashSet<>();
+        final Map<String, Integer> map = new HashMap<>();
+        int minSteps = -1;
+        final String beginWord;
+        final String endWord;
+        final List<String> wordList;
+        final WordGraph g;
+        final StepEmitter emit;
+
+        Walk(String beginWord, String endWord, List<String> wordList, StepEmitter emit) {
+            this.beginWord = beginWord;
+            this.endWord = endWord;
+            this.wordList = wordList;
+            this.emit = emit;
+            g = new WordGraph(beginWord, wordList);
         }
 
-        List<int[]> edgePairs = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (oneLetterApart(idToWord[i], idToWord[j])) {
-                    edgePairs.add(new int[]{i, j});
+        void findLadders() {
+            Deque<String> q = new ArrayDeque<>();
+            set.addAll(wordList);
+            int level = 1;
+            map.put(beginWord, level);
+            q.add(beginWord);
+            set.remove(beginWord);
+            g.mark(beginWord, "queued");
+            g.mark(endWord, "target");
+
+            emit.at("init").say("First a BFS from %s that records each word's level (its position in a shortest "
+                            + "sequence). %s is level 1.", beginWord, beginWord)
+                    .var("map", map.toString()).graph(g.nodes, g.edges).nodes(g.states).queue(q).step();
+
+            while (!q.isEmpty()) {
+                String curr = q.poll();
+                g.mark(curr, "visiting");
+                if (curr.equals(endWord)) {
+                    minSteps = map.get(curr);
+                    g.mark(curr, "done");
+                    emit.at("reached").say("Polled %s at level %d: every shortest ladder has minSteps = %d words. Stop "
+                                    + "the BFS.", curr, minSteps, minSteps)
+                            .var("minSteps", minSteps).var("map", map.toString())
+                            .graph(g.nodes, g.edges).nodes(g.states).queue(q).step();
+                    break;
                 }
+                emit.at("poll").say("Poll %s at level %d. Any listed word one letter away is at level %d.",
+                                curr, map.get(curr), map.get(curr) + 1)
+                        .var("curr", curr).var("map", map.toString())
+                        .graph(g.nodes, g.edges).nodes(g.states).queue(q).step();
+                level = map.get(curr) + 1;
+                for (int i = 0; i < curr.length(); i++) {
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        String newWord = curr.substring(0, i) + ch + curr.substring(i + 1);
+                        if (set.contains(newWord)) {
+                            q.add(newWord);
+                            map.put(newWord, level);
+                            set.remove(newWord);
+                            if (!newWord.equals(endWord)) g.mark(newWord, "queued");
+                            emit.at("discover").say("%s -> %s: %s gets level %d.", curr, newWord, newWord, level)
+                                    .var("curr", curr).var("map", map.toString())
+                                    .graph(g.nodes, g.edges).nodes(g.states).edges(g.edge(curr, newWord))
+                                    .queue(q).step();
+                        }
+                    }
+                }
+                g.mark(curr, "visited");
             }
-        }
-        List<List<Integer>> adjacency = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            adjacency.add(new ArrayList<>());
-        }
-        for (int[] e : edgePairs) {
-            adjacency.get(e[0]).add(e[1]);
-            adjacency.get(e[1]).add(e[0]);
-        }
 
-        // Node positions only; the word graph is undirected, so the edges are built here
-        // rather than taken from GraphLayout.directed(), which always sets the arrowhead flag.
-        GraphLayout.Layout positionOnly =
-                GraphLayout.directed(new Inputs.GraphInput(n, new int[0][]));
-        List<GraphNode> nodes = new ArrayList<>();
-        for (GraphNode base : positionOnly.nodes()) {
-            nodes.add(new GraphNode(base.getId(), idToWord[base.getId()], base.getX(), base.getY(), "unvisited"));
-        }
-        List<GraphEdge> edges = new ArrayList<>();
-        for (int[] e : edgePairs) {
-            edges.add(new GraphEdge(e[0], e[1], null, false, false));
+            List<String> currList = new ArrayList<>();
+            currList.add(endWord);
+            solve(endWord, currList);
+
+            emit.at("done").say(res.isEmpty()
+                            ? endWord + " was never reached, so there is no ladder. Return []."
+                            : "Return res: " + res.size() + " shortest ladder" + Narration.s(res.size()) + ".")
+                    .var("res", show(res)).graph(g.nodes, g.edges).nodes(g.states).step();
         }
 
-        Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < n; i++) {
-            states.put(i, "unvisited");
-        }
-
-        int beginId = 0;
-        Integer endId = wordToId.get(endWord);
-
-        Map<Integer, Integer> level = new HashMap<>();
-        Map<Integer, List<Integer>> preds = new HashMap<>();
-        level.put(beginId, 0);
-        states.put(beginId, "visited");
-        List<Integer> layer = new ArrayList<>(List.of(beginId));
-
-        emit.at("init")
-                .say("Built the one-letter-transformation graph over %d word%s. BFS outward from "
-                                + "'%s' one whole layer at a time, remembering EVERY predecessor that "
-                                + "reaches a word first.", n, Narration.s(n), beginWord)
-                .var("layer 0", words(layer, idToWord))
-                .var("target", endWord)
-                .graph(nodes, edges).nodes(states).queue(words(layer, idToWord)).step();
-
-        int depth = 0;
-        boolean found = endId != null && level.containsKey(endId);
-        while (!layer.isEmpty() && !found) {
-            emit.at("layerStart")
-                    .say("Layer %d holds %s. Expand all of it before looking at layer %d.",
-                            depth, words(layer, idToWord), depth + 1)
-                    .var("depth", depth).var("layer", words(layer, idToWord))
-                    .graph(nodes, edges).nodes(states).queue(words(layer, idToWord)).step();
-
-            List<Integer> next = new ArrayList<>();
-            for (int cur : layer) {
-                for (int nb : adjacency.get(cur)) {
-                    if (!level.containsKey(nb)) {
-                        level.put(nb, depth + 1);
-                        preds.computeIfAbsent(nb, k -> new ArrayList<>()).add(cur);
-                        next.add(nb);
-                        states.put(nb, "queued");
-                        emit.at("expand")
-                                .say("'%s' -> '%s': first time '%s' is seen, so it lands in layer %d "
-                                                + "with predecessor '%s'.",
-                                        idToWord[cur], idToWord[nb], idToWord[nb], depth + 1, idToWord[cur])
-                                .var("word", idToWord[nb]).var("depth", depth + 1)
-                                .var("preds(" + idToWord[nb] + ")", words(preds.get(nb), idToWord))
-                                .graph(nodes, edges).nodes(states)
-                                .edges(List.of(cur + "-" + nb))
-                                .queue(words(next, idToWord)).step();
-                    } else if (level.get(nb) == depth + 1) {
-                        preds.get(nb).add(cur);
-                        emit.at("altPred")
-                                .say("'%s' also reaches '%s', which is already in layer %d - a TIE, "
-                                                + "so record '%s' as an extra predecessor: %s.",
-                                        idToWord[cur], idToWord[nb], depth + 1, idToWord[cur],
-                                        words(preds.get(nb), idToWord))
-                                .var("word", idToWord[nb])
-                                .var("preds(" + idToWord[nb] + ")", words(preds.get(nb), idToWord))
-                                .graph(nodes, edges).nodes(states)
-                                .edges(List.of(cur + "-" + nb))
-                                .queue(words(next, idToWord)).step();
+        void solve(String word, List<String> currList) {
+            emit.push("solve(" + word + ")");
+            emit.at("enter").say(currList.size() == minSteps
+                            ? "solve(" + word + "): the list holds " + minSteps + " words - a full ladder."
+                            : "solve(" + word + "): the list " + currList + " holds " + currList.size() + " of "
+                                    + minSteps + " words. Look for a word one letter away with a smaller level.")
+                    .var("currList", currList.toString()).var("res", show(res))
+                    .graph(g.nodes, g.edges).nodes(g.states).step();
+            if (currList.size() == minSteps) {
+                List<String> temp = new ArrayList<>(currList);
+                Collections.reverse(temp);
+                res.add(temp);
+                emit.at("record").say("Reverse it into %s and add it to res.", String.join(" -> ", temp))
+                        .var("res", show(res)).graph(g.nodes, g.edges).nodes(g.states).step();
+                emit.pop();
+                return;
+            }
+            String curr = word;
+            for (int i = 0; i < curr.length(); i++) {
+                for (char ch = 'a'; ch <= 'z'; ch++) {
+                    String newWord = curr.substring(0, i) + ch + curr.substring(i + 1);
+                    if (map.containsKey(newWord) && map.get(newWord) < map.getOrDefault(curr, -1)) {
+                        currList.add(newWord);
+                        emit.at("back").say("%s (level %d) is one letter from %s (level %d): step back to it.",
+                                        newWord, map.get(newWord), curr, map.getOrDefault(curr, -1))
+                                .var("currList", currList.toString())
+                                .graph(g.nodes, g.edges).nodes(g.states).edges(g.edge(curr, newWord)).step();
+                        solve(newWord, currList);
+                        currList.remove(currList.size() - 1);
                     }
                 }
             }
-
-            for (int id : next) {
-                states.put(id, "visited");
-            }
-            depth++;
-            layer = next;
-            found = endId != null && level.containsKey(endId);
+            emit.pop();
         }
 
-        if (!found) {
-            emit.at("unreachable")
-                    .say("Every layer drained without ever reaching '%s' - no transformation "
-                            + "sequence exists, so the answer is the empty list.", endWord)
-                    .var("ladders", 0)
-                    .graph(nodes, edges).nodes(states).step();
-            emit.at("done")
-                    .say("No transformation sequence exists from '%s' to '%s'.", beginWord, endWord)
-                    .var("ladders", 0)
-                    .graph(nodes, edges).nodes(states).step();
-            return;
+        /** "hit -> hot -> cog; ..." in res order, "[]" when empty. */
+        static String show(List<List<String>> res) {
+            if (res.isEmpty()) return "[]";
+            List<String> out = new ArrayList<>();
+            for (List<String> l : res) out.add(String.join(" -> ", l));
+            return String.join("; ", out);
         }
-
-        states.put(endId, "visiting");
-        emit.at("found")
-                .say("'%s' first appears in layer %d, so every shortest ladder has %d word%s. Stop "
-                                + "expanding and walk the predecessor lists back from '%s'.",
-                        endWord, level.get(endId), level.get(endId) + 1, Narration.s(level.get(endId) + 1), endWord)
-                .var("length", level.get(endId) + 1)
-                .graph(nodes, edges).nodes(states).step();
-
-        List<String> ladders = new ArrayList<>();
-        Deque<Integer> path = new ArrayDeque<>();
-        backtrack(endId, beginId, path, preds, idToWord, ladders, nodes, edges, states, emit);
-
-        emit.at("done")
-                .say("%d shortest transformation sequence%s of %d word%s each: %s.",
-                        ladders.size(), Narration.s(ladders.size()), level.get(endId) + 1,
-                        Narration.s(level.get(endId) + 1), String.join("; ", ladders))
-                .var("ladders", ladders.size())
-                .var("answer", String.join("; ", ladders))
-                .graph(nodes, edges).nodes(states).step();
-    }
-
-    private void backtrack(int word, int beginId, Deque<Integer> path,
-                            Map<Integer, List<Integer>> preds, String[] idToWord,
-                            List<String> ladders, List<GraphNode> nodes, List<GraphEdge> edges,
-                            Map<Integer, String> states, StepEmitter emit) {
-        path.addFirst(word);
-        emit.push("backtrack(" + idToWord[word] + ")");
-
-        if (word == beginId) {
-            String ladder = String.join(" -> ", words(path, idToWord));
-            ladders.add(ladder);
-            emit.at("pathFound")
-                    .say("Reached the start word, so this branch is a complete ladder: %s.", ladder)
-                    .var("ladder", ladder).var("ladders so far", ladders.size())
-                    .graph(nodes, edges).nodes(states).stack(words(path, idToWord)).step();
-        } else {
-            for (int p : preds.get(word)) {
-                emit.at("buildPath")
-                        .say("'%s' can be reached from '%s' in the previous layer - step back to it. "
-                                        + "Partial ladder so far: %s.",
-                                idToWord[word], idToWord[p], String.join(" -> ", words(path, idToWord)))
-                        .var("word", idToWord[word]).var("predecessor", idToWord[p])
-                        .graph(nodes, edges).nodes(states)
-                        .edges(List.of(p + "-" + word))
-                        .stack(words(path, idToWord)).step();
-                backtrack(p, beginId, path, preds, idToWord, ladders, nodes, edges, states, emit);
-            }
-        }
-
-        emit.pop();
-        path.removeFirst();
-    }
-
-    private static boolean oneLetterApart(String a, String b) {
-        if (a.length() != b.length()) {
-            return false;
-        }
-        int diff = 0;
-        for (int i = 0; i < a.length(); i++) {
-            if (a.charAt(i) != b.charAt(i)) {
-                diff++;
-                if (diff > 1) {
-                    return false;
-                }
-            }
-        }
-        return diff == 1;
-    }
-
-    private static List<String> words(Iterable<Integer> ids, String[] idToWord) {
-        List<String> out = new ArrayList<>();
-        for (int id : ids) {
-            out.add(idToWord[id]);
-        }
-        return out;
     }
 }

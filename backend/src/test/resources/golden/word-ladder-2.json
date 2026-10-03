@@ -1,42 +1,40 @@
 {
   "anchors" : {
-    "altPred" : 19,
-    "buildPath" : 44,
-    "done" : 33,
-    "expand" : 15,
-    "found" : 31,
-    "init" : 7,
-    "layerStart" : 11,
-    "pathFound" : 41,
-    "unreachable" : 29
+    "back" : 58,
+    "discover" : 30,
+    "done" : 42,
+    "enter" : 46,
+    "init" : 8,
+    "poll" : 18,
+    "reached" : 21,
+    "record" : 49
   },
-  "code" : "public List<List<String>> findLadders(String beginWord, String endWord,\n                                       Map<String, List<String>> adjacency) {\n    Map<String, Integer> level = new HashMap<>();\n    Map<String, List<String>> preds = new HashMap<>();\n    List<String> layer = List.of(beginWord);\n    level.put(beginWord, 0);\n\n    int depth = 0;\n    boolean found = false;\n    while (!layer.isEmpty() && !found) {\n        List<String> next = new ArrayList<>();\n        for (String word : layer) {\n            for (String nb : adjacency.getOrDefault(word, List.of())) {\n                if (!level.containsKey(nb)) {\n                    level.put(nb, depth + 1);\n                    preds.computeIfAbsent(nb, k -> new ArrayList<>()).add(word);\n                    next.add(nb);\n                } else if (level.get(nb) == depth + 1) {\n                    preds.get(nb).add(word);   // a tie, not a longer route\n                }\n            }\n        }\n        depth++;\n        layer = next;\n        found = level.containsKey(endWord);\n    }\n\n    if (!found) {\n        return List.of();\n    }\n    List<List<String>> ladders = new ArrayList<>();\n    backtrack(endWord, new ArrayDeque<>(), preds, beginWord, ladders);\n    return ladders;\n}\n\nprivate void backtrack(String word, Deque<String> path,\n                        Map<String, List<String>> preds,\n                        String beginWord, List<List<String>> ladders) {\n    path.addFirst(word);\n    if (word.equals(beginWord)) {\n        ladders.add(new ArrayList<>(path));\n    } else {\n        for (String p : preds.get(word)) {\n            backtrack(p, path, preds, beginWord, ladders);\n        }\n    }\n    path.removeFirst();\n}",
+  "code" : "class Solution {\n    List<List<String>> res = new ArrayList<>();\n    Set<String> set = new HashSet<>();\n    Map<String,Integer> map = new HashMap<>();\n    int minSteps = -1;\n\n    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {\n        Queue<String> q = new LinkedList<>();\n        for (String word: wordList)\n            set.add(word);\n\n        int level = 1;\n        map.put(beginWord, level);\n        q.add(beginWord);\n        set.remove(beginWord);\n\n        while (!q.isEmpty()) {\n            String curr = q.poll();\n\n            if (curr.equals(endWord)) {\n                minSteps = map.get(curr);\n                break;\n            }\n\n            level = map.get(curr)+1;\n            for (int i=0;i<curr.length();i++) {\n                for (char ch='a';ch<='z';ch++) {\n                    String newWord= curr.substring(0,i)+ch+curr.substring(i+1);\n                    if (set.contains(newWord)) {\n                        q.add(newWord);\n                        map.put(newWord,level);\n                        set.remove(newWord);\n                    }\n                }\n            }\n        }\n\n        List<String> currList = new ArrayList<>();\n        currList.add(endWord);\n        solve(endWord,currList);\n\n        return res;\n    }\n\n    private void solve(String word,List<String> currList) {\n        if (currList.size() == minSteps) {\n            List<String> temp = new ArrayList<>(currList);\n            Collections.reverse(temp);\n            res.add(temp);\n            return;\n        }\n\n        String curr = word;\n        for (int i=0;i<curr.length();i++) {\n            for (char ch='a';ch<='z';ch++) {\n                String newWord= curr.substring(0,i)+ch+curr.substring(i+1);\n                if (map.containsKey(newWord) && map.get(newWord) < map.getOrDefault(curr, -1)) {\n                    currList.add(newWord);\n                    solve(newWord, currList);\n                    currList.remove(currList.size()-1);\n                }\n            }\n        }\n    }\n}",
   "problemId" : "word-ladder-2",
   "resolvedInput" : {
     "beginWord" : "hit",
     "endWord" : "cog",
     "wordList" : "hot,dot,dog,lot,log,cog"
   },
-  "stepCount" : 24,
+  "stepCount" : 34,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 7,
-    "description" : "Built the one-letter-transformation graph over 7 words. BFS outward from 'hit' one whole layer at a time, remembering EVERY predecessor that reaches a word first.",
+    "activeLine" : 8,
+    "description" : "First a BFS from hit that records each word's level (its position in a shortest sequence). hit is level 1.",
     "queueOrStackState" : [ "hit" ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
+      "0" : "queued",
       "1" : "unvisited",
       "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "layer 0" : "[hit]",
-      "target" : "cog"
+      "map" : "{hit=1}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -144,23 +142,23 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 11,
-    "description" : "Layer 0 holds [hit]. Expand all of it before looking at layer 1.",
-    "queueOrStackState" : [ "hit" ],
+    "activeLine" : 18,
+    "description" : "Poll hit at level 1. Any listed word one letter away is at level 2.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
+      "0" : "visiting",
       "1" : "unvisited",
       "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "depth" : "0",
-      "layer" : "[hit]"
+      "curr" : "hit",
+      "map" : "{hit=1}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -268,24 +266,23 @@
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 15,
-    "description" : "'hit' -> 'hot': first time 'hot' is seen, so it lands in layer 1 with predecessor 'hit'.",
+    "activeLine" : 30,
+    "description" : "hit -> hot: hot gets level 2.",
     "queueOrStackState" : [ "hot" ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
+      "0" : "visiting",
       "1" : "queued",
       "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ "0-1" ],
     "variables" : {
-      "depth" : "1",
-      "preds(hot)" : "[hit]",
-      "word" : "hot"
+      "curr" : "hit",
+      "map" : "{hit=1, hot=2}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -393,23 +390,23 @@
     } ]
   }, {
     "stepNumber" : 4,
-    "activeLine" : 11,
-    "description" : "Layer 1 holds [hot]. Expand all of it before looking at layer 2.",
-    "queueOrStackState" : [ "hot" ],
+    "activeLine" : 18,
+    "description" : "Poll hot at level 2. Any listed word one letter away is at level 3.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
-      "1" : "visited",
+      "1" : "visiting",
       "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "depth" : "1",
-      "layer" : "[hot]"
+      "curr" : "hot",
+      "map" : "{hit=1, hot=2}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -517,24 +514,23 @@
     } ]
   }, {
     "stepNumber" : 5,
-    "activeLine" : 15,
-    "description" : "'hot' -> 'dot': first time 'dot' is seen, so it lands in layer 2 with predecessor 'hot'.",
+    "activeLine" : 30,
+    "description" : "hot -> dot: dot gets level 3.",
     "queueOrStackState" : [ "dot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
-      "1" : "visited",
+      "1" : "visiting",
       "2" : "queued",
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ "1-2" ],
     "variables" : {
-      "depth" : "2",
-      "preds(dot)" : "[hot]",
-      "word" : "dot"
+      "curr" : "hot",
+      "map" : "{hit=1, dot=3, hot=2}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -642,24 +638,23 @@
     } ]
   }, {
     "stepNumber" : 6,
-    "activeLine" : 15,
-    "description" : "'hot' -> 'lot': first time 'lot' is seen, so it lands in layer 2 with predecessor 'hot'.",
+    "activeLine" : 30,
+    "description" : "hot -> lot: lot gets level 3.",
     "queueOrStackState" : [ "dot", "lot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
-      "1" : "visited",
+      "1" : "visiting",
       "2" : "queued",
       "3" : "unvisited",
       "4" : "queued",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ "1-4" ],
     "variables" : {
-      "depth" : "2",
-      "preds(lot)" : "[hot]",
-      "word" : "lot"
+      "curr" : "hot",
+      "map" : "{lot=3, hit=1, dot=3, hot=2}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -767,23 +762,23 @@
     } ]
   }, {
     "stepNumber" : 7,
-    "activeLine" : 11,
-    "description" : "Layer 2 holds [dot, lot]. Expand all of it before looking at layer 3.",
-    "queueOrStackState" : [ "dot", "lot" ],
+    "activeLine" : 18,
+    "description" : "Poll dot at level 3. Any listed word one letter away is at level 4.",
+    "queueOrStackState" : [ "lot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
-      "2" : "visited",
+      "2" : "visiting",
       "3" : "unvisited",
-      "4" : "visited",
+      "4" : "queued",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "depth" : "2",
-      "layer" : "[dot, lot]"
+      "curr" : "dot",
+      "map" : "{lot=3, hit=1, dot=3, hot=2}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -891,24 +886,23 @@
     } ]
   }, {
     "stepNumber" : 8,
-    "activeLine" : 15,
-    "description" : "'dot' -> 'dog': first time 'dog' is seen, so it lands in layer 3 with predecessor 'dot'.",
-    "queueOrStackState" : [ "dog" ],
+    "activeLine" : 30,
+    "description" : "dot -> dog: dog gets level 4.",
+    "queueOrStackState" : [ "lot", "dog" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
-      "2" : "visited",
+      "2" : "visiting",
       "3" : "queued",
-      "4" : "visited",
+      "4" : "queued",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ "2-3" ],
     "variables" : {
-      "depth" : "3",
-      "preds(dog)" : "[dot]",
-      "word" : "dog"
+      "curr" : "dot",
+      "map" : "{lot=3, hit=1, dot=3, hot=2, dog=4}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1016,24 +1010,23 @@
     } ]
   }, {
     "stepNumber" : 9,
-    "activeLine" : 15,
-    "description" : "'lot' -> 'log': first time 'log' is seen, so it lands in layer 3 with predecessor 'lot'.",
-    "queueOrStackState" : [ "dog", "log" ],
+    "activeLine" : 18,
+    "description" : "Poll lot at level 3. Any listed word one letter away is at level 4.",
+    "queueOrStackState" : [ "dog" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
       "3" : "queued",
-      "4" : "visited",
-      "5" : "queued",
-      "6" : "unvisited"
+      "4" : "visiting",
+      "5" : "unvisited",
+      "6" : "target"
     },
-    "activeEdges" : [ "4-5" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "depth" : "3",
-      "preds(log)" : "[lot]",
-      "word" : "log"
+      "curr" : "lot",
+      "map" : "{lot=3, hit=1, dot=3, hot=2, dog=4}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1141,23 +1134,23 @@
     } ]
   }, {
     "stepNumber" : 10,
-    "activeLine" : 11,
-    "description" : "Layer 3 holds [dog, log]. Expand all of it before looking at layer 4.",
+    "activeLine" : 30,
+    "description" : "lot -> log: log gets level 4.",
     "queueOrStackState" : [ "dog", "log" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
-      "3" : "visited",
-      "4" : "visited",
-      "5" : "visited",
-      "6" : "unvisited"
+      "3" : "queued",
+      "4" : "visiting",
+      "5" : "queued",
+      "6" : "target"
     },
-    "activeEdges" : [ ],
+    "activeEdges" : [ "4-5" ],
     "variables" : {
-      "depth" : "3",
-      "layer" : "[dog, log]"
+      "curr" : "lot",
+      "map" : "{lot=3, hit=1, log=4, dot=3, hot=2, dog=4}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1265,24 +1258,23 @@
     } ]
   }, {
     "stepNumber" : 11,
-    "activeLine" : 15,
-    "description" : "'dog' -> 'cog': first time 'cog' is seen, so it lands in layer 4 with predecessor 'dog'.",
-    "queueOrStackState" : [ "cog" ],
+    "activeLine" : 18,
+    "description" : "Poll dog at level 4. Any listed word one letter away is at level 5.",
+    "queueOrStackState" : [ "log" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
-      "3" : "visited",
+      "3" : "visiting",
       "4" : "visited",
-      "5" : "visited",
-      "6" : "queued"
+      "5" : "queued",
+      "6" : "target"
     },
-    "activeEdges" : [ "3-6" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "depth" : "4",
-      "preds(cog)" : "[dog]",
-      "word" : "cog"
+      "curr" : "dog",
+      "map" : "{lot=3, hit=1, log=4, dot=3, hot=2, dog=4}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1390,23 +1382,23 @@
     } ]
   }, {
     "stepNumber" : 12,
-    "activeLine" : 19,
-    "description" : "'log' also reaches 'cog', which is already in layer 4 - a TIE, so record 'log' as an extra predecessor: [dog, log].",
-    "queueOrStackState" : [ "cog" ],
+    "activeLine" : 30,
+    "description" : "dog -> cog: cog gets level 5.",
+    "queueOrStackState" : [ "log", "cog" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
-      "3" : "visited",
+      "3" : "visiting",
       "4" : "visited",
-      "5" : "visited",
-      "6" : "queued"
+      "5" : "queued",
+      "6" : "target"
     },
-    "activeEdges" : [ "5-6" ],
+    "activeEdges" : [ "3-6" ],
     "variables" : {
-      "preds(cog)" : "[dog, log]",
-      "word" : "cog"
+      "curr" : "dog",
+      "map" : "{lot=3, hit=1, log=4, dot=3, cog=5, hot=2, dog=4}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1514,9 +1506,9 @@
     } ]
   }, {
     "stepNumber" : 13,
-    "activeLine" : 31,
-    "description" : "'cog' first appears in layer 4, so every shortest ladder has 5 words. Stop expanding and walk the predecessor lists back from 'cog'.",
-    "queueOrStackState" : null,
+    "activeLine" : 18,
+    "description" : "Poll log at level 4. Any listed word one letter away is at level 5.",
+    "queueOrStackState" : [ "cog" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1524,12 +1516,13 @@
       "2" : "visited",
       "3" : "visited",
       "4" : "visited",
-      "5" : "visited",
-      "6" : "visiting"
+      "5" : "visiting",
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "5"
+      "curr" : "log",
+      "map" : "{lot=3, hit=1, log=4, dot=3, cog=5, hot=2, dog=4}"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1637,10 +1630,10 @@
     } ]
   }, {
     "stepNumber" : 14,
-    "activeLine" : 44,
-    "description" : "'cog' can be reached from 'dog' in the previous layer - step back to it. Partial ladder so far: cog.",
-    "queueOrStackState" : [ "cog" ],
-    "callStack" : [ "backtrack(cog)" ],
+    "activeLine" : 21,
+    "description" : "Polled cog at level 5: every shortest ladder has minSteps = 5 words. Stop the BFS.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1648,12 +1641,12 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ "3-6" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "predecessor" : "dog",
-      "word" : "cog"
+      "map" : "{lot=3, hit=1, log=4, dot=3, cog=5, hot=2, dog=4}",
+      "minSteps" : "5"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1761,10 +1754,10 @@
     } ]
   }, {
     "stepNumber" : 15,
-    "activeLine" : 44,
-    "description" : "'dog' can be reached from 'dot' in the previous layer - step back to it. Partial ladder so far: dog -> cog.",
-    "queueOrStackState" : [ "dog", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(dog)" ],
+    "activeLine" : 46,
+    "description" : "solve(cog): the list [cog] holds 1 of 5 words. Look for a word one letter away with a smaller level.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1772,12 +1765,12 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ "2-3" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "predecessor" : "dot",
-      "word" : "dog"
+      "currList" : "[cog]",
+      "res" : "[]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1885,10 +1878,10 @@
     } ]
   }, {
     "stepNumber" : 16,
-    "activeLine" : 44,
-    "description" : "'dot' can be reached from 'hot' in the previous layer - step back to it. Partial ladder so far: dot -> dog -> cog.",
-    "queueOrStackState" : [ "dot", "dog", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(dog)", "backtrack(dot)" ],
+    "activeLine" : 58,
+    "description" : "dog (level 4) is one letter from cog (level 5): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -1896,12 +1889,11 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ "1-2" ],
+    "activeEdges" : [ "3-6" ],
     "variables" : {
-      "predecessor" : "hot",
-      "word" : "dot"
+      "currList" : "[cog, dog]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2009,10 +2001,10 @@
     } ]
   }, {
     "stepNumber" : 17,
-    "activeLine" : 44,
-    "description" : "'hot' can be reached from 'hit' in the previous layer - step back to it. Partial ladder so far: hot -> dot -> dog -> cog.",
-    "queueOrStackState" : [ "hot", "dot", "dog", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(dog)", "backtrack(dot)", "backtrack(hot)" ],
+    "activeLine" : 46,
+    "description" : "solve(dog): the list [cog, dog] holds 2 of 5 words. Look for a word one letter away with a smaller level.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -2020,12 +2012,12 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ "0-1" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "predecessor" : "hit",
-      "word" : "hot"
+      "currList" : "[cog, dog]",
+      "res" : "[]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2133,10 +2125,10 @@
     } ]
   }, {
     "stepNumber" : 18,
-    "activeLine" : 41,
-    "description" : "Reached the start word, so this branch is a complete ladder: hit -> hot -> dot -> dog -> cog.",
-    "queueOrStackState" : [ "hit", "hot", "dot", "dog", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(dog)", "backtrack(dot)", "backtrack(hot)", "backtrack(hit)" ],
+    "activeLine" : 58,
+    "description" : "dot (level 3) is one letter from dog (level 4): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -2144,12 +2136,11 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ ],
+    "activeEdges" : [ "2-3" ],
     "variables" : {
-      "ladder" : "hit -> hot -> dot -> dog -> cog",
-      "ladders so far" : "1"
+      "currList" : "[cog, dog, dot]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2257,10 +2248,10 @@
     } ]
   }, {
     "stepNumber" : 19,
-    "activeLine" : 44,
-    "description" : "'cog' can be reached from 'log' in the previous layer - step back to it. Partial ladder so far: cog.",
-    "queueOrStackState" : [ "cog" ],
-    "callStack" : [ "backtrack(cog)" ],
+    "activeLine" : 46,
+    "description" : "solve(dot): the list [cog, dog, dot] holds 3 of 5 words. Look for a word one letter away with a smaller level.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)", "solve(dot)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -2268,12 +2259,12 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ "5-6" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "predecessor" : "log",
-      "word" : "cog"
+      "currList" : "[cog, dog, dot]",
+      "res" : "[]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2381,10 +2372,10 @@
     } ]
   }, {
     "stepNumber" : 20,
-    "activeLine" : 44,
-    "description" : "'log' can be reached from 'lot' in the previous layer - step back to it. Partial ladder so far: log -> cog.",
-    "queueOrStackState" : [ "log", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(log)" ],
+    "activeLine" : 58,
+    "description" : "hot (level 2) is one letter from dot (level 3): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)", "solve(dot)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -2392,12 +2383,11 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ "4-5" ],
+    "activeEdges" : [ "1-2" ],
     "variables" : {
-      "predecessor" : "lot",
-      "word" : "log"
+      "currList" : "[cog, dog, dot, hot]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2505,10 +2495,10 @@
     } ]
   }, {
     "stepNumber" : 21,
-    "activeLine" : 44,
-    "description" : "'lot' can be reached from 'hot' in the previous layer - step back to it. Partial ladder so far: lot -> log -> cog.",
-    "queueOrStackState" : [ "lot", "log", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(log)", "backtrack(lot)" ],
+    "activeLine" : 46,
+    "description" : "solve(hot): the list [cog, dog, dot, hot] holds 4 of 5 words. Look for a word one letter away with a smaller level.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)", "solve(dot)", "solve(hot)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -2516,12 +2506,12 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
-    "activeEdges" : [ "1-4" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "predecessor" : "hot",
-      "word" : "lot"
+      "currList" : "[cog, dog, dot, hot]",
+      "res" : "[]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2629,10 +2619,10 @@
     } ]
   }, {
     "stepNumber" : 22,
-    "activeLine" : 44,
-    "description" : "'hot' can be reached from 'hit' in the previous layer - step back to it. Partial ladder so far: hot -> lot -> log -> cog.",
-    "queueOrStackState" : [ "hot", "lot", "log", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(log)", "backtrack(lot)", "backtrack(hot)" ],
+    "activeLine" : 58,
+    "description" : "hit (level 1) is one letter from hot (level 2): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)", "solve(dot)", "solve(hot)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -2640,12 +2630,11 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
     "activeEdges" : [ "0-1" ],
     "variables" : {
-      "predecessor" : "hit",
-      "word" : "hot"
+      "currList" : "[cog, dog, dot, hot, hit]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2753,10 +2742,10 @@
     } ]
   }, {
     "stepNumber" : 23,
-    "activeLine" : 41,
-    "description" : "Reached the start word, so this branch is a complete ladder: hit -> hot -> lot -> log -> cog.",
-    "queueOrStackState" : [ "hit", "hot", "lot", "log", "cog" ],
-    "callStack" : [ "backtrack(cog)", "backtrack(log)", "backtrack(lot)", "backtrack(hot)", "backtrack(hit)" ],
+    "activeLine" : 46,
+    "description" : "solve(hit): the list holds 5 words - a full ladder.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)", "solve(dot)", "solve(hot)", "solve(hit)" ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
@@ -2764,12 +2753,12 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "ladder" : "hit -> hot -> lot -> log -> cog",
-      "ladders so far" : "2"
+      "currList" : "[cog, dog, dot, hot, hit]",
+      "res" : "[]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -2877,8 +2866,1242 @@
     } ]
   }, {
     "stepNumber" : 24,
-    "activeLine" : 33,
-    "description" : "2 shortest transformation sequences of 5 words each: hit -> hot -> dot -> dog -> cog; hit -> hot -> lot -> log -> cog.",
+    "activeLine" : 49,
+    "description" : "Reverse it into hit -> hot -> dot -> dog -> cog and add it to res.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(dog)", "solve(dot)", "solve(hot)", "solve(hit)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "res" : "hit -> hot -> dot -> dog -> cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 58,
+    "description" : "log (level 4) is one letter from cog (level 5): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ "5-6" ],
+    "variables" : {
+      "currList" : "[cog, log]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 46,
+    "description" : "solve(log): the list [cog, log] holds 2 of 5 words. Look for a word one letter away with a smaller level.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currList" : "[cog, log]",
+      "res" : "hit -> hot -> dot -> dog -> cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 58,
+    "description" : "lot (level 3) is one letter from log (level 4): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ "4-5" ],
+    "variables" : {
+      "currList" : "[cog, log, lot]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 46,
+    "description" : "solve(lot): the list [cog, log, lot] holds 3 of 5 words. Look for a word one letter away with a smaller level.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)", "solve(lot)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currList" : "[cog, log, lot]",
+      "res" : "hit -> hot -> dot -> dog -> cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 29,
+    "activeLine" : 58,
+    "description" : "hot (level 2) is one letter from lot (level 3): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)", "solve(lot)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ "1-4" ],
+    "variables" : {
+      "currList" : "[cog, log, lot, hot]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 46,
+    "description" : "solve(hot): the list [cog, log, lot, hot] holds 4 of 5 words. Look for a word one letter away with a smaller level.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)", "solve(lot)", "solve(hot)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currList" : "[cog, log, lot, hot]",
+      "res" : "hit -> hot -> dot -> dog -> cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 58,
+    "description" : "hit (level 1) is one letter from hot (level 2): step back to it.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)", "solve(lot)", "solve(hot)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ "0-1" ],
+    "variables" : {
+      "currList" : "[cog, log, lot, hot, hit]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 32,
+    "activeLine" : 46,
+    "description" : "solve(hit): the list holds 5 words - a full ladder.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)", "solve(lot)", "solve(hot)", "solve(hit)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currList" : "[cog, log, lot, hot, hit]",
+      "res" : "hit -> hot -> dot -> dog -> cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 33,
+    "activeLine" : 49,
+    "description" : "Reverse it into hit -> hot -> lot -> log -> cog and add it to res.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(cog)", "solve(log)", "solve(lot)", "solve(hot)", "solve(hit)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "res" : "hit -> hot -> dot -> dog -> cog; hit -> hot -> lot -> log -> cog"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 34,
+    "activeLine" : 42,
+    "description" : "Return res: 2 shortest ladders.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -2888,12 +4111,11 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visiting"
+      "6" : "done"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "hit -> hot -> dot -> dog -> cog; hit -> hot -> lot -> log -> cog",
-      "ladders" : "2"
+      "res" : "hit -> hot -> dot -> dog -> cog; hit -> hot -> lot -> log -> cog"
     },
     "dsType" : "Graph",
     "gridState" : null,
