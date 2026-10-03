@@ -1,239 +1,180 @@
 {
   "anchors" : {
-    "allLand" : 43,
-    "best" : 37,
-    "done" : 45,
-    "init" : 3,
-    "sizes" : 20,
-    "tryZero" : 34,
-    "union" : 12
+    "allLand" : 93,
+    "done" : 95,
+    "flip" : 88,
+    "init" : 44,
+    "union" : 60
   },
-  "code" : "public int largestIsland(int[][] grid) {\n    int n = grid.length, m = grid[0].length;\n    int[] parent = new int[n * m];\n    for (int i = 0; i < n * m; i++) parent[i] = i;\n\n    for (int r = 0; r < n; r++) {\n        for (int c = 0; c < m; c++) {\n            if (grid[r][c] == 0) continue;\n            for (int[] d : new int[][]{{0, 1}, {1, 0}}) {\n                int nr = r + d[0], nc = c + d[1];\n                if (nr >= n || nc >= m || grid[nr][nc] == 0) continue;\n                union(r * m + c, nr * m + nc, parent);\n            }\n        }\n    }\n\n    Map<Integer, Integer> size = new HashMap<>();\n    for (int cell = 0; cell < n * m; cell++) {\n        if (grid[cell / m][cell % m] == 1) {\n            size.merge(find(cell, parent), 1, Integer::sum);\n        }\n    }\n\n    int best = 0;\n    for (int r = 0; r < n; r++) {\n        for (int c = 0; c < m; c++) {\n            if (grid[r][c] == 1) continue;\n            Set<Integer> roots = new HashSet<>();\n            for (int[] d : DIRECTIONS) {\n                int nr = r + d[0], nc = c + d[1];\n                if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;\n                if (grid[nr][nc] == 1) roots.add(find(nr * m + nc, parent));\n            }\n            int area = 1;\n            for (int root : roots) area += size.get(root);\n            if (area > best) {\n                best = area;\n            }\n        }\n    }\n\n    if (best == 0) {\n        return n * m;               // no 0 anywhere to flip\n    }\n    return best;\n}",
+  "code" : "class DisjointSet {\n    int[] parent;\n    int[] size;\n\n    public DisjointSet(int n) {\n        parent = new int[n];\n        size = new int[n];\n\n        for (int i=0;i<n;i++) {\n            parent[i] = i;\n            size[i] = 1;\n        }\n    }\n\n    public int getUltimateParent(int node) {\n        if (parent[node] == node)\n            return node;\n\n        return parent[node] = getUltimateParent(parent[node]);\n    }\n\n    public void unionBySize(int u, int v) {\n        int ultParU = getUltimateParent(u);\n        int ultParV = getUltimateParent(v);\n\n        if (ultParU == ultParV)\n            return;\n\n        if (size[ultParU] >= size[ultParV]) {\n            size[ultParU] += size[ultParV];\n            parent[ultParV] = ultParU;\n        } else {\n            size[ultParV] += size[ultParU];\n            parent[ultParU] = ultParV;\n        }\n    }\n}\n\nclass Solution {\n    public int[] dRow = {-1,0,1,0};\n    public int[] dCol = {0,1,0,-1};\n\n    public int largestIsland(int[][] grid) {\n        int n = grid.length;\n        DisjointSet ds = new DisjointSet(n*n);\n        int maxSize = 0;\n\n        for (int i=0;i<n;i++) {\n            for (int j=0;j<n;j++) {\n                if (grid[i][j] == 0)\n                    continue;\n\n                int node = n*i + j;\n                for (int k=0;k<4;k++) {\n                    int newRow = i + dRow[k];\n                    int newCol = j + dCol[k];\n                    int newNode = n*newRow + newCol;\n\n                    if (newRow>=0 && newRow<n && newCol>=0 && newCol<n && grid[newRow][newCol]==1)\n                        ds.unionBySize(node, newNode);\n                }\n            }\n        }\n\n        int oneCnt = 0;\n        for (int i=0;i<n;i++) {\n            for (int j=0;j<n;j++) {\n                if (grid[i][j] == 1) {\n                    oneCnt++;\n                    continue;\n                }\n\n                Set<Integer> set = new HashSet<>();\n                for (int k=0;k<4;k++) {\n                    int newRow = i + dRow[k];\n                    int newCol = j+ dCol[k];\n                    int newNode = n*newRow + newCol;\n\n                    if (newRow>=0 && newRow<n && newCol>=0 && newCol<n && grid[newRow][newCol]==1) {\n                        set.add(ds.getUltimateParent(newNode));\n                    }\n                }\n\n                int currSize = 1;\n                for (int uniqueParent: set)\n                    currSize += ds.size[uniqueParent];\n\n                maxSize = Math.max(maxSize, currSize);\n            }\n        }\n\n        if (oneCnt == n*n)\n            return n*n;\n\n        return maxSize;\n    }\n}",
   "problemId" : "making-large-island",
   "resolvedInput" : {
     "grid" : [ [ 1, 1, 0 ], [ 1, 0, 1 ], [ 0, 1, 1 ] ]
   },
-  "stepCount" : 12,
+  "stepCount" : 9,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 3,
-    "description" : "3x3 grid: 6 land cells, 3 water cells. Every land cell starts as its own island; the right and down neighbours are enough to union them all.",
+    "activeLine" : 44,
+    "description" : "A 3x3 grid. First join every land cell to its land neighbours, so each island becomes one set that knows its size.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "land" : "6",
-      "water" : "3"
+      "maxSize" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 2, 0 ], [ 3, 0, 4 ], [ 0, 5, 6 ] ],
+    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 1 ], [ 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 12,
-    "description" : "(0,0) and (0,1) are both land and adjacent - union them under root 0.",
+    "activeLine" : 60,
+    "description" : "Land (0,0) and land (0,1) touch, so they are one island. unionBySize(0, 1): roots 0 and 1. Set 0 is at least as big, so 1 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,0)",
-      "neighbour" : "(0,1)"
+      "newNode" : "1",
+      "node" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 2, 0, 3 ], [ 0, 4, 5 ] ],
+    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 1 ], [ 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 12,
-    "description" : "(0,0) and (1,0) are both land and adjacent - union them under root 0.",
+    "activeLine" : 60,
+    "description" : "Land (0,0) and land (1,0) touch, so they are one island. unionBySize(0, 3): roots 0 and 3. Set 0 is at least as big, so 3 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,0)",
-      "neighbour" : "(1,0)"
+      "newNode" : "3",
+      "node" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 3, 4 ] ],
+    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 1 ], [ 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 12,
-    "description" : "(1,2) and (2,2) are both land and adjacent - union them under root 5.",
+    "activeLine" : 60,
+    "description" : "Land (1,2) and land (2,2) touch, so they are one island. unionBySize(5, 8): roots 5 and 8. Set 5 is at least as big, so 8 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,2)",
-      "neighbour" : "(2,2)"
+      "newNode" : "8",
+      "node" : "5"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 3, 2 ] ],
+    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 1 ], [ 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 12,
-    "description" : "(2,1) and (2,2) are both land and adjacent - union them under root 7.",
+    "activeLine" : 60,
+    "description" : "Land (2,1) and land (2,2) touch, so they are one island. unionBySize(7, 8): roots 7 and 5. Set 5 is bigger, so 7 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,1)",
-      "neighbour" : "(2,2)"
+      "newNode" : "8",
+      "node" : "7"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
+    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 1 ], [ 0, 1, 1 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 20,
-    "description" : "Island 1 (root cell 0) covers 3 cells.",
+    "activeLine" : 88,
+    "description" : "Flipping water (0,2) joins 2 distinct islands: 1 + 3 + 3 = 7. maxSize = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "island" : "1",
-      "size" : "3",
-      "sizes" : "island 1 = 3, island 2 = 3"
+      "currSize" : "7",
+      "i" : "0",
+      "j" : "2",
+      "maxSize" : "7"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
+    "gridState" : [ [ 3, 3, 7 ], [ 3, 0, 3 ], [ 0, 3, 3 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 20,
-    "description" : "Island 2 (root cell 7) covers 3 cells.",
+    "activeLine" : 88,
+    "description" : "Flipping water (1,1) joins 2 distinct islands: 1 + 3 + 3 = 7. maxSize = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "island" : "2",
-      "size" : "3",
-      "sizes" : "island 1 = 3, island 2 = 3"
+      "currSize" : "7",
+      "i" : "1",
+      "j" : "1",
+      "maxSize" : "7"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
+    "gridState" : [ [ 3, 3, 0 ], [ 3, 7, 3 ], [ 0, 3, 3 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 34,
-    "description" : "Flip (0,2): it touches 2 distinct islands [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
+    "activeLine" : 88,
+    "description" : "Flipping water (2,0) joins 2 distinct islands: 1 + 3 + 3 = 7. maxSize = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "area" : "7",
-      "best" : "0",
-      "cell" : "(0,2)",
-      "islands" : "[1, 2]"
+      "currSize" : "7",
+      "i" : "2",
+      "j" : "0",
+      "maxSize" : "7"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
+    "gridState" : [ [ 3, 3, 0 ], [ 3, 0, 3 ], [ 7, 3, 3 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 37,
-    "description" : "7 beats the previous best, so (0,2) is the flip to remember.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "best" : "7",
-      "cell" : "(0,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 10,
-    "activeLine" : 34,
-    "description" : "Flip (1,1): it touches 2 distinct islands [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "area" : "7",
-      "best" : "7",
-      "cell" : "(1,1)",
-      "islands" : "[1, 2]"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 11,
-    "activeLine" : 34,
-    "description" : "Flip (2,0): it touches 2 distinct islands [1, 2], so the merged area would be 1 + 3 + 3 = 7.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "area" : "7",
-      "best" : "7",
-      "cell" : "(2,0)",
-      "islands" : "[1, 2]"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 12,
-    "activeLine" : 45,
-    "description" : "Every water cell tried. Flipping (0,2) gives the largest island: 7 cells.",
+    "activeLine" : 95,
+    "description" : "The best flip gives an island of 7. Return maxSize.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "answer" : "7",
-      "cell" : "(0,2)"
+      "maxSize" : "7"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 1, 1, 0 ], [ 1, 0, 2 ], [ 0, 2, 2 ] ],
+    "gridState" : [ [ 3, 3, 0 ], [ 3, 0, 3 ], [ 0, 3, 3 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,

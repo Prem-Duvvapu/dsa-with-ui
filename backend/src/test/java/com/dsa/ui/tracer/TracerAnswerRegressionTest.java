@@ -67,6 +67,19 @@ class TracerAnswerRegressionTest {
                 .isInstanceOf(InputValidationException.class);
     }
 
+    /** Grids whose shape the owner's code depends on are refused by InputValidator, not crashed on. */
+    @org.junit.jupiter.api.Test
+    void gridShapeRulesAreEnforced() {
+        AlgorithmTracer swim = tracers.find("swim-in-rising-water").orElseThrow();
+        assertThatThrownBy(() -> runner.run(swim, Map.of("grid", List.of(List.of(0, 1), List.of(1, 3)))))
+                .isInstanceOf(InputValidationException.class);
+        assertThatThrownBy(() -> runner.run(swim, Map.of("grid", List.of(List.of(0, 1, 2), List.of(3, 4, 5)))))
+                .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer island = tracers.find("making-large-island").orElseThrow();
+        assertThatThrownBy(() -> runner.run(island, Map.of("grid", List.of(List.of(1, 0, 1), List.of(0, 1, 0)))))
+                .isInstanceOf(InputValidationException.class);
+    }
+
     @ParameterizedTest(name = "{0} {1} -> {2} = {3}")
     @CsvSource(delimiter = '|', textBlock = """
             # '^' is right-associative: A^B^C is A^(B^C).
@@ -119,6 +132,12 @@ class TracerAnswerRegressionTest {
             city-smallest-neighbors | {"graph":{"vertices":3,"edges":[[0,1,1],[1,2,1]]},"threshold":1} | answer | 2
             min-multiplications-reach-end | {"arr":[2],"start":5,"end":5}       | answer        | 0
             min-multiplications-reach-end | {"arr":[2,3],"start":1,"end":6}     | answer        | 2
+            # DSU problems on the owner's DisjointSet: spare cables vs components; flipping the one water
+            # cell that joins two islands; the corner joins at the time of the path's highest cell.
+            network-connected-ops  | {"graph":{"vertices":5,"edges":[[0,1],[0,2],[1,2],[3,4]]}} | answer | 1
+            network-connected-ops  | {"graph":{"vertices":5,"edges":[[0,1],[2,3]]}} | answer | -1
+            making-large-island    | {"grid":[[1,0],[0,1]]}                     | answer        | 3
+            swim-in-rising-water   | {"grid":[[0,1,2],[5,4,3],[6,7,8]]}         | answer        | 8
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

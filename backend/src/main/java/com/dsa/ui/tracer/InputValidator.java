@@ -227,6 +227,24 @@ public final class InputValidator {
             }
             out.add(parsed);
         }
+        if (f.flag("square") && out.size() != width) {
+            throw new IllegalArgumentException("The grid must be square: " + out.size() + " rows but "
+                    + width + " columns.");
+        }
+        if (f.flag("squarePermutation")) {
+            int cells = out.size() * width;
+            boolean[] seen = new boolean[cells];
+            for (List<Number> row : out) {
+                for (Number cell : row) {
+                    int v = cell.intValue();
+                    if (v < 0 || v >= cells || seen[v]) {
+                        throw new IllegalArgumentException("Must hold every value from 0 to " + (cells - 1)
+                                + " exactly once.");
+                    }
+                    seen[v] = true;
+                }
+            }
+        }
         return out;
     }
 

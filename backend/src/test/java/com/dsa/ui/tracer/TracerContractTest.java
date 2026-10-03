@@ -460,8 +460,26 @@ class TracerContractTest {
 
         int targetRows = maxRows != null ? Math.min(base.size() * 2, maxRows) : base.size() * 2;
         int targetCols = maxCols != null ? Math.min(baseWidth * 2, maxCols) : baseWidth * 2;
+        if (field.flag("square")) {
+            targetRows = targetCols = Math.min(targetRows, targetCols);
+        }
         assertTrue(targetRows > base.size() || targetCols > baseWidth,
                 field.getName() + " cannot be grown within its own maxRows/maxCols");
+
+        if (field.flag("squarePermutation")) {
+            // Tiling the default would repeat values. Number the cells 0..n*n-1 in row order
+            // instead: a valid permutation that also puts the corners as far apart in time as
+            // they can be.
+            List<Object> perm = new ArrayList<>(targetRows);
+            for (int r = 0; r < targetRows; r++) {
+                List<Object> row = new ArrayList<>(targetCols);
+                for (int c = 0; c < targetCols; c++) {
+                    row.add(r * targetCols + c);
+                }
+                perm.add(row);
+            }
+            return perm;
+        }
 
         List<Object> grown = new ArrayList<>(targetRows);
         for (int r = 0; r < targetRows; r++) {

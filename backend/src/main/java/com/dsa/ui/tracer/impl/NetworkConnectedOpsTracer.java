@@ -7,10 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Every existing cable that is redundant (both its endpoints already reachable from each
- * other) is exactly a spare cable available to bridge a disconnected component elsewhere -
- * DSU counts both quantities at once. If there are fewer cables than the n-1 a spanning tree
- * needs, no rewiring can possibly succeed regardless of which cables are moved.
+ * Number of Operations to Make Network Connected (LeetCode 1319), traced on the owner's own
+ * accepted submission over their DisjointSet: a cable between two computers already in one
+ * component is spare; every other cable joins two components. Connecting k components needs k - 1
+ * cables, so the answer is k - 1 if there are that many spares, else -1. O(E * alpha).
+ *
+ * <p>The submission called the find method {@code getParent}; it is the same method their other DSU
+ * solutions call {@code getUltimateParent}, which is the name the shared class uses.
  */
 @Component
 public class NetworkConnectedOpsTracer implements AlgorithmTracer {
@@ -49,32 +52,38 @@ public class NetworkConnectedOpsTracer implements AlgorithmTracer {
 
     @Override
     public String annotatedCode() {
-        return """
-               public int makeConnected(int n, int[][] connections) {
-                   if (connections.length < n - 1) {
-                       // @a insufficient
-                       return -1;
+        return OwnerDisjointSet.code(java.util.Set.of()) + "\n\n" + """
+               // Your submission named the find method getParent; it is the same method as
+               // getUltimateParent in your other DSU solutions, which is what the class above calls it.
+               class Solution {
+                   public int makeConnected(int n, int[][] connections) {
+                       // @a init
+                       DisjointSet ds = new DisjointSet(n);
+                       int extraCables = 0;
+                       int numOfComponents = 0;
+
+                       for (int[] connection : connections) {
+                           int src = connection[0];
+                           int dest = connection[1];
+
+                           if (ds.getUltimateParent(src) == ds.getUltimateParent(dest))
+                               // @a extra
+                               extraCables++;
+                           else
+                               // @a join
+                               ds.unionBySize(src, dest);
+                       }
+
+                       for (int i=0;i<n;i++)
+                           if (ds.parent[i] == i)
+                               // @a component
+                               numOfComponents++;
+
+                       // @a done
+                       int requiredCables = numOfComponents-1;
+
+                       return (extraCables >= requiredCables) ? requiredCables : -1;
                    }
-                   int[] parent = new int[n];
-                   for (int i = 0; i < n; i++) parent[i] = i;
-
-                   for (int[] c : connections) {
-                       // @a union
-                       int ru = find(c[0], parent), rv = find(c[1], parent);
-                       if (ru != rv) parent[ru] = rv;
-                   }
-
-                   // @a count
-                   Set<Integer> roots = new HashSet<>();
-                   for (int i = 0; i < n; i++) roots.add(find(i, parent));
-
-                   // @a done
-                   return roots.size() - 1;
-               }
-
-               private int find(int x, int[] parent) {
-                   if (parent[x] != x) parent[x] = find(parent[x], parent);
-                   return parent[x];
                }""";
     }
 
@@ -82,55 +91,59 @@ public class NetworkConnectedOpsTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
         int n = graph.vertices();
-        int[][] connections = graph.edges();
-
+        OwnerDisjointSet ds = new OwnerDisjointSet(n);
+        int extraCables = 0;
+        int numOfComponents = 0;
         Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < n; i++) states.put(i, "unvisited");
-
-        if (connections.length < n - 1) {
-            emit.at("insufficient")
-                    .say("%d computers need at least %d cables to ever be fully connected, but only %d exist. Answer: -1.",
-                            n, n - 1, connections.length)
-                    .var("answer", -1).graph(graph).nodes(states).step();
-            return;
+        for (int i = 0; i < n; i++) {
+            states.put(i, "unvisited");
         }
 
-        int[] parent = new int[n];
-        for (int i = 0; i < n; i++) parent[i] = i;
+        emit.at("init").say("%d computers, each its own component so far, and %d cable%s to look at.",
+                        n, graph.edges().length, Narration.s(graph.edges().length))
+                .var("extraCables", 0).var("parent[]", ds.parents()).var("size[]", ds.sizes())
+                .graph(graph).nodes(states).step();
 
-        for (int[] c : connections) {
-            int u = c[0], node = c[1];
-            String edgeKey = u + "-" + node;
-            int ru = find(u, parent);
-            int rv = find(node, parent);
-
-            if (ru == rv) {
-                emit.at("union").say("%d and %d are already connected - this cable is redundant (a spare).", u, node)
-                        .var("edge", edgeKey).graph(graph).nodes(states).edges(List.of(edgeKey)).step();
+        for (int[] connection : graph.edges()) {
+            int src = connection[0];
+            int dest = connection[1];
+            List<String> compressed = new ArrayList<>();
+            boolean same = ds.find(src, compressed) == ds.find(dest, compressed);
+            states.put(src, "visited");
+            states.put(dest, "visited");
+            if (same) {
+                extraCables++;
+                emit.at("extra").say("Cable %d-%d joins two computers already in one component, so it is spare: "
+                                + "extraCables = %d.", src, dest, extraCables)
+                        .var("extraCables", extraCables).var("parent[]", ds.parents()).var("size[]", ds.sizes())
+                        .graph(graph).nodes(states).edges(List.of(src + "-" + dest)).step();
             } else {
-                parent[ru] = rv;
-                states.put(u, "visited");
-                states.put(node, "visited");
-                emit.at("union").say("Connect %d and %d - merge their components.", u, node)
-                        .var("edge", edgeKey).graph(graph).nodes(states).edges(List.of(edgeKey)).step();
+                OwnerDisjointSet.Union result = ds.union(src, dest);
+                emit.at("join").say("Cable %d-%d joins two separate components. %s", src, dest, result.narrate(src, dest))
+                        .var("extraCables", extraCables).var("parent[]", ds.parents()).var("size[]", ds.sizes())
+                        .graph(graph).nodes(states).edges(List.of(src + "-" + dest)).step();
             }
         }
 
-        Set<Integer> roots = new HashSet<>();
-        for (int i = 0; i < n; i++) roots.add(find(i, parent));
-        emit.at("count").say("Distinct components after union: %d (roots %s).", roots.size(), roots)
-                .var("components", roots.size()).graph(graph).nodes(states).step();
-
-        int answer = roots.size() - 1;
-        emit.at("done").say("%d components need %d cable move%s to merge into one connected network.",
-                        roots.size(), answer, Narration.s(answer))
-                .var("answer", answer).graph(graph).nodes(states).step();
-    }
-
-    private static int find(int x, int[] parent) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x], parent);
+        for (int i = 0; i < n; i++) {
+            if (ds.parent[i] == i) {
+                numOfComponents++;
+                states.put(i, "done");
+                emit.at("component").say("Computer %d is its own parent: the root of component %d.", i, numOfComponents)
+                        .var("numOfComponents", numOfComponents).var("parent[]", ds.parents())
+                        .graph(graph).nodes(states).step();
+            }
         }
-        return parent[x];
+
+        int requiredCables = numOfComponents - 1;
+        int answer = extraCables >= requiredCables ? requiredCables : -1;
+        emit.at("done").say(answer == -1
+                        ? numOfComponents + " components need " + requiredCables + " cables to connect, but only "
+                                + extraCables + " are spare. Return -1."
+                        : numOfComponents + " component" + Narration.s(numOfComponents) + " need" + (numOfComponents == 1 ? "s" : "")
+                                + " " + requiredCables + " cable" + Narration.s(requiredCables) + " to connect, and there "
+                                + Narration.is(extraCables) + " " + extraCables + " spare. Return " + requiredCables + ".")
+                .var("numOfComponents", numOfComponents).var("extraCables", extraCables).var("answer", answer)
+                .graph(graph).nodes(states).step();
     }
 }

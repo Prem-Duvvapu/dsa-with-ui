@@ -110,6 +110,15 @@ public final class InputField {
          * RCA-021.
          */
         public Builder bstOrdered() { return constraint("bstOrdered", true); }
+        /** An INT_GRID with as many rows as columns. Enforced by InputValidator. */
+        public Builder square() { return constraint("square", true); }
+
+        /**
+         * An n x n INT_GRID holding every value from 0 to n*n - 1 exactly once (Swim in Rising
+         * Water's guarantee, which code indexing an array by cell value depends on). Enforced by
+         * InputValidator; TracerContractTest's grower builds grids that satisfy it.
+         */
+        public Builder squarePermutation() { return constraint("square", true).constraint("squarePermutation", true); }
         public Builder directed() { return constraint("directed", true); }
         public Builder weighted() { return constraint("weighted", true); }
 
