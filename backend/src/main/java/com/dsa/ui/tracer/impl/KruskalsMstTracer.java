@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Kruskal's sorts every edge by weight up front, then greedily accepts the cheapest one
- * that does not close a cycle - DSU answers "would this close a cycle?" in near-O(1) as
- * "do these two endpoints already share a root?". Accepting v-1 such edges is provably a
- * minimum spanning tree, the same cut-property argument Prim's relies on, applied globally
- * instead of one growing frontier at a time.
+ * Minimum spanning tree weight by Kruskal's algorithm, written in the owner's style on their own
+ * DisjointSet (they have no Kruskal submission of their own): sort the edges by weight, and take
+ * an edge only when its ends are in different components - otherwise it would close a cycle.
+ * O(E log E).
+ *
+ * <p>Java's object sort is stable, so equal weights keep their input order, exactly as the code's
+ * {@code Arrays.sort} would. The tree edges taken so far stay highlighted.
  */
 @Component
 public class KruskalsMstTracer implements AlgorithmTracer {
@@ -56,116 +58,85 @@ public class KruskalsMstTracer implements AlgorithmTracer {
 
     @Override
     public String annotatedCode() {
-        return """
-               public int kruskalsMst(int v, int[][] edges) {
-                   // @a sort
-                   Arrays.sort(edges, (a, b) -> a[2] - b[2]);
-                   int[] parent = new int[v];
-                   int[] rank = new int[v];
-                   for (int i = 0; i < v; i++) parent[i] = i;
+        return OwnerDisjointSet.code(Set.of()) + "\n\n" + """
+               // Written in your style on your DisjointSet - your repo has no Kruskal submission of its own.
+               class Solution {
+                   public int spanningTree(int V, int[][] edges) {
+                       // @a init
+                       DisjointSet ds = new DisjointSet(V);
+                       int mstWeight = 0;
 
-                   int mstWeight = 0;
-                   for (int[] edge : edges) {
-                       // @a consider
-                       int u = edge[0], node = edge[1], w = edge[2];
-                       int ru = find(u, parent), rv = find(node, parent);
-                       if (ru == rv) {
-                           // @a cycle
-                           continue;
+                       Arrays.sort(edges, (x,y) -> Integer.compare(x[2], y[2]));
+
+                       for (int[] e: edges) {
+                           int u = e[0];
+                           int v = e[1];
+                           int wt = e[2];
+
+                           if (ds.getUltimateParent(u) == ds.getUltimateParent(v))
+                               // @a skip
+                               continue;
+
+                           // @a take
+                           ds.unionBySize(u, v);
+                           mstWeight += wt;
                        }
-                       // @a accept
-                       mstWeight += w;
-                       if (rank[ru] < rank[rv]) parent[ru] = rv;
-                       else if (rank[ru] > rank[rv]) parent[rv] = ru;
-                       else { parent[rv] = ru; rank[ru]++; }
-                   }
-                   // @a done
-                   return mstWeight;
-               }
 
-               private int find(int x, int[] parent) {
-                   if (parent[x] != x) parent[x] = find(parent[x], parent);
-                   return parent[x];
+                       // @a done
+                       return mstWeight;
+                   }
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
-        int v = graph.vertices();
-        int[][] edges = graph.edges().clone();
-        Arrays.sort(edges, Comparator.comparingInt(e -> e[2]));
-
-        int[] parent = new int[v];
-        int[] rank = new int[v];
-        for (int i = 0; i < v; i++) parent[i] = i;
-
-        Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < v; i++) states.put(i, "unvisited");
-
-        emit.at("sort").say("%d vertices, %d edges. Sorted by weight ascending: %s.",
-                        v, edges.length, edgesString(edges))
-                .var("mstWeight", 0).graph(graph).nodes(states).step();
-
+        int V = graph.vertices();
+        List<int[]> edges = new ArrayList<>(Arrays.asList(graph.edges()));
+        edges.sort((x, y) -> Integer.compare(x[2], y[2]));
+        OwnerDisjointSet ds = new OwnerDisjointSet(V);
         int mstWeight = 0;
-        int accepted = 0;
-        for (int[] edge : edges) {
-            int u = edge[0], node = edge[1], w = edge[2];
-            String edgeKey = u + "-" + node;
-            int ru = find(u, parent);
-            int rv = find(node, parent);
+        List<String> taken = new ArrayList<>();
+        Map<Integer, String> states = new LinkedHashMap<>();
+        for (int i = 0; i < V; i++) {
+            states.put(i, "unvisited");
+        }
 
-            emit.at("consider").say("Consider %d-%d (weight %d). Roots: %d and %d.", u, node, w, ru, rv)
-                    .var("edge", edgeKey).var("mstWeight", mstWeight)
-                    .graph(graph).nodes(states).edges(List.of(edgeKey)).step();
+        List<String> order = new ArrayList<>();
+        for (int[] e : edges) order.add(e[0] + "-" + e[1] + " (" + e[2] + ")");
+        emit.at("init").say("%d vertices, each its own component. Sorted by weight, the edges are: %s.",
+                        V, String.join(", ", order))
+                .var("mstWeight", 0).var("parent[]", ds.parents()).var("size[]", ds.sizes())
+                .graph(graph).nodes(states).step();
 
-            if (ru == rv) {
-                emit.at("cycle").say("%d and %d are already in the same component - accepting this edge would close a cycle. Reject.",
-                                u, node)
-                        .var("edge", edgeKey)
-                        .graph(graph).nodes(states).edges(List.of(edgeKey)).step();
+        for (int[] e : edges) {
+            int u = e[0];
+            int v = e[1];
+            int wt = e[2];
+            String key = u + "-" + v;
+            List<String> compressed = new ArrayList<>();
+            if (ds.find(u, compressed) == ds.find(v, compressed)) {
+                List<String> shown = new ArrayList<>(taken);
+                shown.add(key);
+                emit.at("skip").say("Edge %d-%d (weight %d): %d and %d are already connected by cheaper edges, "
+                                + "so taking it would close a cycle. Skip it.", u, v, wt, u, v)
+                        .var("mstWeight", mstWeight).var("parent[]", ds.parents()).var("size[]", ds.sizes())
+                        .graph(graph).nodes(states).edges(shown).step();
                 continue;
             }
-
-            mstWeight += w;
-            accepted++;
-            states.put(u, "visited");
-            states.put(node, "visited");
-            if (rank[ru] < rank[rv]) {
-                parent[ru] = rv;
-            } else if (rank[ru] > rank[rv]) {
-                parent[rv] = ru;
-            } else {
-                parent[rv] = ru;
-                rank[ru]++;
-            }
-            emit.at("accept").say("Different components - accept %d-%d. Total weight so far: %d (%d/%d edges).",
-                            u, node, mstWeight, accepted, v - 1)
-                    .var("edge", edgeKey).var("mstWeight", mstWeight)
-                    .graph(graph).nodes(states).edges(List.of(edgeKey)).step();
-
-            if (accepted == v - 1) {
-                break;
-            }
+            OwnerDisjointSet.Union result = ds.union(u, v);
+            mstWeight += wt;
+            taken.add(key);
+            states.put(u, "done");
+            states.put(v, "done");
+            emit.at("take").say("Edge %d-%d (weight %d) joins two different components - take it. mstWeight = %d. %s",
+                            u, v, wt, mstWeight, result.narrate(u, v))
+                    .var("mstWeight", mstWeight).var("parent[]", ds.parents()).var("size[]", ds.sizes())
+                    .graph(graph).nodes(states).edges(taken).step();
         }
 
-        emit.at("done").say("%d edges accepted. Minimum spanning tree weight: %d.", accepted, mstWeight)
-                .var("mstWeight", mstWeight).graph(graph).nodes(states).step();
-    }
-
-    private static int find(int x, int[] parent) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x], parent);
-        }
-        return parent[x];
-    }
-
-    private static String edgesString(int[][] edges) {
-        StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < edges.length; i++) {
-            if (i > 0) sb.append(", ");
-            sb.append(edges[i][0]).append("-").append(edges[i][1]).append("(w").append(edges[i][2]).append(")");
-        }
-        return sb.append(']').toString();
+        emit.at("done").say("Every edge has been considered. The %d tree edge%s weigh %d in total.",
+                        taken.size(), Narration.s(taken.size()), mstWeight)
+                .var("mstWeight", mstWeight).graph(graph).nodes(states).edges(taken).step();
     }
 }
