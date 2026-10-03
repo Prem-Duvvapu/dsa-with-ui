@@ -344,7 +344,8 @@ export default function ProblemWorkspace() {
       )}
       {hasFieldErrors && view !== 'playground' && (
         <div role="alert" aria-label="Your input could not run" className={styles.notice}>
-          <span>Your input could not run: the server rejected some fields. The run shown is still the previous one.</span>
+          <span>Your input could not run: the server rejected some fields. {steps.length > 0
+            ? 'The run shown is still the previous one.' : 'There is no run to show.'}</span>
           <button type="button" className={styles.control} onClick={() => { editorFocusPending.current = true; selectView('playground'); }}>
             Fix it in the editor
           </button>

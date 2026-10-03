@@ -389,6 +389,9 @@ Rollback boundary: revert this PR's squash commit.
 
 ## 2026-10-01 — Review db8683b: S7, S8, migration assertions, notes (remediation complete)
 
+Historical disposition: the subsequent re-audit found R1 (horizontal source arrows) and
+R2 (failed-link notices without a run). Their fixes and current evidence are recorded below.
+
 ```text
 Package / status: review remediation — complete with this PR (after #155, #156)
 Dispositions (INDEPENDENT_REVIEW_DB8683B.md):
@@ -477,6 +480,37 @@ Automated: npx vitest run → 72 files / 601 tests. vite build OK.
 Browser: Chromium with the real backend; num-provinces and rotting-oranges code views; dark and light at
   1440, dark at 390. Keyword colour resolves per theme (rgb(130,170,255) / rgb(29,78,216)). Overflow 0, no
   errors. Evidence: docs/ui-revamp/evidence/syntax/.
+```
+
+## 2026-10-03 — Re-audit R1/R2 and test-strengthening follow-ups
+
+```text
+Package / status: implemented and verified in the fix/ui-revamp-reaudit change set
+Base: ea5e579 (latest origin/main at start). Separate worktree: /home/prem/dsa-ui-audit-fixes.
+R1: the focused source owns ArrowLeft/ArrowRight, preserves native horizontal scrolling,
+  suspends following, and does not seek, change the shared URL, move focus or re-execute.
+  The same arrows still step playback outside the source.
+R2: link refusal describes an explicit committed-run state: custom, default, offline or none.
+  No default-input claim for missing runs or unknown-input offline samples. A requested step
+  with no run reports that it cannot be shown; it does not announce playback at step 1.
+  The Analysis validation alert also makes no previous-run claim when no steps exist.
+  Retained custom runs still restore their share identity; oversized inputs get the existing
+  length notice rather than falsely claiming that the link identifies the retained run.
+Test gaps: cancellation first proves a positive drag, then checks later moves are ignored;
+  editor recovery now asserts focus. Existing migration assertions remain intact.
+RED: 11/11 new R1/R2 cases fail against ea5e579 (two source directions; rejected/unreadable
+  input with/without step, no run/offline sample; no-run Analysis validation alert).
+GREEN: targeted 48/48; full frontend 72 files / 616 tests; production build passes.
+Build: JS 343.74 kB / 109.23 kB gzip; CSS 97.75 kB / 17.65 kB gzip.
+Browser: cached Playwright/Chromium, fixture API, light/dark, 1366x844 and 390x844, reduced
+  motion. 40 checks pass; 0 page errors. Real native left/right scroll changes scrollLeft
+  with step 3 and URL unchanged, focus retained and no extra GET/POST. Invalid links clear
+  input/step parameters and show truthful no-run or offline notices. Recovery returns focus
+  to the editor (StrictMode focuses its validation summary). Four source screenshots saved.
+Evidence: docs/ui-revamp/evidence/reaudit/r1-r2-journey.cjs, results.json, source-*.png.
+Limits: browser API fixtures, not real Java execution; backend unchanged and tests not rerun.
+  No second browser engine, screen reader or 200% zoom pass. Stage y389, single URL writer
+  enforcement and dead-code retirement remain the previously disclosed P8/P5/P9 work.
 ```
 
 ## Problem statements: Linked List and Stack & Queue (57 problems)

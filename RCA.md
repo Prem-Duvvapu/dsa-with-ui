@@ -1434,6 +1434,27 @@ class, and the reason is worth stating rather than rediscovering.
 - **Lesson:** when a screen describes a run, every part of that description must be read
   from the run itself, never from the component that happened to submit it.
 
+### RCA-054 follow-up — 2026-10-03 re-audit R1/R2
+
+- **Status:** Fixed and verified in the `fix/ui-revamp-reaudit` change set.
+- **Symptoms:** source ArrowLeft/ArrowRight changed playback while reading long lines.
+  If the default execution failed and a shared input was rejected or unreadable, notices
+  claimed default input and playback at step 1 although there were no trace steps. An
+  offline sample was also called default input despite its input being unknown.
+- **Causes:** the source-owned key set omitted horizontal arrows. Link refusal used a
+  binary retained-custom flag, so default, offline and absent runs all produced the same
+  copy. The step-dropped branch did not inspect whether a run existed.
+- **Fix:** preserve native horizontal source scrolling and stop propagation to playback;
+  carry custom/default/offline/none state from the matching committed run into refusal
+  notices; name absent-run step restoration explicitly. Analysis validation copy likewise
+  checks whether there are steps before claiming a previous run.
+- **Guard (RED first):** 11 workspace cases fail against `ea5e579`: both source arrows and
+  unavailable-default link combinations, plus no-run Analysis validation. All pass after
+  the fix. Full frontend: 616 tests. Forty Chromium checks verify native scrolling and
+  truthful failure notices in both themes at desktop/phone widths using API fixtures.
+- **Lesson:** absence of a custom submission does not prove a default execution exists;
+  describe only the matching run that was actually committed.
+
 ## RCA-055 — Correct-looking traces with wrong answers, found by writing the problem statements
 
 - **Discovered:** 2026-10-02, while writing own-words statements for every problem (#163, #164

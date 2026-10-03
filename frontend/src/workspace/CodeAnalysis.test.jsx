@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { MemoryRouter, useNavigate } from 'react-router-dom';
+import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
 import AppRouter from '../AppRouter';
 
 /**
@@ -49,7 +49,8 @@ beforeEach(() => {
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 let navigateTo;
-function Nav() { navigateTo = useNavigate(); return null; }
+let location;
+function Nav() { navigateTo = useNavigate(); location = useLocation(); return null; }
 const renderAt = (path) => render(
   <MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
     <AppRouter />
@@ -145,6 +146,31 @@ describe('Code walkthrough', () => {
 });
 
 describe('Keyboard ownership (review S2)', () => {
+  it.each(['ArrowLeft', 'ArrowRight'])('lets source %s scroll without seeking or changing the URL (re-audit R1)', async (key) => {
+    await openCode();
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    await waitFor(() => expect(new URLSearchParams(location.search).get('step')).toBe('2'));
+    const before = location.search;
+    const source = screen.getByRole('region', { name: 'Java source' });
+    source.focus();
+    // dispatchEvent returns false when a listener cancels the native scrolling action.
+    expect(fireEvent.keyDown(source, { key, code: key })).toBe(true);
+    expect(narration()).toHaveTextContent('call fib(3)');
+    expect(location.search).toBe(before);
+    expect(screen.getByText(/Not following/)).toBeInTheDocument();
+    expect(document.activeElement).toBe(source);
+    expect(executes).toBe(1);
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+  });
+
+  it('still steps with horizontal arrows outside the source', async () => {
+    await openCode();
+    fireEvent.keyDown(window, { key: 'ArrowRight', code: 'ArrowRight' });
+    expect(narration()).toHaveTextContent('call fib(3)');
+    fireEvent.keyDown(window, { key: 'ArrowLeft', code: 'ArrowLeft' });
+    expect(narration()).toHaveTextContent('call fib(4)');
+  });
+
   it('lets the focused source scroll with End without jumping playback to the last step', async () => {
     await openCode();
     const source = screen.getByRole('region', { name: 'Java source' });
@@ -236,12 +262,16 @@ describe('Separator lifecycle and geometry (review S5)', () => {
   });
 
   it('stops resizing when the pointer is cancelled', async () => {
+    // jsdom has no PointerEvent: supply coordinates and identity using MouseEvent fields.
+    vi.stubGlobal('PointerEvent', MouseEvent);
     await openCode();
     const separator = screen.getByRole('separator');
     fireEvent.pointerDown(separator, { clientX: 600, pointerId: 1 });
+    fireEvent.pointerMove(separator, { clientX: 780, pointerId: 1 });
+    expect(separator).toHaveAttribute('aria-valuenow', '65');
     fireEvent.pointerCancel(separator, { pointerId: 1 });
     fireEvent.pointerMove(separator, { clientX: 200, pointerId: 1 });
-    expect(separator).toHaveAttribute('aria-valuenow', '60');
+    expect(separator).toHaveAttribute('aria-valuenow', '65');
   });
 
   it('announces the split the pane minimums actually allow', async () => {

@@ -156,3 +156,62 @@ describe('Every same-page navigation applies its own step (S1)', () => {
     await waitFor(() => expect(narration()).toHaveTextContent('n=1 step 5'));
   });
 });
+
+describe('Failed links describe the available run honestly (re-audit R2)', () => {
+  it.each([
+    ['no run', 'rejected', undefined],
+    ['no run', 'rejected', 3],
+    ['no run', 'unreadable', undefined],
+    ['no run', 'unreadable', 3],
+    ['offline sample', 'rejected', undefined],
+    ['offline sample', 'rejected', 3],
+    ['offline sample', 'unreadable', undefined],
+    ['offline sample', 'unreadable', 3]
+  ])('describes %s after %s input with requested step %s', async (available, inputKind, step) => {
+    const entry = available === 'offline sample' ? { ...ALPHA, executionSteps: trace(1).steps } : ALPHA;
+    let failDefault;
+    const original = fetch.getMockImplementation();
+    fetch.mockImplementation((url, opts = {}) => {
+      if (url === '/api/problems') return Promise.resolve(ok([entry]));
+      if (url === '/api/problems/alpha') return Promise.resolve(ok(entry));
+      if (url === '/api/problems/alpha/execute' && !opts.method) {
+        return new Promise(resolve => { failDefault = () => resolve({ ok: false, status: 500, json: async () => null }); });
+      }
+      return original(url, opts);
+    });
+    renderAt(link(inputKind === 'rejected' ? { n: 99 } : 'not-valid-json', step));
+    // Make the sample catalogue available before the request fails, as in offline use.
+    await screen.findByRole('heading', { level: 1, name: 'Alpha' });
+    await act(async () => { failDefault(); });
+    const notice = await screen.findByRole('status', { name: 'Shared link' });
+    expect(notice).not.toHaveTextContent(/showing the default input/i);
+    if (available === 'no run') {
+      expect(notice).toHaveTextContent('There is no run to show.');
+      expect(notice).not.toHaveTextContent(/playback starts at step 1/i);
+      if (step) expect(notice).toHaveTextContent(/no run to show it in/i);
+      expect(narration()).toHaveTextContent('No trace steps available.');
+    } else {
+      expect(notice).toHaveTextContent('Showing the offline sample');
+      expect(narration()).toHaveTextContent('n=1 step 1');
+      if (step) expect(notice).toHaveTextContent(/playback starts at step 1/i);
+    }
+    await waitFor(() => {
+      expect(params().get('input')).toBeNull();
+      expect(params().get('step')).toBeNull();
+    });
+  });
+
+  it('does not claim a previous run in the Analysis validation alert when the default failed', async () => {
+    const original = fetch.getMockImplementation();
+    fetch.mockImplementation((url, opts = {}) => {
+      if (url === '/api/problems/alpha/execute' && !opts.method) {
+        return Promise.resolve({ ok: false, status: 500, json: async () => null });
+      }
+      return original(url, opts);
+    });
+    renderAt(`${link({ n: 99 }, 3)}&view=analysis`);
+    const alert = await screen.findByRole('alert', { name: /Your input could not run/i });
+    expect(alert).toHaveTextContent('There is no run to show.');
+    expect(alert).not.toHaveTextContent(/run shown is still the previous one/i);
+  });
+});
