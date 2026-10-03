@@ -1,712 +1,499 @@
 {
   "anchors" : {
-    "apply" : 11,
-    "done" : 13,
-    "rank" : 7,
-    "sort" : 2
+    "done" : 27,
+    "first" : 18,
+    "next" : 24,
+    "pair" : 10,
+    "same" : 22,
+    "sort" : 15
   },
-  "code" : "public int[] replaceWithRank(int[] values) {\n    int[] ordered = values.clone();\n    Arrays.sort(ordered);\n    Map<Integer, Integer> rank = new HashMap<>();\n    for (int value : ordered) {\n        if (!rank.containsKey(value)) {\n            rank.put(value, rank.size() + 1);\n        }\n    }\n    for (int i = 0; i < values.length; i++) {\n        values[i] = rank.get(values[i]);\n    }\n    return values;\n}",
+  "code" : "class Solution {\n    public int[] arrayRankTransform(int[] arr) {\n        int n=arr.length;\n        int[][] sortedArr=new int[n][2];\n        int[] res=new int[n];\n\n        if (n==0)\n            return res;\n\n        for (int i=0;i<n;i++) {\n            sortedArr[i][0]=arr[i];\n            sortedArr[i][1]=i;\n        }\n\n        Arrays.sort(sortedArr, (x,y) -> Integer.compare(x[0],y[0]));\n\n        int rank=1;\n        res[sortedArr[0][1]]=rank;\n\n        for (int i=1;i<n;i++) {\n            if (sortedArr[i][0]==sortedArr[i-1][0])\n                res[sortedArr[i][1]]=rank;\n            else\n                res[sortedArr[i][1]]=++rank;\n        }\n\n        return res;\n    }\n}",
   "problemId" : "replace-rank-array",
   "resolvedInput" : {
     "values" : [ 20, 15, 26, 2, 98, 6, 2 ]
   },
-  "stepCount" : 15,
+  "stepCount" : 10,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "Sort a copy so distinct values appear in rank order: [2, 2, 6, 15, 20, 26, 98].",
+    "activeLine" : 10,
+    "description" : "Pair every value with its index, so the rank can be written back to the right slot.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "ordered" : "[2, 2, 6, 15, 20, 26, 98]"
-    },
-    "dsType" : "PriorityQueue",
+    "variables" : { },
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 2,
-      "state" : "default"
+      "value" : 20,
+      "state" : "default",
+      "label" : "@0"
     }, {
       "index" : 1,
-      "value" : 2,
-      "state" : "default"
+      "value" : 15,
+      "state" : "default",
+      "label" : "@1"
     }, {
       "index" : 2,
-      "value" : 6,
-      "state" : "default"
+      "value" : 26,
+      "state" : "default",
+      "label" : "@2"
     }, {
       "index" : 3,
-      "value" : 15,
-      "state" : "default"
+      "value" : 2,
+      "state" : "default",
+      "label" : "@3"
     }, {
       "index" : 4,
-      "value" : 20,
-      "state" : "default"
+      "value" : 98,
+      "state" : "default",
+      "label" : "@4"
     }, {
       "index" : 5,
-      "value" : 26,
-      "state" : "default"
+      "value" : 6,
+      "state" : "default",
+      "label" : "@5"
     }, {
       "index" : 6,
-      "value" : 98,
-      "state" : "default"
+      "value" : 2,
+      "state" : "default",
+      "label" : "@6"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
-    "description" : "First occurrence of 2 gets rank 1.",
+    "activeLine" : 15,
+    "description" : "Sort the pairs by value: [2, 2, 6, 15, 20, 26, 98]. Each label is the index the value came from.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "rank" : "1",
-      "value" : "2"
-    },
-    "dsType" : "PriorityQueue",
+    "variables" : { },
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 2,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@3"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@6"
     }, {
       "index" : 2,
       "value" : 6,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@5"
     }, {
       "index" : 3,
       "value" : 15,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@1"
     }, {
       "index" : 4,
       "value" : 20,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@0"
     }, {
       "index" : 5,
       "value" : 26,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@2"
     }, {
       "index" : 6,
       "value" : 98,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 7,
-    "description" : "First occurrence of 6 gets rank 2.",
+    "activeLine" : 18,
+    "description" : "The smallest value, 2 (index 3), gets rank 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "rank" : "2",
-      "value" : "6"
+      "rank" : "1",
+      "res" : "[0, 0, 0, 1, 0, 0, 0]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 2,
-      "state" : "default"
+      "state" : "current",
+      "label" : "@3"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@6"
     }, {
       "index" : 2,
       "value" : 6,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@5"
     }, {
       "index" : 3,
       "value" : 15,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@1"
     }, {
       "index" : 4,
       "value" : 20,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@0"
     }, {
       "index" : 5,
       "value" : 26,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@2"
     }, {
       "index" : 6,
       "value" : 98,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
-    "description" : "First occurrence of 15 gets rank 3.",
+    "activeLine" : 22,
+    "description" : "2 equals the value before it, so index 6 keeps rank 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "rank" : "3",
-      "value" : "15"
+      "i" : "1",
+      "rank" : "1",
+      "res" : "[0, 0, 0, 1, 0, 0, 1]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 2,
-      "state" : "default"
+      "state" : "target",
+      "label" : "@3"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default"
+      "state" : "current",
+      "label" : "@6"
     }, {
       "index" : 2,
       "value" : 6,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@5"
     }, {
       "index" : 3,
       "value" : 15,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@1"
     }, {
       "index" : 4,
       "value" : 20,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@0"
     }, {
       "index" : 5,
       "value" : 26,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@2"
     }, {
       "index" : 6,
       "value" : 98,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 7,
-    "description" : "First occurrence of 20 gets rank 4.",
+    "activeLine" : 24,
+    "description" : "6 is larger than 2, so index 5 gets the next rank, 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "rank" : "4",
-      "value" : "20"
+      "i" : "2",
+      "rank" : "2",
+      "res" : "[0, 0, 0, 1, 0, 2, 1]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 2,
-      "state" : "default"
+      "state" : "done",
+      "label" : "@3"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default"
+      "state" : "target",
+      "label" : "@6"
     }, {
       "index" : 2,
       "value" : 6,
-      "state" : "default"
+      "state" : "current",
+      "label" : "@5"
     }, {
       "index" : 3,
       "value" : 15,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@1"
     }, {
       "index" : 4,
       "value" : 20,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@0"
     }, {
       "index" : 5,
       "value" : 26,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@2"
     }, {
       "index" : 6,
       "value" : 98,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 7,
-    "description" : "First occurrence of 26 gets rank 5.",
+    "activeLine" : 24,
+    "description" : "15 is larger than 6, so index 1 gets the next rank, 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "rank" : "5",
-      "value" : "26"
+      "i" : "3",
+      "rank" : "3",
+      "res" : "[0, 3, 0, 1, 0, 2, 1]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 2,
-      "state" : "default"
+      "state" : "done",
+      "label" : "@3"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default"
+      "state" : "done",
+      "label" : "@6"
     }, {
       "index" : 2,
       "value" : 6,
-      "state" : "default"
+      "state" : "target",
+      "label" : "@5"
     }, {
       "index" : 3,
       "value" : 15,
-      "state" : "default"
+      "state" : "current",
+      "label" : "@1"
     }, {
       "index" : 4,
       "value" : 20,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@0"
     }, {
       "index" : 5,
       "value" : 26,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@2"
     }, {
       "index" : 6,
       "value" : 98,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 7,
-    "description" : "First occurrence of 98 gets rank 6.",
+    "activeLine" : 24,
+    "description" : "20 is larger than 15, so index 0 gets the next rank, 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "rank" : "6",
-      "value" : "98"
+      "i" : "4",
+      "rank" : "4",
+      "res" : "[4, 3, 0, 1, 0, 2, 1]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 2,
-      "state" : "default"
+      "state" : "done",
+      "label" : "@3"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default"
+      "state" : "done",
+      "label" : "@6"
     }, {
       "index" : 2,
       "value" : 6,
-      "state" : "default"
+      "state" : "done",
+      "label" : "@5"
     }, {
       "index" : 3,
       "value" : 15,
-      "state" : "default"
+      "state" : "target",
+      "label" : "@1"
     }, {
       "index" : 4,
       "value" : 20,
-      "state" : "default"
+      "state" : "current",
+      "label" : "@0"
     }, {
       "index" : 5,
       "value" : 26,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@2"
     }, {
       "index" : 6,
       "value" : 98,
-      "state" : "default"
+      "state" : "default",
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 11,
-    "description" : "Replace values[0] = 20 with rank 4.",
+    "activeLine" : 24,
+    "description" : "26 is larger than 20, so index 2 gets the next rank, 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "0",
-      "rank" : "4"
+      "i" : "5",
+      "rank" : "5",
+      "res" : "[4, 3, 5, 1, 0, 2, 1]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 4,
-      "state" : "current",
-      "label" : "20→4"
+      "value" : 2,
+      "state" : "done",
+      "label" : "@3"
     }, {
       "index" : 1,
-      "value" : 15,
-      "state" : "default",
-      "label" : "15"
+      "value" : 2,
+      "state" : "done",
+      "label" : "@6"
     }, {
       "index" : 2,
-      "value" : 26,
-      "state" : "default",
-      "label" : "26"
+      "value" : 6,
+      "state" : "done",
+      "label" : "@5"
     }, {
       "index" : 3,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
+      "value" : 15,
+      "state" : "done",
+      "label" : "@1"
     }, {
       "index" : 4,
-      "value" : 98,
-      "state" : "default",
-      "label" : "98"
+      "value" : 20,
+      "state" : "target",
+      "label" : "@0"
     }, {
       "index" : 5,
-      "value" : 6,
-      "state" : "default",
-      "label" : "6"
+      "value" : 26,
+      "state" : "current",
+      "label" : "@2"
     }, {
       "index" : 6,
-      "value" : 2,
+      "value" : 98,
       "state" : "default",
-      "label" : "2"
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 11,
-    "description" : "Replace values[1] = 15 with rank 3.",
+    "activeLine" : 24,
+    "description" : "98 is larger than 26, so index 4 gets the next rank, 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "index" : "1",
-      "rank" : "3"
+      "i" : "6",
+      "rank" : "6",
+      "res" : "[4, 3, 5, 1, 6, 2, 1]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 4,
-      "state" : "default",
-      "label" : "20→4"
+      "value" : 2,
+      "state" : "done",
+      "label" : "@3"
     }, {
       "index" : 1,
-      "value" : 3,
-      "state" : "current",
-      "label" : "15→3"
+      "value" : 2,
+      "state" : "done",
+      "label" : "@6"
     }, {
       "index" : 2,
-      "value" : 26,
-      "state" : "default",
-      "label" : "26"
+      "value" : 6,
+      "state" : "done",
+      "label" : "@5"
     }, {
       "index" : 3,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
+      "value" : 15,
+      "state" : "done",
+      "label" : "@1"
     }, {
       "index" : 4,
-      "value" : 98,
-      "state" : "default",
-      "label" : "98"
+      "value" : 20,
+      "state" : "done",
+      "label" : "@0"
     }, {
       "index" : 5,
-      "value" : 6,
-      "state" : "default",
-      "label" : "6"
+      "value" : 26,
+      "state" : "target",
+      "label" : "@2"
     }, {
       "index" : 6,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
+      "value" : 98,
+      "state" : "current",
+      "label" : "@4"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 11,
-    "description" : "Replace values[2] = 26 with rank 5.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "index" : "2",
-      "rank" : "5"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 4,
-      "state" : "default",
-      "label" : "20→4"
-    }, {
-      "index" : 1,
-      "value" : 3,
-      "state" : "default",
-      "label" : "15→3"
-    }, {
-      "index" : 2,
-      "value" : 5,
-      "state" : "current",
-      "label" : "26→5"
-    }, {
-      "index" : 3,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
-    }, {
-      "index" : 4,
-      "value" : 98,
-      "state" : "default",
-      "label" : "98"
-    }, {
-      "index" : 5,
-      "value" : 6,
-      "state" : "default",
-      "label" : "6"
-    }, {
-      "index" : 6,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 11,
-    "activeLine" : 11,
-    "description" : "Replace values[3] = 2 with rank 1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "index" : "3",
-      "rank" : "1"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 4,
-      "state" : "default",
-      "label" : "20→4"
-    }, {
-      "index" : 1,
-      "value" : 3,
-      "state" : "default",
-      "label" : "15→3"
-    }, {
-      "index" : 2,
-      "value" : 5,
-      "state" : "default",
-      "label" : "26→5"
-    }, {
-      "index" : 3,
-      "value" : 1,
-      "state" : "current",
-      "label" : "2→1"
-    }, {
-      "index" : 4,
-      "value" : 98,
-      "state" : "default",
-      "label" : "98"
-    }, {
-      "index" : 5,
-      "value" : 6,
-      "state" : "default",
-      "label" : "6"
-    }, {
-      "index" : 6,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 12,
-    "activeLine" : 11,
-    "description" : "Replace values[4] = 98 with rank 6.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "index" : "4",
-      "rank" : "6"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 4,
-      "state" : "default",
-      "label" : "20→4"
-    }, {
-      "index" : 1,
-      "value" : 3,
-      "state" : "default",
-      "label" : "15→3"
-    }, {
-      "index" : 2,
-      "value" : 5,
-      "state" : "default",
-      "label" : "26→5"
-    }, {
-      "index" : 3,
-      "value" : 1,
-      "state" : "default",
-      "label" : "2→1"
-    }, {
-      "index" : 4,
-      "value" : 6,
-      "state" : "current",
-      "label" : "98→6"
-    }, {
-      "index" : 5,
-      "value" : 6,
-      "state" : "default",
-      "label" : "6"
-    }, {
-      "index" : 6,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 13,
-    "activeLine" : 11,
-    "description" : "Replace values[5] = 6 with rank 2.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "index" : "5",
-      "rank" : "2"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 4,
-      "state" : "default",
-      "label" : "20→4"
-    }, {
-      "index" : 1,
-      "value" : 3,
-      "state" : "default",
-      "label" : "15→3"
-    }, {
-      "index" : 2,
-      "value" : 5,
-      "state" : "default",
-      "label" : "26→5"
-    }, {
-      "index" : 3,
-      "value" : 1,
-      "state" : "default",
-      "label" : "2→1"
-    }, {
-      "index" : 4,
-      "value" : 6,
-      "state" : "default",
-      "label" : "98→6"
-    }, {
-      "index" : 5,
-      "value" : 2,
-      "state" : "current",
-      "label" : "6→2"
-    }, {
-      "index" : 6,
-      "value" : 2,
-      "state" : "default",
-      "label" : "2"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 14,
-    "activeLine" : 11,
-    "description" : "Replace values[6] = 2 with rank 1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "index" : "6",
-      "rank" : "1"
-    },
-    "dsType" : "PriorityQueue",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 4,
-      "state" : "default",
-      "label" : "20→4"
-    }, {
-      "index" : 1,
-      "value" : 3,
-      "state" : "default",
-      "label" : "15→3"
-    }, {
-      "index" : 2,
-      "value" : 5,
-      "state" : "default",
-      "label" : "26→5"
-    }, {
-      "index" : 3,
-      "value" : 1,
-      "state" : "default",
-      "label" : "2→1"
-    }, {
-      "index" : 4,
-      "value" : 6,
-      "state" : "default",
-      "label" : "98→6"
-    }, {
-      "index" : 5,
-      "value" : 2,
-      "state" : "default",
-      "label" : "6→2"
-    }, {
-      "index" : 6,
-      "value" : 1,
-      "state" : "current",
-      "label" : "2→1"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 15,
-    "activeLine" : 13,
-    "description" : "Rank replacement complete: [4, 3, 5, 1, 6, 2, 1].",
+    "activeLine" : 27,
+    "description" : "Every index has its rank: [4, 3, 5, 1, 6, 2, 1].",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -714,7 +501,7 @@
     "variables" : {
       "result" : "[4, 3, 5, 1, 6, 2, 1]"
     },
-    "dsType" : "PriorityQueue",
+    "dsType" : "Array",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,

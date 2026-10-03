@@ -1,10 +1,11 @@
 {
   "anchors" : {
-    "append" : 8,
-    "done" : 12,
-    "pickSmallestHead" : 7
+    "append" : 16,
+    "done" : 23,
+    "init" : 8,
+    "pickSmallestHead" : 13
   },
-  "code" : "public ListNode mergeKLists(ListNode[] lists) {\n    PriorityQueue<ListNode> heap = new PriorityQueue<>((a, b) -> a.val - b.val);\n    for (ListNode head : lists) if (head != null) heap.add(head);\n\n    ListNode dummy = new ListNode(-1), tail = dummy;\n    while (!heap.isEmpty()) {\n        ListNode smallest = heap.poll();\n        tail.next = smallest;\n        tail = tail.next;\n        if (smallest.next != null) heap.add(smallest.next);\n    }\n    return dummy.next;\n}",
+  "code" : "class Solution {\n    public ListNode mergeKLists(ListNode[] lists) {\n        int k=lists.length;\n        ListNode head=new ListNode(-1);\n        ListNode temp=head;\n        PriorityQueue<ListNode> pq=new PriorityQueue<>((x,y)->Integer.compare(x.val,y.val));\n\n        for (int i=0;i<k;i++)\n            if (lists[i]!=null)\n                pq.add(lists[i]);\n\n        while (!pq.isEmpty()) {\n            ListNode currNode=pq.poll();\n            ListNode nextNode=currNode.next;\n\n            temp.next=currNode;\n            temp=temp.next;\n\n            if (nextNode!=null)\n                pq.add(nextNode);\n        }\n\n        return head.next;\n    }\n}",
   "problemId" : "merge-k-sorted-lists",
   "resolvedInput" : {
     "list1" : [ 1, 4, 5 ],
@@ -14,7 +15,7 @@
   "stepCount" : 18,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 7,
+    "activeLine" : 8,
     "description" : "Three sorted lists to merge: [1, 4, 5], [1, 3, 4], [2, 6]. Only their heads go into the heap - 3 of them - so each pick costs log k, not k.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -95,8 +96,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
-    "description" : "Pop the heap root: 1, from list 1. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
+    "activeLine" : 13,
+    "description" : "Pop the heap root: 1, from list 1. It is the smallest of the 3 live heads, and the heap keeps it at the root, so finding it took no scan of the heads.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -178,7 +179,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 1 to the merged output (1 node so far). List 1's next head, 4, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -261,8 +262,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
-    "description" : "Pop the heap root: 1, from list 2. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
+    "activeLine" : 13,
+    "description" : "Pop the heap root: 1, from list 2. It is the smallest of the 3 live heads, and the heap keeps it at the root, so finding it took no scan of the heads.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -344,7 +345,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 1 to the merged output (2 nodes so far). List 2's next head, 3, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -427,8 +428,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 7,
-    "description" : "Pop the heap root: 2, from list 3. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
+    "activeLine" : 13,
+    "description" : "Pop the heap root: 2, from list 3. It is the smallest of the 3 live heads, and the heap keeps it at the root, so finding it took no scan of the heads.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -510,7 +511,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 2 to the merged output (3 nodes so far). List 3's next head, 6, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -593,8 +594,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 7,
-    "description" : "Pop the heap root: 3, from list 2. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
+    "activeLine" : 13,
+    "description" : "Pop the heap root: 3, from list 2. It is the smallest of the 3 live heads, and the heap keeps it at the root, so finding it took no scan of the heads.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -676,7 +677,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 3 to the merged output (4 nodes so far). List 2's next head, 4, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -759,8 +760,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 7,
-    "description" : "Pop the heap root: 4, from list 1. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
+    "activeLine" : 13,
+    "description" : "Pop the heap root: 4, from list 1. It is the smallest of the 3 live heads, and the heap keeps it at the root, so finding it took no scan of the heads.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -842,7 +843,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 4 to the merged output (5 nodes so far). List 1's next head, 5, takes its place in the heap.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -925,8 +926,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 7,
-    "description" : "Pop the heap root: 4, from list 2. It is the smallest of the 3 live heads, and the heap knew that without comparing them.",
+    "activeLine" : 13,
+    "description" : "Pop the heap root: 4, from list 2. It is the smallest of the 3 live heads, and the heap keeps it at the root, so finding it took no scan of the heads.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -1008,7 +1009,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 4 to the merged output (6 nodes so far). List 2 is exhausted, so nothing replaces it and the heap shrinks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1091,8 +1092,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 7,
-    "description" : "Pop the heap root: 5, from list 1. It is the smallest of the 2 live heads, and the heap knew that without comparing them.",
+    "activeLine" : 13,
+    "description" : "Pop the heap root: 5, from list 1. It is the smallest of the 2 live heads, and the heap keeps it at the root, so finding it took no scan of the heads.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -1174,7 +1175,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 5 to the merged output (7 nodes so far). List 1 is exhausted, so nothing replaces it and the heap shrinks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1257,7 +1258,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 7,
+    "activeLine" : 13,
     "description" : "Pop the heap root: 6, from list 3. It is the only live head left.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1340,7 +1341,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 8,
+    "activeLine" : 16,
     "description" : "Append 6 to the merged output (8 nodes so far). List 3 is exhausted, so nothing replaces it and the heap shrinks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1423,7 +1424,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 12,
+    "activeLine" : 23,
     "description" : "The heap is empty, so all three lists are exhausted. Merged result: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
