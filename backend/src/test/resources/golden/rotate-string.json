@@ -1,28 +1,28 @@
 {
   "anchors" : {
-    "compare" : 4,
-    "done" : 6
+    "found" : 47,
+    "init" : 10,
+    "lengths" : 3,
+    "lps" : 20,
+    "none" : 50,
+    "search" : 36
   },
-  "code" : "public boolean rotateString(String s, String goal) {\n    if (s.length() != goal.length()) return false;\n    for (int shift = 0; shift < s.length(); shift++) {\n        if ((s.substring(shift) + s.substring(0, shift)).equals(goal)) return true;\n    }\n    return false;\n}",
+  "code" : "class Solution {\n    public boolean rotateString(String s, String goal) {\n        if (s.length()!=goal.length())\n            return false;\n\n        return kmp(s+s,goal);\n    }\n\n    public boolean kmp(String text,String pattern) {\n        int n=text.length();\n        int m=pattern.length();\n\n        int[] lps=new int[m];\n        lps[0]=0;\n        int i=0;\n        int j=1;\n        int currLength=0;\n\n        while (j<m) {\n            if (pattern.charAt(j)==pattern.charAt(currLength)) {\n                currLength++;\n                lps[j]=currLength;\n                j++;\n            } else {\n                if (currLength==0) {\n                    lps[j]=currLength;\n                    j++;\n                } else {\n                    currLength=lps[currLength-1];\n                }\n            }\n        }\n\n        j=0;\n        while (i<n && j<m) {\n            if (text.charAt(i)==pattern.charAt(j)) {\n                i++;\n                j++;\n            } else {\n                if (j==0)\n                    i++;\n                else\n                    j=lps[j-1];\n            }\n\n            if (j==m)\n                return true;\n        }\n\n        return false;\n    }\n}",
   "problemId" : "rotate-string",
   "resolvedInput" : {
     "goal" : "cdeab",
     "s" : "abcde"
   },
-  "stepCount" : 4,
+  "stepCount" : 14,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 4,
-    "description" : "Left rotation by 0 gives \"abcde\": does not match goal \"cdeab\".",
+    "activeLine" : 3,
+    "description" : "Same length. Every rotation of s appears inside s + s = \"abcdeabcde\", so search for goal there.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "candidate" : "abcde",
-      "matches" : "false",
-      "shift" : "0"
-    },
+    "variables" : { },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
@@ -47,6 +47,31 @@
       "label" : "d"
     }, {
       "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
       "value" : 101,
       "state" : "default",
       "label" : "e"
@@ -56,60 +81,56 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 4,
-    "description" : "Left rotation by 1 gives \"bcdea\": does not match goal \"cdeab\".",
+    "activeLine" : 10,
+    "description" : "First build lps for \"cdeab\": lps[j] is the length of the longest proper prefix of pattern[0..j] that is also a suffix of it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "candidate" : "bcdea",
-      "matches" : "false",
-      "shift" : "1"
+      "lps" : "[0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
-      "value" : 98,
-      "state" : "default",
-      "label" : "b"
-    }, {
-      "index" : 1,
       "value" : 99,
       "state" : "default",
       "label" : "c"
     }, {
-      "index" : 2,
+      "index" : 1,
       "value" : 100,
       "state" : "default",
       "label" : "d"
     }, {
-      "index" : 3,
+      "index" : 2,
       "value" : 101,
       "state" : "default",
       "label" : "e"
     }, {
-      "index" : 4,
+      "index" : 3,
       "value" : 97,
       "state" : "default",
       "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 4,
-    "description" : "Left rotation by 2 gives \"cdeab\": matches goal \"cdeab\".",
+    "activeLine" : 20,
+    "description" : "pattern[1] = 'd' matches no prefix: lps[1] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "candidate" : "cdeab",
-      "matches" : "true",
-      "shift" : "2"
+      "lps" : "[0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -126,7 +147,7 @@
     }, {
       "index" : 2,
       "value" : 101,
-      "state" : "default",
+      "state" : "current",
       "label" : "e"
     }, {
       "index" : 3,
@@ -144,8 +165,610 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 6,
-    "description" : "Rotation check result: true.",
+    "activeLine" : 20,
+    "description" : "pattern[2] = 'e' matches no prefix: lps[2] = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lps" : "[0, 0, 0, 0, 0]"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 20,
+    "description" : "pattern[3] = 'a' matches no prefix: lps[3] = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lps" : "[0, 0, 0, 0, 0]"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 20,
+    "description" : "pattern[4] = 'b' matches no prefix: lps[4] = 0.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "lps" : "[0, 0, 0, 0, 0]"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 2,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 36,
+    "description" : "text[0] = 'a' cannot start goal: move on.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "j" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 36,
+    "description" : "text[1] = 'b' cannot start goal: move on.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "j" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 36,
+    "description" : "text[2] = pattern[0] = 'c': 1 letter of goal matched.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "3",
+      "j" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "current",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 36,
+    "description" : "text[3] = pattern[1] = 'd': 2 letters of goal matched.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "j" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "current",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 36,
+    "description" : "text[4] = pattern[2] = 'e': 3 letters of goal matched.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "5",
+      "j" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 36,
+    "description" : "text[5] = pattern[3] = 'a': 4 letters of goal matched.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "6",
+      "j" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 36,
+    "description" : "text[6] = pattern[4] = 'b': 5 letters of goal matched.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "7",
+      "j" : "5"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "current",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 47,
+    "description" : "All 5 letters of goal matched inside s + s: goal is a rotation of s. Return true.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -177,6 +800,31 @@
       "label" : "d"
     }, {
       "index" : 4,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 7,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 8,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 9,
       "value" : 101,
       "state" : "default",
       "label" : "e"
