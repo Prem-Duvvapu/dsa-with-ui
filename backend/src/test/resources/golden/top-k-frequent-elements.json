@@ -1,27 +1,28 @@
 {
   "anchors" : {
-    "counted" : 5,
-    "done" : 15,
-    "evict" : 10,
-    "push" : 7
+    "add" : 13,
+    "count" : 5,
+    "done" : 24,
+    "evict" : 15,
+    "take" : 20
   },
-  "code" : "public int[] topKFrequent(int[] nums, int k) {\n    Map<Integer, Integer> freq = new LinkedHashMap<>();\n    for (int num : nums) freq.merge(num, 1, Integer::sum);\n\n    List<int[]> heap = new ArrayList<>(); // {value, frequency}, min-heap by frequency\n    for (Map.Entry<Integer, Integer> e : freq.entrySet()) {\n        heap.add(new int[]{e.getKey(), e.getValue()});\n        siftUp(heap, heap.size() - 1);\n        if (heap.size() > k) {\n            swap(heap, 0, heap.size() - 1);\n            heap.remove(heap.size() - 1);\n            siftDown(heap, 0);\n        }\n    }\n    return sortedByFrequencyDesc(heap);\n}\n\nprivate void siftUp(List<int[]> heap, int i) {\n    while (i > 0 && less(heap.get(i), heap.get((i - 1) / 2))) {\n        swap(heap, i, (i - 1) / 2);\n        i = (i - 1) / 2;\n    }\n}\n\nprivate void siftDown(List<int[]> heap, int i) {\n    int n = heap.size();\n    while (true) {\n        int l = 2 * i + 1, r = 2 * i + 2, smallest = i;\n        if (l < n && less(heap.get(l), heap.get(smallest))) smallest = l;\n        if (r < n && less(heap.get(r), heap.get(smallest))) smallest = r;\n        if (smallest == i) return;\n        swap(heap, i, smallest);\n        i = smallest;\n    }\n}\n\n// Ordered by frequency ascending; ties broken by value for a deterministic shape.\nprivate boolean less(int[] a, int[] b) {\n    return a[1] != b[1] ? a[1] < b[1] : a[0] < b[0];\n}\n\nprivate void swap(List<int[]> heap, int i, int j) {\n    int[] tmp = heap.get(i);\n    heap.set(i, heap.get(j));\n    heap.set(j, tmp);\n}",
+  "code" : "// Changed from your submission: it kept every distinct value in a max-heap, O(n log n). A\n// min-heap by frequency trimmed to k keeps only the k most frequent - O(n log k).\nclass Solution {\n    public int[] topKFrequent(int[] nums, int k) {\n        int[] res=new int[k];\n        Map<Integer,Integer> map=new HashMap<>();\n\n        for (int val: nums)\n            map.put(val,map.getOrDefault(val,0)+1);\n\n        PriorityQueue<Integer> pq=new PriorityQueue<>((x,y) -> Integer.compare(map.get(x),map.get(y)));\n        for (int val: map.keySet()) {\n            pq.add(val);\n            if (pq.size()>k)\n                pq.poll();\n        }\n\n        int pos=k-1;\n        while (pos>=0) {\n            res[pos]=pq.poll();\n            pos--;\n        }\n\n        return res;\n    }\n}",
   "problemId" : "top-k-frequent-elements",
   "resolvedInput" : {
     "k" : 2,
     "nums" : [ 1, 1, 1, 2, 2, 3 ]
   },
-  "stepCount" : 6,
+  "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 5,
-    "description" : "Counted frequencies for 3 distinct values: {1=3, 2=2, 3=1}.",
+    "description" : "Count each value: {1=3, 2=2, 3=1}.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "frequencies" : "{1=3, 2=2, 3=1}"
+      "map" : "{1=3, 2=2, 3=1}"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
@@ -55,16 +56,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
-    "description" : "Push 1 (frequency 3) onto the heap - it now holds 1 candidate.",
+    "activeLine" : 13,
+    "description" : "Add 1 (count 3). The least frequent kept value is on top.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "frequency" : "3",
-      "heapSize" : "1",
-      "value" : "1"
+      "map" : "{1=3, 2=2, 3=1}"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
@@ -78,16 +77,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 7,
-    "description" : "Push 2 (frequency 2) onto the heap - it now holds 2 candidates.",
+    "activeLine" : 13,
+    "description" : "Add 2 (count 2). The least frequent kept value is on top.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "frequency" : "2",
-      "heapSize" : "2",
-      "value" : "2"
+      "map" : "{1=3, 2=2, 3=1}"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
@@ -105,16 +102,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
-    "description" : "Push 3 (frequency 1) onto the heap - it now holds 3 candidates.",
+    "activeLine" : 13,
+    "description" : "Add 3 (count 1). The least frequent kept value is on top.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "frequency" : "1",
-      "heapSize" : "3",
-      "value" : "3"
+      "map" : "{1=3, 2=2, 3=1}"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
@@ -136,15 +131,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 10,
-    "description" : "More than 2 candidates - drop 3 (least frequent, at 1), keeping only the top 2 so far.",
+    "activeLine" : 15,
+    "description" : "More than 2 values: drop the least frequent, 3 (count 1).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "evicted" : "3",
-      "evictedFrequency" : "1"
+      "map" : "{1=3, 2=2, 3=1}"
     },
     "dsType" : "PriorityQueue",
     "gridState" : null,
@@ -162,8 +156,46 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 15,
-    "description" : "Heap holds exactly the 2 most frequent values: [1, 2].",
+    "activeLine" : 20,
+    "description" : "Take 2 (count 2) into res[1] - the least frequent of the rest goes last.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "res" : "[0, 2]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 20,
+    "description" : "Take 1 (count 3) into res[0] - the least frequent of the rest goes last.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "res" : "[1, 2]"
+    },
+    "dsType" : "PriorityQueue",
+    "gridState" : null,
+    "arrayState" : [ ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 24,
+    "description" : "Return [1, 2], most frequent first.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },

@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The mirror image of {@code kth-largest-element}: a size-k MAX-heap holds the k smallest
- * values seen so far, so its root is always the current k-th smallest. Shown as the plain
- * array a max-heap really keeps internally, with the heap as internal bookkeeping rather
- * than the star of the picture - a genuine binary tree here would look identical to the
- * other heap tracer's, so the array is the more honest choice for this one.
+ * Kth Smallest Element (GfG), traced on the owner's own accepted submission: a max-heap that never
+ * holds more than k values keeps the k smallest seen so far, so its top is the k-th smallest.
+ * O(n log k).
+ *
+ * <p>One change: the submission's comparator ({@code a<b ? 1 : -1}) never returned 0, which breaks
+ * Java's Comparator contract for equal values. {@code Integer.compare(b, a)} orders the same max-heap
+ * safely; a comment in the displayed code says so.
  */
 @Component
 public class KthSmallestElementTracer implements AlgorithmTracer {
@@ -54,124 +56,60 @@ public class KthSmallestElementTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int findKthSmallest(int[] nums, int k) {
-                   List<Integer> heap = new ArrayList<>(); // max-heap: parent >= children
-                   for (int num : nums) {
-                       // @a push
-                       heap.add(num);
-                       siftUp(heap, heap.size() - 1);
-                       if (heap.size() > k) {
-                           // @a evict
-                           swap(heap, 0, heap.size() - 1);
-                           heap.remove(heap.size() - 1);
-                           siftDown(heap, 0);
+               // Changed from your submission: its comparator (a<b ? 1 : -1) never returned 0, which
+               // breaks Java's Comparator contract for equal values. Integer.compare(b,a) builds the
+               // same max-heap safely.
+               class Solution{
+                   public static int kthSmallest(int[] arr, int l, int r, int k)
+                   {
+                       // @a init
+                       PriorityQueue<Integer> q=new PriorityQueue<>((a,b) -> Integer.compare(b,a)); //contains largest element at peek
+                       for (int val: arr)
+                       {
+                           // @a add
+                           q.add(val);
+                           if (q.size()>k)
+                               // @a evict
+                               q.poll();
                        }
-                   }
-                   // @a done
-                   return heap.get(0);
-               }
 
-               private int siftUp(List<Integer> heap, int i) {
-                   while (i > 0 && heap.get(i) > heap.get((i - 1) / 2)) {
-                       swap(heap, i, (i - 1) / 2);
-                       i = (i - 1) / 2;
+                       // @a done
+                       return q.peek();
                    }
-                   return i;
-               }
-
-               private int siftDown(List<Integer> heap, int i) {
-                   int n = heap.size();
-                   while (true) {
-                       int l = 2 * i + 1, r = 2 * i + 2, largest = i;
-                       if (l < n && heap.get(l) > heap.get(largest)) largest = l;
-                       if (r < n && heap.get(r) > heap.get(largest)) largest = r;
-                       if (largest == i) return i;
-                       swap(heap, i, largest);
-                       i = largest;
-                   }
-               }
-
-               private void swap(List<Integer> heap, int i, int j) {
-                   Integer tmp = heap.get(i);
-                   heap.set(i, heap.get(j));
-                   heap.set(j, tmp);
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
-        int[] nums = in.getIntArray("nums");
+        int[] arr = in.getIntArray("nums");
         int k = in.getInt("k");
-        List<Integer> heap = new ArrayList<>();
-
-        for (int num : nums) {
-            heap.add(num);
-            int at = siftUp(heap, heap.size() - 1);
-            emit.at("push")
-                    .say("Insert %d. Heap now holds %d value%s; its root, %d, is the largest "
-                                    + "of them.",
-                            num, heap.size(), heap.size() == 1 ? "" : "s", heap.get(0))
-                    .var("inserted", num).var("heapSize", heap.size())
-                    .array(toArray(heap), at).step();
-
-            if (heap.size() > k) {
-                int evicted = heap.get(0);
-                swap(heap, 0, heap.size() - 1);
-                heap.remove(heap.size() - 1);
-                int settledAt = heap.isEmpty() ? -1 : siftDown(heap, 0);
-                emit.at("evict")
-                        .say("Heap exceeds size %d - evict the largest value, %d, keeping only "
-                                        + "the %d smallest seen so far.",
-                                k, evicted, k)
-                        .var("evicted", evicted).var("heapSize", heap.size())
-                        .array(toArray(heap), settledAt).step();
+        if (k > arr.length) {
+            throw new InputValidationException(Map.of("k", "can be at most the array length, " + arr.length));
+        }
+        ArrayHeap<Integer> q = new ArrayHeap<>((a, b) -> Integer.compare(b, a));
+        emit.at("init").say("Keep a max-heap of at most k = %d values: then it holds the %d smallest seen so far, "
+                        + "and its top is the largest of those.", k, k)
+                .var("k", k).array(arr).step();
+        for (int val : arr) {
+            int at = q.offer(val);
+            emit.at("add").say("Add %d. The heap holds %d value%s; the top is %d.",
+                            val, q.size(), Narration.s(q.size()), q.peek())
+                    .var("val", val).var("size", q.size()).array(slots(q), at).step();
+            if (q.size() > k) {
+                int out = q.poll();
+                emit.at("evict").say("More than %d values: remove the largest, %d - it cannot be among the %d smallest.",
+                                k, out, k)
+                        .var("evicted", out).var("size", q.size()).array(slots(q), 0).step();
             }
         }
-
-        emit.at("done")
-                .say("Every value processed. The heap's root, %d, is the %s smallest.",
-                        heap.get(0), Narration.ordinal(k))
-                .var("answer", heap.get(0))
-                .array(toArray(heap), 0).step();
+        emit.at("done").say("The heap holds the %d smallest values, and its top, %d, is the %s smallest.",
+                        k, q.peek(), Narration.ordinal(k))
+                .var("answer", q.peek()).array(slots(q), 0).step();
     }
 
-    private static int[] toArray(List<Integer> heap) {
+    private static int[] slots(ArrayHeap<Integer> heap) {
         int[] out = new int[heap.size()];
-        for (int i = 0; i < out.length; i++) {
-            out[i] = heap.get(i);
-        }
+        for (int i = 0; i < out.length; i++) out[i] = heap.slots().get(i);
         return out;
-    }
-
-    private static int siftUp(List<Integer> heap, int i) {
-        while (i > 0) {
-            int parent = (i - 1) / 2;
-            if (heap.get(i) > heap.get(parent)) {
-                swap(heap, i, parent);
-                i = parent;
-            } else {
-                break;
-            }
-        }
-        return i;
-    }
-
-    private static int siftDown(List<Integer> heap, int i) {
-        int n = heap.size();
-        while (true) {
-            int l = 2 * i + 1, r = 2 * i + 2, largest = i;
-            if (l < n && heap.get(l) > heap.get(largest)) largest = l;
-            if (r < n && heap.get(r) > heap.get(largest)) largest = r;
-            if (largest == i) break;
-            swap(heap, i, largest);
-            i = largest;
-        }
-        return i;
-    }
-
-    private static void swap(List<Integer> heap, int i, int j) {
-        Integer tmp = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, tmp);
     }
 }

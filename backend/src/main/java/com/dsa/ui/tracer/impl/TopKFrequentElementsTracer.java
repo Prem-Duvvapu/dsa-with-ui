@@ -11,10 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Count frequencies first, then keep only the k most frequent values in a size-k min-heap
- * ordered by frequency, not by value. The array shown on the wire carries the candidate
- * VALUES (what a viewer actually cares about); frequency - the field the heap really orders
- * by - travels alongside as a step variable instead.
+ * Top K Frequent Elements (LeetCode 347), in the owner's style: count with a HashMap, then keep a
+ * min-heap ordered by frequency at no more than k values, so it holds the k most frequent; fill
+ * the answer from the back as the heap empties, least frequent first. O(n log k).
+ *
+ * <p>The owner's submission put every distinct value in a max-heap - O(n log n). Keeping the heap at
+ * size k is the stronger answer; a comment in the displayed code says so. Real HashMap iteration
+ * and {@link ArrayHeap} (which sifts as java.util.PriorityQueue does) keep tie order the code's.
  */
 @Component
 public class TopKFrequentElementsTracer implements AlgorithmTracer {
@@ -55,55 +58,36 @@ public class TopKFrequentElementsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int[] topKFrequent(int[] nums, int k) {
-                   Map<Integer, Integer> freq = new LinkedHashMap<>();
-                   for (int num : nums) freq.merge(num, 1, Integer::sum);
+               // Changed from your submission: it kept every distinct value in a max-heap, O(n log n). A
+               // min-heap by frequency trimmed to k keeps only the k most frequent - O(n log k).
+               class Solution {
+                   public int[] topKFrequent(int[] nums, int k) {
+                       // @a count
+                       int[] res=new int[k];
+                       Map<Integer,Integer> map=new HashMap<>();
 
-                   // @a counted
-                   List<int[]> heap = new ArrayList<>(); // {value, frequency}, min-heap by frequency
-                   for (Map.Entry<Integer, Integer> e : freq.entrySet()) {
-                       // @a push
-                       heap.add(new int[]{e.getKey(), e.getValue()});
-                       siftUp(heap, heap.size() - 1);
-                       if (heap.size() > k) {
-                           // @a evict
-                           swap(heap, 0, heap.size() - 1);
-                           heap.remove(heap.size() - 1);
-                           siftDown(heap, 0);
+                       for (int val: nums)
+                           map.put(val,map.getOrDefault(val,0)+1);
+
+                       PriorityQueue<Integer> pq=new PriorityQueue<>((x,y) -> Integer.compare(map.get(x),map.get(y)));
+                       for (int val: map.keySet()) {
+                           // @a add
+                           pq.add(val);
+                           if (pq.size()>k)
+                               // @a evict
+                               pq.poll();
                        }
+
+                       int pos=k-1;
+                       while (pos>=0) {
+                           // @a take
+                           res[pos]=pq.poll();
+                           pos--;
+                       }
+
+                       // @a done
+                       return res;
                    }
-                   // @a done
-                   return sortedByFrequencyDesc(heap);
-               }
-
-               private void siftUp(List<int[]> heap, int i) {
-                   while (i > 0 && less(heap.get(i), heap.get((i - 1) / 2))) {
-                       swap(heap, i, (i - 1) / 2);
-                       i = (i - 1) / 2;
-                   }
-               }
-
-               private void siftDown(List<int[]> heap, int i) {
-                   int n = heap.size();
-                   while (true) {
-                       int l = 2 * i + 1, r = 2 * i + 2, smallest = i;
-                       if (l < n && less(heap.get(l), heap.get(smallest))) smallest = l;
-                       if (r < n && less(heap.get(r), heap.get(smallest))) smallest = r;
-                       if (smallest == i) return;
-                       swap(heap, i, smallest);
-                       i = smallest;
-                   }
-               }
-
-               // Ordered by frequency ascending; ties broken by value for a deterministic shape.
-               private boolean less(int[] a, int[] b) {
-                   return a[1] != b[1] ? a[1] < b[1] : a[0] < b[0];
-               }
-
-               private void swap(List<int[]> heap, int i, int j) {
-                   int[] tmp = heap.get(i);
-                   heap.set(i, heap.get(j));
-                   heap.set(j, tmp);
                }""";
     }
 
@@ -111,100 +95,37 @@ public class TopKFrequentElementsTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
         int k = in.getInt("k");
-
-        Map<Integer, Integer> freq = new LinkedHashMap<>();
-        for (int num : nums) {
-            freq.merge(num, 1, Integer::sum);
+        Map<Integer, Integer> map = new java.util.HashMap<>();
+        for (int val : nums) map.put(val, map.getOrDefault(val, 0) + 1);
+        if (k > map.size()) {
+            throw new InputValidationException(Map.of("k", "can be at most the number of distinct values, " + map.size()));
         }
-
-        emit.at("counted")
-                .say("Counted frequencies for %d distinct value%s: %s.",
-                        freq.size(), freq.size() == 1 ? "" : "s", freq)
-                .var("frequencies", freq.toString())
-                .array(nums).step();
-
-        List<int[]> heap = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> e : freq.entrySet()) {
-            int value = e.getKey();
-            int count = e.getValue();
-            heap.add(new int[]{value, count});
-            int at = siftUp(heap, heap.size() - 1);
-            emit.at("push")
-                    .say("Push %d (frequency %d) onto the heap - it now holds %d candidate%s.",
-                            value, count, heap.size(), heap.size() == 1 ? "" : "s")
-                    .var("value", value).var("frequency", count).var("heapSize", heap.size())
-                    .array(valuesOf(heap), at).step();
-
-            if (heap.size() > k) {
-                int[] evicted = heap.get(0);
-                swap(heap, 0, heap.size() - 1);
-                heap.remove(heap.size() - 1);
-                int settledAt = heap.isEmpty() ? -1 : siftDown(heap, 0);
-                emit.at("evict")
-                        .say("More than %d candidates - drop %d (least frequent, at %d), "
-                                        + "keeping only the top %d so far.",
-                                k, evicted[0], evicted[1], k)
-                        .var("evicted", evicted[0]).var("evictedFrequency", evicted[1])
-                        .array(valuesOf(heap), settledAt).step();
+        int[] res = new int[k];
+        emit.at("count").say("Count each value: %s.", map).var("map", map.toString()).array(nums).step();
+        ArrayHeap<Integer> pq = new ArrayHeap<>((x, y) -> Integer.compare(map.get(x), map.get(y)));
+        for (int val : map.keySet()) {
+            int at = pq.offer(val);
+            emit.at("add").say("Add %d (count %d). The least frequent kept value is on top.", val, map.get(val))
+                    .var("map", map.toString()).array(slots(pq), at).step();
+            if (pq.size() > k) {
+                int out = pq.poll();
+                emit.at("evict").say("More than %d values: drop the least frequent, %d (count %d).", k, out, map.get(out))
+                        .var("map", map.toString()).array(slots(pq), 0).step();
             }
         }
-
-        int[] answer = sortedByFrequencyDesc(heap);
-        emit.at("done")
-                .say("Heap holds exactly the %d most frequent values: %s.", k, Arrays.toString(answer))
-                .var("answer", Arrays.toString(answer))
-                .array(answer).step();
+        for (int pos = k - 1; pos >= 0; pos--) {
+            res[pos] = pq.poll();
+            emit.at("take").say("Take %d (count %d) into res[%d] - the least frequent of the rest goes last.",
+                            res[pos], map.get(res[pos]), pos)
+                    .var("res", java.util.Arrays.toString(res)).array(slots(pq), 0).step();
+        }
+        emit.at("done").say("Return %s, most frequent first.", java.util.Arrays.toString(res))
+                .var("answer", java.util.Arrays.toString(res)).array(res).step();
     }
 
-    private static int[] sortedByFrequencyDesc(List<int[]> heap) {
-        return heap.stream()
-                .sorted((a, b) -> b[1] != a[1] ? Integer.compare(b[1], a[1]) : Integer.compare(a[0], b[0]))
-                .mapToInt(pair -> pair[0])
-                .toArray();
-    }
-
-    private static int[] valuesOf(List<int[]> heap) {
+    private static int[] slots(ArrayHeap<Integer> heap) {
         int[] out = new int[heap.size()];
-        for (int i = 0; i < out.length; i++) {
-            out[i] = heap.get(i)[0];
-        }
+        for (int i = 0; i < out.length; i++) out[i] = heap.slots().get(i);
         return out;
-    }
-
-    private static int siftUp(List<int[]> heap, int i) {
-        while (i > 0) {
-            int parent = (i - 1) / 2;
-            if (less(heap.get(i), heap.get(parent))) {
-                swap(heap, i, parent);
-                i = parent;
-            } else {
-                break;
-            }
-        }
-        return i;
-    }
-
-    private static int siftDown(List<int[]> heap, int i) {
-        int n = heap.size();
-        while (true) {
-            int l = 2 * i + 1, r = 2 * i + 2, smallest = i;
-            if (l < n && less(heap.get(l), heap.get(smallest))) smallest = l;
-            if (r < n && less(heap.get(r), heap.get(smallest))) smallest = r;
-            if (smallest == i) break;
-            swap(heap, i, smallest);
-            i = smallest;
-        }
-        return i;
-    }
-
-    /** Ordered by frequency ascending; ties broken by value for a deterministic heap shape. */
-    private static boolean less(int[] a, int[] b) {
-        return a[1] != b[1] ? a[1] < b[1] : a[0] < b[0];
-    }
-
-    private static void swap(List<int[]> heap, int i, int j) {
-        int[] tmp = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, tmp);
     }
 }

@@ -11,10 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * LeetCode 215. A size-k min-heap holds exactly the k largest values seen so far, so its
- * root is always the current k-th largest. The heap's own array representation IS a
- * complete binary tree, so {@link BinaryTreeLayout} renders the heap directly - no separate
- * visualization model is needed for "a heap" once you notice that.
+ * Kth Largest Element in an Array (LeetCode 215), traced on the owner's own accepted submission: a
+ * min-heap that never holds more than k values keeps exactly the k largest seen so far, so its top
+ * is the k-th largest. O(n log k).
+ *
+ * <p>The canvas draws the heap's real array ({@link ArrayHeap}, which sifts exactly as
+ * {@code java.util.PriorityQueue} does for add and poll).
  */
 @Component
 public class KthLargestElementTracer implements AlgorithmTracer {
@@ -55,47 +57,26 @@ public class KthLargestElementTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int findKthLargest(int[] nums, int k) {
-                   List<Integer> heap = new ArrayList<>();
-                   for (int num : nums) {
-                       // @a push
-                       heap.add(num);
-                       siftUp(heap, heap.size() - 1);
-                       if (heap.size() > k) {
-                           // @a evict
-                           swap(heap, 0, heap.size() - 1);
-                           heap.remove(heap.size() - 1);
-                           siftDown(heap, 0);
+               class Solution {
+                   public int findKthLargest(int[] nums, int k) {
+                       // @a init
+                       int kle=0;
+                       PriorityQueue<Integer> minHeap=new PriorityQueue<>();
+
+                       for (int val: nums)
+                       {
+                           if (minHeap.size()<=k)
+                               // @a add
+                               minHeap.add(val);
+
+                           if (minHeap.size()>k)
+                               // @a evict
+                               minHeap.poll();
                        }
-                   }
-                   // @a done
-                   return heap.get(0);
-               }
 
-               private int siftUp(List<Integer> heap, int i) {
-                   while (i > 0 && heap.get(i) < heap.get((i - 1) / 2)) {
-                       swap(heap, i, (i - 1) / 2);
-                       i = (i - 1) / 2;
+                       // @a done
+                       return minHeap.peek();
                    }
-                   return i;
-               }
-
-               private int siftDown(List<Integer> heap, int i) {
-                   int n = heap.size();
-                   while (true) {
-                       int l = 2 * i + 1, r = 2 * i + 2, smallest = i;
-                       if (l < n && heap.get(l) < heap.get(smallest)) smallest = l;
-                       if (r < n && heap.get(r) < heap.get(smallest)) smallest = r;
-                       if (smallest == i) return i;
-                       swap(heap, i, smallest);
-                       i = smallest;
-                   }
-               }
-
-               private void swap(List<Integer> heap, int i, int j) {
-                   Integer tmp = heap.get(i);
-                   heap.set(i, heap.get(j));
-                   heap.set(j, tmp);
                }""";
     }
 
@@ -103,81 +84,35 @@ public class KthLargestElementTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
         int k = in.getInt("k");
-        List<Integer> heap = new ArrayList<>();
-
-        for (int num : nums) {
-            heap.add(num);
-            int at = siftUp(heap, heap.size() - 1);
-            emit.at("push")
-                    .say("Insert %d. Heap now holds %d value%s; its root, %d, is the smallest "
-                                    + "of them.",
-                            num, heap.size(), heap.size() == 1 ? "" : "s", heap.get(0))
-                    .var("inserted", num).var("heapSize", heap.size())
-                    .tree(render(heap, at)).step();
-
-            if (heap.size() > k) {
-                int evicted = heap.get(0);
-                swap(heap, 0, heap.size() - 1);
-                heap.remove(heap.size() - 1);
-                int settledAt = heap.isEmpty() ? -1 : siftDown(heap, 0);
-                emit.at("evict")
-                        .say("Heap exceeds size %d - evict the smallest value, %d, keeping only "
-                                        + "the %d largest seen so far.",
-                                k, evicted, k)
-                        .var("evicted", evicted).var("heapSize", heap.size())
-                        .tree(render(heap, settledAt)).step();
+        if (k > nums.length) {
+            throw new InputValidationException(Map.of("k", "can be at most the array length, " + nums.length));
+        }
+        ArrayHeap<Integer> minHeap = ArrayHeap.minHeap();
+        emit.at("init").say("Keep a min-heap of at most k = %d values: then it holds the %d largest seen so far, "
+                        + "and its top is the smallest of those.", k, k)
+                .var("k", k).array(nums).step();
+        for (int val : nums) {
+            if (minHeap.size() <= k) {
+                int at = minHeap.offer(val);
+                emit.at("add").say("Add %d. The heap holds %d value%s; the top is %d.",
+                                val, minHeap.size(), Narration.s(minHeap.size()), minHeap.peek())
+                        .var("val", val).var("size", minHeap.size()).array(slots(minHeap), at).step();
+            }
+            if (minHeap.size() > k) {
+                int out = minHeap.poll();
+                emit.at("evict").say("More than %d values: remove the smallest, %d - it cannot be among the %d largest.",
+                                k, out, k)
+                        .var("evicted", out).var("size", minHeap.size()).array(slots(minHeap), 0).step();
             }
         }
-
-        emit.at("done")
-                .say("Every value processed. The heap's root, %d, is the %s largest.",
-                        heap.get(0), Narration.ordinal(k))
-                .var("answer", heap.get(0))
-                .tree(render(heap, 0)).step();
+        emit.at("done").say("The heap holds the %d largest values, and its top, %d, is the %s largest.",
+                        k, minHeap.peek(), Narration.ordinal(k))
+                .var("answer", minHeap.peek()).array(slots(minHeap), 0).step();
     }
 
-    private List<TreeNode> render(List<Integer> heap, int highlight) {
-        if (heap.isEmpty()) {
-            return List.of();
-        }
-        BinaryTreeLayout layout = new BinaryTreeLayout(heap.toArray(new Integer[0]));
-        Map<Integer, String> states = new LinkedHashMap<>();
-        states.put(0, "target");
-        if (highlight >= 0) {
-            states.put(highlight, "current");
-        }
-        return layout.render(states);
-    }
-
-    private static int siftUp(List<Integer> heap, int i) {
-        while (i > 0) {
-            int parent = (i - 1) / 2;
-            if (heap.get(i) < heap.get(parent)) {
-                swap(heap, i, parent);
-                i = parent;
-            } else {
-                break;
-            }
-        }
-        return i;
-    }
-
-    private static int siftDown(List<Integer> heap, int i) {
-        int n = heap.size();
-        while (true) {
-            int l = 2 * i + 1, r = 2 * i + 2, smallest = i;
-            if (l < n && heap.get(l) < heap.get(smallest)) smallest = l;
-            if (r < n && heap.get(r) < heap.get(smallest)) smallest = r;
-            if (smallest == i) break;
-            swap(heap, i, smallest);
-            i = smallest;
-        }
-        return i;
-    }
-
-    private static void swap(List<Integer> heap, int i, int j) {
-        Integer tmp = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, tmp);
+    private static int[] slots(ArrayHeap<Integer> heap) {
+        int[] out = new int[heap.size()];
+        for (int i = 0; i < out.length; i++) out[i] = heap.slots().get(i);
+        return out;
     }
 }

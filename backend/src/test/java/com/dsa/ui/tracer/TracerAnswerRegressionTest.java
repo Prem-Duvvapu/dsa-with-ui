@@ -98,6 +98,12 @@ class TracerAnswerRegressionTest {
         AlgorithmTracer atoi = tracers.find("string-to-integer-atoi").orElseThrow();
         assertThatThrownBy(() -> runner.run(atoi, Map.of("s", "\u0663")))
                 .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer kth = tracers.find("kth-largest-element").orElseThrow();
+        assertThatThrownBy(() -> runner.run(kth, Map.of("nums", List.of(1, 2), "k", 3)))
+                .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer topK = tracers.find("top-k-frequent-elements").orElseThrow();
+        assertThatThrownBy(() -> runner.run(topK, Map.of("nums", List.of(1, 1, 2), "k", 3)))
+                .isInstanceOf(InputValidationException.class);
         AlgorithmTracer cards = tracers.find("maximum-points-cards").orElseThrow();
         assertThatThrownBy(() -> runner.run(cards, Map.of("cardPoints", List.of(1, 2), "k", 3)))
                 .isInstanceOf(InputValidationException.class);
@@ -200,6 +206,11 @@ class TracerAnswerRegressionTest {
             longest-happy-prefix   | {"s":"level"}                              | answer        | l
             longest-happy-prefix   | {"s":"a"}                                  | answer        | ''
             count-substrings-k-distinct | {"s":"aa","k":1}                      | answer        | 3
+            # Heaps on the owner's code: duplicates, k = n, the max-heap kth smallest, top-k at k = distinct.
+            kth-largest-element    | {"nums":[3,2,3,1,2,4,5,5,6],"k":4}         | answer        | 4
+            kth-largest-element    | {"nums":[2,1],"k":2}                       | answer        | 1
+            kth-smallest-element   | {"nums":[4,4,4],"k":2}                     | answer        | 4
+            top-k-frequent-elements | {"nums":[5,5,6],"k":2}                    | answer        | [5, 6]
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));
