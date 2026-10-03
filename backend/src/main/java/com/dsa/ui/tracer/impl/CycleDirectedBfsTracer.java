@@ -7,11 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Kahn's algorithm processes a vertex only once every prerequisite of it has already been
- * processed - a directed cycle is exactly the set of vertices that can NEVER satisfy that,
- * since each one's indegree only ever drops to zero if something outside the cycle points
- * into it. If Kahn's BFS finishes having processed fewer than V vertices, whatever is left
- * over is a cycle (or reachable only through one).
+ * Detect a cycle in a directed graph with Kahn's algorithm, written the way the owner wrote
+ * Course Schedule (LeetCode 207): count indegrees, repeatedly take a vertex with none, and lower
+ * the count of its successors. Vertices on a cycle always keep an incoming edge, so they are
+ * never taken; any indegree left above 0 at the end means a cycle. O(V + E).
  */
 @Component
 public class CycleDirectedBfsTracer implements AlgorithmTracer {
@@ -60,107 +59,130 @@ public class CycleDirectedBfsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public boolean isCyclic(int v, List<List<Integer>> adj) {
-                   // @a indegree
-                   int[] indegree = new int[v];
-                   for (int node = 0; node < v; node++) {
-                       for (int next : adj.get(node)) indegree[next]++;
-                   }
+               class Solution {
+                   public boolean isCyclic(int V, int[][] edges) {
+                       // @a init
+                       List<List<Integer>> adjList = new ArrayList<>();
+                       int[] indegree = new int[V];
+                       Queue<Integer> q = new LinkedList<>();
 
-                   // @a seed
-                   Queue<Integer> queue = new LinkedList<>();
-                   for (int i = 0; i < v; i++) {
-                       if (indegree[i] == 0) queue.add(i);
-                   }
+                       for (int i=0;i<V;i++)
+                           adjList.add(new ArrayList<>());
 
-                   int processed = 0;
-                   while (!queue.isEmpty()) {
-                       // @a poll
-                       int node = queue.poll();
-                       processed++;
-                       for (int next : adj.get(node)) {
-                           // @a decrement
-                           indegree[next]--;
-                           if (indegree[next] == 0) {
-                               // @a enqueue
-                               queue.add(next);
+                       for (int[] edge: edges) {
+                           int u = edge[0];
+                           int v = edge[1];
+
+                           adjList.get(u).add(v);
+                           indegree[v]++;
+                       }
+
+                       // @a seed
+                       for (int i=0;i<V;i++)
+                           if (indegree[i] == 0)
+                               q.add(i);
+
+                       while (!q.isEmpty()) {
+                           // @a poll
+                           int curr = q.poll();
+                           for (int ngbr: adjList.get(curr)) {
+                               // @a decrement
+                               indegree[ngbr]--;
+
+                               if (indegree[ngbr] == 0)
+                                   // @a enqueue
+                                   q.add(ngbr);
                            }
                        }
+
+                       for (int i=0;i<V;i++)
+                           if (indegree[i] > 0)
+                               // @a cycle
+                               return true;
+
+                       // @a acyclic
+                       return false;
                    }
-                   // @a verdict
-                   return processed < v;
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
-        List<List<Integer>> adj = graph.adjacency(true);
-        int v = graph.vertices();
-        int[] indegree = new int[v];
-        for (int node = 0; node < v; node++) {
-            for (int next : adj.get(node)) indegree[next]++;
+        int V = graph.vertices();
+        List<List<Integer>> adjList = new ArrayList<>();
+        int[] indegree = new int[V];
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < V; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] edge : graph.edges()) {
+            adjList.get(edge[0]).add(edge[1]);
+            indegree[edge[1]]++;
         }
 
         GraphLayout.Layout layout = GraphLayout.directed(graph);
         Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < v; i++) states.put(i, "unvisited");
-
-        emit.at("indegree")
-                .say("%d vertices, %d directed edges. Indegree of each: %s.",
-                        v, graph.edges().length, Arrays.toString(indegree))
+        for (int i = 0; i < V; i++) {
+            states.put(i, "unvisited");
+        }
+        emit.at("init").say("%d vertices and %d directed edge%s. indegree[i] counts the edges coming into i: %s.",
+                        V, graph.edges().length, Narration.s(graph.edges().length), Arrays.toString(indegree))
                 .var("indegree", Arrays.toString(indegree))
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
 
-        Deque<Integer> queue = new ArrayDeque<>();
-        for (int i = 0; i < v; i++) {
+        for (int i = 0; i < V; i++) {
             if (indegree[i] == 0) {
-                queue.add(i);
+                q.add(i);
                 states.put(i, "queued");
             }
         }
-        emit.at("seed")
-                .say("Every vertex with indegree 0 has no unprocessed prerequisite - seed the queue with %s.",
-                        queue)
-                .var("queue", queue.toString())
-                .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+        emit.at("seed").say(q.isEmpty()
+                        ? "No vertex has indegree 0, so nothing can be taken first."
+                        : "Vertices with no incoming edges can be taken now: queue " + q + ".")
+                .var("indegree", Arrays.toString(indegree)).var("q", q.toString())
+                .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
 
-        int processed = 0;
-        while (!queue.isEmpty()) {
-            int node = queue.poll();
-            processed++;
-            states.put(node, "visited");
-            emit.at("poll")
-                    .say("Dequeue %d (processed %d of %d so far).", node, processed, v)
-                    .var("node", node).var("processed", processed)
-                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            states.put(curr, "done");
+            emit.at("poll").say("Take vertex %d, then remove its outgoing edges.", curr)
+                    .var("curr", curr).var("indegree", Arrays.toString(indegree))
+                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
 
-            for (int next : adj.get(node)) {
-                indegree[next]--;
-                emit.at("decrement")
-                        .say("%d -> %d: %d's remaining indegree drops to %d.", node, next, next, indegree[next])
-                        .var("node", node).var("neighbour", next).var("indegreeLeft", indegree[next])
+            for (int ngbr : adjList.get(curr)) {
+                indegree[ngbr]--;
+                emit.at("decrement").say("%d -> %d removed: %d has %d incoming edge%s left.",
+                                curr, ngbr, ngbr, indegree[ngbr], Narration.s(indegree[ngbr]))
+                        .var("curr", curr).var("ngbr", ngbr).var("indegree", Arrays.toString(indegree))
                         .graph(layout.nodes(), layout.edges()).nodes(states)
-                        .edges(List.of(node + "-" + next)).queue(queue).step();
-
-                if (indegree[next] == 0) {
-                    queue.add(next);
-                    states.put(next, "queued");
-                    emit.at("enqueue")
-                            .say("%d has no prerequisite left - enqueue it.", next)
-                            .var("enqueued", next)
-                            .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+                        .edges(List.of(curr + "-" + ngbr)).queue(q).step();
+                if (indegree[ngbr] == 0) {
+                    q.add(ngbr);
+                    states.put(ngbr, "queued");
+                    emit.at("enqueue").say("Vertex %d has no incoming edges left - queue it.", ngbr)
+                            .var("ngbr", ngbr).var("q", q.toString())
+                            .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
                 }
             }
         }
 
-        boolean cyclic = processed < v;
-        emit.at("verdict")
-                .say(cyclic
-                        ? "Only %d of %d vertices ever reached indegree 0 - the rest form a directed cycle."
-                        : "All %d of %d vertices were processed - no directed cycle.",
-                        processed, v)
-                .var("processed", processed).var("answer", cyclic)
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] > 0) {
+                for (int j = 0; j < V; j++) {
+                    if (indegree[j] > 0) states.put(j, "cycle");
+                }
+                emit.at("cycle").say("The queue is empty but vertex %d still has %d incoming edge%s. The outlined "
+                                + "vertices feed each other in a cycle, so none could ever be taken. Return true.",
+                                i, indegree[i], Narration.s(indegree[i]))
+                        .var("indegree", Arrays.toString(indegree)).var("answer", true)
+                        .graph(layout.nodes(), layout.edges()).nodes(states).step();
+                return;
+            }
+        }
+        emit.at("acyclic").say("Every vertex was taken, so the edges can all be ordered front to back: no "
+                        + "cycle. Return false.")
+                .var("indegree", Arrays.toString(indegree)).var("answer", false)
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
     }
 }

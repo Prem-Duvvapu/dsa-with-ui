@@ -1,13 +1,14 @@
 {
   "anchors" : {
-    "decrement" : 17,
-    "enqueue" : 19,
-    "indegree" : 2,
-    "poll" : 14,
-    "seed" : 7,
-    "verdict" : 23
+    "acyclic" : 36,
+    "cycle" : 34,
+    "decrement" : 25,
+    "enqueue" : 28,
+    "init" : 3,
+    "poll" : 23,
+    "seed" : 18
   },
-  "code" : "public boolean isCyclic(int v, List<List<Integer>> adj) {\n    int[] indegree = new int[v];\n    for (int node = 0; node < v; node++) {\n        for (int next : adj.get(node)) indegree[next]++;\n    }\n\n    Queue<Integer> queue = new LinkedList<>();\n    for (int i = 0; i < v; i++) {\n        if (indegree[i] == 0) queue.add(i);\n    }\n\n    int processed = 0;\n    while (!queue.isEmpty()) {\n        int node = queue.poll();\n        processed++;\n        for (int next : adj.get(node)) {\n            indegree[next]--;\n            if (indegree[next] == 0) {\n                queue.add(next);\n            }\n        }\n    }\n    return processed < v;\n}",
+  "code" : "class Solution {\n    public boolean isCyclic(int V, int[][] edges) {\n        List<List<Integer>> adjList = new ArrayList<>();\n        int[] indegree = new int[V];\n        Queue<Integer> q = new LinkedList<>();\n\n        for (int i=0;i<V;i++)\n            adjList.add(new ArrayList<>());\n\n        for (int[] edge: edges) {\n            int u = edge[0];\n            int v = edge[1];\n\n            adjList.get(u).add(v);\n            indegree[v]++;\n        }\n\n        for (int i=0;i<V;i++)\n            if (indegree[i] == 0)\n                q.add(i);\n\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n            for (int ngbr: adjList.get(curr)) {\n                indegree[ngbr]--;\n\n                if (indegree[ngbr] == 0)\n                    q.add(ngbr);\n            }\n        }\n\n        for (int i=0;i<V;i++)\n            if (indegree[i] > 0)\n                return true;\n\n        return false;\n    }\n}",
   "problemId" : "cycle-directed-bfs",
   "resolvedInput" : {
     "graph" : {
@@ -18,8 +19,8 @@
   "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "4 vertices, 4 directed edges. Indegree of each: [0, 1, 2, 1].",
+    "activeLine" : 3,
+    "description" : "4 vertices and 4 directed edges. indegree[i] counts the edges coming into i: [0, 1, 2, 1].",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -90,8 +91,8 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
-    "description" : "Every vertex with indegree 0 has no unprocessed prerequisite - seed the queue with [0].",
+    "activeLine" : 18,
+    "description" : "Vertices with no incoming edges can be taken now: queue [0].",
     "queueOrStackState" : [ "0" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -102,7 +103,8 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "queue" : "[0]"
+      "indegree" : "[0, 1, 2, 1]",
+      "q" : "[0]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -162,20 +164,20 @@
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 14,
-    "description" : "Dequeue 0 (processed 1 of 4 so far).",
+    "activeLine" : 23,
+    "description" : "Take vertex 0, then remove its outgoing edges.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
+      "0" : "done",
       "1" : "unvisited",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "0",
-      "processed" : "1"
+      "curr" : "0",
+      "indegree" : "[0, 1, 2, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -235,21 +237,21 @@
     } ]
   }, {
     "stepNumber" : 4,
-    "activeLine" : 17,
-    "description" : "0 -> 1: 1's remaining indegree drops to 0.",
+    "activeLine" : 25,
+    "description" : "0 -> 1 removed: 1 has 0 incoming edges left.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
+      "0" : "done",
       "1" : "unvisited",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ "0-1" ],
     "variables" : {
-      "indegreeLeft" : "0",
-      "neighbour" : "1",
-      "node" : "0"
+      "curr" : "0",
+      "indegree" : "[0, 0, 2, 1]",
+      "ngbr" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -309,19 +311,20 @@
     } ]
   }, {
     "stepNumber" : 5,
-    "activeLine" : 19,
-    "description" : "1 has no prerequisite left - enqueue it.",
+    "activeLine" : 28,
+    "description" : "Vertex 1 has no incoming edges left - queue it.",
     "queueOrStackState" : [ "1" ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
+      "0" : "done",
       "1" : "queued",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "enqueued" : "1"
+      "ngbr" : "1",
+      "q" : "[1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -381,20 +384,20 @@
     } ]
   }, {
     "stepNumber" : 6,
-    "activeLine" : 14,
-    "description" : "Dequeue 1 (processed 2 of 4 so far).",
+    "activeLine" : 23,
+    "description" : "Take vertex 1, then remove its outgoing edges.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
-      "1" : "visited",
+      "0" : "done",
+      "1" : "done",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "1",
-      "processed" : "2"
+      "curr" : "1",
+      "indegree" : "[0, 0, 2, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -454,21 +457,21 @@
     } ]
   }, {
     "stepNumber" : 7,
-    "activeLine" : 17,
-    "description" : "1 -> 2: 2's remaining indegree drops to 1.",
+    "activeLine" : 25,
+    "description" : "1 -> 2 removed: 2 has 1 incoming edge left.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
-      "1" : "visited",
+      "0" : "done",
+      "1" : "done",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ "1-2" ],
     "variables" : {
-      "indegreeLeft" : "1",
-      "neighbour" : "2",
-      "node" : "1"
+      "curr" : "1",
+      "indegree" : "[0, 0, 1, 1]",
+      "ngbr" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -528,20 +531,20 @@
     } ]
   }, {
     "stepNumber" : 8,
-    "activeLine" : 23,
-    "description" : "Only 2 of 4 vertices ever reached indegree 0 - the rest form a directed cycle.",
+    "activeLine" : 34,
+    "description" : "The queue is empty but vertex 2 still has 1 incoming edge. The outlined vertices feed each other in a cycle, so none could ever be taken. Return true.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
-      "1" : "visited",
-      "2" : "unvisited",
-      "3" : "unvisited"
+      "0" : "done",
+      "1" : "done",
+      "2" : "cycle",
+      "3" : "cycle"
     },
     "activeEdges" : [ ],
     "variables" : {
       "answer" : "true",
-      "processed" : "2"
+      "indegree" : "[0, 0, 1, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,

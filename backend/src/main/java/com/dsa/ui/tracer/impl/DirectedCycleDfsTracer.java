@@ -7,10 +7,14 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Cycle detection in a DIRECTED graph by DFS with a recursion-stack marker ({@code pathVis}),
- * since in a directed graph reaching an already-visited vertex only proves a cycle when that
- * vertex is still on the CURRENT call path — reachability through a different, already-
- * finished branch is not a back-edge.
+ * Detect a cycle in a directed graph by DFS with a recursion stack, traced on the owner's own
+ * accepted code (from their Course Schedule submission): {@code visited} marks every vertex
+ * ever explored, {@code recStack} only the vertices on the current DFS path. An edge into a
+ * vertex still on the path closes a cycle. A vertex that is visited but off the path was
+ * fully explored without finding one, so it is skipped. O(V + E).
+ *
+ * <p>Canvas: vertices on the current path are amber, finished ones grey, and the vertex an
+ * edge closes the cycle on is outlined.
  */
 @Component
 public class DirectedCycleDfsTracer implements AlgorithmTracer {
@@ -51,40 +55,62 @@ public class DirectedCycleDfsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public boolean isCyclic(int v, List<List<Integer>> adj) {
-                   // @a init
-                   boolean[] vis = new boolean[v];
-                   boolean[] pathVis = new boolean[v];
-                   for (int i = 0; i < v; i++) {
-                       if (!vis[i]) {
-                           // @a component
-                           if (dfsCheck(i, adj, vis, pathVis)) {
-                               return true;
-                           }
-                       }
+               class Edge
+               {
+                   int src;
+                   int dest;
+                   public Edge(int s,int d)
+                   {
+                       src=s;
+                       dest=d;
                    }
-                   // @a noCycle
-                   return false;
                }
 
-               private boolean dfsCheck(int node, List<List<Integer>> adj, boolean[] vis, boolean[] pathVis) {
-                   // @a visit
-                   vis[node] = true;
-                   pathVis[node] = true;
-                   for (int next : adj.get(node)) {
-                       if (!vis[next]) {
-                           // @a recurse
-                           if (dfsCheck(next, adj, vis, pathVis)) {
+               class Solution {
+                   private boolean isCycleUtil(ArrayList<Edge>[] graph,int curr,boolean[] visited,boolean[] recStack)
+                   {
+                       // @a visit
+                       visited[curr]=true;
+                       recStack[curr]=true;
+
+                       for (int i=0;i<graph[curr].size();i++)
+                       {
+                           Edge e=graph[curr].get(i);
+
+                           if (recStack[e.dest])
+                               // @a backEdge
                                return true;
-                           }
-                       } else if (pathVis[next]) {
-                           // @a cycleDetected
-                           return true;
+
+                           // @a check
+                           if (!visited[e.dest])
+                               if (isCycleUtil(graph,e.dest,visited,recStack))
+                                   // @a propagate
+                                   return true;
                        }
+
+                       // @a leave
+                       recStack[curr]=false;
+                       return false;
                    }
-                   // @a backtrack
-                   pathVis[node] = false;
-                   return false;
+
+                   public boolean isCycle(ArrayList<Edge>[] graph)
+                   {
+                       // @a init
+                       boolean[] visited=new boolean[graph.length];
+                       boolean[] recStk=new boolean[graph.length];
+
+                       for (int i=0;i<graph.length;i++)
+                       {
+                           if (!visited[i])
+                               // @a start
+                               if (isCycleUtil(graph,i,visited,recStk))
+                                   // @a found
+                                   return true;
+                       }
+
+                       // @a none
+                       return false;
+                   }
                }""";
     }
 
@@ -93,78 +119,96 @@ public class DirectedCycleDfsTracer implements AlgorithmTracer {
         Inputs.GraphInput graph = in.getGraph("graph");
         List<List<Integer>> adj = graph.adjacency(true);
         int v = graph.vertices();
-        boolean[] vis = new boolean[v];
-        boolean[] pathVis = new boolean[v];
+        boolean[] visited = new boolean[v];
+        boolean[] recStk = new boolean[v];
         GraphLayout.Layout layout = GraphLayout.directed(graph);
         Map<Integer, String> states = new LinkedHashMap<>();
         for (int i = 0; i < v; i++) {
             states.put(i, "unvisited");
         }
 
-        emit.at("init").say("%d vertices, %d directed edges. Track an overall visited set plus the current recursion path.",
-                        v, graph.edges().length)
+        emit.at("init").say("%d vertices, %d directed edges. visited[] marks every vertex ever explored; "
+                        + "recStack[] marks only those on the current DFS path.", v, graph.edges().length)
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
 
-        boolean cycle = false;
-        for (int i = 0; i < v && !cycle; i++) {
-            if (vis[i]) {
+        for (int i = 0; i < v; i++) {
+            if (visited[i]) {
                 continue;
             }
-            emit.at("component").say("%d starts a new component. dfsCheck(%d).", i, i)
-                    .var("src", i).graph(layout.nodes(), layout.edges()).nodes(states).step();
-
-            cycle = dfsCheck(i, adj, vis, pathVis, states, layout, emit);
+            emit.at("start").say("Vertex %d is unvisited: start isCycleUtil(%d).", i, i)
+                    .var("i", i).graph(layout.nodes(), layout.edges()).nodes(states).step();
+            if (isCycleUtil(adj, i, visited, recStk, states, layout, emit)) {
+                emit.at("found").say("isCycleUtil(%d) found an edge back into the current path: the graph "
+                                + "has a directed cycle. Return true.", i)
+                        .var("answer", true).graph(layout.nodes(), layout.edges()).nodes(states).step();
+                return;
+            }
         }
 
-        if (!cycle) {
-            emit.at("noCycle").say("Every node's recursion path unwound cleanly. No directed cycle.")
-                    .graph(layout.nodes(), layout.edges()).nodes(states).step();
-        } else {
-            // dfsCheck returns true straight up the stack, so its last emitted step is the
-            // cycleDetected one - emitted while every frame is still on the stack. Close the
-            // trace at depth 0 instead of freezing the sidebar mid-descent.
-            emit.at("cycleDetected")
-                    .say("The recursion returned true all the way to the top. A directed cycle exists,"
-                            + " so the search stops here.")
-                    .graph(layout.nodes(), layout.edges()).nodes(states).step();
-        }
+        emit.at("none").say("Every vertex was explored and no edge ever pointed back into the current path. "
+                        + "There is no directed cycle. Return false.")
+                .var("answer", false).graph(layout.nodes(), layout.edges()).nodes(states).step();
     }
 
-    private boolean dfsCheck(int node, List<List<Integer>> adj, boolean[] vis, boolean[] pathVis,
-                              Map<Integer, String> states, GraphLayout.Layout layout, StepEmitter emit) {
-        emit.push("dfsCheck(" + node + ")");
-        vis[node] = true;
-        pathVis[node] = true;
-        states.put(node, "visiting");
-        emit.at("visit").say("Enter %d. Mark it visited and add it to the current recursion path.", node)
-                .var("node", node).graph(layout.nodes(), layout.edges()).nodes(states).step();
+    private static boolean isCycleUtil(List<List<Integer>> adj, int curr, boolean[] visited, boolean[] recStack,
+                                       Map<Integer, String> states, GraphLayout.Layout layout, StepEmitter emit) {
+        emit.push("isCycleUtil(" + curr + ")");
+        visited[curr] = true;
+        recStack[curr] = true;
+        states.put(curr, "visiting");
+        emit.at("visit").say("isCycleUtil(%d): mark %d visited and put it on the current path.", curr, curr)
+                .var("curr", curr).var("path", path(recStack))
+                .graph(layout.nodes(), layout.edges()).nodes(states).step();
 
-        for (int next : adj.get(node)) {
-            if (!vis[next]) {
-                emit.at("recurse").say("%d -> %d is unvisited. Descend into it.", node, next)
-                        .var("node", node).var("neighbour", next)
-                        .graph(layout.nodes(), layout.edges()).nodes(states).edges(List.of(node + "-" + next)).step();
-                if (dfsCheck(next, adj, vis, pathVis, states, layout, emit)) {
-                    emit.pop();
-                    return true;
-                }
-            } else if (pathVis[next]) {
-                states.put(next, "cycle");
-                emit.at("cycleDetected").say(
-                                "%d -> %d: %d is already on the CURRENT recursion path - a directed cycle exists.",
-                                node, next, next)
-                        .var("node", node).var("neighbour", next)
-                        .graph(layout.nodes(), layout.edges()).nodes(states).edges(List.of(node + "-" + next)).step();
+        for (int dest : adj.get(curr)) {
+            if (recStack[dest]) {
+                states.put(dest, "cycle");
+                emit.at("backEdge").say("Edge %d -> %d points at %d, which is still on the current path %s: "
+                                + "following it leads back round to %d. Cycle - return true.",
+                                curr, dest, dest, path(recStack), curr)
+                        .var("curr", curr).var("dest", dest).var("path", path(recStack))
+                        .graph(layout.nodes(), layout.edges()).nodes(states)
+                        .edges(List.of(curr + "-" + dest)).step();
+                emit.pop();
+                return true;
+            }
+            if (visited[dest]) {
+                emit.at("check").say("Edge %d -> %d: %d is visited but off the current path - it was fully "
+                                + "explored without finding a cycle. Skip it.", curr, dest, dest)
+                        .var("curr", curr).var("dest", dest)
+                        .graph(layout.nodes(), layout.edges()).nodes(states)
+                        .edges(List.of(curr + "-" + dest)).step();
+                continue;
+            }
+            emit.at("check").say("Edge %d -> %d: %d is unvisited. Recurse into isCycleUtil(%d).",
+                            curr, dest, dest, dest)
+                    .var("curr", curr).var("dest", dest)
+                    .graph(layout.nodes(), layout.edges()).nodes(states)
+                    .edges(List.of(curr + "-" + dest)).step();
+            if (isCycleUtil(adj, dest, visited, recStack, states, layout, emit)) {
+                emit.at("propagate").say("isCycleUtil(%d) found a cycle, so isCycleUtil(%d) returns true too.",
+                                dest, curr)
+                        .var("curr", curr).graph(layout.nodes(), layout.edges()).nodes(states).step();
                 emit.pop();
                 return true;
             }
         }
 
-        pathVis[node] = false;
-        states.put(node, "visited");
-        emit.at("backtrack").say("%d has no unexplored or on-path neighbours left. Remove it from the recursion path.", node)
-                .var("node", node).graph(layout.nodes(), layout.edges()).nodes(states).step();
+        recStack[curr] = false;
+        states.put(curr, "visited");
+        emit.at("leave").say("No edge out of %d closes a cycle. Take %d off the current path and return false.",
+                        curr, curr)
+                .var("curr", curr).var("path", path(recStack))
+                .graph(layout.nodes(), layout.edges()).nodes(states).step();
         emit.pop();
         return false;
+    }
+
+    private static String path(boolean[] recStack) {
+        List<Integer> on = new ArrayList<>();
+        for (int i = 0; i < recStack.length; i++) {
+            if (recStack[i]) on.add(i);
+        }
+        return on.toString();
     }
 }
