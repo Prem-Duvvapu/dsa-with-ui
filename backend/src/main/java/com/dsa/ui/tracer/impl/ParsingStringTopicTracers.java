@@ -6,62 +6,155 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * String to Integer (atoi) (LeetCode 8), traced on the owner's own accepted submission: skip spaces,
+ * read an optional sign, skip leading zeros, then read digits into a long - stopping as soon as it
+ * passes Integer.MAX_VALUE - apply the sign and clamp. O(n).
+ *
+ * <p>Each early {@code return 0} is highlighted on the check that decides it, so every highlight is
+ * reachable from the contract inputs. The code's Character.isDigit also accepts non-ASCII digits, so
+ * the input is LeetCode's: English letters, digits, ' ', '+', '-' and '.'.
+ */
 @Component
 class StringToIntegerAtoiTracer extends StringTracerSupport {
     public String id() { return "string-to-integer-atoi"; }
 
     public InputSpec inputSpec() {
-        return InputSpec.of(text("s", "Input text", "   -42", 1, 40));
+        return InputSpec.of(patternedText("s", "Input text", "   -42", 1, 40, "[A-Za-z0-9 +.\\-]+",
+                "English letters, digits, spaces, '+', '-' and '.' only."));
     }
 
     public Map<String, Object> alternateInput() { return Map.of("s", "4193 with words"); }
 
     public String annotatedCode() {
         return """
-               public int myAtoi(String s) {
-                   int i = 0, sign = 1;
-                   long value = 0;
-                   // @a scan
-                   while (i < s.length() && s.charAt(i) == ' ') i++;
-                   if (i < s.length() && (s.charAt(i) == '+' || s.charAt(i) == '-'))
-                       sign = s.charAt(i++) == '-' ? -1 : 1;
-                   while (i < s.length() && Character.isDigit(s.charAt(i))) {
-                       value = Math.min((long) Integer.MAX_VALUE + 1, value * 10 + s.charAt(i++) - '0');
+               class Solution {
+                   public int myAtoi(String s) {
+                       int n=s.length();
+                       long res=0;
+                       int i=0;
+                       boolean isPositive=true;
+
+                       //skip whitespaces
+                       // @a spaces
+                       while (i<n && s.charAt(i)==' ')
+                           i++;
+
+                       if (i==n)
+                           return 0;
+
+                       //check sign
+                       // @a sign
+                       if (s.charAt(i)=='-') {
+                           isPositive=false;
+                           i++;
+                       } else if (s.charAt(i)=='+') {
+                           isPositive=true;
+                           i++;
+                       } else if (!Character.isDigit(s.charAt(i)))
+                           return 0;
+
+                       //check zeroes
+                       // @a zeros
+                       while (i<n && s.charAt(i)=='0')
+                           i++;
+
+                       if (i==n || !Character.isDigit(s.charAt(i)))
+                           return 0;
+
+                       while (i<n && Character.isDigit(s.charAt(i))) {
+                           // @a digit
+                           res=(res*10+(s.charAt(i)-'0'));
+                           i++;
+
+                           if (res>(long)Integer.MAX_VALUE)
+                               break;
+                       }
+
+                       // @a clamp
+                       if (!isPositive)
+                           res*=-1;
+
+                       if (res>(long)Integer.MAX_VALUE)
+                           return Integer.MAX_VALUE;
+                       else if (res<(long)Integer.MIN_VALUE)
+                           return Integer.MIN_VALUE;
+
+                       // @a done
+                       return (int)res;
                    }
-                   // @a done
-                   return clamp(sign * value);
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
-        int index = 0;
-        while (index < s.length() && s.charAt(index) == ' ') {
-            emit.at("scan").say("Index %d is leading whitespace; skip it.", index)
-                    .var("index", index).var("phase", "whitespace").chars(s, index).step();
-            index++;
+        int n = s.length();
+        long res = 0;
+        int i = 0;
+        boolean isPositive = true;
+        while (i < n && s.charAt(i) == ' ') i++;
+        if (i == n) {
+            emit.at("spaces").say("The string is only spaces: nothing to read. Return 0.")
+                    .var("answer", 0).chars(s).step();
+            return;
         }
-        int sign = 1;
-        if (index < s.length() && (s.charAt(index) == '+' || s.charAt(index) == '-')) {
-            sign = s.charAt(index) == '-' ? -1 : 1;
-            emit.at("scan").say("Index %d supplies sign '%c'; sign=%d.", index, s.charAt(index), sign)
-                    .var("index", index).var("phase", "sign").var("sign", sign).chars(s, index).step();
-            index++;
+        emit.at("spaces").say("Skip %d leading space%s; reading starts at index %d.", i, Narration.s(i), i)
+                .var("i", i).chars(s, i).step();
+        char c = s.charAt(i);
+        if (c == '-') {
+            isPositive = false;
+            i++;
+            emit.at("sign").say("'-': the number is negative.").var("i", i).chars(s, i - 1).step();
+        } else if (c == '+') {
+            i++;
+            emit.at("sign").say("'+': the number is positive.").var("i", i).chars(s, i - 1).step();
+        } else if (!Character.isDigit(c)) {
+            emit.at("sign").say("'%c' is neither a sign nor a digit, so there is no number. Return 0.", c)
+                    .var("answer", 0).chars(s, i).step();
+            return;
+        } else {
+            emit.at("sign").say("No sign: the number is positive.").var("i", i).chars(s, i).step();
         }
-        long magnitude = 0;
-        while (index < s.length() && Character.isDigit(s.charAt(index))) {
-            int digit = s.charAt(index) - '0';
-            magnitude = Math.min((long) Integer.MAX_VALUE + 1, magnitude * 10 + digit);
-            emit.at("scan").say("Consume digit %d at index %d; magnitude=%d.", digit, index, magnitude)
-                    .var("index", index).var("phase", "digits").var("magnitude", magnitude)
-                    .chars(s, index).step();
-            index++;
+        int zerosFrom = i;
+        while (i < n && s.charAt(i) == '0') i++;
+        if (i == n || !Character.isDigit(s.charAt(i))) {
+            emit.at("zeros").say(i > zerosFrom
+                            ? "Only zeros follow, then no more digits: the value is 0. Return 0."
+                            : "No digit follows. Return 0.")
+                    .var("answer", 0).chars(s, Math.min(i, n - 1)).step();
+            return;
         }
-        long signed = sign * magnitude;
-        int answer = signed > Integer.MAX_VALUE ? Integer.MAX_VALUE
-                : signed < Integer.MIN_VALUE ? Integer.MIN_VALUE : (int) signed;
-        emit.at("done").say("Parsing stops at index %d; clamped 32-bit result is %d.", index, answer)
-                .var("stopIndex", index).var("answer", answer).chars(s).step();
+        emit.at("zeros").say(i > zerosFrom
+                        ? String.format("Skip %d leading zero%s.", i - zerosFrom, Narration.s(i - zerosFrom))
+                        : "No leading zeros to skip.")
+                .var("i", i).chars(s, i).step();
+        while (i < n && Character.isDigit(s.charAt(i))) {
+            res = res * 10 + (s.charAt(i) - '0');
+            i++;
+            boolean over = res > (long) Integer.MAX_VALUE;
+            emit.at("digit").say(over
+                            ? String.format("Digit '%c': res = %d, already past Integer.MAX_VALUE - stop reading.", s.charAt(i - 1), res)
+                            : String.format("Digit '%c': res = %d.", s.charAt(i - 1), res))
+                    .var("i", i).var("res", res).chars(s, i - 1).step();
+            if (over) break;
+        }
+        if (!isPositive) res *= -1;
+        int answer;
+        if (res > (long) Integer.MAX_VALUE) {
+            answer = Integer.MAX_VALUE;
+            emit.at("clamp").say("%d is above Integer.MAX_VALUE: clamp to %d.", res, answer)
+                    .var("res", res).var("answer", answer).chars(s).step();
+            return;
+        } else if (res < (long) Integer.MIN_VALUE) {
+            answer = Integer.MIN_VALUE;
+            emit.at("clamp").say("%d is below Integer.MIN_VALUE: clamp to %d.", res, answer)
+                    .var("res", res).var("answer", answer).chars(s).step();
+            return;
+        }
+        emit.at("clamp").say(isPositive ? "Positive, and within int range." : "Apply the minus sign: res = %d, within int range.",
+                        res)
+                .var("res", res).chars(s).step();
+        emit.at("done").say("Return %d.", res).var("res", res).var("answer", (int) res).chars(s).step();
     }
 }
 
@@ -124,6 +217,12 @@ class CountSubstringsKDistinctTracer extends StringTracerSupport {
     }
 }
 
+/**
+ * Longest Palindromic Substring (LeetCode 5), traced on the owner's own accepted submission: expand
+ * around every centre. Each centre first absorbs the run of identical letters around it - which is
+ * what makes even-length palindromes ("bb") work without a second pass - then grows outward while the
+ * two ends match. O(n^2), the expected interview answer.
+ */
 @Component
 class LongestPalindromicSubstringTracer extends StringTracerSupport {
     public String id() { return "longest-palindromic-substring"; }
@@ -137,54 +236,93 @@ class LongestPalindromicSubstringTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public String longestPalindrome(String s) {
-                   int bestLeft = 0, bestRight = 0;
-                   for (int center = 0; center < s.length(); center++) {
-                       // @a expand
-                       int[] odd = expand(s, center, center);
-                       int[] even = expand(s, center, center + 1);
-                       if (longer(odd, bestLeft, bestRight)) { bestLeft = odd[0]; bestRight = odd[1]; }
-                       if (longer(even, bestLeft, bestRight)) { bestLeft = even[0]; bestRight = even[1]; }
+               class Solution {
+                   public String longestPalindrome(String s) {
+                       // @a init
+                       int n=s.length();
+                       int maxLen=0;
+                       int start=-1;
+                       int currLen=0;
+
+                       for (int i=0;i<n;i++) {
+                           // @a center
+                           int left=i-1;
+                           int right=i+1;
+
+                           while (left>=0 && s.charAt(left)==s.charAt(i))
+                               left--;
+
+                           while (right<n && s.charAt(right)==s.charAt(i))
+                               right++;
+
+                           while (left>=0 && right<n) {
+                               if (s.charAt(left)==s.charAt(right)) {
+                                   // @a expand
+                                   left--;
+                                   right++;
+                               } else {
+                                   break;
+                               }
+                           }
+
+                           currLen=right-left-1;
+                           if (currLen>maxLen) {
+                               // @a best
+                               maxLen=currLen;
+                               start=left+1;
+                           }
+                       }
+
+                       // @a done
+                       return s.substring(start,start+maxLen);
                    }
-                   // @a done
-                   return s.substring(bestLeft, bestRight + 1);
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
-        int bestLeft = 0;
-        int bestRight = 0;
-        for (int center = 0; center < s.length(); center++) {
-            int[][] starts = {{center, center}, {center, center + 1}};
-            for (int[] start : starts) {
-                int left = start[0];
-                int right = start[1];
-                while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
-                    if (right - left > bestRight - bestLeft) {
-                        bestLeft = left;
-                        bestRight = right;
-                    }
-                    emit.at("expand").say("Center %s expands to [%d,%d] \"%s\"; best is \"%s\".",
-                                    start[0] == start[1] ? String.valueOf(center) : center + "/" + (center + 1),
-                                    left, right, s.substring(left, right + 1),
-                                    s.substring(bestLeft, bestRight + 1))
-                            .var("left", left).var("right", right)
-                            .var("best", s.substring(bestLeft, bestRight + 1))
-                            .chars(s, left, right).step();
+        int n = s.length();
+        int maxLen = 0;
+        int start = -1;
+        emit.at("init").say("Try every index as the centre of a palindrome and grow it outward.").chars(s).step();
+        for (int i = 0; i < n; i++) {
+            int left = i - 1;
+            int right = i + 1;
+            while (left >= 0 && s.charAt(left) == s.charAt(i)) left--;
+            while (right < n && s.charAt(right) == s.charAt(i)) right++;
+            emit.at("center").say("Centre %d ('%c'). The run of '%c' around it is s[%d..%d] = \"%s\".",
+                            i, s.charAt(i), s.charAt(i), left + 1, right - 1, s.substring(left + 1, right))
+                    .var("i", i).var("maxLen", maxLen).chars(s, left + 1, right - 1).step();
+            while (left >= 0 && right < n) {
+                if (s.charAt(left) == s.charAt(right)) {
                     left--;
                     right++;
+                    emit.at("expand").say("s[%d] = s[%d] = '%c': grow to \"%s\".",
+                                    left + 1, right - 1, s.charAt(left + 1), s.substring(left + 1, right))
+                            .var("i", i).var("maxLen", maxLen).chars(s, left + 1, right - 1).step();
+                } else {
+                    break;
                 }
             }
+            int currLen = right - left - 1;
+            if (currLen > maxLen) {
+                maxLen = currLen;
+                start = left + 1;
+                emit.at("best").say("\"%s\" (length %d) is the longest so far.", s.substring(start, start + maxLen), maxLen)
+                        .var("i", i).var("maxLen", maxLen).var("best", s.substring(start, start + maxLen))
+                        .chars(s, start, start + maxLen - 1).step();
+            }
         }
-        String answer = s.substring(bestLeft, bestRight + 1);
-        emit.at("done").say("Longest palindromic substring is \"%s\" at [%d,%d].",
-                        answer, bestLeft, bestRight)
-                .var("left", bestLeft).var("right", bestRight).var("answer", answer)
-                .chars(s, bestLeft, bestRight).step();
+        String answer = s.substring(start, start + maxLen);
+        emit.at("done").say("Return \"%s\".", answer).var("answer", answer).chars(s, start, start + maxLen - 1).step();
     }
 }
 
+/**
+ * Sum of Beauty of All Substrings (LeetCode 1781), traced on the owner's own accepted submission: for
+ * every start i, extend the substring one letter at a time, keeping 26 counts, and add (most frequent
+ * - least frequent among letters present) for each. O(26 * n^2).
+ */
 @Component
 class SumBeautyAllSubstringsTracer extends StringTracerSupport {
     public String id() { return "sum-beauty-all-substrings"; }
@@ -198,46 +336,71 @@ class SumBeautyAllSubstringsTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public int beautySum(String s) {
-                   int total = 0;
-                   for (int left = 0; left < s.length(); left++) {
-                       int[] frequency = new int[26];
-                       for (int right = left; right < s.length(); right++) {
-                           frequency[s.charAt(right) - 'a']++;
-                           // @a extend
-                           total += maximum(frequency) - minimumPositive(frequency);
+               class Solution {
+                   public int beautySum(String s) {
+                       // @a init
+                       int n=s.length();
+                       int totalSum=0;
+                       int[] freq=new int[26];
+                       int minFreq=Integer.MAX_VALUE;
+                       int maxFreq=Integer.MIN_VALUE;
+
+                       for (int i=0;i<n;i++) {
+                           // @a start
+                           Arrays.fill(freq,0);
+
+                           for (int j=i;j<n;j++) {
+                               int pos=s.charAt(j)-'a';
+                               freq[pos]++;
+
+                               minFreq=Integer.MAX_VALUE;
+                               maxFreq=Integer.MIN_VALUE;
+
+                               for (int k=0;k<26;k++) {
+                                   if (freq[k]!=0 && freq[k]<minFreq)
+                                       minFreq=Math.min(minFreq,freq[k]);
+
+                                   maxFreq=Math.max(maxFreq,freq[k]);
+                               }
+
+                               // @a add
+                               totalSum+=(maxFreq-minFreq);
+                           }
                        }
+
+                       // @a done
+                       return totalSum;
                    }
-                   // @a done
-                   return total;
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
-        int total = 0;
-        for (int left = 0; left < s.length(); left++) {
-            int[] frequency = new int[26];
-            for (int right = left; right < s.length(); right++) {
-                frequency[s.charAt(right) - 'a']++;
-                int maximum = 0;
-                int minimum = Integer.MAX_VALUE;
-                for (int count : frequency) {
-                    if (count > 0) {
-                        maximum = Math.max(maximum, count);
-                        minimum = Math.min(minimum, count);
-                    }
+        int n = s.length();
+        int totalSum = 0;
+        int[] freq = new int[26];
+        emit.at("init").say("Beauty = (most frequent count) - (least frequent count, among letters present). Sum it over "
+                        + "every substring.")
+                .var("totalSum", 0).chars(s).step();
+        for (int i = 0; i < n; i++) {
+            java.util.Arrays.fill(freq, 0);
+            emit.at("start").say("Substrings starting at %d: reset the counts.", i)
+                    .var("i", i).var("totalSum", totalSum).chars(s, i).step();
+            for (int j = i; j < n; j++) {
+                freq[s.charAt(j) - 'a']++;
+                int minFreq = Integer.MAX_VALUE;
+                int maxFreq = Integer.MIN_VALUE;
+                for (int k = 0; k < 26; k++) {
+                    if (freq[k] != 0 && freq[k] < minFreq) minFreq = Math.min(minFreq, freq[k]);
+                    maxFreq = Math.max(maxFreq, freq[k]);
                 }
-                int beauty = maximum - minimum;
-                total += beauty;
-                emit.at("extend").say("Substring [%d,%d] \"%s\": max frequency %d − min positive %d = %d; total=%d.",
-                                left, right, s.substring(left, right + 1), maximum, minimum, beauty, total)
-                        .var("left", left).var("right", right).var("beauty", beauty).var("total", total)
-                        .chars(s, left, right).step();
+                totalSum += maxFreq - minFreq;
+                emit.at("add").say("\"%s\": most frequent %d, least %d, beauty %d. totalSum = %d.",
+                                s.substring(i, j + 1), maxFreq, minFreq, maxFreq - minFreq, totalSum)
+                        .var("i", i).var("j", j).var("totalSum", totalSum).chars(s, i, j).step();
             }
         }
-        emit.at("done").say("Sum of beauty over every substring of \"%s\" is %d.", s, total)
-                .var("answer", total).chars(s).step();
+        emit.at("done").say("Return %d.", totalSum).var("totalSum", totalSum).var("answer", totalSum).chars(s).step();
     }
 }
 

@@ -162,6 +162,11 @@ class RemoveOutermostParenthesesTracer extends StringTracerSupport {
     }
 }
 
+/**
+ * Reverse Words in a String (LeetCode 151), traced on the owner's own accepted submission: trim,
+ * split on runs of whitespace (which drops the extra spaces), and append the words back to front
+ * with single spaces. O(n).
+ */
 @Component
 class ReverseWordsStringTracer extends StringTracerSupport {
     public String id() { return "reverse-words-string"; }
@@ -175,34 +180,41 @@ class ReverseWordsStringTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public String reverseWords(String s) {
-                   String[] words = s.trim().split("\\s+");
-                   StringBuilder answer = new StringBuilder();
-                   for (int i = words.length - 1; i >= 0; i--) {
-                       // @a append
-                       if (!answer.isEmpty()) answer.append(' ');
-                       answer.append(words[i]);
+               class Solution {
+                   public String reverseWords(String s) {
+                       // @a split
+                       String[] words=s.trim().split("\\\\s+");
+                       StringBuilder res=new StringBuilder();
+
+                       for (int i=words.length-1;i>=0;i--) {
+                           // @a append
+                           res.append(words[i]);
+                           if (i!=0)
+                               res.append(" ");
+                       }
+
+                       // @a done
+                       return res.toString();
                    }
-                   // @a done
-                   return answer.toString();
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
-        String trimmed = s.trim();
-        String[] words = trimmed.isEmpty() ? new String[0] : trimmed.split("\\s+");
-        StringBuilder answer = new StringBuilder();
+        String[] words = s.trim().split("\\s+");
+        StringBuilder res = new StringBuilder();
+        emit.at("split").say("Trim the ends and split on runs of spaces: %d word%s, %s.",
+                        words.length, Narration.s(words.length), java.util.Arrays.toString(words))
+                .var("words", java.util.Arrays.toString(words)).chars(s).step();
         for (int i = words.length - 1; i >= 0; i--) {
-            if (!answer.isEmpty()) answer.append(' ');
-            answer.append(words[i]);
-            emit.at("append").say("Take word %d, \"%s\", from the right; result is now \"%s\".",
-                            i, words[i], answer)
-                    .var("wordIndex", i).var("word", words[i]).var("result", answer)
-                    .chars(s).step();
+            res.append(words[i]);
+            if (i != 0) res.append(" ");
+            emit.at("append").say("Append words[%d] = \"%s\"%s. res = \"%s\".", i, words[i],
+                            i != 0 ? " and one space" : "", res)
+                    .var("i", i).var("res", res.toString()).chars(res.toString()).step();
         }
-        emit.at("done").say("Words reversed and whitespace normalized: \"%s\".", answer)
-                .var("answer", answer).chars(s).step();
+        emit.at("done").say("Return \"%s\".", res)
+                .var("res", res.toString()).var("answer", res.toString()).chars(res.toString()).step();
     }
 }
 

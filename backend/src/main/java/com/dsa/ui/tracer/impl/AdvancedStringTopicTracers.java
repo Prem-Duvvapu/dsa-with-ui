@@ -66,6 +66,11 @@ class BracketReversalsTracer extends StringTracerSupport {
     }
 }
 
+/**
+ * Count and Say (LeetCode 38), traced on the owner's own accepted submission: term n is read off term
+ * n - 1 - each run of a repeated digit becomes "count, digit". The recursion builds term 1 first and
+ * each call reads its predecessor; the call stack shows the chain. O(total length of the terms).
+ */
 @Component
 class CountAndSayTracer extends StringTracerSupport {
     public String id() { return "count-and-say"; }
@@ -79,51 +84,67 @@ class CountAndSayTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public String countAndSay(int n) {
-                   String term = "1";
-                   for (int round = 2; round <= n; round++) {
-                       StringBuilder next = new StringBuilder();
-                       for (int i = 0; i < term.length();) {
-                           int end = i + 1;
-                           while (end < term.length() && term.charAt(end) == term.charAt(i)) end++;
+               class Solution {
+                   public String countAndSay(int n) {
+                       if (n==1)
+                           // @a base
+                           return "1";
+
+                       // @a call
+                       String prev=countAndSay(n-1);
+                       StringBuilder curr=new StringBuilder();
+                       int i=0;
+
+                       while (i<prev.length()) {
+                           char ch=prev.charAt(i);
+                           int j=i+1;
+
+                           while (j<prev.length() && prev.charAt(j)==ch)
+                               j++;
+
                            // @a group
-                           next.append(end - i).append(term.charAt(i));
-                           i = end;
+                           int cnt=j-i;
+                           curr.append(cnt).append(ch);
+                           i=j;
                        }
-                       // @a term
-                       term = next.toString();
+
+                       // @a done
+                       return curr.toString();
                    }
-                   // @a done
-                   return term;
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         int n = in.getInt("n");
-        String term = "1";
+        String answer = countAndSay(n, emit);
+        emit.at("done").say("Term %d is \"%s\".", n, answer).var("answer", answer).chars(answer).step();
+    }
+
+    private static String countAndSay(int n, StepEmitter emit) {
+        emit.push("countAndSay(" + n + ")");
         if (n == 1) {
-            emit.at("term").say("The first term is the seed \"1\".")
-                    .var("round", 1).var("term", term).chars(term).step();
+            emit.at("base").say("countAndSay(1) is \"1\" by definition.").var("n", 1).chars("1").step();
+            emit.pop();
+            return "1";
         }
-        for (int round = 2; round <= n; round++) {
-            StringBuilder next = new StringBuilder();
-            for (int i = 0; i < term.length();) {
-                int end = i + 1;
-                while (end < term.length() && term.charAt(end) == term.charAt(i)) end++;
-                int count = end - i;
-                next.append(count).append(term.charAt(i));
-                emit.at("group").say("Round %d reads %d consecutive '%c' character%s, appending \"%d%c\".",
-                                round, count, term.charAt(i), Narration.s(count), count, term.charAt(i))
-                        .var("round", round).var("count", count).var("next", next)
-                        .chars(term, i, end - 1).step();
-                i = end;
-            }
-            term = next.toString();
-            emit.at("term").say("Round %d is complete: \"%s\".", round, term)
-                    .var("round", round).var("term", term).chars(term).step();
+        emit.at("call").say("countAndSay(%d) is read off term %d, so compute that first.", n, n - 1)
+                .var("n", n).step();
+        String prev = countAndSay(n - 1, emit);
+        StringBuilder curr = new StringBuilder();
+        int i = 0;
+        while (i < prev.length()) {
+            char ch = prev.charAt(i);
+            int j = i + 1;
+            while (j < prev.length() && prev.charAt(j) == ch) j++;
+            int cnt = j - i;
+            curr.append(cnt).append(ch);
+            emit.at("group").say("Term %d has %d '%c'%s in a row: say \"%d%c\". curr = \"%s\".",
+                            n - 1, cnt, ch, cnt == 1 ? "" : "s", cnt, ch, curr)
+                    .var("n", n).var("prev", prev).var("curr", curr.toString()).chars(prev, i, j - 1).step();
+            i = j;
         }
-        emit.at("done").say("The count-and-say term at n=%d is \"%s\".", n, term)
-                .var("n", n).var("answer", term).chars(term).step();
+        emit.pop();
+        return curr.toString();
     }
 }
 

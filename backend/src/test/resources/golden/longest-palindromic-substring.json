@@ -1,33 +1,32 @@
 {
   "anchors" : {
-    "done" : 9,
-    "expand" : 4
+    "best" : 29,
+    "center" : 9,
+    "done" : 34,
+    "expand" : 20,
+    "init" : 3
   },
-  "code" : "public String longestPalindrome(String s) {\n    int bestLeft = 0, bestRight = 0;\n    for (int center = 0; center < s.length(); center++) {\n        int[] odd = expand(s, center, center);\n        int[] even = expand(s, center, center + 1);\n        if (longer(odd, bestLeft, bestRight)) { bestLeft = odd[0]; bestRight = odd[1]; }\n        if (longer(even, bestLeft, bestRight)) { bestLeft = even[0]; bestRight = even[1]; }\n    }\n    return s.substring(bestLeft, bestRight + 1);\n}",
+  "code" : "class Solution {\n    public String longestPalindrome(String s) {\n        int n=s.length();\n        int maxLen=0;\n        int start=-1;\n        int currLen=0;\n\n        for (int i=0;i<n;i++) {\n            int left=i-1;\n            int right=i+1;\n\n            while (left>=0 && s.charAt(left)==s.charAt(i))\n                left--;\n\n            while (right<n && s.charAt(right)==s.charAt(i))\n                right++;\n\n            while (left>=0 && right<n) {\n                if (s.charAt(left)==s.charAt(right)) {\n                    left--;\n                    right++;\n                } else {\n                    break;\n                }\n            }\n\n            currLen=right-left-1;\n            if (currLen>maxLen) {\n                maxLen=currLen;\n                start=left+1;\n            }\n        }\n\n        return s.substring(start,start+maxLen);\n    }\n}",
   "problemId" : "longest-palindromic-substring",
   "resolvedInput" : {
     "s" : "babad"
   },
-  "stepCount" : 8,
+  "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 4,
-    "description" : "Center 0 expands to [0,0] \"b\"; best is \"b\".",
+    "activeLine" : 3,
+    "description" : "Try every index as the centre of a palindrome and grow it outward.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "best" : "b",
-      "left" : "0",
-      "right" : "0"
-    },
+    "variables" : { },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 98,
-      "state" : "current",
+      "state" : "default",
       "label" : "b"
     }, {
       "index" : 1,
@@ -55,28 +54,27 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 4,
-    "description" : "Center 1 expands to [1,1] \"a\"; best is \"b\".",
+    "activeLine" : 9,
+    "description" : "Centre 0 ('b'). The run of 'b' around it is s[0..0] = \"b\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "best" : "b",
-      "left" : "1",
-      "right" : "1"
+      "i" : "0",
+      "maxLen" : "0"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 98,
-      "state" : "default",
+      "state" : "current",
       "label" : "b"
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "current",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 2,
@@ -99,16 +97,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 4,
-    "description" : "Center 1 expands to [0,2] \"bab\"; best is \"bab\".",
+    "activeLine" : 29,
+    "description" : "\"b\" (length 1) is the longest so far.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "best" : "bab",
-      "left" : "0",
-      "right" : "2"
+      "best" : "b",
+      "i" : "0",
+      "maxLen" : "1"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -125,7 +123,7 @@
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "target",
+      "state" : "default",
       "label" : "b"
     }, {
       "index" : 3,
@@ -143,16 +141,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 4,
-    "description" : "Center 2 expands to [2,2] \"b\"; best is \"bab\".",
+    "activeLine" : 9,
+    "description" : "Centre 1 ('a'). The run of 'a' around it is s[1..1] = \"a\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "best" : "bab",
-      "left" : "2",
-      "right" : "2"
+      "i" : "1",
+      "maxLen" : "1"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -164,12 +161,12 @@
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 2,
       "value" : 98,
-      "state" : "current",
+      "state" : "default",
       "label" : "b"
     }, {
       "index" : 3,
@@ -187,16 +184,145 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 4,
-    "description" : "Center 2 expands to [1,3] \"aba\"; best is \"bab\".",
+    "activeLine" : 20,
+    "description" : "s[0] = s[2] = 'b': grow to \"bab\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "maxLen" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "target",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 29,
+    "description" : "\"bab\" (length 3) is the longest so far.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "best" : "bab",
-      "left" : "1",
-      "right" : "3"
+      "i" : "1",
+      "maxLen" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "target",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 9,
+    "description" : "Centre 2 ('b'). The run of 'b' around it is s[2..2] = \"b\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "maxLen" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "current",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 20,
+    "description" : "s[1] = s[3] = 'a': grow to \"aba\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "maxLen" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -230,105 +356,101 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 6,
-    "activeLine" : 4,
-    "description" : "Center 3 expands to [3,3] \"a\"; best is \"bab\".",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "best" : "bab",
-      "left" : "3",
-      "right" : "3"
-    },
-    "dsType" : "String",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 98,
-      "state" : "default",
-      "label" : "b"
-    }, {
-      "index" : 1,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 2,
-      "value" : 98,
-      "state" : "default",
-      "label" : "b"
-    }, {
-      "index" : 3,
-      "value" : 97,
-      "state" : "current",
-      "label" : "a"
-    }, {
-      "index" : 4,
-      "value" : 100,
-      "state" : "default",
-      "label" : "d"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 7,
-    "activeLine" : 4,
-    "description" : "Center 4 expands to [4,4] \"d\"; best is \"bab\".",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "best" : "bab",
-      "left" : "4",
-      "right" : "4"
-    },
-    "dsType" : "String",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 98,
-      "state" : "default",
-      "label" : "b"
-    }, {
-      "index" : 1,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 2,
-      "value" : 98,
-      "state" : "default",
-      "label" : "b"
-    }, {
-      "index" : 3,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 4,
-      "value" : 100,
-      "state" : "current",
-      "label" : "d"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 8,
+    "stepNumber" : 9,
     "activeLine" : 9,
-    "description" : "Longest palindromic substring is \"bab\" at [0,2].",
+    "description" : "Centre 3 ('a'). The run of 'a' around it is s[3..3] = \"a\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "bab",
-      "left" : "0",
-      "right" : "2"
+      "i" : "3",
+      "maxLen" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 9,
+    "description" : "Centre 4 ('d'). The run of 'd' around it is s[4..4] = \"d\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "4",
+      "maxLen" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 98,
+      "state" : "default",
+      "label" : "b"
+    }, {
+      "index" : 3,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 4,
+      "value" : 100,
+      "state" : "current",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 34,
+    "description" : "Return \"bab\".",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "bab"
     },
     "dsType" : "String",
     "gridState" : null,
