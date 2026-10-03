@@ -1,23 +1,24 @@
 {
   "anchors" : {
-    "enqueueNeighbor" : 17,
-    "found" : 11,
-    "init" : 7,
-    "unreachable" : 20,
-    "visit" : 10
+    "discover" : 29,
+    "found" : 19,
+    "init" : 3,
+    "level" : 38,
+    "none" : 41,
+    "poll" : 16
   },
-  "code" : "public int wordLadderLength(String beginWord, String endWord,\n                             Map<String, List<String>> adjacency) {\n    Deque<String> queue = new ArrayDeque<>();\n    Map<String, Integer> length = new HashMap<>();\n    queue.add(beginWord);\n    length.put(beginWord, 1);\n\n    while (!queue.isEmpty()) {\n        String word = queue.poll();\n        if (word.equals(endWord)) {\n            return length.get(word);\n        }\n        for (String neighbor : adjacency.getOrDefault(word, List.of())) {\n            if (!length.containsKey(neighbor)) {\n                length.put(neighbor, length.get(word) + 1);\n                queue.add(neighbor);\n            }\n        }\n    }\n    return 0;\n}",
+  "code" : "class Solution {\n    public int ladderLength(String beginWord, String endWord, List<String> wordList) {\n        Set<String> set = new HashSet<>();\n        Queue<String> q = new LinkedList<>();\n        Set<String> wordSet = new HashSet<>(wordList);\n        int n = beginWord.length();\n        int res = 1;\n\n        set.add(beginWord);\n        q.add(beginWord);\n\n        while (!q.isEmpty()) {\n            int qlen = q.size();\n\n            while (qlen-- > 0) {\n                String curr = q.poll();\n\n                if (curr.equals(endWord))\n                    return res;\n\n                StringBuilder newWord = new StringBuilder(curr);\n                for (int i=0;i<n;i++) {\n                    char originalChar = newWord.charAt(i);\n\n                    for (char ch='a';ch<='z';ch++) {\n                        newWord.setCharAt(i,ch);\n\n                        if (wordSet.contains(newWord.toString()) && !set.contains(newWord.toString())) {\n                            set.add(newWord.toString());\n                            q.add(newWord.toString());\n                        }\n                    }\n\n                    newWord.setCharAt(i,originalChar);\n                }\n            }\n\n            res++;\n        }\n\n        return 0;\n    }\n}",
   "problemId" : "word-ladder-1",
   "resolvedInput" : {
     "beginWord" : "hit",
     "endWord" : "cog",
     "wordList" : "hot,dot,dog,lot,log,cog"
   },
-  "stepCount" : 15,
+  "stepCount" : 18,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 7,
-    "description" : "Built the one-letter-transformation graph over 7 words. Seed the queue with 'hit' at length 1.",
+    "activeLine" : 3,
+    "description" : "Start the sequence at hit: res = 1 word so far. Each BFS level is one more word.",
     "queueOrStackState" : [ "hit" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -27,11 +28,11 @@
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "1"
+      "res" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -139,8 +140,8 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 10,
-    "description" : "Dequeue 'hit' (length 1).",
+    "activeLine" : 16,
+    "description" : "Poll hit (sequence length 1). Try every letter at every position.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -150,12 +151,12 @@
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "1",
-      "word" : "hit"
+      "curr" : "hit",
+      "res" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -263,8 +264,8 @@
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 17,
-    "description" : "'hot' differs from 'hit' by one letter and is unvisited - enqueue it at length 2.",
+    "activeLine" : 29,
+    "description" : "Changing letter 1 of hit to 'o' gives hot, a listed word not seen yet. Queue it.",
     "queueOrStackState" : [ "hot" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -274,12 +275,12 @@
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ "0-1" ],
     "variables" : {
-      "length" : "2",
-      "neighbor" : "hot"
+      "curr" : "hit",
+      "res" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -387,23 +388,22 @@
     } ]
   }, {
     "stepNumber" : 4,
-    "activeLine" : 10,
-    "description" : "Dequeue 'hot' (length 2).",
-    "queueOrStackState" : [ ],
+    "activeLine" : 38,
+    "description" : "Level done. The next level's words are 2 words into the sequence: res = 2.",
+    "queueOrStackState" : [ "hot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
-      "1" : "visiting",
+      "1" : "queued",
       "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "2",
-      "word" : "hot"
+      "res" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -511,23 +511,23 @@
     } ]
   }, {
     "stepNumber" : 5,
-    "activeLine" : 17,
-    "description" : "'dot' differs from 'hot' by one letter and is unvisited - enqueue it at length 3.",
-    "queueOrStackState" : [ "dot" ],
+    "activeLine" : 16,
+    "description" : "Poll hot (sequence length 2). Try every letter at every position.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visiting",
-      "2" : "queued",
+      "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
-    "activeEdges" : [ "1-2" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "length" : "3",
-      "neighbor" : "dot"
+      "curr" : "hot",
+      "res" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -635,23 +635,23 @@
     } ]
   }, {
     "stepNumber" : 6,
-    "activeLine" : 17,
-    "description" : "'lot' differs from 'hot' by one letter and is unvisited - enqueue it at length 3.",
-    "queueOrStackState" : [ "dot", "lot" ],
+    "activeLine" : 29,
+    "description" : "Changing letter 0 of hot to 'd' gives dot, a listed word not seen yet. Queue it.",
+    "queueOrStackState" : [ "dot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visiting",
       "2" : "queued",
       "3" : "unvisited",
-      "4" : "queued",
+      "4" : "unvisited",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
-    "activeEdges" : [ "1-4" ],
+    "activeEdges" : [ "1-2" ],
     "variables" : {
-      "length" : "3",
-      "neighbor" : "lot"
+      "curr" : "hot",
+      "res" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -759,23 +759,23 @@
     } ]
   }, {
     "stepNumber" : 7,
-    "activeLine" : 10,
-    "description" : "Dequeue 'dot' (length 3).",
-    "queueOrStackState" : [ "lot" ],
+    "activeLine" : 29,
+    "description" : "Changing letter 0 of hot to 'l' gives lot, a listed word not seen yet. Queue it.",
+    "queueOrStackState" : [ "dot", "lot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
-      "1" : "visited",
-      "2" : "visiting",
+      "1" : "visiting",
+      "2" : "queued",
       "3" : "unvisited",
       "4" : "queued",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
-    "activeEdges" : [ ],
+    "activeEdges" : [ "1-4" ],
     "variables" : {
-      "length" : "3",
-      "word" : "dot"
+      "curr" : "hot",
+      "res" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -883,23 +883,22 @@
     } ]
   }, {
     "stepNumber" : 8,
-    "activeLine" : 17,
-    "description" : "'dog' differs from 'dot' by one letter and is unvisited - enqueue it at length 4.",
-    "queueOrStackState" : [ "lot", "dog" ],
+    "activeLine" : 38,
+    "description" : "Level done. The next level's words are 3 words into the sequence: res = 3.",
+    "queueOrStackState" : [ "dot", "lot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
-      "2" : "visiting",
-      "3" : "queued",
+      "2" : "queued",
+      "3" : "unvisited",
       "4" : "queued",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
-    "activeEdges" : [ "2-3" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "length" : "4",
-      "neighbor" : "dog"
+      "res" : "3"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1007,23 +1006,23 @@
     } ]
   }, {
     "stepNumber" : 9,
-    "activeLine" : 10,
-    "description" : "Dequeue 'lot' (length 3).",
-    "queueOrStackState" : [ "dog" ],
+    "activeLine" : 16,
+    "description" : "Poll dot (sequence length 3). Try every letter at every position.",
+    "queueOrStackState" : [ "lot" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
-      "2" : "visited",
-      "3" : "queued",
-      "4" : "visiting",
+      "2" : "visiting",
+      "3" : "unvisited",
+      "4" : "queued",
       "5" : "unvisited",
-      "6" : "unvisited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "3",
-      "word" : "lot"
+      "curr" : "dot",
+      "res" : "3"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1131,23 +1130,23 @@
     } ]
   }, {
     "stepNumber" : 10,
-    "activeLine" : 17,
-    "description" : "'log' differs from 'lot' by one letter and is unvisited - enqueue it at length 4.",
-    "queueOrStackState" : [ "dog", "log" ],
+    "activeLine" : 29,
+    "description" : "Changing letter 2 of dot to 'g' gives dog, a listed word not seen yet. Queue it.",
+    "queueOrStackState" : [ "lot", "dog" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
-      "2" : "visited",
+      "2" : "visiting",
       "3" : "queued",
-      "4" : "visiting",
-      "5" : "queued",
-      "6" : "unvisited"
+      "4" : "queued",
+      "5" : "unvisited",
+      "6" : "target"
     },
-    "activeEdges" : [ "4-5" ],
+    "activeEdges" : [ "2-3" ],
     "variables" : {
-      "length" : "4",
-      "neighbor" : "log"
+      "curr" : "dot",
+      "res" : "3"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1255,23 +1254,23 @@
     } ]
   }, {
     "stepNumber" : 11,
-    "activeLine" : 10,
-    "description" : "Dequeue 'dog' (length 4).",
-    "queueOrStackState" : [ "log" ],
+    "activeLine" : 16,
+    "description" : "Poll lot (sequence length 3). Try every letter at every position.",
+    "queueOrStackState" : [ "dog" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
-      "3" : "visiting",
-      "4" : "visited",
-      "5" : "queued",
-      "6" : "unvisited"
+      "3" : "queued",
+      "4" : "visiting",
+      "5" : "unvisited",
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "4",
-      "word" : "dog"
+      "curr" : "lot",
+      "res" : "3"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1379,23 +1378,23 @@
     } ]
   }, {
     "stepNumber" : 12,
-    "activeLine" : 17,
-    "description" : "'cog' differs from 'dog' by one letter and is unvisited - enqueue it at length 5.",
-    "queueOrStackState" : [ "log", "cog" ],
+    "activeLine" : 29,
+    "description" : "Changing letter 2 of lot to 'g' gives log, a listed word not seen yet. Queue it.",
+    "queueOrStackState" : [ "dog", "log" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
-      "3" : "visiting",
-      "4" : "visited",
+      "3" : "queued",
+      "4" : "visiting",
       "5" : "queued",
-      "6" : "queued"
+      "6" : "target"
     },
-    "activeEdges" : [ "3-6" ],
+    "activeEdges" : [ "4-5" ],
     "variables" : {
-      "length" : "5",
-      "neighbor" : "cog"
+      "curr" : "lot",
+      "res" : "3"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1503,23 +1502,22 @@
     } ]
   }, {
     "stepNumber" : 13,
-    "activeLine" : 10,
-    "description" : "Dequeue 'log' (length 4).",
-    "queueOrStackState" : [ "cog" ],
+    "activeLine" : 38,
+    "description" : "Level done. The next level's words are 4 words into the sequence: res = 4.",
+    "queueOrStackState" : [ "dog", "log" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
-      "3" : "visited",
+      "3" : "queued",
       "4" : "visited",
-      "5" : "visiting",
-      "6" : "queued"
+      "5" : "queued",
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "4",
-      "word" : "log"
+      "res" : "4"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1627,23 +1625,23 @@
     } ]
   }, {
     "stepNumber" : 14,
-    "activeLine" : 10,
-    "description" : "Dequeue 'cog' (length 5).",
-    "queueOrStackState" : [ ],
+    "activeLine" : 16,
+    "description" : "Poll dog (sequence length 4). Try every letter at every position.",
+    "queueOrStackState" : [ "log" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
       "2" : "visited",
-      "3" : "visited",
+      "3" : "visiting",
       "4" : "visited",
-      "5" : "visited",
-      "6" : "visiting"
+      "5" : "queued",
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "5",
-      "word" : "cog"
+      "curr" : "dog",
+      "res" : "4"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1751,9 +1749,257 @@
     } ]
   }, {
     "stepNumber" : 15,
-    "activeLine" : 11,
-    "description" : "'cog' is the target word - the transformation sequence has 5 words.",
-    "queueOrStackState" : null,
+    "activeLine" : 29,
+    "description" : "Changing letter 0 of dog to 'c' gives cog, a listed word not seen yet. Queue it.",
+    "queueOrStackState" : [ "log", "cog" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visiting",
+      "4" : "visited",
+      "5" : "queued",
+      "6" : "target"
+    },
+    "activeEdges" : [ "3-6" ],
+    "variables" : {
+      "curr" : "dog",
+      "res" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 16,
+    "description" : "Poll log (sequence length 4). Try every letter at every position.",
+    "queueOrStackState" : [ "cog" ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visiting",
+      "6" : "target"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "log",
+      "res" : "4"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 38,
+    "description" : "Level done. The next level's words are 5 words into the sequence: res = 5.",
+    "queueOrStackState" : [ "cog" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
@@ -1762,11 +2008,134 @@
       "3" : "visited",
       "4" : "visited",
       "5" : "visited",
-      "6" : "visited"
+      "6" : "target"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "length" : "5"
+      "res" : "5"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "hit",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "hot",
+      "x" : 273.8197778961636,
+      "y" : 85.18122377695198,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "dot",
+      "x" : 296.9913494618188,
+      "y" : 186.70251207475772,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "dog",
+      "x" : 232.066048694107,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 4,
+      "label" : "lot",
+      "x" : 127.93395130589303,
+      "y" : 268.11626414829027,
+      "state" : "unvisited"
+    }, {
+      "id" : 5,
+      "label" : "log",
+      "x" : 63.00865053818117,
+      "y" : 186.70251207475775,
+      "state" : "unvisited"
+    }, {
+      "id" : 6,
+      "label" : "cog",
+      "x" : 86.18022210383641,
+      "y" : 85.181223776952,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 4,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 4,
+      "to" : 5,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 5,
+      "to" : 6,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 19,
+    "description" : "Polled cog, which is endWord: the shortest sequence has res = 5 words.",
+    "queueOrStackState" : [ ],
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "visited",
+      "4" : "visited",
+      "5" : "visited",
+      "6" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "res" : "5"
     },
     "dsType" : "Graph",
     "gridState" : null,

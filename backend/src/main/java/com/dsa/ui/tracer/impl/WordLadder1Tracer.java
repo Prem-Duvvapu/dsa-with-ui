@@ -1,27 +1,19 @@
 package com.dsa.ui.tracer.impl;
 
 import com.dsa.ui.model.DsType;
-import com.dsa.ui.model.GraphEdge;
-import com.dsa.ui.model.GraphNode;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 /**
- * Shortest transformation sequence from {@code beginWord} to {@code endWord}, where every
- * step changes exactly one letter and the intermediate word must appear in the supplied
- * word list. The transformation graph is never handed to the algorithm directly - it is
- * implicit, built here by comparing every pair of candidate words - but it is still a
- * genuine graph (words are vertices, a one-letter difference is an edge), so this tracer
- * builds that graph explicitly and runs plain BFS over it, exactly the way the algorithm
- * conceptually works.
+ * Word Ladder (LeetCode 127), traced on the owner's own accepted submission: a level-by-level BFS
+ * from beginWord where each level tries all 26 letters at every position of each word and keeps
+ * the new words that are in the list. {@code res} counts the words in the sequence, so the level
+ * at which endWord is polled is the answer; 0 if it never is. O(N * L * 26).
  *
- * <p>The word list travels as one comma-separated {@link FieldType#STRING}, not a new
- * field kind: this problem's alphabet is lowercase letters only, so a comma can never
- * appear inside a word, and the existing {@code .constraint("pattern", ...)} mechanism
- * already bounds both the per-word length and the word count (a bounded regex repetition,
- * {@code {0,11}}) without touching {@link InputValidator}.
+ * <p>The canvas draws the words joined when they differ by one letter - the moves those 26 tries
+ * can find.
  */
 @Component
 public class WordLadder1Tracer implements AlgorithmTracer {
@@ -77,31 +69,54 @@ public class WordLadder1Tracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int wordLadderLength(String beginWord, String endWord,
-                                            Map<String, List<String>> adjacency) {
-                   Deque<String> queue = new ArrayDeque<>();
-                   Map<String, Integer> length = new HashMap<>();
-                   queue.add(beginWord);
-                   length.put(beginWord, 1);
-                   // @a init
+               class Solution {
+                   public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+                       // @a init
+                       Set<String> set = new HashSet<>();
+                       Queue<String> q = new LinkedList<>();
+                       Set<String> wordSet = new HashSet<>(wordList);
+                       int n = beginWord.length();
+                       int res = 1;
 
-                   while (!queue.isEmpty()) {
-                       String word = queue.poll();
-                       // @a visit
-                       if (word.equals(endWord)) {
-                           // @a found
-                           return length.get(word);
-                       }
-                       for (String neighbor : adjacency.getOrDefault(word, List.of())) {
-                           if (!length.containsKey(neighbor)) {
-                               length.put(neighbor, length.get(word) + 1);
-                               queue.add(neighbor);
-                               // @a enqueueNeighbor
+                       set.add(beginWord);
+                       q.add(beginWord);
+
+                       while (!q.isEmpty()) {
+                           int qlen = q.size();
+
+                           while (qlen-- > 0) {
+                               // @a poll
+                               String curr = q.poll();
+
+                               if (curr.equals(endWord))
+                                   // @a found
+                                   return res;
+
+                               StringBuilder newWord = new StringBuilder(curr);
+                               for (int i=0;i<n;i++) {
+                                   char originalChar = newWord.charAt(i);
+
+                                   for (char ch='a';ch<='z';ch++) {
+                                       newWord.setCharAt(i,ch);
+
+                                       if (wordSet.contains(newWord.toString()) && !set.contains(newWord.toString())) {
+                                           // @a discover
+                                           set.add(newWord.toString());
+                                           q.add(newWord.toString());
+                                       }
+                                   }
+
+                                   newWord.setCharAt(i,originalChar);
+                               }
                            }
+
+                           // @a level
+                           res++;
                        }
+
+                       // @a none
+                       return 0;
                    }
-                   // @a unreachable
-                   return 0;
                }""";
     }
 
@@ -109,136 +124,65 @@ public class WordLadder1Tracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         String beginWord = in.getString("beginWord");
         String endWord = in.getString("endWord");
-        String[] listed = in.getString("wordList").split(",");
+        List<String> wordList = List.of(in.getString("wordList").split(","));
+        WordGraph g = new WordGraph(beginWord, wordList);
+        Set<String> set = new HashSet<>();
+        Deque<String> q = new ArrayDeque<>();
+        Set<String> wordSet = new HashSet<>(wordList);
+        int n = beginWord.length();
+        int res = 1;
+        set.add(beginWord);
+        q.add(beginWord);
+        g.mark(beginWord, "queued");
+        g.mark(endWord, "target");
 
-        LinkedHashMap<String, Integer> wordToId = new LinkedHashMap<>();
-        wordToId.put(beginWord, 0);
-        for (String w : listed) {
-            wordToId.putIfAbsent(w, wordToId.size());
-        }
-        int n = wordToId.size();
-        String[] idToWord = new String[n];
-        for (Map.Entry<String, Integer> e : wordToId.entrySet()) {
-            idToWord[e.getValue()] = e.getKey();
-        }
+        emit.at("init").say("Start the sequence at %s: res = 1 word so far. Each BFS level is one more word.",
+                        beginWord)
+                .var("res", res).graph(g.nodes, g.edges).nodes(g.states).queue(q).step();
 
-        List<int[]> edgePairs = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (oneLetterApart(idToWord[i], idToWord[j])) {
-                    edgePairs.add(new int[]{i, j});
+        while (!q.isEmpty()) {
+            int qlen = q.size();
+            while (qlen-- > 0) {
+                String curr = q.poll();
+                g.mark(curr, "visiting");
+                if (curr.equals(endWord)) {
+                    g.mark(curr, "done");
+                    emit.at("found").say("Polled %s, which is endWord: the shortest sequence has res = %d word%s.",
+                                    curr, res, Narration.s(res))
+                            .var("res", res).graph(g.nodes, g.edges).nodes(g.states).queue(q).step();
+                    return;
                 }
-            }
-        }
-        List<List<Integer>> adjacency = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            adjacency.add(new ArrayList<>());
-        }
-        for (int[] e : edgePairs) {
-            adjacency.get(e[0]).add(e[1]);
-            adjacency.get(e[1]).add(e[0]);
-        }
+                emit.at("poll").say("Poll %s (sequence length %d). Try every letter at every position.", curr, res)
+                        .var("curr", curr).var("res", res).graph(g.nodes, g.edges).nodes(g.states).queue(q).step();
 
-        // Node positions only - this word graph is undirected, so the edges are built
-        // below rather than taken from GraphLayout.directed(), which always marks
-        // edges directed for the arrowhead it draws.
-        GraphLayout.Layout positionOnly =
-                GraphLayout.directed(new Inputs.GraphInput(n, new int[0][]));
-        List<GraphNode> nodes = new ArrayList<>();
-        for (GraphNode base : positionOnly.nodes()) {
-            nodes.add(new GraphNode(base.getId(), idToWord[base.getId()], base.getX(), base.getY(), "unvisited"));
-        }
-        List<GraphEdge> edges = new ArrayList<>();
-        for (int[] e : edgePairs) {
-            edges.add(new GraphEdge(e[0], e[1], null, false, false));
-        }
-
-        Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < n; i++) {
-            states.put(i, "unvisited");
-        }
-
-        int beginId = 0;
-        Integer endId = wordToId.get(endWord);
-
-        Deque<Integer> queue = new ArrayDeque<>();
-        Map<Integer, Integer> length = new HashMap<>();
-        queue.add(beginId);
-        length.put(beginId, 1);
-        states.put(beginId, "queued");
-
-        emit.at("init").say(
-                        "Built the one-letter-transformation graph over %d words. Seed the queue with "
-                                + "'%s' at length 1.", n, beginWord)
-                .var("length", 1)
-                .graph(nodes, edges).nodes(states).queue(idsToWords(queue, idToWord)).step();
-
-        boolean found = false;
-        while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            states.put(cur, "visiting");
-
-            emit.at("visit").say("Dequeue '%s' (length %d).", idToWord[cur], length.get(cur))
-                    .var("word", idToWord[cur]).var("length", length.get(cur))
-                    .graph(nodes, edges).nodes(states).queue(idsToWords(queue, idToWord)).step();
-
-            if (endId != null && cur == endId) {
-                states.put(cur, "visited");
-                emit.at("found").say(
-                                "'%s' is the target word - the transformation sequence has %d words.",
-                                idToWord[cur], length.get(cur))
-                        .var("length", length.get(cur))
-                        .graph(nodes, edges).nodes(states).step();
-                found = true;
-                break;
-            }
-
-            for (int next : adjacency.get(cur)) {
-                if (!length.containsKey(next)) {
-                    length.put(next, length.get(cur) + 1);
-                    queue.add(next);
-                    states.put(next, "queued");
-
-                    emit.at("enqueueNeighbor").say(
-                                    "'%s' differs from '%s' by one letter and is unvisited - enqueue it at length %d.",
-                                    idToWord[next], idToWord[cur], length.get(next))
-                            .var("neighbor", idToWord[next]).var("length", length.get(next))
-                            .graph(nodes, edges).nodes(states)
-                            .edges(List.of(cur + "-" + next))
-                            .queue(idsToWords(queue, idToWord)).step();
+                StringBuilder newWord = new StringBuilder(curr);
+                for (int i = 0; i < n; i++) {
+                    char originalChar = newWord.charAt(i);
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        newWord.setCharAt(i, ch);
+                        String w = newWord.toString();
+                        if (wordSet.contains(w) && !set.contains(w)) {
+                            set.add(w);
+                            q.add(w);
+                            if (!w.equals(endWord)) g.mark(w, "queued");
+                            emit.at("discover").say("Changing letter %d of %s to '%c' gives %s, a listed word not seen "
+                                            + "yet. Queue it.", i, curr, ch, w)
+                                    .var("curr", curr).var("res", res)
+                                    .graph(g.nodes, g.edges).nodes(g.states).edges(g.edge(curr, w)).queue(q).step();
+                        }
+                    }
+                    newWord.setCharAt(i, originalChar);
                 }
+                g.mark(curr, "visited");
             }
-            states.put(cur, "visited");
+            res++;
+            emit.at("level").say(q.isEmpty()
+                            ? "The level is done and nothing new was found."
+                            : "Level done. The next level's words are " + (res) + " words into the sequence: res = " + res + ".")
+                    .var("res", res).graph(g.nodes, g.edges).nodes(g.states).queue(q).step();
         }
 
-        if (!found) {
-            emit.at("unreachable").say(
-                            "Queue emptied without reaching '%s' - no transformation sequence exists.", endWord)
-                    .graph(nodes, edges).nodes(states).step();
-        }
-    }
-
-    private static boolean oneLetterApart(String a, String b) {
-        if (a.length() != b.length()) {
-            return false;
-        }
-        int diff = 0;
-        for (int i = 0; i < a.length(); i++) {
-            if (a.charAt(i) != b.charAt(i)) {
-                diff++;
-                if (diff > 1) {
-                    return false;
-                }
-            }
-        }
-        return diff == 1;
-    }
-
-    private static List<String> idsToWords(Iterable<Integer> ids, String[] idToWord) {
-        List<String> out = new ArrayList<>();
-        for (int id : ids) {
-            out.add(idToWord[id]);
-        }
-        return out;
+        emit.at("none").say("The queue is empty and %s was never reached. Return 0.", endWord)
+                .var("res", 0).graph(g.nodes, g.edges).nodes(g.states).step();
     }
 }

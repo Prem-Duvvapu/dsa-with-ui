@@ -13,7 +13,7 @@
         "wordList": "hot,dot,dog,lot,log,cog"
       },
       "output": "hit -> hot -> dot -> dog -> cog; hit -> hot -> lot -> log -> cog",
-      "answerVariable": "answer",
+      "answerVariable": "res",
       "explanation": "The shortest sequences have 5 words, and there are exactly two of them: one passes through dot and dog, the other through lot and log."
     },
     {
@@ -22,9 +22,19 @@
         "endWord": "dog",
         "wordList": "dot,dog,hog"
       },
-      "output": "hot -> dot -> dog; hot -> hog -> dog",
-      "answerVariable": "answer",
-      "explanation": "Changing either the first or the middle letter of hot gives a word one step from dog, so there are two shortest sequences of 3 words."
+      "output": "hot -> hog -> dog; hot -> dot -> dog",
+      "answerVariable": "res",
+      "explanation": "From hot, changing the last letter gives hog and changing the first letter gives dot, and each of those is one letter from dog. So there are two shortest sequences of 3 words."
+    },
+    {
+      "input": {
+        "beginWord": "hit",
+        "endWord": "cog",
+        "wordList": "hot,dot,dog,lot,log"
+      },
+      "output": "[]",
+      "answerVariable": "res",
+      "explanation": "cog is not in the list, so no sequence can end there and there are no ladders."
     }
   ],
   "constraints": [
