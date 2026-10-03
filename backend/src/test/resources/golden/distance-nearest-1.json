@@ -1,28 +1,28 @@
 {
   "anchors" : {
-    "done" : 33,
-    "expand" : 29,
-    "init" : 2,
-    "poll" : 20,
-    "seed" : 10,
-    "skip" : 27
+    "done" : 29,
+    "init" : 16,
+    "level" : 36,
+    "next" : 54,
+    "poll" : 39,
+    "reach" : 48
   },
-  "code" : "public int[][] nearest(int[][] grid) {\n    int n = grid.length, m = grid[0].length;\n    boolean[][] seen = new boolean[n][m];\n    int[][] dist = new int[n][m];\n    Queue<int[]> queue = new LinkedList<>();\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            if (grid[i][j] == 1) {\n                queue.add(new int[]{i, j, 0});\n                seen[i][j] = true;\n            }\n        }\n    }\n\n    int[] delrow = {-1, 0, 1, 0};\n    int[] delcol = {0, 1, 0, -1};\n\n    while (!queue.isEmpty()) {\n        int[] cell = queue.poll();\n        int row = cell[0], col = cell[1], steps = cell[2];\n        dist[row][col] = steps;\n\n        for (int k = 0; k < 4; k++) {\n            int nrow = row + delrow[k], ncol = col + delcol[k];\n            if (nrow < 0 || nrow >= n || ncol < 0 || ncol >= m || seen[nrow][ncol]) {\n                continue;\n            }\n            seen[nrow][ncol] = true;\n            queue.add(new int[]{nrow, ncol, steps + 1});\n        }\n    }\n    return dist;\n}",
+  "code" : "class Pair {\n    int row;\n    int col;\n\n    Pair(int row,int col) {\n        this.row = row;\n        this.col = col;\n    }\n}\n\nclass Solution {\n    public static int[] dRow = {-1,0,1,0};\n    public static int[] dCol = {0,1,0,-1};\n\n    public int[][] nearest(int[][] grid) {\n        int m = grid.length;\n        int n = grid[0].length;\n        Queue<Pair> q = new LinkedList<>();\n        int[][] res = new int[m][n];\n\n        for (int i=0;i<m;i++) {\n            for (int j=0;j<n;j++) {\n                if (grid[i][j] == 1)\n                    q.add(new Pair(i,j));\n            }\n        }\n\n        bfs(q,res,grid,m,n);\n        return res;\n    }\n\n    public void bfs(Queue<Pair> q, int[][] res,int[][] grid,int m,int n) {\n        int dist = 1;\n\n        while (!q.isEmpty()) {\n            int qlen = q.size();\n\n            while (qlen-- > 0) {\n                Pair curr = q.poll();\n                int currRow = curr.row;\n                int currCol = curr.col;\n\n                for (int i=0;i<4;i++) {\n                    int newRow = currRow + dRow[i];\n                    int newCol = currCol + dCol[i];\n\n                    if (newRow>=0 && newRow<m && newCol>=0 && newCol<n && grid[newRow][newCol]==0 && res[newRow][newCol]==0) {\n                        res[newRow][newCol] = dist;\n                        q.add(new Pair(newRow, newCol));\n                    }\n                }\n            }\n\n            dist++;\n        }\n    }\n}",
   "problemId" : "distance-nearest-1",
   "resolvedInput" : {
     "grid" : [ [ 0, 0, 0 ], [ 0, 1, 0 ], [ 1, 0, 1 ] ]
   },
-  "stepCount" : 48,
+  "stepCount" : 23,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "3x3 grid, 3 cells already at distance 0. -1 means \"not yet reached\".",
-    "queueOrStackState" : null,
+    "activeLine" : 16,
+    "description" : "Every 1 is its own nearest 1, at distance 0: put all 3 of them in the queue together. The BFS then moves outward one step per level, so the first level to reach a 0-cell gives its distance.",
+    "queueOrStackState" : [ "(1,1)", "(2,0)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "seeds" : "3"
+      "sources" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, -1, -1 ], [ -1, 0, -1 ], [ 0, -1, 0 ] ],
@@ -32,14 +32,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 10,
-    "description" : "Seed the queue with every 1-cell at distance 0.",
-    "queueOrStackState" : null,
+    "activeLine" : 36,
+    "description" : "Level 1: 3 cells in the queue. Any 0-neighbour of theirs that no earlier level reached is 1 step from a 1.",
+    "queueOrStackState" : [ "(1,1)", "(2,0)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "queueSize" : "3"
+      "dist" : "1",
+      "qlen" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, -1, -1 ], [ -1, 0, -1 ], [ 0, -1, 0 ] ],
@@ -49,15 +50,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 20,
-    "description" : "Dequeue (1,1) at distance 0.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (1,1) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(2,0)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,1)",
-      "distance" : "0"
+      "currCol" : "1",
+      "currRow" : "1",
+      "dist" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, -1, -1 ], [ -1, 0, -1 ], [ 0, -1, 0 ] ],
@@ -67,15 +69,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 29,
-    "description" : "(0,1) is new. Its nearest 1 is 1 step away.",
-    "queueOrStackState" : null,
+    "activeLine" : 48,
+    "description" : "(0,1) is a 0 no earlier level reached, so its nearest 1 is 1 step away: res[0][1] = 1.",
+    "queueOrStackState" : [ "(2,0)", "(2,2)", "(0,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,1)",
-      "distance" : "1"
+      "dist" : "1",
+      "newCol" : "1",
+      "newRow" : "0"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, 1, -1 ], [ -1, 0, -1 ], [ 0, -1, 0 ] ],
@@ -85,51 +88,54 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 29,
-    "description" : "(2,1) is new. Its nearest 1 is 1 step away.",
-    "queueOrStackState" : null,
+    "activeLine" : 48,
+    "description" : "(1,2) is a 0 no earlier level reached, so its nearest 1 is 1 step away: res[1][2] = 1.",
+    "queueOrStackState" : [ "(2,0)", "(2,2)", "(0,1)", "(1,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,1)",
-      "distance" : "1"
+      "dist" : "1",
+      "newCol" : "2",
+      "newRow" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ -1, 0, -1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ -1, 1, -1 ], [ -1, 0, 1 ], [ 0, -1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 29,
-    "description" : "(1,0) is new. Its nearest 1 is 1 step away.",
-    "queueOrStackState" : null,
+    "activeLine" : 48,
+    "description" : "(2,1) is a 0 no earlier level reached, so its nearest 1 is 1 step away: res[2][1] = 1.",
+    "queueOrStackState" : [ "(2,0)", "(2,2)", "(0,1)", "(1,2)", "(2,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,0)",
-      "distance" : "1"
+      "dist" : "1",
+      "newCol" : "1",
+      "newRow" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, -1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ -1, 1, -1 ], [ -1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 29,
-    "description" : "(1,2) is new. Its nearest 1 is 1 step away.",
-    "queueOrStackState" : null,
+    "activeLine" : 48,
+    "description" : "(1,0) is a 0 no earlier level reached, so its nearest 1 is 1 step away: res[1][0] = 1.",
+    "queueOrStackState" : [ "(2,0)", "(2,2)", "(0,1)", "(1,2)", "(2,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,2)",
-      "distance" : "1"
+      "dist" : "1",
+      "newCol" : "0",
+      "newRow" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
@@ -139,15 +145,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 20,
-    "description" : "Dequeue (2,0) at distance 0.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (2,0) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(2,2)", "(0,1)", "(1,2)", "(2,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,0)",
-      "distance" : "0"
+      "currCol" : "0",
+      "currRow" : "2",
+      "dist" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
@@ -157,14 +164,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 27,
-    "description" : "(1,0) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (2,2) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,1)", "(1,2)", "(2,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,0)"
+      "currCol" : "2",
+      "currRow" : "2",
+      "dist" : "1"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
@@ -174,14 +183,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 27,
-    "description" : "(3,0) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 54,
+    "description" : "Level done. The cells it reached form the next level, one step farther: dist = 2.",
+    "queueOrStackState" : [ "(0,1)", "(1,2)", "(2,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(3,0)"
+      "dist" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
@@ -191,14 +200,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 27,
-    "description" : "(2,-1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 36,
+    "description" : "Level 2: 4 cells in the queue. Any 0-neighbour of theirs that no earlier level reached is 2 steps from a 1.",
+    "queueOrStackState" : [ "(0,1)", "(1,2)", "(2,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,-1)"
+      "dist" : "2",
+      "qlen" : "4"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
@@ -208,14 +218,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 27,
-    "description" : "(2,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (0,1) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(1,2)", "(2,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,1)"
+      "currCol" : "1",
+      "currRow" : "0",
+      "dist" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
@@ -225,171 +237,182 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 20,
-    "description" : "Dequeue (2,2) at distance 0.",
-    "queueOrStackState" : null,
+    "activeLine" : 48,
+    "description" : "(0,2) is a 0 no earlier level reached, so its nearest 1 is 2 steps away: res[0][2] = 2.",
+    "queueOrStackState" : [ "(1,2)", "(2,1)", "(1,0)", "(0,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,2)",
-      "distance" : "0"
+      "dist" : "2",
+      "newCol" : "2",
+      "newRow" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ -1, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 27,
-    "description" : "(1,2) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 48,
+    "description" : "(0,0) is a 0 no earlier level reached, so its nearest 1 is 2 steps away: res[0][0] = 2.",
+    "queueOrStackState" : [ "(1,2)", "(2,1)", "(1,0)", "(0,2)", "(0,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,2)"
+      "dist" : "2",
+      "newCol" : "0",
+      "newRow" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 27,
-    "description" : "(3,2) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (1,2) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(2,1)", "(1,0)", "(0,2)", "(0,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(3,2)"
+      "currCol" : "2",
+      "currRow" : "1",
+      "dist" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 27,
-    "description" : "(2,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (2,1) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(1,0)", "(0,2)", "(0,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,1)"
+      "currCol" : "1",
+      "currRow" : "2",
+      "dist" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 27,
-    "description" : "(2,3) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (1,0) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,2)", "(0,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,3)"
+      "currCol" : "0",
+      "currRow" : "1",
+      "dist" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 20,
-    "description" : "Dequeue (0,1) at distance 1.",
-    "queueOrStackState" : null,
+    "activeLine" : 54,
+    "description" : "Level done. The cells it reached form the next level, one step farther: dist = 3.",
+    "queueOrStackState" : [ "(0,2)", "(0,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,1)",
-      "distance" : "1"
+      "dist" : "3"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 27,
-    "description" : "(-1,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 36,
+    "description" : "Level 3: 2 cells in the queue. Any 0-neighbour of theirs that no earlier level reached is 3 steps from a 1.",
+    "queueOrStackState" : [ "(0,2)", "(0,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(-1,1)"
+      "dist" : "3",
+      "qlen" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 27,
-    "description" : "(1,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (0,2) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,1)"
+      "currCol" : "2",
+      "currRow" : "0",
+      "dist" : "3"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ -1, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 29,
-    "description" : "(0,0) is new. Its nearest 1 is 2 steps away.",
-    "queueOrStackState" : null,
+    "activeLine" : 39,
+    "description" : "Take (0,0) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,0)",
-      "distance" : "2"
+      "currCol" : "0",
+      "currRow" : "0",
+      "dist" : "3"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, -1 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
+    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 29,
-    "description" : "(0,2) is new. Its nearest 1 is 2 steps away.",
-    "queueOrStackState" : null,
+    "activeLine" : 54,
+    "description" : "The level reached nothing new and the queue is empty: every cell has its distance.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,2)",
-      "distance" : "2"
+      "dist" : "4"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
@@ -399,443 +422,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 20,
-    "description" : "Dequeue (2,1) at distance 1.",
+    "activeLine" : 29,
+    "description" : "Return res: each cell's distance to its nearest 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,1)",
-      "distance" : "1"
+      "res" : "[[2,1,2],[1,0,1],[0,1,0]]"
     },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 24,
-    "activeLine" : 27,
-    "description" : "(1,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 25,
-    "activeLine" : 27,
-    "description" : "(3,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(3,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 26,
-    "activeLine" : 27,
-    "description" : "(2,0) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 27,
-    "activeLine" : 27,
-    "description" : "(2,2) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 28,
-    "activeLine" : 20,
-    "description" : "Dequeue (1,0) at distance 1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,0)",
-      "distance" : "1"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 29,
-    "activeLine" : 27,
-    "description" : "(0,0) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 30,
-    "activeLine" : 27,
-    "description" : "(2,0) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 31,
-    "activeLine" : 27,
-    "description" : "(1,-1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,-1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 32,
-    "activeLine" : 27,
-    "description" : "(1,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 33,
-    "activeLine" : 20,
-    "description" : "Dequeue (1,2) at distance 1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,2)",
-      "distance" : "1"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 34,
-    "activeLine" : 27,
-    "description" : "(0,2) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 35,
-    "activeLine" : 27,
-    "description" : "(2,2) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 36,
-    "activeLine" : 27,
-    "description" : "(1,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 37,
-    "activeLine" : 27,
-    "description" : "(1,3) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,3)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 38,
-    "activeLine" : 20,
-    "description" : "Dequeue (0,0) at distance 2.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,0)",
-      "distance" : "2"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 39,
-    "activeLine" : 27,
-    "description" : "(-1,0) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(-1,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 40,
-    "activeLine" : 27,
-    "description" : "(1,0) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 41,
-    "activeLine" : 27,
-    "description" : "(0,-1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,-1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 42,
-    "activeLine" : 27,
-    "description" : "(0,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 43,
-    "activeLine" : 20,
-    "description" : "Dequeue (0,2) at distance 2.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,2)",
-      "distance" : "2"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 44,
-    "activeLine" : 27,
-    "description" : "(-1,2) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(-1,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 45,
-    "activeLine" : 27,
-    "description" : "(1,2) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 46,
-    "activeLine" : 27,
-    "description" : "(0,1) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 47,
-    "activeLine" : 27,
-    "description" : "(0,3) is out of bounds or already reached - skip it.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,3)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 48,
-    "activeLine" : 33,
-    "description" : "Every cell reached. Distances to the nearest 1 are final.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : { },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 1, 2 ], [ 1, 0, 1 ], [ 0, 1, 0 ] ],
     "arrayState" : null,

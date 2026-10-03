@@ -7,21 +7,21 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Rotten Oranges: how many minutes until no fresh orange is left.
+ * Rotting Oranges (LeetCode 994), traced on the owner's own accepted submission: every rotten
+ * orange is queued at the start, then a level-by-level BFS where one level is one minute.
+ * Already optimal - O(m*n), each orange queued at most once.
  *
- * <p>Rot spreads from every already-rotten orange at once, so this is multi-source BFS -
- * each of them enters the queue stamped with minute 0. BFS then visits cells in
- * nondecreasing minute order, which is what makes the minute stamped on a cell the FIRST
- * (and therefore smallest) minute any rotten neighbour could have reached it. The answer is
- * the largest stamp handed out, and -1 if any fresh orange was never reached at all.
- *
- * <p>The grid is mutated as it goes: a cell flips 1 -&gt; 2 the instant it is spoiled, which
- * is also what stops it being queued twice.
+ * <p>The code never writes into {@code grid}; it marks {@code visited} and counts
+ * {@code freshCnt} down. The canvas draws a fresh orange the BFS has reached as 2 (rotten), so
+ * the spread is visible. {@code minutes} grows only when another level is waiting - the last
+ * level rots nothing new, and counting it would be one minute too many.
  */
 @Component
 public class RottingOrangesTracer implements AlgorithmTracer {
 
-    private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    // The code's own direction order: up, right, down, left.
+    private static final int[] D_ROW = {-1, 0, 1, 0};
+    private static final int[] D_COL = {0, 1, 0, -1};
 
     @Override
     public String id() {
@@ -69,130 +69,174 @@ public class RottingOrangesTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int orangesRotting(int[][] grid) {
-                   // @a survey
-                   int rows = grid.length, cols = grid[0].length;
-                   Queue<int[]> queue = new LinkedList<>();
-                   int fresh = 0;
-                   for (int r = 0; r < rows; r++) {
-                       for (int c = 0; c < cols; c++) {
-                           if (grid[r][c] == 2) {
-                               queue.add(new int[]{r, c, 0});
-                           } else if (grid[r][c] == 1) {
-                               fresh++;
+               class Pair {
+                   int row;
+                   int col;
+
+                   Pair(int row,int col) {
+                       this.row = row;
+                       this.col = col;
+                   }
+               }
+
+               class Solution {
+                   public static int[] dRow = {-1,0,1,0};
+                   public static int[] dCol = {0,1,0,-1};
+
+                   public int orangesRotting(int[][] grid) {
+                       // @a init
+                       int m = grid.length;
+                       int n = grid[0].length;
+                       int freshCnt = 0;
+                       boolean[][] visited = new boolean[m][n];
+                       Queue<Pair> q = new LinkedList<>();
+
+                       for (int i=0;i<m;i++) {
+                           for (int j=0;j<n;j++) {
+                               if (grid[i][j] == 1) {
+                                   freshCnt++;
+                               } else if (grid[i][j] == 2) {
+                                   visited[i][j] = true;
+                                   q.add(new Pair(i,j));
+                               }
                            }
                        }
+
+                       return bfs(freshCnt,visited,q,grid,m,n);
                    }
 
-                   int elapsed = 0, spoiled = 0;
-                   while (!queue.isEmpty()) {
-                       // @a dequeue
-                       int[] cell = queue.poll();
-                       int r = cell[0], c = cell[1], minute = cell[2];
-                       elapsed = Math.max(elapsed, minute);
+                   private int bfs(int freshCnt,boolean[][] visited,Queue<Pair> q,int[][] grid,int m,int n) {
+                       int minutes = 0;
 
-                       for (int[] d : DIRECTIONS) {
-                           int nr = r + d[0], nc = c + d[1];
-                           if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[nr][nc] != 1) {
-                               // @a immune
-                               continue;
+                       while (!q.isEmpty()) {
+                           // @a level
+                           int qlen = q.size();
+
+                           while (qlen-- > 0) {
+                               // @a poll
+                               Pair curr = q.poll();
+                               int currRow = curr.row;
+                               int currCol = curr.col;
+
+                               for (int i=0;i<4;i++) {
+                                   int newRow = currRow + dRow[i];
+                                   int newCol = currCol + dCol[i];
+
+                                   if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && grid[newRow][newCol]==1 && !visited[newRow][newCol]) {
+                                       // @a rot
+                                       visited[newRow][newCol] = true;
+                                       q.add(new Pair(newRow, newCol));
+                                       freshCnt--;
+                                   }
+                               }
                            }
-                           // @a spread
-                           grid[nr][nc] = 2;
-                           spoiled++;
-                           queue.add(new int[]{nr, nc, minute + 1});
-                       }
-                   }
 
-                   if (spoiled == fresh) {
-                       // @a cleared
-                       return elapsed;
+                           if (!q.isEmpty())
+                               // @a minute
+                               minutes++;
+                       }
+
+                       // @a done
+                       return (freshCnt == 0) ? minutes : -1;
                    }
-                   // @a stranded
-                   return -1;
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[][] grid = in.getGrid("grid");
-        int rows = grid.length;
-        int cols = grid[0].length;
-
-        Deque<int[]> queue = new ArrayDeque<>();
-        int fresh = 0;
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (grid[r][c] == 2) {
-                    queue.add(new int[]{r, c, 0});
-                } else if (grid[r][c] == 1) {
-                    fresh++;
+        int m = grid.length;
+        int n = grid[0].length;
+        int freshCnt = 0;
+        boolean[][] visited = new boolean[m][n];
+        Deque<int[]> q = new ArrayDeque<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    freshCnt++;
+                } else if (grid[i][j] == 2) {
+                    visited[i][j] = true;
+                    q.add(new int[]{i, j});
                 }
             }
         }
 
-        emit.at("survey").say("A %dx%d crate holding %d fresh orange%s and %d rotten one%s. Every "
-                        + "rotten orange starts the clock at minute 0.",
-                        rows, cols, fresh, Narration.s(fresh), queue.size(), Narration.s(queue.size()))
-                .var("fresh", fresh).var("sources", queue.size())
-                .grid(grid).queue(stamps(queue)).step();
+        emit.at("init").say("%d fresh orange%s and %d rotten one%s. Every rotten orange goes in the "
+                        + "queue at minute 0; each BFS level after that is one more minute.",
+                        freshCnt, Narration.s(freshCnt), q.size(), Narration.s(q.size()))
+                .var("freshCnt", freshCnt).var("minutes", 0)
+                .grid(view(grid, visited)).queue(cells(q)).step();
 
-        int elapsed = 0;
-        int spoiled = 0;
-        while (!queue.isEmpty()) {
-            int[] cell = queue.poll();
-            int r = cell[0];
-            int c = cell[1];
-            int minute = cell[2];
-            elapsed = Math.max(elapsed, minute);
+        int minutes = 0;
+        while (!q.isEmpty()) {
+            int qlen = q.size();
+            emit.at("level").say("Minute %d: %d rotten orange%s in the queue. Each one rots any fresh "
+                            + "orange it shares an edge with.", minutes, qlen, Narration.s(qlen))
+                    .var("qlen", qlen).var("minutes", minutes).var("freshCnt", freshCnt)
+                    .grid(view(grid, visited)).queue(cells(q)).step();
 
-            emit.at("dequeue").say("Take (%d,%d), rotten as of minute %d. Check its four neighbours.",
-                            r, c, minute)
-                    .var("cell", "(" + r + "," + c + ")").var("minute", minute)
-                    .var("remaining", fresh - spoiled)
-                    .grid(grid).queue(stamps(queue)).step();
+            while (qlen-- > 0) {
+                int[] curr = q.poll();
+                int currRow = curr[0];
+                int currCol = curr[1];
+                emit.at("poll").say("Take (%d,%d) off the queue and look at its four neighbours.",
+                                currRow, currCol)
+                        .var("currRow", currRow).var("currCol", currCol).var("freshCnt", freshCnt)
+                        .grid(view(grid, visited)).queue(cells(q)).step();
 
-            for (int[] d : DIRECTIONS) {
-                int nr = r + d[0];
-                int nc = c + d[1];
-                if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[nr][nc] != 1) {
-                    emit.at("immune").say("(%d,%d) is off the crate, empty, or already rotten - the "
-                                    + "rot has nothing to do there.", nr, nc)
-                            .var("cell", "(" + nr + "," + nc + ")")
-                            .grid(grid).queue(stamps(queue)).step();
-                    continue;
+                for (int i = 0; i < 4; i++) {
+                    int newRow = currRow + D_ROW[i];
+                    int newCol = currCol + D_COL[i];
+                    if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n
+                            && grid[newRow][newCol] == 1 && !visited[newRow][newCol]) {
+                        visited[newRow][newCol] = true;
+                        q.add(new int[]{newRow, newCol});
+                        freshCnt--;
+                        emit.at("rot").say("(%d,%d) is a fresh orange next to (%d,%d), so it rots: mark it "
+                                        + "visited and queue it. %d fresh left.",
+                                        newRow, newCol, currRow, currCol, freshCnt)
+                                .var("newRow", newRow).var("newCol", newCol).var("freshCnt", freshCnt)
+                                .grid(view(grid, visited)).queue(cells(q)).step();
+                    }
                 }
-                grid[nr][nc] = 2;
-                spoiled++;
-                queue.add(new int[]{nr, nc, minute + 1});
+            }
 
-                emit.at("spread").say("(%d,%d) is fresh and shares an edge, so it spoils at minute "
-                                + "%d. %d fresh orange%s left.",
-                                nr, nc, minute + 1, fresh - spoiled, Narration.s(fresh - spoiled))
-                        .var("cell", "(" + nr + "," + nc + ")").var("minute", minute + 1)
-                        .var("remaining", fresh - spoiled)
-                        .grid(grid).queue(stamps(queue)).step();
+            if (!q.isEmpty()) {
+                minutes++;
+                emit.at("minute").say("Oranges rotted this minute, and they will spread next: minutes = %d.",
+                                minutes)
+                        .var("minutes", minutes).var("freshCnt", freshCnt)
+                        .grid(view(grid, visited)).queue(cells(q)).step();
             }
         }
 
-        if (spoiled == fresh) {
-            emit.at("cleared").say("All %d fresh orange%s spoiled; the last one went at minute %d. "
-                            + "Answer: %d.", fresh, Narration.s(fresh), elapsed, elapsed)
-                    .var("answer", elapsed).var("spoiled", spoiled)
-                    .grid(grid).step();
-        } else {
-            emit.at("stranded").say("The queue is empty but %d fresh orange%s were never reached - "
-                            + "no amount of waiting rots them. Answer: -1.", fresh - spoiled, Narration.s(fresh - spoiled))
-                    .var("answer", -1).var("unreachable", fresh - spoiled)
-                    .grid(grid).step();
-        }
+        int answer = freshCnt == 0 ? minutes : -1;
+        emit.at("done").say(freshCnt == 0
+                        ? "The queue is empty and no fresh orange is left, so return minutes = " + minutes + "."
+                        : "The queue is empty but " + freshCnt + " fresh orange" + Narration.s(freshCnt)
+                                + " never touched a rotten one - they can never rot. Return -1.")
+                .var("freshCnt", freshCnt).var("minutes", minutes).var("answer", answer)
+                .grid(view(grid, visited)).step();
     }
 
-    /** Queue entries carry the minute they were stamped with, which is the whole trick. */
-    private static List<String> stamps(Deque<int[]> queue) {
+    /** A fresh orange the BFS has reached is drawn as 2: rotten. */
+    private static int[][] view(int[][] grid, boolean[][] visited) {
+        int[][] out = new int[grid.length][];
+        for (int r = 0; r < grid.length; r++) {
+            out[r] = grid[r].clone();
+            for (int c = 0; c < grid[r].length; c++) {
+                if (visited[r][c]) {
+                    out[r][c] = 2;
+                }
+            }
+        }
+        return out;
+    }
+
+    private static List<String> cells(Deque<int[]> q) {
         List<String> out = new ArrayList<>();
-        for (int[] cell : queue) {
-            out.add("(" + cell[0] + "," + cell[1] + ") min " + cell[2]);
+        for (int[] cell : q) {
+            out.add("(" + cell[0] + "," + cell[1] + ")");
         }
         return out;
     }

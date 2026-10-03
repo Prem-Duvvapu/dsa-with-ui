@@ -43,6 +43,18 @@ class TracerAnswerRegressionTest {
                 .isInstanceOf(InputValidationException.class);
     }
 
+    /**
+     * The nearest-1 BFS seeds its queue with every 1. With no 1 at all, res would stay all 0 -
+     * every cell claiming distance 0 to a 1 that does not exist - so the input is refused.
+     */
+    @ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"nearest-cell-1", "distance-nearest-1"})
+    void nearestOneRefusesAGridWithNoOne(String id) {
+        AlgorithmTracer tracer = tracers.find(id).orElseThrow();
+        assertThatThrownBy(() -> runner.run(tracer, Map.of("grid", List.of(List.of(0, 0), List.of(0, 0)))))
+                .isInstanceOf(InputValidationException.class);
+    }
+
     @ParameterizedTest(name = "{0} {1} -> {2} = {3}")
     @CsvSource(delimiter = '|', textBlock = """
             # '^' is right-associative: A^B^C is A^(B^C).
@@ -75,6 +87,13 @@ class TracerAnswerRegressionTest {
             partition-equal-subset-sum | {"nums":[0,2,2]}                       | answer        | true
             partition-set-min-abs-diff | {"nums":[0,3]}                         | answer        | 3
             target-sum-dp              | {"nums":[0,1],"target":1}              | answer        | 2
+            # Owner-code rewrites (grid BFS): no orange at all needs no time; a fresh orange the rot
+            # cannot reach makes it impossible; the last level must not count as a minute.
+            rotting-oranges        | {"grid":[[0]]}                             | answer        | 0
+            rotting-oranges        | {"grid":[[2,1,1],[0,1,1],[1,0,1]]}         | answer        | -1
+            rotting-oranges        | {"grid":[[2,1,1],[1,1,0],[0,1,1]]}         | answer        | 4
+            nearest-cell-1         | {"grid":[[0,1,1,0],[1,1,0,0],[0,0,1,1]]}   | res           | [[1,0,0,1],[0,0,1,1],[1,1,0,0]]
+            distance-nearest-1     | {"grid":[[1,0,0],[0,0,0],[0,0,0]]}         | res           | [[0,1,2],[1,2,3],[2,3,4]]
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));
