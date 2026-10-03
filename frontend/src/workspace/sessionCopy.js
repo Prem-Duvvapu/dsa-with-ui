@@ -20,12 +20,15 @@ export const RUN_FAILURE_COPY = Object.freeze({
 
 /** What a shared link asked for that could not be honoured, in the learner's terms. */
 export function linkNoticeText(notice) {
-  // `kept`: the link could not be honoured and the previous CUSTOM run is still on screen, so
-  // the notice says so - and the link was pointed back at that run - rather than claiming
-  // the default input is shown.
-  const outcome = notice.kept
-    ? 'The previous run is still shown, and the link now points to it.'
-    : 'Showing the default input.';
+  // Never infer a default execution merely from the absence of a custom submission.
+  const outcome = {
+    custom: notice.shared
+      ? 'The previous run is still shown, and the link now points to it.'
+      : 'The previous run is still shown, but its input cannot fit in a share link.',
+    default: 'Showing the default input.',
+    offline: 'Showing the offline sample; its input is unknown.',
+    none: 'There is no run to show.'
+  }[notice.available] ?? 'There is no run to show.';
   if (notice.kind === 'input' && notice.reason === 'unreadable') {
     return `The input in this link could not be read, so it was not run. ${outcome}`;
   }

@@ -129,6 +129,7 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 
 | Task/state | Base commit/build | Browser/viewport/theme | Real backend or fixture | Artifact/measurement | Result and fix |
 | --- | --- | --- | --- | --- | --- |
+| Re-audit R1/R2 | `ea5e579` + fix/ui-revamp-reaudit change set | Chromium 1366×844, 390×844, light/dark, reduced motion | Explicit API fixtures | `evidence/reaudit/results.json`, `r1-r2-journey.cjs`, `source-*.png` | 40 checks pass, 0 page errors: native source arrows scroll without seeking, sharing or fetching; unavailable defaults + rejected/malformed links truthfully describe no run or offline sample; Analysis recovery focuses the editor. Full suite 616 tests; 11 defect cases RED on base |
 | Library first load | `82f2808` dev | Chromium 1.63, 1366×768 + 390×844, light + dark | Real backend | `evidence/p0/p0-library-*.jpg`; search top 491 / 549px; first row 691–777px at 1366 | Fails search and first-row gates → P2 |
 | Array workspace (Two Sum) | `82f2808` dev | same | Real backend | `evidence/p0/p0-array-1366x768-light.jpg`; stage 705×223 at y219 | Stage too short → P3 |
 | Graph+Queue workspace (BFS) | `82f2808` dev | same | Real backend | `evidence/p0/p0-graph-*.jpg`; stage 705×359 | Below 440px target → P3 |
@@ -150,6 +151,7 @@ Representatives are chosen from the live catalogue (431 entries). Counts per key
 
 | Date/package | Evidence/problem | Decision | Tradeoff | Follow-up/gate |
 | --- | --- | --- | --- | --- |
+| 2026-10-03 / re-audit R1/R2 | Horizontal source arrows leaked to playback; absent/offline run treated as default | Source owns both horizontal arrows; refusal carries explicit available-run state; step and Analysis notices respect absence | Precise sample input stays unknown; no claim that an unavailable run is shown | Implemented and verified; historical review findings retained. Fixture browser evidence, no fresh real-backend certification |
 | 2026-09-29 / planning | Old plan predates existing sharing/comparison and dedicated renderers | New handoff takes precedence | Older docs retained as historical context | Implementing agent reads handoff first |
 | 2026-09-29 / P0 | `/mnt/c` vitest run takes 10+ minutes | Implement in a git worktree on the WSL Linux filesystem (`/home/prem/dsa-ui-revamp`), same repository and branches | One extra worktree entry in `git worktree list` | Remove the worktree after P9 |
 | 2026-09-29 / P0 | No browser harness in the repo | Use Playwright 1.63 from the npx cache via `evidence/browser-audit.cjs`; no new dependency | Not in CI; a human must run it | Revisit at P8 if CI browser coverage is required |

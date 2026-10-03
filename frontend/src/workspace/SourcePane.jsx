@@ -3,7 +3,7 @@ import { Crosshair } from 'lucide-react';
 import CodeViewer from '../components/CodeViewer';
 import styles from './ProblemWorkspace.module.css';
 
-const MANUAL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
+const MANUAL_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
 
 /**
  * The Java source, following execution until the learner takes over.

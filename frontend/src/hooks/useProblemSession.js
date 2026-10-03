@@ -121,15 +121,17 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       const notices = [];
       let total = runRef.current.problemId === pending.problemId ? runRef.current.steps.length : 0;
       let honoured = true;
-      // When a link cannot be honoured, whatever was on screen stays on screen. If that is a
-      // custom run, saying "showing the default input" - and dropping `input` from the link -
-      // would contradict it (B2): the link is pointed back at the run actually displayed.
+      // A refused link describes the matching committed run, including when none exists.
+      // An offline sample has unknown input; it cannot be called the default execution.
       const refuse = (reason) => {
         honoured = false;
         const shown = runRef.current;
-        const keptCustom = shown.problemId === pending.problemId && shown.submittedInput !== null;
-        shareInput(keptCustom ? shown.submittedInput : null);
-        notices.push({ kind: 'input', reason, kept: keptCustom });
+        const hasRun = shown.problemId === pending.problemId && shown.id > 0 && shown.steps.length > 0;
+        const available = !hasRun ? 'none' : shown.offline ? 'offline'
+          : shown.submittedInput !== null ? 'custom' : 'default';
+        const shared = shareInput(available === 'custom' ? shown.submittedInput : null);
+        setShareNote(shared ? null : 'too-long');
+        notices.push({ kind: 'input', reason, available, shared });
       };
 
       if (pending.input.status === 'invalid') {
@@ -146,8 +148,12 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       // on screen, otherwise step 1 - applied explicitly, never inherited from the old URL.
       if (pending.step !== null && !honoured) {
         dropStep();
-        seek(0);
-        notices.push({ kind: 'step-dropped', requested: pending.step + 1 });
+        if (total === 0) {
+          notices.push({ kind: 'step-no-run', requested: pending.step + 1 });
+        } else {
+          seek(0);
+          notices.push({ kind: 'step-dropped', requested: pending.step + 1 });
+        }
       } else if (pending.step !== null && total === 0) {
         notices.push({ kind: 'step-no-run', requested: pending.step + 1 });
       } else if (pending.step !== null && pending.step < total) {

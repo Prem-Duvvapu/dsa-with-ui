@@ -77,6 +77,7 @@ describe('A rejected run stays fixable after leaving the editor (S7)', () => {
     fireEvent.click(within(notice).getByRole('button', { name: 'Fix it in the editor' }));
     expect(screen.getByRole('tab', { name: 'Playground' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByText('Count: Must be at most 50.')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Try your own input' })).toHaveFocus();
   });
 });
 
