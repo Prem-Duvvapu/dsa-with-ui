@@ -5,14 +5,13 @@ import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * Count Number of Nice Subarrays — subarrays with exactly K odd numbers.
- * An array element is either odd (1) or even (0). Counting subarrays with K odds
- * reduces to {@code atMost(k) - atMost(k - 1)}, solved in O(N) via two-pointer sliding window.
+ * Count Number of Nice Subarrays (LeetCode 1248), traced on the owner's own accepted submission. Counting windows with EXACTLY k is awkward;
+ * counting windows with AT MOST k is a plain sliding window - for each right end, every start from
+ * left to right works, which is right - left + 1 windows. So exactly(k) = atMost(k) - atMost(k - 1),
+ * two O(n) passes. Replacing every number by num % 2 turns "k odd numbers" into "sum k", so this is Binary Subarrays With Sum again.
  */
 @Component
 public class CountNiceSubarraysTracer implements AlgorithmTracer {
@@ -53,26 +52,44 @@ public class CountNiceSubarraysTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int numberOfSubarrays(int[] nums, int k) {
-                   // @a combine
-                   return atMost(nums, k) - atMost(nums, k - 1);
-               }
+               class Solution {
+                   public int numberOfSubarrays(int[] nums, int k) {
+                       // @a init
+                       int n=nums.length;
+                       int[] arr=new int[n];
 
-               private int atMost(int[] nums, int k) {
-                   if (k < 0) return 0;
-                   int left = 0, odds = 0, total = 0;
-                   for (int right = 0; right < nums.length; right++) {
-                       // @a expand
-                       if (nums[right] % 2 != 0) odds++;
-                       while (odds > k && left <= right) {
-                           // @a shrink
-                           if (nums[left] % 2 != 0) odds--;
-                           left++;
-                       }
-                       // @a countWindows
-                       total += right - left + 1;
+                       for (int i=0;i<n;i++)
+                           arr[i]=nums[i]%2;
+
+                       int res=solve(arr,k)-solve(arr,k-1);
+                       // @a done
+                       return res;
                    }
-                   return total;
+
+                   private int solve(int[] nums,int k) {
+                       int left=0;
+                       int right=0;
+                       int resCnt=0;
+                       int sum=0;
+
+                       while (right < nums.length) {
+                           // @a add
+                           sum+=nums[right];
+
+                           while (sum > k) {
+                               // @a shrink
+                               sum-=nums[left];
+                               left++;
+                           }
+
+                           // @a count
+                           resCnt+=(right-left+1);
+                           right++;
+                       }
+
+                       // @a total
+                       return resCnt;
+                   }
                }""";
     }
 
@@ -80,67 +97,50 @@ public class CountNiceSubarraysTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
         int k = in.getInt("k");
-
-        int atMostK = atMost(nums, k, emit, k);
-        int atMostKMinus1 = k > 0 ? atMost(nums, k - 1, emit, k - 1) : 0;
-        int exact = atMostK - atMostKMinus1;
-
-        emit.at("combine")
-                .say("Pass 1 (odds ≤ %d): %d subarrays. Pass 2 (odds ≤ %d): %d subarrays. "
-                                + "Exactly %d odds: %d - %d = %d nice subarrays.",
-                        k, atMostK, k - 1, atMostKMinus1, k, atMostK, atMostKMinus1, exact)
-                .var("atMostK", atMostK).var("atMostKMinus1", atMostKMinus1).var("answer", exact)
-                .array(nums, -1)
-                .step();
+        int n = nums.length;
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) arr[i] = nums[i] % 2;
+        emit.at("init").say("Odd numbers become 1 and even ones 0: arr = %s. Now a subarray with k = %d odd numbers is "
+                        + "a subarray of arr summing to %d, and exactly(%d) = atMost(%d) - atMost(%d).",
+                        Arrays.toString(arr), k, k, k, k, k - 1)
+                .var("k", k).arrayState(WindowCells.of(arr, -1, -1)).step();
+        int a = solve(arr, k, emit);
+        int b = solve(arr, k - 1, emit);
+        int res = a - b;
+        emit.at("done").say("%d - %d = %d nice subarrays.", a, b, res)
+                .var("res", res).var("answer", res).arrayState(WindowCells.of(arr, -1, -1)).step();
     }
 
-    private int atMost(int[] nums, int limit, StepEmitter emit, int passLabel) {
-        if (limit < 0) return 0;
-        int left = 0, odds = 0, total = 0;
-
-        for (int right = 0; right < nums.length; right++) {
-            boolean isOdd = nums[right] % 2 != 0;
-            if (isOdd) odds++;
-            emit.at("expand")
-                    .say("[Pass odds ≤ %d] Add nums[%d]=%d (%s) → odds in window: %d.",
-                            limit, right, nums[right], isOdd ? "ODD" : "EVEN", odds)
-                    .var("pass", "atMost(" + passLabel + ")").var("left", left).var("right", right).var("odds", odds)
-                    .arrayState(windowState(nums, left, right))
-                    .step();
-
-            while (odds > limit && left <= right) {
-                boolean leftWasOdd = nums[left] % 2 != 0;
-                if (leftWasOdd) odds--;
+    private static int solve(int[] nums, int k, StepEmitter emit) {
+        emit.push("solve(arr, " + k + ")");
+        int left = 0;
+        int right = 0;
+        int resCnt = 0;
+        int sum = 0;
+        while (right < nums.length) {
+            sum += nums[right];
+            emit.at("add").say("solve(%d): add arr[%d] = %d. %d odd number%s in the window.",
+                            k, right, nums[right], sum, Narration.s(sum))
+                    .var("k", k).var("left", left).var("right", right).var("sum", sum).var("resCnt", resCnt)
+                    .arrayState(WindowCells.of(nums, left, right)).step();
+            while (sum > k) {
+                sum -= nums[left];
                 left++;
-                emit.at("shrink")
-                        .say("[Pass odds ≤ %d] Odds (%d) > %d → shrink left past index %d (%s). Left is now %d, odds in window: %d.",
-                                limit, odds + (leftWasOdd ? 1 : 0), limit, left - 1, leftWasOdd ? "ODD" : "EVEN", left, odds)
-                        .var("pass", "atMost(" + passLabel + ")").var("left", left).var("right", right).var("odds", odds)
-                        .arrayState(windowState(nums, left, right))
-                        .step();
+                emit.at("shrink").say("More than %d odd: drop arr[%d]. sum = %d.", k, left - 1, sum)
+                        .var("k", k).var("left", left).var("right", right).var("sum", sum).var("resCnt", resCnt)
+                        .arrayState(WindowCells.of(nums, left, right)).step();
             }
-
-            total += right - left + 1;
-            emit.at("countWindows")
-                    .say("[Pass odds ≤ %d] Window [%d,%d] adds %d valid subarrays ending at index %d. Running total: %d.",
-                            limit, left, right, right - left + 1, right, total)
-                    .var("pass", "atMost(" + passLabel + ")").var("added", right - left + 1).var("total", total)
-                    .arrayState(windowState(nums, left, right))
-                    .step();
+            resCnt += right - left + 1;
+            emit.at("count").say("%d subarray%s %s at %d with at most %d odd. resCnt = %d.",
+                            right - left + 1, Narration.s(right - left + 1),
+                            Narration.plural(right - left + 1, "ends", "end"), right, k, resCnt)
+                    .var("k", k).var("left", left).var("right", right).var("sum", sum).var("resCnt", resCnt)
+                    .arrayState(WindowCells.of(nums, left, right)).step();
+            right++;
         }
-
-        return total;
-    }
-
-    private static List<ArrayElement> windowState(int[] nums, int left, int right) {
-        List<ArrayElement> state = new ArrayList<>(nums.length);
-        for (int i = 0; i < nums.length; i++) {
-            String st = (i == right) ? "current"
-                    : (i == left) ? "target"
-                    : (i > left && i < right) ? "active"
-                    : "default";
-            state.add(new ArrayElement(i, nums[i], st, nums[i] % 2 != 0 ? "odd" : "even"));
-        }
-        return state;
+        emit.at("total").say("solve(arr, %d) = %d.", k, resCnt)
+                .var("k", k).var("resCnt", resCnt).arrayState(WindowCells.of(nums, -1, -1)).step();
+        emit.pop();
+        return resCnt;
     }
 }

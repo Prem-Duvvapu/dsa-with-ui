@@ -1,28 +1,113 @@
 {
   "anchors" : {
-    "done" : 25,
-    "expand" : 10,
-    "recordBest" : 15,
-    "shrink" : 19
+    "add" : 17,
+    "covers" : 24,
+    "done" : 45,
+    "init" : 3,
+    "none" : 43
   },
-  "code" : "public String minWindow(String s, String t) {\n    Map<Character, Integer> need = new HashMap<>();\n    for (char c : t.toCharArray()) need.merge(c, 1, Integer::sum);\n\n    Map<Character, Integer> window = new HashMap<>();\n    int have = 0, needCount = need.size();\n    int left = 0, bestLen = Integer.MAX_VALUE, bestStart = 0;\n\n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        window.merge(c, 1, Integer::sum);\n        if (need.containsKey(c) && window.get(c).intValue() == need.get(c).intValue()) have++;\n\n        while (have == needCount) {\n            if (right - left + 1 < bestLen) {\n                bestLen = right - left + 1;\n                bestStart = left;\n            }\n            char leftChar = s.charAt(left);\n            window.merge(leftChar, -1, Integer::sum);\n            if (need.containsKey(leftChar) && window.get(leftChar) < need.get(leftChar)) have--;\n            left++;\n        }\n    }\n    return bestLen == Integer.MAX_VALUE ? \"\" : s.substring(bestStart, bestStart + bestLen);\n}",
+  "code" : "class Solution {\n    public String minWindow(String s, String t) {\n        int n=s.length();\n        int m=t.length();\n        int[] freq=new int[256];\n        int left=0;\n        int right=0;\n        int cnt=0;\n        int minLen=(int)1e6;\n        int currLen=0;\n        int startIndex=-1;\n\n        for (char ch: t.toCharArray())\n            freq[ch]--;\n\n        while (right<n) {\n            char ch=s.charAt(right);\n            freq[ch]++;\n\n            if (freq[ch]<=0)\n                cnt++;\n\n            while (cnt==m) {\n                currLen=right-left+1;\n                if (currLen<minLen) {\n                    minLen=currLen;\n                    startIndex=left;\n                }\n\n                char leftChar=s.charAt(left);\n                freq[leftChar]--;\n\n                if (freq[leftChar]<0)\n                    cnt--;\n\n                left++;\n            }\n\n            right++;\n        }\n\n        if (startIndex==-1)\n            return \"\";\n\n        return s.substring(startIndex,startIndex+minLen);\n    }\n}",
   "problemId" : "minimum-window-substring",
   "resolvedInput" : {
     "s" : "ADOBECODEBANC",
     "t" : "ABC"
   },
-  "stepCount" : 27,
+  "stepCount" : 25,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 10,
-    "description" : "Add 'A'. Covering 1 of 3 required distinct characters.",
+    "activeLine" : 3,
+    "description" : "freq starts at minus each character's count in t = \"ABC\". cnt counts the characters of t the window has; it covers t when cnt = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "1",
-      "need" : "3",
+      "cnt" : "0",
+      "m" : "3"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 2,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 3,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 4,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 5,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    }, {
+      "index" : 6,
+      "value" : 79,
+      "state" : "default",
+      "label" : "O"
+    }, {
+      "index" : 7,
+      "value" : 68,
+      "state" : "default",
+      "label" : "D"
+    }, {
+      "index" : 8,
+      "value" : 69,
+      "state" : "default",
+      "label" : "E"
+    }, {
+      "index" : 9,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 10,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 11,
+      "value" : 78,
+      "state" : "default",
+      "label" : "N"
+    }, {
+      "index" : 12,
+      "value" : 67,
+      "state" : "default",
+      "label" : "C"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 17,
+    "description" : "Take in 'A' at 0: t needed it. cnt = 1 of 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "best" : "none",
+      "cnt" : "1",
+      "left" : "0",
       "right" : "0"
     },
     "dsType" : "Window",
@@ -97,16 +182,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 2,
-    "activeLine" : 10,
-    "description" : "Add 'D'. Covering 1 of 3 required distinct characters.",
+    "stepNumber" : 3,
+    "activeLine" : 17,
+    "description" : "Take in 'D' at 1: t does not need another one. cnt stays 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "1",
-      "need" : "3",
+      "best" : "none",
+      "cnt" : "1",
+      "left" : "0",
       "right" : "1"
     },
     "dsType" : "Window",
@@ -181,16 +267,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 3,
-    "activeLine" : 10,
-    "description" : "Add 'O'. Covering 1 of 3 required distinct characters.",
+    "stepNumber" : 4,
+    "activeLine" : 17,
+    "description" : "Take in 'O' at 2: t does not need another one. cnt stays 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "1",
-      "need" : "3",
+      "best" : "none",
+      "cnt" : "1",
+      "left" : "0",
       "right" : "2"
     },
     "dsType" : "Window",
@@ -265,16 +352,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 4,
-    "activeLine" : 10,
-    "description" : "Add 'B'. Covering 2 of 3 required distinct characters.",
+    "stepNumber" : 5,
+    "activeLine" : 17,
+    "description" : "Take in 'B' at 3: t needed it. cnt = 2 of 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "need" : "3",
+      "best" : "none",
+      "cnt" : "2",
+      "left" : "0",
       "right" : "3"
     },
     "dsType" : "Window",
@@ -349,16 +437,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 5,
-    "activeLine" : 10,
-    "description" : "Add 'E'. Covering 2 of 3 required distinct characters.",
+    "stepNumber" : 6,
+    "activeLine" : 17,
+    "description" : "Take in 'E' at 4: t does not need another one. cnt stays 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "need" : "3",
+      "best" : "none",
+      "cnt" : "2",
+      "left" : "0",
       "right" : "4"
     },
     "dsType" : "Window",
@@ -433,16 +522,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 6,
-    "activeLine" : 10,
-    "description" : "Add 'C'. Covering 3 of 3 required distinct characters.",
+    "stepNumber" : 7,
+    "activeLine" : 17,
+    "description" : "Take in 'C' at 5: t needed it. cnt = 3 of 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "need" : "3",
+      "best" : "none",
+      "cnt" : "3",
+      "left" : "0",
       "right" : "5"
     },
     "dsType" : "Window",
@@ -517,111 +607,30 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 7,
-    "activeLine" : 15,
-    "description" : "Window [0,5] (\"ADOBEC\") covers t and beats the best so far: length 6.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "bestLen" : "6",
-      "bestWindow" : "ADOBEC"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 65,
-      "state" : "target",
-      "label" : "A"
-    }, {
-      "index" : 1,
-      "value" : 68,
-      "state" : "active",
-      "label" : "D"
-    }, {
-      "index" : 2,
-      "value" : 79,
-      "state" : "active",
-      "label" : "O"
-    }, {
-      "index" : 3,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 4,
-      "value" : 69,
-      "state" : "active",
-      "label" : "E"
-    }, {
-      "index" : 5,
-      "value" : 67,
-      "state" : "current",
-      "label" : "C"
-    }, {
-      "index" : 6,
-      "value" : 79,
-      "state" : "default",
-      "label" : "O"
-    }, {
-      "index" : 7,
-      "value" : 68,
-      "state" : "default",
-      "label" : "D"
-    }, {
-      "index" : 8,
-      "value" : 69,
-      "state" : "default",
-      "label" : "E"
-    }, {
-      "index" : 9,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 10,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 11,
-      "value" : 78,
-      "state" : "default",
-      "label" : "N"
-    }, {
-      "index" : 12,
-      "value" : 67,
-      "state" : "default",
-      "label" : "C"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
     "stepNumber" : 8,
-    "activeLine" : 19,
-    "description" : "Shrink past 'A' - window now starts at 1 (covering 2 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [0, 5] = \"ADOBEC\" covers t (length 6; best so far \"ADOBEC\"). Drop 'A' from the left, which t needed - cnt = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "left" : "1"
+      "best" : "ADOBEC",
+      "cnt" : "2",
+      "left" : "1",
+      "right" : "5"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 65,
-      "state" : "default",
+      "state" : "target",
       "label" : "A"
     }, {
       "index" : 1,
       "value" : 68,
-      "state" : "target",
+      "state" : "active",
       "label" : "D"
     }, {
       "index" : 2,
@@ -684,15 +693,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 10,
-    "description" : "Add 'O'. Covering 2 of 3 required distinct characters.",
+    "activeLine" : 17,
+    "description" : "Take in 'O' at 6: t does not need another one. cnt stays 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "need" : "3",
+      "best" : "ADOBEC",
+      "cnt" : "2",
+      "left" : "1",
       "right" : "6"
     },
     "dsType" : "Window",
@@ -768,15 +778,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 10,
-    "description" : "Add 'D'. Covering 2 of 3 required distinct characters.",
+    "activeLine" : 17,
+    "description" : "Take in 'D' at 7: t does not need another one. cnt stays 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "need" : "3",
+      "best" : "ADOBEC",
+      "cnt" : "2",
+      "left" : "1",
       "right" : "7"
     },
     "dsType" : "Window",
@@ -852,15 +863,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 10,
-    "description" : "Add 'E'. Covering 2 of 3 required distinct characters.",
+    "activeLine" : 17,
+    "description" : "Take in 'E' at 8: t does not need another one. cnt stays 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "need" : "3",
+      "best" : "ADOBEC",
+      "cnt" : "2",
+      "left" : "1",
       "right" : "8"
     },
     "dsType" : "Window",
@@ -936,15 +948,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 10,
-    "description" : "Add 'B'. Covering 2 of 3 required distinct characters.",
+    "activeLine" : 17,
+    "description" : "Take in 'B' at 9: t does not need another one. cnt stays 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "need" : "3",
+      "best" : "ADOBEC",
+      "cnt" : "2",
+      "left" : "1",
       "right" : "9"
     },
     "dsType" : "Window",
@@ -1020,15 +1033,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 10,
-    "description" : "Add 'A'. Covering 3 of 3 required distinct characters.",
+    "activeLine" : 17,
+    "description" : "Take in 'A' at 10: t needed it. cnt = 3 of 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "need" : "3",
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "1",
       "right" : "10"
     },
     "dsType" : "Window",
@@ -1104,15 +1118,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 19,
-    "description" : "Shrink past 'D' - window now starts at 2 (covering 3 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [1, 10] = \"DOBECODEBA\" covers t (length 10; best so far \"ADOBEC\"). Drop 'D' from the left; t did not need it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "left" : "2"
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "2",
+      "right" : "10"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1124,12 +1140,12 @@
     }, {
       "index" : 1,
       "value" : 68,
-      "state" : "default",
+      "state" : "target",
       "label" : "D"
     }, {
       "index" : 2,
       "value" : 79,
-      "state" : "target",
+      "state" : "active",
       "label" : "O"
     }, {
       "index" : 3,
@@ -1187,15 +1203,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 19,
-    "description" : "Shrink past 'O' - window now starts at 3 (covering 3 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [2, 10] = \"OBECODEBA\" covers t (length 9; best so far \"ADOBEC\"). Drop 'O' from the left; t did not need it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "left" : "3"
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "3",
+      "right" : "10"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1212,12 +1230,12 @@
     }, {
       "index" : 2,
       "value" : 79,
-      "state" : "default",
+      "state" : "target",
       "label" : "O"
     }, {
       "index" : 3,
       "value" : 66,
-      "state" : "target",
+      "state" : "active",
       "label" : "B"
     }, {
       "index" : 4,
@@ -1270,15 +1288,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 19,
-    "description" : "Shrink past 'B' - window now starts at 4 (covering 3 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [3, 10] = \"BECODEBA\" covers t (length 8; best so far \"ADOBEC\"). Drop 'B' from the left; t did not need it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "left" : "4"
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "4",
+      "right" : "10"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1300,12 +1320,12 @@
     }, {
       "index" : 3,
       "value" : 66,
-      "state" : "default",
+      "state" : "target",
       "label" : "B"
     }, {
       "index" : 4,
       "value" : 69,
-      "state" : "target",
+      "state" : "active",
       "label" : "E"
     }, {
       "index" : 5,
@@ -1353,15 +1373,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 19,
-    "description" : "Shrink past 'E' - window now starts at 5 (covering 3 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [4, 10] = \"ECODEBA\" covers t (length 7; best so far \"ADOBEC\"). Drop 'E' from the left; t did not need it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "left" : "5"
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "5",
+      "right" : "10"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1388,12 +1410,12 @@
     }, {
       "index" : 4,
       "value" : 69,
-      "state" : "default",
+      "state" : "target",
       "label" : "E"
     }, {
       "index" : 5,
       "value" : 67,
-      "state" : "target",
+      "state" : "active",
       "label" : "C"
     }, {
       "index" : 6,
@@ -1436,15 +1458,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 19,
-    "description" : "Shrink past 'C' - window now starts at 6 (covering 2 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [5, 10] = \"CODEBA\" covers t (length 6; best so far \"ADOBEC\"). Drop 'C' from the left, which t needed - cnt = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "left" : "6"
+      "best" : "ADOBEC",
+      "cnt" : "2",
+      "left" : "6",
+      "right" : "10"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1476,12 +1500,12 @@
     }, {
       "index" : 5,
       "value" : 67,
-      "state" : "default",
+      "state" : "target",
       "label" : "C"
     }, {
       "index" : 6,
       "value" : 79,
-      "state" : "target",
+      "state" : "active",
       "label" : "O"
     }, {
       "index" : 7,
@@ -1519,15 +1543,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 10,
-    "description" : "Add 'N'. Covering 2 of 3 required distinct characters.",
+    "activeLine" : 17,
+    "description" : "Take in 'N' at 11: t does not need another one. cnt stays 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "2",
-      "need" : "3",
+      "best" : "ADOBEC",
+      "cnt" : "2",
+      "left" : "6",
       "right" : "11"
     },
     "dsType" : "Window",
@@ -1603,15 +1628,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 10,
-    "description" : "Add 'C'. Covering 3 of 3 required distinct characters.",
+    "activeLine" : 17,
+    "description" : "Take in 'C' at 12: t needed it. cnt = 3 of 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "need" : "3",
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "6",
       "right" : "12"
     },
     "dsType" : "Window",
@@ -1687,15 +1713,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 19,
-    "description" : "Shrink past 'O' - window now starts at 7 (covering 3 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [6, 12] = \"ODEBANC\" covers t (length 7; best so far \"ADOBEC\"). Drop 'O' from the left; t did not need it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "left" : "7"
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "7",
+      "right" : "12"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1732,12 +1760,12 @@
     }, {
       "index" : 6,
       "value" : 79,
-      "state" : "default",
+      "state" : "target",
       "label" : "O"
     }, {
       "index" : 7,
       "value" : 68,
-      "state" : "target",
+      "state" : "active",
       "label" : "D"
     }, {
       "index" : 8,
@@ -1770,15 +1798,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 19,
-    "description" : "Shrink past 'D' - window now starts at 8 (covering 3 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [7, 12] = \"DEBANC\" covers t (length 6; best so far \"ADOBEC\"). Drop 'D' from the left; t did not need it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "left" : "8"
+      "best" : "ADOBEC",
+      "cnt" : "3",
+      "left" : "8",
+      "right" : "12"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1820,12 +1850,12 @@
     }, {
       "index" : 7,
       "value" : 68,
-      "state" : "default",
+      "state" : "target",
       "label" : "D"
     }, {
       "index" : 8,
       "value" : 69,
-      "state" : "target",
+      "state" : "active",
       "label" : "E"
     }, {
       "index" : 9,
@@ -1853,15 +1883,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 15,
-    "description" : "Window [8,12] (\"EBANC\") covers t and beats the best so far: length 5.",
+    "activeLine" : 24,
+    "description" : "Window [8, 12] = \"EBANC\" covers t (length 5; best so far \"EBANC\"). Drop 'E' from the left; t did not need it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "bestLen" : "5",
-      "bestWindow" : "EBANC"
+      "best" : "EBANC",
+      "cnt" : "3",
+      "left" : "9",
+      "right" : "12"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -1936,15 +1968,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 24,
-    "activeLine" : 19,
-    "description" : "Shrink past 'E' - window now starts at 9 (covering 3 of 3).",
+    "activeLine" : 24,
+    "description" : "Window [9, 12] = \"BANC\" covers t (length 4; best so far \"BANC\"). Drop 'B' from the left, which t needed - cnt = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "have" : "3",
-      "left" : "9"
+      "best" : "BANC",
+      "cnt" : "2",
+      "left" : "10",
+      "right" : "12"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -2019,174 +2053,8 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 25,
-    "activeLine" : 15,
-    "description" : "Window [9,12] (\"BANC\") covers t and beats the best so far: length 4.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "bestLen" : "4",
-      "bestWindow" : "BANC"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 1,
-      "value" : 68,
-      "state" : "default",
-      "label" : "D"
-    }, {
-      "index" : 2,
-      "value" : 79,
-      "state" : "default",
-      "label" : "O"
-    }, {
-      "index" : 3,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 4,
-      "value" : 69,
-      "state" : "default",
-      "label" : "E"
-    }, {
-      "index" : 5,
-      "value" : 67,
-      "state" : "default",
-      "label" : "C"
-    }, {
-      "index" : 6,
-      "value" : 79,
-      "state" : "default",
-      "label" : "O"
-    }, {
-      "index" : 7,
-      "value" : 68,
-      "state" : "default",
-      "label" : "D"
-    }, {
-      "index" : 8,
-      "value" : 69,
-      "state" : "default",
-      "label" : "E"
-    }, {
-      "index" : 9,
-      "value" : 66,
-      "state" : "target",
-      "label" : "B"
-    }, {
-      "index" : 10,
-      "value" : 65,
-      "state" : "active",
-      "label" : "A"
-    }, {
-      "index" : 11,
-      "value" : 78,
-      "state" : "active",
-      "label" : "N"
-    }, {
-      "index" : 12,
-      "value" : 67,
-      "state" : "current",
-      "label" : "C"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 26,
-    "activeLine" : 19,
-    "description" : "Shrink past 'B' - window now starts at 10 (covering 2 of 3).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "have" : "2",
-      "left" : "10"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 1,
-      "value" : 68,
-      "state" : "default",
-      "label" : "D"
-    }, {
-      "index" : 2,
-      "value" : 79,
-      "state" : "default",
-      "label" : "O"
-    }, {
-      "index" : 3,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 4,
-      "value" : 69,
-      "state" : "default",
-      "label" : "E"
-    }, {
-      "index" : 5,
-      "value" : 67,
-      "state" : "default",
-      "label" : "C"
-    }, {
-      "index" : 6,
-      "value" : 79,
-      "state" : "default",
-      "label" : "O"
-    }, {
-      "index" : 7,
-      "value" : 68,
-      "state" : "default",
-      "label" : "D"
-    }, {
-      "index" : 8,
-      "value" : 69,
-      "state" : "default",
-      "label" : "E"
-    }, {
-      "index" : 9,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 10,
-      "value" : 65,
-      "state" : "target",
-      "label" : "A"
-    }, {
-      "index" : 11,
-      "value" : 78,
-      "state" : "active",
-      "label" : "N"
-    }, {
-      "index" : 12,
-      "value" : 67,
-      "state" : "current",
-      "label" : "C"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 27,
-    "activeLine" : 25,
-    "description" : "Shortest window covering t: \"BANC\".",
+    "activeLine" : 45,
+    "description" : "The smallest window that covers t is \"BANC\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
@@ -2244,22 +2112,22 @@
     }, {
       "index" : 9,
       "value" : 66,
-      "state" : "default",
+      "state" : "target",
       "label" : "B"
     }, {
       "index" : 10,
       "value" : 65,
-      "state" : "default",
+      "state" : "active",
       "label" : "A"
     }, {
       "index" : 11,
       "value" : 78,
-      "state" : "default",
+      "state" : "active",
       "label" : "N"
     }, {
       "index" : 12,
       "value" : 67,
-      "state" : "default",
+      "state" : "current",
       "label" : "C"
     } ],
     "listState" : null,

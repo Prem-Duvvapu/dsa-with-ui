@@ -89,6 +89,12 @@ class TracerAnswerRegressionTest {
         AlgorithmTracer substring = tracers.find("longest-substring-without-repeating").orElseThrow();
         assertThatThrownBy(() -> runner.run(substring, Map.of("s", "a\u20acb")))
                 .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer three = tracers.find("number-substrings-all-three-chars").orElseThrow();
+        assertThatThrownBy(() -> runner.run(three, Map.of("s", "abcd")))
+                .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer window = tracers.find("minimum-window-substring").orElseThrow();
+        assertThatThrownBy(() -> runner.run(window, Map.of("s", "a\u20ac", "t", "a")))
+                .isInstanceOf(InputValidationException.class);
         AlgorithmTracer cards = tracers.find("maximum-points-cards").orElseThrow();
         assertThatThrownBy(() -> runner.run(cards, Map.of("cardPoints", List.of(1, 2), "k", 3)))
                 .isInstanceOf(InputValidationException.class);
@@ -163,6 +169,12 @@ class TracerAnswerRegressionTest {
             longest-repeating-character-replacement | {"s":"AAAB","k":0}        | answer        | 3
             maximum-points-cards   | {"cardPoints":[1,79,80,1,1,1,200,1],"k":3} | answer        | 202
             maximum-points-cards   | {"cardPoints":[2,2,2],"k":3}               | answer        | 6
+            # Counting windows with the atMost(k) - atMost(k-1) trick; last-seen counting; min window.
+            binary-subarrays-with-sum | {"nums":[0,0,0],"goal":0}              | answer        | 6
+            count-nice-subarrays   | {"nums":[2,4,6],"k":1}                     | answer        | 0
+            subarrays-k-different-integers | {"nums":[1,1,1],"k":1}             | answer        | 6
+            number-substrings-all-three-chars | {"s":"abc"}                     | answer        | 1
+            minimum-window-substring | {"s":"aa","t":"aa"}                      | answer        | aa
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

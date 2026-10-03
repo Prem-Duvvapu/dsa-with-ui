@@ -5,14 +5,13 @@ import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * Binary Subarrays With Sum — count subarrays summing to exact goal using
- * sliding window: {@code numSubarraysWithSum(goal) = atMost(goal) - atMost(goal - 1)}.
- * For a non-negative array, atMost(K) is monotonically expandable and shrinkable in O(N).
+ * Binary Subarrays With Sum (LeetCode 930), traced on the owner's own accepted submission. Counting windows with EXACTLY k is awkward;
+ * counting windows with AT MOST k is a plain sliding window - for each right end, every start from
+ * left to right works, which is right - left + 1 windows. So exactly(k) = atMost(k) - atMost(k - 1),
+ * two O(n) passes. Each pass is shown as its own call on the stack.
  */
 @Component
 public class BinarySubarraysWithSumTracer implements AlgorithmTracer {
@@ -53,26 +52,49 @@ public class BinarySubarraysWithSumTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int numSubarraysWithSum(int[] nums, int goal) {
-                   // @a combine
-                   return atMost(nums, goal) - atMost(nums, goal - 1);
-               }
+               class Solution {
+                   public int numSubarraysWithSum(int[] nums, int goal) {
+                       // @a init
+                       int a=solve(nums,goal);
+                       int b=solve(nums,goal-1);
 
-               private int atMost(int[] nums, int goal) {
-                   if (goal < 0) return 0;
-                   int left = 0, sum = 0, total = 0;
-                   for (int right = 0; right < nums.length; right++) {
-                       // @a expand
-                       sum += nums[right];
-                       while (sum > goal && left <= right) {
-                           // @a shrink
-                           sum -= nums[left];
-                           left++;
-                       }
-                       // @a countWindows
-                       total += right - left + 1;
+                       // @a done
+                       return (a-b);
                    }
-                   return total;
+
+                   public int solve(int[] nums,int k) {
+                       if (k<0)
+                           // @a negative
+                           return 0;
+
+                       int n=nums.length;
+                       int left=0;
+                       int right=0;
+                       int currSum=0;
+                       int cnt=0;
+
+                       while (right<n) {
+                           // @a add
+                           currSum+=nums[right];
+
+                           //greater than k
+                           while (left<=right && currSum>k) {
+                               // @a shrink
+                               currSum-=nums[left];
+                               left++;
+                           }
+
+                           //less than or equal to k
+                           // @a count
+                           int currCnt=(right-left)+1;
+                           cnt+=currCnt;
+
+                           right++;
+                       }
+
+                       // @a total
+                       return cnt;
+                   }
                }""";
     }
 
@@ -80,66 +102,53 @@ public class BinarySubarraysWithSumTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
         int goal = in.getInt("goal");
-
-        int atMostGoal = atMost(nums, goal, emit, goal);
-        int atMostGoalMinus1 = goal > 0 ? atMost(nums, goal - 1, emit, goal - 1) : 0;
-        int exact = atMostGoal - atMostGoalMinus1;
-
-        emit.at("combine")
-                .say("Pass 1 (sum ≤ %d): %d subarrays. Pass 2 (sum ≤ %d): %d subarrays. "
-                                + "Exact sum = %d: %d - %d = %d.",
-                        goal, atMostGoal, goal - 1, atMostGoalMinus1, goal, atMostGoal, atMostGoalMinus1, exact)
-                .var("atMostGoal", atMostGoal).var("atMostGoalMinus1", atMostGoalMinus1).var("answer", exact)
-                .array(nums, -1)
-                .step();
+        emit.at("init").say("Subarrays summing to exactly %d = (subarrays summing to at most %d) - (at most %d). "
+                        + "Count each with solve().", goal, goal, goal - 1)
+                .var("goal", goal).arrayState(WindowCells.of(nums, -1, -1)).step();
+        int a = solve(nums, goal, emit);
+        int b = solve(nums, goal - 1, emit);
+        emit.at("done").say("%d subarrays sum to at most %d and %d to at most %d, so %d - %d = %d sum to exactly %d.",
+                        a, goal, b, goal - 1, a, b, a - b, goal)
+                .var("a", a).var("b", b).var("answer", a - b).arrayState(WindowCells.of(nums, -1, -1)).step();
     }
 
-    private int atMost(int[] nums, int limit, StepEmitter emit, int passLabel) {
-        if (limit < 0) return 0;
-        int left = 0, sum = 0, total = 0;
-
-        for (int right = 0; right < nums.length; right++) {
-            sum += nums[right];
-            emit.at("expand")
-                    .say("[Pass sum ≤ %d] Add nums[%d]=%d → window sum is %d.",
-                            limit, right, nums[right], sum)
-                    .var("pass", "atMost(" + passLabel + ")").var("left", left).var("right", right).var("sum", sum)
-                    .arrayState(windowState(nums, left, right))
-                    .step();
-
-            while (sum > limit && left <= right) {
-                sum -= nums[left];
+    private static int solve(int[] nums, int k, StepEmitter emit) {
+        emit.push("solve(nums, " + k + ")");
+        if (k < 0) {
+            emit.at("negative").say("solve(nums, %d): no subarray of 0s and 1s sums to at most a negative number. "
+                            + "Return 0.", k)
+                    .var("k", k).arrayState(WindowCells.of(nums, -1, -1)).step();
+            emit.pop();
+            return 0;
+        }
+        int n = nums.length;
+        int left = 0;
+        int right = 0;
+        int currSum = 0;
+        int cnt = 0;
+        while (right < n) {
+            currSum += nums[right];
+            emit.at("add").say("solve(%d): add nums[%d] = %d. currSum = %d.", k, right, nums[right], currSum)
+                    .var("k", k).var("left", left).var("right", right).var("currSum", currSum).var("cnt", cnt)
+                    .arrayState(WindowCells.of(nums, left, right)).step();
+            while (left <= right && currSum > k) {
+                currSum -= nums[left];
                 left++;
-                emit.at("shrink")
-                        .say("[Pass sum ≤ %d] Sum %d > %d → shrink from left past index %d. Window starts at %d, sum is %d.",
-                                limit, sum + nums[left - 1], limit, left - 1, left, sum)
-                        .var("pass", "atMost(" + passLabel + ")").var("left", left).var("right", right).var("sum", sum)
-                        .arrayState(windowState(nums, left, right))
-                        .step();
+                emit.at("shrink").say("currSum was over %d: drop nums[%d]. currSum = %d.", k, left - 1, currSum)
+                        .var("k", k).var("left", left).var("right", right).var("currSum", currSum).var("cnt", cnt)
+                        .arrayState(WindowCells.of(nums, left, right)).step();
             }
-
-            total += right - left + 1;
-            emit.at("countWindows")
-                    .say("[Pass sum ≤ %d] Window [%d,%d] adds %d subarray%s ending at index %d. Running total: %d.",
-                            limit, left, right, right - left + 1, Narration.s(right - left + 1),
-                            right, total)
-                    .var("pass", "atMost(" + passLabel + ")").var("added", right - left + 1).var("total", total)
-                    .arrayState(windowState(nums, left, right))
-                    .step();
+            int currCnt = (right - left) + 1;
+            cnt += currCnt;
+            emit.at("count").say("Every subarray ending at %d and starting from %d to %d sums to at most %d: %d more. "
+                            + "cnt = %d.", right, left, right, k, currCnt, cnt)
+                    .var("k", k).var("left", left).var("right", right).var("currSum", currSum).var("cnt", cnt)
+                    .arrayState(WindowCells.of(nums, left, right)).step();
+            right++;
         }
-
-        return total;
-    }
-
-    private static List<ArrayElement> windowState(int[] nums, int left, int right) {
-        List<ArrayElement> state = new ArrayList<>(nums.length);
-        for (int i = 0; i < nums.length; i++) {
-            String st = (i == right) ? "current"
-                    : (i == left) ? "target"
-                    : (i > left && i < right) ? "active"
-                    : "default";
-            state.add(new ArrayElement(i, nums[i], st));
-        }
-        return state;
+        emit.at("total").say("solve(nums, %d) = %d.", k, cnt)
+                .var("k", k).var("cnt", cnt).arrayState(WindowCells.of(nums, -1, -1)).step();
+        emit.pop();
+        return cnt;
     }
 }
