@@ -1,29 +1,24 @@
 {
   "anchors" : {
-    "build" : 2,
-    "done" : 20,
-    "fallback" : 13,
-    "init" : 5,
-    "match" : 9,
-    "noMatch" : 15
+    "done" : 28,
+    "init" : 6,
+    "lps" : 14
   },
-  "code" : "public String shortestPalindrome(String s) {\n    String combined = s + \"#\" + reverse(s);\n    int n = combined.length();\n    int[] lps = new int[n];\n    int len = 0;\n    int i = 1;\n    while (i < n) {\n        if (combined.charAt(i) == combined.charAt(len)) {\n            len++;\n            lps[i] = len;\n            i++;\n        } else if (len != 0) {\n            len = lps[len - 1];\n        } else {\n            lps[i] = 0;\n            i++;\n        }\n    }\n    int k = lps[n - 1];\n    return reverse(s.substring(k)) + s;\n}",
+  "code" : "// Changed from your submission: it compared rolling hashes, which can collide and give a\n// wrong answer on unlucky inputs. KMP's lps table on s + \"#\" + reverse(s) is exact and\n// still O(n) - written with the same lps loop as your Rotate String solution.\nclass Solution {\n    public String shortestPalindrome(String s) {\n        String pattern=s+\"#\"+new StringBuilder(s).reverse().toString();\n        int m=pattern.length();\n        int[] lps=new int[m];\n        lps[0]=0;\n        int j=1;\n        int currLength=0;\n\n        while (j<m) {\n            if (pattern.charAt(j)==pattern.charAt(currLength)) {\n                currLength++;\n                lps[j]=currLength;\n                j++;\n            } else {\n                if (currLength==0) {\n                    lps[j]=currLength;\n                    j++;\n                } else {\n                    currLength=lps[currLength-1];\n                }\n            }\n        }\n\n        int longestPalindromeLen=lps[m-1];\n        StringBuilder res=new StringBuilder(s.substring(longestPalindromeLen));\n        res.reverse();\n        res.append(s);\n\n        return res.toString();\n    }\n}",
   "problemId" : "shortest-palindrome",
   "resolvedInput" : {
     "s" : "aacecaaa"
   },
-  "stepCount" : 24,
+  "stepCount" : 23,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "Join s to its own reverse with a separator so a match can never cross from one half into the other: \"aacecaaa#aaacecaa\".",
+    "activeLine" : 6,
+    "description" : "pattern = s + \"#\" + (s reversed) = \"aacecaaa#aaacecaa\". The lps value at its last letter is the longest prefix of s that reads the same backwards - the '#' stops a match from running past s.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "combined" : "aacecaaa#aaacecaa"
-    },
+    "variables" : { },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
@@ -117,28 +112,28 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 5,
-    "description" : "lps[0] = 0 always - a single character has no shorter prefix to match against itself.",
+    "activeLine" : 14,
+    "description" : "pattern[1] = 'a' continues the matched prefix: lps[1] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "1",
-      "len" : "0",
-      "lps" : "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
+      "currLength" : "1",
+      "j" : "1",
+      "lps" : "[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "current",
+      "state" : "target",
       "label" : "a"
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 2,
@@ -221,15 +216,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 9,
-    "description" : "combined[1]='a' matches combined[0]='a' - extend the match to length 1 and record lps[1]=1.",
+    "activeLine" : 14,
+    "description" : "pattern[2] = 'c' breaks the 1-letter match; try the next shorter candidate, length 0 (lps[0]).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "1",
-      "len" : "1",
+      "currLength" : "0",
+      "j" : "2",
       "lps" : "[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -237,17 +232,17 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "current",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 2,
       "value" : 99,
-      "state" : "default",
+      "state" : "current",
       "label" : "c"
     }, {
       "index" : 3,
@@ -325,15 +320,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 13,
-    "description" : "combined[2]='c' breaks the match of length 1 - fall back to the next-best recorded match length 0 (lps[0]) without moving i forward.",
+    "activeLine" : 14,
+    "description" : "pattern[2] = 'c' starts no prefix: lps[2] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "2",
-      "len" : "0",
+      "currLength" : "0",
+      "j" : "2",
       "lps" : "[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -341,7 +336,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -429,15 +424,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 15,
-    "description" : "combined[2]='c' does not match combined[0]='a', and there is no shorter match left to fall back to - lps[2] = 0.",
+    "activeLine" : 14,
+    "description" : "pattern[3] = 'e' starts no prefix: lps[3] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "2",
-      "len" : "0",
+      "currLength" : "0",
+      "j" : "3",
       "lps" : "[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -445,7 +440,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -455,12 +450,12 @@
     }, {
       "index" : 2,
       "value" : 99,
-      "state" : "current",
+      "state" : "default",
       "label" : "c"
     }, {
       "index" : 3,
       "value" : 101,
-      "state" : "default",
+      "state" : "current",
       "label" : "e"
     }, {
       "index" : 4,
@@ -533,15 +528,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 15,
-    "description" : "combined[3]='e' does not match combined[0]='a', and there is no shorter match left to fall back to - lps[3] = 0.",
+    "activeLine" : 14,
+    "description" : "pattern[4] = 'c' starts no prefix: lps[4] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "3",
-      "len" : "0",
+      "currLength" : "0",
+      "j" : "4",
       "lps" : "[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -549,7 +544,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -564,12 +559,12 @@
     }, {
       "index" : 3,
       "value" : 101,
-      "state" : "current",
+      "state" : "default",
       "label" : "e"
     }, {
       "index" : 4,
       "value" : 99,
-      "state" : "default",
+      "state" : "current",
       "label" : "c"
     }, {
       "index" : 5,
@@ -637,119 +632,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 15,
-    "description" : "combined[4]='c' does not match combined[0]='a', and there is no shorter match left to fall back to - lps[4] = 0.",
+    "activeLine" : 14,
+    "description" : "pattern[5] = 'a' continues the matched prefix: lps[5] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "4",
-      "len" : "0",
-      "lps" : "[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
-    },
-    "dsType" : "String",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 97,
-      "state" : "target",
-      "label" : "a"
-    }, {
-      "index" : 1,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 2,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 3,
-      "value" : 101,
-      "state" : "default",
-      "label" : "e"
-    }, {
-      "index" : 4,
-      "value" : 99,
-      "state" : "current",
-      "label" : "c"
-    }, {
-      "index" : 5,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 6,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 7,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 8,
-      "value" : 35,
-      "state" : "default",
-      "label" : "#"
-    }, {
-      "index" : 9,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 10,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 11,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 12,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 13,
-      "value" : 101,
-      "state" : "default",
-      "label" : "e"
-    }, {
-      "index" : 14,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 15,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 16,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 8,
-    "activeLine" : 9,
-    "description" : "combined[5]='a' matches combined[0]='a' - extend the match to length 1 and record lps[5]=1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "i" : "5",
-      "len" : "1",
+      "currLength" : "1",
+      "j" : "5",
       "lps" : "[0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -844,16 +735,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 9,
-    "activeLine" : 9,
-    "description" : "combined[6]='a' matches combined[1]='a' - extend the match to length 2 and record lps[6]=2.",
+    "stepNumber" : 8,
+    "activeLine" : 14,
+    "description" : "pattern[6] = 'a' continues the matched prefix: lps[6] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "6",
-      "len" : "2",
+      "currLength" : "2",
+      "j" : "6",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -948,17 +839,121 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 10,
-    "activeLine" : 13,
-    "description" : "combined[7]='a' breaks the match of length 2 - fall back to the next-best recorded match length 1 (lps[1]) without moving i forward.",
+    "stepNumber" : 9,
+    "activeLine" : 14,
+    "description" : "pattern[7] = 'a' breaks the 2-letter match; try the next shorter candidate, length 1 (lps[1]).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "7",
-      "len" : "1",
+      "currLength" : "1",
+      "j" : "7",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "target",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 7,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 8,
+      "value" : 35,
+      "state" : "default",
+      "label" : "#"
+    }, {
+      "index" : 9,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 10,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 11,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 12,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 13,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 14,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 15,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 16,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 14,
+    "description" : "pattern[7] = 'a' continues the matched prefix: lps[7] = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currLength" : "2",
+      "j" : "7",
+      "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -1053,15 +1048,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 9,
-    "description" : "combined[7]='a' matches combined[1]='a' - extend the match to length 2 and record lps[7]=2.",
+    "activeLine" : 14,
+    "description" : "pattern[8] = '#' breaks the 2-letter match; try the next shorter candidate, length 1 (lps[1]).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "7",
-      "len" : "2",
+      "currLength" : "1",
+      "j" : "8",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -1069,12 +1064,12 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "default",
+      "state" : "target",
       "label" : "a"
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 2,
@@ -1104,12 +1099,12 @@
     }, {
       "index" : 7,
       "value" : 97,
-      "state" : "current",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 8,
       "value" : 35,
-      "state" : "default",
+      "state" : "current",
       "label" : "#"
     }, {
       "index" : 9,
@@ -1157,15 +1152,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 13,
-    "description" : "combined[8]='#' breaks the match of length 2 - fall back to the next-best recorded match length 1 (lps[1]) without moving i forward.",
+    "activeLine" : 14,
+    "description" : "pattern[8] = '#' breaks the 1-letter match; try the next shorter candidate, length 0 (lps[0]).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "8",
-      "len" : "1",
+      "currLength" : "0",
+      "j" : "8",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -1178,7 +1173,7 @@
     }, {
       "index" : 1,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 2,
@@ -1261,15 +1256,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 13,
-    "description" : "combined[8]='#' breaks the match of length 1 - fall back to the next-best recorded match length 0 (lps[0]) without moving i forward.",
+    "activeLine" : 14,
+    "description" : "pattern[8] = '#' starts no prefix: lps[8] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "8",
-      "len" : "0",
+      "currLength" : "0",
+      "j" : "8",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -1277,7 +1272,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -1365,119 +1360,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 15,
-    "description" : "combined[8]='#' does not match combined[0]='a', and there is no shorter match left to fall back to - lps[8] = 0.",
+    "activeLine" : 14,
+    "description" : "pattern[9] = 'a' continues the matched prefix: lps[9] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "8",
-      "len" : "0",
-      "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
-    },
-    "dsType" : "String",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 97,
-      "state" : "target",
-      "label" : "a"
-    }, {
-      "index" : 1,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 2,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 3,
-      "value" : 101,
-      "state" : "default",
-      "label" : "e"
-    }, {
-      "index" : 4,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 5,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 6,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 7,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 8,
-      "value" : 35,
-      "state" : "current",
-      "label" : "#"
-    }, {
-      "index" : 9,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 10,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 11,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 12,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 13,
-      "value" : 101,
-      "state" : "default",
-      "label" : "e"
-    }, {
-      "index" : 14,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 15,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 16,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 15,
-    "activeLine" : 9,
-    "description" : "combined[9]='a' matches combined[0]='a' - extend the match to length 1 and record lps[9]=1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "i" : "9",
-      "len" : "1",
+      "currLength" : "1",
+      "j" : "9",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -1572,16 +1463,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 16,
-    "activeLine" : 9,
-    "description" : "combined[10]='a' matches combined[1]='a' - extend the match to length 2 and record lps[10]=2.",
+    "stepNumber" : 15,
+    "activeLine" : 14,
+    "description" : "pattern[10] = 'a' continues the matched prefix: lps[10] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "10",
-      "len" : "2",
+      "currLength" : "2",
+      "j" : "10",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -1645,6 +1536,110 @@
       "index" : 11,
       "value" : 97,
       "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 12,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 13,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 14,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 15,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 16,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 14,
+    "description" : "pattern[11] = 'a' breaks the 2-letter match; try the next shorter candidate, length 1 (lps[1]).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "currLength" : "1",
+      "j" : "11",
+      "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 0, 0, 0, 0, 0, 0]"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "target",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 2,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 3,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 4,
+      "value" : 99,
+      "state" : "default",
+      "label" : "c"
+    }, {
+      "index" : 5,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 6,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 7,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 8,
+      "value" : 35,
+      "state" : "default",
+      "label" : "#"
+    }, {
+      "index" : 9,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 10,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 11,
+      "value" : 97,
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 12,
@@ -1677,119 +1672,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 13,
-    "description" : "combined[11]='a' breaks the match of length 2 - fall back to the next-best recorded match length 1 (lps[1]) without moving i forward.",
+    "activeLine" : 14,
+    "description" : "pattern[11] = 'a' continues the matched prefix: lps[11] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "11",
-      "len" : "1",
-      "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 0, 0, 0, 0, 0, 0]"
-    },
-    "dsType" : "String",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 1,
-      "value" : 97,
-      "state" : "target",
-      "label" : "a"
-    }, {
-      "index" : 2,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 3,
-      "value" : 101,
-      "state" : "default",
-      "label" : "e"
-    }, {
-      "index" : 4,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 5,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 6,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 7,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 8,
-      "value" : 35,
-      "state" : "default",
-      "label" : "#"
-    }, {
-      "index" : 9,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 10,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 11,
-      "value" : 97,
-      "state" : "current",
-      "label" : "a"
-    }, {
-      "index" : 12,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 13,
-      "value" : 101,
-      "state" : "default",
-      "label" : "e"
-    }, {
-      "index" : 14,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 15,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 16,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 18,
-    "activeLine" : 9,
-    "description" : "combined[11]='a' matches combined[1]='a' - extend the match to length 2 and record lps[11]=2.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "i" : "11",
-      "len" : "2",
+      "currLength" : "2",
+      "j" : "11",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -1884,16 +1775,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 19,
-    "activeLine" : 9,
-    "description" : "combined[12]='c' matches combined[2]='c' - extend the match to length 3 and record lps[12]=3.",
+    "stepNumber" : 18,
+    "activeLine" : 14,
+    "description" : "pattern[12] = 'c' continues the matched prefix: lps[12] = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "12",
-      "len" : "3",
+      "currLength" : "3",
+      "j" : "12",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 3, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -1988,16 +1879,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 20,
-    "activeLine" : 9,
-    "description" : "combined[13]='e' matches combined[3]='e' - extend the match to length 4 and record lps[13]=4.",
+    "stepNumber" : 19,
+    "activeLine" : 14,
+    "description" : "pattern[13] = 'e' continues the matched prefix: lps[13] = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "13",
-      "len" : "4",
+      "currLength" : "4",
+      "j" : "13",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 3, 4, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -2092,16 +1983,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 21,
-    "activeLine" : 9,
-    "description" : "combined[14]='c' matches combined[4]='c' - extend the match to length 5 and record lps[14]=5.",
+    "stepNumber" : 20,
+    "activeLine" : 14,
+    "description" : "pattern[14] = 'c' continues the matched prefix: lps[14] = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "14",
-      "len" : "5",
+      "currLength" : "5",
+      "j" : "14",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 3, 4, 5, 0, 0]"
     },
     "dsType" : "String",
@@ -2196,16 +2087,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 22,
-    "activeLine" : 9,
-    "description" : "combined[15]='a' matches combined[5]='a' - extend the match to length 6 and record lps[15]=6.",
+    "stepNumber" : 21,
+    "activeLine" : 14,
+    "description" : "pattern[15] = 'a' continues the matched prefix: lps[15] = 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "15",
-      "len" : "6",
+      "currLength" : "6",
+      "j" : "15",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 3, 4, 5, 6, 0]"
     },
     "dsType" : "String",
@@ -2300,16 +2191,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 23,
-    "activeLine" : 9,
-    "description" : "combined[16]='a' matches combined[6]='a' - extend the match to length 7 and record lps[16]=7.",
+    "stepNumber" : 22,
+    "activeLine" : 14,
+    "description" : "pattern[16] = 'a' continues the matched prefix: lps[16] = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "16",
-      "len" : "7",
+      "currLength" : "7",
+      "j" : "16",
       "lps" : "[0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 3, 4, 5, 6, 7]"
     },
     "dsType" : "String",
@@ -2404,16 +2295,16 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 24,
-    "activeLine" : 20,
-    "description" : "lps[16]=7 - the first 7 characters of s are already a palindrome anchored at the start. Mirror everything after that onto the front: \"aaacecaaa\".",
+    "stepNumber" : 23,
+    "activeLine" : 28,
+    "description" : "lps[last] = 7, so s[0..6] = \"aacecaa\" is already a palindrome. Put the reverse of the rest, \"a\", in front: \"aaacecaaa\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "answer" : "aaacecaaa",
-      "k" : "7"
+      "longestPalindromeLen" : "7"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -2429,24 +2320,24 @@
       "label" : "a"
     }, {
       "index" : 2,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 3,
       "value" : 99,
       "state" : "default",
       "label" : "c"
     }, {
-      "index" : 3,
+      "index" : 4,
       "value" : 101,
       "state" : "default",
       "label" : "e"
     }, {
-      "index" : 4,
+      "index" : 5,
       "value" : 99,
       "state" : "default",
       "label" : "c"
-    }, {
-      "index" : 5,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
     }, {
       "index" : 6,
       "value" : 97,
@@ -2459,46 +2350,6 @@
       "label" : "a"
     }, {
       "index" : 8,
-      "value" : 35,
-      "state" : "default",
-      "label" : "#"
-    }, {
-      "index" : 9,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 10,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 11,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 12,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 13,
-      "value" : 101,
-      "state" : "default",
-      "label" : "e"
-    }, {
-      "index" : 14,
-      "value" : 99,
-      "state" : "default",
-      "label" : "c"
-    }, {
-      "index" : 15,
-      "value" : 97,
-      "state" : "default",
-      "label" : "a"
-    }, {
-      "index" : 16,
       "value" : 97,
       "state" : "default",
       "label" : "a"

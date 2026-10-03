@@ -158,6 +158,11 @@ class StringToIntegerAtoiTracer extends StringTracerSupport {
     }
 }
 
+/**
+ * Count number of substrings with exactly k distinct characters (GfG), traced on the owner's own
+ * accepted submission: exactly(k) = atMost(k) - atMost(k - 1), each counted with a sliding window that
+ * keeps 26 counts and the number of distinct letters in it. O(n).
+ */
 @Component
 class CountSubstringsKDistinctTracer extends StringTracerSupport {
     public String id() { return "count-substrings-k-distinct"; }
@@ -173,47 +178,98 @@ class CountSubstringsKDistinctTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public long substringsWithKDistinct(String s, int k) {
-                   // @a window
-                   long atMostK = atMost(s, k);
-                   long atMostKMinusOne = atMost(s, k - 1);
-                   // @a done
-                   return atMostK - atMostKMinusOne;
+               class Solution
+               {
+                   long substrCount (String s, int k)//returns no. of substrings of size=k
+                   {
+                       // @a init
+                       return solve(s,k)-solve(s,k-1);
+                   }
+
+                   private long solve(String s,int k)//returns no. of substrings of size<=k
+                   {
+                       int n=s.length();
+                       long ans=0;
+                       int left=0;
+                       int[] cnt=new int[26];
+                       int distinctChar=0;
+
+                       for (int right=0;right<n;right++)
+                       {
+                           // @a add
+                           char ch=s.charAt(right);
+                           cnt[ch-'a']++;
+
+                           if (cnt[ch-'a']==1)
+                               distinctChar++;
+
+                           while (distinctChar>k)
+                           {
+                               // @a shrink
+                               char temp=s.charAt(left);
+                               cnt[temp-'a']--;
+
+                               if (cnt[temp-'a']==0)
+                                   distinctChar--;
+
+                               left++;
+                           }
+
+                           // @a count
+                           ans+=(right-left+1);
+                       }
+
+                       // @a total
+                       return ans;
+                   }
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
         int k = in.getInt("k");
-        long atMostK = atMost(s, k, "k", emit);
-        long atMostPrevious = atMost(s, k - 1, "k-1", emit);
-        long answer = atMostK - atMostPrevious;
-        emit.at("done").say("Exactly %d distinct = atMost(%d) %d − atMost(%d) %d = %d substrings.",
-                        k, k, atMostK, k - 1, atMostPrevious, answer)
-                .var("atMostK", atMostK).var("atMostKMinusOne", atMostPrevious).var("answer", answer)
-                .chars(s).step();
+        emit.at("init").say("Substrings with exactly %d distinct letters = atMost(%d) - atMost(%d).", k, k, k - 1)
+                .var("k", k).chars(s).step();
+        long a = solve(s, k, emit);
+        long b = solve(s, k - 1, emit);
+        emit.at("init").say("%d - %d = %d substrings have exactly %d distinct letters.", a, b, a - b, k)
+                .var("answer", a - b).chars(s).step();
     }
 
-    private static long atMost(String s, int limit, String pass, StepEmitter emit) {
-        if (limit < 0) return 0;
-        Map<Character, Integer> frequency = new HashMap<>();
+    private static long solve(String s, int k, StepEmitter emit) {
+        emit.push("solve(s, " + k + ")");
+        int n = s.length();
+        long ans = 0;
         int left = 0;
-        long total = 0;
-        for (int right = 0; right < s.length(); right++) {
-            frequency.merge(s.charAt(right), 1, Integer::sum);
-            while (frequency.size() > limit) {
-                char removed = s.charAt(left++);
-                frequency.compute(removed, (key, count) -> count == 1 ? null : count - 1);
+        int[] cnt = new int[26];
+        int distinctChar = 0;
+        for (int right = 0; right < n; right++) {
+            char ch = s.charAt(right);
+            cnt[ch - 'a']++;
+            if (cnt[ch - 'a'] == 1) distinctChar++;
+            emit.at("add").say("solve(%d): take in '%c'. %d distinct letter%s in s[%d..%d].",
+                            k, ch, distinctChar, Narration.s(distinctChar), left, right)
+                    .var("k", k).var("left", left).var("right", right).var("distinctChar", distinctChar).var("ans", ans)
+                    .chars(s, right, left).step();
+            while (distinctChar > k) {
+                char temp = s.charAt(left);
+                cnt[temp - 'a']--;
+                if (cnt[temp - 'a'] == 0) distinctChar--;
+                left++;
+                emit.at("shrink").say("More than %d distinct: drop '%c'. %d distinct left.", k, temp, distinctChar)
+                        .var("k", k).var("left", left).var("right", right).var("distinctChar", distinctChar).var("ans", ans)
+                        .chars(s, right, left).step();
             }
-            long added = right - left + 1L;
-            total += added;
-            emit.at("window").say("%s pass: window [%d,%d] has %d distinct; add %d suffixes (total %d).",
-                            pass, left, right, frequency.size(), added, total)
-                    .var("pass", pass).var("left", left).var("right", right)
-                    .var("distinct", frequency.size()).var("total", total)
-                    .chars(s, left, right).step();
+            ans += right - left + 1;
+            emit.at("count").say("%d substring%s %s at %d with at most %d distinct. ans = %d.",
+                            right - left + 1, Narration.s(right - left + 1),
+                            Narration.plural(right - left + 1, "ends", "end"), right, k, ans)
+                    .var("k", k).var("left", left).var("right", right).var("distinctChar", distinctChar).var("ans", ans)
+                    .chars(s, right, left).step();
         }
-        return total;
+        emit.at("total").say("solve(s, %d) = %d.", k, ans).var("k", k).var("ans", ans).chars(s).step();
+        emit.pop();
+        return ans;
     }
 }
 

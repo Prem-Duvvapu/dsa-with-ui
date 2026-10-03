@@ -1,36 +1,35 @@
 {
   "anchors" : {
-    "done" : 4,
-    "window" : 2
+    "add" : 18,
+    "count" : 35,
+    "init" : 5,
+    "shrink" : 26,
+    "total" : 38
   },
-  "code" : "public long substringsWithKDistinct(String s, int k) {\n    long atMostK = atMost(s, k);\n    long atMostKMinusOne = atMost(s, k - 1);\n    return atMostK - atMostKMinusOne;\n}",
+  "code" : "class Solution\n{\n    long substrCount (String s, int k)//returns no. of substrings of size=k\n    {\n        return solve(s,k)-solve(s,k-1);\n    }\n\n    private long solve(String s,int k)//returns no. of substrings of size<=k\n    {\n        int n=s.length();\n        long ans=0;\n        int left=0;\n        int[] cnt=new int[26];\n        int distinctChar=0;\n\n        for (int right=0;right<n;right++)\n        {\n            char ch=s.charAt(right);\n            cnt[ch-'a']++;\n\n            if (cnt[ch-'a']==1)\n                distinctChar++;\n\n            while (distinctChar>k)\n            {\n                char temp=s.charAt(left);\n                cnt[temp-'a']--;\n\n                if (cnt[temp-'a']==0)\n                    distinctChar--;\n\n                left++;\n            }\n\n            ans+=(right-left+1);\n        }\n\n        return ans;\n    }\n}",
   "problemId" : "count-substrings-k-distinct",
   "resolvedInput" : {
     "k" : 2,
     "s" : "pqpqs"
   },
-  "stepCount" : 11,
+  "stepCount" : 31,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "k pass: window [0,0] has 1 distinct; add 1 suffixes (total 1).",
+    "activeLine" : 5,
+    "description" : "Substrings with exactly 2 distinct letters = atMost(2) - atMost(1).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "1",
-      "left" : "0",
-      "pass" : "k",
-      "right" : "0",
-      "total" : "1"
+      "k" : "2"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 112,
-      "state" : "current",
+      "state" : "default",
       "label" : "p"
     }, {
       "index" : 1,
@@ -58,18 +57,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 2,
-    "description" : "k pass: window [0,1] has 2 distinct; add 2 suffixes (total 3).",
+    "activeLine" : 18,
+    "description" : "solve(2): take in 'p'. 1 distinct letter in s[0..0].",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "2",
+      "ans" : "0",
+      "distinctChar" : "1",
+      "k" : "2",
       "left" : "0",
-      "pass" : "k",
-      "right" : "1",
-      "total" : "3"
+      "right" : "0"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -81,7 +80,7 @@
     }, {
       "index" : 1,
       "value" : 113,
-      "state" : "target",
+      "state" : "default",
       "label" : "q"
     }, {
       "index" : 2,
@@ -104,18 +103,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 2,
-    "description" : "k pass: window [0,2] has 2 distinct; add 3 suffixes (total 6).",
+    "activeLine" : 35,
+    "description" : "1 substring ends at 0 with at most 2 distinct. ans = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "2",
+      "ans" : "1",
+      "distinctChar" : "1",
+      "k" : "2",
       "left" : "0",
-      "pass" : "k",
-      "right" : "2",
-      "total" : "6"
+      "right" : "0"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -132,7 +131,7 @@
     }, {
       "index" : 2,
       "value" : 112,
-      "state" : "target",
+      "state" : "default",
       "label" : "p"
     }, {
       "index" : 3,
@@ -150,30 +149,30 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 2,
-    "description" : "k pass: window [0,3] has 2 distinct; add 4 suffixes (total 10).",
+    "activeLine" : 18,
+    "description" : "solve(2): take in 'q'. 2 distinct letters in s[0..1].",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "2",
+      "ans" : "1",
+      "distinctChar" : "2",
+      "k" : "2",
       "left" : "0",
-      "pass" : "k",
-      "right" : "3",
-      "total" : "10"
+      "right" : "1"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 112,
-      "state" : "current",
+      "state" : "target",
       "label" : "p"
     }, {
       "index" : 1,
       "value" : 113,
-      "state" : "default",
+      "state" : "current",
       "label" : "q"
     }, {
       "index" : 2,
@@ -183,7 +182,7 @@
     }, {
       "index" : 3,
       "value" : 113,
-      "state" : "target",
+      "state" : "default",
       "label" : "q"
     }, {
       "index" : 4,
@@ -196,30 +195,30 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 2,
-    "description" : "k pass: window [3,4] has 2 distinct; add 2 suffixes (total 12).",
+    "activeLine" : 35,
+    "description" : "2 substrings end at 1 with at most 2 distinct. ans = 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "2",
-      "left" : "3",
-      "pass" : "k",
-      "right" : "4",
-      "total" : "12"
+      "ans" : "3",
+      "distinctChar" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "1"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 112,
-      "state" : "default",
+      "state" : "target",
       "label" : "p"
     }, {
       "index" : 1,
       "value" : 113,
-      "state" : "default",
+      "state" : "current",
       "label" : "q"
     }, {
       "index" : 2,
@@ -229,12 +228,12 @@
     }, {
       "index" : 3,
       "value" : 113,
-      "state" : "current",
+      "state" : "default",
       "label" : "q"
     }, {
       "index" : 4,
       "value" : 115,
-      "state" : "target",
+      "state" : "default",
       "label" : "s"
     } ],
     "listState" : null,
@@ -242,25 +241,25 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 2,
-    "description" : "k-1 pass: window [0,0] has 1 distinct; add 1 suffixes (total 1).",
+    "activeLine" : 18,
+    "description" : "solve(2): take in 'p'. 2 distinct letters in s[0..2].",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "1",
+      "ans" : "3",
+      "distinctChar" : "2",
+      "k" : "2",
       "left" : "0",
-      "pass" : "k-1",
-      "right" : "0",
-      "total" : "1"
+      "right" : "2"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 112,
-      "state" : "current",
+      "state" : "target",
       "label" : "p"
     }, {
       "index" : 1,
@@ -270,7 +269,7 @@
     }, {
       "index" : 2,
       "value" : 112,
-      "state" : "default",
+      "state" : "current",
       "label" : "p"
     }, {
       "index" : 3,
@@ -288,35 +287,35 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 2,
-    "description" : "k-1 pass: window [1,1] has 1 distinct; add 1 suffixes (total 2).",
+    "activeLine" : 35,
+    "description" : "3 substrings end at 2 with at most 2 distinct. ans = 6.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "1",
-      "left" : "1",
-      "pass" : "k-1",
-      "right" : "1",
-      "total" : "2"
+      "ans" : "6",
+      "distinctChar" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "2"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 112,
-      "state" : "default",
+      "state" : "target",
       "label" : "p"
     }, {
       "index" : 1,
       "value" : 113,
-      "state" : "current",
+      "state" : "default",
       "label" : "q"
     }, {
       "index" : 2,
       "value" : 112,
-      "state" : "default",
+      "state" : "current",
       "label" : "p"
     }, {
       "index" : 3,
@@ -334,25 +333,25 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 2,
-    "description" : "k-1 pass: window [2,2] has 1 distinct; add 1 suffixes (total 3).",
+    "activeLine" : 18,
+    "description" : "solve(2): take in 'q'. 2 distinct letters in s[0..3].",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "1",
-      "left" : "2",
-      "pass" : "k-1",
-      "right" : "2",
-      "total" : "3"
+      "ans" : "6",
+      "distinctChar" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 112,
-      "state" : "default",
+      "state" : "target",
       "label" : "p"
     }, {
       "index" : 1,
@@ -362,12 +361,12 @@
     }, {
       "index" : 2,
       "value" : 112,
-      "state" : "current",
+      "state" : "default",
       "label" : "p"
     }, {
       "index" : 3,
       "value" : 113,
-      "state" : "default",
+      "state" : "current",
       "label" : "q"
     }, {
       "index" : 4,
@@ -380,25 +379,25 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 2,
-    "description" : "k-1 pass: window [3,3] has 1 distinct; add 1 suffixes (total 4).",
+    "activeLine" : 35,
+    "description" : "4 substrings end at 3 with at most 2 distinct. ans = 10.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "1",
-      "left" : "3",
-      "pass" : "k-1",
-      "right" : "3",
-      "total" : "4"
+      "ans" : "10",
+      "distinctChar" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "3"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 112,
-      "state" : "default",
+      "state" : "target",
       "label" : "p"
     }, {
       "index" : 1,
@@ -426,18 +425,843 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 2,
-    "description" : "k-1 pass: window [4,4] has 1 distinct; add 1 suffixes (total 5).",
+    "activeLine" : 18,
+    "description" : "solve(2): take in 's'. 3 distinct letters in s[0..4].",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(s, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "distinct" : "1",
+      "ans" : "10",
+      "distinctChar" : "3",
+      "k" : "2",
+      "left" : "0",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "target",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 26,
+    "description" : "More than 2 distinct: drop 'p'. 3 distinct left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "10",
+      "distinctChar" : "3",
+      "k" : "2",
+      "left" : "1",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "target",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 26,
+    "description" : "More than 2 distinct: drop 'q'. 3 distinct left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "10",
+      "distinctChar" : "3",
+      "k" : "2",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "target",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 26,
+    "description" : "More than 2 distinct: drop 'p'. 2 distinct left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "10",
+      "distinctChar" : "2",
+      "k" : "2",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "target",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 35,
+    "description" : "2 substrings end at 4 with at most 2 distinct. ans = 12.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "12",
+      "distinctChar" : "2",
+      "k" : "2",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "target",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 38,
+    "description" : "solve(s, 2) = 12.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 2)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "12",
+      "k" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 18,
+    "description" : "solve(1): take in 'p'. 1 distinct letter in s[0..0].",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "0",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "0",
+      "right" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 17,
+    "activeLine" : 35,
+    "description" : "1 substring ends at 0 with at most 1 distinct. ans = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "1",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "0",
+      "right" : "0"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 18,
+    "activeLine" : 18,
+    "description" : "solve(1): take in 'q'. 2 distinct letters in s[0..1].",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "1",
+      "distinctChar" : "2",
+      "k" : "1",
+      "left" : "0",
+      "right" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "target",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 26,
+    "description" : "More than 1 distinct: drop 'p'. 1 distinct left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "1",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "1",
+      "right" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 20,
+    "activeLine" : 35,
+    "description" : "1 substring ends at 1 with at most 1 distinct. ans = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "2",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "1",
+      "right" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 21,
+    "activeLine" : 18,
+    "description" : "solve(1): take in 'p'. 2 distinct letters in s[1..2].",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "2",
+      "distinctChar" : "2",
+      "k" : "1",
+      "left" : "1",
+      "right" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "target",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 22,
+    "activeLine" : 26,
+    "description" : "More than 1 distinct: drop 'q'. 1 distinct left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "2",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "2",
+      "right" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 23,
+    "activeLine" : 35,
+    "description" : "1 substring ends at 2 with at most 1 distinct. ans = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "3",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "2",
+      "right" : "2"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "current",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 24,
+    "activeLine" : 18,
+    "description" : "solve(1): take in 'q'. 2 distinct letters in s[2..3].",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "3",
+      "distinctChar" : "2",
+      "k" : "1",
+      "left" : "2",
+      "right" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "target",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 26,
+    "description" : "More than 1 distinct: drop 'p'. 1 distinct left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "3",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "3",
+      "right" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 26,
+    "activeLine" : 35,
+    "description" : "1 substring ends at 3 with at most 1 distinct. ans = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "4",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "3",
+      "right" : "3"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "current",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 18,
+    "description" : "solve(1): take in 's'. 2 distinct letters in s[3..4].",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "4",
+      "distinctChar" : "2",
+      "k" : "1",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "target",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 26,
+    "description" : "More than 1 distinct: drop 'q'. 1 distinct left.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "4",
+      "distinctChar" : "1",
+      "k" : "1",
       "left" : "4",
-      "pass" : "k-1",
-      "right" : "4",
-      "total" : "5"
+      "right" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -471,17 +1295,104 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 11,
-    "activeLine" : 4,
-    "description" : "Exactly 2 distinct = atMost(2) 12 − atMost(1) 5 = 7 substrings.",
+    "stepNumber" : 29,
+    "activeLine" : 35,
+    "description" : "1 substring ends at 4 with at most 1 distinct. ans = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "5",
+      "distinctChar" : "1",
+      "k" : "1",
+      "left" : "4",
+      "right" : "4"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "current",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 30,
+    "activeLine" : 38,
+    "description" : "solve(s, 1) = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(s, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "ans" : "5",
+      "k" : "1"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 1,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 2,
+      "value" : 112,
+      "state" : "default",
+      "label" : "p"
+    }, {
+      "index" : 3,
+      "value" : 113,
+      "state" : "default",
+      "label" : "q"
+    }, {
+      "index" : 4,
+      "value" : 115,
+      "state" : "default",
+      "label" : "s"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 31,
+    "activeLine" : 5,
+    "description" : "12 - 5 = 7 substrings have exactly 2 distinct letters.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "7",
-      "atMostK" : "12",
-      "atMostKMinusOne" : "5"
+      "answer" : "7"
     },
     "dsType" : "String",
     "gridState" : null,
