@@ -1,12 +1,10 @@
 {
   "anchors" : {
-    "done" : 18,
-    "fallback" : 12,
-    "init" : 4,
-    "match" : 8,
-    "noMatch" : 14
+    "done" : 28,
+    "init" : 6,
+    "lps" : 14
   },
-  "code" : "public String longestPrefix(String s) {\n    int n = s.length();\n    int[] lps = new int[n];\n    int len = 0;\n    int i = 1;\n    while (i < n) {\n        if (s.charAt(i) == s.charAt(len)) {\n            len++;\n            lps[i] = len;\n            i++;\n        } else if (len != 0) {\n            len = lps[len - 1];\n        } else {\n            lps[i] = 0;\n            i++;\n        }\n    }\n    return s.substring(0, lps[n - 1]);\n}",
+  "code" : "// Changed from your submission: it compared two rolling hashes, which is a probabilistic\n// check. KMP's lps table gives the answer exactly - lps[n-1] is the longest proper prefix\n// that is also a suffix - using the same lps loop as your Rotate String solution.\nclass Solution {\n    public String longestPrefix(String s) {\n        String pattern=s;\n        int m=pattern.length();\n        int[] lps=new int[m];\n        lps[0]=0;\n        int j=1;\n        int currLength=0;\n\n        while (j<m) {\n            if (pattern.charAt(j)==pattern.charAt(currLength)) {\n                currLength++;\n                lps[j]=currLength;\n                j++;\n            } else {\n                if (currLength==0) {\n                    lps[j]=currLength;\n                    j++;\n                } else {\n                    currLength=lps[currLength-1];\n                }\n            }\n        }\n\n        int maxLength=lps[m-1];\n        return s.substring(0,maxLength);\n    }\n}",
   "problemId" : "longest-happy-prefix",
   "resolvedInput" : {
     "s" : "ababcabab"
@@ -14,23 +12,19 @@
   "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 4,
-    "description" : "lps[0] = 0 always - a single character has no shorter prefix to match against itself.",
+    "activeLine" : 6,
+    "description" : "Build lps for \"ababcabab\": lps[j] is the longest proper prefix of s[0..j] that is also its suffix. The last entry answers the question for the whole string.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "i" : "1",
-      "len" : "0",
-      "lps" : "[0, 0, 0, 0, 0, 0, 0, 0, 0]"
-    },
+    "variables" : { },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "current",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -79,14 +73,14 @@
   }, {
     "stepNumber" : 2,
     "activeLine" : 14,
-    "description" : "s[1]='b' does not match s[0]='a', and there is no shorter match left to fall back to - lps[1] = 0.",
+    "description" : "pattern[1] = 'b' starts no prefix: lps[1] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "1",
-      "len" : "0",
+      "currLength" : "0",
+      "j" : "1",
       "lps" : "[0, 0, 0, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -94,7 +88,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -142,15 +136,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 8,
-    "description" : "s[2]='a' matches s[0]='a' - extend the match to length 1 and record lps[2]=1.",
+    "activeLine" : 14,
+    "description" : "pattern[2] = 'a' continues the matched prefix: lps[2] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "2",
-      "len" : "1",
+      "currLength" : "1",
+      "j" : "2",
       "lps" : "[0, 0, 1, 0, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -206,15 +200,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 8,
-    "description" : "s[3]='b' matches s[1]='b' - extend the match to length 2 and record lps[3]=2.",
+    "activeLine" : 14,
+    "description" : "pattern[3] = 'b' continues the matched prefix: lps[3] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "3",
-      "len" : "2",
+      "currLength" : "2",
+      "j" : "3",
       "lps" : "[0, 0, 1, 2, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -270,15 +264,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 12,
-    "description" : "s[4]='c' breaks the match of length 2 - fall back to the next-best recorded match length 0 (lps[1]) without moving i forward.",
+    "activeLine" : 14,
+    "description" : "pattern[4] = 'c' breaks the 2-letter match; try the next shorter candidate, length 0 (lps[1]).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "4",
-      "len" : "0",
+      "currLength" : "0",
+      "j" : "4",
       "lps" : "[0, 0, 1, 2, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -286,7 +280,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -335,14 +329,14 @@
   }, {
     "stepNumber" : 6,
     "activeLine" : 14,
-    "description" : "s[4]='c' does not match s[0]='a', and there is no shorter match left to fall back to - lps[4] = 0.",
+    "description" : "pattern[4] = 'c' starts no prefix: lps[4] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "4",
-      "len" : "0",
+      "currLength" : "0",
+      "j" : "4",
       "lps" : "[0, 0, 1, 2, 0, 0, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -350,7 +344,7 @@
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "target",
+      "state" : "default",
       "label" : "a"
     }, {
       "index" : 1,
@@ -398,15 +392,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 8,
-    "description" : "s[5]='a' matches s[0]='a' - extend the match to length 1 and record lps[5]=1.",
+    "activeLine" : 14,
+    "description" : "pattern[5] = 'a' continues the matched prefix: lps[5] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "5",
-      "len" : "1",
+      "currLength" : "1",
+      "j" : "5",
       "lps" : "[0, 0, 1, 2, 0, 1, 0, 0, 0]"
     },
     "dsType" : "String",
@@ -462,15 +456,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 8,
-    "description" : "s[6]='b' matches s[1]='b' - extend the match to length 2 and record lps[6]=2.",
+    "activeLine" : 14,
+    "description" : "pattern[6] = 'b' continues the matched prefix: lps[6] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "6",
-      "len" : "2",
+      "currLength" : "2",
+      "j" : "6",
       "lps" : "[0, 0, 1, 2, 0, 1, 2, 0, 0]"
     },
     "dsType" : "String",
@@ -526,15 +520,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 8,
-    "description" : "s[7]='a' matches s[2]='a' - extend the match to length 3 and record lps[7]=3.",
+    "activeLine" : 14,
+    "description" : "pattern[7] = 'a' continues the matched prefix: lps[7] = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "7",
-      "len" : "3",
+      "currLength" : "3",
+      "j" : "7",
       "lps" : "[0, 0, 1, 2, 0, 1, 2, 3, 0]"
     },
     "dsType" : "String",
@@ -590,15 +584,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 8,
-    "description" : "s[8]='b' matches s[3]='b' - extend the match to length 4 and record lps[8]=4.",
+    "activeLine" : 14,
+    "description" : "pattern[8] = 'b' continues the matched prefix: lps[8] = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "8",
-      "len" : "4",
+      "currLength" : "4",
+      "j" : "8",
       "lps" : "[0, 0, 1, 2, 0, 1, 2, 3, 4]"
     },
     "dsType" : "String",
@@ -654,22 +648,22 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 18,
-    "description" : "The LPS array's last cell, lps[8]=4, names the longest prefix of s that reappears as a proper suffix: \"abab\".",
+    "activeLine" : 28,
+    "description" : "lps[last] = 4: \"abab\" is both a prefix and a suffix of s.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "answer" : "abab",
-      "lps" : "[0, 0, 1, 2, 0, 1, 2, 3, 4]"
+      "maxLength" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 97,
-      "state" : "default",
+      "state" : "current",
       "label" : "a"
     }, {
       "index" : 1,
@@ -684,7 +678,7 @@
     }, {
       "index" : 3,
       "value" : 98,
-      "state" : "default",
+      "state" : "target",
       "label" : "b"
     }, {
       "index" : 4,

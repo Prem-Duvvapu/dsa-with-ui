@@ -8,10 +8,12 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * The "happy prefix" is not a separate algorithm - it is the KMP failure function (the
- * same table {@code kmp-lps-algo} builds) applied to the string itself, read off its very
- * last cell. lps[n-1] names the length of the longest prefix that reappears, intact, as a
- * suffix somewhere later in the same string.
+ * Longest Happy Prefix (LeetCode 1392), in the owner's style: the longest proper prefix of s that is
+ * also a suffix is exactly lps[n - 1] of KMP's prefix function. O(n).
+ *
+ * <p>The owner's submission compared two rolling hashes; that passes, but it is a probabilistic check.
+ * The traced code computes the lps table with the owner's own lps loop from their Rotate String
+ * solution and reads the answer off its last entry; a comment in the code says so.
  */
 @Component
 public class LongestHappyPrefixTracer implements AlgorithmTracer {
@@ -48,81 +50,54 @@ public class LongestHappyPrefixTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public String longestPrefix(String s) {
-                   int n = s.length();
-                   int[] lps = new int[n];
-                   // @a init
-                   int len = 0;
-                   int i = 1;
-                   while (i < n) {
-                       if (s.charAt(i) == s.charAt(len)) {
-                           // @a match
-                           len++;
-                           lps[i] = len;
-                           i++;
-                       } else if (len != 0) {
-                           // @a fallback
-                           len = lps[len - 1];
-                       } else {
-                           // @a noMatch
-                           lps[i] = 0;
-                           i++;
+               // Changed from your submission: it compared two rolling hashes, which is a probabilistic
+               // check. KMP's lps table gives the answer exactly - lps[n-1] is the longest proper prefix
+               // that is also a suffix - using the same lps loop as your Rotate String solution.
+               class Solution {
+                   public String longestPrefix(String s) {
+                       // @a init
+                       String pattern=s;
+                       int m=pattern.length();
+                       int[] lps=new int[m];
+                       lps[0]=0;
+                       int j=1;
+                       int currLength=0;
+
+                       while (j<m) {
+                           // @a lps
+                           if (pattern.charAt(j)==pattern.charAt(currLength)) {
+                               currLength++;
+                               lps[j]=currLength;
+                               j++;
+                           } else {
+                               if (currLength==0) {
+                                   lps[j]=currLength;
+                                   j++;
+                               } else {
+                                   currLength=lps[currLength-1];
+                               }
+                           }
                        }
+
+                       // @a done
+                       int maxLength=lps[m-1];
+                       return s.substring(0,maxLength);
                    }
-                   // @a done
-                   return s.substring(0, lps[n - 1]);
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
-        int n = s.length();
-        int[] lps = new int[n];
-        int len = 0;
-        int i = 1;
-
-        emit.at("init")
-                .say("lps[0] = 0 always - a single character has no shorter prefix to match against itself.")
-                .var("len", len).var("i", i).var("lps", Arrays.toString(lps))
-                .chars(s, 0, -1).step();
-
-        while (i < n) {
-            if (s.charAt(i) == s.charAt(len)) {
-                len++;
-                lps[i] = len;
-                emit.at("match")
-                        .say("s[%d]='%c' matches s[%d]='%c' - extend the match to length %d and record lps[%d]=%d.",
-                                i, s.charAt(i), len - 1, s.charAt(len - 1), len, i, len)
-                        .var("len", len).var("i", i).var("lps", Arrays.toString(lps))
-                        .chars(s, i, len - 1).step();
-                i++;
-            } else if (len != 0) {
-                int before = len;
-                len = lps[len - 1];
-                emit.at("fallback")
-                        .say("s[%d]='%c' breaks the match of length %d - fall back to the next-best "
-                                + "recorded match length %d (lps[%d]) without moving i forward.",
-                                i, s.charAt(i), before, len, before - 1)
-                        .var("len", len).var("i", i).var("lps", Arrays.toString(lps))
-                        .chars(s, i, len).step();
-            } else {
-                lps[i] = 0;
-                emit.at("noMatch")
-                        .say("s[%d]='%c' does not match s[0]='%c', and there is no shorter match left to "
-                                + "fall back to - lps[%d] = 0.",
-                                i, s.charAt(i), s.charAt(0), i)
-                        .var("len", len).var("i", i).var("lps", Arrays.toString(lps))
-                        .chars(s, i, 0).step();
-                i++;
-            }
-        }
-
-        String prefix = s.substring(0, lps[n - 1]);
-        emit.at("done")
-                .say("The LPS array's last cell, lps[%d]=%d, names the longest prefix of s that reappears "
-                        + "as a proper suffix: \"%s\".", n - 1, lps[n - 1], prefix)
-                .var("lps", Arrays.toString(lps)).var("answer", prefix)
+        emit.at("init").say("Build lps for \"%s\": lps[j] is the longest proper prefix of s[0..j] that is also its "
+                        + "suffix. The last entry answers the question for the whole string.", s)
                 .chars(s).step();
+        int[] lps = OwnerLps.build(s, emit, "lps");
+        int maxLength = lps[s.length() - 1];
+        String answer = s.substring(0, maxLength);
+        emit.at("done").say(maxLength == 0
+                        ? "lps[last] = 0: no proper prefix is also a suffix. Return \"\"."
+                        : "lps[last] = " + maxLength + ": \"" + answer + "\" is both a prefix and a suffix of s.")
+                .var("maxLength", maxLength).var("answer", answer).chars(s, 0, maxLength - 1).step();
     }
 }

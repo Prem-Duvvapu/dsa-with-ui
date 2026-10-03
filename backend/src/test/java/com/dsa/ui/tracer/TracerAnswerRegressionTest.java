@@ -194,6 +194,12 @@ class TracerAnswerRegressionTest {
             string-to-integer-atoi | {"s":"   "}                                | answer        | 0
             count-and-say          | {"n":1}                                    | answer        | 1
             sum-beauty-all-substrings | {"s":"ab"}                              | answer        | 0
+            # KMP lps (owner's loop): exact answers where the submissions compared hashes.
+            shortest-palindrome    | {"s":"abab"}                               | answer        | babab
+            shortest-palindrome    | {"s":"a"}                                  | answer        | a
+            longest-happy-prefix   | {"s":"level"}                              | answer        | l
+            longest-happy-prefix   | {"s":"a"}                                  | answer        | ''
+            count-substrings-k-distinct | {"s":"aa","k":1}                      | answer        | 3
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));
