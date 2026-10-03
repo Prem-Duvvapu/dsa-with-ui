@@ -7,17 +7,14 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * How long a signal broadcast from one node takes to reach the whole network
- * (LeetCode 743).
+ * Network Delay Time (LeetCode 743), traced on the owner's own accepted submission: Dijkstra with
+ * a priority queue of {@code Node(dest, wt)}, a {@code (int)1e5} "not reached" sentinel, then the
+ * largest arrival time (or -1 if any node was never reached). Optimal: O(E log V).
  *
- * <p>The shortest-path work is ordinary Dijkstra, but the question asked at the end is
- * not "how far is node x": it is "when is the LAST node lit up", which is the maximum
- * over every finalized distance — and -1 the moment a single node was never reached at
- * all. That asymmetry is the point of the problem, so the trace ends by walking the
- * finished distance array and naming the node that decides the answer.
- *
- * <p>Vertices are numbered from 0 here rather than LeetCode's 1..n, because every graph
- * input in this catalogue is 0-based; the algorithm and the answers are unchanged.
+ * <p>The one change is numbering: the app's nodes are 0 to n - 1 where LeetCode's are 1 to n, so
+ * the arrays have n slots and the loops start at 0. The displayed code says so in a comment.
+ * The priority queue is a real {@link PriorityQueue} with the same comparator, so ties pop in
+ * the same order the submission's would.
  */
 @Component
 public class NetworkDelayTimeTracer implements AlgorithmTracer {
@@ -70,183 +67,171 @@ public class NetworkDelayTimeTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int networkDelayTime(int n, List<List<int[]>> adj, int source) {
-                   // @a init
-                   int[] time = new int[n];
-                   Arrays.fill(time, Integer.MAX_VALUE);
-                   time[source] = 0;
-                   PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
-                   pq.add(new int[]{source, 0});
+               class Node {
+                   int dest;
+                   int wt;
 
-                   while (!pq.isEmpty()) {
-                       // @a extract
-                       int[] top = pq.poll();
-                       int node = top[0], t = top[1];
-                       if (t > time[node]) {
-                           // @a stale
-                           continue;
+                    Node(int dest,int wt) {
+                       this.dest=dest;
+                       this.wt=wt;
+                    }
+               }
+
+               // Changed from your submission: nodes are numbered 0 to n - 1 here (LeetCode numbers
+               // them 1 to n), so the arrays have n slots and the loops start at 0.
+               class Solution {
+                   public int networkDelayTime(int[][] times, int n, int k) {
+                       // @a init
+                       int initialSource=k;
+                       List<List<Node>> adjList=new ArrayList<>();
+                       int[] dist=new int[n];
+                       PriorityQueue<Node> q=new PriorityQueue<>((x,y)->(x.wt-y.wt));
+                       q.add(new Node(initialSource,0));
+
+                       Arrays.fill(dist,(int)1e5);
+                       dist[initialSource]=0;
+
+                       for (int i=0;i<n;i++)
+                           adjList.add(new ArrayList<>());
+
+                       for (int[] e: times) {
+                           int u=e[0];
+                           int v=e[1];
+                           int w=e[2];
+
+                           adjList.get(u).add(new Node(v,w));
                        }
-                       for (int[] link : adj.get(node)) {
-                           int next = link[0], travel = link[1];
-                           if (t + travel < time[next]) {
-                               // @a relax
-                               time[next] = t + travel;
-                               pq.add(new int[]{next, time[next]});
-                           } else {
-                               // @a slower
-                               continue;
+
+                       while (!q.isEmpty()) {
+                           // @a poll
+                           Node curr=q.poll();
+                           int currSrc=curr.dest;
+                           int currWt=curr.wt;
+
+                           for (Node neighbour: adjList.get(currSrc)) {
+                               if (dist[currSrc]+neighbour.wt<dist[neighbour.dest]) {
+                                   // @a relax
+                                   dist[neighbour.dest]=dist[currSrc]+neighbour.wt;
+                                   q.add(new Node(neighbour.dest,dist[neighbour.dest]));
+                               }
                            }
                        }
-                   }
 
-                   // @a answer
-                   int slowest = 0;
-                   for (int t : time) {
-                       if (t == Integer.MAX_VALUE) return -1;
-                       slowest = Math.max(slowest, t);
+                       for (int i=0;i<n;i++)
+                           if (dist[i]==(int)1e5)
+                               // @a unreachable
+                               return -1;
+
+                       // @a done
+                       int maxTime=-1;
+                       for (int i=0;i<n;i++)
+                           maxTime=Math.max(maxTime,dist[i]);
+
+                       return maxTime;
                    }
-                   return slowest;
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
-        int source = in.getInt("source");
+        int k = in.getInt("source");
         int n = graph.vertices();
-        if (source >= n) {
+        if (k >= n) {
             throw new InputValidationException(Map.of("source",
                     "This network only has nodes 0.." + (n - 1) + "."));
         }
+        final int unreached = (int) 1e5;
+        List<List<int[]>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] e : graph.edges()) {
+            adjList.get(e[0]).add(new int[]{e[1], e[2]});
+        }
+        int[] dist = new int[n];
+        Arrays.fill(dist, unreached);
+        dist[k] = 0;
+        PriorityQueue<int[]> q = new PriorityQueue<>((x, y) -> (x[1] - y[1]));
+        q.add(new int[]{k, 0});
 
-        List<List<Inputs.GraphInput.Neighbor>> adj = graph.weightedAdjacency(true);
         GraphLayout.Layout layout = GraphLayout.directed(graph);
-
-        int[] time = new int[n];
-        Arrays.fill(time, Integer.MAX_VALUE);
-        time[source] = 0;
-
         Map<Integer, String> states = new LinkedHashMap<>();
         for (int i = 0; i < n; i++) {
             states.put(i, "unvisited");
         }
-        states.put(source, "queued");
+        states.put(k, "queued");
+        emit.at("init").say("%d nodes. The signal starts at node %d at time 0; every other node starts at "
+                        + "1e5, meaning \"not reached\". The priority queue always hands back the earliest "
+                        + "known arrival.", n, k)
+                .var("dist", show(dist, unreached)).graph(layout.nodes(), layout.edges()).nodes(states)
+                .queue(pq(q)).step();
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-        pq.add(new int[]{source, 0});
+        while (!q.isEmpty()) {
+            int[] curr = q.poll();
+            int currSrc = curr[0];
+            int currWt = curr[1];
+            states.put(currSrc, "visiting");
+            emit.at("poll").say(currWt > dist[currSrc]
+                            ? "Poll node " + currSrc + " at time " + currWt + ". It was already reached sooner (at "
+                                    + dist[currSrc] + "), so none of its links can improve anything."
+                            : "Poll node " + currSrc + " at time " + currWt + ": the earliest arrival still waiting. "
+                                    + "Try each link out of it.")
+                    .var("currSrc", currSrc).var("currWt", currWt).var("dist", show(dist, unreached))
+                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(pq(q)).step();
 
-        emit.at("init").say(
-                        "Node %d transmits at t = 0. Every other node's arrival time starts unknown, "
-                                + "and the queue holds the one node the signal has definitely reached.",
-                        source)
-                .var("source", source).var("time", timeString(time))
-                .graph(layout.nodes(), layout.edges()).nodes(states).queue(pqSnapshot(pq)).step();
-
-        while (!pq.isEmpty()) {
-            int[] top = pq.poll();
-            int node = top[0];
-            int t = top[1];
-
-            emit.at("extract").say("Take the earliest pending arrival: node %d at t = %d.", node, t)
-                    .var("node", node).var("arrival", t).var("time", timeString(time))
-                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(pqSnapshot(pq)).step();
-
-            if (t > time[node]) {
-                emit.at("stale").say(
-                                "The signal already reached node %d at t = %d, earlier than this entry's %d. "
-                                        + "This entry was queued before that shortcut was found - drop it.",
-                                node, time[node], t)
-                        .var("node", node).var("arrival", t).var("time", timeString(time))
-                        .graph(layout.nodes(), layout.edges()).nodes(states).queue(pqSnapshot(pq)).step();
-                continue;
-            }
-
-            states.put(node, "visiting");
-
-            for (Inputs.GraphInput.Neighbor link : adj.get(node)) {
-                int next = link.to();
-                int travel = link.weight();
-                String edgeKey = node + "-" + next;
-
-                if (t + travel < time[next]) {
-                    String old = timeLabel(time[next]);
-                    time[next] = t + travel;
-                    pq.add(new int[]{next, time[next]});
-                    if (!"done".equals(states.get(next))) {
-                        states.put(next, "queued");
-                    }
-                    emit.at("relax").say(
-                                    "Link %d -> %d takes %d. The signal would reach %d at %d + %d = %d, "
-                                            + "earlier than %s. Record it and queue node %d.",
-                                    node, next, travel, next, t, travel, time[next], old, next)
-                            .var("node", node).var("link", edgeKey).var("arrival", time[next])
-                            .var("time", timeString(time))
+            for (int[] neighbour : adjList.get(currSrc)) {
+                if (dist[currSrc] + neighbour[1] < dist[neighbour[0]]) {
+                    int before = dist[neighbour[0]];
+                    dist[neighbour[0]] = dist[currSrc] + neighbour[1];
+                    q.add(new int[]{neighbour[0], dist[neighbour[0]]});
+                    states.put(neighbour[0], "queued");
+                    emit.at("relax").say("%d -> %d arrives at %d + %d = %d, earlier than %s. dist[%d] = %d.",
+                                    currSrc, neighbour[0], dist[currSrc], neighbour[1], dist[neighbour[0]],
+                                    before == unreached ? "never" : String.valueOf(before), neighbour[0], dist[neighbour[0]])
+                            .var("currSrc", currSrc).var("dist", show(dist, unreached))
                             .graph(layout.nodes(), layout.edges()).nodes(states)
-                            .edges(List.of(edgeKey)).queue(pqSnapshot(pq)).step();
-                } else {
-                    emit.at("slower").say(
-                                    "Link %d -> %d takes %d, arriving at %d + %d = %d. Node %d already hears "
-                                            + "the signal at %d, so this route is no faster.",
-                                    node, next, travel, t, travel, t + travel, next, time[next])
-                            .var("node", node).var("link", edgeKey).var("time", timeString(time))
-                            .graph(layout.nodes(), layout.edges()).nodes(states)
-                            .edges(List.of(edgeKey)).queue(pqSnapshot(pq)).step();
+                            .edges(List.of(currSrc + "-" + neighbour[0])).queue(pq(q)).step();
                 }
             }
-
-            states.put(node, "done");
+            states.put(currSrc, "done");
         }
 
-        int unreached = -1;
-        int slowest = 0;
-        int slowestNode = source;
         for (int i = 0; i < n; i++) {
-            if (time[i] == Integer.MAX_VALUE) {
-                unreached = i;
-                break;
+            if (dist[i] == unreached) {
+                states.put(i, "cycle");
+                emit.at("unreachable").say("Node %d still holds 1e5: no chain of links reaches it, so the "
+                                + "signal never gets there. Return -1.", i)
+                        .var("dist", show(dist, unreached)).var("answer", -1)
+                        .graph(layout.nodes(), layout.edges()).nodes(states).step();
+                return;
             }
-            if (time[i] > slowest) {
-                slowest = time[i];
-                slowestNode = i;
-            }
         }
-
-        String verdict;
-        if (unreached >= 0) {
-            states.put(unreached, "target");
-            verdict = String.format(
-                    "node %d never hears it, so no finite delay covers the whole network: the answer is -1",
-                    unreached);
-        } else {
-            states.put(slowestNode, "target");
-            verdict = String.format(
-                    "the last node to hear it is %d at t = %d, so the network delay time is %d",
-                    slowestNode, slowest, slowest);
+        int maxTime = -1;
+        for (int i = 0; i < n; i++) {
+            maxTime = Math.max(maxTime, dist[i]);
         }
-        emit.at("answer").say("Queue empty; arrival times are final at %s. Scanning them, %s.",
-                        timeString(time), verdict)
-                .var("time", timeString(time))
-                .var("answer", unreached >= 0 ? -1 : slowest)
-                .graph(layout.nodes(), layout.edges()).nodes(states).queue(pqSnapshot(pq)).step();
+        emit.at("done").say("Every node is reached. The last arrival is the largest time in dist: %d.", maxTime)
+                .var("dist", show(dist, unreached)).var("answer", maxTime)
+                .graph(layout.nodes(), layout.edges()).nodes(states).step();
     }
 
-    private static List<String> pqSnapshot(PriorityQueue<int[]> pq) {
-        List<String> snapshot = new ArrayList<>(pq.size());
-        for (int[] entry : pq) {
-            snapshot.add(entry[0] + "@" + entry[1]);
+    /** The queue, earliest first, as "node@time". */
+    private static List<String> pq(PriorityQueue<int[]> q) {
+        List<int[]> items = new ArrayList<>(q);
+        items.sort((x, y) -> x[1] - y[1]);
+        List<String> out = new ArrayList<>();
+        for (int[] it : items) {
+            out.add(it[0] + "@" + it[1]);
         }
-        return snapshot;
+        return out;
     }
 
-    private static String timeLabel(int value) {
-        return value == Integer.MAX_VALUE ? "never" : "t = " + value;
-    }
-
-    private static String timeString(int[] time) {
+    private static String show(int[] dist, int unreached) {
         StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < time.length; i++) {
+        for (int i = 0; i < dist.length; i++) {
             if (i > 0) sb.append(", ");
-            sb.append(time[i] == Integer.MAX_VALUE ? "never" : String.valueOf(time[i]));
+            sb.append(dist[i] == unreached ? "1e5" : String.valueOf(dist[i]));
         }
         return sb.append(']').toString();
     }

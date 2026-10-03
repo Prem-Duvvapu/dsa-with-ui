@@ -55,6 +55,18 @@ class TracerAnswerRegressionTest {
                 .isInstanceOf(InputValidationException.class);
     }
 
+    /**
+     * Shortest Path in DAG marks an unreachable vertex -1, as the GfG problem does. With a negative
+     * weight a real distance could also be -1, so weights follow GfG and must be non-negative.
+     */
+    @org.junit.jupiter.api.Test
+    void shortestPathDagRefusesNegativeWeights() {
+        AlgorithmTracer tracer = tracers.find("shortest-path-dag").orElseThrow();
+        assertThatThrownBy(() -> runner.run(tracer, Map.of("start", 0,
+                "graph", Map.of("vertices", 2, "edges", List.of(List.of(0, 1, -1))))))
+                .isInstanceOf(InputValidationException.class);
+    }
+
     @ParameterizedTest(name = "{0} {1} -> {2} = {3}")
     @CsvSource(delimiter = '|', textBlock = """
             # '^' is right-associative: A^B^C is A^(B^C).
@@ -94,6 +106,11 @@ class TracerAnswerRegressionTest {
             rotting-oranges        | {"grid":[[2,1,1],[1,1,0],[0,1,1]]}         | answer        | 4
             nearest-cell-1         | {"grid":[[0,1,1,0],[1,1,0,0],[0,0,1,1]]}   | res           | [[1,0,0,1],[0,0,1,1],[1,1,0,0]]
             distance-nearest-1     | {"grid":[[1,0,0],[0,0,0],[0,0,0]]}         | res           | [[0,1,2],[1,2,3],[2,3,4]]
+            # Shortest paths on the owner's code: a source other than 0 leaves earlier vertices at -1; the
+            # signal time is the LAST arrival, not the sum; effort is the biggest single step.
+            shortest-path-dag      | {"graph":{"vertices":4,"edges":[[0,1,1],[1,2,2],[2,3,3]]},"start":1} | distance | [-1, 0, 2, 5]
+            network-delay-time     | {"graph":{"vertices":4,"edges":[[0,1,1],[0,2,4],[1,2,1],[2,3,1]]},"source":0} | answer | 3
+            path-min-effort        | {"heights":[[1,10,1],[1,10,1],[1,1,1]]}    | answer        | 0
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));
