@@ -17,7 +17,12 @@
   width: 100%;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
+  /* Not justify-content: center. A centred row that overflows spills past BOTH edges, and
+     the part past the left edge cannot be scrolled to - the first cells of a wide array
+     were simply unreachable. Auto margins on the end cells centre a short row and start a
+     long one at its first cell. */
+  justify-content: flex-start;
+  position: relative;
   gap: 24px;
   padding: 20px;
   /* Faint gridlines behind the bars: a bar's height is a quantity, and a quantity is
@@ -30,4 +35,12 @@
   border-bottom: 2px solid var(--border-strong);
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+.stage > :first-child {
+  margin-inline-start: auto;
+}
+
+.stage > :last-child {
+  margin-inline-end: auto;
 }
