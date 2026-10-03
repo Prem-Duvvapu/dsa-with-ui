@@ -35,7 +35,7 @@
         }
       },
       "output": "3-4, 0-3",
-      "answerVariable": "bridges",
+      "answerVariable": "res",
       "explanation": "Vertices 0, 1 and 2 form a triangle, so none of its edges is a bridge. The edges 0 − 3 and 3 − 4 are the only links to 3 and 4, so deleting either one cuts part of the graph off."
     },
     {
@@ -63,7 +63,7 @@
         }
       },
       "output": "none",
-      "answerVariable": "bridges",
+      "answerVariable": "res",
       "explanation": "Every edge lies on the cycle 0 − 1 − 2 − 3 − 0, so no single deletion disconnects the graph."
     }
   ],

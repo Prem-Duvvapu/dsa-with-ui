@@ -138,6 +138,9 @@ class TracerAnswerRegressionTest {
             network-connected-ops  | {"graph":{"vertices":5,"edges":[[0,1],[2,3]]}} | answer | -1
             making-large-island    | {"grid":[[1,0],[0,1]]}                     | answer        | 3
             swim-in-rising-water   | {"grid":[[0,1,2],[5,4,3],[6,7,8]]}         | answer        | 8
+            # A bridge in a second component (the owner's DFS from 0 alone would miss it); Kruskal with ties.
+            tarjan-bridges         | {"graph":{"vertices":5,"edges":[[2,3],[3,4],[4,2],[0,1]]}} | res | 0-1
+            kruskals-mst           | {"graph":{"vertices":4,"edges":[[0,1,1],[1,2,1],[2,3,1],[3,0,1],[0,2,5]]}} | mstWeight | 3
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

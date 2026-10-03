@@ -7,16 +7,15 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * A bridge is an edge whose removal disconnects the graph. Tarjan finds them all in one DFS
- * by timestamping each vertex as it is discovered ({@code disc}) and computing, for each
- * vertex, the OLDEST discovery time reachable from its subtree using at most one back-edge
- * ({@code low}). The tree edge u-v is then a bridge exactly when {@code low[v] > disc[u]}:
- * nothing in v's subtree can climb back to u or above it, so that edge is the subtree's only
- * way out.
+ * Bridges in a graph (Tarjan), traced on the owner's own accepted Critical Connections submission
+ * (LeetCode 1192). {@code firstVisitedTime} stamps each vertex as the DFS reaches it, and
+ * {@code lowestTime} is the earliest stamp reachable from its subtree without using the edge back
+ * to its parent. The edge curr-ngbr is a bridge exactly when {@code lowestTime[ngbr] >
+ * firstVisitedTime[curr]}: nothing below ngbr can get back above curr another way. O(V + E).
  *
- * <p>The parent edge is skipped rather than treated as a back-edge - in an undirected graph
- * every tree edge appears twice in the adjacency list, and counting the return copy as a
- * back-edge would make low[v] collapse to disc[u] and hide every bridge.
+ * <p>One change: the submission ran one DFS from vertex 0 because LeetCode guarantees a connected
+ * network. Here the graph may have several parts, so a DFS starts from every unvisited vertex; a
+ * comment in the displayed code says so.
  */
 @Component
 public class TarjanBridgesTracer implements AlgorithmTracer {
@@ -58,36 +57,58 @@ public class TarjanBridgesTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public List<int[]> bridges(int v, List<List<Integer>> adj) {
-                   // @a init
-                   int[] disc = new int[v], low = new int[v];
-                   Arrays.fill(disc, -1);
-                   List<int[]> found = new ArrayList<>();
-                   for (int i = 0; i < v; i++) {
-                       if (disc[i] == -1) dfs(i, -1, adj, disc, low, found);
-                   }
-                   // @a done
-                   return found;
-               }
+               // Changed from your submission: it ran one DFS from vertex 0, since LeetCode guarantees a
+               // connected network. Here the graph may have several parts, so a DFS starts from every
+               // vertex not yet visited.
+               class Solution {
+                   public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+                       // @a init
+                       List<List<Integer>> res = new ArrayList<>();
+                       List<List<Integer>> adjList = new ArrayList<>();
+                       int[] firstVisitedTime = new int[n];
+                       int[] lowestTime = new int[n];
+                       boolean[] visited = new boolean[n];
+                       int[] time = {1};
 
-               private void dfs(int u, int parent, List<List<Integer>> adj,
-                                 int[] disc, int[] low, List<int[]> found) {
-                   // @a visit
-                   disc[u] = low[u] = timer++;
-                   for (int w : adj.get(u)) {
-                       if (w == parent) continue;
-                       if (disc[w] == -1) {
-                           // @a treeEdge
-                           dfs(w, u, adj, disc, low, found);
-                           // @a childReturn
-                           low[u] = Math.min(low[u], low[w]);
-                           if (low[w] > disc[u]) {
+                       for (int i=0;i<n;i++)
+                           adjList.add(new ArrayList<>());
+
+                       for (List<Integer> edge: connections) {
+                           int u = edge.get(0);
+                           int v = edge.get(1);
+
+                           adjList.get(u).add(v);
+                           adjList.get(v).add(u);
+                       }
+
+                       for (int i=0;i<n;i++)
+                           if (!visited[i])
+                               // @a start
+                               dfs(i,-1,time,visited,firstVisitedTime,lowestTime,res,adjList);
+                       // @a done
+                       return res;
+                   }
+
+                   public void dfs(int curr,int parent,int[] time,boolean[] visited,int[] firstVisitedTime,int[] lowestTime,List<List<Integer>> res,List<List<Integer>> adjList) {
+                       // @a visit
+                       visited[curr] = true;
+                       firstVisitedTime[curr] = time[0];
+                       lowestTime[curr] = time[0];
+                       time[0]++;
+
+                       for (int ngbr: adjList.get(curr)) {
+                           if (ngbr == parent)
+                               continue;
+
+                           if (!visited[ngbr])
+                               dfs(ngbr,curr,time,visited,firstVisitedTime,lowestTime,res,adjList);
+
+                           // @a low
+                           lowestTime[curr] = Math.min(lowestTime[curr], lowestTime[ngbr]);
+
+                           if (lowestTime[ngbr] > firstVisitedTime[curr])
                                // @a bridge
-                               found.add(new int[]{u, w});
-                           }
-                       } else {
-                           // @a backEdge
-                           low[u] = Math.min(low[u], disc[w]);
+                               res.add(new ArrayList<>(Arrays.asList(curr,ngbr)));
                        }
                    }
                }""";
@@ -96,123 +117,123 @@ public class TarjanBridgesTracer implements AlgorithmTracer {
     @Override
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
-        List<List<Integer>> adj = graph.adjacency();
-        int v = graph.vertices();
-        int[] disc = new int[v];
-        int[] low = new int[v];
-        Arrays.fill(disc, -1);
-        Arrays.fill(low, -1);
-        Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < v; i++) {
-            states.put(i, "unvisited");
+        int n = graph.vertices();
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<>());
         }
-        List<String> bridges = new ArrayList<>();
+        for (int[] e : graph.edges()) {
+            adjList.get(e[0]).add(e[1]);
+            adjList.get(e[1]).add(e[0]);
+        }
+        Walk w = new Walk(n, graph, emit);
 
-        emit.at("init")
-                .say("%d vertices, %d undirected edges. disc[u] is when the DFS first sees u; "
-                                + "low[u] is the oldest disc reachable from u's subtree via one back-edge.",
-                        v, graph.edges().length)
-                .var("disc[]", Arrays.toString(disc)).var("low[]", Arrays.toString(low))
-                .var("bridges", bridges.toString())
-                .graph(graph).nodes(states).step();
+        emit.at("init").say("%d vertices, %d edges. A DFS stamps each vertex with the time it is first "
+                        + "reached, and works out the earliest stamp its subtree can get back to.",
+                        n, graph.edges().length)
+                .graph(graph).nodes(w.states).step();
 
-        int[] timer = {0};
-        for (int i = 0; i < v; i++) {
-            if (disc[i] == -1) {
-                dfs(i, -1, adj, disc, low, timer, bridges, states, graph, emit);
+        for (int i = 0; i < n; i++) {
+            if (!w.visited[i]) {
+                emit.at("start").say("Vertex %d is unvisited: start a DFS from it.", i)
+                        .var("i", i).graph(graph).nodes(w.states).step();
+                w.dfs(i, -1, adjList);
             }
         }
 
-        String summary;
-        if (bridges.isEmpty()) {
-            summary = "No edge is a bridge - every edge sits on a cycle, so removing any one of "
-                    + "them leaves the graph connected.";
-        } else {
-            summary = "Bridges: " + String.join(", ", bridges)
-                    + ". Removing any one of them splits the graph.";
-        }
-        emit.at("done")
-                .say("DFS complete. %s", summary)
-                .var("disc[]", Arrays.toString(disc)).var("low[]", Arrays.toString(low))
-                .var("bridges", bridges.isEmpty() ? "none" : String.join(", ", bridges))
-                .graph(graph).nodes(states).step();
+        emit.at("done").say(w.res.isEmpty()
+                        ? "Every edge lies on a cycle, so removing any one leaves the graph connected. No bridges."
+                        : "The DFS is complete. The bridges are " + w.show() + ".")
+                .var("res", w.show()).var("firstVisitedTime", Arrays.toString(w.first))
+                .var("lowestTime", Arrays.toString(w.low))
+                .graph(graph).nodes(w.states).edges(w.bridgeKeys()).step();
     }
 
-    private void dfs(int u, int parent, List<List<Integer>> adj, int[] disc, int[] low,
-                      int[] timer, List<String> bridges, Map<Integer, String> states,
-                      Inputs.GraphInput graph, StepEmitter emit) {
-        emit.push("dfs(" + u + ", parent=" + parent + ")");
-        disc[u] = timer[0];
-        low[u] = timer[0];
-        timer[0]++;
-        states.put(u, "visiting");
+    /** The DFS state, so the recursion can be written the way the code is. */
+    private static final class Walk {
+        final boolean[] visited;
+        final int[] first;
+        final int[] low;
+        final List<int[]> res = new ArrayList<>();
+        final Map<Integer, String> states = new LinkedHashMap<>();
+        final Inputs.GraphInput graph;
+        final StepEmitter emit;
+        int time = 1;
 
-        emit.at("visit")
-                .say("Discover %d as the %s vertex: disc[%d] = low[%d] = %d.",
-                        u, ordinal(disc[u] + 1), u, u, disc[u])
-                .var("u", u).var("disc[]", Arrays.toString(disc)).var("low[]", Arrays.toString(low))
-                .var("bridges", bridges.isEmpty() ? "none" : String.join(", ", bridges))
-                .graph(graph).nodes(states).step();
+        Walk(int n, Inputs.GraphInput graph, StepEmitter emit) {
+            visited = new boolean[n];
+            first = new int[n];
+            low = new int[n];
+            this.graph = graph;
+            this.emit = emit;
+            for (int i = 0; i < n; i++) states.put(i, "unvisited");
+        }
 
-        for (int w : adj.get(u)) {
-            if (w == parent) {
-                continue;
-            }
-            if (disc[w] == -1) {
-                emit.at("treeEdge")
-                        .say("%d - %d is unexplored, so it is a DFS tree edge. Descend into %d.", u, w, w)
-                        .var("u", u).var("child", w)
-                        .var("disc[]", Arrays.toString(disc)).var("low[]", Arrays.toString(low))
-                        .graph(graph).nodes(states).edges(List.of(u + "-" + w)).step();
+        void dfs(int curr, int parent, List<List<Integer>> adjList) {
+            emit.push("dfs(" + curr + ")");
+            visited[curr] = true;
+            first[curr] = time;
+            low[curr] = time;
+            time++;
+            states.put(curr, "visiting");
+            emit.at("visit").say("dfs(%d): first reached at time %d, so firstVisitedTime[%d] = lowestTime[%d] = %d.",
+                            curr, first[curr], curr, curr, first[curr])
+                    .var("curr", curr).var("firstVisitedTime", Arrays.toString(first))
+                    .var("lowestTime", Arrays.toString(low)).graph(graph).nodes(states).edges(bridgeKeys()).step();
 
-                dfs(w, u, adj, disc, low, timer, bridges, states, graph, emit);
-
-                int before = low[u];
-                low[u] = Math.min(low[u], low[w]);
-                emit.at("childReturn")
-                        .say("Back at %d from child %d: low[%d] = min(%d, low[%d] = %d) = %d.",
-                                u, w, u, before, w, low[w], low[u])
-                        .var("u", u).var("child", w)
-                        .var("disc[]", Arrays.toString(disc)).var("low[]", Arrays.toString(low))
-                        .graph(graph).nodes(states).edges(List.of(u + "-" + w)).step();
-
-                if (low[w] > disc[u]) {
-                    bridges.add(u + "-" + w);
-                    emit.at("bridge")
-                            .say("low[%d] = %d > disc[%d] = %d: nothing under %d can climb back to "
-                                            + "%d or higher, so %d - %d is a BRIDGE.",
-                                    w, low[w], u, disc[u], w, u, u, w)
-                            .var("bridge", u + " - " + w)
-                            .var("disc[]", Arrays.toString(disc)).var("low[]", Arrays.toString(low))
-                            .var("bridges", String.join(", ", bridges))
-                            .graph(graph).nodes(states).edges(List.of(u + "-" + w)).step();
+            for (int ngbr : adjList.get(curr)) {
+                if (ngbr == parent) continue;
+                boolean child = !visited[ngbr];
+                if (child) {
+                    dfs(ngbr, curr, adjList);
                 }
-            } else {
-                int before = low[u];
-                low[u] = Math.min(low[u], disc[w]);
-                emit.at("backEdge")
-                        .say("%d - %d is a back-edge to already-discovered %d: low[%d] = min(%d, "
-                                        + "disc[%d] = %d) = %d.",
-                                u, w, w, u, before, w, disc[w], low[u])
-                        .var("u", u).var("back", w)
-                        .var("disc[]", Arrays.toString(disc)).var("low[]", Arrays.toString(low))
-                        .graph(graph).nodes(states).edges(List.of(u + "-" + w)).step();
+                int before = low[curr];
+                low[curr] = Math.min(low[curr], low[ngbr]);
+                String why = child
+                        ? String.format("Back from child %d, whose subtree reaches time %d", ngbr, low[ngbr])
+                        : String.format("%d was already reached another way, so edge %d-%d closes a cycle; take "
+                                + "%d's lowestTime, %d", ngbr, curr, ngbr, ngbr, low[ngbr]);
+                emit.at("low").say("%s: lowestTime[%d] = min(%d, %d) = %d.", why, curr, before, low[ngbr], low[curr])
+                        .var("curr", curr).var("ngbr", ngbr).var("lowestTime", Arrays.toString(low))
+                        .graph(graph).nodes(states).edges(withEdge(curr, ngbr)).step();
+                if (low[ngbr] > first[curr]) {
+                    res.add(new int[]{curr, ngbr});
+                    emit.at("bridge").say("lowestTime[%d] = %d is later than firstVisitedTime[%d] = %d: nothing under %d "
+                                    + "can get back to %d or above except through this edge. %d-%d is a bridge.",
+                                    ngbr, low[ngbr], curr, first[curr], ngbr, curr, curr, ngbr)
+                            .var("res", show()).graph(graph).nodes(states).edges(bridgeKeys()).step();
+                }
             }
+            states.put(curr, "visited");
+            emit.pop();
         }
 
-        states.put(u, "visited");
-        emit.pop();
-    }
+        String show() {
+            if (res.isEmpty()) return "none";
+            List<String> out = new ArrayList<>();
+            for (int[] b : res) out.add(b[0] + "-" + b[1]);
+            return String.join(", ", out);
+        }
 
-    private static String ordinal(int n) {
-        return switch (n % 100) {
-            case 11, 12, 13 -> n + "th";
-            default -> switch (n % 10) {
-                case 1 -> n + "st";
-                case 2 -> n + "nd";
-                case 3 -> n + "rd";
-                default -> n + "th";
-            };
-        };
+        /** The canvas names an undirected edge in its input orientation. */
+        String key(int a, int b) {
+            for (int[] e : graph.edges()) {
+                if (e[0] == a && e[1] == b) return a + "-" + b;
+                if (e[0] == b && e[1] == a) return b + "-" + a;
+            }
+            return a + "-" + b;
+        }
+
+        List<String> bridgeKeys() {
+            List<String> out = new ArrayList<>();
+            for (int[] b : res) out.add(key(b[0], b[1]));
+            return out;
+        }
+
+        List<String> withEdge(int a, int b) {
+            List<String> out = bridgeKeys();
+            out.add(key(a, b));
+            return out;
+        }
     }
 }
