@@ -1,10 +1,14 @@
 import layout from './layout.module.css';
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import styles from './ArrayCanvas.module.css';
 import { lastPayload } from '../trace/lastPayload';
 
+// States that mark the cell a step is about; the stage scrolls to keep the first one in view.
+const LIVE = new Set(['current', 'comparing', 'active', 'target', 'pivot', 'max', 'swapping']);
+
 export default function ArrayCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
+  const stageRef = useRef(null);
   // Absence is not "show the default". Tracers restate a structure only on the steps
   // that change it, so falling through to the catalogue default drew the CATALOGUE's
   // data over the caller's own input. Measured app-wide: 1506 steps across 142 of 232
@@ -49,13 +53,31 @@ export default function ArrayCanvas({ problem, currentStep, step, steps, current
     }
   };
 
+  const firstLive = normalizedArray.findIndex((el) => LIVE.has(el.state));
+
+  // A row wider than the stage scrolls, and the cell the step is about may be off-screen -
+  // task-scheduler's 26 letter counts put the answer in the last two. Scroll the stage
+  // itself, never scrollIntoView, which would also move the page under the reader.
+  useLayoutEffect(() => {
+    const stage = stageRef.current;
+    const cell = firstLive >= 0 ? stage?.children[firstLive] : null;
+    if (!stage || !cell) return;
+    const left = cell.offsetLeft;
+    const right = left + cell.offsetWidth;
+    if (left < stage.scrollLeft) {
+      stage.scrollLeft = Math.max(0, left - 24);
+    } else if (right > stage.scrollLeft + stage.clientWidth) {
+      stage.scrollLeft = right - stage.clientWidth + 24;
+    }
+  }, [activeStep, firstLive]);
+
   const values = normalizedArray.map(el => Math.abs(el.value));
   const maxVal = Math.max(...values, 1);
 
   return (
     <div className={styles.wrap}>
       {/* Array Stage with Faint Horizontal Gridlines */}
-      <div className={styles.stage} data-testid="array-stage">
+      <div className={styles.stage} data-testid="array-stage" ref={stageRef}>
         {normalizedArray.map((el, idx) => {
           const colorInfo = getElementColor(el.state);
           const ratio = Math.abs(el.value) / maxVal;
