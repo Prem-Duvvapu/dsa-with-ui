@@ -5,18 +5,13 @@ import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * "Exactly K distinct" has no direct sliding window of its own - shrinking to restore
- * validity could mean either too many or too few distinct values, and a window can't tell
- * which without external bookkeeping. "At most K" has no such ambiguity (only "too many"
- * ever needs fixing), so exactly(K) = atMost(K) - atMost(K-1): every window counted by
- * atMost(K-1) is also counted by atMost(K), and the difference is exactly the windows with
- * precisely K distinct values.
+ * Subarrays with K Different Integers (LeetCode 992), traced on the owner's own accepted submission. Counting windows with EXACTLY k is awkward;
+ * counting windows with AT MOST k is a plain sliding window - for each right end, every start from
+ * left to right works, which is right - left + 1 windows. So exactly(k) = atMost(k) - atMost(k - 1),
+ * two O(n) passes. The window keeps a HashMap of counts; it is too wide once the map holds more than k keys.
  */
 @Component
 public class SubarraysKDifferentIntegersTracer implements AlgorithmTracer {
@@ -56,31 +51,43 @@ public class SubarraysKDifferentIntegersTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int subarraysWithKDistinct(int[] nums, int k) {
-                   // @a combine
-                   return atMost(nums, k) - atMost(nums, k - 1);
-               }
+               class Solution {
+                   public int subarraysWithKDistinct(int[] nums, int k) {
+                       // @a init
+                       int res=solve(nums,k)-solve(nums,k-1);
+                       // @a done
+                       return res;
+                   }
 
-               private int atMost(int[] nums, int k) {
-                   Map<Integer, Integer> count = new HashMap<>();
-                   int left = 0, total = 0;
+                   private int solve(int[] nums,int k) {
+                       int left=0;
+                       int right=0;
+                       int cnt=0;
+                       Map<Integer,Integer> map=new HashMap<>();
 
-                   for (int right = 0; right < nums.length; right++) {
-                       // @a expand
-                       count.merge(nums[right], 1, Integer::sum);
+                       while (right<nums.length) {
+                           // @a add
+                           map.put(nums[right],map.getOrDefault(nums[right],0)+1);
 
-                       while (count.size() > k) {
-                           // @a shrinkToAtMost
-                           int leftVal = nums[left];
-                           int remaining = count.merge(leftVal, -1, Integer::sum);
-                           if (remaining == 0) count.remove(leftVal);
-                           left++;
+                           while (map.size()>k) {
+                               // @a shrink
+                               int val=map.get(nums[left]);
+                               val--;
+                               if (val==0)
+                                   map.remove(nums[left]);
+                               else
+                                   map.put(nums[left],val);
+                               left++;
+                           }
+
+                           // @a count
+                           cnt+=(right-left+1);
+                           right++;
                        }
 
-                       // @a countWindows
-                       total += right - left + 1;
+                       // @a total
+                       return cnt;
                    }
-                   return total;
                }""";
     }
 
@@ -88,67 +95,47 @@ public class SubarraysKDifferentIntegersTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
         int k = in.getInt("k");
-
-        int atMostK = atMost(nums, k, emit, k);
-        int atMostKMinus1 = k > 0 ? atMost(nums, k - 1, emit, k - 1) : 0;
-        int exactly = atMostK - atMostKMinus1;
-
-        emit.at("combine")
-                .say("Subarrays with at most %d distinct: %d. With at most %d distinct: %d. "
-                                + "Exactly %d distinct: %d - %d = %d.",
-                        k, atMostK, k - 1, atMostKMinus1, k, atMostK, atMostKMinus1, exactly)
-                .var("atMostK", atMostK).var("atMostKMinus1", atMostKMinus1).var("answer", exactly)
-                .array(nums, -1).step();
+        emit.at("init").say("Subarrays with exactly %d distinct values = atMost(%d) - atMost(%d).", k, k, k - 1)
+                .var("k", k).arrayState(WindowCells.of(nums, -1, -1)).step();
+        int a = solve(nums, k, emit);
+        int b = solve(nums, k - 1, emit);
+        int res = a - b;
+        emit.at("done").say("%d - %d = %d subarrays have exactly %d distinct values.", a, b, res, k)
+                .var("res", res).var("answer", res).arrayState(WindowCells.of(nums, -1, -1)).step();
     }
 
-    private int atMost(int[] nums, int limit, StepEmitter emit, int passLabel) {
-        Map<Integer, Integer> count = new LinkedHashMap<>();
+    private static int solve(int[] nums, int k, StepEmitter emit) {
+        emit.push("solve(nums, " + k + ")");
         int left = 0;
-        int total = 0;
-
-        if (limit < 0) {
-            return 0;
-        }
-
-        for (int right = 0; right < nums.length; right++) {
-            count.merge(nums[right], 1, Integer::sum);
-            emit.at("expand")
-                    .say("[at most %d distinct] Add nums[%d]=%d. Window now holds %d distinct value%s.",
-                            limit, right, nums[right], count.size(), count.size() == 1 ? "" : "s")
-                    .var("pass", "atMost(" + passLabel + ")").var("distinct", count.size())
-                    .arrayState(windowState(nums, left, right)).step();
-
-            while (count.size() > limit) {
-                int leftVal = nums[left];
-                int remaining = count.merge(leftVal, -1, Integer::sum);
-                if (remaining == 0) count.remove(leftVal);
+        int right = 0;
+        int cnt = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        while (right < nums.length) {
+            map.put(nums[right], map.getOrDefault(nums[right], 0) + 1);
+            emit.at("add").say("solve(%d): add nums[%d] = %d. The window holds %d distinct value%s.",
+                            k, right, nums[right], map.size(), Narration.s(map.size()))
+                    .var("k", k).var("left", left).var("right", right).var("map", map.toString()).var("cnt", cnt)
+                    .arrayState(WindowCells.of(nums, left, right)).step();
+            while (map.size() > k) {
+                int val = map.get(nums[left]) - 1;
+                if (val == 0) map.remove(nums[left]);
+                else map.put(nums[left], val);
                 left++;
-                emit.at("shrinkToAtMost")
-                        .say("[at most %d distinct] Too many distinct values - shrink past nums[%d]=%d. "
-                                        + "Window now starts at %d.",
-                                limit, left - 1, leftVal, left)
-                        .var("pass", "atMost(" + passLabel + ")").var("left", left)
-                        .arrayState(windowState(nums, left, right)).step();
+                emit.at("shrink").say("More than %d distinct: drop nums[%d]. %d distinct left.", k, left - 1, map.size())
+                        .var("k", k).var("left", left).var("right", right).var("map", map.toString()).var("cnt", cnt)
+                        .arrayState(WindowCells.of(nums, left, right)).step();
             }
-
-            total += right - left + 1;
-            emit.at("countWindows")
-                    .say("[at most %d distinct] %d new subarrays end at index %d (window [%d,%d]). "
-                                    + "Running total: %d.",
-                            limit, right - left + 1, right, left, right, total)
-                    .var("pass", "atMost(" + passLabel + ")").var("runningTotal", total)
-                    .arrayState(windowState(nums, left, right)).step();
+            cnt += right - left + 1;
+            emit.at("count").say("%d subarray%s %s at %d with at most %d distinct. cnt = %d.",
+                            right - left + 1, Narration.s(right - left + 1),
+                            Narration.plural(right - left + 1, "ends", "end"), right, k, cnt)
+                    .var("k", k).var("left", left).var("right", right).var("map", map.toString()).var("cnt", cnt)
+                    .arrayState(WindowCells.of(nums, left, right)).step();
+            right++;
         }
-
-        return total;
-    }
-
-    private static List<ArrayElement> windowState(int[] nums, int left, int right) {
-        List<ArrayElement> state = new ArrayList<>(nums.length);
-        for (int i = 0; i < nums.length; i++) {
-            String s = i == right ? "current" : i == left ? "target" : (i > left && i < right) ? "active" : "default";
-            state.add(new ArrayElement(i, nums[i], s));
-        }
-        return state;
+        emit.at("total").say("solve(nums, %d) = %d.", k, cnt)
+                .var("k", k).var("cnt", cnt).arrayState(WindowCells.of(nums, -1, -1)).step();
+        emit.pop();
+        return cnt;
     }
 }

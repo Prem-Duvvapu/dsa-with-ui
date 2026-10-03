@@ -1,37 +1,37 @@
 {
   "anchors" : {
-    "combine" : 2,
-    "countWindows" : 14,
-    "expand" : 9,
-    "shrink" : 11
+    "add" : 20,
+    "count" : 29,
+    "done" : 6,
+    "init" : 3,
+    "negative" : 11,
+    "shrink" : 24,
+    "total" : 35
   },
-  "code" : "public int numSubarraysWithSum(int[] nums, int goal) {\n    return atMost(nums, goal) - atMost(nums, goal - 1);\n}\n\nprivate int atMost(int[] nums, int goal) {\n    if (goal < 0) return 0;\n    int left = 0, sum = 0, total = 0;\n    for (int right = 0; right < nums.length; right++) {\n        sum += nums[right];\n        while (sum > goal && left <= right) {\n            sum -= nums[left];\n            left++;\n        }\n        total += right - left + 1;\n    }\n    return total;\n}",
+  "code" : "class Solution {\n    public int numSubarraysWithSum(int[] nums, int goal) {\n        int a=solve(nums,goal);\n        int b=solve(nums,goal-1);\n\n        return (a-b);\n    }\n\n    public int solve(int[] nums,int k) {\n        if (k<0)\n            return 0;\n\n        int n=nums.length;\n        int left=0;\n        int right=0;\n        int currSum=0;\n        int cnt=0;\n\n        while (right<n) {\n            currSum+=nums[right];\n\n            //greater than k\n            while (left<=right && currSum>k) {\n                currSum-=nums[left];\n                left++;\n            }\n\n            //less than or equal to k\n            int currCnt=(right-left)+1;\n            cnt+=currCnt;\n\n            right++;\n        }\n\n        return cnt;\n    }\n}",
   "problemId" : "binary-subarrays-with-sum",
   "resolvedInput" : {
     "goal" : 2,
     "nums" : [ 1, 0, 1, 0, 1 ]
   },
-  "stepCount" : 25,
+  "stepCount" : 28,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 2] Add nums[0]=1 → window sum is 1.",
+    "activeLine" : 3,
+    "description" : "Subarrays summing to exactly 2 = (subarrays summing to at most 2) - (at most 1). Count each with solve().",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "left" : "0",
-      "pass" : "atMost(2)",
-      "right" : "0",
-      "sum" : "1"
+      "goal" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 0,
@@ -54,16 +54,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 2] Window [0,0] adds 1 subarray ending at index 0. Running total: 1.",
+    "activeLine" : 20,
+    "description" : "solve(2): add nums[0] = 1. currSum = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "1",
-      "pass" : "atMost(2)",
-      "total" : "1"
+      "cnt" : "0",
+      "currSum" : "1",
+      "k" : "2",
+      "left" : "0",
+      "right" : "0"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -93,28 +95,29 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 2] Add nums[1]=0 → window sum is 1.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 0 and starting from 0 to 0 sums to at most 2: 1 more. cnt = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "1",
+      "currSum" : "1",
+      "k" : "2",
       "left" : "0",
-      "pass" : "atMost(2)",
-      "right" : "1",
-      "sum" : "1"
+      "right" : "0"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "target"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 2,
       "value" : 1,
@@ -133,16 +136,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 2] Window [0,1] adds 2 subarrays ending at index 1. Running total: 3.",
+    "activeLine" : 20,
+    "description" : "solve(2): add nums[1] = 0. currSum = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "2",
-      "pass" : "atMost(2)",
-      "total" : "3"
+      "cnt" : "1",
+      "currSum" : "1",
+      "k" : "2",
+      "left" : "0",
+      "right" : "1"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -172,17 +177,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 2] Add nums[2]=1 → window sum is 2.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 1 and starting from 0 to 1 sums to at most 2: 2 more. cnt = 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "3",
+      "currSum" : "1",
+      "k" : "2",
       "left" : "0",
-      "pass" : "atMost(2)",
-      "right" : "2",
-      "sum" : "2"
+      "right" : "1"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -193,11 +199,11 @@
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 3,
       "value" : 0,
@@ -212,16 +218,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 2] Window [0,2] adds 3 subarrays ending at index 2. Running total: 6.",
+    "activeLine" : 20,
+    "description" : "solve(2): add nums[2] = 1. currSum = 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "3",
-      "pass" : "atMost(2)",
-      "total" : "6"
+      "cnt" : "3",
+      "currSum" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -251,17 +259,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 2] Add nums[3]=0 → window sum is 2.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 2 and starting from 0 to 2 sums to at most 2: 3 more. cnt = 6.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "6",
+      "currSum" : "2",
+      "k" : "2",
       "left" : "0",
-      "pass" : "atMost(2)",
-      "right" : "3",
-      "sum" : "2"
+      "right" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -276,11 +285,11 @@
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 1,
@@ -291,16 +300,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 2] Window [0,3] adds 4 subarrays ending at index 3. Running total: 10.",
+    "activeLine" : 20,
+    "description" : "solve(2): add nums[3] = 0. currSum = 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "4",
-      "pass" : "atMost(2)",
-      "total" : "10"
+      "cnt" : "6",
+      "currSum" : "2",
+      "k" : "2",
+      "left" : "0",
+      "right" : "3"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -330,17 +341,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 2] Add nums[4]=1 → window sum is 3.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 3 and starting from 0 to 3 sums to at most 2: 4 more. cnt = 10.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "10",
+      "currSum" : "2",
+      "k" : "2",
       "left" : "0",
-      "pass" : "atMost(2)",
-      "right" : "4",
-      "sum" : "3"
+      "right" : "3"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -359,39 +371,40 @@
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 4,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 11,
-    "description" : "[Pass sum ≤ 2] Sum 3 > 2 → shrink from left past index 0. Window starts at 1, sum is 2.",
+    "activeLine" : 20,
+    "description" : "solve(2): add nums[4] = 1. currSum = 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "left" : "1",
-      "pass" : "atMost(2)",
-      "right" : "4",
-      "sum" : "2"
+      "cnt" : "10",
+      "currSum" : "3",
+      "k" : "2",
+      "left" : "0",
+      "right" : "4"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "default"
+      "state" : "target"
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "target"
+      "state" : "active"
     }, {
       "index" : 2,
       "value" : 1,
@@ -410,16 +423,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 2] Window [1,4] adds 4 subarrays ending at index 4. Running total: 14.",
+    "activeLine" : 24,
+    "description" : "currSum was over 2: drop nums[0]. currSum = 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "4",
-      "pass" : "atMost(2)",
-      "total" : "14"
+      "cnt" : "10",
+      "currSum" : "2",
+      "k" : "2",
+      "left" : "1",
+      "right" : "4"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -449,63 +464,63 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 1] Add nums[0]=1 → window sum is 1.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 4 and starting from 1 to 4 sums to at most 2: 4 more. cnt = 14.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "left" : "0",
-      "pass" : "atMost(1)",
-      "right" : "0",
-      "sum" : "1"
+      "cnt" : "14",
+      "currSum" : "2",
+      "k" : "2",
+      "left" : "1",
+      "right" : "4"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "default"
+      "state" : "target"
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "default"
+      "state" : "active"
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "default"
+      "state" : "active"
     }, {
       "index" : 4,
       "value" : 1,
-      "state" : "default"
+      "state" : "current"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 1] Window [0,0] adds 1 subarray ending at index 0. Running total: 1.",
+    "activeLine" : 35,
+    "description" : "solve(nums, 2) = 14.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 2)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "1",
-      "pass" : "atMost(1)",
-      "total" : "1"
+      "cnt" : "14",
+      "k" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 0,
@@ -528,28 +543,29 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 1] Add nums[1]=0 → window sum is 1.",
+    "activeLine" : 20,
+    "description" : "solve(1): add nums[0] = 1. currSum = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "0",
+      "currSum" : "1",
+      "k" : "1",
       "left" : "0",
-      "pass" : "atMost(1)",
-      "right" : "1",
-      "sum" : "1"
+      "right" : "0"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "target"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 2,
       "value" : 1,
@@ -568,27 +584,29 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 1] Window [0,1] adds 2 subarrays ending at index 1. Running total: 3.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 0 and starting from 0 to 0 sums to at most 1: 1 more. cnt = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "2",
-      "pass" : "atMost(1)",
-      "total" : "3"
+      "cnt" : "1",
+      "currSum" : "1",
+      "k" : "1",
+      "left" : "0",
+      "right" : "0"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "target"
+      "state" : "current"
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 2,
       "value" : 1,
@@ -607,17 +625,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 1] Add nums[2]=1 → window sum is 2.",
+    "activeLine" : 20,
+    "description" : "solve(1): add nums[1] = 0. currSum = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "1",
+      "currSum" : "1",
+      "k" : "1",
       "left" : "0",
-      "pass" : "atMost(1)",
-      "right" : "2",
-      "sum" : "2"
+      "right" : "1"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -628,11 +647,11 @@
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 3,
       "value" : 0,
@@ -647,32 +666,33 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 11,
-    "description" : "[Pass sum ≤ 1] Sum 2 > 1 → shrink from left past index 0. Window starts at 1, sum is 1.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 1 and starting from 0 to 1 sums to at most 1: 2 more. cnt = 3.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "left" : "1",
-      "pass" : "atMost(1)",
-      "right" : "2",
-      "sum" : "1"
+      "cnt" : "3",
+      "currSum" : "1",
+      "k" : "1",
+      "left" : "0",
+      "right" : "1"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "default"
+      "state" : "target"
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "target"
+      "state" : "current"
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 3,
       "value" : 0,
@@ -687,27 +707,29 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 1] Window [1,2] adds 2 subarrays ending at index 2. Running total: 5.",
+    "activeLine" : 20,
+    "description" : "solve(1): add nums[2] = 1. currSum = 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "2",
-      "pass" : "atMost(1)",
-      "total" : "5"
+      "cnt" : "3",
+      "currSum" : "2",
+      "k" : "1",
+      "left" : "0",
+      "right" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "default"
+      "state" : "target"
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "target"
+      "state" : "active"
     }, {
       "index" : 2,
       "value" : 1,
@@ -726,17 +748,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 1] Add nums[3]=0 → window sum is 1.",
+    "activeLine" : 24,
+    "description" : "currSum was over 1: drop nums[0]. currSum = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "3",
+      "currSum" : "1",
+      "k" : "1",
       "left" : "1",
-      "pass" : "atMost(1)",
-      "right" : "3",
-      "sum" : "1"
+      "right" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -751,11 +774,11 @@
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 1,
@@ -766,16 +789,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 1] Window [1,3] adds 3 subarrays ending at index 3. Running total: 8.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 2 and starting from 1 to 2 sums to at most 1: 2 more. cnt = 5.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "3",
-      "pass" : "atMost(1)",
-      "total" : "8"
+      "cnt" : "5",
+      "currSum" : "1",
+      "k" : "1",
+      "left" : "1",
+      "right" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -790,11 +815,11 @@
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "current"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 1,
@@ -805,17 +830,18 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 9,
-    "description" : "[Pass sum ≤ 1] Add nums[4]=1 → window sum is 2.",
+    "activeLine" : 20,
+    "description" : "solve(1): add nums[3] = 0. currSum = 1.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "cnt" : "5",
+      "currSum" : "1",
+      "k" : "1",
       "left" : "1",
-      "pass" : "atMost(1)",
-      "right" : "4",
-      "sum" : "2"
+      "right" : "3"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -834,28 +860,29 @@
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 4,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 11,
-    "description" : "[Pass sum ≤ 1] Sum 2 > 1 → shrink from left past index 1. Window starts at 2, sum is 2.",
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 3 and starting from 1 to 3 sums to at most 1: 3 more. cnt = 8.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "left" : "2",
-      "pass" : "atMost(1)",
-      "right" : "4",
-      "sum" : "2"
+      "cnt" : "8",
+      "currSum" : "1",
+      "k" : "1",
+      "left" : "1",
+      "right" : "3"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -866,36 +893,37 @@
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "default"
+      "state" : "target"
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "target"
+      "state" : "active"
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "active"
+      "state" : "current"
     }, {
       "index" : 4,
       "value" : 1,
-      "state" : "current"
+      "state" : "default"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 11,
-    "description" : "[Pass sum ≤ 1] Sum 2 > 1 → shrink from left past index 2. Window starts at 3, sum is 1.",
+    "activeLine" : 20,
+    "description" : "solve(1): add nums[4] = 1. currSum = 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "left" : "3",
-      "pass" : "atMost(1)",
-      "right" : "4",
-      "sum" : "1"
+      "cnt" : "8",
+      "currSum" : "2",
+      "k" : "1",
+      "left" : "1",
+      "right" : "4"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -906,15 +934,15 @@
     }, {
       "index" : 1,
       "value" : 0,
-      "state" : "default"
+      "state" : "target"
     }, {
       "index" : 2,
       "value" : 1,
-      "state" : "default"
+      "state" : "active"
     }, {
       "index" : 3,
       "value" : 0,
-      "state" : "target"
+      "state" : "active"
     }, {
       "index" : 4,
       "value" : 1,
@@ -925,16 +953,59 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 24,
-    "activeLine" : 14,
-    "description" : "[Pass sum ≤ 1] Window [3,4] adds 2 subarrays ending at index 4. Running total: 10.",
+    "activeLine" : 24,
+    "description" : "currSum was over 1: drop nums[1]. currSum = 2.",
     "queueOrStackState" : null,
-    "callStack" : [ ],
+    "callStack" : [ "solve(nums, 1)" ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "added" : "2",
-      "pass" : "atMost(1)",
-      "total" : "10"
+      "cnt" : "8",
+      "currSum" : "2",
+      "k" : "1",
+      "left" : "2",
+      "right" : "4"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "target"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "active"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 25,
+    "activeLine" : 24,
+    "description" : "currSum was over 1: drop nums[2]. currSum = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(nums, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "8",
+      "currSum" : "1",
+      "k" : "1",
+      "left" : "3",
+      "right" : "4"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -963,17 +1034,96 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 25,
-    "activeLine" : 2,
-    "description" : "Pass 1 (sum ≤ 2): 14 subarrays. Pass 2 (sum ≤ 1): 10 subarrays. Exact sum = 2: 14 - 10 = 4.",
+    "stepNumber" : 26,
+    "activeLine" : 29,
+    "description" : "Every subarray ending at 4 and starting from 3 to 4 sums to at most 1: 2 more. cnt = 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(nums, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "10",
+      "currSum" : "1",
+      "k" : "1",
+      "left" : "3",
+      "right" : "4"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "target"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 27,
+    "activeLine" : 35,
+    "description" : "solve(nums, 1) = 10.",
+    "queueOrStackState" : null,
+    "callStack" : [ "solve(nums, 1)" ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "cnt" : "10",
+      "k" : "1"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 1,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 2,
+      "value" : 1,
+      "state" : "default"
+    }, {
+      "index" : 3,
+      "value" : 0,
+      "state" : "default"
+    }, {
+      "index" : 4,
+      "value" : 1,
+      "state" : "default"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 28,
+    "activeLine" : 6,
+    "description" : "14 subarrays sum to at most 2 and 10 to at most 1, so 14 - 10 = 4 sum to exactly 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "a" : "14",
       "answer" : "4",
-      "atMostGoal" : "14",
-      "atMostGoalMinus1" : "10"
+      "b" : "10"
     },
     "dsType" : "Window",
     "gridState" : null,
