@@ -1,13 +1,13 @@
 {
   "anchors" : {
-    "decrement" : 20,
-    "done" : 27,
-    "enqueue" : 22,
-    "poll" : 17,
-    "reverse" : 2,
-    "seed" : 10
+    "decrement" : 28,
+    "done" : 35,
+    "enqueue" : 31,
+    "init" : 3,
+    "poll" : 24,
+    "seed" : 19
   },
-  "code" : "public List<Integer> eventualSafeNodes(int v, List<List<Integer>> adj) {\n    List<List<Integer>> radj = new ArrayList<>();\n    int[] outdegree = new int[v];\n    for (int i = 0; i < v; i++) radj.add(new ArrayList<>());\n    for (int node = 0; node < v; node++) {\n        outdegree[node] = adj.get(node).size();\n        for (int next : adj.get(node)) radj.get(next).add(node);\n    }\n\n    Queue<Integer> queue = new LinkedList<>();\n    boolean[] safe = new boolean[v];\n    for (int i = 0; i < v; i++) {\n        if (outdegree[i] == 0) queue.add(i);\n    }\n\n    while (!queue.isEmpty()) {\n        int node = queue.poll();\n        safe[node] = true;\n        for (int pred : radj.get(node)) {\n            outdegree[pred]--;\n            if (outdegree[pred] == 0) {\n                queue.add(pred);\n            }\n        }\n    }\n\n    List<Integer> result = new ArrayList<>();\n    for (int i = 0; i < v; i++) if (safe[i]) result.add(i);\n    return result;\n}",
+  "code" : "class Solution {\n    public List<Integer> eventualSafeNodes(int[][] graph) {\n        int n = graph.length;\n        List<Integer> res = new ArrayList<>();\n        List<List<Integer>> revAdjList = new ArrayList<>();\n        int[] indegree = new int[n];\n        Queue<Integer> q = new LinkedList<>();\n\n        for (int i=0;i<n;i++)\n            revAdjList.add(new ArrayList<>());\n\n        for (int i=0;i<n;i++) {\n            for (int ngbr: graph[i]) {\n                revAdjList.get(ngbr).add(i);\n                indegree[i]++;\n            }\n        }\n\n        for (int i=0;i<n;i++)\n            if (indegree[i] == 0)\n                q.add(i);\n\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n            res.add(curr);\n\n            for (int ngbr: revAdjList.get(curr))  {\n                indegree[ngbr]--;\n\n                if (indegree[ngbr] == 0)\n                    q.add(ngbr);\n            }\n        }\n\n        Collections.sort(res);\n        return res;\n    }\n}",
   "problemId" : "find-eventual-safe-states",
   "resolvedInput" : {
     "graph" : {
@@ -18,8 +18,8 @@
   "stepCount" : 13,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "7 vertices, 7 edges. Reverse every edge; a node's outdegree becomes its reversed indegree: [2, 2, 1, 1, 1, 0, 0].",
+    "activeLine" : 3,
+    "description" : "Reverse every edge. In the reversed graph, indegree[i] is the number of edges leaving i in the original: [2, 2, 1, 1, 1, 0, 0]. A node with none is terminal, so it is safe.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -33,7 +33,7 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "outdegree" : "[2, 2, 1, 1, 1, 0, 0]"
+      "indegree" : "[2, 2, 1, 1, 1, 0, 0]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -129,8 +129,8 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 10,
-    "description" : "Terminal nodes (outdegree 0) have no way to loop - they are safe by definition. Seed the queue with [5, 6].",
+    "activeLine" : 19,
+    "description" : "Terminal nodes, safe by definition: queue [5, 6].",
     "queueOrStackState" : [ "5", "6" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -144,7 +144,7 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "queue" : "[5, 6]"
+      "q" : "[5, 6]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -240,8 +240,8 @@
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 17,
-    "description" : "Dequeue 5 and mark it safe - every path out of it reaches a terminal.",
+    "activeLine" : 24,
+    "description" : "Node 5 is safe: add it to res, then lower the count of each node with an edge into 5.",
     "queueOrStackState" : [ "6" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -250,12 +250,13 @@
       "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
-      "5" : "visited",
+      "5" : "safe",
       "6" : "queued"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "5"
+      "curr" : "5",
+      "res" : "[5]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -351,8 +352,8 @@
     } ]
   }, {
     "stepNumber" : 4,
-    "activeLine" : 20,
-    "description" : "2 -> 5 in the original graph: 2's remaining unsafe out-edges drops to 0.",
+    "activeLine" : 28,
+    "description" : "2 -> 5 leads to a safe node. 2 now has 0 edges not yet known to be safe.",
     "queueOrStackState" : [ "6" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -361,14 +362,14 @@
       "2" : "unvisited",
       "3" : "unvisited",
       "4" : "unvisited",
-      "5" : "visited",
+      "5" : "safe",
       "6" : "queued"
     },
     "activeEdges" : [ "2-5" ],
     "variables" : {
-      "node" : "5",
-      "outdegreeLeft" : "0",
-      "predecessor" : "2"
+      "curr" : "5",
+      "indegree" : "[2, 2, 0, 1, 1, 0, 0]",
+      "ngbr" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -464,8 +465,8 @@
     } ]
   }, {
     "stepNumber" : 5,
-    "activeLine" : 22,
-    "description" : "Every out-edge of 2 now leads to a safe node - enqueue it.",
+    "activeLine" : 31,
+    "description" : "Every edge out of 2 leads to a safe node, so 2 is safe too - queue it.",
     "queueOrStackState" : [ "6", "2" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -474,12 +475,13 @@
       "2" : "queued",
       "3" : "unvisited",
       "4" : "unvisited",
-      "5" : "visited",
+      "5" : "safe",
       "6" : "queued"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "enqueued" : "2"
+      "ngbr" : "2",
+      "q" : "[6, 2]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -575,8 +577,8 @@
     } ]
   }, {
     "stepNumber" : 6,
-    "activeLine" : 20,
-    "description" : "4 -> 5 in the original graph: 4's remaining unsafe out-edges drops to 0.",
+    "activeLine" : 28,
+    "description" : "4 -> 5 leads to a safe node. 4 now has 0 edges not yet known to be safe.",
     "queueOrStackState" : [ "6", "2" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -585,14 +587,14 @@
       "2" : "queued",
       "3" : "unvisited",
       "4" : "unvisited",
-      "5" : "visited",
+      "5" : "safe",
       "6" : "queued"
     },
     "activeEdges" : [ "4-5" ],
     "variables" : {
-      "node" : "5",
-      "outdegreeLeft" : "0",
-      "predecessor" : "4"
+      "curr" : "5",
+      "indegree" : "[2, 2, 0, 1, 0, 0, 0]",
+      "ngbr" : "4"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -688,8 +690,8 @@
     } ]
   }, {
     "stepNumber" : 7,
-    "activeLine" : 22,
-    "description" : "Every out-edge of 4 now leads to a safe node - enqueue it.",
+    "activeLine" : 31,
+    "description" : "Every edge out of 4 leads to a safe node, so 4 is safe too - queue it.",
     "queueOrStackState" : [ "6", "2", "4" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -698,12 +700,13 @@
       "2" : "queued",
       "3" : "unvisited",
       "4" : "queued",
-      "5" : "visited",
+      "5" : "safe",
       "6" : "queued"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "enqueued" : "4"
+      "ngbr" : "4",
+      "q" : "[6, 2, 4]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -799,8 +802,8 @@
     } ]
   }, {
     "stepNumber" : 8,
-    "activeLine" : 17,
-    "description" : "Dequeue 6 and mark it safe - every path out of it reaches a terminal.",
+    "activeLine" : 24,
+    "description" : "Node 6 is safe: add it to res, then lower the count of each node with an edge into 6.",
     "queueOrStackState" : [ "2", "4" ],
     "callStack" : [ ],
     "nodeStates" : {
@@ -809,12 +812,13 @@
       "2" : "queued",
       "3" : "unvisited",
       "4" : "queued",
-      "5" : "visited",
-      "6" : "visited"
+      "5" : "safe",
+      "6" : "safe"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "6"
+      "curr" : "6",
+      "res" : "[5, 6]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -910,22 +914,23 @@
     } ]
   }, {
     "stepNumber" : 9,
-    "activeLine" : 17,
-    "description" : "Dequeue 2 and mark it safe - every path out of it reaches a terminal.",
+    "activeLine" : 24,
+    "description" : "Node 2 is safe: add it to res, then lower the count of each node with an edge into 2.",
     "queueOrStackState" : [ "4" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "unvisited",
       "1" : "unvisited",
-      "2" : "visited",
+      "2" : "safe",
       "3" : "unvisited",
       "4" : "queued",
-      "5" : "visited",
-      "6" : "visited"
+      "5" : "safe",
+      "6" : "safe"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "2"
+      "curr" : "2",
+      "res" : "[5, 6, 2]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1021,24 +1026,24 @@
     } ]
   }, {
     "stepNumber" : 10,
-    "activeLine" : 20,
-    "description" : "0 -> 2 in the original graph: 0's remaining unsafe out-edges drops to 1.",
+    "activeLine" : 28,
+    "description" : "0 -> 2 leads to a safe node. 0 now has 1 edge not yet known to be safe.",
     "queueOrStackState" : [ "4" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "unvisited",
       "1" : "unvisited",
-      "2" : "visited",
+      "2" : "safe",
       "3" : "unvisited",
       "4" : "queued",
-      "5" : "visited",
-      "6" : "visited"
+      "5" : "safe",
+      "6" : "safe"
     },
     "activeEdges" : [ "0-2" ],
     "variables" : {
-      "node" : "2",
-      "outdegreeLeft" : "1",
-      "predecessor" : "0"
+      "curr" : "2",
+      "indegree" : "[1, 2, 0, 1, 0, 0, 0]",
+      "ngbr" : "0"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1134,24 +1139,24 @@
     } ]
   }, {
     "stepNumber" : 11,
-    "activeLine" : 20,
-    "description" : "1 -> 2 in the original graph: 1's remaining unsafe out-edges drops to 1.",
+    "activeLine" : 28,
+    "description" : "1 -> 2 leads to a safe node. 1 now has 1 edge not yet known to be safe.",
     "queueOrStackState" : [ "4" ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "unvisited",
       "1" : "unvisited",
-      "2" : "visited",
+      "2" : "safe",
       "3" : "unvisited",
       "4" : "queued",
-      "5" : "visited",
-      "6" : "visited"
+      "5" : "safe",
+      "6" : "safe"
     },
     "activeEdges" : [ "1-2" ],
     "variables" : {
-      "node" : "2",
-      "outdegreeLeft" : "1",
-      "predecessor" : "1"
+      "curr" : "2",
+      "indegree" : "[1, 1, 0, 1, 0, 0, 0]",
+      "ngbr" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1247,22 +1252,23 @@
     } ]
   }, {
     "stepNumber" : 12,
-    "activeLine" : 17,
-    "description" : "Dequeue 4 and mark it safe - every path out of it reaches a terminal.",
+    "activeLine" : 24,
+    "description" : "Node 4 is safe: add it to res, then lower the count of each node with an edge into 4.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "unvisited",
       "1" : "unvisited",
-      "2" : "visited",
+      "2" : "safe",
       "3" : "unvisited",
-      "4" : "visited",
-      "5" : "visited",
-      "6" : "visited"
+      "4" : "safe",
+      "5" : "safe",
+      "6" : "safe"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "4"
+      "curr" : "4",
+      "res" : "[5, 6, 2, 4]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -1358,22 +1364,22 @@
     } ]
   }, {
     "stepNumber" : 13,
-    "activeLine" : 27,
-    "description" : "Safe nodes: [2, 4, 5, 6].",
+    "activeLine" : 35,
+    "description" : "The queue is empty. Outlined nodes are on a cycle or lead into one, so they were never queued. Sorted, the safe nodes are [2, 4, 5, 6].",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "unvisited",
-      "1" : "unvisited",
-      "2" : "visited",
-      "3" : "unvisited",
-      "4" : "visited",
-      "5" : "visited",
-      "6" : "visited"
+      "0" : "cycle",
+      "1" : "cycle",
+      "2" : "safe",
+      "3" : "cycle",
+      "4" : "safe",
+      "5" : "safe",
+      "6" : "safe"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "safeNodes" : "[2, 4, 5, 6]"
+      "res" : "[2, 4, 5, 6]"
     },
     "dsType" : "Graph",
     "gridState" : null,

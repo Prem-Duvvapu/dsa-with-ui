@@ -7,10 +7,12 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Course Schedule I asks only whether every course is finishable - exactly whether the
- * prerequisite graph is a DAG. Kahn's BFS answers this for free: it can only process a
- * course once every prerequisite is processed, so processed == numCourses iff no cycle
- * blocks progress forever.
+ * Course Schedule (LeetCode 207), traced on the owner's own accepted submission: Kahn's algorithm. Count each course's
+ * unmet prerequisites ({@code indegree}), start from the courses with none, and every time a
+ * course is taken, lower the count of the courses that waited on it. O(V + E).
+ *
+ * <p>Input: the app's edge [u, v] means "u must come before v", which is LeetCode's
+ * prerequisite pair [v, u]; the tracer hands the code {@code prerequisites} in that form. The answer is whether every course can be taken.
  */
 @Component
 public class CourseSchedule1Tracer implements AlgorithmTracer {
@@ -51,106 +53,138 @@ public class CourseSchedule1Tracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public boolean canFinish(int numCourses, int[][] prerequisites) {
-                   // @a indegree
-                   int[] indegree = new int[numCourses];
-                   for (int[] p : prerequisites) indegree[p[1]]++;
+               class Solution {
+                   public boolean canFinish(int numCourses, int[][] prerequisites) {
+                       // @a init
+                       int V = numCourses;
+                       List<List<Integer>> adjList = new ArrayList<>();
+                       int[] indegree = new int[V];
+                       Queue<Integer> q = new LinkedList<>();
 
-                   // @a seed
-                   Queue<Integer> queue = new LinkedList<>();
-                   for (int i = 0; i < numCourses; i++) {
-                       if (indegree[i] == 0) queue.add(i);
-                   }
+                       for (int i=0;i<V;i++)
+                           adjList.add(new ArrayList<>());
 
-                   int processed = 0;
-                   while (!queue.isEmpty()) {
-                       // @a poll
-                       int course = queue.poll();
-                       processed++;
-                       for (int[] p : prerequisites) {
-                           if (p[0] == course) {
+                       for (int[] edge: prerequisites) {
+                           int a = edge[0];
+                           int b = edge[1];
+
+                           adjList.get(b).add(a);
+                           indegree[a]++;
+                       }
+
+                       // @a seed
+                       for (int i=0;i<V;i++)
+                           if (indegree[i] == 0)
+                               q.add(i);
+
+                       while (!q.isEmpty()) {
+                           // @a poll
+                           int curr = q.poll();
+                           for (int ngbr: adjList.get(curr)) {
                                // @a decrement
-                               indegree[p[1]]--;
-                               if (indegree[p[1]] == 0) {
+                               indegree[ngbr]--;
+
+                               if (indegree[ngbr] == 0)
                                    // @a enqueue
-                                   queue.add(p[1]);
-                               }
+                                   q.add(ngbr);
                            }
                        }
+
+                       for (int i=0;i<V;i++)
+                           if (indegree[i] > 0)
+                               // @a blocked
+                               return false;
+
+                       // @a done
+                       return true;
                    }
-                   // @a verdict
-                   return processed == numCourses;
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
-        List<List<Integer>> adj = graph.adjacency(true);
-        int v = graph.vertices();
-        int[] indegree = new int[v];
-        for (int node = 0; node < v; node++) {
-            for (int next : adj.get(node)) indegree[next]++;
+        int V = graph.vertices();
+        // The app's edge [u, v] (u before v) is LeetCode's prerequisite pair [v, u].
+        int[][] prerequisites = new int[graph.edges().length][];
+        for (int e = 0; e < prerequisites.length; e++) {
+            prerequisites[e] = new int[]{graph.edges()[e][1], graph.edges()[e][0]};
+        }
+        List<List<Integer>> adjList = new ArrayList<>();
+        int[] indegree = new int[V];
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < V; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] edge : prerequisites) {
+            int a = edge[0];
+            int b = edge[1];
+            adjList.get(b).add(a);
+            indegree[a]++;
         }
 
         GraphLayout.Layout layout = GraphLayout.directed(graph);
         Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < v; i++) states.put(i, "unvisited");
-
-        emit.at("indegree")
-                .say("%d courses, %d prerequisite links. Indegree (unmet prerequisites) of each: %s.",
-                        v, graph.edges().length, Arrays.toString(indegree))
+        for (int i = 0; i < V; i++) {
+            states.put(i, "unvisited");
+        }
+        emit.at("init").say("%d courses and %d prerequisite pair%s. An arrow b -> a means b must be taken "
+                        + "before a. indegree[a] counts a's unmet prerequisites: %s.",
+                        V, prerequisites.length, Narration.s(prerequisites.length), Arrays.toString(indegree))
                 .var("indegree", Arrays.toString(indegree))
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
 
-        Deque<Integer> queue = new ArrayDeque<>();
-        for (int i = 0; i < v; i++) {
+        for (int i = 0; i < V; i++) {
             if (indegree[i] == 0) {
-                queue.add(i);
+                q.add(i);
                 states.put(i, "queued");
             }
         }
-        emit.at("seed")
-                .say("Every course with 0 unmet prerequisites can be scheduled now: %s.", queue)
-                .var("queue", queue.toString())
-                .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+        emit.at("seed").say(q.isEmpty()
+                        ? "No course has 0 unmet prerequisites, so nothing can be taken first."
+                        : "Courses with no unmet prerequisites can be taken now: queue " + q + ".")
+                .var("indegree", Arrays.toString(indegree)).var("q", q.toString())
+                .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
 
-        int processed = 0;
-        while (!queue.isEmpty()) {
-            int course = queue.poll();
-            processed++;
-            states.put(course, "visited");
-            emit.at("poll")
-                    .say("Schedule course %d (%d of %d courses scheduled so far).", course, processed, v)
-                    .var("course", course).var("processed", processed)
-                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            states.put(curr, "done");
+            emit.at("poll").say("Take course %d, then lower the count of each course that waits on it.", curr)
+                    .var("curr", curr).var("indegree", Arrays.toString(indegree))
+                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
 
-            for (int next : adj.get(course)) {
-                indegree[next]--;
-                emit.at("decrement")
-                        .say("%d -> %d: course %d has %d unmet prerequisite%s left.", course, next, next, indegree[next], Narration.s(indegree[next]))
-                        .var("course", course).var("unlocked", next).var("indegreeLeft", indegree[next])
+            for (int ngbr : adjList.get(curr)) {
+                indegree[ngbr]--;
+                emit.at("decrement").say("%d -> %d: course %d now has %d unmet prerequisite%s.",
+                                curr, ngbr, ngbr, indegree[ngbr], Narration.s(indegree[ngbr]))
+                        .var("curr", curr).var("ngbr", ngbr).var("indegree", Arrays.toString(indegree))
                         .graph(layout.nodes(), layout.edges()).nodes(states)
-                        .edges(List.of(course + "-" + next)).queue(queue).step();
-
-                if (indegree[next] == 0) {
-                    queue.add(next);
-                    states.put(next, "queued");
-                    emit.at("enqueue")
-                            .say("Course %d has every prerequisite met - it can be scheduled.", next)
-                            .var("unlocked", next)
-                            .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+                        .edges(List.of(curr + "-" + ngbr)).queue(q).step();
+                if (indegree[ngbr] == 0) {
+                    q.add(ngbr);
+                    states.put(ngbr, "queued");
+                    emit.at("enqueue").say("Course %d has no unmet prerequisites left - queue it.", ngbr)
+                            .var("ngbr", ngbr).var("q", q.toString())
+                            .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
                 }
             }
         }
 
-        boolean canFinish = processed == v;
-        emit.at("verdict")
-                .say(canFinish
-                        ? "All %d of %d courses were scheduled. canFinish = true."
-                        : "Only %d of %d courses were ever schedulable - a prerequisite cycle blocks the rest. canFinish = false.",
-                        processed, v)
-                .var("processed", processed).var("answer", canFinish)
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] > 0) {
+                for (int j = 0; j < V; j++) {
+                    if (indegree[j] > 0) states.put(j, "cycle");
+                }
+                emit.at("blocked").say("The queue is empty but course %d still has %d unmet prerequisite%s: "
+                                + "the outlined courses wait on each other in a cycle, so they can never be "
+                                + "taken. Return %s.", i, indegree[i], Narration.s(indegree[i]), "false")
+                        .var("indegree", Arrays.toString(indegree)).var("answer", false)
+                        .graph(layout.nodes(), layout.edges()).nodes(states).step();
+                return;
+            }
+        }
+        emit.at("done").say("Every course reached 0 unmet prerequisites and was taken. Return true.")
+                .var("indegree", Arrays.toString(indegree)).var("answer", true)
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
     }
 }

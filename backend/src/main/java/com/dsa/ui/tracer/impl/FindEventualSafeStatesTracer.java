@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * A node is "safe" if every path out of it eventually reaches a terminal node (no path
- * loops forever). Reversing every edge turns "every outgoing path is safe" into "every
- * predecessor becomes reachable once I'm confirmed safe" - exactly Kahn's BFS on the
- * reversed graph, seeded from the terminal nodes (outdegree 0) instead of indegree 0. A
- * node stuck in a cycle never has its reversed-indegree count reach zero, so it is never
- * dequeued and never marked safe.
+ * Find Eventual Safe States (LeetCode 802), traced on the owner's own accepted submission. A
+ * node is safe when every path from it ends at a terminal node. Reverse every edge; then a
+ * node's {@code indegree} in the reversed graph is its number of outgoing edges in the original,
+ * and Kahn's algorithm peels nodes from the terminals inward. A node on, or leading into, a
+ * cycle always keeps an edge left, so it is never queued. Sort the result. O(V + E + V log V).
+ *
+ * <p>Input: the app's edge [u, v] is "u -> v", the same as v appearing in LeetCode's graph[u].
  */
 @Component
 public class FindEventualSafeStatesTracer implements AlgorithmTracer {
@@ -55,115 +56,129 @@ public class FindEventualSafeStatesTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public List<Integer> eventualSafeNodes(int v, List<List<Integer>> adj) {
-                   // @a reverse
-                   List<List<Integer>> radj = new ArrayList<>();
-                   int[] outdegree = new int[v];
-                   for (int i = 0; i < v; i++) radj.add(new ArrayList<>());
-                   for (int node = 0; node < v; node++) {
-                       outdegree[node] = adj.get(node).size();
-                       for (int next : adj.get(node)) radj.get(next).add(node);
-                   }
+               class Solution {
+                   public List<Integer> eventualSafeNodes(int[][] graph) {
+                       // @a init
+                       int n = graph.length;
+                       List<Integer> res = new ArrayList<>();
+                       List<List<Integer>> revAdjList = new ArrayList<>();
+                       int[] indegree = new int[n];
+                       Queue<Integer> q = new LinkedList<>();
 
-                   // @a seed
-                   Queue<Integer> queue = new LinkedList<>();
-                   boolean[] safe = new boolean[v];
-                   for (int i = 0; i < v; i++) {
-                       if (outdegree[i] == 0) queue.add(i);
-                   }
+                       for (int i=0;i<n;i++)
+                           revAdjList.add(new ArrayList<>());
 
-                   while (!queue.isEmpty()) {
-                       // @a poll
-                       int node = queue.poll();
-                       safe[node] = true;
-                       for (int pred : radj.get(node)) {
-                           // @a decrement
-                           outdegree[pred]--;
-                           if (outdegree[pred] == 0) {
-                               // @a enqueue
-                               queue.add(pred);
+                       for (int i=0;i<n;i++) {
+                           for (int ngbr: graph[i]) {
+                               revAdjList.get(ngbr).add(i);
+                               indegree[i]++;
                            }
                        }
-                   }
 
-                   // @a done
-                   List<Integer> result = new ArrayList<>();
-                   for (int i = 0; i < v; i++) if (safe[i]) result.add(i);
-                   return result;
+                       // @a seed
+                       for (int i=0;i<n;i++)
+                           if (indegree[i] == 0)
+                               q.add(i);
+
+                       while (!q.isEmpty()) {
+                           // @a poll
+                           int curr = q.poll();
+                           res.add(curr);
+
+                           for (int ngbr: revAdjList.get(curr))  {
+                               // @a decrement
+                               indegree[ngbr]--;
+
+                               if (indegree[ngbr] == 0)
+                                   // @a enqueue
+                                   q.add(ngbr);
+                           }
+                       }
+
+                       // @a done
+                       Collections.sort(res);
+                       return res;
+                   }
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
-        Inputs.GraphInput graph = in.getGraph("graph");
-        List<List<Integer>> adj = graph.adjacency(true);
-        int v = graph.vertices();
-
-        List<List<Integer>> radj = new ArrayList<>();
-        int[] outdegree = new int[v];
-        for (int i = 0; i < v; i++) radj.add(new ArrayList<>());
-        for (int node = 0; node < v; node++) {
-            outdegree[node] = adj.get(node).size();
-            for (int next : adj.get(node)) radj.get(next).add(node);
+        Inputs.GraphInput input = in.getGraph("graph");
+        List<List<Integer>> graph = input.adjacency(true);
+        int n = input.vertices();
+        List<Integer> res = new ArrayList<>();
+        List<List<Integer>> revAdjList = new ArrayList<>();
+        int[] indegree = new int[n];
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            revAdjList.add(new ArrayList<>());
+        }
+        for (int i = 0; i < n; i++) {
+            for (int ngbr : graph.get(i)) {
+                revAdjList.get(ngbr).add(i);
+                indegree[i]++;
+            }
         }
 
-        GraphLayout.Layout layout = GraphLayout.directed(graph);
+        GraphLayout.Layout layout = GraphLayout.directed(input);
         Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < v; i++) states.put(i, "unvisited");
-
-        emit.at("reverse")
-                .say("%d vertices, %d edges. Reverse every edge; a node's outdegree becomes its reversed indegree: %s.",
-                        v, graph.edges().length, Arrays.toString(outdegree))
-                .var("outdegree", Arrays.toString(outdegree))
+        for (int i = 0; i < n; i++) {
+            states.put(i, "unvisited");
+        }
+        emit.at("init").say("Reverse every edge. In the reversed graph, indegree[i] is the number of edges "
+                        + "leaving i in the original: %s. A node with none is terminal, so it is safe.",
+                        Arrays.toString(indegree))
+                .var("indegree", Arrays.toString(indegree))
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
 
-        Deque<Integer> queue = new ArrayDeque<>();
-        boolean[] safe = new boolean[v];
-        for (int i = 0; i < v; i++) {
-            if (outdegree[i] == 0) {
-                queue.add(i);
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
                 states.put(i, "queued");
             }
         }
-        emit.at("seed")
-                .say("Terminal nodes (outdegree 0) have no way to loop - they are safe by definition. Seed the queue with %s.", queue)
-                .var("queue", queue.toString())
-                .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+        emit.at("seed").say(q.isEmpty()
+                        ? "No node is terminal - every node has an edge out - so no node can be safe."
+                        : "Terminal nodes, safe by definition: queue " + q + ".")
+                .var("q", q.toString()).graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
 
-        while (!queue.isEmpty()) {
-            int node = queue.poll();
-            safe[node] = true;
-            states.put(node, "visited");
-            emit.at("poll")
-                    .say("Dequeue %d and mark it safe - every path out of it reaches a terminal.", node)
-                    .var("node", node)
-                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            res.add(curr);
+            states.put(curr, "safe");
+            emit.at("poll").say("Node %d is safe: add it to res, then lower the count of each node with an "
+                            + "edge into %d.", curr, curr)
+                    .var("curr", curr).var("res", res.toString())
+                    .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
 
-            for (int pred : radj.get(node)) {
-                outdegree[pred]--;
-                emit.at("decrement")
-                        .say("%d -> %d in the original graph: %d's remaining unsafe out-edges drops to %d.",
-                                pred, node, pred, outdegree[pred])
-                        .var("node", node).var("predecessor", pred).var("outdegreeLeft", outdegree[pred])
+            for (int ngbr : revAdjList.get(curr)) {
+                indegree[ngbr]--;
+                emit.at("decrement").say("%d -> %d leads to a safe node. %d now has %d edge%s not yet known to "
+                                + "be safe.", ngbr, curr, ngbr, indegree[ngbr], Narration.s(indegree[ngbr]))
+                        .var("curr", curr).var("ngbr", ngbr).var("indegree", Arrays.toString(indegree))
                         .graph(layout.nodes(), layout.edges()).nodes(states)
-                        .edges(List.of(pred + "-" + node)).queue(queue).step();
-
-                if (outdegree[pred] == 0) {
-                    queue.add(pred);
-                    states.put(pred, "queued");
-                    emit.at("enqueue")
-                            .say("Every out-edge of %d now leads to a safe node - enqueue it.", pred)
-                            .var("enqueued", pred)
-                            .graph(layout.nodes(), layout.edges()).nodes(states).queue(queue).step();
+                        .edges(List.of(ngbr + "-" + curr)).queue(q).step();
+                if (indegree[ngbr] == 0) {
+                    q.add(ngbr);
+                    states.put(ngbr, "queued");
+                    emit.at("enqueue").say("Every edge out of %d leads to a safe node, so %d is safe too - queue it.",
+                                    ngbr, ngbr)
+                            .var("ngbr", ngbr).var("q", q.toString())
+                            .graph(layout.nodes(), layout.edges()).nodes(states).queue(q).step();
                 }
             }
         }
 
-        List<Integer> result = new ArrayList<>();
-        for (int i = 0; i < v; i++) if (safe[i]) result.add(i);
-        emit.at("done")
-                .say("Safe nodes: %s.", result)
-                .var("safeNodes", result.toString())
+        Collections.sort(res);
+        for (int i = 0; i < n; i++) {
+            if (!"safe".equals(states.get(i))) {
+                states.put(i, "cycle");
+            }
+        }
+        emit.at("done").say("The queue is empty. Outlined nodes are on a cycle or lead into one, so they "
+                        + "were never queued. Sorted, the safe nodes are %s.", res)
+                .var("res", res.toString())
                 .graph(layout.nodes(), layout.edges()).nodes(states).step();
     }
 }

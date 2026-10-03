@@ -1,13 +1,16 @@
 {
   "anchors" : {
-    "bipartite" : 11,
-    "colorNode" : 15,
-    "component" : 6,
-    "conflict" : 22,
-    "init" : 2,
-    "recurse" : 18
+    "bipartite" : 15,
+    "colour" : 19,
+    "component" : 10,
+    "conflict" : 26,
+    "init" : 3,
+    "notBipartite" : 11,
+    "propagate" : 24,
+    "recurse" : 23,
+    "return" : 30
   },
-  "code" : "public boolean isBipartite(int v, List<List<Integer>> adj) {\n    int[] color = new int[v];\n    Arrays.fill(color, -1);\n    for (int i = 0; i < v; i++) {\n        if (color[i] == -1) {\n            if (!dfs(i, 0, adj, color)) {\n                return false;\n            }\n        }\n    }\n    return true;\n}\n\nprivate boolean dfs(int node, int col, List<List<Integer>> adj, int[] color) {\n    color[node] = col;\n    for (int next : adj.get(node)) {\n        if (color[next] == -1) {\n            if (!dfs(next, 1 - col, adj, color)) {\n                return false;\n            }\n        } else if (color[next] == col) {\n            return false;\n        }\n    }\n    return true;\n}",
+  "code" : "class Solution {\n    public boolean isBipartite(int[][] graph) {\n        int n = graph.length;\n        int[] color = new int[n];\n\n        Arrays.fill(color, -1);\n\n        for (int i=0;i<n;i++) {\n            if (color[i] == -1) {\n                if (!dfs(i,0,color,graph))\n                    return false;\n            }\n        }\n\n        return true;\n    }\n\n    private boolean dfs(int curr,int currColor,int[] color,int[][] graph) {\n        color[curr] = currColor;\n\n        for (int ngbr: graph[curr]) {\n            if (color[ngbr] == -1) {\n                if (!dfs(ngbr,1 - currColor,color,graph))\n                    return false;\n            } else if (color[ngbr] == currColor) {\n                return false;\n            }\n        }\n\n        return true;\n    }\n}",
   "problemId" : "bipartite-graph-dfs",
   "resolvedInput" : {
     "graph" : {
@@ -15,11 +18,11 @@
       "vertices" : 4
     }
   },
-  "stepCount" : 10,
+  "stepCount" : 14,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "4 vertices, 4 edges. 2-colour each unvisited component by DFS.",
+    "activeLine" : 3,
+    "description" : "4 vertices, 4 edges, none coloured yet (-1). Every edge must join a colour-0 vertex to a colour-1 vertex.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -29,7 +32,9 @@
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
-    "variables" : { },
+    "variables" : {
+      "color" : "[-1, -1, -1, -1]"
+    },
     "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
@@ -88,8 +93,8 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 6,
-    "description" : "0 starts a new component. Colour it 0.",
+    "activeLine" : 10,
+    "description" : "Vertex 0 is uncoloured, so it starts a new component: dfs(0, 0).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -100,7 +105,8 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "src" : "0"
+      "color" : "[-1, -1, -1, -1]",
+      "i" : "0"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -160,20 +166,21 @@
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 15,
-    "description" : "Colour 0 = 0.",
+    "activeLine" : 19,
+    "description" : "dfs(0, 0): give vertex 0 colour 0, then check its neighbours.",
     "queueOrStackState" : null,
     "callStack" : [ "dfs(0,0)" ],
     "nodeStates" : {
-      "0" : "queued",
+      "0" : "visited",
       "1" : "unvisited",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "color" : "0",
-      "node" : "0"
+      "color" : "[0, -1, -1, -1]",
+      "curr" : "0",
+      "currColor" : "0"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -233,20 +240,20 @@
     } ]
   }, {
     "stepNumber" : 4,
-    "activeLine" : 18,
-    "description" : "1 is uncoloured - descend into it with colour 1.",
+    "activeLine" : 23,
+    "description" : "Neighbour 1 is uncoloured: it must take the other colour, 1. Recurse into dfs(1, 1).",
     "queueOrStackState" : null,
     "callStack" : [ "dfs(0,0)" ],
     "nodeStates" : {
-      "0" : "queued",
+      "0" : "visited",
       "1" : "unvisited",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ "0-1" ],
     "variables" : {
-      "neighbour" : "1",
-      "node" : "0"
+      "curr" : "0",
+      "ngbr" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -306,20 +313,21 @@
     } ]
   }, {
     "stepNumber" : 5,
-    "activeLine" : 15,
-    "description" : "Colour 1 = 1.",
+    "activeLine" : 19,
+    "description" : "dfs(1, 1): give vertex 1 colour 1, then check its neighbours.",
     "queueOrStackState" : null,
     "callStack" : [ "dfs(0,0)", "dfs(1,1)" ],
     "nodeStates" : {
-      "0" : "queued",
-      "1" : "visiting",
+      "0" : "visited",
+      "1" : "done",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "color" : "1",
-      "node" : "1"
+      "color" : "[0, 1, -1, -1]",
+      "curr" : "1",
+      "currColor" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -379,20 +387,20 @@
     } ]
   }, {
     "stepNumber" : 6,
-    "activeLine" : 18,
-    "description" : "2 is uncoloured - descend into it with colour 0.",
+    "activeLine" : 23,
+    "description" : "Neighbour 2 is uncoloured: it must take the other colour, 0. Recurse into dfs(2, 0).",
     "queueOrStackState" : null,
     "callStack" : [ "dfs(0,0)", "dfs(1,1)" ],
     "nodeStates" : {
-      "0" : "queued",
-      "1" : "visiting",
+      "0" : "visited",
+      "1" : "done",
       "2" : "unvisited",
       "3" : "unvisited"
     },
     "activeEdges" : [ "1-2" ],
     "variables" : {
-      "neighbour" : "2",
-      "node" : "1"
+      "curr" : "1",
+      "ngbr" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -452,20 +460,21 @@
     } ]
   }, {
     "stepNumber" : 7,
-    "activeLine" : 15,
-    "description" : "Colour 2 = 0.",
+    "activeLine" : 19,
+    "description" : "dfs(2, 0): give vertex 2 colour 0, then check its neighbours.",
     "queueOrStackState" : null,
     "callStack" : [ "dfs(0,0)", "dfs(1,1)", "dfs(2,0)" ],
     "nodeStates" : {
-      "0" : "queued",
-      "1" : "visiting",
-      "2" : "queued",
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "color" : "0",
-      "node" : "2"
+      "color" : "[0, 1, 0, -1]",
+      "curr" : "2",
+      "currColor" : "0"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -525,20 +534,20 @@
     } ]
   }, {
     "stepNumber" : 8,
-    "activeLine" : 18,
-    "description" : "3 is uncoloured - descend into it with colour 1.",
+    "activeLine" : 23,
+    "description" : "Neighbour 3 is uncoloured: it must take the other colour, 1. Recurse into dfs(3, 1).",
     "queueOrStackState" : null,
     "callStack" : [ "dfs(0,0)", "dfs(1,1)", "dfs(2,0)" ],
     "nodeStates" : {
-      "0" : "queued",
-      "1" : "visiting",
-      "2" : "queued",
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
       "3" : "unvisited"
     },
     "activeEdges" : [ "2-3" ],
     "variables" : {
-      "neighbour" : "3",
-      "node" : "2"
+      "curr" : "2",
+      "ngbr" : "3"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -598,20 +607,21 @@
     } ]
   }, {
     "stepNumber" : 9,
-    "activeLine" : 15,
-    "description" : "Colour 3 = 1.",
+    "activeLine" : 19,
+    "description" : "dfs(3, 1): give vertex 3 colour 1, then check its neighbours.",
     "queueOrStackState" : null,
     "callStack" : [ "dfs(0,0)", "dfs(1,1)", "dfs(2,0)", "dfs(3,1)" ],
     "nodeStates" : {
-      "0" : "queued",
-      "1" : "visiting",
-      "2" : "queued",
-      "3" : "visiting"
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
+      "3" : "done"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "color" : "1",
-      "node" : "3"
+      "color" : "[0, 1, 0, 1]",
+      "curr" : "3",
+      "currColor" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -671,18 +681,309 @@
     } ]
   }, {
     "stepNumber" : 10,
-    "activeLine" : 11,
-    "description" : "Every component was 2-coloured with no adjacent same-colour pair. Bipartite.",
+    "activeLine" : 30,
+    "description" : "Every neighbour of 3 has the opposite colour. dfs(3, 1) returns true.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)", "dfs(1,1)", "dfs(2,0)", "dfs(3,1)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
+      "3" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "3"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 30,
+    "description" : "Every neighbour of 2 has the opposite colour. dfs(2, 0) returns true.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)", "dfs(1,1)", "dfs(2,0)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
+      "3" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "2"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 30,
+    "description" : "Every neighbour of 1 has the opposite colour. dfs(1, 1) returns true.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)", "dfs(1,1)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
+      "3" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 30,
+    "description" : "Every neighbour of 0 has the opposite colour. dfs(0, 0) returns true.",
+    "queueOrStackState" : null,
+    "callStack" : [ "dfs(0,0)" ],
+    "nodeStates" : {
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
+      "3" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 3,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 3,
+      "to" : 0,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 15,
+    "description" : "Every vertex is coloured and no edge joins two vertices of the same colour: the grey and green vertices are the two sides. Return true.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "queued",
-      "1" : "visiting",
-      "2" : "queued",
-      "3" : "visiting"
+      "0" : "visited",
+      "1" : "done",
+      "2" : "visited",
+      "3" : "done"
     },
     "activeEdges" : [ ],
-    "variables" : { },
+    "variables" : {
+      "answer" : "true",
+      "color" : "[0, 1, 0, 1]"
+    },
     "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
