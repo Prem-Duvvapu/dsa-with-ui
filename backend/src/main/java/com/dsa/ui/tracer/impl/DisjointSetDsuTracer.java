@@ -7,13 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Union by rank keeps every tree shallow on its own (attach the shorter tree under the
- * taller one, so height only ever grows on a tie), and path compression in {@code find}
- * flattens whatever height still accumulates by re-pointing every visited node straight at
- * the root the moment it is discovered - the two together are what keep near-O(1) find/union
- * instead of degrading to a linked list of unioned elements.
- *
- * <p>Elements are 1-indexed to match {@code DsuCanvas}; index 0 is unused padding.
+ * Disjoint Set (Union-Find), on the owner's own {@code DisjointSet}: path compression in
+ * {@code getUltimateParent} and union by size. Elements are numbered 0 to n - 1, and each union
+ * hangs the smaller set's root under the larger one's, so trees stay shallow; with path
+ * compression every operation is close to O(1) amortised.
  */
 @Component
 public class DisjointSetDsuTracer implements AlgorithmTracer {
@@ -33,8 +30,8 @@ public class DisjointSetDsuTracer implements AlgorithmTracer {
         return InputSpec.of(
                 InputField.of("dsu", FieldType.GRAPH)
                         .label("Elements and unions")
-                        .help("Vertex count is elements + 1 (index 0 is padding). Edges are the "
-                                + "union(u, v) operations to perform, in order.")
+                        .help("Vertex count is the number of elements, numbered 0 to n - 1. Edges are "
+                                + "the unionBySize(u, v) operations to perform, in order.")
                         .constraint("maxVertices", 21)
                         .constraint("maxEdges", 20)
                         .defaultValue(Map.of(
@@ -45,170 +42,55 @@ public class DisjointSetDsuTracer implements AlgorithmTracer {
                         .build());
     }
 
-    /** Two independent pairs plus an isolated element - a partial merge, never a single set. */
+    /**
+     * Two independent pairs, an untouched element, and one union of two elements that are already
+     * together - the early return the default never takes.
+     */
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("dsu", Map.of(
                 "vertices", 6,
-                "edges", List.of(List.of(1, 2), List.of(3, 4))));
+                "edges", List.of(List.of(1, 2), List.of(3, 4), List.of(2, 1))));
     }
+
+    private static final Set<String> ANCHORED = Set.of(
+            OwnerDisjointSet.SAME_SET, OwnerDisjointSet.ATTACH_TO_U, OwnerDisjointSet.ATTACH_TO_V);
 
     @Override
     public String annotatedCode() {
-        return """
-               class DisjointSet {
-                   int[] parent, rank;
-
-                   public DisjointSet(int n) {
+        return OwnerDisjointSet.code(ANCHORED) + "\n\n" + """
+               class Solution {
+                   public void process(int n, int[][] unions) {
                        // @a init
-                       parent = new int[n + 1];
-                       rank = new int[n + 1];
-                       for (int i = 0; i <= n; i++) parent[i] = i;
+                       DisjointSet ds = new DisjointSet(n);
+
+                       for (int[] op: unions)
+                           ds.unionBySize(op[0], op[1]);
+                   // @a done
                    }
-
-                   public int find(int x) {
-                       if (parent[x] != x) {
-                           parent[x] = find(parent[x]); // path compression
-                       }
-                       return parent[x];
-                   }
-
-                   public void union(int u, int v) {
-                       // @a find
-                       int ru = find(u), rv = find(v);
-                       if (ru == rv) return;
-
-                       // @a attach
-                       if (rank[ru] < rank[rv]) {
-                           parent[ru] = rv;
-                       } else if (rank[ru] > rank[rv]) {
-                           parent[rv] = ru;
-                       } else {
-                           parent[rv] = ru;
-                           rank[ru]++;
-                       }
-                   }
-               }
-
-               // @a done
-               for (int[] op : unions) dsu.union(op[0], op[1]);
-               """;
+               }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
-        Inputs.GraphInput dsu = in.getGraph("dsu");
-        int n = dsu.vertices() - 1;
-        int[][] unions = dsu.edges();
+        Inputs.GraphInput input = in.getGraph("dsu");
+        int n = input.vertices();
+        OwnerDisjointSet ds = new OwnerDisjointSet(n);
 
-        int[] parent = new int[n + 1];
-        int[] rank = new int[n + 1];
-        for (int i = 0; i <= n; i++) parent[i] = i;
+        emit.at("init").say("%d elements, each in a set of its own: parent[i] = i and size[i] = 1.", n)
+                .var("Operation", "DisjointSet(" + n + ")").var("Disjoint Sets", ds.sets())
+                .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
 
-        emit.at("init")
-                .say("Initialize DSU with %d elements: parent[i] = i, rank[i] = 0 for every i. "
-                        + "Each element starts as its own root.", n)
-                .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                .var("Disjoint Sets", formatSets(parent, n)).var("Operation", "Initialize DSU(" + n + ")")
-                .step();
-
-        for (int[] op : unions) {
-            int u = op[0];
-            int v = op[1];
-            int ru = find(u, parent);
-            int rv = find(v, parent);
-
-            emit.at("find")
-                    .say("union(%d, %d): find(%d) = %d (rank %d), find(%d) = %d (rank %d).",
-                            u, v, u, ru, rank[ru], v, rv, rank[rv])
-                    .var("u", u).var("v", v).var("ru", ru).var("rv", rv)
-                    .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                    .var("Disjoint Sets", formatSets(parent, n)).var("Operation", "find(" + u + ", " + v + ")")
-                    .step();
-
-            if (ru == rv) {
-                emit.at("attach")
-                        .say("%d and %d are already in the same set (root %d) - union(%d, %d) is a no-op.",
-                                u, v, ru, u, v)
-                        .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                        .var("Disjoint Sets", formatSets(parent, n)).var("Operation", "union(" + u + ", " + v + ") no-op")
-                        .step();
-                continue;
-            }
-
-            String reason;
-            if (rank[ru] < rank[rv]) {
-                parent[ru] = rv;
-                reason = String.format("rank[%d] (%d) < rank[%d] (%d). Attach %d under %d.", ru, rank[ru], rv, rank[rv], ru, rv);
-            } else if (rank[ru] > rank[rv]) {
-                parent[rv] = ru;
-                reason = String.format("rank[%d] (%d) < rank[%d] (%d). Attach %d under %d.", rv, rank[rv], ru, rank[ru], rv, ru);
-            } else {
-                parent[rv] = ru;
-                rank[ru]++;
-                reason = String.format("Ranks tie (%d == %d). Attach %d under %d and bump rank[%d] to %d.",
-                        rank[rv], rank[ru] - 1, rv, ru, ru, rank[ru]);
-            }
-
-            String sets = formatSets(parent, n);
-            emit.at("attach")
-                    .say("Operation: union(%d, %d). %s", u, v, reason)
-                    .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                    .var("Disjoint Sets", sets).var("Operation", "union(" + u + ", " + v + ")")
-                    .step();
+        for (int[] op : input.edges()) {
+            OwnerDisjointSet.Union result = ds.union(op[0], op[1]);
+            emit.at(result.branch()).say(result.narrate(op[0], op[1]))
+                    .var("Operation", "unionBySize(" + op[0] + ", " + op[1] + ")")
+                    .var("Disjoint Sets", ds.sets())
+                    .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
         }
 
-        String finalSets = formatSets(parent, n);
-        boolean single = countRoots(parent, n) == 1;
-        emit.at("done")
-                .say(single
-                        ? "Every element is now in one connected component: %s."
-                        : "Final disjoint sets: %s.", finalSets)
-                .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                .var("Disjoint Sets", single ? finalSets + " (Single Component!)" : finalSets)
-                .var("Operation", "Done")
-                .step();
-    }
-
-    private static int find(int x, int[] parent) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x], parent);
-        }
-        return parent[x];
-    }
-
-    /** Read-only root lookup for display, so building the sets string never mutates parent[]. */
-    private static int rootOf(int x, int[] parent) {
-        while (parent[x] != x) {
-            x = parent[x];
-        }
-        return x;
-    }
-
-    private static int countRoots(int[] parent, int n) {
-        Set<Integer> roots = new HashSet<>();
-        for (int i = 1; i <= n; i++) roots.add(rootOf(i, parent));
-        return roots.size();
-    }
-
-    private static String formatSets(int[] parent, int n) {
-        Map<Integer, List<Integer>> groups = new HashMap<>();
-        for (int i = 1; i <= n; i++) {
-            groups.computeIfAbsent(rootOf(i, parent), k -> new ArrayList<>()).add(i);
-        }
-        List<List<Integer>> ordered = new ArrayList<>(groups.values());
-        ordered.sort(Comparator.comparingInt(g -> g.get(0)));
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < ordered.size(); i++) {
-            if (i > 0) sb.append(", ");
-            sb.append("{");
-            List<Integer> group = ordered.get(i);
-            for (int j = 0; j < group.size(); j++) {
-                if (j > 0) sb.append(", ");
-                sb.append(group.get(j));
-            }
-            sb.append("}");
-        }
-        return sb.toString();
+        emit.at("done").say("Every union is done. The elements fall into these sets: %s.", ds.sets())
+                .var("Operation", "done").var("Disjoint Sets", ds.sets())
+                .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
     }
 }

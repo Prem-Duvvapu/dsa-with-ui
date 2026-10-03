@@ -1,30 +1,31 @@
 {
   "anchors" : {
-    "claim" : 12,
-    "done" : 33,
-    "init" : 5,
-    "merge" : 27,
-    "union" : 14
+    "done" : 75,
+    "first" : 52,
+    "group" : 61,
+    "init" : 41,
+    "seen" : 54,
+    "sort" : 71
   },
-  "code" : "public List<List<String>> accountsMerge(List<List<String>> accounts) {\n    int n = accounts.size();\n    int[] parent = new int[n + 1];\n    int[] rank = new int[n + 1];\n    for (int i = 0; i <= n; i++) parent[i] = i;\n    Map<String, Integer> owner = new HashMap<>();\n\n    for (int i = 1; i <= n; i++) {\n        List<String> row = accounts.get(i - 1);\n        for (String email : row.subList(1, row.size())) {\n            if (!owner.containsKey(email)) {\n                owner.put(email, i);\n            } else {\n                union(i, owner.get(email), parent, rank);\n            }\n        }\n    }\n\n    Map<Integer, TreeSet<String>> groups = new TreeMap<>();\n    for (Map.Entry<String, Integer> e : owner.entrySet()) {\n        groups.computeIfAbsent(find(e.getValue(), parent),\n                               k -> new TreeSet<>()).add(e.getKey());\n    }\n\n    List<List<String>> merged = new ArrayList<>();\n    for (Map.Entry<Integer, TreeSet<String>> g : groups.entrySet()) {\n        List<String> row = new ArrayList<>();\n        row.add(nameOfFirstAccountIn(g.getKey()));\n        row.addAll(g.getValue());\n        merged.add(row);\n    }\n\n    return merged;\n}",
+  "code" : "class DisjointSet {\n    int[] parent;\n    int[] size;\n\n    public DisjointSet(int n) {\n        parent = new int[n];\n        size = new int[n];\n\n        for (int i=0;i<n;i++) {\n            parent[i] = i;\n            size[i] = 1;\n        }\n    }\n\n    public int getUltimateParent(int node) {\n        if (parent[node] == node)\n            return node;\n\n        return parent[node] = getUltimateParent(parent[node]);\n    }\n\n    public void unionBySize(int u, int v) {\n        int ultParU = getUltimateParent(u);\n        int ultParV = getUltimateParent(v);\n\n        if (ultParU == ultParV)\n            return;\n\n        if (size[ultParU] >= size[ultParV]) {\n            size[ultParU] += size[ultParV];\n            parent[ultParV] = ultParU;\n        } else {\n            size[ultParV] += size[ultParU];\n            parent[ultParU] = ultParV;\n        }\n    }\n}\n\nclass Solution {\n    public List<List<String>> accountsMerge(List<List<String>> accounts) {\n        int n = accounts.size();\n        DisjointSet ds = new DisjointSet(n);\n        Map<String, Integer> mailToParent = new HashMap<>();\n        Map<Integer, List<String>> parentToMails = new HashMap<>();\n        List<List<String>> res = new ArrayList<>();\n\n        for (int i=0; i<n; i++) {\n            for (int j=1; j<accounts.get(i).size(); j++) {\n                String email = accounts.get(i).get(j);\n\n                if (!mailToParent.containsKey(email))\n                    mailToParent.put(email, i);\n                else\n                    ds.unionBySize(mailToParent.get(email), i);\n            }\n        }\n\n        for (Map.Entry<String, Integer> m: mailToParent.entrySet()) {\n            String email = m.getKey();\n            int parent = m.getValue();\n            int ultParent = ds.getUltimateParent(parent);\n\n            if (!parentToMails.containsKey(ultParent))\n                parentToMails.put(ultParent, new ArrayList<>(Arrays.asList(accounts.get(ultParent).get(0))));\n\n            parentToMails.get(ultParent).add(email);\n        }\n\n        for (Map.Entry<Integer, List<String>> m: parentToMails.entrySet()) {\n            List<String> list = m.getValue();\n            Collections.sort(list.subList(1,list.size()));\n            res.add(list);\n        }\n\n        return res;\n    }\n}",
   "problemId" : "accounts-merge",
   "resolvedInput" : {
     "accounts" : "John:johnsmith@mail.com,john_newyork@mail.com;John:johnsmith@mail.com,john00@mail.com;Mary:mary@mail.com;John:johnnybravo@mail.com"
   },
-  "stepCount" : 11,
+  "stepCount" : 16,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 5,
-    "description" : "4 accounts. Each starts in its own set - two accounts only merge once they are found to share an email.",
+    "activeLine" : 41,
+    "description" : "4 accounts, numbered 0 to 3, each in a set of its own. mailToParent remembers the first account that listed each email.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1}, {2}, {3}, {4}",
-      "Operation" : "Initialize DSU(4)",
-      "parent[]" : "[0, 1, 2, 3, 4]",
-      "rank[]" : "[0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{0}, {1}, {2}, {3}",
+      "Operation" : "DisjointSet(4)",
+      "parent[]" : "[0, 1, 2, 3]",
+      "size[]" : "[1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -34,17 +35,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 12,
-    "description" : "Account 1 ('John') is the first to list johnsmith@mail.com - it becomes that email's owner.",
+    "activeLine" : 52,
+    "description" : "johnsmith@mail.com appears for the first time, in account 0: mailToParent[johnsmith@mail.com] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1}, {2}, {3}, {4}",
-      "Operation" : "claim johnsmith@mail.com -> account 1",
-      "parent[]" : "[0, 1, 2, 3, 4]",
-      "rank[]" : "[0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{0}, {1}, {2}, {3}",
+      "Operation" : "first sight of johnsmith@mail.com",
+      "parent[]" : "[0, 1, 2, 3]",
+      "size[]" : "[1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -54,17 +55,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 12,
-    "description" : "Account 1 ('John') is the first to list john_newyork@mail.com - it becomes that email's owner.",
+    "activeLine" : 52,
+    "description" : "john_newyork@mail.com appears for the first time, in account 0: mailToParent[john_newyork@mail.com] = 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1}, {2}, {3}, {4}",
-      "Operation" : "claim john_newyork@mail.com -> account 1",
-      "parent[]" : "[0, 1, 2, 3, 4]",
-      "rank[]" : "[0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{0}, {1}, {2}, {3}",
+      "Operation" : "first sight of john_newyork@mail.com",
+      "parent[]" : "[0, 1, 2, 3]",
+      "size[]" : "[1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -74,17 +75,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 14,
-    "description" : "Account 2 ('John') also lists johnsmith@mail.com, already owned by account 1: ranks tie, so root 1 joins root 2 and rank[2] becomes 1.",
+    "activeLine" : 54,
+    "description" : "johnsmith@mail.com was already listed by account 0, so accounts 0 and 1 belong to the same person. unionBySize(0, 1): roots 0 and 1. Set 0 is at least as big, so 1 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Operation" : "union(2, 1)",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "unionBySize(0, 1)",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -94,17 +95,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 12,
-    "description" : "Account 2 ('John') is the first to list john00@mail.com - it becomes that email's owner.",
+    "activeLine" : 52,
+    "description" : "john00@mail.com appears for the first time, in account 1: mailToParent[john00@mail.com] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Operation" : "claim john00@mail.com -> account 2",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "first sight of john00@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -114,17 +115,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 12,
-    "description" : "Account 3 ('Mary') is the first to list mary@mail.com - it becomes that email's owner.",
+    "activeLine" : 52,
+    "description" : "mary@mail.com appears for the first time, in account 2: mailToParent[mary@mail.com] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Operation" : "claim mary@mail.com -> account 3",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "first sight of mary@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -134,17 +135,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 12,
-    "description" : "Account 4 ('John') is the first to list johnnybravo@mail.com - it becomes that email's owner.",
+    "activeLine" : 52,
+    "description" : "johnnybravo@mail.com appears for the first time, in account 3: mailToParent[johnnybravo@mail.com] = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Operation" : "claim johnnybravo@mail.com -> account 4",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "first sight of johnnybravo@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -154,18 +155,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 27,
-    "description" : "Root 2 covers accounts {1, 2}. Its 3 distinct emails sort to john00@mail.com, john_newyork@mail.com, johnsmith@mail.com, and the name comes from account 1 ('John').",
+    "activeLine" : 61,
+    "description" : "johnnybravo@mail.com belongs to account 3, whose root is 3: file it under root 3 (John).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Merged" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]",
-      "Operation" : "merge group 2",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "group johnnybravo@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -175,18 +175,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 27,
-    "description" : "Root 3 covers accounts {3}. Its 1 distinct email sorts to mary@mail.com, and the name comes from account 3 ('Mary').",
+    "activeLine" : 61,
+    "description" : "johnsmith@mail.com belongs to account 0, whose root is 0: file it under root 0 (John).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Merged" : "[Mary: mary@mail.com]",
-      "Operation" : "merge group 3",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "group johnsmith@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -196,18 +195,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 27,
-    "description" : "Root 4 covers accounts {4}. Its 1 distinct email sorts to johnnybravo@mail.com, and the name comes from account 4 ('John').",
+    "activeLine" : 61,
+    "description" : "john00@mail.com belongs to account 1, whose root is 0: file it under root 0 (John).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Merged" : "[John: johnnybravo@mail.com]",
-      "Operation" : "merge group 4",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "group john00@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -217,18 +215,121 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 33,
-    "description" : "4 accounts collapse into 3 merged accounts: [John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
+    "activeLine" : 61,
+    "description" : "john_newyork@mail.com belongs to account 0, whose root is 0: file it under root 0 (John).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}",
-      "Merged" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
-      "Operation" : "Done: 3 merged accounts",
-      "parent[]" : "[0, 2, 2, 3, 4]",
-      "rank[]" : "[0, 0, 1, 0, 0]"
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "group john_newyork@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 12,
+    "activeLine" : 61,
+    "description" : "mary@mail.com belongs to account 2, whose root is 2: file it under root 2 (Mary).",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "group mary@mail.com",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 71,
+    "description" : "Root 0: sort its emails after the name, giving [John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "sort root 0",
+      "parent[]" : "[0, 0, 2, 3]",
+      "res" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]",
+      "size[]" : "[2, 1, 1, 1]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 14,
+    "activeLine" : 71,
+    "description" : "Root 2: sort its emails after the name, giving [Mary: mary@mail.com].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "sort root 2",
+      "parent[]" : "[0, 0, 2, 3]",
+      "res" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]",
+      "size[]" : "[2, 1, 1, 1]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 15,
+    "activeLine" : 71,
+    "description" : "Root 3: sort its emails after the name, giving [John: johnnybravo@mail.com].",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "sort root 3",
+      "parent[]" : "[0, 0, 2, 3]",
+      "res" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
+      "size[]" : "[2, 1, 1, 1]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 75,
+    "description" : "4 accounts belong to 3 people. Return res.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{0, 1}, {2}, {3}",
+      "Operation" : "done",
+      "parent[]" : "[0, 0, 2, 3]",
+      "res" : "[John: john00@mail.com, john_newyork@mail.com, johnsmith@mail.com]; [Mary: mary@mail.com]; [John: johnnybravo@mail.com]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,

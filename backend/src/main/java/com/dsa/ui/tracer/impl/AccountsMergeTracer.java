@@ -7,20 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Two accounts belong to the same person as soon as they share ONE email, and that relation
- * is transitive - A shares an email with B, B shares a different email with C, so all three
- * are one person even though A and C have nothing in common. That is exactly connectivity,
- * so the merge is a DSU over ACCOUNT INDICES (not over emails): the first account to list an
- * email owns it, and every later account listing the same email unions itself with the owner.
- * Grouping by root at the end and sorting each group's distinct emails gives the answer.
+ * Accounts Merge (LeetCode 721), traced on the owner's own accepted submission: a DSU over account
+ * indices. The first account to list an email owns it in {@code mailToParent}; a later account
+ * listing the same email is unioned with that owner. Then each email goes to its owner's root, and
+ * each root's emails are sorted after the name. O(total emails * log) for the sorts.
  *
- * <p>Elements are 1-indexed to match {@code DsuCanvas}; index 0 is unused padding.
- *
- * <p>Accounts travel as one {@link FieldType#STRING} in {@code Name:email,email;Name:email}
- * form rather than as a new field kind: names are letters and emails cannot contain a comma,
- * a semicolon or a colon, so the separators are unambiguous, and the existing
- * {@code .constraint("pattern", ...)} mechanism bounds both the account count and the emails
- * per account with bounded regex repetition without touching {@link InputValidator}.
+ * <p>The maps are real {@link HashMap}s, so emails are visited and merged accounts are listed in
+ * the same order the submission produces.
  */
 @Component
 public class AccountsMergeTracer implements AlgorithmTracer {
@@ -69,45 +62,51 @@ public class AccountsMergeTracer implements AlgorithmTracer {
 
     @Override
     public String annotatedCode() {
-        return """
-               public List<List<String>> accountsMerge(List<List<String>> accounts) {
-                   int n = accounts.size();
-                   int[] parent = new int[n + 1];
-                   int[] rank = new int[n + 1];
-                   // @a init
-                   for (int i = 0; i <= n; i++) parent[i] = i;
-                   Map<String, Integer> owner = new HashMap<>();
+        return OwnerDisjointSet.code(Set.of()) + "\n\n" + """
+               class Solution {
+                   public List<List<String>> accountsMerge(List<List<String>> accounts) {
+                       // @a init
+                       int n = accounts.size();
+                       DisjointSet ds = new DisjointSet(n);
+                       Map<String, Integer> mailToParent = new HashMap<>();
+                       Map<Integer, List<String>> parentToMails = new HashMap<>();
+                       List<List<String>> res = new ArrayList<>();
 
-                   for (int i = 1; i <= n; i++) {
-                       List<String> row = accounts.get(i - 1);
-                       for (String email : row.subList(1, row.size())) {
-                           if (!owner.containsKey(email)) {
-                               // @a claim
-                               owner.put(email, i);
-                           } else {
-                               // @a union
-                               union(i, owner.get(email), parent, rank);
+                       for (int i=0; i<n; i++) {
+                           for (int j=1; j<accounts.get(i).size(); j++) {
+                               String email = accounts.get(i).get(j);
+
+                               if (!mailToParent.containsKey(email))
+                                   // @a first
+                                   mailToParent.put(email, i);
+                               else
+                                   // @a seen
+                                   ds.unionBySize(mailToParent.get(email), i);
                            }
                        }
-                   }
 
-                   Map<Integer, TreeSet<String>> groups = new TreeMap<>();
-                   for (Map.Entry<String, Integer> e : owner.entrySet()) {
-                       groups.computeIfAbsent(find(e.getValue(), parent),
-                                              k -> new TreeSet<>()).add(e.getKey());
-                   }
+                       for (Map.Entry<String, Integer> m: mailToParent.entrySet()) {
+                           String email = m.getKey();
+                           int parent = m.getValue();
+                           // @a group
+                           int ultParent = ds.getUltimateParent(parent);
 
-                   List<List<String>> merged = new ArrayList<>();
-                   for (Map.Entry<Integer, TreeSet<String>> g : groups.entrySet()) {
-                       // @a merge
-                       List<String> row = new ArrayList<>();
-                       row.add(nameOfFirstAccountIn(g.getKey()));
-                       row.addAll(g.getValue());
-                       merged.add(row);
-                   }
+                           if (!parentToMails.containsKey(ultParent))
+                               parentToMails.put(ultParent, new ArrayList<>(Arrays.asList(accounts.get(ultParent).get(0))));
 
-                   // @a done
-                   return merged;
+                           parentToMails.get(ultParent).add(email);
+                       }
+
+                       for (Map.Entry<Integer, List<String>> m: parentToMails.entrySet()) {
+                           List<String> list = m.getValue();
+                           // @a sort
+                           Collections.sort(list.subList(1,list.size()));
+                           res.add(list);
+                       }
+
+                       // @a done
+                       return res;
+                   }
                }""";
     }
 
@@ -115,161 +114,79 @@ public class AccountsMergeTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         String[] entries = in.getString("accounts").split(";");
         int n = entries.length;
-        String[] names = new String[n];
-        List<List<String>> emails = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            int colon = entries[i].indexOf(':');
-            names[i] = entries[i].substring(0, colon);
-            emails.add(List.of(entries[i].substring(colon + 1).split(",")));
+        List<List<String>> accounts = new ArrayList<>();
+        for (String entry : entries) {
+            int colon = entry.indexOf(':');
+            List<String> account = new ArrayList<>();
+            account.add(entry.substring(0, colon));
+            account.addAll(List.of(entry.substring(colon + 1).split(",")));
+            accounts.add(account);
         }
+        OwnerDisjointSet ds = new OwnerDisjointSet(n);
+        Map<String, Integer> mailToParent = new HashMap<>();
+        Map<Integer, List<String>> parentToMails = new HashMap<>();
+        List<List<String>> res = new ArrayList<>();
 
-        int[] parent = new int[n + 1];
-        int[] rank = new int[n + 1];
-        for (int i = 0; i <= n; i++) parent[i] = i;
+        emit.at("init").say("%d account%s, numbered 0 to %d, each in a set of its own. mailToParent remembers "
+                        + "the first account that listed each email.", n, Narration.s(n), n - 1)
+                .var("Operation", "DisjointSet(" + n + ")").var("Disjoint Sets", ds.sets())
+                .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
 
-        emit.at("init")
-                .say("%d account%s. Each starts in its own set - two accounts only merge once "
-                        + "they are found to share an email.", n, Narration.s(n))
-                .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                .var("Disjoint Sets", formatSets(parent, n))
-                .var("Operation", "Initialize DSU(" + n + ")")
-                .step();
-
-        Map<String, Integer> owner = new LinkedHashMap<>();
         for (int i = 0; i < n; i++) {
-            int acc = i + 1;
-            for (String email : emails.get(i)) {
-                if (!owner.containsKey(email)) {
-                    owner.put(email, acc);
-                    emit.at("claim")
-                            .say("Account %d ('%s') is the first to list %s - it becomes that email's owner.",
-                                    acc, names[i], email)
-                            .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                            .var("Disjoint Sets", formatSets(parent, n))
-                            .var("Operation", "claim " + email + " -> account " + acc)
-                            .step();
-                    continue;
-                }
-
-                int other = owner.get(email);
-                int ru = find(acc, parent);
-                int rv = find(other, parent);
-                String reason;
-                if (ru == rv) {
-                    reason = String.format(
-                            "accounts %d and %d already share root %d, so there is nothing to merge.",
-                            acc, other, ru);
-                } else if (rank[ru] < rank[rv]) {
-                    parent[ru] = rv;
-                    reason = String.format("rank[%d] (%d) < rank[%d] (%d), so root %d joins root %d.",
-                            ru, rank[ru], rv, rank[rv], ru, rv);
-                } else if (rank[ru] > rank[rv]) {
-                    parent[rv] = ru;
-                    reason = String.format("rank[%d] (%d) < rank[%d] (%d), so root %d joins root %d.",
-                            rv, rank[rv], ru, rank[ru], rv, ru);
+            for (int j = 1; j < accounts.get(i).size(); j++) {
+                String email = accounts.get(i).get(j);
+                if (!mailToParent.containsKey(email)) {
+                    mailToParent.put(email, i);
+                    emit.at("first").say("%s appears for the first time, in account %d: mailToParent[%s] = %d.",
+                                    email, i, email, i)
+                            .var("Operation", "first sight of " + email).var("Disjoint Sets", ds.sets())
+                            .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
                 } else {
-                    parent[rv] = ru;
-                    rank[ru]++;
-                    reason = String.format("ranks tie, so root %d joins root %d and rank[%d] becomes %d.",
-                            rv, ru, ru, rank[ru]);
+                    int owner = mailToParent.get(email);
+                    OwnerDisjointSet.Union result = ds.union(owner, i);
+                    emit.at("seen").say("%s was already listed by account %d, so accounts %d and %d belong to the "
+                                    + "same person. %s", email, owner, owner, i, result.narrate(owner, i))
+                            .var("Operation", "unionBySize(" + owner + ", " + i + ")").var("Disjoint Sets", ds.sets())
+                            .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
                 }
-
-                emit.at("union")
-                        .say("Account %d ('%s') also lists %s, already owned by account %d: %s",
-                                acc, names[i], email, other, reason)
-                        .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                        .var("Disjoint Sets", formatSets(parent, n))
-                        .var("Operation", "union(" + acc + ", " + other + ")")
-                        .step();
             }
         }
 
-        Map<Integer, TreeSet<String>> groups = new TreeMap<>();
-        for (Map.Entry<String, Integer> e : owner.entrySet()) {
-            groups.computeIfAbsent(find(e.getValue(), parent), k -> new TreeSet<>()).add(e.getKey());
-        }
-        Map<Integer, Integer> firstAccount = new HashMap<>();
-        for (int i = 1; i <= n; i++) {
-            firstAccount.merge(rootOf(i, parent), i, Math::min);
-        }
-
-        List<String> merged = new ArrayList<>();
-        for (Map.Entry<Integer, TreeSet<String>> g : groups.entrySet()) {
-            int root = g.getKey();
-            int first = firstAccount.get(root);
-            String name = names[first - 1];
-            String sorted = String.join(", ", g.getValue());
-            merged.add("[" + name + ": " + sorted + "]");
-
-            emit.at("merge")
-                    .say("Root %d covers accounts {%s}. Its %d distinct email%s %s to %s, and the "
-                                    + "name comes from account %d ('%s').",
-                            root, membersOf(parent, n, root), g.getValue().size(),
-                            Narration.s(g.getValue().size()),
-                            Narration.plural(g.getValue().size(), "sorts", "sort"),
-                            sorted, first, name)
-                    .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                    .var("Disjoint Sets", formatSets(parent, n))
-                    .var("Operation", "merge group " + root)
-                    .var("Merged", "[" + name + ": " + sorted + "]")
-                    .step();
-        }
-
-        emit.at("done")
-                .say("%d account%s collapse into %d merged account%s: %s",
-                        n, Narration.s(n), merged.size(), Narration.s(merged.size()),
-                        String.join("; ", merged))
-                .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                .var("Disjoint Sets", formatSets(parent, n))
-                .var("Operation", "Done: " + merged.size() + " merged account" + Narration.s(merged.size()))
-                .var("Merged", String.join("; ", merged))
-                .step();
-    }
-
-    private static int find(int x, int[] parent) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x], parent);
-        }
-        return parent[x];
-    }
-
-    /** Read-only root lookup for display, so rendering never mutates parent[]. */
-    private static int rootOf(int x, int[] parent) {
-        while (parent[x] != x) {
-            x = parent[x];
-        }
-        return x;
-    }
-
-    private static String membersOf(int[] parent, int n, int root) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= n; i++) {
-            if (rootOf(i, parent) == root) {
-                if (sb.length() > 0) sb.append(", ");
-                sb.append(i);
+        for (Map.Entry<String, Integer> m : mailToParent.entrySet()) {
+            String email = m.getKey();
+            int parent = m.getValue();
+            int ultParent = ds.find(parent, new ArrayList<>());
+            if (!parentToMails.containsKey(ultParent)) {
+                parentToMails.put(ultParent, new ArrayList<>(List.of(accounts.get(ultParent).get(0))));
             }
+            parentToMails.get(ultParent).add(email);
+            emit.at("group").say("%s belongs to account %d, whose root is %d: file it under root %d (%s).",
+                            email, parent, ultParent, ultParent, accounts.get(ultParent).get(0))
+                    .var("Operation", "group " + email).var("Disjoint Sets", ds.sets())
+                    .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
         }
-        return sb.toString();
+
+        for (Map.Entry<Integer, List<String>> m : parentToMails.entrySet()) {
+            List<String> list = m.getValue();
+            Collections.sort(list.subList(1, list.size()));
+            res.add(list);
+            emit.at("sort").say("Root %d: sort its emails after the name, giving %s.", m.getKey(), format(List.of(list)))
+                    .var("Operation", "sort root " + m.getKey()).var("Disjoint Sets", ds.sets())
+                    .var("res", format(res)).var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
+        }
+
+        emit.at("done").say("%d account%s belong to %d %s. Return res.",
+                        n, Narration.s(n), res.size(), res.size() == 1 ? "person" : "people")
+                .var("Operation", "done").var("Disjoint Sets", ds.sets()).var("res", format(res))
+                .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
     }
 
-    private static String formatSets(int[] parent, int n) {
-        Map<Integer, List<Integer>> groups = new HashMap<>();
-        for (int i = 1; i <= n; i++) {
-            groups.computeIfAbsent(rootOf(i, parent), k -> new ArrayList<>()).add(i);
+    /** "[John: a, b]; [Mary: c]" - the name, a colon, then the sorted emails. */
+    private static String format(List<List<String>> lists) {
+        List<String> out = new ArrayList<>();
+        for (List<String> list : lists) {
+            out.add("[" + list.get(0) + ": " + String.join(", ", list.subList(1, list.size())) + "]");
         }
-        List<List<Integer>> ordered = new ArrayList<>(groups.values());
-        ordered.sort(Comparator.comparingInt(g -> g.get(0)));
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < ordered.size(); i++) {
-            if (i > 0) sb.append(", ");
-            sb.append("{");
-            List<Integer> group = ordered.get(i);
-            for (int j = 0; j < group.size(); j++) {
-                if (j > 0) sb.append(", ");
-                sb.append(group.get(j));
-            }
-            sb.append("}");
-        }
-        return sb.toString();
+        return String.join("; ", out);
     }
 }
