@@ -1,0 +1,73 @@
+{
+  "id": "distance-nearest-1",
+  "statement": [
+    "You are given an n × m grid whose cells are 0 or 1, with at least one 1.",
+    "For every cell, find the distance to the nearest cell holding a 1. A step moves to a cell that shares an edge (up, down, left or right), so the distance between (i1, j1) and (i2, j2) is |i1 − i2| + |j1 − j2|. A cell that holds 1 is at distance 0.",
+    "Return an n × m grid in which each cell holds that distance."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "[[2,1,2],[1,0,1],[0,1,0]]",
+      "answerVariable": "res",
+      "explanation": "The top corners are two steps from the centre 1 (and from the bottom-corner 1s); every other 0 touches a 1."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "output": "[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]",
+      "answerVariable": "res",
+      "explanation": "The only 1 is in the top-left corner, so cell (i, j) is i + j steps away; the far corner is 6."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1"
+    }
+  ]
+}

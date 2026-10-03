@@ -1,29 +1,29 @@
 {
   "anchors" : {
-    "cleared" : 33,
-    "dequeue" : 17,
-    "immune" : 24,
-    "spread" : 26,
-    "stranded" : 35,
-    "survey" : 2
+    "done" : 63,
+    "init" : 16,
+    "level" : 40,
+    "minute" : 60,
+    "poll" : 43,
+    "rot" : 52
   },
-  "code" : "public int orangesRotting(int[][] grid) {\n    int rows = grid.length, cols = grid[0].length;\n    Queue<int[]> queue = new LinkedList<>();\n    int fresh = 0;\n    for (int r = 0; r < rows; r++) {\n        for (int c = 0; c < cols; c++) {\n            if (grid[r][c] == 2) {\n                queue.add(new int[]{r, c, 0});\n            } else if (grid[r][c] == 1) {\n                fresh++;\n            }\n        }\n    }\n\n    int elapsed = 0, spoiled = 0;\n    while (!queue.isEmpty()) {\n        int[] cell = queue.poll();\n        int r = cell[0], c = cell[1], minute = cell[2];\n        elapsed = Math.max(elapsed, minute);\n\n        for (int[] d : DIRECTIONS) {\n            int nr = r + d[0], nc = c + d[1];\n            if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[nr][nc] != 1) {\n                continue;\n            }\n            grid[nr][nc] = 2;\n            spoiled++;\n            queue.add(new int[]{nr, nc, minute + 1});\n        }\n    }\n\n    if (spoiled == fresh) {\n        return elapsed;\n    }\n    return -1;\n}",
+  "code" : "class Pair {\n    int row;\n    int col;\n\n    Pair(int row,int col) {\n        this.row = row;\n        this.col = col;\n    }\n}\n\nclass Solution {\n    public static int[] dRow = {-1,0,1,0};\n    public static int[] dCol = {0,1,0,-1};\n\n    public int orangesRotting(int[][] grid) {\n        int m = grid.length;\n        int n = grid[0].length;\n        int freshCnt = 0;\n        boolean[][] visited = new boolean[m][n];\n        Queue<Pair> q = new LinkedList<>();\n\n        for (int i=0;i<m;i++) {\n            for (int j=0;j<n;j++) {\n                if (grid[i][j] == 1) {\n                    freshCnt++;\n                } else if (grid[i][j] == 2) {\n                    visited[i][j] = true;\n                    q.add(new Pair(i,j));\n                }\n            }\n        }\n\n        return bfs(freshCnt,visited,q,grid,m,n);\n    }\n\n    private int bfs(int freshCnt,boolean[][] visited,Queue<Pair> q,int[][] grid,int m,int n) {\n        int minutes = 0;\n\n        while (!q.isEmpty()) {\n            int qlen = q.size();\n\n            while (qlen-- > 0) {\n                Pair curr = q.poll();\n                int currRow = curr.row;\n                int currCol = curr.col;\n\n                for (int i=0;i<4;i++) {\n                    int newRow = currRow + dRow[i];\n                    int newCol = currCol + dCol[i];\n\n                    if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && grid[newRow][newCol]==1 && !visited[newRow][newCol]) {\n                        visited[newRow][newCol] = true;\n                        q.add(new Pair(newRow, newCol));\n                        freshCnt--;\n                    }\n                }\n            }\n\n            if (!q.isEmpty())\n                minutes++;\n        }\n\n        return (freshCnt == 0) ? minutes : -1;\n    }\n}",
   "problemId" : "rotting-oranges",
   "resolvedInput" : {
     "grid" : [ [ 2, 1, 1, 0 ], [ 1, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ]
   },
-  "stepCount" : 57,
+  "stepCount" : 29,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "A 4x4 crate holding 9 fresh oranges and 2 rotten ones. Every rotten orange starts the clock at minute 0.",
-    "queueOrStackState" : [ "(0,0) min 0", "(3,3) min 0" ],
+    "activeLine" : 16,
+    "description" : "9 fresh oranges and 2 rotten ones. Every rotten orange goes in the queue at minute 0; each BFS level after that is one more minute.",
+    "queueOrStackState" : [ "(0,0)", "(3,3)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "fresh" : "9",
-      "sources" : "2"
+      "freshCnt" : "9",
+      "minutes" : "0"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 1, 1, 0 ], [ 1, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
@@ -33,16 +33,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 17,
-    "description" : "Take (0,0), rotten as of minute 0. Check its four neighbours.",
-    "queueOrStackState" : [ "(3,3) min 0" ],
+    "activeLine" : 40,
+    "description" : "Minute 0: 2 rotten oranges in the queue. Each one rots any fresh orange it shares an edge with.",
+    "queueOrStackState" : [ "(0,0)", "(3,3)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,0)",
-      "minute" : "0",
-      "remaining" : "9"
+      "freshCnt" : "9",
+      "minutes" : "0",
+      "qlen" : "2"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 1, 1, 0 ], [ 1, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
@@ -52,14 +52,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 24,
-    "description" : "(-1,0) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(3,3) min 0" ],
+    "activeLine" : 43,
+    "description" : "Take (0,0) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(3,3)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(-1,0)"
+      "currCol" : "0",
+      "currRow" : "0",
+      "freshCnt" : "9"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 1, 1, 0 ], [ 1, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
@@ -69,52 +71,54 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 26,
-    "description" : "(1,0) is fresh and shares an edge, so it spoils at minute 1. 8 fresh oranges left.",
-    "queueOrStackState" : [ "(3,3) min 0", "(1,0) min 1" ],
+    "activeLine" : 52,
+    "description" : "(0,1) is a fresh orange next to (0,0), so it rots: mark it visited and queue it. 8 fresh left.",
+    "queueOrStackState" : [ "(3,3)", "(0,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,0)",
-      "minute" : "1",
-      "remaining" : "8"
+      "freshCnt" : "8",
+      "newCol" : "1",
+      "newRow" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
+    "gridState" : [ [ 2, 2, 1, 0 ], [ 1, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 24,
-    "description" : "(0,-1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(3,3) min 0", "(1,0) min 1" ],
+    "activeLine" : 52,
+    "description" : "(1,0) is a fresh orange next to (0,0), so it rots: mark it visited and queue it. 7 fresh left.",
+    "queueOrStackState" : [ "(3,3)", "(0,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,-1)"
+      "freshCnt" : "7",
+      "newCol" : "0",
+      "newRow" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 1, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
+    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 26,
-    "description" : "(0,1) is fresh and shares an edge, so it spoils at minute 1. 7 fresh oranges left.",
-    "queueOrStackState" : [ "(3,3) min 0", "(1,0) min 1", "(0,1) min 1" ],
+    "activeLine" : 43,
+    "description" : "Take (3,3) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,1)", "(1,0)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,1)",
-      "minute" : "1",
-      "remaining" : "7"
+      "currCol" : "3",
+      "currRow" : "3",
+      "freshCnt" : "7"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
@@ -124,71 +128,72 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 17,
-    "description" : "Take (3,3), rotten as of minute 0. Check its four neighbours.",
-    "queueOrStackState" : [ "(1,0) min 1", "(0,1) min 1" ],
+    "activeLine" : 52,
+    "description" : "(2,3) is a fresh orange next to (3,3), so it rots: mark it visited and queue it. 6 fresh left.",
+    "queueOrStackState" : [ "(0,1)", "(1,0)", "(2,3)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(3,3)",
-      "minute" : "0",
-      "remaining" : "7"
+      "freshCnt" : "6",
+      "newCol" : "3",
+      "newRow" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 2 ] ],
+    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 1, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 26,
-    "description" : "(2,3) is fresh and shares an edge, so it spoils at minute 1. 6 fresh oranges left.",
-    "queueOrStackState" : [ "(1,0) min 1", "(0,1) min 1", "(2,3) min 1" ],
+    "activeLine" : 52,
+    "description" : "(3,2) is a fresh orange next to (3,3), so it rots: mark it visited and queue it. 5 fresh left.",
+    "queueOrStackState" : [ "(0,1)", "(1,0)", "(2,3)", "(3,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,3)",
-      "minute" : "1",
-      "remaining" : "6"
+      "freshCnt" : "5",
+      "newCol" : "2",
+      "newRow" : "3"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 1, 2 ] ],
+    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 24,
-    "description" : "(4,3) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,0) min 1", "(0,1) min 1", "(2,3) min 1" ],
+    "activeLine" : 60,
+    "description" : "Oranges rotted this minute, and they will spread next: minutes = 1.",
+    "queueOrStackState" : [ "(0,1)", "(1,0)", "(2,3)", "(3,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(4,3)"
+      "freshCnt" : "5",
+      "minutes" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 1, 2 ] ],
+    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 26,
-    "description" : "(3,2) is fresh and shares an edge, so it spoils at minute 1. 5 fresh oranges left.",
-    "queueOrStackState" : [ "(1,0) min 1", "(0,1) min 1", "(2,3) min 1", "(3,2) min 1" ],
+    "activeLine" : 40,
+    "description" : "Minute 1: 4 rotten oranges in the queue. Each one rots any fresh orange it shares an edge with.",
+    "queueOrStackState" : [ "(0,1)", "(1,0)", "(2,3)", "(3,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(3,2)",
-      "minute" : "1",
-      "remaining" : "5"
+      "freshCnt" : "5",
+      "minutes" : "1",
+      "qlen" : "4"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
@@ -198,14 +203,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 24,
-    "description" : "(3,4) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,0) min 1", "(0,1) min 1", "(2,3) min 1", "(3,2) min 1" ],
+    "activeLine" : 43,
+    "description" : "Take (0,1) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(1,0)", "(2,3)", "(3,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(3,4)"
+      "currCol" : "1",
+      "currRow" : "0",
+      "freshCnt" : "5"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
@@ -215,808 +222,337 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 17,
-    "description" : "Take (1,0), rotten as of minute 1. Check its four neighbours.",
-    "queueOrStackState" : [ "(0,1) min 1", "(2,3) min 1", "(3,2) min 1" ],
+    "activeLine" : 52,
+    "description" : "(0,2) is a fresh orange next to (0,1), so it rots: mark it visited and queue it. 4 fresh left.",
+    "queueOrStackState" : [ "(1,0)", "(2,3)", "(3,2)", "(0,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,0)",
-      "minute" : "1",
-      "remaining" : "5"
+      "freshCnt" : "4",
+      "newCol" : "2",
+      "newRow" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 24,
-    "description" : "(0,0) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(0,1) min 1", "(2,3) min 1", "(3,2) min 1" ],
+    "activeLine" : 52,
+    "description" : "(1,1) is a fresh orange next to (0,1), so it rots: mark it visited and queue it. 3 fresh left.",
+    "queueOrStackState" : [ "(1,0)", "(2,3)", "(3,2)", "(0,2)", "(1,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,0)"
+      "freshCnt" : "3",
+      "newCol" : "1",
+      "newRow" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 24,
-    "description" : "(2,0) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(0,1) min 1", "(2,3) min 1", "(3,2) min 1" ],
+    "activeLine" : 43,
+    "description" : "Take (1,0) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(2,3)", "(3,2)", "(0,2)", "(1,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,0)"
+      "currCol" : "0",
+      "currRow" : "1",
+      "freshCnt" : "3"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 24,
-    "description" : "(1,-1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(0,1) min 1", "(2,3) min 1", "(3,2) min 1" ],
+    "activeLine" : 43,
+    "description" : "Take (2,3) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(3,2)", "(0,2)", "(1,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,-1)"
+      "currCol" : "3",
+      "currRow" : "2",
+      "freshCnt" : "3"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 1, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 26,
-    "description" : "(1,1) is fresh and shares an edge, so it spoils at minute 2. 4 fresh oranges left.",
-    "queueOrStackState" : [ "(0,1) min 1", "(2,3) min 1", "(3,2) min 1", "(1,1) min 2" ],
+    "activeLine" : 52,
+    "description" : "(1,3) is a fresh orange next to (2,3), so it rots: mark it visited and queue it. 2 fresh left.",
+    "queueOrStackState" : [ "(3,2)", "(0,2)", "(1,1)", "(1,3)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,1)",
-      "minute" : "2",
-      "remaining" : "4"
+      "freshCnt" : "2",
+      "newCol" : "3",
+      "newRow" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 17,
-    "description" : "Take (0,1), rotten as of minute 1. Check its four neighbours.",
-    "queueOrStackState" : [ "(2,3) min 1", "(3,2) min 1", "(1,1) min 2" ],
+    "activeLine" : 52,
+    "description" : "(2,2) is a fresh orange next to (2,3), so it rots: mark it visited and queue it. 1 fresh left.",
+    "queueOrStackState" : [ "(3,2)", "(0,2)", "(1,1)", "(1,3)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,1)",
-      "minute" : "1",
-      "remaining" : "4"
+      "freshCnt" : "1",
+      "newCol" : "2",
+      "newRow" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 24,
-    "description" : "(-1,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,3) min 1", "(3,2) min 1", "(1,1) min 2" ],
+    "activeLine" : 43,
+    "description" : "Take (3,2) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(0,2)", "(1,1)", "(1,3)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(-1,1)"
+      "currCol" : "2",
+      "currRow" : "3",
+      "freshCnt" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 24,
-    "description" : "(1,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,3) min 1", "(3,2) min 1", "(1,1) min 2" ],
+    "activeLine" : 60,
+    "description" : "Oranges rotted this minute, and they will spread next: minutes = 2.",
+    "queueOrStackState" : [ "(0,2)", "(1,1)", "(1,3)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,1)"
+      "freshCnt" : "1",
+      "minutes" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 24,
-    "description" : "(0,0) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,3) min 1", "(3,2) min 1", "(1,1) min 2" ],
+    "activeLine" : 40,
+    "description" : "Minute 2: 4 rotten oranges in the queue. Each one rots any fresh orange it shares an edge with.",
+    "queueOrStackState" : [ "(0,2)", "(1,1)", "(1,3)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,0)"
+      "freshCnt" : "1",
+      "minutes" : "2",
+      "qlen" : "4"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 1, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 26,
-    "description" : "(0,2) is fresh and shares an edge, so it spoils at minute 2. 3 fresh oranges left.",
-    "queueOrStackState" : [ "(2,3) min 1", "(3,2) min 1", "(1,1) min 2", "(0,2) min 2" ],
+    "activeLine" : 43,
+    "description" : "Take (0,2) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(1,1)", "(1,3)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(0,2)",
-      "minute" : "2",
-      "remaining" : "3"
+      "currCol" : "2",
+      "currRow" : "0",
+      "freshCnt" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 17,
-    "description" : "Take (2,3), rotten as of minute 1. Check its four neighbours.",
-    "queueOrStackState" : [ "(3,2) min 1", "(1,1) min 2", "(0,2) min 2" ],
+    "activeLine" : 43,
+    "description" : "Take (1,1) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(1,3)", "(2,2)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,3)",
-      "minute" : "1",
-      "remaining" : "3"
+      "currCol" : "1",
+      "currRow" : "1",
+      "freshCnt" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 1 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 26,
-    "description" : "(1,3) is fresh and shares an edge, so it spoils at minute 2. 2 fresh oranges left.",
-    "queueOrStackState" : [ "(3,2) min 1", "(1,1) min 2", "(0,2) min 2", "(1,3) min 2" ],
+    "activeLine" : 52,
+    "description" : "(2,1) is a fresh orange next to (1,1), so it rots: mark it visited and queue it. 0 fresh left.",
+    "queueOrStackState" : [ "(1,3)", "(2,2)", "(2,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(1,3)",
-      "minute" : "2",
-      "remaining" : "2"
+      "freshCnt" : "0",
+      "newCol" : "1",
+      "newRow" : "2"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 24,
-    "activeLine" : 24,
-    "description" : "(3,3) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(3,2) min 1", "(1,1) min 2", "(0,2) min 2", "(1,3) min 2" ],
+    "activeLine" : 43,
+    "description" : "Take (1,3) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(2,2)", "(2,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(3,3)"
+      "currCol" : "3",
+      "currRow" : "1",
+      "freshCnt" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 1, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 25,
-    "activeLine" : 26,
-    "description" : "(2,2) is fresh and shares an edge, so it spoils at minute 2. 1 fresh orange left.",
-    "queueOrStackState" : [ "(3,2) min 1", "(1,1) min 2", "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
+    "activeLine" : 43,
+    "description" : "Take (2,2) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ "(2,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,2)",
-      "minute" : "2",
-      "remaining" : "1"
+      "currCol" : "2",
+      "currRow" : "2",
+      "freshCnt" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 26,
-    "activeLine" : 24,
-    "description" : "(2,4) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(3,2) min 1", "(1,1) min 2", "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
+    "activeLine" : 60,
+    "description" : "Oranges rotted this minute, and they will spread next: minutes = 3.",
+    "queueOrStackState" : [ "(2,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,4)"
+      "freshCnt" : "0",
+      "minutes" : "3"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 27,
-    "activeLine" : 17,
-    "description" : "Take (3,2), rotten as of minute 1. Check its four neighbours.",
-    "queueOrStackState" : [ "(1,1) min 2", "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
+    "activeLine" : 40,
+    "description" : "Minute 3: 1 rotten orange in the queue. Each one rots any fresh orange it shares an edge with.",
+    "queueOrStackState" : [ "(2,1)" ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(3,2)",
-      "minute" : "1",
-      "remaining" : "1"
+      "freshCnt" : "0",
+      "minutes" : "3",
+      "qlen" : "1"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 28,
-    "activeLine" : 24,
-    "description" : "(2,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,1) min 2", "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
+    "activeLine" : 43,
+    "description" : "Take (2,1) off the queue and look at its four neighbours.",
+    "queueOrStackState" : [ ],
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "cell" : "(2,2)"
+      "currCol" : "1",
+      "currRow" : "2",
+      "freshCnt" : "0"
     },
     "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
+    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
     "arrayState" : null,
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 29,
-    "activeLine" : 24,
-    "description" : "(4,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,1) min 2", "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(4,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 30,
-    "activeLine" : 24,
-    "description" : "(3,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,1) min 2", "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(3,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 31,
-    "activeLine" : 24,
-    "description" : "(3,3) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,1) min 2", "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(3,3)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 32,
-    "activeLine" : 17,
-    "description" : "Take (1,1), rotten as of minute 2. Check its four neighbours.",
-    "queueOrStackState" : [ "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,1)",
-      "minute" : "2",
-      "remaining" : "1"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 33,
-    "activeLine" : 24,
-    "description" : "(0,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(0,2) min 2", "(1,3) min 2", "(2,2) min 2" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 1, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 34,
-    "activeLine" : 26,
-    "description" : "(2,1) is fresh and shares an edge, so it spoils at minute 3. 0 fresh oranges left.",
-    "queueOrStackState" : [ "(0,2) min 2", "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,1)",
-      "minute" : "3",
-      "remaining" : "0"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 35,
-    "activeLine" : 24,
-    "description" : "(1,0) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(0,2) min 2", "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 36,
-    "activeLine" : 24,
-    "description" : "(1,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(0,2) min 2", "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 37,
-    "activeLine" : 17,
-    "description" : "Take (0,2), rotten as of minute 2. Check its four neighbours.",
-    "queueOrStackState" : [ "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,2)",
-      "minute" : "2",
-      "remaining" : "0"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 38,
-    "activeLine" : 24,
-    "description" : "(-1,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(-1,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 39,
-    "activeLine" : 24,
-    "description" : "(1,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 40,
-    "activeLine" : 24,
-    "description" : "(0,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 41,
-    "activeLine" : 24,
-    "description" : "(0,3) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(1,3) min 2", "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,3)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 42,
-    "activeLine" : 17,
-    "description" : "Take (1,3), rotten as of minute 2. Check its four neighbours.",
-    "queueOrStackState" : [ "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,3)",
-      "minute" : "2",
-      "remaining" : "0"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 43,
-    "activeLine" : 24,
-    "description" : "(0,3) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(0,3)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 44,
-    "activeLine" : 24,
-    "description" : "(2,3) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,3)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 45,
-    "activeLine" : 24,
-    "description" : "(1,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 46,
-    "activeLine" : 24,
-    "description" : "(1,4) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,2) min 2", "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,4)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 47,
-    "activeLine" : 17,
-    "description" : "Take (2,2), rotten as of minute 2. Check its four neighbours.",
-    "queueOrStackState" : [ "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,2)",
-      "minute" : "2",
-      "remaining" : "0"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 48,
-    "activeLine" : 24,
-    "description" : "(1,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 49,
-    "activeLine" : 24,
-    "description" : "(3,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(3,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 50,
-    "activeLine" : 24,
-    "description" : "(2,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 51,
-    "activeLine" : 24,
-    "description" : "(2,3) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ "(2,1) min 3" ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,3)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 52,
-    "activeLine" : 17,
-    "description" : "Take (2,1), rotten as of minute 3. Check its four neighbours.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,1)",
-      "minute" : "3",
-      "remaining" : "0"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 53,
-    "activeLine" : 24,
-    "description" : "(1,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(1,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 54,
-    "activeLine" : 24,
-    "description" : "(3,1) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(3,1)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 55,
-    "activeLine" : 24,
-    "description" : "(2,0) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,0)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 56,
-    "activeLine" : 24,
-    "description" : "(2,2) is off the crate, empty, or already rotten - the rot has nothing to do there.",
-    "queueOrStackState" : [ ],
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "cell" : "(2,2)"
-    },
-    "dsType" : "Matrix",
-    "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 57,
-    "activeLine" : 33,
-    "description" : "All 9 fresh oranges spoiled; the last one went at minute 3. Answer: 3.",
+    "activeLine" : 63,
+    "description" : "The queue is empty and no fresh orange is left, so return minutes = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "answer" : "3",
-      "spoiled" : "9"
+      "freshCnt" : "0",
+      "minutes" : "3"
     },
     "dsType" : "Matrix",
     "gridState" : [ [ 2, 2, 2, 0 ], [ 2, 2, 0, 2 ], [ 0, 2, 2, 2 ], [ 0, 0, 2, 2 ] ],

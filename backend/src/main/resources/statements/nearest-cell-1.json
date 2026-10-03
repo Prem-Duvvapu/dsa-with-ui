@@ -1,0 +1,87 @@
+{
+  "id": "nearest-cell-1",
+  "statement": [
+    "You are given an n × m grid whose cells are 0 or 1, with at least one 1.",
+    "For every cell, find the distance to the nearest cell holding a 1. A step moves to a cell that shares an edge (up, down, left or right), so the distance between (i1, j1) and (i2, j2) is |i1 − i2| + |j1 − j2|. A cell that holds 1 is at distance 0.",
+    "Return an n × m grid in which each cell holds that distance."
+  ],
+  "examples": [
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "output": "[[1,0,0,1],[0,0,1,1],[0,1,1,0]]",
+      "answerVariable": "res",
+      "explanation": "Every 0 here shares an edge with some 1, so every 0 gets distance 1 and every 1 stays 0."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "output": "[[4,3,2,3,4],[3,2,1,2,3],[2,1,0,1,2],[3,2,1,2,3],[4,3,2,3,4]]",
+      "answerVariable": "res",
+      "explanation": "There is one 1, in the centre, so each distance is the number of steps to the centre; the corners are 2 + 2 = 4 away."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1"
+    }
+  ]
+}
