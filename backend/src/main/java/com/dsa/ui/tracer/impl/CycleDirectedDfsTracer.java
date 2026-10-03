@@ -150,13 +150,13 @@ public class CycleDirectedDfsTracer implements AlgorithmTracer {
             emit.at("noCycle")
                     .say("Every vertex reached BLACK without one edge ever pointing at a GRAY vertex."
                             + " No back edge means no directed cycle - this graph is a DAG.")
-                    .var("colour[]", colours(colour))
+                    .var("answer", false).var("colour[]", colours(colour))
                     .graph(layout.nodes(), layout.edges()).nodes(states).step();
         } else {
             emit.at("backEdge")
                     .say("A back edge was found, so the answer is settled and the remaining vertices"
                             + " never need colouring. The graph is cyclic.")
-                    .var("colour[]", colours(colour))
+                    .var("answer", true).var("colour[]", colours(colour))
                     .graph(layout.nodes(), layout.edges()).nodes(states).step();
         }
     }

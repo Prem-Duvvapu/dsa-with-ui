@@ -1,0 +1,93 @@
+{
+  "id": "directed-cycle-dfs",
+  "statement": [
+    "You are given a directed graph: the vertex count V (vertices 0 to V − 1) and a list of edges [u, v], each pointing from u to v. The graph may have several parts that are not connected to each other.",
+    "A directed cycle is a path that follows edges in their direction and comes back to the vertex it started from.",
+    "Return true if the graph contains at least one directed cycle, and false otherwise.",
+    "This version uses depth-first search and remembers which vertices are on the current recursion path: an edge into a vertex that is still on the path closes a cycle."
+  ],
+  "examples": [
+    {
+      "input": {
+        "graph": {
+          "vertices": 3,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ]
+          ]
+        }
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "0 → 1 → 2 → 0 follows the edges back to where it started."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "Vertex 3 is reached along two routes, but every edge points forward, so no path returns to its start."
+    },
+    {
+      "input": {
+        "graph": {
+          "vertices": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        }
+      },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "The part 0 → 1 has no cycle, but in the separate part 2 and 3 point at each other."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GeeksforGeeks",
+      "url": "https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1"
+    }
+  ]
+}

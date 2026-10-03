@@ -1,14 +1,16 @@
 {
   "anchors" : {
-    "backtrack" : 26,
-    "component" : 6,
-    "cycleDetected" : 23,
-    "init" : 2,
-    "noCycle" : 11,
-    "recurse" : 19,
+    "backEdge" : 23,
+    "check" : 25,
+    "found" : 43,
+    "init" : 36,
+    "leave" : 30,
+    "none" : 46,
+    "propagate" : 27,
+    "start" : 42,
     "visit" : 15
   },
-  "code" : "public boolean isCyclic(int v, List<List<Integer>> adj) {\n    boolean[] vis = new boolean[v];\n    boolean[] pathVis = new boolean[v];\n    for (int i = 0; i < v; i++) {\n        if (!vis[i]) {\n            if (dfsCheck(i, adj, vis, pathVis)) {\n                return true;\n            }\n        }\n    }\n    return false;\n}\n\nprivate boolean dfsCheck(int node, List<List<Integer>> adj, boolean[] vis, boolean[] pathVis) {\n    vis[node] = true;\n    pathVis[node] = true;\n    for (int next : adj.get(node)) {\n        if (!vis[next]) {\n            if (dfsCheck(next, adj, vis, pathVis)) {\n                return true;\n            }\n        } else if (pathVis[next]) {\n            return true;\n        }\n    }\n    pathVis[node] = false;\n    return false;\n}",
+  "code" : "class Edge\n{\n    int src;\n    int dest;\n    public Edge(int s,int d)\n    {\n        src=s;\n        dest=d;\n    }\n}\n\nclass Solution {\n    private boolean isCycleUtil(ArrayList<Edge>[] graph,int curr,boolean[] visited,boolean[] recStack)\n    {\n        visited[curr]=true;\n        recStack[curr]=true;\n\n        for (int i=0;i<graph[curr].size();i++)\n        {\n            Edge e=graph[curr].get(i);\n\n            if (recStack[e.dest])\n                return true;\n\n            if (!visited[e.dest])\n                if (isCycleUtil(graph,e.dest,visited,recStack))\n                    return true;\n        }\n\n        recStack[curr]=false;\n        return false;\n    }\n\n    public boolean isCycle(ArrayList<Edge>[] graph)\n    {\n        boolean[] visited=new boolean[graph.length];\n        boolean[] recStk=new boolean[graph.length];\n\n        for (int i=0;i<graph.length;i++)\n        {\n            if (!visited[i])\n                if (isCycleUtil(graph,i,visited,recStk))\n                    return true;\n        }\n\n        return false;\n    }\n}",
   "problemId" : "directed-cycle-dfs",
   "resolvedInput" : {
     "graph" : {
@@ -16,11 +18,11 @@
       "vertices" : 3
     }
   },
-  "stepCount" : 9,
+  "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
-    "description" : "3 vertices, 3 directed edges. Track an overall visited set plus the current recursion path.",
+    "activeLine" : 36,
+    "description" : "3 vertices, 3 directed edges. visited[] marks every vertex ever explored; recStack[] marks only those on the current DFS path.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -76,8 +78,8 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 6,
-    "description" : "0 starts a new component. dfsCheck(0).",
+    "activeLine" : 42,
+    "description" : "Vertex 0 is unvisited: start isCycleUtil(0).",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -87,7 +89,7 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "src" : "0"
+      "i" : "0"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -136,9 +138,9 @@
   }, {
     "stepNumber" : 3,
     "activeLine" : 15,
-    "description" : "Enter 0. Mark it visited and add it to the current recursion path.",
+    "description" : "isCycleUtil(0): mark 0 visited and put it on the current path.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)" ],
+    "callStack" : [ "isCycleUtil(0)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "unvisited",
@@ -146,7 +148,8 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "0"
+      "curr" : "0",
+      "path" : "[0]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -194,10 +197,10 @@
     } ]
   }, {
     "stepNumber" : 4,
-    "activeLine" : 19,
-    "description" : "0 -> 1 is unvisited. Descend into it.",
+    "activeLine" : 25,
+    "description" : "Edge 0 -> 1: 1 is unvisited. Recurse into isCycleUtil(1).",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)" ],
+    "callStack" : [ "isCycleUtil(0)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "unvisited",
@@ -205,8 +208,8 @@
     },
     "activeEdges" : [ "0-1" ],
     "variables" : {
-      "neighbour" : "1",
-      "node" : "0"
+      "curr" : "0",
+      "dest" : "1"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -255,9 +258,9 @@
   }, {
     "stepNumber" : 5,
     "activeLine" : 15,
-    "description" : "Enter 1. Mark it visited and add it to the current recursion path.",
+    "description" : "isCycleUtil(1): mark 1 visited and put it on the current path.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)" ],
+    "callStack" : [ "isCycleUtil(0)", "isCycleUtil(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -265,7 +268,8 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "1"
+      "curr" : "1",
+      "path" : "[0, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -313,10 +317,10 @@
     } ]
   }, {
     "stepNumber" : 6,
-    "activeLine" : 19,
-    "description" : "1 -> 2 is unvisited. Descend into it.",
+    "activeLine" : 25,
+    "description" : "Edge 1 -> 2: 2 is unvisited. Recurse into isCycleUtil(2).",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)" ],
+    "callStack" : [ "isCycleUtil(0)", "isCycleUtil(1)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -324,8 +328,8 @@
     },
     "activeEdges" : [ "1-2" ],
     "variables" : {
-      "neighbour" : "2",
-      "node" : "1"
+      "curr" : "1",
+      "dest" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -374,9 +378,9 @@
   }, {
     "stepNumber" : 7,
     "activeLine" : 15,
-    "description" : "Enter 2. Mark it visited and add it to the current recursion path.",
+    "description" : "isCycleUtil(2): mark 2 visited and put it on the current path.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)" ],
+    "callStack" : [ "isCycleUtil(0)", "isCycleUtil(1)", "isCycleUtil(2)" ],
     "nodeStates" : {
       "0" : "visiting",
       "1" : "visiting",
@@ -384,7 +388,8 @@
     },
     "activeEdges" : [ ],
     "variables" : {
-      "node" : "2"
+      "curr" : "2",
+      "path" : "[0, 1, 2]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -433,9 +438,9 @@
   }, {
     "stepNumber" : 8,
     "activeLine" : 23,
-    "description" : "2 -> 0: 0 is already on the CURRENT recursion path - a directed cycle exists.",
+    "description" : "Edge 2 -> 0 points at 0, which is still on the current path [0, 1, 2]: following it leads back round to 2. Cycle - return true.",
     "queueOrStackState" : null,
-    "callStack" : [ "dfsCheck(0)", "dfsCheck(1)", "dfsCheck(2)" ],
+    "callStack" : [ "isCycleUtil(0)", "isCycleUtil(1)", "isCycleUtil(2)" ],
     "nodeStates" : {
       "0" : "cycle",
       "1" : "visiting",
@@ -443,8 +448,9 @@
     },
     "activeEdges" : [ "2-0" ],
     "variables" : {
-      "neighbour" : "0",
-      "node" : "2"
+      "curr" : "2",
+      "dest" : "0",
+      "path" : "[0, 1, 2]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -492,8 +498,126 @@
     } ]
   }, {
     "stepNumber" : 9,
-    "activeLine" : 23,
-    "description" : "The recursion returned true all the way to the top. A directed cycle exists, so the search stops here.",
+    "activeLine" : 27,
+    "description" : "isCycleUtil(2) found a cycle, so isCycleUtil(1) returns true too.",
+    "queueOrStackState" : null,
+    "callStack" : [ "isCycleUtil(0)", "isCycleUtil(1)" ],
+    "nodeStates" : {
+      "0" : "cycle",
+      "1" : "visiting",
+      "2" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "1"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 10,
+    "activeLine" : 27,
+    "description" : "isCycleUtil(1) found a cycle, so isCycleUtil(0) returns true too.",
+    "queueOrStackState" : null,
+    "callStack" : [ "isCycleUtil(0)" ],
+    "nodeStates" : {
+      "0" : "cycle",
+      "1" : "visiting",
+      "2" : "visiting"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "curr" : "0"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 283.92304845413264,
+      "y" : 219.99999999999997,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 76.07695154586739,
+      "y" : 220.00000000000006,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    }, {
+      "from" : 2,
+      "to" : 0,
+      "weight" : null,
+      "directed" : true,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 11,
+    "activeLine" : 43,
+    "description" : "isCycleUtil(0) found an edge back into the current path: the graph has a directed cycle. Return true.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -502,7 +626,9 @@
       "2" : "visiting"
     },
     "activeEdges" : [ ],
-    "variables" : { },
+    "variables" : {
+      "answer" : "true"
+    },
     "dsType" : "Graph",
     "gridState" : null,
     "arrayState" : null,
