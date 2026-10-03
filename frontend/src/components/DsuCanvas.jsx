@@ -6,7 +6,7 @@ import React from 'react';
  *
  * Previously part of GraphCanvas.jsx (lines 84–159), which held five visualizers
  * behind ad-hoc predicates. The DSU renderer is structurally different from all
- * other canvases — parent[] and rank[] tables, component cards — so it belongs
+ * other canvases — parent[] and size[] tables, component cards — so it belongs
  * in its own file.
  *
  * Header and legend are removed: CanvasShell owns those now.
@@ -19,9 +19,11 @@ export default function DsuCanvas({ problem, currentStep, step }) {
   // them). It used to default to a hardcoded 7-element DSU when a key was missing, which
   // drew a plausible, entirely fabricated structure instead of failing - the no-fallback
   // rule leaking into the render path. Say so instead.
+  // The traced DSU is the owner's: union by size, elements numbered from 0. Every element
+  // the arrays hold is drawn - no padding slot, no minimum column count.
   const parentStr = variables['parent[]'];
-  const rankStr = variables['rank[]'];
-  if (!parentStr || !rankStr) {
+  const sizeStr = variables['size[]'];
+  if (!parentStr || !sizeStr) {
     return (
       <div
         data-testid="dsu-state-unavailable"
@@ -30,7 +32,7 @@ export default function DsuCanvas({ problem, currentStep, step }) {
         DSU state unavailable for this step — the trace did not emit
         <code className={styles.code}>parent[]</code>
         and
-        <code className={styles.code}>rank[]</code>.
+        <code className={styles.code}>size[]</code>.
       </div>
     );
   }
@@ -39,11 +41,10 @@ export default function DsuCanvas({ problem, currentStep, step }) {
   const dsuOpStr = variables['Operation'] || '';
 
   const parentArr = parentStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
-  const rankArr = rankStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
+  const sizeArr = sizeStr.replace(/[\[\]]/g, '').split(',').map(s => s.trim());
 
-  // How many elements (skip index 0 when it's just padding)
-  const count = Math.max(parentArr.length - 1, 7);
-  const indices = Array.from({ length: count }, (_, i) => i + 1);
+  const count = parentArr.length;
+  const indices = Array.from({ length: count }, (_, i) => i);
 
   return (
     <div className={styles.wrap}>
@@ -67,7 +68,7 @@ export default function DsuCanvas({ problem, currentStep, step }) {
           </div>
         </div>
 
-        {/* Parent & Rank tables */}
+        {/* parent[] and size[] tables */}
         <div className={styles.tables}>
           {/* Element index header */}
           <div className={styles.row}>
@@ -83,7 +84,7 @@ export default function DsuCanvas({ problem, currentStep, step }) {
           <div className={styles.row}>
             <span className={styles.rowLabel}>parent[i]</span>
             {indices.map(idx => {
-              const val = parentArr[idx] || idx;
+              const val = parentArr[idx];
               const isRoot = String(val) === String(idx);
               return (
                 <div
@@ -96,17 +97,14 @@ export default function DsuCanvas({ problem, currentStep, step }) {
             })}
           </div>
 
-          {/* rank[i] row */}
+          {/* size[i] row */}
           <div className={styles.row}>
-            <span className={styles.rowLabel}>rank[i]</span>
-            {indices.map(idx => {
-              const rVal = rankArr[idx] || 0;
-              return (
-                <div key={idx} className={styles.rankCell}>
-                  {rVal}
-                </div>
-              );
-            })}
+            <span className={styles.rowLabel}>size[i]</span>
+            {indices.map(idx => (
+              <div key={idx} className={styles.rankCell}>
+                {sizeArr[idx]}
+              </div>
+            ))}
           </div>
         </div>
       </div>

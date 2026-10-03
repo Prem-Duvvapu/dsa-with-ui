@@ -4,14 +4,19 @@ import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
+import java.util.function.IntFunction;
 import java.util.*;
 
 /**
- * A stone can be removed as long as some other stone still shares its row or column, so the
- * only stones that can NEVER be removed are one representative per connected group (sharing
- * a row/column is transitive - group A-B, B-C means A and C are removable via that chain even
- * without a direct shared line). DSU over stone indices counts exactly that: stones minus the
- * number of groups is the maximum removable.
+ * Most Stones Removed with Same Row or Column (LeetCode 947), traced on the owner's own submission:
+ * rows and columns are DSU nodes (row x is node x, column y is node y + colStart), and each stone
+ * unions its row with its column. Every connected group of k stones can be removed down to one,
+ * so the answer is stones minus groups. O(n * alpha).
+ *
+ * <p>One change: the submission's {@code unionBySize} had no "already in the same set" check, so a
+ * repeated union doubled that root's size and skewed union-by-size balancing (the answer was still
+ * right). The DisjointSet shown is the owner's own later version, which has the check; a comment
+ * in the displayed code says so.
  */
 @Component
 public class MostStonesRemovedTracer implements AlgorithmTracer {
@@ -50,31 +55,51 @@ public class MostStonesRemovedTracer implements AlgorithmTracer {
 
     @Override
     public String annotatedCode() {
-        return """
-               public int removeStones(int[][] stones) {
-                   int n = stones.length;
-                   int[] parent = new int[n + 1];
-                   int[] rank = new int[n + 1];
-                   // @a init
-                   for (int i = 0; i <= n; i++) parent[i] = i;
+        return OwnerDisjointSet.code(Set.of()) + "\n\n" + """
+               // Changed from your submission: its unionBySize had no "already in the same set" check.
+               // The answer was still right, but each repeated union doubled that root's size[] and
+               // skewed the balancing. The DisjointSet above is your own later version with the check.
+               class Solution {
+                   public int removeStones(int[][] stones) {
+                       // @a init
+                       int n = stones.length;
+                       int maxRow = 0;
+                       int maxCol = 0;
 
-                   for (int i = 0; i < n; i++) {
-                       for (int j = i + 1; j < n; j++) {
-                           boolean sameRow = stones[i][0] == stones[j][0];
-                           boolean sameCol = stones[i][1] == stones[j][1];
-                           if (sameRow || sameCol) {
-                               // @a union
-                               union(i + 1, j + 1, parent, rank);
-                           }
+                       for (int[] coordinates: stones) {
+                           int x = coordinates[0];
+                           int y = coordinates[1];
+
+                           maxRow = Math.max(maxRow, x);
+                           maxCol = Math.max(maxCol, y);
                        }
+
+                       int colStart = maxRow + 1;
+                       int colEnd = maxCol + colStart;
+
+                       DisjointSet ds = new DisjointSet(colEnd+1);
+                       boolean[] visited = new boolean[colEnd+1];
+                       for (int[] coordinates: stones) {
+                           int x = coordinates[0];
+                           int y = coordinates[1] + colStart;
+
+                           visited[x] = true;
+                           visited[y] = true;
+
+                           // @a union
+                           ds.unionBySize(x,y);
+                       }
+
+                       int components = 0;
+                       for (int i=0;i<=colEnd;i++) {
+                           if (visited[i] && ds.parent[i] == i)
+                               // @a component
+                               components++;
+                       }
+
+                       // @a done
+                       return (n - components);
                    }
-
-                   // @a count
-                   Set<Integer> roots = new HashSet<>();
-                   for (int i = 1; i <= n; i++) roots.add(find(i, parent));
-
-                   // @a done
-                   return n - roots.size();
                }""";
     }
 
@@ -82,94 +107,54 @@ public class MostStonesRemovedTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[][] stones = in.getGrid("stones");
         int n = stones.length;
-        int[] parent = new int[n + 1];
-        int[] rank = new int[n + 1];
-        for (int i = 0; i <= n; i++) parent[i] = i;
+        int maxRow = 0;
+        int maxCol = 0;
+        for (int[] c : stones) {
+            maxRow = Math.max(maxRow, c[0]);
+            maxCol = Math.max(maxCol, c[1]);
+        }
+        int colStart = maxRow + 1;
+        int colEnd = maxCol + colStart;
+        OwnerDisjointSet ds = new OwnerDisjointSet(colEnd + 1);
+        boolean[] visited = new boolean[colEnd + 1];
+        IntFunction<String> label = i -> i < colStart ? "r" + i : "c" + (i - colStart);
 
-        emit.at("init")
-                .say("%d stones. Union any pair sharing a row or column (1-indexed to match the element display).", n)
-                .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                .var("Disjoint Sets", formatSets(parent, n)).var("Operation", "Initialize DSU(" + n + ")")
-                .step();
+        emit.at("init").say("%d stone%s. Rows 0..%d are DSU nodes 0..%d and columns 0..%d are nodes %d..%d, so "
+                        + "a stone joins its row node to its column node.",
+                        n, Narration.s(n), maxRow, maxRow, maxCol, colStart, colEnd)
+                .var("Operation", "DisjointSet(" + (colEnd + 1) + ")").var("Disjoint Sets", "")
+                .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
 
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                boolean sameRow = stones[i][0] == stones[j][0];
-                boolean sameCol = stones[i][1] == stones[j][1];
-                if (!(sameRow || sameCol)) {
-                    continue;
-                }
+        for (int[] c : stones) {
+            int x = c[0];
+            int y = c[1] + colStart;
+            visited[x] = true;
+            visited[y] = true;
+            OwnerDisjointSet.Union result = ds.union(x, y);
+            emit.at("union").say("Stone (%d,%d) links row %d (node %d) with column %d (node %d). %s",
+                            c[0], c[1], c[0], x, c[1], y, result.narrate(x, y))
+                    .var("Operation", "stone (" + c[0] + "," + c[1] + "): unionBySize(" + x + ", " + y + ")")
+                    .var("Disjoint Sets", ds.sets(i -> visited[i], label))
+                    .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
+        }
 
-                int u = i + 1, w = j + 1;
-                int ru = find(u, parent);
-                int rv = find(w, parent);
-                if (ru == rv) {
-                    continue;
-                }
-
-                if (rank[ru] < rank[rv]) {
-                    parent[ru] = rv;
-                } else if (rank[ru] > rank[rv]) {
-                    parent[rv] = ru;
-                } else {
-                    parent[rv] = ru;
-                    rank[ru]++;
-                }
-
-                emit.at("union")
-                        .say("Stone %d (%d,%d) and stone %d (%d,%d) share a %s - union them.",
-                                u, stones[i][0], stones[i][1], w, stones[j][0], stones[j][1],
-                                sameRow ? "row" : "column")
-                        .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                        .var("Disjoint Sets", formatSets(parent, n))
-                        .var("Operation", "union(" + u + ", " + w + ")")
-                        .step();
+        int components = 0;
+        for (int i = 0; i <= colEnd; i++) {
+            if (visited[i] && ds.parent[i] == i) {
+                components++;
+                emit.at("component").say("Node %d (%s) is used by a stone and is its own parent: the root of "
+                                + "group %d.", i, label.apply(i), components)
+                        .var("components", components).var("Operation", "count roots")
+                        .var("Disjoint Sets", ds.sets(j -> visited[j], label))
+                        .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
             }
         }
 
-        Set<Integer> roots = new HashSet<>();
-        for (int i = 1; i <= n; i++) roots.add(find(i, parent));
-        emit.at("count")
-                .say("Count distinct roots across all %d stones: %d group%s - %s.", n, roots.size(), Narration.s(roots.size()), formatSets(parent, n))
-                .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                .var("Disjoint Sets", formatSets(parent, n)).var("Operation", "Count groups")
-                .step();
-        int answer = n - roots.size();
-
-        emit.at("done")
-                .say("%d group%s formed. One stone per group is unremovable - the rest can go. Max removable: %d.",
-                        roots.size(), Narration.s(roots.size()), answer)
-                .var("parent[]", Arrays.toString(parent)).var("rank[]", Arrays.toString(rank))
-                .var("Disjoint Sets", formatSets(parent, n))
-                .var("Operation", "Done: " + answer + " removable")
-                .step();
-    }
-
-    private static int find(int x, int[] parent) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x], parent);
-        }
-        return parent[x];
-    }
-
-    private static String formatSets(int[] parent, int n) {
-        Map<Integer, List<Integer>> groups = new HashMap<>();
-        for (int i = 1; i <= n; i++) {
-            groups.computeIfAbsent(find(i, parent), k -> new ArrayList<>()).add(i);
-        }
-        List<List<Integer>> ordered = new ArrayList<>(groups.values());
-        ordered.sort(Comparator.comparingInt(g -> g.get(0)));
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < ordered.size(); i++) {
-            if (i > 0) sb.append(", ");
-            sb.append("{");
-            List<Integer> group = ordered.get(i);
-            for (int j = 0; j < group.size(); j++) {
-                if (j > 0) sb.append(", ");
-                sb.append(group.get(j));
-            }
-            sb.append("}");
-        }
-        return sb.toString();
+        int answer = n - components;
+        emit.at("done").say("Each group of stones can be removed down to its last one: %d - %d = %d.",
+                        n, components, answer)
+                .var("components", components).var("answer", answer).var("Operation", "done")
+                .var("Disjoint Sets", ds.sets(j -> visited[j], label))
+                .var("parent[]", ds.parents()).var("size[]", ds.sizes()).step();
     }
 }

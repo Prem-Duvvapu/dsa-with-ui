@@ -1,29 +1,29 @@
 {
   "anchors" : {
-    "count" : 17,
-    "done" : 20,
-    "init" : 5,
-    "union" : 12
+    "component" : 74,
+    "done" : 77,
+    "init" : 44,
+    "union" : 68
   },
-  "code" : "public int removeStones(int[][] stones) {\n    int n = stones.length;\n    int[] parent = new int[n + 1];\n    int[] rank = new int[n + 1];\n    for (int i = 0; i <= n; i++) parent[i] = i;\n\n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            boolean sameRow = stones[i][0] == stones[j][0];\n            boolean sameCol = stones[i][1] == stones[j][1];\n            if (sameRow || sameCol) {\n                union(i + 1, j + 1, parent, rank);\n            }\n        }\n    }\n\n    Set<Integer> roots = new HashSet<>();\n    for (int i = 1; i <= n; i++) roots.add(find(i, parent));\n\n    return n - roots.size();\n}",
+  "code" : "class DisjointSet {\n    int[] parent;\n    int[] size;\n\n    public DisjointSet(int n) {\n        parent = new int[n];\n        size = new int[n];\n\n        for (int i=0;i<n;i++) {\n            parent[i] = i;\n            size[i] = 1;\n        }\n    }\n\n    public int getUltimateParent(int node) {\n        if (parent[node] == node)\n            return node;\n\n        return parent[node] = getUltimateParent(parent[node]);\n    }\n\n    public void unionBySize(int u, int v) {\n        int ultParU = getUltimateParent(u);\n        int ultParV = getUltimateParent(v);\n\n        if (ultParU == ultParV)\n            return;\n\n        if (size[ultParU] >= size[ultParV]) {\n            size[ultParU] += size[ultParV];\n            parent[ultParV] = ultParU;\n        } else {\n            size[ultParV] += size[ultParU];\n            parent[ultParU] = ultParV;\n        }\n    }\n}\n\n// Changed from your submission: its unionBySize had no \"already in the same set\" check.\n// The answer was still right, but each repeated union doubled that root's size[] and\n// skewed the balancing. The DisjointSet above is your own later version with the check.\nclass Solution {\n    public int removeStones(int[][] stones) {\n        int n = stones.length;\n        int maxRow = 0;\n        int maxCol = 0;\n\n        for (int[] coordinates: stones) {\n            int x = coordinates[0];\n            int y = coordinates[1];\n\n            maxRow = Math.max(maxRow, x);\n            maxCol = Math.max(maxCol, y);\n        }\n\n        int colStart = maxRow + 1;\n        int colEnd = maxCol + colStart;\n\n        DisjointSet ds = new DisjointSet(colEnd+1);\n        boolean[] visited = new boolean[colEnd+1];\n        for (int[] coordinates: stones) {\n            int x = coordinates[0];\n            int y = coordinates[1] + colStart;\n\n            visited[x] = true;\n            visited[y] = true;\n\n            ds.unionBySize(x,y);\n        }\n\n        int components = 0;\n        for (int i=0;i<=colEnd;i++) {\n            if (visited[i] && ds.parent[i] == i)\n                components++;\n        }\n\n        return (n - components);\n    }\n}",
   "problemId" : "most-stones-removed",
   "resolvedInput" : {
     "stones" : [ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 2 ], [ 2, 1 ], [ 2, 2 ] ]
   },
-  "stepCount" : 8,
+  "stepCount" : 9,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 5,
-    "description" : "6 stones. Union any pair sharing a row or column (1-indexed to match the element display).",
+    "activeLine" : 44,
+    "description" : "6 stones. Rows 0..2 are DSU nodes 0..2 and columns 0..2 are nodes 3..5, so a stone joins its row node to its column node.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1}, {2}, {3}, {4}, {5}, {6}",
-      "Operation" : "Initialize DSU(6)",
-      "parent[]" : "[0, 1, 2, 3, 4, 5, 6]",
-      "rank[]" : "[0, 0, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "",
+      "Operation" : "DisjointSet(6)",
+      "parent[]" : "[0, 1, 2, 3, 4, 5]",
+      "size[]" : "[1, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -33,17 +33,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 12,
-    "description" : "Stone 1 (0,0) and stone 2 (0,1) share a row - union them.",
+    "activeLine" : 68,
+    "description" : "Stone (0,0) links row 0 (node 0) with column 0 (node 3). unionBySize(0, 3): roots 0 and 3. Set 0 is at least as big, so 3 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}, {5}, {6}",
-      "Operation" : "union(1, 2)",
-      "parent[]" : "[0, 1, 1, 3, 4, 5, 6]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{r0, c0}",
+      "Operation" : "stone (0,0): unionBySize(0, 3)",
+      "parent[]" : "[0, 1, 2, 0, 4, 5]",
+      "size[]" : "[2, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -53,17 +53,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 12,
-    "description" : "Stone 1 (0,0) and stone 3 (1,0) share a column - union them.",
+    "activeLine" : 68,
+    "description" : "Stone (0,1) links row 0 (node 0) with column 1 (node 4). unionBySize(0, 4): roots 0 and 4. Set 0 is at least as big, so 4 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4}, {5}, {6}",
-      "Operation" : "union(1, 3)",
-      "parent[]" : "[0, 1, 1, 1, 4, 5, 6]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{r0, c0, c1}",
+      "Operation" : "stone (0,1): unionBySize(0, 4)",
+      "parent[]" : "[0, 1, 2, 0, 0, 5]",
+      "size[]" : "[3, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -73,17 +73,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 12,
-    "description" : "Stone 2 (0,1) and stone 5 (2,1) share a column - union them.",
+    "activeLine" : 68,
+    "description" : "Stone (1,0) links row 1 (node 1) with column 0 (node 3). unionBySize(1, 3): roots 1 and 0. Set 0 is bigger, so 1 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3, 5}, {4}, {6}",
-      "Operation" : "union(2, 5)",
-      "parent[]" : "[0, 1, 1, 1, 4, 1, 6]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{r0, r1, c0, c1}",
+      "Operation" : "stone (1,0): unionBySize(1, 3)",
+      "parent[]" : "[0, 0, 2, 0, 0, 5]",
+      "size[]" : "[4, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -93,17 +93,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 12,
-    "description" : "Stone 3 (1,0) and stone 4 (1,2) share a row - union them.",
+    "activeLine" : 68,
+    "description" : "Stone (1,2) links row 1 (node 1) with column 2 (node 5). unionBySize(1, 5): roots 0 and 5. Set 0 is at least as big, so 5 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3, 4, 5}, {6}",
-      "Operation" : "union(3, 4)",
-      "parent[]" : "[0, 1, 1, 1, 1, 1, 6]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{r0, r1, c0, c1, c2}",
+      "Operation" : "stone (1,2): unionBySize(1, 5)",
+      "parent[]" : "[0, 0, 2, 0, 0, 0]",
+      "size[]" : "[5, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -113,17 +113,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 12,
-    "description" : "Stone 4 (1,2) and stone 6 (2,2) share a column - union them.",
+    "activeLine" : 68,
+    "description" : "Stone (2,1) links row 2 (node 2) with column 1 (node 4). unionBySize(2, 4): roots 2 and 0. Set 0 is bigger, so 2 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3, 4, 5, 6}",
-      "Operation" : "union(4, 6)",
-      "parent[]" : "[0, 1, 1, 1, 1, 1, 1]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{r0, r1, r2, c0, c1, c2}",
+      "Operation" : "stone (2,1): unionBySize(2, 4)",
+      "parent[]" : "[0, 0, 0, 0, 0, 0]",
+      "size[]" : "[6, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -133,17 +133,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 17,
-    "description" : "Count distinct roots across all 6 stones: 1 group - {1, 2, 3, 4, 5, 6}.",
+    "activeLine" : 68,
+    "description" : "Stone (2,2) links row 2 (node 2) with column 2 (node 5). unionBySize(2, 5): both have root 0, so they are already in one set - return.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3, 4, 5, 6}",
-      "Operation" : "Count groups",
-      "parent[]" : "[0, 1, 1, 1, 1, 1, 1]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{r0, r1, r2, c0, c1, c2}",
+      "Operation" : "stone (2,2): unionBySize(2, 5)",
+      "parent[]" : "[0, 0, 0, 0, 0, 0]",
+      "size[]" : "[6, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -153,17 +153,40 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 20,
-    "description" : "1 group formed. One stone per group is unremovable - the rest can go. Max removable: 5.",
+    "activeLine" : 74,
+    "description" : "Node 0 (r0) is used by a stone and is its own parent: the root of group 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3, 4, 5, 6}",
-      "Operation" : "Done: 5 removable",
-      "parent[]" : "[0, 1, 1, 1, 1, 1, 1]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{r0, r1, r2, c0, c1, c2}",
+      "Operation" : "count roots",
+      "components" : "1",
+      "parent[]" : "[0, 0, 0, 0, 0, 0]",
+      "size[]" : "[6, 1, 1, 1, 1, 1]"
+    },
+    "dsType" : "Dsu",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 9,
+    "activeLine" : 77,
+    "description" : "Each group of stones can be removed down to its last one: 6 - 1 = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "Disjoint Sets" : "{r0, r1, r2, c0, c1, c2}",
+      "Operation" : "done",
+      "answer" : "5",
+      "components" : "1",
+      "parent[]" : "[0, 0, 0, 0, 0, 0]",
+      "size[]" : "[6, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,

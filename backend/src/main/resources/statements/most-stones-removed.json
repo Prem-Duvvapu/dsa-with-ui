@@ -3,7 +3,7 @@
   "statement": [
     "You are given stones, a list of [x, y] positions on a grid, with at most one stone per position.",
     "A stone may be removed if at least one other stone that has not been removed shares its row or its column.",
-    "Return the largest number of stones that can be removed. Here the answer is reported as \"Done: k removable\", where k is that number."
+    "Return the largest number of stones that can be removed."
   ],
   "examples": [
     {
@@ -35,8 +35,8 @@
           ]
         ]
       },
-      "output": "Done: 5 removable",
-      "answerVariable": "Operation",
+      "output": "5",
+      "answerVariable": "answer",
       "explanation": "All six stones are linked into one group through shared rows and columns, and every group can be cleared down to a single stone, so 5 can be removed."
     },
     {
@@ -64,8 +64,8 @@
           ]
         ]
       },
-      "output": "Done: 3 removable",
-      "answerVariable": "Operation",
+      "output": "3",
+      "answerVariable": "answer",
       "explanation": "The four corner stones form one group and the centre stone (1, 1) shares no row or column with any of them. Each group keeps one stone, so 5 − 2 = 3 are removed."
     },
     {
@@ -85,8 +85,8 @@
           ]
         ]
       },
-      "output": "Done: 0 removable",
-      "answerVariable": "Operation",
+      "output": "0",
+      "answerVariable": "answer",
       "explanation": "The stones lie on a diagonal, so no two share a row or a column and none can be removed."
     }
   ],

@@ -1,9 +1,9 @@
 {
   "id": "disjoint-set-dsu",
   "statement": [
-    "A disjoint set union (DSU, also called union–find) keeps elements in separate groups and supports two operations: find(x), which returns the representative of x's group, and union(u, v), which merges the groups of u and v. Union by rank attaches the shorter tree under the taller one, and path compression points each visited element straight at its representative.",
-    "You are given dsu: its vertex count is n + 1, for the elements 1 to n (index 0 is unused), and its edges are union(u, v) operations to apply in order.",
-    "Apply every union and return the final groups, each listed in increasing order."
+    "A disjoint set union (DSU, also called union–find) keeps elements in separate groups and supports two operations: find(x), which returns the representative of x's group, and union(u, v), which merges the groups of u and v.",
+    "Union by size hangs the root of the smaller group under the root of the larger one, so trees stay shallow, and path compression points each element a find passes straight at its representative. Together they make each operation almost constant time.",
+    "You are given dsu: its vertex count n is the number of elements, numbered 0 to n − 1, and its edges are union(u, v) operations to apply in order. Apply every union and return the final groups, each listed in increasing order."
   ],
   "examples": [
     {
@@ -18,13 +18,17 @@
             [
               3,
               4
+            ],
+            [
+              2,
+              1
             ]
           ]
         }
       },
-      "output": "{1, 2}, {3, 4}, {5}",
+      "output": "{0}, {1, 2}, {3, 4}, {5}",
       "answerVariable": "Disjoint Sets",
-      "explanation": "The two unions build the groups {1, 2} and {3, 4}. Element 5 is never mentioned, so it stays alone."
+      "explanation": "The first two unions build {1, 2} and {3, 4}. union(2, 1) finds both already in one group and changes nothing. Elements 0 and 5 are never mentioned, so each stays alone."
     },
     {
       "input": {
@@ -50,9 +54,9 @@
           ]
         }
       },
-      "output": "{1, 2, 3, 4}, {5, 6}, {7}",
+      "output": "{0}, {1, 2, 3, 4}, {5, 6}, {7}",
       "answerVariable": "Disjoint Sets",
-      "explanation": "union(2, 4) joins the two groups built by the first two unions into {1, 2, 3, 4}. union(5, 6) makes a separate pair, and 7 is untouched."
+      "explanation": "union(2, 4) joins the groups built by the first two unions into {1, 2, 3, 4}. union(5, 6) makes a separate pair, and 0 and 7 are untouched."
     }
   ],
   "sources": [

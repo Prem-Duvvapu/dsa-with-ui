@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * DSU is the one structure with no payload field of its own.
  *
  * <p>Its state is smuggled through {@code variables} as human-readable strings and re-parsed
- * with a regex in the browser: {@code DsuCanvas} splits {@code parent[]} and {@code rank[]}
+ * with a regex in the browser: {@code DsuCanvas} splits {@code parent[]} and {@code size[]}
  * on commas to rebuild the tables. That makes the string FORMAT part of the wire contract
  * as surely as any field name, and nothing was checking it — a tracer could emit
  * {@code "parent: 0 1 2"} and the canvas would draw a garbage structure with no test
@@ -44,7 +44,7 @@ class DsuTransportContractTest {
         return Stream.of("disjoint-set-dsu", "accounts-merge", "most-stones-removed");
     }
 
-    @ParameterizedTest(name = "{0} emits parent[] and rank[] in the shape the canvas parses")
+    @ParameterizedTest(name = "{0} emits parent[] and size[] in the shape the canvas parses")
     @MethodSource("dsuIds")
     @DisplayName("DSU tables arrive as bracketed integer lists of equal length")
     void dsuTablesParse(String id) {
@@ -61,18 +61,18 @@ class DsuTransportContractTest {
             }
             checked++;
             String parent = vars.get("parent[]");
-            String rank = vars.get("rank[]");
+            String size = vars.get("size[]");
 
-            assertNotNull(rank, id + " emitted parent[] without rank[]; DsuCanvas needs both"
+            assertNotNull(size, id + " emitted parent[] without size[]; DsuCanvas needs both"
                     + " and renders its unavailable panel when either is missing");
             assertTrue(INT_LIST.matcher(parent.trim()).matches(),
                     id + " parent[] is not a bracketed integer list, so the canvas's split on"
                             + " commas produces nonsense: " + parent);
-            assertTrue(INT_LIST.matcher(rank.trim()).matches(),
-                    id + " rank[] is not a bracketed integer list: " + rank);
-            assertEquals(count(parent), count(rank),
-                    id + " parent[] and rank[] are different lengths, so the canvas draws rows"
-                            + " that do not line up: " + parent + " vs " + rank);
+            assertTrue(INT_LIST.matcher(size.trim()).matches(),
+                    id + " size[] is not a bracketed integer list: " + size);
+            assertEquals(count(parent), count(size),
+                    id + " parent[] and size[] are different lengths, so the canvas draws rows"
+                            + " that do not line up: " + parent + " vs " + size);
         }
 
         assertTrue(checked > 0, id + " never emitted a DSU table at all");

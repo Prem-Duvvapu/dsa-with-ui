@@ -1,11 +1,12 @@
 {
   "anchors" : {
-    "attach" : 21,
-    "done" : 32,
-    "find" : 18,
-    "init" : 5
+    "attachToU" : 30,
+    "attachToV" : 33,
+    "done" : 45,
+    "init" : 41,
+    "sameSet" : 27
   },
-  "code" : "class DisjointSet {\n    int[] parent, rank;\n\n    public DisjointSet(int n) {\n        parent = new int[n + 1];\n        rank = new int[n + 1];\n        for (int i = 0; i <= n; i++) parent[i] = i;\n    }\n\n    public int find(int x) {\n        if (parent[x] != x) {\n            parent[x] = find(parent[x]); // path compression\n        }\n        return parent[x];\n    }\n\n    public void union(int u, int v) {\n        int ru = find(u), rv = find(v);\n        if (ru == rv) return;\n\n        if (rank[ru] < rank[rv]) {\n            parent[ru] = rv;\n        } else if (rank[ru] > rank[rv]) {\n            parent[rv] = ru;\n        } else {\n            parent[rv] = ru;\n            rank[ru]++;\n        }\n    }\n}\n\nfor (int[] op : unions) dsu.union(op[0], op[1]);\n",
+  "code" : "class DisjointSet {\n    int[] parent;\n    int[] size;\n\n    public DisjointSet(int n) {\n        parent = new int[n];\n        size = new int[n];\n\n        for (int i=0;i<n;i++) {\n            parent[i] = i;\n            size[i] = 1;\n        }\n    }\n\n    public int getUltimateParent(int node) {\n        if (parent[node] == node)\n            return node;\n\n        return parent[node] = getUltimateParent(parent[node]);\n    }\n\n    public void unionBySize(int u, int v) {\n        int ultParU = getUltimateParent(u);\n        int ultParV = getUltimateParent(v);\n\n        if (ultParU == ultParV)\n            return;\n\n        if (size[ultParU] >= size[ultParV]) {\n            size[ultParU] += size[ultParV];\n            parent[ultParV] = ultParU;\n        } else {\n            size[ultParV] += size[ultParU];\n            parent[ultParU] = ultParV;\n        }\n    }\n}\n\nclass Solution {\n    public void process(int n, int[][] unions) {\n        DisjointSet ds = new DisjointSet(n);\n\n        for (int[] op: unions)\n            ds.unionBySize(op[0], op[1]);\n    }\n}",
   "problemId" : "disjoint-set-dsu",
   "resolvedInput" : {
     "dsu" : {
@@ -13,20 +14,20 @@
       "vertices" : 8
     }
   },
-  "stepCount" : 14,
+  "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 5,
-    "description" : "Initialize DSU with 7 elements: parent[i] = i, rank[i] = 0 for every i. Each element starts as its own root.",
+    "activeLine" : 41,
+    "description" : "8 elements, each in a set of its own: parent[i] = i and size[i] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1}, {2}, {3}, {4}, {5}, {6}, {7}",
-      "Operation" : "Initialize DSU(7)",
+      "Disjoint Sets" : "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}",
+      "Operation" : "DisjointSet(8)",
       "parent[]" : "[0, 1, 2, 3, 4, 5, 6, 7]",
-      "rank[]" : "[0, 0, 0, 0, 0, 0, 0, 0]"
+      "size[]" : "[1, 1, 1, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -36,21 +37,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 18,
-    "description" : "union(1, 2): find(1) = 1 (rank 0), find(2) = 2 (rank 0).",
+    "activeLine" : 30,
+    "description" : "unionBySize(1, 2): roots 1 and 2. Set 1 is at least as big, so 2 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1}, {2}, {3}, {4}, {5}, {6}, {7}",
-      "Operation" : "find(1, 2)",
-      "parent[]" : "[0, 1, 2, 3, 4, 5, 6, 7]",
-      "rank[]" : "[0, 0, 0, 0, 0, 0, 0, 0]",
-      "ru" : "1",
-      "rv" : "2",
-      "u" : "1",
-      "v" : "2"
+      "Disjoint Sets" : "{0}, {1, 2}, {3}, {4}, {5}, {6}, {7}",
+      "Operation" : "unionBySize(1, 2)",
+      "parent[]" : "[0, 1, 1, 3, 4, 5, 6, 7]",
+      "size[]" : "[1, 2, 1, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -60,17 +57,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 21,
-    "description" : "Operation: union(1, 2). Ranks tie (0 == 0). Attach 2 under 1 and bump rank[1] to 1.",
+    "activeLine" : 30,
+    "description" : "unionBySize(2, 3): roots 1 and 3. Set 1 is at least as big, so 3 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}, {5}, {6}, {7}",
-      "Operation" : "union(1, 2)",
-      "parent[]" : "[0, 1, 1, 3, 4, 5, 6, 7]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{0}, {1, 2, 3}, {4}, {5}, {6}, {7}",
+      "Operation" : "unionBySize(2, 3)",
+      "parent[]" : "[0, 1, 1, 1, 4, 5, 6, 7]",
+      "size[]" : "[1, 3, 1, 1, 1, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -80,21 +77,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 18,
-    "description" : "union(2, 3): find(2) = 1 (rank 1), find(3) = 3 (rank 0).",
+    "activeLine" : 30,
+    "description" : "unionBySize(4, 5): roots 4 and 5. Set 4 is at least as big, so 5 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2}, {3}, {4}, {5}, {6}, {7}",
-      "Operation" : "find(2, 3)",
-      "parent[]" : "[0, 1, 1, 3, 4, 5, 6, 7]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0, 0]",
-      "ru" : "1",
-      "rv" : "3",
-      "u" : "2",
-      "v" : "3"
+      "Disjoint Sets" : "{0}, {1, 2, 3}, {4, 5}, {6}, {7}",
+      "Operation" : "unionBySize(4, 5)",
+      "parent[]" : "[0, 1, 1, 1, 4, 4, 6, 7]",
+      "size[]" : "[1, 3, 1, 1, 2, 1, 1, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -104,17 +97,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 21,
-    "description" : "Operation: union(2, 3). rank[3] (0) < rank[1] (1). Attach 3 under 1.",
+    "activeLine" : 30,
+    "description" : "unionBySize(6, 7): roots 6 and 7. Set 6 is at least as big, so 7 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4}, {5}, {6}, {7}",
-      "Operation" : "union(2, 3)",
-      "parent[]" : "[0, 1, 1, 1, 4, 5, 6, 7]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0, 0]"
+      "Disjoint Sets" : "{0}, {1, 2, 3}, {4, 5}, {6, 7}",
+      "Operation" : "unionBySize(6, 7)",
+      "parent[]" : "[0, 1, 1, 1, 4, 4, 6, 6]",
+      "size[]" : "[1, 3, 1, 1, 2, 1, 2, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -124,21 +117,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 18,
-    "description" : "union(4, 5): find(4) = 4 (rank 0), find(5) = 5 (rank 0).",
+    "activeLine" : 30,
+    "description" : "unionBySize(5, 6): roots 4 and 6. Set 4 is at least as big, so 6 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4}, {5}, {6}, {7}",
-      "Operation" : "find(4, 5)",
-      "parent[]" : "[0, 1, 1, 1, 4, 5, 6, 7]",
-      "rank[]" : "[0, 1, 0, 0, 0, 0, 0, 0]",
-      "ru" : "4",
-      "rv" : "5",
-      "u" : "4",
-      "v" : "5"
+      "Disjoint Sets" : "{0}, {1, 2, 3}, {4, 5, 6, 7}",
+      "Operation" : "unionBySize(5, 6)",
+      "parent[]" : "[0, 1, 1, 1, 4, 4, 4, 6]",
+      "size[]" : "[1, 3, 1, 1, 4, 1, 2, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -148,17 +137,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 21,
-    "description" : "Operation: union(4, 5). Ranks tie (0 == 0). Attach 5 under 4 and bump rank[4] to 1.",
+    "activeLine" : 33,
+    "description" : "unionBySize(3, 7): roots 1 and 4. Set 4 is bigger, so 1 hangs under it. Path compression on the way: parent[7] = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4, 5}, {6}, {7}",
-      "Operation" : "union(4, 5)",
-      "parent[]" : "[0, 1, 1, 1, 4, 4, 6, 7]",
-      "rank[]" : "[0, 1, 0, 0, 1, 0, 0, 0]"
+      "Disjoint Sets" : "{0}, {1, 2, 3, 4, 5, 6, 7}",
+      "Operation" : "unionBySize(3, 7)",
+      "parent[]" : "[0, 4, 1, 1, 4, 4, 4, 4]",
+      "size[]" : "[1, 3, 1, 1, 7, 1, 2, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
@@ -168,149 +157,17 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 18,
-    "description" : "union(6, 7): find(6) = 6 (rank 0), find(7) = 7 (rank 0).",
+    "activeLine" : 45,
+    "description" : "Every union is done. The elements fall into these sets: {0}, {1, 2, 3, 4, 5, 6, 7}.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4, 5}, {6}, {7}",
-      "Operation" : "find(6, 7)",
-      "parent[]" : "[0, 1, 1, 1, 4, 4, 6, 7]",
-      "rank[]" : "[0, 1, 0, 0, 1, 0, 0, 0]",
-      "ru" : "6",
-      "rv" : "7",
-      "u" : "6",
-      "v" : "7"
-    },
-    "dsType" : "Dsu",
-    "gridState" : null,
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 9,
-    "activeLine" : 21,
-    "description" : "Operation: union(6, 7). Ranks tie (0 == 0). Attach 7 under 6 and bump rank[6] to 1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4, 5}, {6, 7}",
-      "Operation" : "union(6, 7)",
-      "parent[]" : "[0, 1, 1, 1, 4, 4, 6, 6]",
-      "rank[]" : "[0, 1, 0, 0, 1, 0, 1, 0]"
-    },
-    "dsType" : "Dsu",
-    "gridState" : null,
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 10,
-    "activeLine" : 18,
-    "description" : "union(5, 6): find(5) = 4 (rank 1), find(6) = 6 (rank 1).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4, 5}, {6, 7}",
-      "Operation" : "find(5, 6)",
-      "parent[]" : "[0, 1, 1, 1, 4, 4, 6, 6]",
-      "rank[]" : "[0, 1, 0, 0, 1, 0, 1, 0]",
-      "ru" : "4",
-      "rv" : "6",
-      "u" : "5",
-      "v" : "6"
-    },
-    "dsType" : "Dsu",
-    "gridState" : null,
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 11,
-    "activeLine" : 21,
-    "description" : "Operation: union(5, 6). Ranks tie (1 == 1). Attach 6 under 4 and bump rank[4] to 2.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4, 5, 6, 7}",
-      "Operation" : "union(5, 6)",
-      "parent[]" : "[0, 1, 1, 1, 4, 4, 4, 6]",
-      "rank[]" : "[0, 1, 0, 0, 2, 0, 1, 0]"
-    },
-    "dsType" : "Dsu",
-    "gridState" : null,
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 12,
-    "activeLine" : 18,
-    "description" : "union(3, 7): find(3) = 1 (rank 1), find(7) = 4 (rank 2).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "Disjoint Sets" : "{1, 2, 3}, {4, 5, 6, 7}",
-      "Operation" : "find(3, 7)",
-      "parent[]" : "[0, 1, 1, 1, 4, 4, 4, 4]",
-      "rank[]" : "[0, 1, 0, 0, 2, 0, 1, 0]",
-      "ru" : "1",
-      "rv" : "4",
-      "u" : "3",
-      "v" : "7"
-    },
-    "dsType" : "Dsu",
-    "gridState" : null,
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 13,
-    "activeLine" : 21,
-    "description" : "Operation: union(3, 7). rank[1] (1) < rank[4] (2). Attach 1 under 4.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "Disjoint Sets" : "{1, 2, 3, 4, 5, 6, 7}",
-      "Operation" : "union(3, 7)",
+      "Disjoint Sets" : "{0}, {1, 2, 3, 4, 5, 6, 7}",
+      "Operation" : "done",
       "parent[]" : "[0, 4, 1, 1, 4, 4, 4, 4]",
-      "rank[]" : "[0, 1, 0, 0, 2, 0, 1, 0]"
-    },
-    "dsType" : "Dsu",
-    "gridState" : null,
-    "arrayState" : null,
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 14,
-    "activeLine" : 32,
-    "description" : "Every element is now in one connected component: {1, 2, 3, 4, 5, 6, 7}.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "Disjoint Sets" : "{1, 2, 3, 4, 5, 6, 7} (Single Component!)",
-      "Operation" : "Done",
-      "parent[]" : "[0, 4, 1, 1, 4, 4, 4, 4]",
-      "rank[]" : "[0, 1, 0, 0, 2, 0, 1, 0]"
+      "size[]" : "[1, 3, 1, 1, 7, 1, 2, 1]"
     },
     "dsType" : "Dsu",
     "gridState" : null,
