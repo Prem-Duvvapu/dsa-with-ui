@@ -77,7 +77,7 @@ public class HeapService implements ProblemProvider {
             {"min-to-max-heap", "Convert Min Heap to Max Heap", "Heaps - Learning", "Medium", "Run Heapify down from index N/2-1 down to 0 in O(N) time."},
             {"kth-smallest-element", "Kth Smallest Element in Array", "Heaps - Medium", "Medium", "Find Kth smallest element using Max-Heap of size K."},
             {"sort-k-sorted-array", "Sort K Sorted Array (Nearly Sorted)", "Heaps - Medium", "Medium", "Sort array where each element is at most K steps away using Min-Heap of size K+1."},
-            {"replace-rank-array", "Replace Elements by Their Rank", "Heaps - Medium", "Easy", "Rank array elements using PriorityQueue or Sorting + Map."},
+            {"replace-rank-array", "Replace Elements by Their Rank", "Heaps - Medium", "Easy", "Replace each value with its rank by sorting (value, index) pairs and walking them once."},
             {"task-scheduler", "Task Scheduler", "Heaps - Medium", "Medium", "Least time to run tasks with cooldown n, by counting how often the most frequent task occurs."},
             {"hand-of-straights", "Hand of Straights", "Heaps - Medium", "Medium", "Divide cards into groups of size W with consecutive values using Min-Heap / TreeMap."},
             {"design-twitter", "Design Twitter", "Heaps - Hard", "Hard", "Design Twitter feed using PriorityQueue merging user tweets in O(1) time."},
@@ -97,17 +97,21 @@ public class HeapService implements ProblemProvider {
         // arithmetic: children of i at 2i+1 and 2i+2.
         for (String[] p : list) {
             String id = p[0]; String title = p[1]; String cat = p[2]; String diff = p[3]; String desc = p[4];
-            // Two problems here are solved without a heap in the owner's code, so they draw arrays:
-            // Task Scheduler counts frequencies (one pass), Hand of Straights walks a TreeMap.
+            // Three problems here are solved without a heap in the owner's code, so they draw arrays:
+            // Task Scheduler counts frequencies (one pass), Hand of Straights walks a TreeMap, and
+            // Rank Transform sorts (value, index) pairs.
             boolean counting = "task-scheduler".equals(id);
             boolean treeMap = "hand-of-straights".equals(id);
             // Two heaps cannot be drawn as one heap tree: median shows its two sorted halves.
             boolean twoHeaps = "median-data-stream".equals(id);
-            String dsType = counting || treeMap || twoHeaps ? "Array" : "PriorityQueue";
+            boolean sortPairs = "replace-rank-array".equals(id);
+            String dsType = counting || treeMap || twoHeaps || sortPairs ? "Array" : "PriorityQueue";
             ComplexityDetail complexity = counting
                 ? new ComplexityDetail("O(N)", "Time Complexity: one pass to count, then a fixed 26-slot sort.", "Array", "O(1)", "Space Complexity: a 26-slot frequency array.", "Memory", "Auxiliary Space: O(1)", "Memory")
                 : treeMap
                 ? new ComplexityDetail("O(N log N)", "Time Complexity: building the TreeMap of card counts.", "Array", "O(N)", "Space Complexity: the TreeMap and the queue of group starts.", "Memory", "Auxiliary Space: O(N)", "Memory")
+                : sortPairs
+                ? new ComplexityDetail("O(N log N)", "Time Complexity: sorting the (value, index) pairs.", "Array", "O(N)", "Space Complexity: the pairs and the result.", "Memory", "Auxiliary Space: O(N)", "Memory")
                 : twoHeaps
                 ? new ComplexityDetail("O(N log N)", "Time Complexity: O(log N) heap work per added number.", "PriorityQueue", "O(N)", "Space Complexity: the two heaps hold every number.", "Memory", "Auxiliary Space: O(N)", "Memory")
                 : new ComplexityDetail("O(N log K)", "Time Complexity: Min/Max-Heap priority queue operations.", "PriorityQueue", "O(K)", "Space Complexity: PriorityQueue space.", "Memory", "Auxiliary Space: O(K)", "Memory");

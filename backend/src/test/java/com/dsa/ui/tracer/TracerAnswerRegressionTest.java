@@ -220,6 +220,12 @@ class TracerAnswerRegressionTest {
             hand-of-straights      | {"hand":[9,4],"groupSize":1} | answer        | true
             median-data-stream     | {"nums":[7]}                               | median        | 7.0
             median-data-stream     | {"nums":[-1,-2]}                           | median        | -1.5
+            # Sort-pairs rank, value-only heap of list heads, and the corner pushes the C++ original read A[-1] on.
+            replace-rank-array     | {"values":[7]}                             | result        | [1]
+            replace-rank-array     | {"values":[3,3,1]}                         | result        | [2, 2, 1]
+            merge-k-sorted-lists   | {"list1":[1],"list2":[1],"list3":[1]}      | answer        | 1 -> 1 -> 1
+            maximum-sum-combination | {"a":[1,1],"b":[1,1],"count":4}           | answer        | [2, 2, 2, 2]
+            maximum-sum-combination | {"a":[5],"b":[1,2,3],"count":3}           | answer        | [8, 7, 6]
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

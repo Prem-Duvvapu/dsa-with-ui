@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A min-heap over the K lists' current heads: only the head of each list can possibly be
+ * Merge k Sorted Lists (LeetCode 23), traced on the owner's own accepted submission: a min-heap over
+ * the K lists' current heads. Only the head of each list can possibly be
  * the next output value (every list is already sorted), so the heap never needs to hold
  * more than K candidates at once. With K = 3 that heap is small enough to show as a plain
  * linear scan for the minimum, which is exactly what a 3-entry heap degenerates to.
@@ -66,21 +67,34 @@ public class MergeKSortedListsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public ListNode mergeKLists(ListNode[] lists) {
-                   PriorityQueue<ListNode> heap = new PriorityQueue<>((a, b) -> a.val - b.val);
-                   for (ListNode head : lists) if (head != null) heap.add(head);
+               class Solution {
+                   public ListNode mergeKLists(ListNode[] lists) {
+                       int k=lists.length;
+                       ListNode head=new ListNode(-1);
+                       ListNode temp=head;
+                       PriorityQueue<ListNode> pq=new PriorityQueue<>((x,y)->Integer.compare(x.val,y.val));
 
-                   ListNode dummy = new ListNode(-1), tail = dummy;
-                   while (!heap.isEmpty()) {
-                       // @a pickSmallestHead
-                       ListNode smallest = heap.poll();
-                       // @a append
-                       tail.next = smallest;
-                       tail = tail.next;
-                       if (smallest.next != null) heap.add(smallest.next);
+                       // @a init
+                       for (int i=0;i<k;i++)
+                           if (lists[i]!=null)
+                               pq.add(lists[i]);
+
+                       while (!pq.isEmpty()) {
+                           // @a pickSmallestHead
+                           ListNode currNode=pq.poll();
+                           ListNode nextNode=currNode.next;
+
+                           // @a append
+                           temp.next=currNode;
+                           temp=temp.next;
+
+                           if (nextNode!=null)
+                               pq.add(nextNode);
+                       }
+
+                       // @a done
+                       return head.next;
                    }
-                   // @a done
-                   return dummy.next;
                }""";
     }
 
@@ -118,15 +132,16 @@ public class MergeKSortedListsTracer implements AlgorithmTracer {
         // all three heads linearly for the minimum - same answer with three lists, and no
         // test can tell, but it is not the algorithm on screen and it never mentioned the
         // structure the problem exists to teach. Entries are {value, listIndex}.
-        ArrayHeap<int[]> heap = new ArrayHeap<>(
-                java.util.Comparator.<int[]>comparingInt(e -> e[0]).thenComparingInt(e -> e[1]));
+        // The owner's comparator orders by value alone, and ArrayHeap sifts as PriorityQueue does, so
+        // equal heads leave the heap in the order Java's own PriorityQueue would give them.
+        ArrayHeap<int[]> heap = new ArrayHeap<>((x, y) -> Integer.compare(x[0], y[0]));
         for (int i = 0; i < 3; i++) {
             if (lists[i].length > 0) {
                 heap.offer(new int[]{lists[i][0], i});
             }
         }
 
-        emit.at("pickSmallestHead")
+        emit.at("init")
                 .say("Three sorted lists to merge: %s, %s, %s. Only their heads go into the "
                                 + "heap - %d of them - so each pick costs log k, not k.",
                         java.util.Arrays.toString(lists[0]),
@@ -148,7 +163,7 @@ public class MergeKSortedListsTracer implements AlgorithmTracer {
                             heap.size() == 0
                                     ? "It is the only live head left."
                                     : String.format("It is the smallest of the %d live heads, and the"
-                                            + " heap knew that without comparing them.", heap.size() + 1))
+                                            + " heap keeps it at the root, so finding it took no scan of the heads.", heap.size() + 1))
                     .var("value", bestValue).var("fromList", bestList + 1)
                     .var("heap", candidates(heap))
                     .list(render(lists, idBase, head, mergedIds, -1)).step();
