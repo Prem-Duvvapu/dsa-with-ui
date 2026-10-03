@@ -7,15 +7,21 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * "Effort" along a path is its largest single step, not the sum of steps - a bottleneck
- * shortest path. Dijkstra still applies: relax a neighbour whenever routing through the
- * current cell would give it a smaller bottleneck than its best known one, using
- * max(currentEffort, heightDifference) in place of the usual currentDist + weight.
+ * Path With Minimum Effort (LeetCode 1631), traced on the owner's own accepted submission. A
+ * path's effort is its largest single height step, not the sum, so this is a bottleneck shortest
+ * path: Dijkstra where a neighbour's candidate is max(minEffort[current], step) instead of
+ * dist + weight. The first time the bottom-right cell leaves the queue its effort is final.
+ * Optimal: O(m*n log(m*n)).
+ *
+ * <p>The canvas shows the heights; {@code minEffort} is listed as a variable, "inf" for a cell no
+ * route has reached yet.
  */
 @Component
 public class PathMinEffortTracer implements AlgorithmTracer {
 
-    private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    // The code's own direction order: up, right, down, left.
+    private static final int[] D_ROW = {-1, 0, 1, 0};
+    private static final int[] D_COL = {0, 1, 0, -1};
 
     @Override
     public String id() {
@@ -55,97 +61,154 @@ public class PathMinEffortTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public int minimumEffortPath(int[][] heights) {
-                   int n = heights.length, m = heights[0].length;
-                   // @a init
-                   int[][] effort = new int[n][m];
-                   for (int[] row : effort) Arrays.fill(row, Integer.MAX_VALUE);
-                   effort[0][0] = 0;
-                   PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
-                   pq.add(new int[]{0, 0, 0});
+               class Tuple {
+                   int effort;
+                   int row;
+                   int col;
 
-                   while (!pq.isEmpty()) {
-                       // @a extract
-                       int[] top = pq.poll();
-                       int row = top[0], col = top[1], e = top[2];
-                       if (row == n - 1 && col == m - 1) {
-                           // @a arrived
-                           return e;
-                       }
-                       for (int[] d : DIRECTIONS) {
-                           int nrow = row + d[0], ncol = col + d[1];
-                           if (nrow < 0 || nrow >= n || ncol < 0 || ncol >= m) continue;
-                           int newEffort = Math.max(e, Math.abs(heights[row][col] - heights[nrow][ncol]));
-                           if (newEffort < effort[nrow][ncol]) {
-                               // @a relax
-                               effort[nrow][ncol] = newEffort;
-                               pq.add(new int[]{nrow, ncol, newEffort});
+                   Tuple(int effort,int row,int col) {
+                       this.effort = effort;
+                       this.row = row;
+                       this.col = col;
+                   }
+               }
+
+               class Solution {
+                   public static int[] dRow = {-1,0,1,0};
+                   public static int[] dCol = {0,1,0,-1};
+
+                   public int minimumEffortPath(int[][] heights) {
+                       // @a init
+                       int m = heights.length;
+                       int n = heights[0].length;
+                       int[][] minEffort = new int[m][n];
+                       PriorityQueue<Tuple> pq = new PriorityQueue<>((x,y) -> Integer.compare(x.effort,y.effort));
+
+                       for (int[] arr: minEffort)
+                           Arrays.fill(arr, Integer.MAX_VALUE);
+
+                       minEffort[0][0] = 0;
+                       pq.add(new Tuple(0,0,0));
+
+                       while (!pq.isEmpty()) {
+                           // @a poll
+                           Tuple curr = pq.poll();
+                           int currEffort = curr.effort;
+                           int currRow = curr.row;
+                           int currCol = curr.col;
+
+                           if (currRow == m-1 && currCol == n-1)
+                               // @a reached
+                               return minEffort[currRow][currCol];
+
+                           for (int i=0;i<4;i++) {
+                               int newRow = currRow + dRow[i];
+                               int newCol = currCol + dCol[i];
+
+                               if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n) {
+                                   int currDiff = Math.abs(heights[currRow][currCol] - heights[newRow][newCol]);
+                                   int currRouteMaxDiff= Math.max(minEffort[currRow][currCol], currDiff);
+
+                                   if (minEffort[newRow][newCol] > currRouteMaxDiff) {
+                                       // @a relax
+                                       minEffort[newRow][newCol] = currRouteMaxDiff;
+                                       pq.add(new Tuple(currRouteMaxDiff,newRow,newCol));
+                                   }
+                               }
                            }
                        }
+
+                       return minEffort[m-1][n-1];
                    }
-                   return effort[n - 1][m - 1];
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[][] heights = in.getGrid("heights");
-        int rows = heights.length;
-        int cols = heights[0].length;
-        int[][] effort = new int[rows][cols];
-        for (int[] row : effort) Arrays.fill(row, Integer.MAX_VALUE);
-        effort[0][0] = 0;
-
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[2]));
+        int m = heights.length;
+        int n = heights[0].length;
+        int[][] minEffort = new int[m][n];
+        for (int[] arr : minEffort) {
+            Arrays.fill(arr, Integer.MAX_VALUE);
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x, y) -> Integer.compare(x[0], y[0]));
+        minEffort[0][0] = 0;
         pq.add(new int[]{0, 0, 0});
 
-        emit.at("init").say("%dx%d height map. effort(0,0) = 0, everywhere else infinite. Enqueue the start.",
-                        rows, cols)
-                .var("effort", effortString(effort)).grid(heights).step();
+        emit.at("init").say("Start at (0,0) with effort 0. A route's effort is its single biggest height "
+                        + "step, so every other cell starts at infinity and the queue hands back the "
+                        + "smallest effort first.")
+                .var("minEffort", show(minEffort)).grid(heights).queue(tuples(pq)).step();
 
         while (!pq.isEmpty()) {
-            int[] top = pq.poll();
-            int row = top[0], col = top[1], e = top[2];
+            int[] curr = pq.poll();
+            int currEffort = curr[0];
+            int currRow = curr[1];
+            int currCol = curr[2];
+            emit.at("poll").say("Poll (%d,%d) with effort %d - the cheapest route still waiting.",
+                            currRow, currCol, currEffort)
+                    .var("currRow", currRow).var("currCol", currCol).var("currEffort", currEffort)
+                    .var("minEffort", show(minEffort)).grid(heights).queue(tuples(pq)).step();
 
-            if (row == rows - 1 && col == cols - 1) {
-                emit.at("arrived").say("Reached (%d,%d) with effort %d - the smallest bottleneck reaches it first.", row, col, e)
-                        .var("answer", e).grid(heights).step();
+            if (currRow == m - 1 && currCol == n - 1) {
+                emit.at("reached").say("That is the bottom-right corner. Nothing left in the queue is cheaper, "
+                                + "so its effort %d is final. Return it.", minEffort[currRow][currCol])
+                        .var("minEffort", show(minEffort)).var("answer", minEffort[currRow][currCol])
+                        .grid(heights).queue(tuples(pq)).step();
                 return;
             }
 
-            emit.at("extract").say("Pop the smallest-effort entry: (%d,%d) at effort %d.", row, col, e)
-                    .var("cell", "(" + row + "," + col + ")").var("effort", e)
-                    .grid(heights).step();
-
-            for (int[] d : DIRECTIONS) {
-                int nrow = row + d[0], ncol = col + d[1];
-                if (nrow < 0 || nrow >= rows || ncol < 0 || ncol >= cols) continue;
-                int newEffort = Math.max(e, Math.abs(heights[row][col] - heights[nrow][ncol]));
-                if (newEffort < effort[nrow][ncol]) {
-                    effort[nrow][ncol] = newEffort;
-                    pq.add(new int[]{nrow, ncol, newEffort});
-                    emit.at("relax").say("(%d,%d) -> (%d,%d): height gap %d, bottleneck max(%d, %d) = %d beats its old best. Update and enqueue.",
-                                    row, col, nrow, ncol, Math.abs(heights[row][col] - heights[nrow][ncol]), e,
-                                    Math.abs(heights[row][col] - heights[nrow][ncol]), newEffort)
-                            .var("cell", "(" + nrow + "," + ncol + ")").var("newEffort", newEffort)
-                            .var("effort", effortString(effort))
-                            .grid(heights).step();
+            for (int i = 0; i < 4; i++) {
+                int newRow = currRow + D_ROW[i];
+                int newCol = currCol + D_COL[i];
+                if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n) {
+                    int currDiff = Math.abs(heights[currRow][currCol] - heights[newRow][newCol]);
+                    int currRouteMaxDiff = Math.max(minEffort[currRow][currCol], currDiff);
+                    if (minEffort[newRow][newCol] > currRouteMaxDiff) {
+                        int before = minEffort[newRow][newCol];
+                        minEffort[newRow][newCol] = currRouteMaxDiff;
+                        pq.add(new int[]{currRouteMaxDiff, newRow, newCol});
+                        emit.at("relax").say("Step to (%d,%d) is |%d - %d| = %d, so this route's effort is "
+                                        + "max(%d, %d) = %d, better than %s. minEffort[%d][%d] = %d.",
+                                        newRow, newCol, heights[currRow][currCol], heights[newRow][newCol], currDiff,
+                                        minEffort[currRow][currCol], currDiff, currRouteMaxDiff,
+                                        before == Integer.MAX_VALUE ? "infinity" : String.valueOf(before),
+                                        newRow, newCol, currRouteMaxDiff)
+                                .var("newRow", newRow).var("newCol", newCol).var("currRouteMaxDiff", currRouteMaxDiff)
+                                .var("minEffort", show(minEffort)).grid(heights).queue(tuples(pq)).step();
+                    }
                 }
             }
         }
+
+        // Unreachable: every cell of a grid is connected to every other, so the bottom-right corner
+        // is always polled and returned above. The code's final return is a compiler fallback.
+        throw new IllegalStateException("the bottom-right cell was never polled");
     }
 
-    private static String effortString(int[][] effort) {
+    private static String show(int[][] grid) {
         StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < effort.length; i++) {
-            if (i > 0) sb.append(", ");
-            sb.append("[");
-            for (int j = 0; j < effort[i].length; j++) {
-                if (j > 0) sb.append(", ");
-                sb.append(effort[i][j] == Integer.MAX_VALUE ? "∞" : String.valueOf(effort[i][j]));
+        for (int r = 0; r < grid.length; r++) {
+            if (r > 0) sb.append(',');
+            sb.append('[');
+            for (int c = 0; c < grid[r].length; c++) {
+                if (c > 0) sb.append(',');
+                sb.append(grid[r][c] == Integer.MAX_VALUE ? "inf" : String.valueOf(grid[r][c]));
             }
-            sb.append("]");
+            sb.append(']');
         }
         return sb.append(']').toString();
+    }
+
+    /** The queue, smallest effort first, as "(row,col) e=effort". */
+    private static List<String> tuples(PriorityQueue<int[]> pq) {
+        List<int[]> items = new ArrayList<>(pq);
+        items.sort((x, y) -> Integer.compare(x[0], y[0]));
+        List<String> out = new ArrayList<>();
+        for (int[] t : items) {
+            out.add("(" + t[1] + "," + t[2] + ") e=" + t[0]);
+        }
+        return out;
     }
 }
