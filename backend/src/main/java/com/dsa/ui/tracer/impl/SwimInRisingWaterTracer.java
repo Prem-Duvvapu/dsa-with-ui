@@ -7,20 +7,22 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * At time t every cell whose elevation is at most t is swimmable, and movement within the
- * swimmable region is free - so the earliest arrival time is the smallest t for which some
- * path exists, which is the LARGEST elevation on that path. That makes this a bottleneck
- * shortest path, not a sum-of-costs one, and Dijkstra still applies with max(...) replacing
- * the usual addition.
+ * Swim in Rising Water (LeetCode 778), traced on the owner's own accepted submission over their
+ * DisjointSet. Elevations are 0 .. n*n - 1, each once, so at time t exactly one new cell (the one
+ * with elevation t) goes under water; join it to every neighbour already under water, and stop at
+ * the first time (0,0) and the bottom-right corner share a set. O(n^2 * alpha).
  *
- * <p>It differs from {@code path-min-effort} in what the bottleneck measures: there the cost
- * of a move is the height DIFFERENCE across it, here the cost of entering a cell is that
- * cell's OWN elevation - so the start already costs grid[0][0] rather than 0.
+ * <p>The code indexes {@code arr[grid[i][j]]}, which relies on LeetCode's guarantee that the grid is
+ * n x n with every value from 0 to n*n - 1 exactly once; the input field declares that
+ * ({@code squarePermutation}) and InputValidator refuses a grid that breaks it. The
+ * n == 1 early return carries no highlight: neither contract input is 1x1.
  */
 @Component
 public class SwimInRisingWaterTracer implements AlgorithmTracer {
 
-    private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    // The code's own direction order: up, right, down, left.
+    private static final int[] D_ROW = {-1, 0, 1, 0};
+    private static final int[] D_COL = {0, 1, 0, -1};
 
     @Override
     public String id() {
@@ -38,6 +40,7 @@ public class SwimInRisingWaterTracer implements AlgorithmTracer {
                 InputField.of("grid", FieldType.INT_GRID)
                         .label("Elevation map")
                         .help("grid[r][c] is that cell's elevation. Swim from (0,0) to the bottom-right corner.")
+                        .squarePermutation()
                         .constraint("maxRows", 8)
                         .constraint("maxCols", 8)
                         .values(0, 99)
@@ -60,118 +63,102 @@ public class SwimInRisingWaterTracer implements AlgorithmTracer {
 
     @Override
     public String annotatedCode() {
-        return """
-               public int swimInWater(int[][] grid) {
-                   int n = grid.length, m = grid[0].length;
-                   // @a init
-                   int[][] time = new int[n][m];
-                   for (int[] row : time) Arrays.fill(row, Integer.MAX_VALUE);
-                   time[0][0] = grid[0][0];
-                   PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
-                   pq.add(new int[]{0, 0, grid[0][0]});
+        return OwnerDisjointSet.code(Set.of()) + "\n\n" + """
+               class Solution {
+                   static int[] dRow = {-1, 0, 1, 0};
+                   static int[] dCol = {0, 1, 0, -1};
 
-                   while (!pq.isEmpty()) {
-                       // @a extract
-                       int[] top = pq.poll();
-                       int row = top[0], col = top[1], t = top[2];
-                       if (row == n - 1 && col == m - 1) {
-                           // @a arrived
-                           return t;
-                       }
-                       for (int[] d : DIRECTIONS) {
-                           int nrow = row + d[0], ncol = col + d[1];
-                           if (nrow < 0 || nrow >= n || ncol < 0 || ncol >= m) continue;
-                           int wait = Math.max(t, grid[nrow][ncol]);
-                           if (wait < time[nrow][ncol]) {
-                               // @a relax
-                               time[nrow][ncol] = wait;
-                               pq.add(new int[]{nrow, ncol, wait});
+                   public int swimInWater(int[][] grid) {
+                       // @a init
+                       int n = grid.length;
+                       if (n == 1)
+                           return 0;
+
+                       DisjointSet ds = new DisjointSet(n*n);
+                       int[][] arr = new int[n*n][2];
+
+                       for (int i=0;i<n;i++)
+                           for (int j=0;j<n;j++)
+                               arr[grid[i][j]] = new int[]{i,j};
+
+                       int time = 0;
+                       while (ds.getUltimateParent(0) != ds.getUltimateParent(n*n-1)) {
+                           // @a rise
+                           int[] curr = arr[time];
+                           int x = curr[0];
+                           int y = curr[1];
+                           int node = x*n + y;
+
+                           for (int i=0;i<4;i++) {
+                               int newRow = x + dRow[i];
+                               int newCol = y + dCol[i];
+                               int newNode = newRow*n + newCol;
+
+                               if (newRow>=0 && newRow<n && newCol>=0 && newCol<n && grid[newRow][newCol]<=time)
+                                   // @a join
+                                   ds.unionBySize(node,newNode);
                            }
+
+                           time++;
                        }
+
+                       // @a done
+                       return time-1;
                    }
-                   return time[n - 1][m - 1];
                }""";
     }
 
     @Override
     public void run(Inputs in, StepEmitter emit) {
         int[][] grid = in.getGrid("grid");
-        int rows = grid.length;
-        int cols = grid[0].length;
-        int[][] time = new int[rows][cols];
-        for (int[] row : time) Arrays.fill(row, Integer.MAX_VALUE);
-        time[0][0] = grid[0][0];
+        int n = grid.length;
+        if (n == 1) {
+            emit.at("init").say("A 1x1 grid: the start is already the end, so the check right after the setup "
+                            + "returns 0.")
+                    .var("answer", 0).grid(grid).step();
+            return;
+        }
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(
-                Comparator.<int[]>comparingInt(a -> a[2])
-                        .thenComparingInt(a -> a[0])
-                        .thenComparingInt(a -> a[1]));
-        pq.add(new int[]{0, 0, grid[0][0]});
-
-        emit.at("init")
-                .say("%dx%d elevation map. Entering (0,0) already costs its own elevation %d, so "
-                                + "time(0,0) = %d and every other cell starts unreachable.",
-                        rows, cols, grid[0][0], grid[0][0])
-                .var("time", timeString(time)).var("target", "(" + (rows - 1) + "," + (cols - 1) + ")")
-                .grid(grid).step();
-
-        while (!pq.isEmpty()) {
-            int[] top = pq.poll();
-            int row = top[0];
-            int col = top[1];
-            int t = top[2];
-
-            if (row == rows - 1 && col == cols - 1) {
-                emit.at("arrived")
-                        .say("The bottom-right corner (%d,%d) comes off the queue at time %d. The "
-                                        + "smallest bottleneck always surfaces first, so %d is the answer.",
-                                row, col, t, t)
-                        .var("answer", t).var("time", timeString(time))
-                        .grid(grid).step();
-                return;
-            }
-
-            emit.at("extract")
-                    .say("Pop the earliest-reachable cell: (%d,%d), swimmable from time %d "
-                                    + "(its own elevation is %d).",
-                            row, col, t, grid[row][col])
-                    .var("cell", "(" + row + "," + col + ")").var("t", t)
-                    .var("time", timeString(time))
-                    .grid(grid).step();
-
-            for (int[] d : DIRECTIONS) {
-                int nrow = row + d[0];
-                int ncol = col + d[1];
-                if (nrow < 0 || nrow >= rows || ncol < 0 || ncol >= cols) {
-                    continue;
-                }
-                int wait = Math.max(t, grid[nrow][ncol]);
-                if (wait < time[nrow][ncol]) {
-                    time[nrow][ncol] = wait;
-                    pq.add(new int[]{nrow, ncol, wait});
-                    emit.at("relax")
-                            .say("(%d,%d) -> (%d,%d): elevation %d, so this route reaches it at "
-                                            + "max(%d, %d) = %d, beating its old best. Enqueue it.",
-                                    row, col, nrow, ncol, grid[nrow][ncol], t, grid[nrow][ncol], wait)
-                            .var("cell", "(" + nrow + "," + ncol + ")").var("t", wait)
-                            .var("time", timeString(time))
-                            .grid(grid).step();
-                }
+        OwnerDisjointSet ds = new OwnerDisjointSet(n * n);
+        int[][] arr = new int[n * n][2];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[grid[i][j]] = new int[]{i, j};
             }
         }
+
+        emit.at("init").say("Elevations run 0 to %d, each once, so arr[t] is the cell that goes under water at "
+                        + "time t. Join each newly flooded cell to its flooded neighbours until (0,0) and (%d,%d) "
+                        + "are in one set.", n * n - 1, n - 1, n - 1)
+                .var("time", 0).grid(grid).step();
+
+        int time = 0;
+        while (root(ds, 0) != root(ds, n * n - 1)) {
+            int x = arr[time][0];
+            int y = arr[time][1];
+            int node = x * n + y;
+            emit.at("rise").say("Time %d: the water reaches elevation %d, flooding (%d,%d).", time, time, x, y)
+                    .var("time", time).var("x", x).var("y", y).grid(grid).step();
+            for (int i = 0; i < 4; i++) {
+                int newRow = x + D_ROW[i];
+                int newCol = y + D_COL[i];
+                int newNode = newRow * n + newCol;
+                if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < n && grid[newRow][newCol] <= time) {
+                    OwnerDisjointSet.Union result = ds.union(node, newNode);
+                    emit.at("join").say("Neighbour (%d,%d), elevation %d, is under water too. %s",
+                                    newRow, newCol, grid[newRow][newCol], result.narrate(node, newNode))
+                            .var("time", time).grid(grid).step();
+                }
+            }
+            time++;
+        }
+
+        emit.at("done").say("(0,0) and (%d,%d) are now in one set. The loop already moved time on to %d, so the "
+                        + "answer is time - 1 = %d.", n - 1, n - 1, time, time - 1)
+                .var("time", time).var("answer", time - 1).grid(grid).step();
     }
 
-    private static String timeString(int[][] time) {
-        StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < time.length; i++) {
-            if (i > 0) sb.append(", ");
-            sb.append("[");
-            for (int j = 0; j < time[i].length; j++) {
-                if (j > 0) sb.append(", ");
-                sb.append(time[i][j] == Integer.MAX_VALUE ? "∞" : String.valueOf(time[i][j]));
-            }
-            sb.append("]");
-        }
-        return sb.append(']').toString();
+    private static int root(OwnerDisjointSet ds, int x) {
+        return ds.find(x, new ArrayList<>());
     }
 }

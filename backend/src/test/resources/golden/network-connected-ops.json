@@ -1,11 +1,12 @@
 {
   "anchors" : {
-    "count" : 13,
-    "done" : 16,
-    "insufficient" : 3,
-    "union" : 9
+    "component" : 59,
+    "done" : 61,
+    "extra" : 52,
+    "init" : 43,
+    "join" : 54
   },
-  "code" : "public int makeConnected(int n, int[][] connections) {\n    if (connections.length < n - 1) {\n        return -1;\n    }\n    int[] parent = new int[n];\n    for (int i = 0; i < n; i++) parent[i] = i;\n\n    for (int[] c : connections) {\n        int ru = find(c[0], parent), rv = find(c[1], parent);\n        if (ru != rv) parent[ru] = rv;\n    }\n\n    Set<Integer> roots = new HashSet<>();\n    for (int i = 0; i < n; i++) roots.add(find(i, parent));\n\n    return roots.size() - 1;\n}\n\nprivate int find(int x, int[] parent) {\n    if (parent[x] != x) parent[x] = find(parent[x], parent);\n    return parent[x];\n}",
+  "code" : "class DisjointSet {\n    int[] parent;\n    int[] size;\n\n    public DisjointSet(int n) {\n        parent = new int[n];\n        size = new int[n];\n\n        for (int i=0;i<n;i++) {\n            parent[i] = i;\n            size[i] = 1;\n        }\n    }\n\n    public int getUltimateParent(int node) {\n        if (parent[node] == node)\n            return node;\n\n        return parent[node] = getUltimateParent(parent[node]);\n    }\n\n    public void unionBySize(int u, int v) {\n        int ultParU = getUltimateParent(u);\n        int ultParV = getUltimateParent(v);\n\n        if (ultParU == ultParV)\n            return;\n\n        if (size[ultParU] >= size[ultParV]) {\n            size[ultParU] += size[ultParV];\n            parent[ultParV] = ultParU;\n        } else {\n            size[ultParV] += size[ultParU];\n            parent[ultParU] = ultParV;\n        }\n    }\n}\n\n// Your submission named the find method getParent; it is the same method as\n// getUltimateParent in your other DSU solutions, which is what the class above calls it.\nclass Solution {\n    public int makeConnected(int n, int[][] connections) {\n        DisjointSet ds = new DisjointSet(n);\n        int extraCables = 0;\n        int numOfComponents = 0;\n\n        for (int[] connection : connections) {\n            int src = connection[0];\n            int dest = connection[1];\n\n            if (ds.getUltimateParent(src) == ds.getUltimateParent(dest))\n                extraCables++;\n            else\n                ds.unionBySize(src, dest);\n        }\n\n        for (int i=0;i<n;i++)\n            if (ds.parent[i] == i)\n                numOfComponents++;\n\n        int requiredCables = numOfComponents-1;\n\n        return (extraCables >= requiredCables) ? requiredCables : -1;\n    }\n}",
   "problemId" : "network-connected-ops",
   "resolvedInput" : {
     "graph" : {
@@ -13,22 +14,24 @@
       "vertices" : 4
     }
   },
-  "stepCount" : 5,
+  "stepCount" : 7,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 9,
-    "description" : "Connect 0 and 1 - merge their components.",
+    "activeLine" : 43,
+    "description" : "4 computers, each its own component so far, and 3 cables to look at.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
-      "1" : "visited",
+      "0" : "unvisited",
+      "1" : "unvisited",
       "2" : "unvisited",
       "3" : "unvisited"
     },
-    "activeEdges" : [ "0-1" ],
+    "activeEdges" : [ ],
     "variables" : {
-      "edge" : "0-1"
+      "extraCables" : "0",
+      "parent[]" : "[0, 1, 2, 3]",
+      "size[]" : "[1, 1, 1, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -82,19 +85,21 @@
     } ]
   }, {
     "stepNumber" : 2,
-    "activeLine" : 9,
-    "description" : "Connect 0 and 2 - merge their components.",
+    "activeLine" : 54,
+    "description" : "Cable 0-1 joins two separate components. unionBySize(0, 1): roots 0 and 1. Set 0 is at least as big, so 1 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
       "0" : "visited",
       "1" : "visited",
-      "2" : "visited",
+      "2" : "unvisited",
       "3" : "unvisited"
     },
-    "activeEdges" : [ "0-2" ],
+    "activeEdges" : [ "0-1" ],
     "variables" : {
-      "edge" : "0-2"
+      "extraCables" : "0",
+      "parent[]" : "[0, 0, 2, 3]",
+      "size[]" : "[2, 1, 1, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -148,8 +153,8 @@
     } ]
   }, {
     "stepNumber" : 3,
-    "activeLine" : 9,
-    "description" : "1 and 2 are already connected - this cable is redundant (a spare).",
+    "activeLine" : 54,
+    "description" : "Cable 0-2 joins two separate components. unionBySize(0, 2): roots 0 and 2. Set 0 is at least as big, so 2 hangs under it.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -158,9 +163,11 @@
       "2" : "visited",
       "3" : "unvisited"
     },
-    "activeEdges" : [ "1-2" ],
+    "activeEdges" : [ "0-2" ],
     "variables" : {
-      "edge" : "1-2"
+      "extraCables" : "0",
+      "parent[]" : "[0, 0, 0, 3]",
+      "size[]" : "[3, 1, 1, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -214,8 +221,8 @@
     } ]
   }, {
     "stepNumber" : 4,
-    "activeLine" : 13,
-    "description" : "Distinct components after union: 2 (roots [2, 3]).",
+    "activeLine" : 52,
+    "description" : "Cable 1-2 joins two computers already in one component, so it is spare: extraCables = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
@@ -224,9 +231,11 @@
       "2" : "visited",
       "3" : "unvisited"
     },
-    "activeEdges" : [ ],
+    "activeEdges" : [ "1-2" ],
     "variables" : {
-      "components" : "2"
+      "extraCables" : "1",
+      "parent[]" : "[0, 0, 0, 3]",
+      "size[]" : "[3, 1, 1, 1]"
     },
     "dsType" : "Graph",
     "gridState" : null,
@@ -280,19 +289,155 @@
     } ]
   }, {
     "stepNumber" : 5,
-    "activeLine" : 16,
-    "description" : "2 components need 1 cable move to merge into one connected network.",
+    "activeLine" : 59,
+    "description" : "Computer 0 is its own parent: the root of component 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : {
-      "0" : "visited",
+      "0" : "done",
       "1" : "visited",
       "2" : "visited",
       "3" : "unvisited"
     },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "1"
+      "numOfComponents" : "1",
+      "parent[]" : "[0, 0, 0, 3]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 59,
+    "description" : "Computer 3 is its own parent: the root of component 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "numOfComponents" : "2",
+      "parent[]" : "[0, 0, 0, 3]"
+    },
+    "dsType" : "Graph",
+    "gridState" : null,
+    "arrayState" : null,
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null,
+    "graphNodes" : [ {
+      "id" : 0,
+      "label" : "0",
+      "x" : 180.0,
+      "y" : 40.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 1,
+      "label" : "1",
+      "x" : 300.0,
+      "y" : 160.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 2,
+      "label" : "2",
+      "x" : 180.0,
+      "y" : 280.0,
+      "state" : "unvisited"
+    }, {
+      "id" : 3,
+      "label" : "3",
+      "x" : 60.0,
+      "y" : 160.00000000000003,
+      "state" : "unvisited"
+    } ],
+    "graphEdges" : [ {
+      "from" : 0,
+      "to" : 1,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 0,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    }, {
+      "from" : 1,
+      "to" : 2,
+      "weight" : null,
+      "directed" : false,
+      "highlighted" : false
+    } ]
+  }, {
+    "stepNumber" : 7,
+    "activeLine" : 61,
+    "description" : "2 components need 1 cable to connect, and there is 1 spare. Return 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : {
+      "0" : "done",
+      "1" : "visited",
+      "2" : "visited",
+      "3" : "done"
+    },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "1",
+      "extraCables" : "1",
+      "numOfComponents" : "2"
     },
     "dsType" : "Graph",
     "gridState" : null,
