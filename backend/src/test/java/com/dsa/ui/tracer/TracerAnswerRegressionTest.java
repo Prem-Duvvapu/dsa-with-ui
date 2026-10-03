@@ -80,6 +80,20 @@ class TracerAnswerRegressionTest {
                 .isInstanceOf(InputValidationException.class);
     }
 
+    /** Inputs the owner's window code indexes by character, or reads k cards from, are bounded. */
+    @org.junit.jupiter.api.Test
+    void windowInputRulesAreEnforced() {
+        AlgorithmTracer replacement = tracers.find("longest-repeating-character-replacement").orElseThrow();
+        assertThatThrownBy(() -> runner.run(replacement, Map.of("s", "aab", "k", 1)))
+                .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer substring = tracers.find("longest-substring-without-repeating").orElseThrow();
+        assertThatThrownBy(() -> runner.run(substring, Map.of("s", "a\u20acb")))
+                .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer cards = tracers.find("maximum-points-cards").orElseThrow();
+        assertThatThrownBy(() -> runner.run(cards, Map.of("cardPoints", List.of(1, 2), "k", 3)))
+                .isInstanceOf(InputValidationException.class);
+    }
+
     @ParameterizedTest(name = "{0} {1} -> {2} = {3}")
     @CsvSource(delimiter = '|', textBlock = """
             # '^' is right-associative: A^B^C is A^(B^C).
@@ -141,6 +155,14 @@ class TracerAnswerRegressionTest {
             # A bridge in a second component (the owner's DFS from 0 alone would miss it); Kruskal with ties.
             tarjan-bridges         | {"graph":{"vertices":5,"edges":[[2,3],[3,4],[4,2],[0,1]]}} | res | 0-1
             kruskals-mst           | {"graph":{"vertices":4,"edges":[[0,1,1],[1,2,1],[2,3,1],[3,0,1],[0,2,5]]}} | mstWeight | 3
+            # Sliding window on the owner's code: a repeat BEFORE the window must not move left
+            # ("abba"); the never-shrinking windows; taking every card from the back.
+            longest-substring-without-repeating | {"s":"abba"}                  | answer        | 2
+            longest-substring-without-repeating | {"s":"tmmzuxt"}               | answer        | 5
+            max-consecutive-ones-3 | {"nums":[0,0,0,1],"k":0}                   | answer        | 1
+            longest-repeating-character-replacement | {"s":"AAAB","k":0}        | answer        | 3
+            maximum-points-cards   | {"cardPoints":[1,79,80,1,1,1,200,1],"k":3} | answer        | 202
+            maximum-points-cards   | {"cardPoints":[2,2,2],"k":3}               | answer        | 6
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

@@ -363,7 +363,18 @@ class TracerContractTest {
             larger.put(field.getName(), field.getDefaultValue());
         }
         for (InputField field : growables) {
-            larger.put(field.getName(), scaleUp(field));
+            Object grown = scaleUp(field);
+            larger.put(field.getName(), grown);
+            // An O(k) algorithm does the same work on a longer array: grow k with it.
+            Object scalesWith = field.getConstraints() == null ? null : field.getConstraints().get("workScalesWith");
+            if (scalesWith != null && grown instanceof List<?> list) {
+                InputField companion = tracer.inputSpec().getFields().stream()
+                        .filter(f -> f.getName().equals(scalesWith)).findFirst().orElseThrow();
+                int base = ((Number) companion.getDefaultValue()).intValue();
+                Integer max = companion.intConstraint("max");
+                int target = Math.min(base * 2, list.size());
+                larger.put(companion.getName(), max != null ? Math.min(target, max) : target);
+            }
         }
 
         int onDefaults = runner.runDefaults(tracer).getSteps().size();

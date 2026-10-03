@@ -1,27 +1,83 @@
 {
   "anchors" : {
-    "done" : 17,
-    "expand" : 6,
-    "shrink" : 11,
-    "windowComplete" : 15
+    "add" : 11,
+    "done" : 26,
+    "init" : 3,
+    "slide" : 16,
+    "valid" : 21
   },
-  "code" : "public int characterReplacement(String s, int k) {\n    int[] freq = new int[26];\n    int left = 0, maxFreq = 0, maxLen = 0;\n\n    for (int right = 0; right < s.length(); right++) {\n        freq[s.charAt(right) - 'A']++;\n        maxFreq = Math.max(maxFreq, freq[s.charAt(right) - 'A']);\n\n        int windowLen = right - left + 1;\n        if (windowLen - maxFreq > k) {\n            freq[s.charAt(left) - 'A']--;\n            left++;\n        }\n\n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    return maxLen;\n}",
+  "code" : "class Solution {\n    public int characterReplacement(String s, int k) {\n        int n=s.length();\n        int left=0;\n        int right=0;\n        int maxLen=0;\n        int[] freq=new int[26];\n        int maxFreq=0;\n\n        while (right<n) {\n            char ch=s.charAt(right);\n            freq[ch-'A']++;\n            maxFreq=Math.max(maxFreq,freq[ch-'A']);\n\n            if ((right-left+1)-maxFreq > k) {\n                freq[s.charAt(left)-'A']--;\n                left++;\n            }\n\n            if ((right-left+1)-maxFreq <= k)\n                maxLen=Math.max(maxLen,right-left+1);\n\n            right++;\n        }\n\n        return maxLen;\n    }\n}",
   "problemId" : "longest-repeating-character-replacement",
   "resolvedInput" : {
     "k" : 1,
     "s" : "AABABBA"
   },
-  "stepCount" : 18,
+  "stepCount" : 19,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 6,
-    "description" : "Add 'A'. Most frequent character in the window now appears 1 time.",
+    "activeLine" : 3,
+    "description" : "A window can be made one repeated letter when (its length - the count of its most common letter) <= k = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "k" : "1",
+      "maxLen" : "0"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 2,
+    "activeLine" : 11,
+    "description" : "Take in 'A' at 0: it appears 1 time in the window; maxFreq = 1.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "0",
       "maxFreq" : "1",
+      "maxLen" : "0",
       "right" : "0"
     },
     "dsType" : "Window",
@@ -66,16 +122,18 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 2,
-    "activeLine" : 15,
-    "description" : "Window [0,0] is valid with at most 1 replacement. Best so far: 1.",
+    "stepNumber" : 3,
+    "activeLine" : 21,
+    "description" : "Window [0, 0] needs 0 replacements, within k: maxLen = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
+      "maxFreq" : "1",
       "maxLen" : "1",
-      "windowLen" : "1"
+      "right" : "0"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -119,15 +177,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 3,
-    "activeLine" : 6,
-    "description" : "Add 'A'. Most frequent character in the window now appears 2 times.",
+    "stepNumber" : 4,
+    "activeLine" : 11,
+    "description" : "Take in 'A' at 1: it appears 2 times in the window; maxFreq = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
       "maxFreq" : "2",
+      "maxLen" : "1",
       "right" : "1"
     },
     "dsType" : "Window",
@@ -172,16 +232,18 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 4,
-    "activeLine" : 15,
-    "description" : "Window [0,1] is valid with at most 1 replacement. Best so far: 2.",
+    "stepNumber" : 5,
+    "activeLine" : 21,
+    "description" : "Window [0, 1] needs 0 replacements, within k: maxLen = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
+      "maxFreq" : "2",
       "maxLen" : "2",
-      "windowLen" : "2"
+      "right" : "1"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -225,15 +287,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 5,
-    "activeLine" : 6,
-    "description" : "Add 'B'. Most frequent character in the window now appears 2 times.",
+    "stepNumber" : 6,
+    "activeLine" : 11,
+    "description" : "Take in 'B' at 2: it appears 1 time in the window; maxFreq = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
       "maxFreq" : "2",
+      "maxLen" : "2",
       "right" : "2"
     },
     "dsType" : "Window",
@@ -278,16 +342,18 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 6,
-    "activeLine" : 15,
-    "description" : "Window [0,2] is valid with at most 1 replacement. Best so far: 3.",
+    "stepNumber" : 7,
+    "activeLine" : 21,
+    "description" : "Window [0, 2] needs 1 replacement, within k: maxLen = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
+      "maxFreq" : "2",
       "maxLen" : "3",
-      "windowLen" : "3"
+      "right" : "2"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -331,15 +397,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 7,
-    "activeLine" : 6,
-    "description" : "Add 'A'. Most frequent character in the window now appears 3 times.",
+    "stepNumber" : 8,
+    "activeLine" : 11,
+    "description" : "Take in 'A' at 3: it appears 3 times in the window; maxFreq = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
       "maxFreq" : "3",
+      "maxLen" : "3",
       "right" : "3"
     },
     "dsType" : "Window",
@@ -384,16 +452,18 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 8,
-    "activeLine" : 15,
-    "description" : "Window [0,3] is valid with at most 1 replacement. Best so far: 4.",
+    "stepNumber" : 9,
+    "activeLine" : 21,
+    "description" : "Window [0, 3] needs 1 replacement, within k: maxLen = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
+      "maxFreq" : "3",
       "maxLen" : "4",
-      "windowLen" : "4"
+      "right" : "3"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -437,15 +507,17 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 9,
-    "activeLine" : 6,
-    "description" : "Add 'B'. Most frequent character in the window now appears 3 times.",
+    "stepNumber" : 10,
+    "activeLine" : 11,
+    "description" : "Take in 'B' at 4: it appears 2 times in the window; maxFreq = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "0",
       "maxFreq" : "3",
+      "maxLen" : "4",
       "right" : "4"
     },
     "dsType" : "Window",
@@ -490,68 +562,18 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 10,
-    "activeLine" : 11,
-    "description" : "Window of 5 needs more than 1 replacement - shrink past 'A'. Window now starts at 1.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "left" : "1"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 1,
-      "value" : 65,
-      "state" : "target",
-      "label" : "A"
-    }, {
-      "index" : 2,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 3,
-      "value" : 65,
-      "state" : "active",
-      "label" : "A"
-    }, {
-      "index" : 4,
-      "value" : 66,
-      "state" : "current",
-      "label" : "B"
-    }, {
-      "index" : 5,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 6,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
     "stepNumber" : 11,
-    "activeLine" : 15,
-    "description" : "Window [1,4] is valid with at most 1 replacement. Best so far: 4.",
+    "activeLine" : 16,
+    "description" : "Length 5 - maxFreq 3 = 2 replacements, more than k = 1. Slide: drop 'A' at 0, so the window keeps length 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "1",
+      "maxFreq" : "3",
       "maxLen" : "4",
-      "windowLen" : "4"
+      "right" : "4"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -596,14 +618,71 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 6,
-    "description" : "Add 'B'. Most frequent character in the window now appears 3 times.",
+    "activeLine" : 21,
+    "description" : "Window [1, 4] needs 1 replacement, within k: maxLen = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "1",
       "maxFreq" : "3",
+      "maxLen" : "4",
+      "right" : "4"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 13,
+    "activeLine" : 11,
+    "description" : "Take in 'B' at 5: it appears 3 times in the window; maxFreq = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "1",
+      "maxFreq" : "3",
+      "maxLen" : "4",
       "right" : "5"
     },
     "dsType" : "Window",
@@ -648,68 +727,18 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 13,
-    "activeLine" : 11,
-    "description" : "Window of 5 needs more than 1 replacement - shrink past 'A'. Window now starts at 2.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "left" : "2"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 1,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 2,
-      "value" : 66,
-      "state" : "target",
-      "label" : "B"
-    }, {
-      "index" : 3,
-      "value" : 65,
-      "state" : "active",
-      "label" : "A"
-    }, {
-      "index" : 4,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 5,
-      "value" : 66,
-      "state" : "current",
-      "label" : "B"
-    }, {
-      "index" : 6,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
     "stepNumber" : 14,
-    "activeLine" : 15,
-    "description" : "Window [2,5] is valid with at most 1 replacement. Best so far: 4.",
+    "activeLine" : 16,
+    "description" : "Length 5 - maxFreq 3 = 2 replacements, more than k = 1. Slide: drop 'A' at 1, so the window keeps length 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "2",
+      "maxFreq" : "3",
       "maxLen" : "4",
-      "windowLen" : "4"
+      "right" : "5"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -754,14 +783,71 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 6,
-    "description" : "Add 'A'. Most frequent character in the window now appears 3 times.",
+    "activeLine" : 21,
+    "description" : "Window [2, 5] needs 1 replacement, within k: maxLen = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "2",
       "maxFreq" : "3",
+      "maxLen" : "4",
+      "right" : "5"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "target",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "active",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "current",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 16,
+    "activeLine" : 11,
+    "description" : "Take in 'A' at 6: it appears 2 times in the window; maxFreq = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "left" : "2",
+      "maxFreq" : "3",
+      "maxLen" : "4",
       "right" : "6"
     },
     "dsType" : "Window",
@@ -806,68 +892,18 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 16,
-    "activeLine" : 11,
-    "description" : "Window of 5 needs more than 1 replacement - shrink past 'B'. Window now starts at 3.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "left" : "3"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 1,
-      "value" : 65,
-      "state" : "default",
-      "label" : "A"
-    }, {
-      "index" : 2,
-      "value" : 66,
-      "state" : "default",
-      "label" : "B"
-    }, {
-      "index" : 3,
-      "value" : 65,
-      "state" : "target",
-      "label" : "A"
-    }, {
-      "index" : 4,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 5,
-      "value" : 66,
-      "state" : "active",
-      "label" : "B"
-    }, {
-      "index" : 6,
-      "value" : 65,
-      "state" : "current",
-      "label" : "A"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
     "stepNumber" : 17,
-    "activeLine" : 15,
-    "description" : "Window [3,6] is valid with at most 1 replacement. Best so far: 4.",
+    "activeLine" : 16,
+    "description" : "Length 5 - maxFreq 3 = 2 replacements, more than k = 1. Slide: drop 'B' at 2, so the window keeps length 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "left" : "3",
+      "maxFreq" : "3",
       "maxLen" : "4",
-      "windowLen" : "4"
+      "right" : "6"
     },
     "dsType" : "Window",
     "gridState" : null,
@@ -912,14 +948,70 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 17,
-    "description" : "Every character processed. Longest window achievable with 1 replacement: 4.",
+    "activeLine" : 21,
+    "description" : "Window [3, 6] needs 1 replacement, within k: maxLen = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "4"
+      "left" : "3",
+      "maxFreq" : "3",
+      "maxLen" : "4",
+      "right" : "6"
+    },
+    "dsType" : "Window",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 1,
+      "value" : 65,
+      "state" : "default",
+      "label" : "A"
+    }, {
+      "index" : 2,
+      "value" : 66,
+      "state" : "default",
+      "label" : "B"
+    }, {
+      "index" : 3,
+      "value" : 65,
+      "state" : "target",
+      "label" : "A"
+    }, {
+      "index" : 4,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 5,
+      "value" : 66,
+      "state" : "active",
+      "label" : "B"
+    }, {
+      "index" : 6,
+      "value" : 65,
+      "state" : "current",
+      "label" : "A"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 19,
+    "activeLine" : 26,
+    "description" : "The longest window that 1 replacement can turn into one letter has length 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4",
+      "maxLen" : "4"
     },
     "dsType" : "Window",
     "gridState" : null,

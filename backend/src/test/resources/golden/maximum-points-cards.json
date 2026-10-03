@@ -1,502 +1,248 @@
 {
   "anchors" : {
-    "buildWindow" : 9,
-    "done" : 19,
-    "initialWindow" : 13,
-    "slideWindow" : 15
+    "done" : 26,
+    "init" : 3,
+    "swap" : 17
   },
-  "code" : "public int maxScore(int[] cardPoints, int k) {\n    int n = cardPoints.length;\n    int totalSum = 0;\n    for (int pt : cardPoints) totalSum += pt;\n\n    int windowSize = n - k;\n    int windowSum = 0;\n    for (int i = 0; i < windowSize; i++) {\n        windowSum += cardPoints[i];\n    }\n\n    int minWindowSum = windowSum;\n\n    for (int right = windowSize; right < n; right++) {\n        int left = right - windowSize;\n        windowSum += cardPoints[right] - cardPoints[left];\n        minWindowSum = Math.min(minWindowSum, windowSum);\n    }\n    return totalSum - minWindowSum;\n}",
+  "code" : "class Solution {\n    public int maxScore(int[] cardPoints, int k) {\n        int n = cardPoints.length;\n        int maxSum = 0;\n        int currSum = 0;\n\n        for (int i=0;i<k;i++) {\n            currSum += cardPoints[i];\n        }\n\n        maxSum = currSum;\n\n        int i = 0;\n        int j = k-1;\n\n        while (j>=0) {\n            currSum -= cardPoints[j];\n            j--;\n            i--;\n\n            i = (i+n)%n;\n            currSum += cardPoints[i];\n            maxSum = Math.max(currSum, maxSum);\n        }\n\n        return maxSum;\n    }\n}",
   "problemId" : "maximum-points-cards",
   "resolvedInput" : {
     "cardPoints" : [ 1, 2, 3, 4, 5, 6, 1 ],
     "k" : 3
   },
-  "stepCount" : 9,
+  "stepCount" : 5,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 9,
-    "description" : "Initial unpicked window (size 4 = N - K): add cardPoints[0]=1 → sum is 1.",
+    "activeLine" : 3,
+    "description" : "Take the first 3 cards from the front: currSum = 6. That is one way to split the 3 cards between the two ends.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "0",
-      "windowSize" : "4",
-      "windowSum" : "1"
+      "currSum" : "6",
+      "maxSum" : "6"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "current",
-      "label" : "unpicked"
+      "state" : "active"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     }, {
       "index" : 2,
       "value" : 3,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     }, {
       "index" : 3,
       "value" : 4,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 5,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 5,
       "value" : 6,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 6,
       "value" : 1,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 9,
-    "description" : "Initial unpicked window (size 4 = N - K): add cardPoints[1]=2 → sum is 3.",
+    "activeLine" : 17,
+    "description" : "Give back front card 2 (3) and take back card 6 (1): currSum = 4. maxSum = 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "1",
-      "windowSize" : "4",
-      "windowSum" : "3"
+      "currSum" : "4",
+      "i" : "6",
+      "j" : "1",
+      "maxSum" : "6"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "target",
-      "label" : "unpicked"
+      "state" : "active"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "current",
-      "label" : "unpicked"
+      "state" : "active"
     }, {
       "index" : 2,
       "value" : 3,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 3,
       "value" : 4,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 5,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 5,
       "value" : 6,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 6,
       "value" : 1,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "current"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 9,
-    "description" : "Initial unpicked window (size 4 = N - K): add cardPoints[2]=3 → sum is 6.",
+    "activeLine" : 17,
+    "description" : "Give back front card 1 (2) and take back card 5 (6): currSum = 8. maxSum = 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "2",
-      "windowSize" : "4",
-      "windowSum" : "6"
+      "currSum" : "8",
+      "i" : "5",
+      "j" : "0",
+      "maxSum" : "8"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "target",
-      "label" : "unpicked"
+      "state" : "active"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "active",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 2,
       "value" : 3,
-      "state" : "current",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 3,
       "value" : 4,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 5,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "default"
     }, {
       "index" : 5,
       "value" : 6,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "current"
     }, {
       "index" : 6,
       "value" : 1,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 9,
-    "description" : "Initial unpicked window (size 4 = N - K): add cardPoints[3]=4 → sum is 10.",
+    "activeLine" : 17,
+    "description" : "Give back front card 0 (1) and take back card 4 (5): currSum = 12. maxSum = 12.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "i" : "3",
-      "windowSize" : "4",
-      "windowSum" : "10"
+      "currSum" : "12",
+      "i" : "4",
+      "j" : "-1",
+      "maxSum" : "12"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "target",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "active",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 2,
       "value" : 3,
-      "state" : "active",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 3,
       "value" : 4,
-      "state" : "current",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 5,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "current"
     }, {
       "index" : 5,
       "value" : 6,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     }, {
       "index" : 6,
       "value" : 1,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     } ],
     "listState" : null,
     "trieState" : null,
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 13,
-    "description" : "Initial unpicked window [0,3] has sum 10. Picked card score: 22 - 10 = 12.",
+    "activeLine" : 26,
+    "description" : "Every split has been tried. The best total is 12.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "currentScore" : "12",
-      "minWindowSum" : "10"
+      "answer" : "12",
+      "maxSum" : "12"
     },
     "dsType" : "Window",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 1,
-      "state" : "target",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 1,
       "value" : 2,
-      "state" : "active",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 2,
       "value" : 3,
-      "state" : "active",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 3,
       "value" : 4,
-      "state" : "current",
-      "label" : "unpicked"
+      "state" : "default"
     }, {
       "index" : 4,
       "value" : 5,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     }, {
       "index" : 5,
       "value" : 6,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     }, {
       "index" : 6,
       "value" : 1,
-      "state" : "default",
-      "label" : "picked"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 6,
-    "activeLine" : 15,
-    "description" : "Slide window: drop cardPoints[0]=1, add cardPoints[4]=5. Window sum: 14 (min: 10, maxScore: 12).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "left" : "1",
-      "maxScore" : "12",
-      "minWindowSum" : "10",
-      "right" : "4",
-      "windowSum" : "14"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 1,
-      "value" : 2,
-      "state" : "target",
-      "label" : "unpicked"
-    }, {
-      "index" : 2,
-      "value" : 3,
-      "state" : "active",
-      "label" : "unpicked"
-    }, {
-      "index" : 3,
-      "value" : 4,
-      "state" : "active",
-      "label" : "unpicked"
-    }, {
-      "index" : 4,
-      "value" : 5,
-      "state" : "current",
-      "label" : "unpicked"
-    }, {
-      "index" : 5,
-      "value" : 6,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 6,
-      "value" : 1,
-      "state" : "default",
-      "label" : "picked"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 7,
-    "activeLine" : 15,
-    "description" : "Slide window: drop cardPoints[1]=2, add cardPoints[5]=6. Window sum: 18 (min: 10, maxScore: 12).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "left" : "2",
-      "maxScore" : "12",
-      "minWindowSum" : "10",
-      "right" : "5",
-      "windowSum" : "18"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 1,
-      "value" : 2,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 2,
-      "value" : 3,
-      "state" : "target",
-      "label" : "unpicked"
-    }, {
-      "index" : 3,
-      "value" : 4,
-      "state" : "active",
-      "label" : "unpicked"
-    }, {
-      "index" : 4,
-      "value" : 5,
-      "state" : "active",
-      "label" : "unpicked"
-    }, {
-      "index" : 5,
-      "value" : 6,
-      "state" : "current",
-      "label" : "unpicked"
-    }, {
-      "index" : 6,
-      "value" : 1,
-      "state" : "default",
-      "label" : "picked"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 8,
-    "activeLine" : 15,
-    "description" : "Slide window: drop cardPoints[2]=3, add cardPoints[6]=1. Window sum: 16 (min: 10, maxScore: 12).",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "left" : "3",
-      "maxScore" : "12",
-      "minWindowSum" : "10",
-      "right" : "6",
-      "windowSum" : "16"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 1,
-      "value" : 2,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 2,
-      "value" : 3,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 3,
-      "value" : 4,
-      "state" : "target",
-      "label" : "unpicked"
-    }, {
-      "index" : 4,
-      "value" : 5,
-      "state" : "active",
-      "label" : "unpicked"
-    }, {
-      "index" : 5,
-      "value" : 6,
-      "state" : "active",
-      "label" : "unpicked"
-    }, {
-      "index" : 6,
-      "value" : 1,
-      "state" : "current",
-      "label" : "unpicked"
-    } ],
-    "listState" : null,
-    "trieState" : null,
-    "treeNodes" : null
-  }, {
-    "stepNumber" : 9,
-    "activeLine" : 19,
-    "description" : "All unpicked window positions checked. Maximum points from taking 3 cards: 12.",
-    "queueOrStackState" : null,
-    "callStack" : [ ],
-    "nodeStates" : { },
-    "activeEdges" : [ ],
-    "variables" : {
-      "answer" : "12"
-    },
-    "dsType" : "Window",
-    "gridState" : null,
-    "arrayState" : [ {
-      "index" : 0,
-      "value" : 1,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 1,
-      "value" : 2,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 2,
-      "value" : 3,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 3,
-      "value" : 4,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 4,
-      "value" : 5,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 5,
-      "value" : 6,
-      "state" : "default",
-      "label" : "picked"
-    }, {
-      "index" : 6,
-      "value" : 1,
-      "state" : "default",
-      "label" : "picked"
+      "state" : "active"
     } ],
     "listState" : null,
     "trieState" : null,
