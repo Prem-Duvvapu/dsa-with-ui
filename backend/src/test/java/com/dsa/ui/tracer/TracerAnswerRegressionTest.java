@@ -175,6 +175,14 @@ class TracerAnswerRegressionTest {
             subarrays-k-different-integers | {"nums":[1,1,1],"k":1}             | answer        | 6
             number-substrings-all-three-chars | {"s":"abc"}                     | answer        | 1
             minimum-window-substring | {"s":"aa","t":"aa"}                      | answer        | aa
+            # Strings on the owner's code: the t-to-s clash, unequal lengths, a KMP fallback, a word that is
+            # a prefix of the first, roman subtraction, the longest odd prefix.
+            isomorphic-strings     | {"s":"badc","t":"baba"}                    | answer        | false
+            valid-anagram          | {"s":"ab","t":"abc"}                       | answer        | false
+            rotate-string          | {"s":"aaab","goal":"abaa"}                 | answer        | true
+            longest-common-prefix  | {"words":"flower,flow"}                    | answer        | flow
+            roman-to-integer       | {"roman":"MCDXLIV"}                        | answer        | 1444
+            largest-odd-number-string | {"number":"52"}                         | answer        | 5
             """)
     void tracerComputesTheCorrectAnswer(String id, String input, String variable, String expected) throws Exception {
         AlgorithmTracer tracer = tracers.find(id).orElseThrow(() -> new AssertionError("no tracer " + id));

@@ -1,9 +1,11 @@
 {
   "anchors" : {
-    "done" : 5,
-    "inspect" : 3
+    "check" : 7,
+    "found" : 9,
+    "init" : 3,
+    "none" : 12
   },
-  "code" : "public String largestOddNumber(String number) {\n    for (int i = number.length() - 1; i >= 0; i--) {\n        if ((number.charAt(i) - '0') % 2 == 1) return number.substring(0, i + 1);\n    }\n    return \"\";\n}",
+  "code" : "class Solution {\n    public String largestOddNumber(String num) {\n        int n=num.length();\n\n        for (int i=n-1;i>=0;i--)\n        {\n            char curr=num.charAt(i);\n            if ((curr-'0')%2==1)\n                return num.substring(0,i+1);\n        }\n\n        return \"\";\n    }\n}",
   "problemId" : "largest-odd-number-string",
   "resolvedInput" : {
     "number" : "35427000"
@@ -12,15 +14,12 @@
   "steps" : [ {
     "stepNumber" : 1,
     "activeLine" : 3,
-    "description" : "Digit 0 at index 7 is even, so remove it from the candidate suffix.",
+    "description" : "A number is odd when its last digit is odd, and the longest prefix is the largest number. Scan from the right.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "digit" : "0",
-      "index" : "7"
-    },
+    "variables" : { },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
@@ -61,7 +60,7 @@
     }, {
       "index" : 7,
       "value" : 48,
-      "state" : "current",
+      "state" : "default",
       "label" : "0"
     } ],
     "listState" : null,
@@ -69,15 +68,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
-    "description" : "Digit 0 at index 6 is even, so remove it from the candidate suffix.",
+    "activeLine" : 7,
+    "description" : "'0' at 7 is even - no odd number can end here.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "digit" : "0",
-      "index" : "6"
+      "i" : "7"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -114,12 +112,12 @@
     }, {
       "index" : 6,
       "value" : 48,
-      "state" : "current",
+      "state" : "default",
       "label" : "0"
     }, {
       "index" : 7,
       "value" : 48,
-      "state" : "default",
+      "state" : "current",
       "label" : "0"
     } ],
     "listState" : null,
@@ -127,15 +125,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
-    "description" : "Digit 0 at index 5 is even, so remove it from the candidate suffix.",
+    "activeLine" : 7,
+    "description" : "'0' at 6 is even - no odd number can end here.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "digit" : "0",
-      "index" : "5"
+      "i" : "6"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -167,12 +164,12 @@
     }, {
       "index" : 5,
       "value" : 48,
-      "state" : "current",
+      "state" : "default",
       "label" : "0"
     }, {
       "index" : 6,
       "value" : 48,
-      "state" : "default",
+      "state" : "current",
       "label" : "0"
     }, {
       "index" : 7,
@@ -185,15 +182,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
-    "description" : "Digit 7 at index 4 is odd, so this prefix is the largest possible odd number.",
+    "activeLine" : 7,
+    "description" : "'0' at 5 is even - no odd number can end here.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "digit" : "7",
-      "index" : "4"
+      "i" : "5"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -220,12 +216,12 @@
     }, {
       "index" : 4,
       "value" : 55,
-      "state" : "current",
+      "state" : "default",
       "label" : "7"
     }, {
       "index" : 5,
       "value" : 48,
-      "state" : "default",
+      "state" : "current",
       "label" : "0"
     }, {
       "index" : 6,
@@ -243,14 +239,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 5,
-    "description" : "Largest odd-valued prefix is \"35427\".",
+    "activeLine" : 9,
+    "description" : "'7' at 4 is odd. The longest prefix ending here is \"35427\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "35427"
+      "answer" : "35427",
+      "i" : "4"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -277,7 +274,7 @@
     }, {
       "index" : 4,
       "value" : 55,
-      "state" : "default",
+      "state" : "current",
       "label" : "7"
     }, {
       "index" : 5,

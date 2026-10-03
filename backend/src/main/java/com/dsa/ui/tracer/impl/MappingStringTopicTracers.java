@@ -9,6 +9,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Isomorphic Strings (LeetCode 205), traced on the owner's own accepted submission: two arrays record
+ * which character each s-character maps to and which each t-character maps from. A clash in either
+ * direction - one character mapping to two, or two mapping to one - means not isomorphic. O(n).
+ *
+ * <p>The two checks are highlighted on their {@code if} lines, which decide pass or fail; that keeps
+ * both reachable from the contract inputs.
+ */
 @Component
 class IsomorphicStringsTracer extends StringTracerSupport {
     public String id() { return "isomorphic-strings"; }
@@ -23,46 +31,107 @@ class IsomorphicStringsTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public boolean isIsomorphic(String s, String t) {
-                   Map<Character, Character> forward = new HashMap<>(), reverse = new HashMap<>();
-                   for (int i = 0; i < s.length(); i++) {
-                       // @a map
-                       if (forward.getOrDefault(s.charAt(i), t.charAt(i)) != t.charAt(i) ||
-                           reverse.getOrDefault(t.charAt(i), s.charAt(i)) != s.charAt(i)) return false;
-                       forward.put(s.charAt(i), t.charAt(i));
-                       reverse.put(t.charAt(i), s.charAt(i));
+               class Solution {
+                   public boolean isIsomorphic(String s, String t) {
+                       // @a init
+                       int n=s.length();
+
+                       int[] sTot=new int[256];
+                       int[] tTos=new int[256];
+
+                       Arrays.fill(sTot,-1);
+                       Arrays.fill(tTos,-1);
+
+                       for (int i=0;i<n;i++) {
+                           char sChar=s.charAt(i);
+                           char tChar=t.charAt(i);
+
+                           //s to t checking
+                           // @a sCheck
+                           if (sTot[sChar]!=-1 && sTot[sChar]!=tChar)
+                               return false;
+                           else
+                               sTot[sChar]=tChar;
+
+                           //t to s checking
+                           // @a tCheck
+                           if (tTos[tChar]!=-1 && tTos[tChar]!=sChar)
+                               return false;
+                           else
+                               tTos[tChar]=sChar;
+                       }
+
+                       // @a done
+                       return true;
                    }
-                   // @a done
-                   return s.length() == t.length();
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
         String t = in.getString("t");
-        Map<Character, Character> forward = new LinkedHashMap<>();
-        Map<Character, Character> reverse = new LinkedHashMap<>();
-        boolean valid = s.length() == t.length();
-        for (int i = 0; valid && i < s.length(); i++) {
-            char a = s.charAt(i);
-            char b = t.charAt(i);
-            Character mapped = forward.get(a);
-            Character reversed = reverse.get(b);
-            valid = (mapped == null || mapped == b) && (reversed == null || reversed == a);
-            if (valid) {
-                forward.put(a, b);
-                reverse.put(b, a);
-            }
-            emit.at("map").say("Index %d compares '%c' → '%c': %s.", i, a, b,
-                            valid ? "both directions remain one-to-one" : "an existing mapping conflicts")
-                    .var("index", i).var("forward", forward).var("reverse", reverse).var("valid", valid)
-                    .chars(s, i).step();
+        if (s.length() != t.length()) {
+            throw new InputValidationException(Map.of("t", "must be as long as s"));
         }
-        emit.at("done").say("The strings are %sisomorphic.", valid ? "" : "not ")
-                .var("answer", valid).chars(s).step();
+        int n = s.length();
+        int[] sTot = new int[256];
+        int[] tTos = new int[256];
+        java.util.Arrays.fill(sTot, -1);
+        java.util.Arrays.fill(tTos, -1);
+        emit.at("init").say("sTot records what each s-letter maps to, tTos what each t-letter maps from.")
+                .chars(s).step();
+        for (int i = 0; i < n; i++) {
+            char sChar = s.charAt(i);
+            char tChar = t.charAt(i);
+            if (sTot[sChar] != -1 && sTot[sChar] != tChar) {
+                emit.at("sCheck").say("'%c' already maps to '%c', but here it would map to '%c'. Return false.",
+                                sChar, (char) sTot[sChar], tChar)
+                        .var("i", i).var("sTot", map(sTot)).var("tTos", map(tTos)).var("answer", false)
+                        .chars(s, i).step();
+                return;
+            }
+            boolean newS = sTot[sChar] == -1;
+            sTot[sChar] = tChar;
+            emit.at("sCheck").say(newS
+                            ? String.format("s[%d] = '%c' has no mapping yet: record '%c' -> '%c'.", i, sChar, sChar, tChar)
+                            : String.format("s[%d] = '%c' already maps to '%c', and t[%d] is '%c' - consistent.", i, sChar, tChar, i, tChar))
+                    .var("i", i).var("sTot", map(sTot)).var("tTos", map(tTos)).chars(s, i).step();
+            if (tTos[tChar] != -1 && tTos[tChar] != sChar) {
+                emit.at("tCheck").say("'%c' is already the image of '%c', so '%c' cannot map to it too. Return false.",
+                                tChar, (char) tTos[tChar], sChar)
+                        .var("i", i).var("sTot", map(sTot)).var("tTos", map(tTos)).var("answer", false)
+                        .chars(t, i).step();
+                return;
+            }
+            boolean newT = tTos[tChar] == -1;
+            tTos[tChar] = sChar;
+            emit.at("tCheck").say(newT
+                            ? String.format("No other s-letter maps to '%c' yet: record '%c' <- '%c'.", tChar, tChar, sChar)
+                            : String.format("'%c' is already the image of '%c' and nothing else - still one-to-one.", tChar, sChar))
+                    .var("i", i).var("sTot", map(sTot)).var("tTos", map(tTos)).chars(t, i).step();
+        }
+        emit.at("done").say("Every position agrees in both directions: the strings are isomorphic.")
+                .var("answer", true).chars(s).step();
+    }
+
+    /** The mapping as "e->a, g->d". */
+    private static String map(int[] m) {
+        List<String> out = new ArrayList<>();
+        for (int c = 0; c < m.length; c++) {
+            if (m[c] != -1) out.add((char) c + "->" + (char) m[c]);
+        }
+        return String.join(", ", out);
     }
 }
 
+/**
+ * Rotate String (LeetCode 796), traced on the owner's own accepted submission: goal is a rotation of
+ * s exactly when the lengths match and goal appears inside s + s, which they search with KMP - first
+ * the longest-prefix-suffix table of goal, then one pass over s + s. O(n).
+ *
+ * <p>The table and search loops each branch three ways; the highlight sits on each loop's decision
+ * and the narration names the branch, which keeps every highlight reachable from the contract inputs.
+ */
 @Component
 class RotateStringTracer extends StringTracerSupport {
     public String id() { return "rotate-string"; }
@@ -77,41 +146,141 @@ class RotateStringTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public boolean rotateString(String s, String goal) {
-                   if (s.length() != goal.length()) return false;
-                   for (int shift = 0; shift < s.length(); shift++) {
-                       // @a compare
-                       if ((s.substring(shift) + s.substring(0, shift)).equals(goal)) return true;
+               class Solution {
+                   public boolean rotateString(String s, String goal) {
+                       // @a lengths
+                       if (s.length()!=goal.length())
+                           return false;
+
+                       return kmp(s+s,goal);
                    }
-                   // @a done
-                   return false;
+
+                   public boolean kmp(String text,String pattern) {
+                       // @a init
+                       int n=text.length();
+                       int m=pattern.length();
+
+                       int[] lps=new int[m];
+                       lps[0]=0;
+                       int i=0;
+                       int j=1;
+                       int currLength=0;
+
+                       while (j<m) {
+                           // @a lps
+                           if (pattern.charAt(j)==pattern.charAt(currLength)) {
+                               currLength++;
+                               lps[j]=currLength;
+                               j++;
+                           } else {
+                               if (currLength==0) {
+                                   lps[j]=currLength;
+                                   j++;
+                               } else {
+                                   currLength=lps[currLength-1];
+                               }
+                           }
+                       }
+
+                       j=0;
+                       while (i<n && j<m) {
+                           // @a search
+                           if (text.charAt(i)==pattern.charAt(j)) {
+                               i++;
+                               j++;
+                           } else {
+                               if (j==0)
+                                   i++;
+                               else
+                                   j=lps[j-1];
+                           }
+
+                           if (j==m)
+                               // @a found
+                               return true;
+                       }
+
+                       // @a none
+                       return false;
+                   }
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
         String goal = in.getString("goal");
-        boolean found = false;
-        if (s.length() == goal.length()) {
-            for (int shift = 0; shift < s.length(); shift++) {
-                String candidate = s.substring(shift) + s.substring(0, shift);
-                found = candidate.equals(goal);
-                emit.at("compare").say("Left rotation by %d gives \"%s\": %s goal \"%s\".",
-                                shift, candidate, found ? "matches" : "does not match", goal)
-                        .var("shift", shift).var("candidate", candidate).var("matches", found)
-                        .chars(candidate).step();
-                if (found) break;
-            }
-        } else {
-            emit.at("compare").say("Lengths differ (%d vs %d), so no rotation can match.",
-                            s.length(), goal.length())
-                    .var("sourceLength", s.length()).var("goalLength", goal.length()).chars(s).step();
+        if (s.length() != goal.length()) {
+            emit.at("lengths").say("s and goal have different lengths, so goal cannot be a rotation. Return false.")
+                    .var("answer", false).chars(s).step();
+            return;
         }
-        emit.at("done").say("Rotation check result: %s.", found)
-                .var("answer", found).chars(s).step();
+        emit.at("lengths").say("Same length. Every rotation of s appears inside s + s = \"%s\", so search for goal there.",
+                        s + s)
+                .chars(s + s).step();
+        String text = s + s;
+        String pattern = goal;
+        int n = text.length();
+        int m = pattern.length();
+        int[] lps = new int[m];
+        int i = 0;
+        int j = 1;
+        int currLength = 0;
+        emit.at("init").say("First build lps for \"%s\": lps[j] is the length of the longest proper prefix of "
+                        + "pattern[0..j] that is also a suffix of it.", pattern)
+                .var("lps", java.util.Arrays.toString(lps)).chars(pattern).step();
+        while (j < m) {
+            String what;
+            if (pattern.charAt(j) == pattern.charAt(currLength)) {
+                currLength++;
+                lps[j] = currLength;
+                what = String.format("pattern[%d] = '%c' extends the matched prefix: lps[%d] = %d.", j, pattern.charAt(j), j, currLength);
+                j++;
+            } else if (currLength == 0) {
+                lps[j] = 0;
+                what = String.format("pattern[%d] = '%c' matches no prefix: lps[%d] = 0.", j, pattern.charAt(j), j);
+                j++;
+            } else {
+                currLength = lps[currLength - 1];
+                what = String.format("Mismatch: fall back to the next shorter prefix, length %d.", currLength);
+            }
+            emit.at("lps").say(what).var("lps", java.util.Arrays.toString(lps)).chars(pattern, Math.min(j, m - 1)).step();
+        }
+        j = 0;
+        while (i < n && j < m) {
+            String what;
+            if (text.charAt(i) == pattern.charAt(j)) {
+                what = String.format("text[%d] = pattern[%d] = '%c': %d letter%s of goal matched.",
+                        i, j, text.charAt(i), j + 1, Narration.s(j + 1));
+                i++;
+                j++;
+            } else if (j == 0) {
+                what = String.format("text[%d] = '%c' cannot start goal: move on.", i, text.charAt(i));
+                i++;
+            } else {
+                int was = j;
+                j = lps[j - 1];
+                what = String.format("Mismatch after %d matched: lps says %d of them can be kept, so continue from there.", was, j);
+            }
+            emit.at("search").say(what).var("i", i).var("j", j).chars(text, Math.min(i, n - 1)).step();
+            if (j == m) {
+                emit.at("found").say("All %d letters of goal matched inside s + s: goal is a rotation of s. Return true.", m)
+                        .var("answer", true).chars(text).step();
+                return;
+            }
+        }
+        emit.at("none").say("goal never appears inside s + s, so it is not a rotation of s. Return false.")
+                .var("answer", false).chars(text).step();
     }
 }
 
+/**
+ * Sort Characters By Frequency (LeetCode 451), traced on the owner's own accepted submission: count
+ * each character in a HashMap, put the counts in a max-heap by frequency, and append each character
+ * as many times as it appears, most frequent first. O(n log k) for k distinct characters.
+ *
+ * <p>Characters with equal counts come out in whatever order Java's HashMap and PriorityQueue give;
+ * the problem accepts any order, and the trace uses the real classes so the output is the code's.
+ */
 @Component
 class SortCharactersFrequencyTracer extends StringTracerSupport {
     public String id() { return "sort-characters-frequency"; }
@@ -125,45 +294,59 @@ class SortCharactersFrequencyTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public String frequencySort(String s) {
-                   Map<Character, Integer> counts = new HashMap<>();
-                   for (char ch : s.toCharArray()) {
-                       // @a count
-                       counts.merge(ch, 1, Integer::sum);
+               class Solution {
+                   public String frequencySort(String s) {
+                       // @a init
+                       char[] arr=s.toCharArray();
+                       Map<Character,Integer> freq=new HashMap<>();
+                       StringBuilder res=new StringBuilder();
+
+                       for (char ch: arr)
+                           // @a count
+                           freq.put(ch,freq.getOrDefault(ch,0)+1);
+
+                       // @a heap
+                       PriorityQueue<Map.Entry<Character,Integer>> pq=new PriorityQueue<>((x,y)->(y.getValue()-x.getValue()));
+                       pq.addAll(freq.entrySet());
+
+                       while (!pq.isEmpty()) {
+                           // @a poll
+                           Map.Entry<Character,Integer> entry=pq.poll();
+                           res.append(String.valueOf(entry.getKey()).repeat(entry.getValue()));
+                       }
+
+                       // @a done
+                       return res.toString();
                    }
-                   List<Character> order = new ArrayList<>(counts.keySet());
-                   order.sort((a, b) -> counts.get(b) - counts.get(a));
-                   StringBuilder answer = new StringBuilder();
-                   for (char ch : order) {
-                       // @a append
-                       answer.append(String.valueOf(ch).repeat(counts.get(ch)));
-                   }
-                   // @a done
-                   return answer.toString();
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
-        Map<Character, Integer> counts = new LinkedHashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            counts.merge(s.charAt(i), 1, Integer::sum);
-            emit.at("count").say("Count '%c' at index %d; frequency is now %d.",
-                            s.charAt(i), i, counts.get(s.charAt(i)))
-                    .var("index", i).var("counts", counts).chars(s, i).step();
+        char[] arr = s.toCharArray();
+        Map<Character, Integer> freq = new java.util.HashMap<>();
+        StringBuilder res = new StringBuilder();
+        emit.at("init").say("Count every character, then emit them most frequent first.").chars(s).step();
+        for (int i = 0; i < arr.length; i++) {
+            char ch = arr[i];
+            freq.put(ch, freq.getOrDefault(ch, 0) + 1);
+            emit.at("count").say("'%c': count %d.", ch, freq.get(ch))
+                    .var("freq", freq.toString()).chars(s, i).step();
         }
-        List<Character> order = new ArrayList<>(counts.keySet());
-        order.sort(Comparator.<Character>comparingInt(counts::get).reversed().thenComparingInt(ch -> ch));
-        StringBuilder answer = new StringBuilder();
-        for (char ch : order) {
-            answer.append(String.valueOf(ch).repeat(counts.get(ch)));
-            emit.at("append").say("Append '%c' %d time%s; output is now \"%s\".",
-                            ch, counts.get(ch), Narration.s(counts.get(ch)), answer)
-                    .var("character", ch).var("frequency", counts.get(ch)).var("output", answer)
-                    .chars(s).step();
+        java.util.PriorityQueue<Map.Entry<Character, Integer>> pq =
+                new java.util.PriorityQueue<>((x, y) -> (y.getValue() - x.getValue()));
+        pq.addAll(freq.entrySet());
+        emit.at("heap").say("Put the %d distinct character%s in a max-heap by count.", freq.size(), Narration.s(freq.size()))
+                .var("freq", freq.toString()).chars(s).step();
+        while (!pq.isEmpty()) {
+            Map.Entry<Character, Integer> entry = pq.poll();
+            res.append(String.valueOf(entry.getKey()).repeat(entry.getValue()));
+            emit.at("poll").say("The most frequent left is '%c' (%d): append it %d time%s. res = \"%s\".",
+                            entry.getKey(), entry.getValue(), entry.getValue(), Narration.s(entry.getValue()), res)
+                    .var("res", res.toString()).chars(res.toString()).step();
         }
-        emit.at("done").say("Characters sorted by descending frequency: \"%s\".", answer)
-                .var("answer", answer).chars(s).step();
+        emit.at("done").say("Return \"%s\".", res)
+                .var("res", res.toString()).var("answer", res.toString()).chars(res.toString()).step();
     }
 }
 
@@ -215,6 +398,11 @@ class MaxNestingDepthParenthesesTracer extends StringTracerSupport {
     }
 }
 
+/**
+ * Roman to Integer (LeetCode 13), traced on the owner's own accepted submission: read right to left,
+ * remembering the largest symbol seen so far ({@code high}). A symbol at least that large is added;
+ * a smaller one stands before a larger one (IV, XC), so it is subtracted. O(n).
+ */
 @Component
 class RomanToIntegerTracer extends StringTracerSupport {
     public String id() { return "roman-to-integer"; }
@@ -228,48 +416,64 @@ class RomanToIntegerTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public int romanToInt(String roman) {
-                   int total = 0, previous = 0;
-                   for (int i = roman.length() - 1; i >= 0; i--) {
-                       int value = valueOf(roman.charAt(i));
-                       // @a inspect
-                       total += value < previous ? -value : value;
-                       previous = Math.max(previous, value);
+               class Solution {
+                   public int romanToInt(String s) {
+                       // @a init
+                       int n=s.length();
+                       Map<Character,Integer> map=new HashMap<>();
+                       map.put('I',1);
+                       map.put('V',5);
+                       map.put('X',10);
+                       map.put('L',50);
+                       map.put('C',100);
+                       map.put('D',500);
+                       map.put('M',1000);
+
+                       int res=0;
+                       char high='I';
+
+                       for (int i=n-1;i>=0;i--) {
+                           char curr=s.charAt(i);
+
+                           if (map.get(curr)>=map.get(high)) {
+                               // @a add
+                               high=curr;
+                               res+=map.get(curr);
+                           } else {
+                               // @a subtract
+                               res-=map.get(curr);
+                           }
+                       }
+
+                       // @a done
+                       return res;
                    }
-                   // @a done
-                   return total;
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
-        String roman = in.getString("roman");
-        int total = 0;
-        int previous = 0;
-        for (int i = roman.length() - 1; i >= 0; i--) {
-            int value = valueOf(roman.charAt(i));
-            boolean subtract = value < previous;
-            total += subtract ? -value : value;
-            previous = Math.max(previous, value);
-            emit.at("inspect").say("Symbol %c is worth %d and is %s; running total=%d.",
-                            roman.charAt(i), value, subtract ? "smaller than the symbol to its right, so subtract it" : "added",
-                            total)
-                    .var("index", i).var("value", value).var("operation", subtract ? "subtract" : "add")
-                    .var("total", total).chars(roman, i).step();
+        String s = in.getString("roman");
+        Map<Character, Integer> map = Map.of('I', 1, 'V', 5, 'X', 10, 'L', 50, 'C', 100, 'D', 500, 'M', 1000);
+        int n = s.length();
+        int res = 0;
+        char high = 'I';
+        emit.at("init").say("Read from the right, keeping high = the largest symbol seen so far (start at I).")
+                .var("res", 0).var("high", "I").chars(s).step();
+        for (int i = n - 1; i >= 0; i--) {
+            char curr = s.charAt(i);
+            if (map.get(curr) >= map.get(high)) {
+                high = curr;
+                res += map.get(curr);
+                emit.at("add").say("'%c' = %d is at least as large as everything to its right: add it. res = %d.",
+                                curr, map.get(curr), res)
+                        .var("i", i).var("high", String.valueOf(high)).var("res", res).chars(s, i).step();
+            } else {
+                res -= map.get(curr);
+                emit.at("subtract").say("'%c' = %d is smaller than '%c' to its right, so it is subtracted (like the I in IV). "
+                                + "res = %d.", curr, map.get(curr), high, res)
+                        .var("i", i).var("high", String.valueOf(high)).var("res", res).chars(s, i).step();
+            }
         }
-        emit.at("done").say("Roman numeral %s converts to %d.", roman, total)
-                .var("answer", total).chars(roman).step();
-    }
-
-    private static int valueOf(char symbol) {
-        return switch (symbol) {
-            case 'I' -> 1;
-            case 'V' -> 5;
-            case 'X' -> 10;
-            case 'L' -> 50;
-            case 'C' -> 100;
-            case 'D' -> 500;
-            case 'M' -> 1000;
-            default -> throw new IllegalArgumentException("Unsupported Roman symbol: " + symbol);
-        };
+        emit.at("done").say("Return %d.", res).var("res", res).var("answer", res).chars(s).step();
     }
 }

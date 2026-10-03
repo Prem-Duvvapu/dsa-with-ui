@@ -1,35 +1,32 @@
 {
   "anchors" : {
-    "done" : 9,
-    "map" : 4
+    "done" : 28,
+    "init" : 3,
+    "sCheck" : 16,
+    "tCheck" : 22
   },
-  "code" : "public boolean isIsomorphic(String s, String t) {\n    Map<Character, Character> forward = new HashMap<>(), reverse = new HashMap<>();\n    for (int i = 0; i < s.length(); i++) {\n        if (forward.getOrDefault(s.charAt(i), t.charAt(i)) != t.charAt(i) ||\n            reverse.getOrDefault(t.charAt(i), s.charAt(i)) != s.charAt(i)) return false;\n        forward.put(s.charAt(i), t.charAt(i));\n        reverse.put(t.charAt(i), s.charAt(i));\n    }\n    return s.length() == t.length();\n}",
+  "code" : "class Solution {\n    public boolean isIsomorphic(String s, String t) {\n        int n=s.length();\n\n        int[] sTot=new int[256];\n        int[] tTos=new int[256];\n\n        Arrays.fill(sTot,-1);\n        Arrays.fill(tTos,-1);\n\n        for (int i=0;i<n;i++) {\n            char sChar=s.charAt(i);\n            char tChar=t.charAt(i);\n\n            //s to t checking\n            if (sTot[sChar]!=-1 && sTot[sChar]!=tChar)\n                return false;\n            else\n                sTot[sChar]=tChar;\n\n            //t to s checking\n            if (tTos[tChar]!=-1 && tTos[tChar]!=sChar)\n                return false;\n            else\n                tTos[tChar]=sChar;\n        }\n\n        return true;\n    }\n}",
   "problemId" : "isomorphic-strings",
   "resolvedInput" : {
     "s" : "egg",
     "t" : "add"
   },
-  "stepCount" : 4,
+  "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 4,
-    "description" : "Index 0 compares 'e' → 'a': both directions remain one-to-one.",
+    "activeLine" : 3,
+    "description" : "sTot records what each s-letter maps to, tTos what each t-letter maps from.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
-    "variables" : {
-      "forward" : "{e=a}",
-      "index" : "0",
-      "reverse" : "{a=e}",
-      "valid" : "true"
-    },
+    "variables" : { },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 101,
-      "state" : "current",
+      "state" : "default",
       "label" : "e"
     }, {
       "index" : 1,
@@ -47,29 +44,28 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 4,
-    "description" : "Index 1 compares 'g' → 'd': both directions remain one-to-one.",
+    "activeLine" : 16,
+    "description" : "s[0] = 'e' has no mapping yet: record 'e' -> 'a'.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "forward" : "{e=a, g=d}",
-      "index" : "1",
-      "reverse" : "{a=e, d=g}",
-      "valid" : "true"
+      "i" : "0",
+      "sTot" : "e->a",
+      "tTos" : ""
     },
     "dsType" : "String",
     "gridState" : null,
     "arrayState" : [ {
       "index" : 0,
       "value" : 101,
-      "state" : "default",
+      "state" : "current",
       "label" : "e"
     }, {
       "index" : 1,
       "value" : 103,
-      "state" : "current",
+      "state" : "default",
       "label" : "g"
     }, {
       "index" : 2,
@@ -82,17 +78,118 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 4,
-    "description" : "Index 2 compares 'g' → 'd': both directions remain one-to-one.",
+    "activeLine" : 22,
+    "description" : "No other s-letter maps to 'a' yet: record 'a' <- 'e'.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "forward" : "{e=a, g=d}",
-      "index" : "2",
-      "reverse" : "{a=e, d=g}",
-      "valid" : "true"
+      "i" : "0",
+      "sTot" : "e->a",
+      "tTos" : "a->e"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "current",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 2,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 4,
+    "activeLine" : 16,
+    "description" : "s[1] = 'g' has no mapping yet: record 'g' -> 'd'.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "sTot" : "e->a, g->d",
+      "tTos" : "a->e"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 101,
+      "state" : "default",
+      "label" : "e"
+    }, {
+      "index" : 1,
+      "value" : 103,
+      "state" : "current",
+      "label" : "g"
+    }, {
+      "index" : 2,
+      "value" : 103,
+      "state" : "default",
+      "label" : "g"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 5,
+    "activeLine" : 22,
+    "description" : "No other s-letter maps to 'd' yet: record 'd' <- 'g'.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "1",
+      "sTot" : "e->a, g->d",
+      "tTos" : "a->e, d->g"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "current",
+      "label" : "d"
+    }, {
+      "index" : 2,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 6,
+    "activeLine" : 16,
+    "description" : "s[2] = 'g' already maps to 'd', and t[2] is 'd' - consistent.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "sTot" : "e->a, g->d",
+      "tTos" : "a->e, d->g"
     },
     "dsType" : "String",
     "gridState" : null,
@@ -116,9 +213,43 @@
     "trieState" : null,
     "treeNodes" : null
   }, {
-    "stepNumber" : 4,
-    "activeLine" : 9,
-    "description" : "The strings are isomorphic.",
+    "stepNumber" : 7,
+    "activeLine" : 22,
+    "description" : "'d' is already the image of 'g' and nothing else - still one-to-one.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "i" : "2",
+      "sTot" : "e->a, g->d",
+      "tTos" : "a->e, d->g"
+    },
+    "dsType" : "String",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 97,
+      "state" : "default",
+      "label" : "a"
+    }, {
+      "index" : 1,
+      "value" : 100,
+      "state" : "default",
+      "label" : "d"
+    }, {
+      "index" : 2,
+      "value" : 100,
+      "state" : "current",
+      "label" : "d"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 8,
+    "activeLine" : 28,
+    "description" : "Every position agrees in both directions: the strings are isomorphic.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },

@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * Valid Anagram (LeetCode 242), traced on the owner's own accepted submission: different lengths
+ * can never be anagrams; otherwise count s's letters up and t's letters down, and they are anagrams
+ * exactly when every count ends at zero. O(n).
+ */
 @Component
 class ValidAnagramTracer extends StringTracerSupport {
     public String id() { return "valid-anagram"; }
@@ -20,37 +25,83 @@ class ValidAnagramTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public boolean isAnagram(String s, String t) {
-                   int[] frequency = new int[26];
-                   for (int i = 0; i < s.length(); i++) {
-                       // @a scan
-                       frequency[s.charAt(i) - 'a']++;
-                       frequency[t.charAt(i) - 'a']--;
+               class Solution {
+                   public boolean isAnagram(String s, String t) {
+                       // @a lengths
+                       if (s.length()!=t.length())
+                           return false;
+
+                       int n=s.length();
+                       int[] freq=new int[26];
+
+                       for (int i=0;i<n;i++) {
+                           // @a countS
+                           char ch=s.charAt(i);
+                           freq[ch-'a']++;
+                       }
+
+                       for (int i=0;i<n;i++) {
+                           // @a countT
+                           char ch=t.charAt(i);
+                           freq[ch-'a']--;
+                       }
+
+                       for (int i=0;i<26;i++)
+                           if (freq[i]!=0)
+                               // @a mismatch
+                               return false;
+
+                       // @a done
+                       return true;
                    }
-                   // @a done
-                   return s.length() == t.length() && allZero(frequency);
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");
         String t = in.getString("t");
-        int[] counts = new int[26];
-        int limit = Math.min(s.length(), t.length());
-        for (int i = 0; i < limit; i++) {
-            counts[s.charAt(i) - 'a']++;
-            counts[t.charAt(i) - 'a']--;
-            emit.at("scan").say("Index %d adds '%c' from s and removes '%c' from t.",
-                            i, s.charAt(i), t.charAt(i))
-                    .var("index", i).var("frequencyDelta", Arrays.toString(counts))
-                    .chars(s, i).step();
+        if (s.length() != t.length()) {
+            emit.at("lengths").say("s has %d letters and t has %d. Different lengths can never be anagrams: return false.",
+                            s.length(), t.length())
+                    .var("answer", false).chars(s).step();
+            return;
         }
-        boolean answer = s.length() == t.length() && Arrays.stream(counts).allMatch(value -> value == 0);
-        emit.at("done").say(answer
-                        ? "Both strings have equal length and every frequency delta is zero: they are anagrams."
-                        : "A length or frequency mismatch remains: the strings are not anagrams.")
-                .var("sLength", s.length()).var("tLength", t.length()).var("answer", answer)
-                .chars(s).step();
+        emit.at("lengths").say("Both have %d letters, so count them.", s.length()).chars(s).step();
+        int n = s.length();
+        int[] freq = new int[26];
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            freq[ch - 'a']++;
+            emit.at("countS").say("s[%d] = '%c': freq['%c'] = %d.", i, ch, ch, freq[ch - 'a'])
+                    .var("i", i).var("freq", counts(freq)).chars(s, i).step();
+        }
+        for (int i = 0; i < n; i++) {
+            char ch = t.charAt(i);
+            freq[ch - 'a']--;
+            emit.at("countT").say("t[%d] = '%c': freq['%c'] = %d.", i, ch, ch, freq[ch - 'a'])
+                    .var("i", i).var("freq", counts(freq)).chars(t, i).step();
+        }
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] != 0) {
+                emit.at("mismatch").say("freq['%c'] = %d, not 0: the strings do not use the same letters equally often. "
+                                + "Return false.", (char) ('a' + i), freq[i])
+                        .var("freq", counts(freq)).var("answer", false).chars(t).step();
+                return;
+            }
+        }
+        emit.at("done").say("Every count is back to 0: t uses exactly s's letters. Return true.")
+                .var("freq", counts(freq)).var("answer", true).chars(t).step();
+    }
+
+    /** The non-zero counts, "{a=2, n=-1}". */
+    private static String counts(int[] freq) {
+        StringBuilder sb = new StringBuilder("{");
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] == 0) continue;
+            if (sb.length() > 1) sb.append(", ");
+            sb.append((char) ('a' + i)).append('=').append(freq[i]);
+        }
+        return sb.append('}').toString();
     }
 }
 
@@ -155,6 +206,11 @@ class ReverseWordsStringTracer extends StringTracerSupport {
     }
 }
 
+/**
+ * Largest Odd Number in String (LeetCode 1903), traced on the owner's own accepted submission: a
+ * number is odd exactly when its last digit is, and a longer prefix is a larger number, so scan
+ * from the right and return the prefix ending at the first odd digit found. O(n).
+ */
 @Component
 class LargestOddNumberStringTracer extends StringTracerSupport {
     public String id() { return "largest-odd-number-string"; }
@@ -171,37 +227,53 @@ class LargestOddNumberStringTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public String largestOddNumber(String number) {
-                   for (int i = number.length() - 1; i >= 0; i--) {
-                       // @a inspect
-                       if ((number.charAt(i) - '0') % 2 == 1) return number.substring(0, i + 1);
+               class Solution {
+                   public String largestOddNumber(String num) {
+                       // @a init
+                       int n=num.length();
+
+                       for (int i=n-1;i>=0;i--)
+                       {
+                           // @a check
+                           char curr=num.charAt(i);
+                           if ((curr-'0')%2==1)
+                               // @a found
+                               return num.substring(0,i+1);
+                       }
+
+                       // @a none
+                       return "";
                    }
-                   // @a done
-                   return "";
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
-        String number = in.getString("number");
-        String answer = "";
-        for (int i = number.length() - 1; i >= 0; i--) {
-            int digit = number.charAt(i) - '0';
-            emit.at("inspect").say("Digit %d at index %d is %s.", digit, i,
-                            digit % 2 == 1 ? "odd, so this prefix is the largest possible odd number"
-                                    : "even, so remove it from the candidate suffix")
-                    .var("index", i).var("digit", digit).chars(number, i).step();
-            if (digit % 2 == 1) {
-                answer = number.substring(0, i + 1);
-                break;
+        String num = in.getString("number");
+        int n = num.length();
+        emit.at("init").say("A number is odd when its last digit is odd, and the longest prefix is the largest number. "
+                        + "Scan from the right.")
+                .chars(num).step();
+        for (int i = n - 1; i >= 0; i--) {
+            char curr = num.charAt(i);
+            if ((curr - '0') % 2 == 1) {
+                String answer = num.substring(0, i + 1);
+                emit.at("found").say("'%c' at %d is odd. The longest prefix ending here is \"%s\".", curr, i, answer)
+                        .var("i", i).var("answer", answer).chars(num, i).step();
+                return;
             }
+            emit.at("check").say("'%c' at %d is even - no odd number can end here.", curr, i)
+                    .var("i", i).chars(num, i).step();
         }
-        emit.at("done").say(answer.isEmpty()
-                        ? "No odd digit exists, so there is no non-empty odd prefix."
-                        : "Largest odd-valued prefix is \"%s\".", answer)
-                .var("answer", answer).chars(number).step();
+        emit.at("none").say("Every digit is even, so no prefix is odd. Return \"\".")
+                .var("answer", "").chars(num).step();
     }
 }
 
+/**
+ * Longest Common Prefix (LeetCode 14), traced on the owner's own accepted submission: start with the
+ * first word as the prefix and cut it back against each later word - at the first mismatch, or to
+ * the word's length if the word is shorter. O(total characters).
+ */
 @Component
 class LongestCommonPrefixTracer extends StringTracerSupport {
     public String id() { return "longest-common-prefix"; }
@@ -215,35 +287,83 @@ class LongestCommonPrefixTracer extends StringTracerSupport {
 
     public String annotatedCode() {
         return """
-               public String longestCommonPrefix(String[] words) {
-                   String prefix = words[0];
-                   for (int i = 1; i < words.length; i++) {
-                       while (!words[i].startsWith(prefix)) {
-                           // @a trim
-                           prefix = prefix.substring(0, prefix.length() - 1);
-                           if (prefix.isEmpty()) break;
+               class Solution {
+                   public String longestCommonPrefix(String[] strs) {
+                       // @a init
+                       int n=strs.length;
+                       String res=strs[0];
+
+                       for (int i=1;i<n;i++) {
+                           // @a word
+                           int j=0; //res pointer
+                           int k=0; //strs[i] pointer
+
+                           while (j<res.length() && k<strs[i].length()) {
+                               if (res.charAt(j)!=strs[i].charAt(k)) {
+                                   if (j==0)
+                                       // @a empty
+                                       return "";
+
+                                   // @a cut
+                                   res=res.substring(0,j);
+                                   break;
+                               }
+
+                               j++;
+                               k++;
+                           }
+
+                           if (k<res.length())
+                               // @a shorter
+                               res=res.substring(0,k);
+
                        }
+
+                       // @a done
+                       return res;
                    }
-                   // @a done
-                   return prefix;
                }""";
     }
 
     public void run(Inputs in, StepEmitter emit) {
-        String raw = in.getString("words");
-        String[] words = raw.split(",");
-        String prefix = words[0];
-        for (int i = 1; i < words.length; i++) {
-            while (!words[i].startsWith(prefix) && !prefix.isEmpty()) {
-                String before = prefix;
-                prefix = prefix.substring(0, prefix.length() - 1);
-                emit.at("trim").say("\"%s\" does not start with \"%s\"; trim the candidate to \"%s\".",
-                                words[i], before, prefix)
-                        .var("wordIndex", i).var("word", words[i]).var("prefix", prefix)
-                        .chars(words[i]).step();
+        String[] strs = in.getString("words").split(",");
+        int n = strs.length;
+        String res = strs[0];
+        emit.at("init").say("Start with the whole first word as the prefix: res = \"%s\".", res)
+                .var("res", res).chars(res).step();
+        for (int i = 1; i < n; i++) {
+            emit.at("word").say("Compare res = \"%s\" with \"%s\" letter by letter.", res, strs[i])
+                    .var("i", i).var("res", res).chars(strs[i]).step();
+            int j = 0;
+            int k = 0;
+            boolean cut = false;
+            while (j < res.length() && k < strs[i].length()) {
+                if (res.charAt(j) != strs[i].charAt(k)) {
+                    if (j == 0) {
+                        emit.at("empty").say("The very first letters differ ('%c' vs '%c'): nothing is common. Return \"\".",
+                                        res.charAt(0), strs[i].charAt(0))
+                                .var("res", "").var("answer", "").chars(strs[i], 0).step();
+                        return;
+                    }
+                    char had = res.charAt(j);
+                    res = res.substring(0, j);
+                    cut = true;
+                    emit.at("cut").say("Letter %d differs ('%c' vs '%c'): cut res to \"%s\".",
+                                    j, had, strs[i].charAt(k), res)
+                            .var("res", res).chars(strs[i], j).step();
+                    break;
+                }
+                j++;
+                k++;
+            }
+            if (!cut && k < res.length()) {
+                res = res.substring(0, k);
+                emit.at("shorter").say("\"%s\" ran out after %d letters, all matching: cut res to \"%s\".",
+                                strs[i], k, res)
+                        .var("res", res).chars(strs[i]).step();
             }
         }
-        emit.at("done").say("Longest prefix shared by %s is \"%s\".", Arrays.toString(words), prefix)
-                .var("answer", prefix).chars(raw).step();
+        emit.at("done").say("Every word starts with \"%s\". Return it.", res)
+                .var("res", res).var("answer", res).chars(res).step();
     }
 }
