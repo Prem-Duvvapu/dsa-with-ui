@@ -7,10 +7,12 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * A graph is bipartite iff its vertices can be 2-coloured so that no edge joins two vertices
- * of the same colour. DFS assigns the opposite colour to every unvisited neighbour and, on an
- * already-coloured neighbour, checks it actually got the opposite colour - a same-colour
- * neighbour is a direct proof of an odd cycle, which is exactly what breaks bipartiteness.
+ * Is Graph Bipartite? (LeetCode 785), traced on the owner's own accepted submission: 2-colour
+ * each uncoloured component by DFS, giving every neighbour the other colour, and stop at the
+ * first edge whose two ends got the same colour. O(V + E).
+ *
+ * <p>Canvas: colour 0 is drawn grey, colour 1 green, and the vertex where a clash is found
+ * amber.
  */
 @Component
 public class BipartiteGraphDfsTracer implements AlgorithmTracer {
@@ -51,37 +53,46 @@ public class BipartiteGraphDfsTracer implements AlgorithmTracer {
     @Override
     public String annotatedCode() {
         return """
-               public boolean isBipartite(int v, List<List<Integer>> adj) {
-                   // @a init
-                   int[] color = new int[v];
-                   Arrays.fill(color, -1);
-                   for (int i = 0; i < v; i++) {
-                       if (color[i] == -1) {
-                           // @a component
-                           if (!dfs(i, 0, adj, color)) {
-                               return false;
-                           }
-                       }
-                   }
-                   // @a bipartite
-                   return true;
-               }
+               class Solution {
+                   public boolean isBipartite(int[][] graph) {
+                       // @a init
+                       int n = graph.length;
+                       int[] color = new int[n];
 
-               private boolean dfs(int node, int col, List<List<Integer>> adj, int[] color) {
-                   // @a colorNode
-                   color[node] = col;
-                   for (int next : adj.get(node)) {
-                       if (color[next] == -1) {
-                           // @a recurse
-                           if (!dfs(next, 1 - col, adj, color)) {
+                       Arrays.fill(color, -1);
+
+                       for (int i=0;i<n;i++) {
+                           if (color[i] == -1) {
+                               // @a component
+                               if (!dfs(i,0,color,graph))
+                                   // @a notBipartite
+                                   return false;
+                           }
+                       }
+
+                       // @a bipartite
+                       return true;
+                   }
+
+                   private boolean dfs(int curr,int currColor,int[] color,int[][] graph) {
+                       // @a colour
+                       color[curr] = currColor;
+
+                       for (int ngbr: graph[curr]) {
+                           if (color[ngbr] == -1) {
+                               // @a recurse
+                               if (!dfs(ngbr,1 - currColor,color,graph))
+                                   // @a propagate
+                                   return false;
+                           } else if (color[ngbr] == currColor) {
+                               // @a conflict
                                return false;
                            }
-                       } else if (color[next] == col) {
-                           // @a conflict
-                           return false;
                        }
+
+                       // @a return
+                       return true;
                    }
-                   return true;
                }""";
     }
 
@@ -89,66 +100,76 @@ public class BipartiteGraphDfsTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         Inputs.GraphInput graph = in.getGraph("graph");
         List<List<Integer>> adj = graph.adjacency();
-        int v = graph.vertices();
-        int[] color = new int[v];
+        int n = graph.vertices();
+        int[] color = new int[n];
         Arrays.fill(color, -1);
         Map<Integer, String> states = new LinkedHashMap<>();
-        for (int i = 0; i < v; i++) {
+        for (int i = 0; i < n; i++) {
             states.put(i, "unvisited");
         }
 
-        emit.at("init").say("%d vertices, %d edges. 2-colour each unvisited component by DFS.",
-                        v, graph.edges().length)
-                .graph(graph).nodes(states).step();
+        emit.at("init").say("%d vertices, %d edges, none coloured yet (-1). Every edge must join a "
+                        + "colour-0 vertex to a colour-1 vertex.", n, graph.edges().length)
+                .var("color", Arrays.toString(color)).graph(graph).nodes(states).step();
 
-        boolean bipartite = true;
-        for (int i = 0; i < v && bipartite; i++) {
+        for (int i = 0; i < n; i++) {
             if (color[i] != -1) {
                 continue;
             }
-            emit.at("component").say("%d starts a new component. Colour it 0.", i)
-                    .var("src", i).graph(graph).nodes(states).step();
-
-            bipartite = dfs(i, 0, adj, color, states, graph, emit);
+            emit.at("component").say("Vertex %d is uncoloured, so it starts a new component: dfs(%d, 0).", i, i)
+                    .var("i", i).var("color", Arrays.toString(color)).graph(graph).nodes(states).step();
+            if (!dfs(i, 0, adj, color, states, graph, emit)) {
+                emit.at("notBipartite").say("dfs(%d, 0) found a clash, so the graph cannot be split into two "
+                                + "sides. Return false.", i)
+                        .var("color", Arrays.toString(color)).var("answer", false)
+                        .graph(graph).nodes(states).step();
+                return;
+            }
         }
 
-        emit.at(bipartite ? "bipartite" : "conflict")
-                .say(bipartite
-                        ? "Every component was 2-coloured with no adjacent same-colour pair. Bipartite."
-                        : "A conflict ended the search early. Not bipartite.")
+        emit.at("bipartite").say("Every vertex is coloured and no edge joins two vertices of the same "
+                        + "colour: the grey and green vertices are the two sides. Return true.")
+                .var("color", Arrays.toString(color)).var("answer", true)
                 .graph(graph).nodes(states).step();
     }
 
-    private boolean dfs(int node, int col, List<List<Integer>> adj, int[] color,
-                         Map<Integer, String> states, Inputs.GraphInput graph, StepEmitter emit) {
-        emit.push("dfs(" + node + "," + col + ")");
-        color[node] = col;
-        states.put(node, col == 0 ? "queued" : "visiting");
-        emit.at("colorNode").say("Colour %d = %d.", node, col)
-                .var("node", node).var("color", col)
+    private static boolean dfs(int curr, int currColor, List<List<Integer>> adj, int[] color,
+                               Map<Integer, String> states, Inputs.GraphInput graph, StepEmitter emit) {
+        emit.push("dfs(" + curr + "," + currColor + ")");
+        color[curr] = currColor;
+        states.put(curr, currColor == 0 ? "visited" : "done");
+        emit.at("colour").say("dfs(%d, %d): give vertex %d colour %d, then check its neighbours.",
+                        curr, currColor, curr, currColor)
+                .var("curr", curr).var("currColor", currColor).var("color", Arrays.toString(color))
                 .graph(graph).nodes(states).step();
 
-        for (int next : adj.get(node)) {
-            if (color[next] == -1) {
-                emit.at("recurse").say("%d is uncoloured - descend into it with colour %d.", next, 1 - col)
-                        .var("node", node).var("neighbour", next)
-                        .graph(graph).nodes(states).edges(List.of(node + "-" + next)).step();
-                if (!dfs(next, 1 - col, adj, color, states, graph, emit)) {
+        for (int ngbr : adj.get(curr)) {
+            if (color[ngbr] == -1) {
+                emit.at("recurse").say("Neighbour %d is uncoloured: it must take the other colour, %d. "
+                                + "Recurse into dfs(%d, %d).", ngbr, 1 - currColor, ngbr, 1 - currColor)
+                        .var("curr", curr).var("ngbr", ngbr)
+                        .graph(graph).nodes(states).edges(List.of(curr + "-" + ngbr)).step();
+                if (!dfs(ngbr, 1 - currColor, adj, color, states, graph, emit)) {
+                    emit.at("propagate").say("dfs(%d, %d) reported a clash further down, so dfs(%d, %d) "
+                                    + "returns false too.", ngbr, 1 - currColor, curr, currColor)
+                            .var("curr", curr).graph(graph).nodes(states).step();
                     emit.pop();
                     return false;
                 }
-            } else if (color[next] == col) {
-                states.put(next, "cycle");
-                emit.at("conflict").say(
-                                "%d already has colour %d, the SAME as %d - two adjacent vertices share a colour. Not bipartite.",
-                                next, color[next], node)
-                        .var("node", node).var("neighbour", next)
-                        .graph(graph).nodes(states).edges(List.of(node + "-" + next)).step();
+            } else if (color[ngbr] == currColor) {
+                states.put(ngbr, "current");
+                emit.at("conflict").say("Neighbour %d already has colour %d - the same as %d. An edge "
+                                + "joins two vertices of one colour. Return false.", ngbr, currColor, curr)
+                        .var("curr", curr).var("ngbr", ngbr)
+                        .graph(graph).nodes(states).edges(List.of(curr + "-" + ngbr)).step();
                 emit.pop();
                 return false;
             }
         }
 
+        emit.at("return").say("Every neighbour of %d has the opposite colour. dfs(%d, %d) returns true.",
+                        curr, curr, currColor)
+                .var("curr", curr).graph(graph).nodes(states).step();
         emit.pop();
         return true;
     }

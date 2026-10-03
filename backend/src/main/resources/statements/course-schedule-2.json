@@ -31,7 +31,7 @@
         }
       },
       "output": "[0, 1, 2, 3]",
-      "answerVariable": "order",
+      "answerVariable": "res",
       "explanation": "Course 0 has no prerequisites. Taking it unlocks 1 and 2, and taking both of those unlocks 3. The order [0, 2, 1, 3] would also be valid."
     },
     {
@@ -50,8 +50,8 @@
           ]
         }
       },
-      "output": "[] (cycle - no valid order)",
-      "answerVariable": "order",
+      "output": "[]",
+      "answerVariable": "res",
       "explanation": "Courses 0 and 1 each require the other, so neither can ever be taken. Course 2 is free, but a full schedule is impossible, so the answer is an empty list."
     }
   ],

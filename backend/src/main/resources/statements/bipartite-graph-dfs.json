@@ -1,0 +1,36 @@
+{
+  "id": "bipartite-graph-dfs",
+  "statement": [
+    "You are given an undirected graph: the vertex count n (vertices 0 to n − 1) and a list of edges [u, v]. The graph may be split into several components that are not connected to each other.",
+    "The graph is bipartite when its vertices can be divided into two groups so that every edge joins a vertex in one group to a vertex in the other. Equivalently, the vertices can be given two colours with no edge joining two vertices of the same colour.",
+    "Return true if the graph is bipartite and false otherwise."
+  ],
+  "examples": [
+    {
+      "input": { "graph": { "vertices": 4, "edges": [[0, 1], [1, 2], [2, 3], [3, 0]] } },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "Put 0 and 2 in one group and 1 and 3 in the other. Every edge of the square joins the two groups."
+    },
+    {
+      "input": { "graph": { "vertices": 3, "edges": [[0, 1], [1, 2], [2, 0]] } },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "In a triangle, 0 and 1 must differ and 1 and 2 must differ, which forces 0 and 2 into the same group, yet they share an edge."
+    },
+    {
+      "input": { "graph": { "vertices": 5, "edges": [[0, 1], [2, 3], [3, 4]] } },
+      "output": "true",
+      "answerVariable": "answer",
+      "explanation": "There are two separate components. Each is a path, and a path can always be coloured alternately."
+    }
+  ],
+  "constraints": [
+    "1 ≤ n ≤ 100",
+    "0 ≤ u, v ≤ n − 1",
+    "No edge joins a vertex to itself, and no edge is listed twice"
+  ],
+  "sources": [
+    { "label": "LeetCode 785", "url": "https://leetcode.com/problems/is-graph-bipartite/" }
+  ]
+}
