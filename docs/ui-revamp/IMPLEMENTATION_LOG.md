@@ -788,3 +788,20 @@ A backend contract defect found by the P7 input journey, fixed as its own change
   - A full re-sweep on merged main.
   - A second browser engine and real devices (virtual keyboard), which are not available here.
   - Unknown-`dsType` and unsupported states are covered by the existing registry tests, not by this sweep.
+
+## 2026-10-05 — DP verification, fix 1: inputs outside the problem are refused
+
+**How the problems were checked.** All 56 DP problems were verified independently, in four groups. For each problem a reviewer:
+- wrote a brute-force Python reference from the problem definition (not from the tracer);
+- checked all 114 statement examples and their explanations;
+- compared the tracer with the reference on 60–80 random and edge-case valid inputs, about 5,000 runs in total.
+
+**What was found.**
+- 0 wrong answers for inputs the statements allow, 0 wrong example outputs, 0 false explanation claims.
+- 13 problems where valid inputs exceed the 2 MB trace budget, so the run stops before the answer (fixed separately).
+- Server errors and unchecked inputs, fixed here:
+  - **ninjas-training** declared `minCols(3)`, but `InputValidator` never implemented `minCols`. A grid narrower than 3 reached `points[day][2]` and returned a 500. `minCols` is now enforced, which also activates celebrity-problem's declared minimum.
+  - **knapsack-01, unbounded-knapsack:** unequal weight and value lists returned a 500 (more weights) or silently dropped values (more values). They are now refused with "Needs exactly one value per weight".
+  - **coin-change-2** accepted repeated coins and counted each copy as a different coin: `[2,2]`, amount 4 gave 3, but the right answer is 1. Coins must now be distinct.
+  - **largest-divisible-subset** accepted repeats, so `[2,2,4]` came back as a "subset". Values must now be distinct.
+- Tests: `TracerAnswerRegressionTest.dpInputsOutsideTheProblemAreRefused` and `InputValidatorTest.rejectsTooNarrow` are both red on `5c4e027`. Full backend suite green.

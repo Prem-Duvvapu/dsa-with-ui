@@ -186,6 +186,7 @@ public final class InputValidator {
             throw new IllegalArgumentException("The grid cannot be empty.");
         }
 
+        Integer minCols = f.intConstraint("minCols");
         Integer maxCols = f.intConstraint("maxCols");
         Integer minVal = f.intConstraint("minValue");
         Integer maxVal = f.intConstraint("maxValue");
@@ -200,6 +201,11 @@ public final class InputValidator {
                 width = row.size();
                 if (maxCols != null && width > maxCols) {
                     throw new IllegalArgumentException("Limited to " + maxCols + " columns.");
+                }
+                // minCols was declared by tracers (ninjas-training, celebrity-problem) but never
+                // checked, so a narrower grid reached code that indexes every column.
+                if (width > 0 && minCols != null && width < minCols) {
+                    throw new IllegalArgumentException("Needs at least " + minCols + " columns.");
                 }
                 if (width == 0) {
                     throw new IllegalArgumentException("Rows cannot be empty.");

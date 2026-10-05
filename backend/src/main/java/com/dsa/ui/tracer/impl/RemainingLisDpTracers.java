@@ -135,6 +135,11 @@ class LargestDivisibleSubsetRemainingTracer extends LisRemainingTracer {
     @Override public String id() { return "largest-divisible-subset"; }
     @Override public String annotatedCode() { return DpTraceSupport.CODE_WITH_RECONSTRUCTION; }
     @Override protected List<Integer> defaults() { return List.of(1, 2, 4, 8); }
+    /** The problem's values are distinct; a repeated value made [2, 2, 4] a "subset". */
+    @Override public InputSpec inputSpec() {
+        return InputSpec.of(InputField.of("nums", FieldType.INT_ARRAY).label("Numbers")
+                .length(1, 15).values(1, 100).distinct().defaultValue(defaults()).build());
+    }
     @Override public Map<String, Object> alternateInput() { return Map.of("nums", List.of(1, 2, 3)); }
     @Override public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums"); Arrays.sort(nums); int n = nums.length;

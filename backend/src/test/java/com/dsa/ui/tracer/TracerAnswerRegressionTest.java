@@ -109,6 +109,33 @@ class TracerAnswerRegressionTest {
                 .isInstanceOf(InputValidationException.class);
     }
 
+    /**
+     * DP inputs that break the problem's own definition are refused, not run (found by the
+     * independent DP verification, 2026-10-05): a ninja day with fewer than three activities
+     * used to 500; unequal weight/value lists used to 500 or silently drop values; repeated
+     * coins were counted as different coins (coins [2,2], amount 4 gave 3, not 1); a repeated
+     * value made [2, 2, 4] a "divisible subset".
+     */
+    @org.junit.jupiter.api.Test
+    void dpInputsOutsideTheProblemAreRefused() {
+        AlgorithmTracer ninja = tracers.find("ninjas-training").orElseThrow();
+        assertThatThrownBy(() -> runner.run(ninja, Map.of("points", List.of(List.of(5, 1)))))
+                .isInstanceOf(InputValidationException.class);
+        for (String id : List.of("knapsack-01", "unbounded-knapsack")) {
+            AlgorithmTracer knapsack = tracers.find(id).orElseThrow();
+            assertThatThrownBy(() -> runner.run(knapsack, Map.of("weights", List.of(1, 2, 3), "values", List.of(1, 2), "capacity", 5)))
+                    .as(id + " with more weights than values").isInstanceOf(InputValidationException.class);
+            assertThatThrownBy(() -> runner.run(knapsack, Map.of("weights", List.of(1), "values", List.of(1, 2), "capacity", 5)))
+                    .as(id + " with more values than weights").isInstanceOf(InputValidationException.class);
+        }
+        AlgorithmTracer coins = tracers.find("coin-change-2").orElseThrow();
+        assertThatThrownBy(() -> runner.run(coins, Map.of("coins", List.of(2, 2), "amount", 4)))
+                .isInstanceOf(InputValidationException.class);
+        AlgorithmTracer divisible = tracers.find("largest-divisible-subset").orElseThrow();
+        assertThatThrownBy(() -> runner.run(divisible, Map.of("nums", List.of(2, 2, 4))))
+                .isInstanceOf(InputValidationException.class);
+    }
+
     @ParameterizedTest(name = "{0} {1} -> {2} = {3}")
     @CsvSource(delimiter = '|', textBlock = """
             # '^' is right-associative: A^B^C is A^(B^C).
