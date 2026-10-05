@@ -144,4 +144,41 @@ describe('InputPanel', () => {
       expect(screen.queryByRole('button', { name: /load two-sum only/i })).not.toBeInTheDocument();
     });
   });
+
+  describe('field semantics (P7)', () => {
+    const intSpec = { fields: [{ name: 'target', type: 'INT', label: 'Target sum', help: 'Any whole number.', defaultValue: 9 }] };
+
+    it('keeps an emptied number field empty instead of inventing a 0', () => {
+      const onRun = vi.fn();
+      render(<Controlled inputSpec={intSpec} onRun={onRun} />);
+      const input = screen.getByLabelText('Target sum');
+      fireEvent.change(input, { target: { value: '' } });
+      expect(input).toHaveValue(null);
+      fireEvent.click(screen.getByRole('button', { name: 'Run with this input' }));
+      // What is sent is what is there: nothing - the server answers with a field error.
+      expect(onRun).toHaveBeenCalledWith({ target: '' });
+    });
+
+    it('lets a negative number be typed from an empty field', () => {
+      render(<Controlled inputSpec={intSpec} />);
+      const input = screen.getByLabelText('Target sum');
+      fireEvent.change(input, { target: { value: '' } });
+      fireEvent.change(input, { target: { value: '-5' } });
+      expect(input).toHaveValue(-5);
+    });
+
+    it('ties the label, help and error to the field', () => {
+      render(<Controlled inputSpec={intSpec} fieldErrors={{ target: 'Must be at most 2000.' }} />);
+      const input = screen.getByRole('spinbutton', { name: 'Target sum' });
+      expect(input).toHaveAccessibleDescription('Any whole number. Must be at most 2000.');
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('names a composite editor as a group, so its inner controls have context', () => {
+      render(<Controlled fieldErrors={{ nums: 'Too long.' }} />);
+      const group = screen.getByRole('group', { name: 'Array' });
+      expect(group).toHaveAccessibleDescription('Too long.');
+      expect(group).toContainElement(screen.getAllByLabelText(/Position \d+ value/)[0]);
+    });
+  });
 });

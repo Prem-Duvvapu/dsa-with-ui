@@ -14,8 +14,14 @@ export default function GraphField({ field, value, onChange }) {
   const maxEdges = c.maxEdges ?? Infinity;
   const weighted = c.weighted === true;
 
-  const setVertices = (n) => {
-    const clamped = Math.max(1, Math.min(maxVertices, n));
+  // An emptied or half-typed number stays empty rather than becoming 0 (or 1): a minus sign
+  // could not be typed, and the field showed a value nobody entered. Submitting it empty is the
+  // server's to reject, as a field error.
+  const numberOrEmpty = (raw) => (raw === '' ? '' : Number(raw));
+
+  const setVertices = (raw) => {
+    if (raw === '') { onChange({ vertices: '', edges }); return; }
+    const clamped = Math.max(1, Math.min(maxVertices, Number(raw)));
     onChange({ vertices: clamped, edges });
   };
 
@@ -44,7 +50,7 @@ export default function GraphField({ field, value, onChange }) {
           min={1}
           max={maxVertices === Infinity ? undefined : maxVertices}
           value={vertices}
-          onChange={(e) => setVertices(Number(e.target.value) || 1)}
+          onChange={(e) => setVertices(e.target.value)}
           className={fields.countInput}
         />
       </label>
@@ -56,7 +62,7 @@ export default function GraphField({ field, value, onChange }) {
             <input
               type="number" min={0} max={Math.max(0, vertices - 1)}
               value={edge[0]}
-              onChange={(ev) => setEdge(i, 0, Number(ev.target.value) || 0)}
+              onChange={(ev) => setEdge(i, 0, numberOrEmpty(ev.target.value))}
               aria-label={`Edge ${i + 1} from vertex`}
               className={`ip-input ${fields.numberInput}`}
             />
@@ -64,7 +70,7 @@ export default function GraphField({ field, value, onChange }) {
             <input
               type="number" min={0} max={Math.max(0, vertices - 1)}
               value={edge[1]}
-              onChange={(ev) => setEdge(i, 1, Number(ev.target.value) || 0)}
+              onChange={(ev) => setEdge(i, 1, numberOrEmpty(ev.target.value))}
               aria-label={`Edge ${i + 1} to vertex`}
               className={`ip-input ${fields.numberInput}`}
             />
@@ -72,7 +78,7 @@ export default function GraphField({ field, value, onChange }) {
               <input
                 type="number"
                 value={edge[2] ?? 1}
-                onChange={(ev) => setEdge(i, 2, Number(ev.target.value) || 0)}
+                onChange={(ev) => setEdge(i, 2, numberOrEmpty(ev.target.value))}
                 aria-label={`Edge ${i + 1} weight`}
                 title="weight"
                 className={`ip-input ${fields.numberInput}`}
