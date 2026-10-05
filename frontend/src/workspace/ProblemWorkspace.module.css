@@ -127,6 +127,7 @@
 .history summary span { font-weight: 400; font-size: var(--type-meta); color: var(--ink-secondary); }
 .history[open] { padding-bottom: 16px; }
 .history > :not(summary) { margin: 0 16px; }
+.history > :not(summary) + :not(summary) { margin-top: 12px; }
 
 /* Code walkthrough: measured split or Diagram / Source subviews */
 .codeArea { min-width: 0; }

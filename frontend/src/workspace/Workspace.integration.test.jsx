@@ -566,6 +566,34 @@ describe('Workspace on a phone', () => {
   });
 });
 
+describe('Workspace execution history (P6a)', () => {
+  it('lists the steps of a graph run - a family with no capture strip - and seeks from the list', async () => {
+    const graphStep = (n, text) => ({
+      stepNumber: n, activeLine: n, description: text, variables: {}, dsType: 'Graph',
+      graphNodes: [{ id: 0, label: '0', x: 10, y: 10, state: 'queued' }], graphEdges: [], nodeStates: { 0: 'queued' }
+    });
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      calls.push(url);
+      if (url === '/api/problems/bfs-traversal/execute') {
+        return Promise.resolve(ok([graphStep(1, 'bfs-traversal step one'), graphStep(2, 'bfs-traversal step two')]));
+      }
+      return Promise.resolve(respondTo(url));
+    }));
+    renderApp('/problem/bfs-traversal');
+    await screen.findByText('bfs-traversal step one');
+    const before = calls.filter((u) => u.endsWith('/execute')).length;
+    const history = screen.getByText('Execution history').closest('details');
+    fireEvent.click(within(history).getByText('Execution history'));
+    expect(await within(history).findByText(/^Steps 1–\d+ of \d+/)).toBeInTheDocument();
+    expect(within(history).queryByLabelText(/Execution capture/)).toBeNull();
+    const second = within(history).getByRole('button', { name: /^Step 2/ });
+    fireEvent.click(second);
+    expect(narration()).toHaveTextContent('bfs-traversal step two');
+    expect(second).toHaveAttribute('aria-current', 'step');
+    expect(calls.filter((u) => u.endsWith('/execute'))).toHaveLength(before);
+  });
+});
+
 describe('Workspace Focus mode (P5b)', () => {
   const spec = { fields: [{ name: 'n', label: 'Count', type: 'INT', defaultValue: 1 }] };
   function withEditor() {

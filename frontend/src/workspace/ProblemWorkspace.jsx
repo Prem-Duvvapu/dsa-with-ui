@@ -31,6 +31,7 @@ import { stageFor } from './stageFamily';
 import CodeWalkthrough from './CodeWalkthrough';
 import SourcePane from './SourcePane';
 import StateInspector from './StateInspector';
+import StepHistory from './StepHistory';
 import { curriculumNeighbours } from './curriculum';
 import { TRACE_ERROR_COPY, linkNoticeText, runFailureText } from './sessionCopy';
 import styles from './ProblemWorkspace.module.css';
@@ -141,6 +142,8 @@ export default function ProblemWorkspace() {
   // source, and which Code subview they chose on a narrow screen. A new problem starts fresh.
   const sourceScroll = useRef(null);
   const [codeSubview, setCodeSubview] = useState('source');
+  // Execution history is listed only while its disclosure is open: closed, it costs nothing.
+  const [historyOpen, setHistoryOpen] = useState(false);
   useEffect(() => {
     setIsCompareOpen(false);
   }, [problemId]);
@@ -574,12 +577,16 @@ export default function ProblemWorkspace() {
                 </section>
               )}
 
-              {(showCapture || canCompare) && (
+              {(steps.length > 0 || canCompare) && (
                 <section className={styles.historyRow} aria-label="Execution history and comparison" hidden={isFocus}>
-                  {showCapture && (
-                    <details className={styles.history} data-tour="capture-strip">
+                  {/* Every family has the textual list; the capture strip joins it where it means
+                      something (not Graph/Tree/DP, whose diagram already shows the whole run). */}
+                  {steps.length > 0 && (
+                    <details className={styles.history} data-tour="capture-strip" open={historyOpen}
+                      onToggle={(event) => setHistoryOpen(event.currentTarget.open)}>
                       <summary>Execution history <span>step {currentStepIndex + 1} of {steps.length}</span></summary>
-                      <CaptureStrip steps={steps} current={currentStepIndex} dsType={dsType} onSeek={session.seek} resolvedInput={resolvedInput} />
+                      {showCapture && <CaptureStrip steps={steps} current={currentStepIndex} dsType={dsType} onSeek={session.seek} resolvedInput={resolvedInput} />}
+                      {historyOpen && <StepHistory key={`${problemId}:${run.id}`} steps={steps} current={currentStepIndex} onSeek={session.seek} />}
                     </details>
                   )}
                   {canCompare && (

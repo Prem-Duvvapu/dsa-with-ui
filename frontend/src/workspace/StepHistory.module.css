@@ -1,0 +1,16 @@
+.history { display: grid; gap: var(--space-sm); min-width: 0; }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; }
+.range { font-size: var(--type-meta); color: var(--ink-secondary); }
+.pager { display: flex; gap: 8px; flex-wrap: wrap; }
+.control { display: inline-flex; align-items: center; min-height: var(--target-min); padding: 0 12px; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-strong); font: inherit; font-size: var(--type-control); font-weight: 600; cursor: pointer; }
+.control:hover:not(:disabled) { background: var(--bench-fill); }
+.control:disabled { opacity: .45; cursor: not-allowed; }
+/* Bounded: 50 entries scroll inside the disclosure rather than lengthening the page. */
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: 420px; overflow-y: auto; overscroll-behavior: contain; }
+.entry { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); gap: 8px; width: 100%; min-height: var(--target-min); padding: 8px 10px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; color: var(--ink-strong); font: inherit; font-size: var(--type-control); text-align: left; cursor: pointer; }
+.entry:hover { background: var(--bench-fill); }
+.selected { border-color: var(--accent-line); background: var(--bench-fill); }
+.number { font: 600 12px var(--font-code); color: var(--ink-secondary); padding-top: 2px; }
+.text { min-width: 0; overflow-wrap: anywhere; }
+.entry:focus-visible, .control:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.empty { font-size: var(--type-meta); color: var(--ink-secondary); }
