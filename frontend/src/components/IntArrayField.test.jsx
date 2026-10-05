@@ -61,4 +61,11 @@ describe('IntArrayField', () => {
     render(<IntArrayField field={FIELD} value={[1, 2]} onChange={() => {}} />);
     expect(screen.queryByLabelText(/click to clear/)).not.toBeInTheDocument();
   });
+
+  it('keeps an emptied chip empty instead of inventing a 0 (P7)', () => {
+    const onChange = vi.fn();
+    render(<IntArrayField field={FIELD} value={[1, 2, 3]} onChange={onChange} />);
+    fireEvent.change(screen.getByLabelText('Position 2 value'), { target: { value: '' } });
+    expect(onChange).toHaveBeenCalledWith([1, '', 3]);
+  });
 });

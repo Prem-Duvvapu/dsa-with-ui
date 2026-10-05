@@ -52,7 +52,7 @@ export default function IntArrayField({ field, value, onChange, allowNulls = fal
             <input
               type="number"
               value={v}
-              onChange={(e) => setAt(i, e.target.value === '' ? 0 : Number(e.target.value))}
+              onChange={(e) => setAt(i, e.target.value === '' ? '' : Number(e.target.value))}
               aria-label={`Position ${i + 1} value`}
               className={fields.chipInput}
             />

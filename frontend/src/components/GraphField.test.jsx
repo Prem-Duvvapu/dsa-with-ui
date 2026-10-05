@@ -66,4 +66,16 @@ describe('GraphField', () => {
     fireEvent.click(screen.getByLabelText('Remove edge 1'));
     expect(onChange).toHaveBeenCalledWith({ vertices: 3, edges: [[1, 2]] });
   });
+
+  it('keeps an emptied number empty instead of inventing a 0 or 1 (P7)', () => {
+    const field = { name: 'graph', constraints: { maxVertices: 5, weighted: true } };
+    const onChange = vi.fn();
+    render(<GraphField field={field} value={{ vertices: 3, edges: [[0, 1, 4]] }} onChange={onChange} />);
+    fireEvent.change(screen.getByLabelText('Vertices'), { target: { value: '' } });
+    expect(onChange).toHaveBeenLastCalledWith({ vertices: '', edges: [[0, 1, 4]] });
+    fireEvent.change(screen.getByLabelText('Edge 1 to vertex'), { target: { value: '' } });
+    expect(onChange).toHaveBeenLastCalledWith({ vertices: 3, edges: [[0, '', 4]] });
+    fireEvent.change(screen.getByLabelText('Edge 1 weight'), { target: { value: '' } });
+    expect(onChange).toHaveBeenLastCalledWith({ vertices: 3, edges: [[0, 1, '']] });
+  });
 });

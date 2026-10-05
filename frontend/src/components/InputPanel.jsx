@@ -39,6 +39,7 @@ import styles from './InputPanel.module.css';
  * loading-without-running would put it straight back.
  */
 export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, values, onChange, onRun, draftChanged = false, variant = 'panel' }) {
+  const fieldIdBase = useId();
   // 'section' is the workspace's normal-flow editor (docs/ui-revamp/playground-concept.png):
   // fields first, then the actions, each named by its visible text so the accessible name
   // and the label a sighted or voice-control user sees are the same words.
@@ -207,28 +208,49 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
 
     </>
   );
+  // Each field's label, help and error are tied to its editor: a single input through its
+  // <label>, a composite editor (array, tree, grid, graph) as a labelled group, so its many
+  // inner controls ("Position 3 value") are heard in the context of the field they belong to.
   const fieldList = (
       <div className={styles.fieldsContainer}>
-        {inputSpec.fields.map((field) => (
-          <div key={field.name}>
-            <div className={styles.fieldLabelRow}>
-              <label className={styles.fieldLabel}>
-                {field.label}
-              </label>
+        {inputSpec.fields.map((field) => {
+          const base = `${fieldIdBase}-${field.name}`;
+          const single = field.type === 'INT' || field.type === 'STRING';
+          const error = fieldErrors?.[field.name];
+          const describedBy = [field.help && `${base}-help`, error && `${base}-error`].filter(Boolean).join(' ') || undefined;
+          return (
+            <div
+              key={field.name}
+              role={single ? undefined : 'group'}
+              aria-labelledby={single ? undefined : `${base}-label`}
+              aria-describedby={single ? undefined : describedBy}
+            >
+              <div className={styles.fieldLabelRow}>
+                <label id={`${base}-label`} htmlFor={single ? `${base}-input` : undefined} className={styles.fieldLabel}>
+                  {field.label}
+                </label>
+              </div>
+              {field.help && (
+                <p id={`${base}-help`} className={styles.fieldHelp}>{field.help}</p>
+              )}
+
+              <FieldEditor
+                field={field}
+                value={draft[field.name]}
+                onChange={(v) => setField(field.name, v)}
+                inputId={`${base}-input`}
+                describedBy={describedBy}
+                invalid={Boolean(error)}
+              />
+
+              {error && (
+                <p id={`${base}-error`} className={styles.fieldError}>
+                  {error}
+                </p>
+              )}
             </div>
-            {field.help && (
-              <p className={styles.fieldHelp}>{field.help}</p>
-            )}
-
-            <FieldEditor field={field} value={draft[field.name]} onChange={(v) => setField(field.name, v)} />
-
-            {fieldErrors?.[field.name] && (
-              <p className={styles.fieldError}>
-                {fieldErrors[field.name]}
-              </p>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
   );
 
@@ -241,29 +263,37 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
   );
 }
 
-function FieldEditor({ field, value, onChange }) {
+function FieldEditor({ field, value, onChange, inputId, describedBy, invalid }) {
   switch (field.type) {
     case 'INT':
+      // An empty or half-typed number ("-" on the way to "-5") stays empty. Turning it into 0
+      // made a minus sign impossible to type and showed a value nobody entered; an empty
+      // field submitted is the server's to reject, with a field error, never a silent 0.
       return (
         <input
+          id={inputId}
           type="number"
+          inputMode="numeric"
           className={`ip-input ${layout.inputNarrow}`}
           min={field.constraints?.min}
           max={field.constraints?.max}
-          value={value ?? 0}
-          onChange={(e) => onChange(e.target.value === '' ? 0 : Number(e.target.value))}
-          aria-label={field.label}
+          value={value ?? ''}
+          onChange={(e) => onChange(e.target.value === '' ? '' : Number(e.target.value))}
+          aria-describedby={describedBy}
+          aria-invalid={invalid || undefined}
         />
       );
     case 'STRING':
       return (
         <input
+          id={inputId}
           type="text"
           className={`ip-input ${layout.inputFull}`}
           maxLength={field.constraints?.maxLength}
           value={value ?? ''}
           onChange={(e) => onChange(e.target.value)}
-          aria-label={field.label}
+          aria-describedby={describedBy}
+          aria-invalid={invalid || undefined}
         />
       );
     case 'INT_ARRAY':

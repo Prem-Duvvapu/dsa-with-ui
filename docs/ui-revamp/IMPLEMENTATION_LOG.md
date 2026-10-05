@@ -745,3 +745,16 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 **Browser:** `evidence/p6/compare-completion-journey.cjs` passes 13/13 (tracker row).
 
 **P6 disposition:** done.
+
+## 2026-10-05 — P7 input contracts: no invented numbers, fields tied to their help and errors
+
+- **Defect: invented numbers.** Three editors turned an empty or half-typed number into a value nobody entered:
+  - INT: `'' → 0`;
+  - array/list/tree chips: `'' → 0`;
+  - graph endpoints and weights: `|| 0`, and vertex count: `|| 1`.
+  So a minus sign could not be typed from an empty field, and clearing a field showed a valid-looking 0. In a real browser on `3373c48`: clear → "0", then typing `-5` → "05".
+- **Fix.** All of them now keep an empty value empty. Submitted empty, the server's validator answers with a field error ("Expected a whole number.", "Position N is not a whole number.", "The vertex count must be a whole number…"), and the previous run stays on screen.
+- **Fields tied to their text.** Each field's label is now its input's `<label for>` (INT/STRING). Composite editors (array, list, tree, grid, graph) are a `role="group"` labelled by the field label. Help and server error are linked with `aria-describedby`, and an erroring field gets `aria-invalid`.
+- **Tests.** 4 InputPanel tests and 2 editor tests. 5 are red on `3373c48`. The negative-typing test passes on both, because jsdom cannot reproduce a browser's partial `-`; the browser probe above is that proof.
+- **Browser.** `evidence/p7/inputs-journey.cjs` passes 14/14 on a phone viewport with touch emulation (tracker row). A real virtual keyboard on a device is not available here and stays pending.
+- **Backend wording defect found (separate PR).** Validation messages number positions and edges from 0 ("Position 1 is not a whole number." for the second chip; "Edge 0 refers to…"), while the editors label them from 1.
