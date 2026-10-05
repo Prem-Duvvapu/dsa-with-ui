@@ -103,6 +103,65 @@ describe('TourGuide', () => {
     expect(screen.getByText('First stop')).toBeInTheDocument();
   });
 
+  it('skips a target that is rendered but hidden - Focus mode, a closed phone Menu', () => {
+    const host = withTargets(['canvas']);
+    const hidden = document.createElement('div');
+    hidden.hidden = true;
+    hidden.appendChild(Object.assign(document.createElement('div'), {}));
+    hidden.firstChild.setAttribute('data-tour', 'input-editor');
+    const menu = document.createElement('details');
+    menu.innerHTML = '<summary>Menu</summary><button data-tour="switcher">Switch problem</button>';
+    host.append(hidden, menu);
+    render(
+      <TourGuide
+        open
+        onClose={() => {}}
+        steps={[
+          { target: 'switcher', title: 'In the closed menu', body: 'x' },
+          { target: 'input-editor', title: 'Hidden by Focus', body: 'y' },
+          { target: 'canvas', title: 'On screen', body: 'z' }
+        ]}
+      />
+    );
+    expect(screen.getByText('1 of 1')).toBeInTheDocument();
+    expect(screen.getByText('On screen')).toBeInTheDocument();
+  });
+
+  it('scrolls each target into view before spotlighting it', () => {
+    const host = withTargets(['canvas', 'input-editor']);
+    const scrolled = [];
+    host.querySelectorAll('[data-tour]').forEach((el) => {
+      el.scrollIntoView = (options) => scrolled.push([el.getAttribute('data-tour'), options.block]);
+    });
+    render(
+      <TourGuide
+        open
+        onClose={() => {}}
+        steps={[
+          { target: 'canvas', title: 'Top', body: 'one' },
+          { target: 'input-editor', title: 'Below the fold', body: 'two' }
+        ]}
+      />
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(scrolled).toEqual([['canvas', 'center'], ['input-editor', 'center']]);
+  });
+
+  it('makes the page inert while it is up, and gives focus back when it ends', () => {
+    withTargets(['canvas']);
+    const opener = document.createElement('button');
+    opener.textContent = 'Help';
+    document.body.appendChild(opener);
+    opener.focus();
+    const one = [{ target: 'canvas', title: 'Only', body: 'x' }];
+    const { rerender } = render(<TourGuide open onClose={() => {}} steps={one} />);
+    expect(opener).toHaveAttribute('inert');
+    expect(screen.getByRole('button', { name: 'Done' })).toHaveFocus();
+    rerender(<TourGuide open={false} onClose={() => {}} steps={one} />);
+    expect(document.querySelector('[inert]')).toBeNull();
+    expect(opener).toHaveFocus();
+  });
+
   it('declares a title and body for every step', () => {
     // Cheap, but it is what catches a half-written step added in a hurry.
     for (const step of TOUR_STEPS) {

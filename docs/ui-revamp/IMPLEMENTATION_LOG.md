@@ -667,3 +667,29 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 - **Not done here.** Focus is offered from the Playground only. The Code walkthrough already gives the diagram half the screen, and its split/subview state is untouched by Focus. The help line for Esc now mentions Focus; the full help/tour update is P5c.
 - **Tests.** 4 integration tests, all red on `175e3d7` (no Focus control): run, step and draft kept, with the editor hidden but mounted; pause on entry and exit; Escape priority behind help; problem change ends Focus. Full suite 635/635; build 349.42 kB / 111.03 kB gzip.
 - **Browser.** `evidence/p5/focus-journey.cjs` passes 22/22 on the real backend (tracker row).
+
+## 2026-10-05 — P5c guidance and keyboard ownership (P5 complete)
+
+- **Keyboard ownership** was already one policy in `useKeyboardShortcuts` (#191: handled events, then an open modal, then composite widgets and the source pane, then the player). P5 adds two rules:
+  - Escape reaches Focus last: any modal dialog, including the tour, takes its own Escape first.
+  - The switcher handles its own Escape and marks it handled.
+- The help list's Esc line now says it also leaves Focus.
+- **Welcome.**
+  - The copy described the retired shell: "the list on the left", `/` focusing a search box, "the panel on the right". It now names Switch problem (Ctrl/⌘ K or /), the Playground and Code walkthrough.
+  - It uses `useModalDialog`: focus trap, an inert page, and focus return.
+  - Dismissal storage (`dsa-ui:seenWelcome`) and replay from help are unchanged.
+- **Tour.**
+  - A step is kept only if its target is actually shown: not hidden, not inert, not inside a closed `<details>`, and passing `checkVisibility()` where the browser has it.
+  - Each target is scrolled into view (centre; instant, or auto under reduced motion) before it is measured.
+  - The page is inert while the tour is up, and focus is returned when it ends.
+  - Starting the tour pauses, leaves Focus and returns to the Playground.
+  - New step: Focus.
+  - The phone restriction (`innerWidth > 768`) is gone: on a phone the steps whose targets are in the closed Menu are skipped, and the rest scroll into view.
+- **Tests.** 7 new tests, all red on `e6faaee`'s components:
+  - the tour skips hidden or closed-menu targets, scrolls each target into view, and makes the page inert then returns focus;
+  - welcome copy is current and the page is inert behind it;
+  - the tour started from Focus leaves Focus first;
+  - the tour is offered on a phone.
+  Full suite 642/642; build 350.44 kB / 111.30 kB gzip (+2.0% over the 109.11 kB recorded before P5).
+- **Browser.** `evidence/p5/tour-journey.cjs` passes 40/40 (tracker row). Its first run found the phone tour spotlighting a CSS-hidden desktop link; that is fixed, and the probe now requires an exact box match.
+- **P5 disposition.** Done, apart from a screen-reader pass of the combobox and tour, which stays pending because no screen reader is available here.
