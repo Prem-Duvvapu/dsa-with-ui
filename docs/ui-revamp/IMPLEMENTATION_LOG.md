@@ -764,6 +764,13 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 - **Tests.** 4 InputPanel tests and 2 editor tests. 5 are red on `3373c48`. The negative-typing test passes on both, because jsdom cannot reproduce a browser's partial `-`; the browser probe above is that proof.
 - **Browser.** `evidence/p7/inputs-journey.cjs` passes 14/14 on a phone viewport with touch emulation (tracker row). A real virtual keyboard on a device is not available here and stays pending.
 - **Backend wording defect found (separate PR).** Validation messages number positions and edges from 0 ("Position 1 is not a whole number." for the second chip; "Edge 0 refers to…"), while the editors label them from 1.
+## 2026-10-05 — Backend: validation messages number elements as the editors do
+
+A backend contract defect found by the P7 input journey, fixed as its own change, as the plan requires.
+
+- **Defect.** `InputValidator` numbered list positions, grid rows/cells and graph edges from 0, while every editor labels them from 1. Clearing the second chip produced "Position 1 is not a whole number."; a bad second edge produced "Edge 1…"; a short second grid row produced "row 1".
+- **Fix.** Messages now count from 1. Grid cells read "Row R, column C" (the grid editor's own words). Vertex ids are unchanged, because they are 0-based ids the reader types, not positions.
+- **Tests.** The `InputValidatorTest.Numbering` tests (array, grid cell, edge) and the updated ragged-grid assertion ("row 2" for the second row) are 4 failures on `3373c48`. Full backend suite green.
 
 ## 2026-10-05 — P7 renderer coverage sweep (all 17 registry keys)
 

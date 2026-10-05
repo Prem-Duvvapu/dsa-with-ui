@@ -115,13 +115,13 @@ public final class InputValidator {
             Object raw = list.get(i);
             if (raw == null) {
                 if (!allowNulls) {
-                    throw new IllegalArgumentException("Position " + i + " is empty.");
+                    throw new IllegalArgumentException("Position " + (i + 1) + " is empty.");
                 }
                 out.add(null);
                 continue;
             }
             if (!(raw instanceof Number n) || raw instanceof Double || raw instanceof Float) {
-                throw new IllegalArgumentException("Position " + i + " is not a whole number.");
+                throw new IllegalArgumentException("Position " + (i + 1) + " is not a whole number.");
             }
             int v = n.intValue();
             if (minVal != null && v < minVal) {
@@ -194,7 +194,7 @@ public final class InputValidator {
 
         for (int r = 0; r < rows.size(); r++) {
             if (!(rows.get(r) instanceof List<?> row)) {
-                throw new IllegalArgumentException("Row " + r + " is not a list.");
+                throw new IllegalArgumentException("Row " + (r + 1) + " is not a list.");
             }
             if (width == -1) {
                 width = row.size();
@@ -206,7 +206,7 @@ public final class InputValidator {
                 }
             } else if (row.size() != width) {
                 throw new IllegalArgumentException(
-                        "Every row must be the same width; row " + r + " has "
+                        "Every row must be the same width; row " + (r + 1) + " has "
                                 + row.size() + ", expected " + width + ".");
             }
             List<Number> parsed = new ArrayList<>(row.size());
@@ -214,7 +214,7 @@ public final class InputValidator {
                 Object cell = row.get(c);
                 if (!(cell instanceof Number n) || cell instanceof Double || cell instanceof Float) {
                     throw new IllegalArgumentException(
-                            "Cell (" + r + "," + c + ") is not a whole number.");
+                            "Row " + (r + 1) + ", column " + (c + 1) + " is not a whole number.");
                 }
                 int v = n.intValue();
                 if (minVal != null && v < minVal) {
@@ -282,22 +282,22 @@ public final class InputValidator {
         List<List<Number>> parsedEdges = new ArrayList<>();
         for (int i = 0; i < edges.size(); i++) {
             if (!(edges.get(i) instanceof List<?> e)) {
-                throw new IllegalArgumentException("Edge " + i + " is not a list.");
+                throw new IllegalArgumentException("Edge " + (i + 1) + " is not a list.");
             }
             int expected = weighted ? 3 : 2;
             if (e.size() != expected) {
-                throw new IllegalArgumentException("Edge " + i + " needs exactly " + expected
+                throw new IllegalArgumentException("Edge " + (i + 1) + " needs exactly " + expected
                         + " values" + (weighted ? " [from, to, weight]." : " [from, to]."));
             }
             List<Number> parsed = new ArrayList<>(e.size());
             for (int j = 0; j < e.size(); j++) {
                 parsed.add(graphInteger(e.get(j),
-                        "Edge " + i + " must contain whole numbers in the supported range."));
+                        "Edge " + (i + 1) + " must contain whole numbers in the supported range."));
             }
             for (int endpoint = 0; endpoint < 2; endpoint++) {
                 int v = parsed.get(endpoint).intValue();
                 if (v < 0 || v >= vertices) {
-                    throw new IllegalArgumentException("Edge " + i + " refers to vertex " + v
+                    throw new IllegalArgumentException("Edge " + (i + 1) + " refers to vertex " + v
                             + ", outside 0.." + (vertices - 1) + ".");
                 }
             }
@@ -305,11 +305,11 @@ public final class InputValidator {
                 int weight = parsed.get(2).intValue();
                 if (minWeight != null && weight < minWeight) {
                     throw new IllegalArgumentException(
-                            "Edge " + i + " weight must be at least " + minWeight + ".");
+                            "Edge " + (i + 1) + " weight must be at least " + minWeight + ".");
                 }
                 if (maxWeight != null && weight > maxWeight) {
                     throw new IllegalArgumentException(
-                            "Edge " + i + " weight must be at most " + maxWeight + ".");
+                            "Edge " + (i + 1) + " weight must be at most " + maxWeight + ".");
                 }
             }
             parsedEdges.add(parsed);
