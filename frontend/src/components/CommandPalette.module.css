@@ -74,6 +74,8 @@
   border-radius: var(--radius-sm);
   text-align: left;
   cursor: pointer;
+  /* Options are pointer targets on phones too. */
+  min-height: 44px;
 }
 
 .itemActive {
@@ -92,4 +94,35 @@
   font-size: var(--text-2xs);
   color: var(--text-muted);
   border-top: 1px solid var(--border-default);
+}
+
+.itemLabel {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Same treatment as the library's matches, so a hit reads the same in both places. */
+.itemLabel mark {
+  background: var(--bench-fill);
+  color: var(--ink-strong);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.itemDetail {
+  flex-shrink: 0;
+  max-width: 40%;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.itemTag {
+  flex-shrink: 0;
+  padding: 1px 6px;
+  font-size: var(--text-2xs);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
 }

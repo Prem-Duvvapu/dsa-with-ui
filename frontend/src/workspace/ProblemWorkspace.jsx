@@ -255,7 +255,9 @@ export default function ProblemWorkspace() {
         onStartTour={canTour ? startTour : null}
         onReplayWelcome={() => { setIsHelpOpen(false); setHasSeenWelcome(false); }} />
       <CommandPalette isOpen={isPaletteOpen} onClose={() => setIsPaletteOpen(false)} problems={problems}
+        currentProblemId={problemId} catalogLoading={catalogLoading} catalogError={catalogError}
         onSelectProblem={(id) => { setIsPaletteOpen(false); if (id !== problemId) navigate(`/problem/${id}`); }}
+        onViewAll={(query) => { setIsPaletteOpen(false); navigate(`/?q=${encodeURIComponent(query)}`); }}
         onCycleTheme={cycleTheme} />
       <WelcomeGuide
         open={!hasSeenWelcome && !catalogLoading && !catalogError && !isTourOpen}

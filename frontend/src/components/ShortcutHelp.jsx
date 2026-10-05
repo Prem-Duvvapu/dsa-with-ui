@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import useModalDialog from '../hooks/useModalDialog';
 import { X } from 'lucide-react';
 import styles from './ShortcutHelp.module.css';
 
@@ -25,18 +26,21 @@ export const SHORTCUTS = [
 ];
 
 export default function ShortcutHelp({ open, onClose, onReplayWelcome, onStartTour }) {
+  const rootRef = useRef(null);
   const closeRef = useRef(null);
 
-  // Focus the dialog's own control on open, so Escape and Tab act on the dialog rather
-  // than on whatever was focused behind it.
-  useEffect(() => {
-    if (open) closeRef.current?.focus();
-  }, [open]);
+  // Focus the dialog's own control on open, so Escape and Tab act on the dialog rather than
+  // on whatever was focused behind it; the page behind is inert until it closes.
+  useModalDialog(rootRef, open, {
+    initialFocusRef: closeRef,
+    fallbackFocus: () => document.getElementById('workspace-view')
+  });
 
   if (!open) return null;
 
   return (
     <div
+      ref={rootRef}
       className={styles.backdrop}
       onClick={onClose}
       data-testid="shortcut-help-backdrop"
