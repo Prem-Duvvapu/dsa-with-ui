@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import useComparisonTrace from './useComparisonTrace';
 
@@ -44,5 +44,23 @@ describe('useComparisonTrace', () => {
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.error).toBeTruthy();
     expect(result.current.defaultRun).toBeNull();
+  });
+
+  it('drops a late answer for a problem it has since moved away from', async () => {
+    const slow = [];
+    fetch.mockImplementation((url) => {
+      if (url.includes('/old/')) return new Promise((resolve) => slow.push(() => resolve(execResponse([{ stepNumber: 1, description: 'old' }]))));
+      return Promise.resolve(execResponse([{ stepNumber: 1, description: 'new' }, { stepNumber: 2, description: 'new 2' }]));
+    });
+    const { result, rerender } = renderHook(({ id }) => useComparisonTrace(id, { n: 1 }, true), { initialProps: { id: 'old' } });
+    rerender({ id: 'new' });
+    await waitFor(() => expect(result.current.defaultRun?.steps).toHaveLength(2));
+    expect(slow).toHaveLength(2);
+    await act(async () => {
+      slow.forEach((release) => release());
+      await new Promise((resolve) => setTimeout(resolve, 20));
+    });
+    expect(result.current.defaultRun.steps[0].description).toBe('new');
+    expect(result.current.loading).toBe(false);
   });
 });

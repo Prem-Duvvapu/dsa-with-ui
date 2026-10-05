@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { decodeTrace } from '../trace/decodeTrace';
 
-async function fetchRun(problemId, body) {
+async function fetchRun(problemId, body, signal) {
   const res = await fetch(`/api/problems/${problemId}/execute`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body || {})
+    body: JSON.stringify(body || {}),
+    signal
   });
   if (!res.ok) throw new Error(`execute failed: ${res.status}`);
   const data = await res.json();
@@ -33,28 +34,47 @@ export default function useComparisonTrace(problemId, alternateInput, isActive) 
   const alternateInputRef = useRef(alternateInput);
   alternateInputRef.current = alternateInput;
 
+  // Only the latest request may land: a retry, a new problem or closing the panel retires
+  // whatever was still in flight, so a slow earlier answer can never overwrite a newer one.
+  const requestRef = useRef(0);
+  const abortRef = useRef(null);
+
   const load = useCallback(async () => {
+    const request = ++requestRef.current;
+    abortRef.current?.abort();
+    abortRef.current = null;
     if (!problemId || !isActive) return;
+    const controller = typeof AbortController === 'function' ? new AbortController() : null;
+    abortRef.current = controller;
     setLoading(true);
     setError(null);
     setDefaultRun(null);
     setAlternateRun(null);
     try {
       const [defaultResult, alternateResult] = await Promise.all([
-        fetchRun(problemId, {}),
-        fetchRun(problemId, alternateInputRef.current)
+        fetchRun(problemId, {}, controller?.signal),
+        fetchRun(problemId, alternateInputRef.current, controller?.signal)
       ]);
+      if (request !== requestRef.current) return;
       setDefaultRun(defaultResult);
       setAlternateRun(alternateResult);
     } catch (err) {
+      if (request !== requestRef.current) return;
       console.warn('Comparison trace fetch failed:', err);
       setError('Could not load both runs to compare.');
     } finally {
-      setLoading(false);
+      if (request === requestRef.current) setLoading(false);
     }
   }, [problemId, isActive]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+    return () => {
+      requestRef.current += 1;
+      abortRef.current?.abort();
+      abortRef.current = null;
+    };
+  }, [load]);
 
   return { loading, error, defaultRun, alternateRun, retry: load };
 }

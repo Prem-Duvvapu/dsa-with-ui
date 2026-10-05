@@ -33,8 +33,8 @@ describe('CompareStrip', () => {
 
     await waitFor(() => expect(screen.queryByText(/loading/i)).not.toBeInTheDocument());
 
-    expect(screen.getByText(/default input/i)).toHaveTextContent('3 steps');
-    expect(screen.getByText(/other case/i)).toHaveTextContent('7 steps');
+    expect(screen.getByRole('heading', { name: /^Default input/ })).toHaveTextContent('3 steps');
+    expect(screen.getByRole('heading', { name: /^Other case/ })).toHaveTextContent('7 steps');
   });
 
   it('offers a retry when either run fails to load', async () => {
@@ -47,6 +47,28 @@ describe('CompareStrip', () => {
     fetch.mockResolvedValueOnce(execResponse(3)).mockResolvedValueOnce(execResponse(7));
     fireEvent.click(screen.getByRole('button', { name: /retry/i }));
 
-    await waitFor(() => expect(screen.getByText(/other case/i)).toHaveTextContent('7 steps'));
+    await waitFor(() => expect(screen.getByRole('heading', { name: /^Other case/ })).toHaveTextContent('7 steps'));
+  });
+
+  it('labels each side with its own input and position, and reads a graph run as text', async () => {
+    fetch.mockResolvedValueOnce(execResponse(3)).mockResolvedValueOnce(execResponse(7));
+    render(<CompareStrip problemId="bfs" dsType="Graph" alternateInput={{ n: 7 }} showCapture={false} />);
+    const other = await screen.findByRole('region', { name: 'Other case' });
+    expect(other).toHaveTextContent('n7');
+    expect(other).toHaveTextContent('Step 1 of 7');
+    expect(other).toHaveTextContent('step 1');
+    expect(screen.queryByLabelText(/Execution capture/)).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Other case: next step' }));
+    expect(other).toHaveTextContent('Step 2 of 7');
+    expect(other).toHaveTextContent('step 2');
+    // Moving one side never moves the other.
+    expect(screen.getByRole('region', { name: 'Default input' })).toHaveTextContent('Step 1 of 3');
+  });
+
+  it('states its scope, and that a submitted main run is not part of it', async () => {
+    fetch.mockResolvedValueOnce(execResponse(3)).mockResolvedValueOnce(execResponse(7));
+    render(<CompareStrip problemId="two-sum" dsType="Array" alternateInput={{ n: 7 }} mainIsCustom />);
+    expect(screen.getByText(/default input with its other case/)).toHaveTextContent('The run above uses your own input and is not part of this comparison.');
+    expect(screen.getByText(/default input with its other case/)).toHaveTextContent('not matching moments of the algorithm');
   });
 });

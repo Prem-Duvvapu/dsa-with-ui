@@ -37,3 +37,56 @@
   color: var(--text-secondary);
   font-size: var(--text-sm);
 }
+
+.scope {
+  margin: 0;
+  font-size: var(--type-meta);
+  color: var(--ink-secondary);
+}
+
+.position {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-panel);
+  color: var(--ink-strong);
+  cursor: pointer;
+}
+
+.control:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.slider {
+  flex: 1 1 160px;
+  min-width: 120px;
+  accent-color: var(--accent);
+}
+
+.counter {
+  font: 600 12px var(--font-code);
+  color: var(--ink-secondary);
+}
+
+.narration {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.control:focus-visible,
+.slider:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
