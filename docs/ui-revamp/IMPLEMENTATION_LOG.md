@@ -746,6 +746,12 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 
 **P6 disposition:** done.
 
+## 2026-10-05 — Fix: the end-of-run row pushed phones sideways (regression from P6b, #199)
+
+- **Found by** the P7 renderer sweep (`evidence/p7/renderer-sweep.cjs`). On `3373c48` at 390×844, the final step of 8 runs overflowed the page by 1–78 px: DP table, bits, window and tree problems, both inputs.
+- **Cause.** Each of those final steps shows the new "End of the run" row. Its "Next: ⟨problem title⟩" button inherits `.control`'s `white-space: nowrap`, so a long title could not wrap. The P6b journey had run at desktop width only.
+- **Fix.** Buttons in that row may wrap (`white-space: normal`, `max-width: 100%`).
+- **Check.** `evidence/p7/completion-overflow-recheck.cjs` re-runs the 8 failing rows: all 8 at 0 px. Layout cannot be measured in jsdom, so the browser re-check is the regression proof and the full sweep is the guard.
 ## 2026-10-05 — P7 input contracts: no invented numbers, fields tied to their help and errors
 
 - **Defect: invented numbers.** Three editors turned an empty or half-typed number into a value nobody entered:
