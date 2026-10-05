@@ -745,3 +745,11 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 **Browser:** `evidence/p6/compare-completion-journey.cjs` passes 13/13 (tracker row).
 
 **P6 disposition:** done.
+
+## 2026-10-05 — Backend: validation messages number elements as the editors do
+
+A backend contract defect found by the P7 input journey, fixed as its own change, as the plan requires.
+
+- **Defect.** `InputValidator` numbered list positions, grid rows/cells and graph edges from 0, while every editor labels them from 1. Clearing the second chip produced "Position 1 is not a whole number."; a bad second edge produced "Edge 1…"; a short second grid row produced "row 1".
+- **Fix.** Messages now count from 1. Grid cells read "Row R, column C" (the grid editor's own words). Vertex ids are unchanged, because they are 0-based ids the reader types, not positions.
+- **Tests.** The `InputValidatorTest.Numbering` tests (array, grid cell, edge) and the updated ragged-grid assertion ("row 2" for the second row) are 4 failures on `3373c48`. Full backend suite green.

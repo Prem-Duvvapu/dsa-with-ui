@@ -219,11 +219,12 @@ class InputValidatorTest {
         }
 
         @Test
-        @DisplayName("A ragged grid is rejected with the offending row")
+        @DisplayName("A ragged grid is rejected with the offending row, numbered as the editor numbers it")
         void rejectsRagged() {
             String msg = reject(spec, Map.of("g", List.of(List.of(0, 1), List.of(1))))
                     .getFieldErrors().get("g");
-            assertTrue(msg.contains("row 1"), msg);
+            // The second row is short; the grid editor calls it row 2.
+            assertTrue(msg.contains("row 2"), msg);
         }
 
         @Test
@@ -236,6 +237,41 @@ class InputValidatorTest {
         @Test
         void rejectsEmpty() {
             assertTrue(reject(spec, Map.of("g", List.of())).getFieldErrors().containsKey("g"));
+        }
+    }
+
+    /**
+     * The editors label positions, rows, columns and edges from 1 ("Position 2 value", "Cell row 2,
+     * column 1", "Edge 2 to vertex"), so the server's message about the same element must use the
+     * same number. It used to count from 0: "Position 1 is not a whole number." for the SECOND chip.
+     * Vertex ids stay 0-based - they are ids the reader types, not positions.
+     */
+    @Nested
+    @DisplayName("element numbering matches the editors")
+    class Numbering {
+
+        @Test
+        void arrayPositionsCountFromOne() {
+            InputSpec spec = InputSpec.of(InputField.of("nums", FieldType.INT_ARRAY).defaultValue(List.of(1)).build());
+            String msg = reject(spec, Map.of("nums", Arrays.asList(4, "", 6))).getFieldErrors().get("nums");
+            assertEquals("Position 2 is not a whole number.", msg);
+        }
+
+        @Test
+        void gridCellsAreRowAndColumnFromOne() {
+            InputSpec spec = InputSpec.of(InputField.of("g", FieldType.INT_GRID).values(0, 1)
+                    .defaultValue(List.of(List.of(0))).build());
+            String msg = reject(spec, Map.of("g", List.of(List.of(0, 1), Arrays.asList("x", 0)))).getFieldErrors().get("g");
+            assertEquals("Row 2, column 1 is not a whole number.", msg);
+        }
+
+        @Test
+        void edgesCountFromOneAndVertexIdsStayAsTyped() {
+            InputSpec spec = InputSpec.of(InputField.of("g", FieldType.GRAPH).constraint("maxVertices", 5)
+                    .defaultValue(Map.of("vertices", 3, "edges", List.of(List.of(0, 1)))).build());
+            String msg = reject(spec, Map.of("g", Map.of("vertices", 3, "edges", List.of(List.of(0, 1), List.of(1, 9)))))
+                    .getFieldErrors().get("g");
+            assertTrue(msg.startsWith("Edge 2 refers to vertex 9"), msg);
         }
     }
 
