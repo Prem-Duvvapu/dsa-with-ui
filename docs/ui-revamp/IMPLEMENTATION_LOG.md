@@ -805,3 +805,16 @@ A backend contract defect found by the P7 input journey, fixed as its own change
   - **coin-change-2** accepted repeated coins and counted each copy as a different coin: `[2,2]`, amount 4 gave 3, but the right answer is 1. Coins must now be distinct.
   - **largest-divisible-subset** accepted repeats, so `[2,2,4]` came back as a "subset". Values must now be distinct.
 - Tests: `TracerAnswerRegressionTest.dpInputsOutsideTheProblemAreRefused` and `InputValidatorTest.rejectsTooNarrow` are both red on `5c4e027`. Full backend suite green.
+
+## 2026-10-05 — DP verification, fix 2: every allowed DP input reaches its answer
+
+- **Problem.** 13 DP problems accepted inputs whose trace exceeded the 2 MB response budget (`InputSpec.DEFAULT_MAX_BYTES`). The run stopped, honestly marked "cut short", but before the answer step, so a learner with a legal input never saw the result.
+  - Table problems: count-subsets-with-sum-k, subset-sum-equal-target, count-partitions-given-diff, partition-equal-subset-sum, partition-set-min-abs-diff, target-sum-dp, knapsack-01, unbounded-knapsack, coin-change-2, minimum-coins-dp.
+  - Length problems: edit-distance, wildcard-matching, print-lis.
+- **Cause.** Every step carries the whole DP table, and the number of steps grows with the number of cells, so the payload grows with cells². 98% of a failing knapsack trace was `dpTable`. The budget is deliberate (it protects the browser), so it stays.
+- **Fix.**
+  - `DpTraceSupport.requireTableFits` refuses, as a field error, any input whose table would exceed 225 cells (15 × 15, measured as the largest that finishes). The message names the table and what to shrink.
+  - The limit is on the table, not on each field, so a few large values and many small ones both remain usable.
+  - edit-distance and wildcard-matching max length 15 → 14; print-lis 30 → 22.
+- **Tests.** `DpTableBudgetTest` runs each problem's largest allowed input; it must finish with the brute-force answer. One step over the limit must be refused: those 13 rows are red on `c5d39f2`.
+- **Test change.** `TracerContractTest.stepCountGrowsWithInput` pads with the smallest allowed value when max-value padding is refused, since a sum-bounded table is a legitimate limit. Full backend suite green.

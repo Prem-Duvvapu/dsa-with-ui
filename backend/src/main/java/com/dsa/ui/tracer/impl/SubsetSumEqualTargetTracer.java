@@ -93,6 +93,7 @@ public class SubsetSumEqualTargetTracer implements AlgorithmTracer {
         int target = in.getInt("target");
         int n = nums.length;
 
+        DpTraceSupport.requireTableFits(n + 1, target + 1, "target", "Use a smaller target or fewer numbers.");
         boolean[][] dp = new boolean[n + 1][target + 1];
         boolean[][] settled = new boolean[n + 1][target + 1];
 

@@ -39,7 +39,7 @@ public class PrintLisTracer implements AlgorithmTracer {
                 InputField.of("nums", FieldType.INT_ARRAY)
                         .label("Array")
                         .help("parent[i] remembers which index i's best subsequence came from.")
-                        .length(1, 30).values(-999, 999)
+                        .length(1, 22).values(-999, 999)
                         .defaultValue(List.of(10, 9, 2, 5, 3, 7, 101, 18))
                         .build());
     }

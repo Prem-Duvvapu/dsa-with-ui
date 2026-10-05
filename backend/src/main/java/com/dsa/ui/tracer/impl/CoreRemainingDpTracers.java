@@ -68,6 +68,7 @@ class PartitionSetMinAbsDiffRemainingTracer extends RemainingDpTracer {
     @Override public Map<String, Object> alternateInput() { return Map.of("nums", List.of(3, 1, 4, 2, 2)); }
     @Override public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums"); int total = Arrays.stream(nums).sum();
+        DpTraceSupport.requireTableFits(nums.length + 1, total + 1, "nums", "Use fewer or smaller numbers.");
         long[][] dp = new long[nums.length + 1][total + 1]; boolean[][] known = new boolean[dp.length][dp[0].length];
         for (int i = 0; i <= nums.length; i++) { dp[i][0] = 1; known[i][0] = true; }
         for (int s = 1; s <= total; s++) known[0][s] = true;
@@ -131,6 +132,7 @@ class TargetSumDpRemainingTracer extends RemainingDpTracer {
     @Override public Map<String, Object> alternateInput() { return Map.of("nums", List.of(1, 2, 1), "target", 0); }
     @Override public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums"); int target = in.getInt("target"), total = Arrays.stream(nums).sum(), width = 2 * total + 1;
+        DpTraceSupport.requireTableFits(nums.length + 1, width, "nums", "Use fewer or smaller numbers.");
         long[][] dp = new long[nums.length + 1][width]; boolean[][] known = new boolean[dp.length][width];
         dp[0][total] = 1; Arrays.fill(known[0], true);
         emit.at("init").say("dp[i][s] counts sign assignments for the first i numbers; the centre column represents sum 0.")

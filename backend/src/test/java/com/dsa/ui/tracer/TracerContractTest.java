@@ -358,12 +358,30 @@ class TracerContractTest {
         // Scale EVERY growable field, not just the first: a tracer whose inputs travel in
         // pairs (meeting starts and ends, matrix and vector) rejects one-sided growth,
         // and rejecting valid-looking input here reads as a broken tracer.
+        int onDefaults = runner.runDefaults(tracer).getSteps().size();
+        int onLarger;
+        try {
+            onLarger = runner.run(tracer, grownInput(tracer, growables, false)).getSteps().size();
+        } catch (InputValidationException tooBig) {
+            // Some tracers bound what a field's VALUES add up to (a DP table sized by a sum,
+            // DpTraceSupport.MAX_TABLE_CELLS). Padding with the largest value overshoots that;
+            // padding with the smallest still gives a longer input, so more work.
+            onLarger = runner.run(tracer, grownInput(tracer, growables, true)).getSteps().size();
+        }
+
+        assertTrue(onLarger > onDefaults, id + " emitted " + onLarger + " steps for larger "
+                + growables.stream().map(InputField::getName).toList()
+                + " and " + onDefaults + " for its defaults — the step count"
+                + " does not depend on how much input there is");
+    }
+
+    private Map<String, Object> grownInput(AlgorithmTracer tracer, List<InputField> growables, boolean smallFiller) {
         Map<String, Object> larger = new LinkedHashMap<>();
         for (InputField field : tracer.inputSpec().getFields()) {
             larger.put(field.getName(), field.getDefaultValue());
         }
         for (InputField field : growables) {
-            Object grown = scaleUp(field);
+            Object grown = scaleUp(field, smallFiller);
             larger.put(field.getName(), grown);
             // An O(k) algorithm does the same work on a longer array: grow k with it.
             Object scalesWith = field.getConstraints() == null ? null : field.getConstraints().get("workScalesWith");
@@ -376,14 +394,7 @@ class TracerContractTest {
                 larger.put(companion.getName(), max != null ? Math.min(target, max) : target);
             }
         }
-
-        int onDefaults = runner.runDefaults(tracer).getSteps().size();
-        int onLarger = runner.run(tracer, larger).getSteps().size();
-
-        assertTrue(onLarger > onDefaults, id + " emitted " + onLarger + " steps for larger "
-                + growables.stream().map(InputField::getName).toList()
-                + " and " + onDefaults + " for its defaults — the step count"
-                + " does not depend on how much input there is");
+        return larger;
     }
 
     /**
@@ -393,17 +404,17 @@ class TracerContractTest {
      * algorithm finishing in the same number of steps — two-sum finds 2 + 7 at indices 0
      * and 1 however much you bolt on the end.
      */
-    private Object scaleUp(InputField field) {
+    private Object scaleUp(InputField field, boolean smallFiller) {
         Object base = field.getDefaultValue();
         return switch (field.getType()) {
-            case INT_ARRAY, LINKED_LIST -> growList(field, asIntList(base));
+            case INT_ARRAY, LINKED_LIST -> growList(field, asIntList(base), smallFiller);
             case INT_GRID -> growGrid(field, (List<?>) base);
             case BINARY_TREE -> growTree(field, ((List<?>) base).size());
             default -> throw new IllegalStateException("not growable: " + field.getType());
         };
     }
 
-    private List<Integer> growList(InputField field, List<Integer> base) {
+    private List<Integer> growList(InputField field, List<Integer> base, boolean smallFiller) {
         int cap = field.intConstraint("maxLength") != null ? field.intConstraint("maxLength") : base.size() * 2;
         int target = Math.min(Math.max(base.size() * 2, base.size() + 1), cap);
         int extra = target - base.size();
@@ -448,7 +459,9 @@ class TracerContractTest {
                     field.getName() + " cannot grow within its declared value range");
             grown.addAll(base);
         } else {
-            int filler = maxValue != null ? maxValue : 999;
+            int filler = smallFiller
+                    ? (minValue != null ? minValue : 0)
+                    : (maxValue != null ? maxValue : 999);
             for (int k = 0; k < extra; k++) {
                 grown.add(filler);
             }

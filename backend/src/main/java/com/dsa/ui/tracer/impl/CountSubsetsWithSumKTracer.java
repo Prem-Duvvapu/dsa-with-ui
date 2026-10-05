@@ -91,6 +91,7 @@ public class CountSubsetsWithSumKTracer implements AlgorithmTracer {
         int[] nums = in.getIntArray("nums");
         int k = in.getInt("k");
         int n = nums.length;
+        DpTraceSupport.requireTableFits(n + 1, k + 1, "k", "Use a smaller k or fewer numbers.");
         int[][] dp = new int[n + 1][k + 1];
         boolean[][] settled = new boolean[n + 1][k + 1];
         List<String> rowLabels = SubsetCountDpTable.rowLabels(nums);
