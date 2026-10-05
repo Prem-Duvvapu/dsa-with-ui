@@ -542,6 +542,82 @@ describe('Workspace on a phone', () => {
   });
 });
 
+describe('Workspace Focus mode (P5b)', () => {
+  const spec = { fields: [{ name: 'n', label: 'Count', type: 'INT', defaultValue: 1 }] };
+  function withEditor() {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      calls.push(url);
+      if (url === '/api/problems') return Promise.resolve(ok(CATALOG.map((p) => (p.id === 'two-sum' ? { ...p, inputSpec: spec } : p))));
+      if (url === '/api/problems/two-sum') return Promise.resolve(ok({ ...CATALOG.find((p) => p.id === 'two-sum'), inputSpec: spec }));
+      return Promise.resolve(respondTo(url));
+    }));
+  }
+  const executes = () => calls.filter((u) => u.endsWith('/execute')).length;
+
+  it('shows only the stage, and keeps the run, the step and an unsaved draft', async () => {
+    withEditor();
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.change(screen.getByLabelText('Count'), { target: { value: '7' } });
+    expect(screen.getByText('Changes not run')).toBeVisible();
+    const before = executes();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Focus' }));
+    expect(screen.getByRole('button', { name: 'Exit focus' })).toHaveFocus();
+    expect(screen.getByRole('heading', { level: 2, name: /Two Sum/ })).toBeVisible();
+    expect(narration()).toHaveTextContent('two-sum step two');
+    expect(screen.getByRole('button', { name: 'Play' })).toBeVisible();
+    // Everything optional is hidden - but still mounted, so nothing is lost.
+    expect(screen.getByLabelText('Count')).not.toBeVisible();
+    expect(screen.queryByRole('tab', { name: 'Code walkthrough' })).toBeNull();
+    expect(screen.queryByRole('heading', { level: 1 })).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Exit focus' }));
+    expect(screen.getByRole('button', { name: 'Focus' })).toHaveFocus();
+    expect(screen.getByLabelText('Count')).toHaveValue(7);
+    expect(screen.getByText('Changes not run')).toBeVisible();
+    expect(narration()).toHaveTextContent('two-sum step two');
+    expect(executes()).toBe(before);
+  });
+
+  it('pauses when entering and when leaving', async () => {
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Focus' }));
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Exit focus' }));
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+  });
+
+  it('leaves on Escape only once a dialog above it has closed', async () => {
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Focus' }));
+    fireEvent.keyDown(window, { key: '?', code: 'Slash' });
+    expect(screen.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeInTheDocument();
+    fireEvent.keyDown(window, { code: 'Escape', key: 'Escape' });
+    expect(screen.queryByRole('dialog', { name: 'Keyboard shortcuts' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Exit focus' })).toBeInTheDocument();
+    fireEvent.keyDown(window, { code: 'Escape', key: 'Escape' });
+    expect(screen.queryByRole('button', { name: 'Exit focus' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Focus' })).toHaveFocus();
+  });
+
+  it('ends when another problem is chosen', async () => {
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Focus' }));
+    await switchTo('Valid Anagram');
+    await screen.findByText('valid-anagram step one');
+    expect(screen.queryByRole('button', { name: 'Exit focus' })).not.toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Code walkthrough' })).toBeVisible();
+  });
+});
+
 describe('Workspace switcher', () => {
   it('is closed until Cmd/Ctrl+K opens it, with the query focused', async () => {
     renderApp();

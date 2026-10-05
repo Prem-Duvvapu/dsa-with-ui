@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Code2, Link2, Pencil, RefreshCw, Search, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Code2, Link2, Maximize2, Minimize2, Pencil, RefreshCw, Search, Star } from 'lucide-react';
 import LearningHeader from '../components/LearningHeader';
 import SiteFooter from '../components/SiteFooter';
 import layout from '../components/LearningLayout.module.css';
@@ -94,8 +94,28 @@ export default function ProblemWorkspace() {
 
   const view = VIEWS.some((v) => v.id === session.view) ? session.view : 'playground';
   const viewLabel = VIEWS.find((v) => v.id === view).label;
+
+  // ── Focus: the Playground with everything optional out of the way ───────
+  // Presentation only: the run, step, draft and URL are the session's and do not change.
+  // The hidden panels stay MOUNTED (the `hidden` attribute), so an editor mid-edit keeps its
+  // state. Entering or leaving pauses; a new problem or another view leaves Focus.
+  const [isFocus, setIsFocus] = useState(false);
+  const focusTriggerRef = useRef(null);
+  const exitFocusRef = useRef(null);
+  const focusMove = useRef(null);
+  const enterFocus = useCallback(() => { pause(); focusMove.current = 'exit'; setIsFocus(true); }, [pause]);
+  const exitFocus = useCallback(() => { pause(); focusMove.current = 'trigger'; setIsFocus(false); }, [pause]);
+  useEffect(() => {
+    const target = focusMove.current === 'exit' ? exitFocusRef.current : focusMove.current === 'trigger' ? focusTriggerRef.current : null;
+    focusMove.current = null;
+    target?.focus();
+  }, [isFocus]);
+  useEffect(() => { setIsFocus(false); }, [problemId]);
+  useEffect(() => { if (view !== 'playground') setIsFocus(false); }, [view]);
+
   const selectView = useCallback((next) => {
     pause();
+    setIsFocus(false);
     session.setView(next, 'playground');
   }, [pause, session]);
 
@@ -149,7 +169,8 @@ export default function ProblemWorkspace() {
     isMobile: false, isSidebarOpen: false,
     // "/" searches problems: with no sidebar, that is the switcher.
     setIsSidebarOpen: () => setIsPaletteOpen(true),
-    isHelpOpen, setIsHelpOpen, isPaletteOpen, setIsPaletteOpen, hasSeenWelcome, setHasSeenWelcome
+    isHelpOpen, setIsHelpOpen, isPaletteOpen, setIsPaletteOpen, hasSeenWelcome, setHasSeenWelcome,
+    isFocus, exitFocus
   });
 
   // Dialogs and a hidden tab pause; nothing resumes by itself.
@@ -400,9 +421,9 @@ export default function ProblemWorkspace() {
   return (
     <div className={layout.page}>
       <a className={layout.skip} href="#workspace-view">Skip to the visualization</a>
-      {header}
+      <div hidden={isFocus}>{header}</div>
 
-      <div className={styles.width}>
+      <div className={styles.width} hidden={isFocus}>
         {catalogError && (
           <div role="alert" className={`${styles.notice} ${styles.catalogNotice}`}>
             <span>{catalogError} Switching problems and curriculum navigation are limited until it loads.</span>
@@ -485,25 +506,44 @@ export default function ProblemWorkspace() {
         </header>
       </div>
 
-      <div data-tour="view-rail" className={styles.railWrap}><ViewRail view={view} onSelect={selectView} /></div>
+      <div data-tour="view-rail" className={styles.railWrap} hidden={isFocus}><ViewRail view={view} onSelect={selectView} /></div>
 
       {/* <main> keeps its landmark role; the tab panel is the element the tabs point at. */}
-      <main id="workspace-view" className={styles.width} tabIndex={-1}>
+      <main id="workspace-view" className={`${styles.width}${isFocus ? ` ${styles.focusMain}` : ''}`} tabIndex={-1} data-focus={isFocus || undefined}>
         <div id={panelId} className={styles.panel} role="tabpanel" aria-labelledby={tabId(view)} tabIndex={-1}>
           {view === 'playground' && (
             <>
               <section className={styles.card} aria-labelledby="stage-title">
                 <div className={styles.cardHead}>
-                  <h2 id="stage-title" ref={stageHeadingRef} tabIndex={-1} className={styles.cardTitle}>{stage.label}</h2>
+                  {isFocus ? (
+                    <h2 id="stage-title" ref={stageHeadingRef} tabIndex={-1} className={styles.cardTitle}>
+                      {title} <span className={styles.focusFamily}>· {stage.label}</span>
+                    </h2>
+                  ) : (
+                    <h2 id="stage-title" ref={stageHeadingRef} tabIndex={-1} className={styles.cardTitle}>{stage.label}</h2>
+                  )}
                   <div className={styles.cardActions}>
-                    {hasInputSpec && (
+                    {hasInputSpec && !isFocus && (
                       <button type="button" className={styles.control} onClick={openEditor}>
                         <Pencil size={16} aria-hidden="true" /> Edit input
                       </button>
                     )}
-                    <button type="button" className={styles.control} onClick={() => selectView('code')}>
-                      <Code2 size={16} aria-hidden="true" /> Show code
-                    </button>
+                    {!isFocus && (
+                      <button type="button" className={styles.control} onClick={() => selectView('code')}>
+                        <Code2 size={16} aria-hidden="true" /> Show code
+                      </button>
+                    )}
+                    {isFocus ? (
+                      <button type="button" ref={exitFocusRef} className={styles.control} onClick={exitFocus}>
+                        <Minimize2 size={16} aria-hidden="true" /> Exit focus
+                      </button>
+                    ) : (
+                      <button type="button" ref={focusTriggerRef} className={styles.control} onClick={enterFocus}
+                        aria-describedby="focus-hint" data-tour="focus">
+                        <Maximize2 size={16} aria-hidden="true" /> Focus
+                      </button>
+                    )}
+                    <span id="focus-hint" className="sr-only">Hides everything but the diagram, its narration and the controls. Esc returns.</span>
                   </div>
                 </div>
                 {notices}
@@ -512,10 +552,10 @@ export default function ProblemWorkspace() {
                 <PlaybackBar session={session} onSpeedChange={changeSpeed} />
               </section>
 
-              {inputUsed}
+              <div hidden={isFocus}>{inputUsed}</div>
 
               {hasInputSpec && (
-                <section className={styles.card} aria-labelledby="try-input-title" id="try-input" data-tour="input-editor">
+                <section className={styles.card} aria-labelledby="try-input-title" id="try-input" data-tour="input-editor" hidden={isFocus}>
                   <h2 id="try-input-title" ref={inputHeadingRef} tabIndex={-1} className={styles.cardTitle}>Try your own input</h2>
                   <p className={styles.hint}>Change the input, then run it. The result above stays until your run succeeds.</p>
                   <InputPanel
@@ -533,7 +573,7 @@ export default function ProblemWorkspace() {
               )}
 
               {(showCapture || canCompare) && (
-                <section className={styles.historyRow} aria-label="Execution history and comparison">
+                <section className={styles.historyRow} aria-label="Execution history and comparison" hidden={isFocus}>
                   {showCapture && (
                     <details className={styles.history} data-tour="capture-strip">
                       <summary>Execution history <span>step {currentStepIndex + 1} of {steps.length}</span></summary>
@@ -548,7 +588,7 @@ export default function ProblemWorkspace() {
                 </section>
               )}
               {canCompare && isCompareOpen && (
-                <section className={styles.card} aria-label="Comparison with the other case">
+                <section className={styles.card} aria-label="Comparison with the other case" hidden={isFocus}>
                   <CompareStrip key={problemId} problemId={problemId} dsType={dsType} alternateInput={problem.alternateInput} />
                 </section>
               )}
@@ -588,7 +628,7 @@ export default function ProblemWorkspace() {
         </div>
       </main>
 
-      <SiteFooter />
+      <div hidden={isFocus}><SiteFooter /></div>
 
       {overlays}
     </div>

@@ -62,6 +62,12 @@
 .cardTitle:focus { outline: none; }
 .cardTitle:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .cardActions { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Focus: the stage card alone, with the problem named in its heading. */
+.focusMain { padding-top: var(--space-md); }
+.focusFamily { color: var(--ink-secondary); font-weight: 600; }
+/* In Focus the stage takes the room the hidden panels gave back: the viewport less the card
+   head, narration and controls (measured at 1366×768), never below the normal floor. */
+.focusMain .stage :global(.shell-stage) { min-height: max(360px, calc(100dvh - 340px)); }
 .hint { color: var(--ink-secondary); margin-top: -8px; }
 
 /* Controls shared by the workspace */
@@ -179,6 +185,8 @@
   .panel { padding-top: var(--space-lg); gap: var(--space-md); }
   .stage :global(.shell-stage) { min-height: 300px; }
   .stage[data-family="spatial"] :global(.shell-stage) { min-height: 340px; }
+  /* Phone controls wrap to three rows, so they need more of the viewport. */
+  .focusMain .stage :global(.shell-stage) { min-height: max(300px, calc(100dvh - 520px)); }
   .stage :global(.shell-legend) { flex-wrap: wrap; margin-left: 0; }
   .transport { width: 100%; }
   .transport .control { flex: 1 1 auto; padding: 0 10px; }

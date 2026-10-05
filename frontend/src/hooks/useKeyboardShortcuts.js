@@ -16,7 +16,8 @@ export default function useKeyboardShortcuts({
   isMobile, isSidebarOpen, setIsSidebarOpen,
   isHelpOpen, setIsHelpOpen,
   isPaletteOpen, setIsPaletteOpen,
-  hasSeenWelcome, setHasSeenWelcome
+  hasSeenWelcome, setHasSeenWelcome,
+  isFocus = false, exitFocus = () => {}
 }) {
 // ── Global keyboard shortcuts ────────────────────────────────────────────
 // This is a media player, so it uses a media player's keys: J/K/L and ,/. alongside the
@@ -68,6 +69,13 @@ useEffect(() => {
       if (isMobile && isSidebarOpen) {
         e.preventDefault();
         setIsSidebarOpen(false);
+        return;
+      }
+      // Any other dialog (the tour) owns its own Escape; Focus is the last thing to close.
+      if (dialogOpen) return;
+      if (isFocus) {
+        e.preventDefault();
+        exitFocus();
         return;
       }
       if (isTyping) active.blur();
@@ -156,5 +164,5 @@ useEffect(() => {
 }, [togglePlay, stepNext, stepPrev, reset, seek, stepCount, nudgeSpeed,
     isMobile, isSidebarOpen, isHelpOpen, setIsSidebarOpen, setIsHelpOpen,
     isPaletteOpen, setIsPaletteOpen,
-    hasSeenWelcome, setHasSeenWelcome]);
+    hasSeenWelcome, setHasSeenWelcome, isFocus, exitFocus]);
 }

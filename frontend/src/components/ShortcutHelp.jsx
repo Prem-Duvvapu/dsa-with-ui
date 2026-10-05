@@ -22,7 +22,7 @@ export const SHORTCUTS = [
   { keys: ['/'], label: 'Switch problem' },
   { keys: ['⌘K', 'Ctrl+K'], label: 'Switch problem or run a command' },
   { keys: ['?'], label: 'Show this list' },
-  { keys: ['Esc'], label: 'Close this list or a dialog' }
+  { keys: ['Esc'], label: 'Close this list or a dialog, then leave Focus' }
 ];
 
 export default function ShortcutHelp({ open, onClose, onReplayWelcome, onStartTour }) {

@@ -656,6 +656,10 @@ body {
   }
 }
 
+/* The hidden attribute must win over a component's own display (a grid card, a flex row):
+   Focus mode hides whole panels with it while keeping them mounted. */
+[hidden] { display: none !important; }
+
 /* Screen reader only utility */
 .sr-only {
   position: absolute;
