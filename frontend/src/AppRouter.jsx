@@ -1,4 +1,5 @@
 import React from 'react';
+import LearningNetworkNav from './components/LearningNetworkNav';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './components/Dashboard.jsx';
 import { CatalogProvider } from './catalog/CatalogProvider';
@@ -16,7 +17,7 @@ import ProblemWorkspace from './workspace/ProblemWorkspace';
  */
 export default function AppRouter() {
   return (
-    <CatalogProvider><Routes>
+    <CatalogProvider><LearningNetworkNav /><Routes>
       <Route path="/problem/:id" element={<ProblemWorkspace />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="*" element={<Navigate to="/" replace />} />
