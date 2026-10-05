@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor, cleanup, within } from '@testing-li
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { TOUR_STEPS } from '../components/TourGuide';
 import ProblemWorkspace from './ProblemWorkspace';
 
@@ -19,10 +19,17 @@ import ProblemWorkspace from './ProblemWorkspace';
  *   speed buttons                      → the Speed menu
  */
 
+/** Stands in for the library: shows where "View all" landed. */
+function LibraryProbe() {
+  const location = useLocation();
+  return <p data-testid="library-probe">{location.pathname}{location.search}</p>;
+}
+
 function renderApp(path = '/problem/two-sum') {
   return render(
     <MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
+        <Route path="/" element={<LibraryProbe />} />
         <Route path="/problem/:id" element={<ProblemWorkspace />} />
       </Routes>
     </MemoryRouter>
@@ -95,8 +102,9 @@ const narration = () => document.querySelector('p[aria-live="polite"]');
 async function switchTo(title) {
   fireEvent.keyDown(window, { key: 'k', ctrlKey: true });
   const dialog = screen.getByRole('dialog', { name: /command palette/i });
-  fireEvent.change(within(dialog).getByRole('textbox'), { target: { value: title } });
-  fireEvent.click(within(dialog).getByText(title));
+  fireEvent.change(within(dialog).getByRole('combobox'), { target: { value: title } });
+  // Matches are highlighted, so the title is split across <mark>s: choose by accessible name.
+  fireEvent.click(within(dialog).getAllByRole('option', { name: (name) => name.startsWith(title) })[0]);
 }
 
 describe('Workspace catalogue loading', () => {
@@ -126,10 +134,10 @@ describe('Workspace catalogue loading', () => {
     await screen.findByText('two-sum step one');
     fireEvent.keyDown(window, { key: 'k', ctrlKey: true });
     const dialog = screen.getByRole('dialog', { name: /command palette/i });
-    fireEvent.change(within(dialog).getByRole('textbox'), { target: { value: 'Count Digits' } });
-    expect(within(dialog).getByText('Count Digits')).toBeInTheDocument();
-    fireEvent.change(within(dialog).getByRole('textbox'), { target: { value: 'Print 1' } });
-    expect(within(dialog).getByText('Print 1 To N')).toBeInTheDocument();
+    fireEvent.change(within(dialog).getByRole('combobox'), { target: { value: 'Count Digits' } });
+    expect(within(dialog).getByRole('option', { name: /^Count Digits/ })).toBeInTheDocument();
+    fireEvent.change(within(dialog).getByRole('combobox'), { target: { value: 'Print 1' } });
+    expect(within(dialog).getByRole('option', { name: /^Print 1 To N/ })).toBeInTheDocument();
   });
 
   it('de-duplicates problems with repeated ids', async () => {
@@ -141,7 +149,7 @@ describe('Workspace catalogue loading', () => {
     renderApp();
     await screen.findByText('two-sum step one');
     fireEvent.keyDown(window, { key: 'k', ctrlKey: true });
-    fireEvent.change(within(screen.getByRole('dialog')).getByRole('textbox'), { target: { value: 'Two Sum' } });
+    fireEvent.change(within(screen.getByRole('dialog')).getByRole('combobox'), { target: { value: 'Two Sum' } });
     expect(screen.queryByText('Two Sum (Duplicate)')).not.toBeInTheDocument();
   });
 });
@@ -508,7 +516,7 @@ describe('Workspace on a phone', () => {
     fireEvent.click(within(menu).getByText('Menu'));
     fireEvent.click(within(menu).getByRole('button', { name: /Switch problem/ }));
     const dialog = screen.getByRole('dialog', { name: /command palette/i });
-    within(dialog).getByRole('textbox').focus();
+    within(dialog).getByRole('combobox').focus();
     fireEvent.keyDown(window, { code: 'Escape' });
     expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
     expect(within(menu).getByRole('link', { name: 'All algorithms' })).toHaveAttribute('href', '/');
@@ -541,7 +549,7 @@ describe('Workspace switcher', () => {
     expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
     fireEvent.keyDown(window, { key: 'k', metaKey: true });
     const dialog = screen.getByRole('dialog', { name: /command palette/i });
-    expect(within(dialog).getByRole('textbox')).toHaveFocus();
+    expect(within(dialog).getByRole('combobox')).toHaveFocus();
   });
 
   it('closes on Escape and on the backdrop', async () => {
@@ -563,12 +571,40 @@ describe('Workspace switcher', () => {
     await screen.findByRole('heading', { level: 1, name: 'Dijkstra' });
   });
 
+  it('makes the page inert while open, and returns focus to the button that opened it', async () => {
+    renderApp();
+    await screen.findByText('two-sum step one');
+    const trigger = screen.getAllByRole('button', { name: /Switch problem/ })[0];
+    trigger.focus();
+    fireEvent.click(trigger);
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+    expect(document.getElementById('workspace-view').closest('[inert]')).not.toBeNull();
+    expect(dialog.closest('[inert]')).toBeNull();
+    fireEvent.keyDown(within(dialog).getByRole('combobox'), { key: 'Escape' });
+    expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
+    expect(document.querySelector('[inert]')).toBeNull();
+    expect(trigger).toHaveFocus();
+  });
+
+  it('carries the query to the library with View all, without running anything', async () => {
+    renderApp();
+    await screen.findByText('two-sum step one');
+    const before = calls.length;
+    fireEvent.keyDown(window, { key: 'k', ctrlKey: true });
+    const dialog = screen.getByRole('dialog', { name: /command palette/i });
+    fireEvent.change(within(dialog).getByRole('combobox'), { target: { value: 'sum' } });
+    fireEvent.click(within(dialog).getByRole('option', { name: /in the library/ }));
+    expect(await screen.findByTestId('library-probe')).toHaveTextContent('/?q=sum');
+    expect(document.querySelector('[inert]')).toBeNull();
+    expect(calls.slice(before).filter((u) => u.endsWith('/execute'))).toHaveLength(0);
+  });
+
   it('offers quick actions on an empty query, including toggling the theme', async () => {
     renderApp();
     await waitFor(() => expect(calls).toContain('/api/problems'));
     expect(document.documentElement.getAttribute('data-theme')).toBeNull();
     fireEvent.keyDown(window, { key: 'k', metaKey: true });
-    fireEvent.click(within(screen.getByRole('dialog', { name: /command palette/i })).getByRole('button', { name: /toggle theme/i }));
+    fireEvent.click(within(screen.getByRole('dialog', { name: /command palette/i })).getByRole('option', { name: /toggle theme/i }));
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     expect(screen.queryByRole('dialog', { name: /command palette/i })).not.toBeInTheDocument();
   });

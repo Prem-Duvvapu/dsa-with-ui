@@ -627,3 +627,25 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
   tracers whose final step never states the answer; each is listed in its batch entry above, and each
   becomes writable when its tracer emits the result. Ten wrong-answer/crash defects found along the way
   are fixed under RCA-055.
+
+## 2026-10-05 — Order 0 reconciliation and P5a switcher
+
+**Order 0.** Started from `dad2640` (#191) and landed the doc cleanup (#193, `06e30c8`): six superseded September 23 planning files removed, the P5–P9 execution plan added. P4's ledger status was still "Review" though its gate journeys and both reviews' fixes are merged; it is now Done. Baseline on `06e30c8` + P5a: 631 frontend tests, `vite build` 347.14 kB / 110.43 kB gzip (+1.2% gzip over #189's 109.11 kB).
+
+**P5a — the switcher.** The existing CommandPalette is the single switcher; no second modal.
+- It is a modal combobox: the query keeps focus, `aria-activedescendant` names the active option, and that option is scrolled into view. Enter chooses, and Escape is handled by the dialog itself (preventDefault, so the page's shortcuts stand down).
+- Results use the library's ranking and `<mark>` highlighting, bounded to 8. "View all N results in the library" carries the query to `/?q=…`.
+- An empty query offers the library's recent searches (same `dsa:recentSearches` key), followed by the existing commands. Choosing a problem from a query records it as recent.
+- The open problem is tagged "Current"; choosing it closes without a rerun, as before.
+- Loading, catalogue failure and no-match each get their own status line instead of one "No matches".
+- New `useModalDialog` gives the switcher and the shortcut list one shared modal contract:
+  - initial focus, Tab containment, and `inert` on everything outside the dialog;
+  - release on close and on unmount (route change, StrictMode double effects);
+  - focus returned to the opener, or to a closed Menu's summary or the main region when the opener has gone.
+- Help previously had no trap and no inert page. `useFocusTrap` had no other users and is deleted; its guards moved into `useModalDialog.test.jsx`.
+
+**Red first.** The 8 new `CommandPalette.test.jsx` tests fail on `06e30c8`'s palette (no combobox, no bounding, no View all, no recents, no own Escape, no loading or no-match status). The 10 `useModalDialog` tests cover the old trap's 5 guards plus inert, unmount release, already-inert elements, closed-menu and missing-opener fallbacks, and StrictMode. There are 2 new workspace integration tests: page inert while open with focus back on the trigger, and View all → library with no execution. Existing switcher tests changed only their role queries (`textbox` → `combobox`, command `button` → `option`), because those semantics changed deliberately.
+
+**Browser.** `evidence/p5/switcher-journey.cjs` passes 18/18 against the real backend at 1366×768 dark and 390×844 light (tracker row). A probe pitfall: Playwright's role queries still see the inert speed `<select>` options behind the dialog, so the journey scopes its locators to the dialog.
+
+**Pending in P5.** Focus mode (P5b). One shortcut-ownership policy, and help/welcome/tour adapted to the current views (P5c). Welcome and Tour keep their own focus handling until then. A screen-reader pass of the combobox stays pending (no screen reader in this environment).

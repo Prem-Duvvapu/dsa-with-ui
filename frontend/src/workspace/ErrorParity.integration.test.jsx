@@ -94,8 +94,8 @@ describe('The not-found page keeps every control working (S8)', () => {
     await screen.findByRole('heading', { name: /No algorithm called/ });
     fireEvent.click(screen.getAllByRole('button', { name: /Switch problem/ })[0]);
     const dialog = screen.getByRole('dialog', { name: /command palette/i });
-    fireEvent.change(within(dialog).getByRole('textbox'), { target: { value: 'Beta' } });
-    fireEvent.click(within(dialog).getByText('Beta'));
+    fireEvent.change(within(dialog).getByRole('combobox'), { target: { value: 'Beta' } });
+    fireEvent.click(within(dialog).getAllByRole('option', { name: (name) => name.startsWith('Beta') })[0]);
     await waitFor(() => expect(location.pathname).toBe('/problem/beta'));
   });
 });
