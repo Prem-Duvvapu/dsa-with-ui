@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import useModalDialog from '../hooks/useModalDialog';
 import { List, Play, Code2, Keyboard, Compass } from 'lucide-react';
 import styles from './WelcomeGuide.module.css';
 
@@ -17,41 +18,43 @@ import styles from './WelcomeGuide.module.css';
 // once already (433 catalogued at the time this was written, 431 after the duplicate-id
 // cleanup) - it reads the same catalogue length the header and sidebar already show.
 function buildSteps(totalProblems) {
-  const countPhrase = totalProblems ? `holds ${totalProblems} of them` : 'holds every one of them';
+  const countPhrase = totalProblems ? `all ${totalProblems} problems` : 'every problem';
   return [
     {
       icon: List,
       title: 'Pick a problem',
-      body: `The list on the left ${countPhrase}, every one with a real execution trace. `
-          + 'Press / to jump straight to the search box.'
+      body: `Switch problem (Ctrl/⌘ K, or /) searches ${countPhrase}, every one with a real `
+          + 'execution trace. All algorithms opens the full library.'
     },
     {
       icon: Play,
       title: 'Watch it run',
-      body: 'The canvas animates the actual algorithm on the input shown beneath it — not a '
+      body: 'The Playground animates the actual algorithm on the input shown beneath it — not a '
           + 'recording. Space plays and pauses; the arrow keys step one at a time.'
     },
     {
       icon: Code2,
       title: 'Follow the code',
-      body: 'The panel on the right highlights the exact line being executed, in step with '
-          + 'the animation. That pairing is the point of the whole thing.'
+      body: 'Code walkthrough puts the Java beside the diagram and highlights the exact line '
+          + 'being executed, in step with the animation. That pairing is the point of the whole thing.'
     }
   ];
 }
 
 export default function WelcomeGuide({ open, onDismiss, onShowShortcuts, onStartTour, totalProblems }) {
+  const rootRef = useRef(null);
   const dismissRef = useRef(null);
   const steps = buildSteps(totalProblems);
 
-  useEffect(() => {
-    if (open) dismissRef.current?.focus();
-  }, [open]);
+  useModalDialog(rootRef, open, {
+    initialFocusRef: dismissRef,
+    fallbackFocus: () => document.getElementById('workspace-view')
+  });
 
   if (!open) return null;
 
   return (
-    <div className={styles.backdrop} data-testid="welcome-guide">
+    <div ref={rootRef} className={styles.backdrop} data-testid="welcome-guide">
       <div
         role="dialog"
         aria-modal="true"

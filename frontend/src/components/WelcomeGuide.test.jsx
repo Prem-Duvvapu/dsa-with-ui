@@ -13,6 +13,24 @@ describe('WelcomeGuide', () => {
     expect(screen.getByText('Follow the code')).toBeInTheDocument();
   });
 
+  it('describes the workspace as it is: the switcher and the views, not the retired sidebar', () => {
+    render(<WelcomeGuide open onDismiss={() => {}} onShowShortcuts={() => {}} totalProblems={431} />);
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveTextContent('Switch problem (Ctrl/⌘ K, or /) searches all 431 problems');
+    expect(dialog).toHaveTextContent('Code walkthrough puts the Java beside the diagram');
+    expect(dialog).not.toHaveTextContent(/list on the left|panel on the right/);
+  });
+
+  it('makes the page behind it inert until dismissed', () => {
+    const page = document.createElement('main');
+    document.body.appendChild(page);
+    const { rerender } = render(<WelcomeGuide open onDismiss={() => {}} onShowShortcuts={() => {}} />);
+    expect(page).toHaveAttribute('inert');
+    rerender(<WelcomeGuide open={false} onDismiss={() => {}} onShowShortcuts={() => {}} />);
+    expect(page).not.toHaveAttribute('inert');
+    page.remove();
+  });
+
   it('renders nothing when closed', () => {
     const { container } = render(<WelcomeGuide open={false} onDismiss={() => {}} />);
     expect(container).toBeEmptyDOMElement();

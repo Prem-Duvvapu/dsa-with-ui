@@ -145,15 +145,17 @@ export default function ProblemWorkspace() {
     setIsCompareOpen(false);
   }, [problemId]);
 
-  // The tour spotlights regions of the Playground; on a phone most of them are off screen at
-  // once, so it is offered on wider screens only (as before). Help lists the shortcuts either way.
-  const canTour = typeof window === 'undefined' || window.innerWidth > 768;
+  // The tour runs on every width: it scrolls each target into view and drops the ones a
+  // narrow screen does not show (the header links live in the closed phone Menu). It starts
+  // from the Playground, out of Focus, so every step has something real to point at.
   const startTour = useCallback(() => {
     setHasSeenWelcome(true);
     setIsHelpOpen(false);
+    pause();
+    setIsFocus(false);
     session.setView('playground', 'playground');
     setIsTourOpen(true);
-  }, [setHasSeenWelcome, session]);
+  }, [setHasSeenWelcome, session, pause]);
 
   const changeSpeed = useCallback((ms) => { setSpeed(ms); setPersistedSpeed(ms); }, [setSpeed, setPersistedSpeed]);
   const nudgeSpeed = useCallback((direction) => {
@@ -273,7 +275,7 @@ export default function ProblemWorkspace() {
   const overlays = (
     <>
       <ShortcutHelp open={isHelpOpen} onClose={() => setIsHelpOpen(false)}
-        onStartTour={canTour ? startTour : null}
+        onStartTour={startTour}
         onReplayWelcome={() => { setIsHelpOpen(false); setHasSeenWelcome(false); }} />
       <CommandPalette isOpen={isPaletteOpen} onClose={() => setIsPaletteOpen(false)} problems={problems}
         currentProblemId={problemId} catalogLoading={catalogLoading} catalogError={catalogError}
@@ -284,7 +286,7 @@ export default function ProblemWorkspace() {
         open={!hasSeenWelcome && !catalogLoading && !catalogError && !isTourOpen}
         onDismiss={() => setHasSeenWelcome(true)}
         onShowShortcuts={() => { setHasSeenWelcome(true); setIsHelpOpen(true); }}
-        onStartTour={canTour ? startTour : null}
+        onStartTour={startTour}
         totalProblems={problems.length}
       />
       <TourGuide open={isTourOpen} onClose={() => setIsTourOpen(false)} totalProblems={problems.length} />

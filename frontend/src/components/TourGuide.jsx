@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+import useModalDialog from '../hooks/useModalDialog';
 import styles from './TourGuide.module.css';
 
 /**
@@ -11,8 +12,10 @@ import styles from './TourGuide.module.css';
  * matters here more than usual - the code panel moved from below the canvas to beside it
  * in this same branch, which is exactly the change that silently breaks a tour.
  *
- * A step whose target is not on screen right now - a collapsed panel, a control that only
- * exists on desktop - is dropped before the tour starts rather than pointing at nothing.
+ * A step whose target is not on screen right now - hidden (Focus mode, the phone Menu's
+ * collapsed contents), or not rendered at all - is dropped before the tour starts rather
+ * than pointing at nothing. Each step scrolls its target into view before spotlighting it,
+ * so a tour on a short or narrow screen does not describe something below the fold.
  * TourGuide.test.jsx asserts every declared target exists in the rendered app, so a
  * removed anchor fails a test instead of shipping a tour that highlights empty space.
  */
@@ -40,6 +43,13 @@ export const TOUR_STEPS = [
     title: 'The algorithm actually runs',
     body: 'This is the real algorithm executing on the input below — arrays, trees, graphs, '
         + 'grids and DP tables each get the picture that suits them.'
+  },
+  {
+    target: 'focus',
+    title: 'Clear everything else away',
+    body: 'Focus hides the statement, the editor and the rest of the page, and keeps the '
+        + 'diagram, its narration and the controls. Exit focus, or Esc, brings them back '
+        + 'exactly as you left them.'
   },
   {
     target: 'controls',
@@ -76,6 +86,25 @@ export const TOUR_STEPS = [
 
 const PAD = 8;
 
+/** A target the reader can actually see: rendered, not hidden, not in a closed disclosure. */
+export function isShown(element) {
+  if (!element || element.closest('[hidden], [inert]')) return false;
+  // CSS can hide it too: the desktop header links are display:none on a phone. Browsers
+  // answer that directly; jsdom has no layout and no checkVisibility, so it skips this.
+  if (typeof element.checkVisibility === 'function' && !element.checkVisibility()) return false;
+  const closed = element.closest('details:not([open])');
+  if (closed && element !== closed && element.closest('summary')?.parentElement !== closed) return false;
+  return true;
+}
+
+function prefersReducedMotion() {
+  try {
+    return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
+  } catch {
+    return false;
+  }
+}
+
 /** Where the tooltip sits relative to the spotlight, kept inside the viewport. */
 function placeTooltip(rect, tipSize) {
   const { innerWidth: vw, innerHeight: vh } = window;
@@ -104,19 +133,25 @@ export default function TourGuide({ open, onClose, steps = TOUR_STEPS, totalProb
   const [tipPos, setTipPos] = useState({ top: 0, left: 0 });
   const tipRef = useRef(null);
   const nextRef = useRef(null);
+  const overlayRef = useRef(null);
 
   // Resolve targets once per opening. A step whose anchor is not rendered right now is
   // dropped rather than shown pointing at nothing.
   useEffect(() => {
     if (!open) return;
-    const present = steps.filter(
-      (s) => document.querySelector(`[data-tour="${s.target}"]`) !== null
-    );
+    const present = steps.filter((s) => isShown(document.querySelector(`[data-tour="${s.target}"]`)));
     setVisibleSteps(present);
     setIndex(0);
   }, [open, steps]);
 
   const step = visibleSteps[index];
+
+  // Bring each target on screen before measuring it.
+  useLayoutEffect(() => {
+    if (!open || !step) return;
+    document.querySelector(`[data-tour="${step.target}"]`)
+      ?.scrollIntoView?.({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'instant' });
+  }, [open, step]);
 
   const measure = useCallback(() => {
     if (!step) return;
@@ -145,6 +180,12 @@ export default function TourGuide({ open, onClose, steps = TOUR_STEPS, totalProb
     setTipPos(placeTooltip(rect, { width: t.width, height: t.height }));
   }, [rect]);
 
+  // The page behind is inert while the tour is up; when it ends, focus goes back to whatever
+  // started it, or to the page when that was a dialog that has since closed.
+  useModalDialog(overlayRef, Boolean(open && step && rect), {
+    initialFocusRef: nextRef,
+    fallbackFocus: () => document.getElementById('workspace-view')
+  });
   useEffect(() => { if (open) nextRef.current?.focus(); }, [open, index]);
 
   const total = visibleSteps.length;
@@ -173,7 +214,7 @@ export default function TourGuide({ open, onClose, steps = TOUR_STEPS, totalProb
   if (!open || !step || !rect) return null;
 
   return (
-    <div className={styles.overlay} data-testid="tour-guide">
+    <div ref={overlayRef} className={styles.overlay} data-testid="tour-guide">
       {/* Four panels around the target rather than one box-shadow: the cutout stays crisp
           at any size and the dimmed areas remain clickable-through-free. */}
       <div className={styles.shade} style={{ top: 0, left: 0, right: 0, height: Math.max(0, rect.top - PAD) }} />
