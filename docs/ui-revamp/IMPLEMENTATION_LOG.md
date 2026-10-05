@@ -764,3 +764,20 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 - **Tests.** 4 InputPanel tests and 2 editor tests. 5 are red on `3373c48`. The negative-typing test passes on both, because jsdom cannot reproduce a browser's partial `-`; the browser probe above is that proof.
 - **Browser.** `evidence/p7/inputs-journey.cjs` passes 14/14 on a phone viewport with touch emulation (tracker row). A real virtual keyboard on a device is not available here and stays pending.
 - **Backend wording defect found (separate PR).** Validation messages number positions and edges from 0 ("Position 1 is not a whole number." for the second chip; "Edge 0 refers to…"), while the editors label them from 1.
+
+## 2026-10-05 — P7 renderer coverage sweep (all 17 registry keys)
+
+- **Method.** `evidence/p7/renderer-sweep.cjs` reads the live catalogue (no document counts). For each of the 17 `dsType`s it takes the first, middle and last catalogued problem: 50 problems, structurally different within each family. Each problem runs with its default input and its declared alternate input (as a shared `?input=` link), at 1366×768 dark and 390×844 light. Every run is inspected at the first, middle and final step for:
+  - a drawn stage (the canvas frame holds a drawing or text, so an honestly empty structure counts; "No visualization" / "Nothing to draw" fails);
+  - no page-wide horizontal overflow;
+  - no page errors.
+  The full result is in `renderer-manifest.json`.
+- **Result on `3373c48`: 192/200.**
+  - All 17 families draw at every inspected step with 0 page errors.
+  - 7 rows overflowed at the phone's final step. That was the end-of-run row added in P6b, fixed in #200 and re-checked at 0 px.
+  - 1 row was a page-load timeout while the host ran unrelated builds (load average ~30).
+- **Probe correction.** The first run flagged Matrix and Queue frames as "nothing drawn". Their screenshots showed a correct grid and a correctly empty queue: the check guessed CSS class names. It was replaced before the recorded run.
+- **Still open for P7.**
+  - A full re-sweep on merged main.
+  - A second browser engine and real devices (virtual keyboard), which are not available here.
+  - Unknown-`dsType` and unsupported states are covered by the existing registry tests, not by this sweep.
