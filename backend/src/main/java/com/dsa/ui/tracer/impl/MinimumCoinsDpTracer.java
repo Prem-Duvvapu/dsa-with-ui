@@ -106,6 +106,7 @@ public class MinimumCoinsDpTracer implements AlgorithmTracer {
         int n = coins.length;
         int inf = CoinChangeDpTable.INFINITY;
 
+        DpTraceSupport.requireTableFits(n + 1, amount + 1, "amount", "Use a smaller amount or fewer coins.");
         int[][] dp = new int[n + 1][amount + 1];
         boolean[][] settled = new boolean[n + 1][amount + 1];
         List<String> rowLabels = CoinChangeDpTable.rowLabels(coins);

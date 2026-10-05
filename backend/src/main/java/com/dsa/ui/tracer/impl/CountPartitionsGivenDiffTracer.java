@@ -150,6 +150,7 @@ public class CountPartitionsGivenDiffTracer implements AlgorithmTracer {
 
         int target = sumPlusD / 2;
         int n = nums.length;
+        DpTraceSupport.requireTableFits(n + 1, target + 1, "nums", "Use fewer or smaller numbers, or a smaller d.");
         int[][] dp = new int[n + 1][target + 1];
         boolean[][] settled = new boolean[n + 1][target + 1];
         List<String> rowLabels = SubsetCountDpTable.rowLabels(nums);

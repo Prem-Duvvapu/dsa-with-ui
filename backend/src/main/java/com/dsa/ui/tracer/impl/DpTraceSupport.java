@@ -4,13 +4,38 @@ import com.dsa.ui.model.DpCell;
 import com.dsa.ui.model.DpTable;
 import com.dsa.ui.tracer.FieldType;
 import com.dsa.ui.tracer.InputField;
+import com.dsa.ui.tracer.InputValidationException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /** Shared, immutable snapshots for the final family of caller-driven DP tracers. */
 final class DpTraceSupport {
+
+    /**
+     * The largest DP table a step-by-step trace can show within the response budget
+     * (InputSpec.DEFAULT_MAX_BYTES). Every step carries the whole table and the number of steps
+     * grows with the number of cells, so the payload grows with cells squared: measured on the
+     * live catalogue, tables up to 15 x 15 finish, and larger ones stopped at 2 MB BEFORE the
+     * answer step - the reader saw a run cut short with no result.
+     */
+    static final int MAX_TABLE_CELLS = 225;
+
+    /**
+     * Refuses, as a field error, an input whose table would not fit, instead of starting a run
+     * that cannot reach its answer. The limit is on the table, not on each field, so a few large
+     * values or many small ones are both fine.
+     */
+    static void requireTableFits(int rows, int cols, String field, String advice) {
+        long cells = (long) rows * cols;
+        if (cells > MAX_TABLE_CELLS) {
+            throw new InputValidationException(Map.of(field, String.format(
+                    "This input needs a %d × %d table (%d cells); a step-by-step trace can show at most %d. %s",
+                    rows, cols, cells, MAX_TABLE_CELLS, advice)));
+        }
+    }
 
     record Coord(int row, int col) {}
 

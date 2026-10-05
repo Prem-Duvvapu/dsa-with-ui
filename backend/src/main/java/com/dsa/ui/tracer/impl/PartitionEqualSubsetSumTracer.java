@@ -113,6 +113,7 @@ public class PartitionEqualSubsetSumTracer implements AlgorithmTracer {
         }
 
         int target = totalSum / 2;
+        DpTraceSupport.requireTableFits(n + 1, target + 1, "nums", "Use fewer or smaller numbers.");
         boolean[][] dp = new boolean[n + 1][target + 1];
         boolean[][] settled = new boolean[n + 1][target + 1];
 

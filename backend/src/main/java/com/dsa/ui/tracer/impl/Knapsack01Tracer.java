@@ -129,6 +129,7 @@ public class Knapsack01Tracer implements AlgorithmTracer {
         }
         int n = wt.length;
         int W = in.getInt("capacity");
+        DpTraceSupport.requireTableFits(n + 1, W + 1, "capacity", "Use a smaller capacity or fewer items.");
         int[][] dp = new int[n + 1][W + 1];
 
         for (int i = 1; i <= n; i++) {
