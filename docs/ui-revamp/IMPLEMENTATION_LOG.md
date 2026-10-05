@@ -649,3 +649,21 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 **Browser.** `evidence/p5/switcher-journey.cjs` passes 18/18 against the real backend at 1366×768 dark and 390×844 light (tracker row). A probe pitfall: Playwright's role queries still see the inert speed `<select>` options behind the dialog, so the journey scopes its locators to the dialog.
 
 **Pending in P5.** Focus mode (P5b). One shortcut-ownership policy, and help/welcome/tour adapted to the current views (P5c). Welcome and Tour keep their own focus handling until then. A screen-reader pass of the combobox stays pending (no screen reader in this environment).
+
+## 2026-10-05 — P5b Focus mode
+
+- **Focus** sits in the Playground stage's header.
+  - It hides the site header, the context block (title, statement, curriculum), the view rail, the input echo, the editor, history/compare and the footer.
+  - They are hidden with the `hidden` attribute, so they stay mounted: an editor mid-edit keeps its local state.
+  - A global `[hidden] { display: none !important }` makes that win over a card's own `display: grid`.
+- What stays: the stage card, now headed with the problem title and diagram family, its notices (truncation, offline, failure, pending), the diagram and companions, the narration with its step counter, and playback.
+- **Exit focus** replaces Edit input / Show code, because those would leave the view.
+- **Behaviour.**
+  - Entering and leaving both pause. Focus moves to Exit focus on entry and back to Focus on exit.
+  - Another problem, or any view change (including Back), ends Focus.
+  - Escape leaves Focus only after the switcher, the welcome, help or any other modal dialog has taken its own Escape.
+  - Focus is presentation only: no URL writer, no execution, nothing persisted.
+- **Room.** The stage takes what the hidden panels freed: `max(360px, 100dvh − 340px)` (phones `max(300px, 100dvh − 520px)`), so the whole card still fits the viewport at 1366×768 and 390×844.
+- **Not done here.** Focus is offered from the Playground only. The Code walkthrough already gives the diagram half the screen, and its split/subview state is untouched by Focus. The help line for Esc now mentions Focus; the full help/tour update is P5c.
+- **Tests.** 4 integration tests, all red on `175e3d7` (no Focus control): run, step and draft kept, with the editor hidden but mounted; pause on entry and exit; Escape priority behind help; problem change ends Focus. Full suite 635/635; build 349.42 kB / 111.03 kB gzip.
+- **Browser.** `evidence/p5/focus-journey.cjs` passes 22/22 on the real backend (tracker row).
