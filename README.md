@@ -6,7 +6,7 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-The proposed UI/UX redesign is documented in the [redesign project plan](docs/ui-revamp/PROJECT_PLAN.md), with a feature-preservation inventory, experience specification, architecture, phased roadmap, and release criteria. This is planning work; the redesigned interface is not implemented yet.
+The library and the new Playground, Code walkthrough and Analysis workspace are implemented. The [UI revamp handoff](docs/ui-revamp/IMPLEMENTATION_HANDOFF.md) defines the remaining work and acceptance criteria; the [execution tracker](docs/ui-revamp/REVAMP_TRACKER.md) and [implementation log](docs/ui-revamp/IMPLEMENTATION_LOG.md) record progress and verification. P5–P9 remain: switching/focus/guidance, history/comparison/completion, full renderer/input coverage, accessibility/usability and release cleanup.
 
 **Status: 431 problems catalogued, all 431 with real execution traces.** The API still
 reports catalogued, traced, and untraced counts independently — see
@@ -351,4 +351,8 @@ The suite is built to catch fake work, not just crashes:
 | `references.md` | UI/UX research and the design-token system. |
 | `PROJECT_CONTEXT.md` | Pedagogical principles behind the visualizations. |
 | `RCA.md` | Root causes, resolutions, open debt, and the regression guard for each recurring incident. |
+| [UI revamp handoff](docs/ui-revamp/IMPLEMENTATION_HANDOFF.md) | Authoritative UI requirements, session contract, feature inventory, P0–P9 roadmap and release gates. |
+| [Revamp tracker](docs/ui-revamp/REVAMP_TRACKER.md), [implementation log](docs/ui-revamp/IMPLEMENTATION_LOG.md) | Package status, decisions, evidence and known limitations. |
+| [Reference design](docs/ui-revamp/REFERENCE_DESIGN.md) | Owner concept, reference layouts and design decisions. |
+| [Remaining phases execution plan](docs/ui-revamp/REMAINING_PHASES_EXECUTION_PLAN.md), [Opus completion prompt](docs/ui-revamp/OPUS_COMPLETION_PROMPT.md) | Step-by-step P5–P9 delivery and acceptance closure, with a reusable agent prompt. |
 | `PROMPT-E-canvases.md`, `PROMPT-F-visual-fidelity.md`, `PROMPT-J-full-roadmap.md` | Historical implementation prompts, kept for design rationale rather than as a live worklist — see each file's status header for what has since shipped. |
