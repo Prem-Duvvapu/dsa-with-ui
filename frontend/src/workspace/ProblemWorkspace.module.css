@@ -68,6 +68,9 @@
 .completion { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; padding: 10px 12px; border: 1px solid var(--rule-subtle); border-radius: 10px; }
 .completionText { font-weight: 650; margin-right: auto; }
 .completion a.control { text-decoration: none; }
+/* A "Next: <title>" button carries a full problem title: on a phone it must wrap, not push
+   the page sideways (.control is nowrap for the short labels everywhere else). */
+.completion .control { white-space: normal; text-align: left; min-width: 0; max-width: 100%; height: auto; padding-block: 8px; }
 .focusFamily { color: var(--ink-secondary); font-weight: 600; }
 /* In Focus the stage takes the room the hidden panels gave back: the viewport less the card
    head, narration and controls (measured at 1366×768), never below the normal floor. */
