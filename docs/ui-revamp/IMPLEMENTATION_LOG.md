@@ -693,3 +693,22 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
   Full suite 642/642; build 350.44 kB / 111.30 kB gzip (+2.0% over the 109.11 kB recorded before P5).
 - **Browser.** `evidence/p5/tour-journey.cjs` passes 40/40 (tracker row). Its first run found the phone tour spotlighting a CSS-hidden desktop link; that is fixed, and the probe now requires an exact box match.
 - **P5 disposition.** Done, apart from a screen-reader pass of the combobox and tour, which stays pending because no screen reader is available here.
+
+## 2026-10-05 — P6a textual execution history for every family
+
+- **What it adds.** `StepHistory` (new, `workspace/`) lists the run's steps as text: the step number and the backend's own narration, 50 per page.
+  - The pager has "Steps a–b of N", Previous/Next page and Jump to current step (which also moves focus to the current entry).
+  - When the current step is on another page, the list says which page it is on.
+  - The selected entry carries `aria-current="step"`.
+- **Seeking.** Choosing an entry calls the session's one `seek` (which pauses), so the diagram, source, Analysis and URL follow. Paging only changes which entries are listed.
+- **Bounded.** No diagram per entry, at most 50 buttons, and the list scrolls inside the disclosure. It renders only while "Execution history" is open: closed, it costs nothing and does not duplicate narration in the DOM.
+- **Scope.**
+  - "Execution history" now appears for every family with steps. Graph/Tree/DP previously had none, because the disclosure existed only for the capture strip. The capture strip keeps its exclusions and sits above the list where it applies.
+  - Keyed by problem and run id, so a new run reopens on its current step's page.
+  - The open/closed state survives view changes.
+- **Tests.**
+  - 6 `StepHistory` tests: bounded page; paging without seek; final step of a 4,999-step run reachable and seekable; current-step marking and "on page N"; Jump to current; opening on the current page; no run.
+  - 1 integration test on a Graph-tagged run: the list appears without a capture strip, and seeking updates the narration with no execution. It is red on `158e55d`, where Graph runs had no history disclosure.
+  - Full suite 649/649; build 352.56 kB / 112.01 kB gzip.
+- **Flaky under load.** One `Lifecycle.integration` test times out at 5 s when the host is saturated. It does so on `158e55d` too, so it is load-related, not this change.
+- **Browser.** `evidence/p6/history-journey.cjs` passes 22/22 (tracker row).

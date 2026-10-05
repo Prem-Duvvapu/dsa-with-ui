@@ -71,10 +71,9 @@ export const TOUR_STEPS = [
   },
   {
     target: 'capture-strip',
-    body: 'Every step of the run at once — one column per step, one row per tracked slot. '
-        + 'Open it to see how long the run is and where the interesting part sits, then click '
-        + 'any column to jump there. Graphs, trees and DP tables skip it: their diagram already '
-        + 'shows the whole run.',
+    body: 'Every step of the run, listed with its narration 50 at a time: open it and click any '
+        + 'step to jump there. Arrays, strings and similar runs also get a capture strip, one column '
+        + 'per step; graphs, trees and DP tables skip that, since their diagram already shows the whole run.',
     title: 'The whole run, at a glance'
   },
   {
