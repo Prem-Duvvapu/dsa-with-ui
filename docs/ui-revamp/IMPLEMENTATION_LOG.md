@@ -771,3 +771,20 @@ A backend contract defect found by the P7 input journey, fixed as its own change
 - **Defect.** `InputValidator` numbered list positions, grid rows/cells and graph edges from 0, while every editor labels them from 1. Clearing the second chip produced "Position 1 is not a whole number."; a bad second edge produced "Edge 1…"; a short second grid row produced "row 1".
 - **Fix.** Messages now count from 1. Grid cells read "Row R, column C" (the grid editor's own words). Vertex ids are unchanged, because they are 0-based ids the reader types, not positions.
 - **Tests.** The `InputValidatorTest.Numbering` tests (array, grid cell, edge) and the updated ragged-grid assertion ("row 2" for the second row) are 4 failures on `3373c48`. Full backend suite green.
+
+## 2026-10-05 — P7 renderer coverage sweep (all 17 registry keys)
+
+- **Method.** `evidence/p7/renderer-sweep.cjs` reads the live catalogue (no document counts). For each of the 17 `dsType`s it takes the first, middle and last catalogued problem: 50 problems, structurally different within each family. Each problem runs with its default input and its declared alternate input (as a shared `?input=` link), at 1366×768 dark and 390×844 light. Every run is inspected at the first, middle and final step for:
+  - a drawn stage (the canvas frame holds a drawing or text, so an honestly empty structure counts; "No visualization" / "Nothing to draw" fails);
+  - no page-wide horizontal overflow;
+  - no page errors.
+  The full result is in `renderer-manifest.json`.
+- **Result on `3373c48`: 192/200.**
+  - All 17 families draw at every inspected step with 0 page errors.
+  - 7 rows overflowed at the phone's final step. That was the end-of-run row added in P6b, fixed in #200 and re-checked at 0 px.
+  - 1 row was a page-load timeout while the host ran unrelated builds (load average ~30).
+- **Probe correction.** The first run flagged Matrix and Queue frames as "nothing drawn". Their screenshots showed a correct grid and a correctly empty queue: the check guessed CSS class names. It was replaced before the recorded run.
+- **Still open for P7.**
+  - A full re-sweep on merged main.
+  - A second browser engine and real devices (virtual keyboard), which are not available here.
+  - Unknown-`dsType` and unsupported states are covered by the existing registry tests, not by this sweep.
