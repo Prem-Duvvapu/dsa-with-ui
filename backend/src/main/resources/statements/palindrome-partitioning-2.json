@@ -20,6 +20,14 @@
       "output": "2",
       "answerVariable": "answer",
       "explanation": "Two cuts give \"a\" | \"bccb\" | \"c\". The string is not a palindrome and cannot be split into two palindromes, so 2 is the minimum."
+    },
+    {
+      "input": {
+        "text": "noon"
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The whole string is already a palindrome, so it needs no cut at all."
     }
   ],
   "constraints": [

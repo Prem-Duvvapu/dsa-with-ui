@@ -23,6 +23,15 @@
       "output": "ab",
       "answerVariable": "answer",
       "explanation": "The length is 2, and \"ab\" is the only common subsequence of that length: \"ca\" and \"cb\" do not appear in order in \"abac\"."
+    },
+    {
+      "input": {
+        "first": "abc",
+        "second": "acb"
+      },
+      "output": "ab",
+      "answerVariable": "answer",
+      "explanation": "Both \"ab\" and \"ac\" are common subsequences of length 2, and no common subsequence is longer. Either one is a correct answer; this trace returns \"ab\"."
     }
   ],
   "sources": [

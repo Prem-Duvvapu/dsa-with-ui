@@ -23,6 +23,15 @@
       "output": "3",
       "answerVariable": "answer",
       "explanation": "Keep \"ab\". Delete the last \"a\" and the \"c\", then insert \"c\" at the front: 2 deletions and 1 insertion."
+    },
+    {
+      "input": {
+        "first": "abc",
+        "second": "xyz"
+      },
+      "output": "6",
+      "answerVariable": "answer",
+      "explanation": "No letter is shared, so nothing can be kept: all 3 letters of \"abc\" are deleted and all 3 letters of \"xyz\" are inserted, 6 operations."
     }
   ],
   "constraints": [

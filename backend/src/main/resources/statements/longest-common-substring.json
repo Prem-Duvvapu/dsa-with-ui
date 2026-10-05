@@ -22,6 +22,15 @@
       "output": "6",
       "answerVariable": "answer",
       "explanation": "\"abcdez\" appears in both strings as one unbroken run."
+    },
+    {
+      "input": {
+        "first": "abc",
+        "second": "xyz"
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "No character appears in both strings, so they share no substring at all: the answer is 0."
     }
   ],
   "constraints": [

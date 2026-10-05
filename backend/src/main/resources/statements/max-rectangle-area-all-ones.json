@@ -59,6 +59,30 @@
       "output": "3",
       "answerVariable": "best",
       "explanation": "The whole 3 × 1 column is 1s, so the area is 3."
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ]
+      },
+      "output": "4",
+      "answerVariable": "best",
+      "explanation": "Two different 2 × 2 blocks are all 1s - the top-left one and the bottom-right one - each of area 4. No rectangle of area 5 or more is all 1s."
     }
   ],
   "constraints": [

@@ -35,6 +35,19 @@
       "output": "1",
       "answerVariable": "answer",
       "explanation": "The values only decrease, so any single element is a longest increasing subsequence."
+    },
+    {
+      "input": {
+        "nums": [
+          7,
+          7,
+          7,
+          7
+        ]
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "Increasing means strictly larger. Equal values cannot follow each other, so the longest increasing subsequence is any single 7."
     }
   ],
   "constraints": [

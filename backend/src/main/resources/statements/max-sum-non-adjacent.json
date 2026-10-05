@@ -36,6 +36,20 @@
       "output": "110",
       "answerVariable": "answer",
       "explanation": "Pick indices 0, 3 and 5: 5 + 100 + 5 = 110. Taking 100 rules out both 10s beside it, and that is still the best trade."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          9,
+          1,
+          1,
+          9
+        ]
+      },
+      "output": "18",
+      "answerVariable": "answer",
+      "explanation": "Taking both 9s (positions 2 and 5) is allowed because they are not next to each other: 9 + 9 = 18. Any choice that includes the 2 can take at most one of the 9s."
     }
   ],
   "constraints": [

@@ -31,6 +31,20 @@
       "output": "6000",
       "answerVariable": "answer",
       "explanation": "There are only two matrices, 10 × 20 and 20 × 30, so the one product costs 10 × 20 × 30 = 6000."
+    },
+    {
+      "input": {
+        "dims": [
+          6,
+          2,
+          9,
+          3,
+          7
+        ]
+      },
+      "output": "180",
+      "answerVariable": "answer",
+      "explanation": "Multiplying left to right costs 6·2·9 + 6·9·3 + 6·3·7 = 108 + 162 + 126 = 396. Multiplying B·C first (2·9·3 = 54), then that by D (2·3·7 = 42), then A by the result (6·2·7 = 84) costs only 180 - the order changes the work by more than half."
     }
   ],
   "constraints": [

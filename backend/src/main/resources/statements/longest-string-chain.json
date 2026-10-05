@@ -21,6 +21,14 @@
       "output": "5",
       "answerVariable": "answer",
       "explanation": "All five words form one chain: xb → xbc → cxbc → pcxbc → pcxbcf."
+    },
+    {
+      "input": {
+        "words": "abcd,dbqca"
+      },
+      "output": "1",
+      "answerVariable": "answer",
+      "explanation": "\"dbqca\" is one letter longer than \"abcd\", but removing any one of its letters never leaves \"abcd\" (the letters are in a different order). Neither word extends the other, so the longest chain is a single word."
     }
   ],
   "constraints": [

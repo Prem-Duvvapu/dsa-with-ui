@@ -23,6 +23,15 @@
       "output": "4",
       "answerVariable": "answer",
       "explanation": "\"gtab\" appears in order in both strings."
+    },
+    {
+      "input": {
+        "first": "abc",
+        "second": "xyz"
+      },
+      "output": "0",
+      "answerVariable": "answer",
+      "explanation": "The two strings have no letter in common, so not even a single character can be matched: the longest common subsequence is empty, length 0."
     }
   ],
   "constraints": [

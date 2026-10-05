@@ -30,6 +30,19 @@
       "output": "[1, 2]",
       "answerVariable": "subset",
       "explanation": "2 and 3 do not divide each other, so the largest size is 2. [1, 3] would be equally correct."
+    },
+    {
+      "input": {
+        "nums": [
+          3,
+          4,
+          16,
+          8
+        ]
+      },
+      "output": "[4, 8, 16]",
+      "answerVariable": "subset",
+      "explanation": "The input is not sorted and 3 divides none of the others. 4, 8 and 16 form a chain in which each value divides the next, so they make the largest subset; it is returned in ascending order."
     }
   ],
   "constraints": [
