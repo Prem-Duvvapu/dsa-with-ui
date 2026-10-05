@@ -238,6 +238,16 @@ class InputValidatorTest {
         void rejectsEmpty() {
             assertTrue(reject(spec, Map.of("g", List.of())).getFieldErrors().containsKey("g"));
         }
+
+        @Test
+        @DisplayName("minCols is enforced, not just declared")
+        void rejectsTooNarrow() {
+            InputSpec wide = InputSpec.of(InputField.of("g", FieldType.INT_GRID)
+                    .constraint("minCols", 3).constraint("maxCols", 3).values(0, 9)
+                    .defaultValue(List.of(List.of(1, 2, 3))).build());
+            assertEquals("Needs at least 3 columns.",
+                    reject(wide, Map.of("g", List.of(List.of(5, 1)))).getFieldErrors().get("g"));
+        }
     }
 
     /**

@@ -44,7 +44,7 @@ public class CoinChange2Tracer implements AlgorithmTracer {
                 InputField.of("coins", FieldType.INT_ARRAY)
                         .label("Coin denominations")
                         .help("Unlimited supply of each — a coin may be used more than once.")
-                        .length(1, 8).values(1, 25)
+                        .length(1, 8).values(1, 25).distinct()
                         .defaultValue(List.of(1, 2, 5))
                         .build(),
                 InputField.of("amount", FieldType.INT)

@@ -47,6 +47,9 @@ public class NinjasTrainingTracer implements AlgorithmTracer {
                         .help("Three activities per day. The same activity cannot be done on "
                                 + "two consecutive days.")
                         .constraint("maxRows", 10)
+                        // Every day offers all three activities; a narrower grid has no meaning here
+                        // and used to reach points[day][2] and fail with a 500.
+                        .constraint("minCols", ACTIVITIES)
                         .constraint("maxCols", ACTIVITIES)
                         .values(0, 100)
                         .defaultValue(List.of(
