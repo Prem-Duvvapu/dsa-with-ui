@@ -44,6 +44,18 @@
       "output": "5",
       "answerVariable": "answer",
       "explanation": "To reach 3, exactly one of the five 1s must be negative, and there are 5 choices for which one."
+    },
+    {
+      "input": {
+        "nums": [
+          0,
+          1
+        ],
+        "target": 1
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "A 0 can take either sign without changing the sum, so +0 + 1 and -0 + 1 are two different assignments that both reach 1."
     }
   ],
   "constraints": [

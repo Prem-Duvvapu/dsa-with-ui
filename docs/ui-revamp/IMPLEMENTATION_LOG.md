@@ -818,3 +818,21 @@ A backend contract defect found by the P7 input journey, fixed as its own change
   - edit-distance and wildcard-matching max length 15 → 14; print-lis 30 → 22.
 - **Tests.** `DpTableBudgetTest` runs each problem's largest allowed input; it must finish with the brute-force answer. One step over the limit must be refused: those 13 rows are red on `c5d39f2`.
 - **Test change.** `TracerContractTest.stepCountGrowsWithInput` pads with the smallest allowed value when max-value padding is refused, since a sum-bounded table is a legitimate limit. Full backend suite green.
+
+## 2026-10-05 — DP verification, fix 3: stronger examples
+
+- **Why.** The verification found every DP example correct, but some sets missed the case that defines the problem.
+- **Added examples (18).** Each uses our own inputs (not LeetCode's or GfG's), and every output was checked both against the tracer (`StatementContractTest`) and by hand or brute force.
+  - zero answers: LCS, longest common substring, and min insertions/deletions with nothing in common; a palindrome needing no insertion or cut;
+  - strictness: `[7,7,7,7]` → 1, and equal values in the tails list;
+  - ties: two LCSs of length 2;
+  - negatives: falling path −3 then −6 = −9;
+  - an even total with no equal split: `[2,3,7]`;
+  - order mattering: cookies `[2,1]` against greed `[1,2]`; a matrix chain costing 396 left to right but 180 at best;
+  - an unsorted divisible subset;
+  - words one letter apart that still don't chain;
+  - two non-adjacent 9s;
+  - two maximal 2×2 rectangles;
+  - three single-letter palindromes;
+  - a 0 that doubles the sign count.
+- **Text fixes.** shortest-common-supersequence now notes that "geeke" is equally correct. mcm-cost-eval drops an internal-commentary sentence; its title stays an open owner decision.

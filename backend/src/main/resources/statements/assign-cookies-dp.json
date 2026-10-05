@@ -37,6 +37,21 @@
       "output": "2",
       "answerVariable": "answer",
       "explanation": "Give the size-1 cookie to the child with greed 1 and the size-2 cookie to the child with greed 2. Both children are content."
+    },
+    {
+      "input": {
+        "greed": [
+          1,
+          2
+        ],
+        "cookies": [
+          2,
+          1
+        ]
+      },
+      "output": "2",
+      "answerVariable": "answer",
+      "explanation": "Handing out cookies in the order given would give the size-2 cookie to the child who needs 1, leaving only a size-1 cookie for the child who needs 2. Matching sizes to needs instead - 1 to the first child, 2 to the second - satisfies both."
     }
   ],
   "constraints": [

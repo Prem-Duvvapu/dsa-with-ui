@@ -31,6 +31,18 @@
       "output": "false",
       "answerVariable": "answer",
       "explanation": "The total is 11, which is odd, so it cannot be divided into two equal integer halves."
+    },
+    {
+      "input": {
+        "nums": [
+          2,
+          3,
+          7
+        ]
+      },
+      "output": "false",
+      "answerVariable": "answer",
+      "explanation": "The total, 12, is even, so each half would have to be 6. The subset sums are 2, 3, 5, 7, 9, 10 and 12 - none of them is 6, so no equal split exists."
     }
   ],
   "constraints": [

@@ -46,6 +46,23 @@
       "output": "101",
       "answerVariable": "answer",
       "explanation": "Every path takes one 100 from the top row. Following it with the 1 below gives the minimum, 101."
+    },
+    {
+      "input": {
+        "matrix": [
+          [
+            -3,
+            8
+          ],
+          [
+            -6,
+            -1
+          ]
+        ]
+      },
+      "output": "-9",
+      "answerVariable": "answer",
+      "explanation": "Negative values pull the sum down. Starting at -3 and falling straight down to -6 gives -9; every other path (-3 then -1, 8 then -6, 8 then -1) is larger."
     }
   ],
   "constraints": [

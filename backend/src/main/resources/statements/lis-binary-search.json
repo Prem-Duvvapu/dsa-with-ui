@@ -35,6 +35,21 @@
       "output": "1",
       "answerVariable": "size",
       "explanation": "Every element is smaller than the one before, so each one replaces the only entry and tails never grows past size 1."
+    },
+    {
+      "input": {
+        "nums": [
+          4,
+          4,
+          1,
+          2,
+          2,
+          5
+        ]
+      },
+      "output": "3",
+      "answerVariable": "size",
+      "explanation": "The repeated 4s and 2s never lengthen the list of tails: an equal value replaces the tail it matches instead of being appended. The tails end as [1, 2, 5], so the longest strictly increasing subsequence has length 3 (for example 1, 2, 5)."
     }
   ],
   "constraints": [

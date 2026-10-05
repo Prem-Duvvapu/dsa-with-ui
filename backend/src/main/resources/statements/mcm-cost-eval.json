@@ -3,7 +3,7 @@
   "statement": [
     "You are given an array dimensions of length n + 1 describing a chain of n matrices: matrix i, for 1 ≤ i ≤ n, has dimensions dimensions[i − 1] × dimensions[i].",
     "Multiplying an a × b matrix by a b × c matrix costs a × b × c scalar multiplications. Choosing where to put the parentheses changes the total cost.",
-    "Return the smallest total cost of multiplying the whole chain. This entry evaluates the same partition recurrence as Matrix Chain Multiplication: the best cost of a range is its cheapest split point plus the cost of joining the two halves."
+    "Return the smallest total cost of multiplying the whole chain."
   ],
   "examples": [
     {
