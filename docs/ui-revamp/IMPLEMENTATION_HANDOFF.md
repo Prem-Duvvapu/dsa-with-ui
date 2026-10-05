@@ -2,7 +2,7 @@
 
 Date: 2026-09-29. Audience: the implementing agent and the project owner.
 
-**This is the authoritative remaining-work plan.** It supersedes conflicting requirements, baseline descriptions, ordering and estimates in the September 23 planning documents. Those documents remain historical design context, not a second competing backlog. Preserve existing repository contribution and tracer-correctness rules.
+**This is the authoritative remaining-work plan.** It consolidates the requirements, feature inventory, architecture, roadmap and verification gates from the September 23 planning package. The superseded planning files have been removed; their historical versions remain available in Git history. Preserve existing repository contribution and tracer-correctness rules.
 
 This deliverable is documentation only. No new UI implementation, fresh browser audit, performance result, or accessibility certification is claimed here. Implementation requires a separate instruction from the owner. Do not infer permission to publish from this file.
 
@@ -629,9 +629,9 @@ Do not remove failing tests merely because old navigation selectors changed. Rew
 
 ## 12. Copy-paste instruction for the implementing agent
 
-> Implement the DSA UI/UX revamp according to `docs/ui-revamp/IMPLEMENTATION_HANDOFF.md`, the authoritative remaining-work plan dated 2026-09-29. First read repository instructions and inspect the actual current code/git state. Treat the older planning documents as historical where they conflict with this handoff. PR #145 already delivered the library and shared catalogue; preserve and refine them rather than rebuilding them.
+> Implement the DSA UI/UX revamp according to `docs/ui-revamp/IMPLEMENTATION_HANDOFF.md`, the authoritative remaining-work plan dated 2026-09-29. First read repository instructions and inspect the actual current code/git state. Read `REVAMP_TRACKER.md` and `IMPLEMENTATION_LOG.md` to identify already merged work. Preserve the library, shared catalogue and new workspace rather than rebuilding them.
 >
-> Start at P0, record a fresh baseline in `REVAMP_TRACKER.md`, then follow P1–P9 in dependency order. Fix session/input/sharing correctness before moving state between views. Preserve F01–F35, all input types, every registered renderer, all existing storage and shared-link behavior. Borrow HLD's hierarchy and natural scrolling, not its exact layout or API. Keep the backend authoritative and do not fabricate data or substitute algorithms.
+> Resume the first incomplete package in dependency order; do not repeat completed packages. Record verification against the current baseline in `REVAMP_TRACKER.md`. Preserve session/input/sharing correctness, F01–F35, all input types, every registered renderer, all existing storage and shared-link behavior. Borrow HLD's hierarchy and natural scrolling, not its exact layout or API. Keep the backend authoritative and do not fabricate data or substitute algorithms.
 >
 > Work in coherent medium-sized branches/PRs. Keep the product usable between changes; activate the new workspace only after the Array, Graph+Queue and 2D DP reference gate. Do not rewrite the whole app in one pass or add a framework/state library without a demonstrated need. Run regression tests and inspect real browser journeys, including phone/laptop, both themes and keyboard behavior. Update evidence and remaining work after every package. Re-estimate at P4 instead of dropping acceptance criteria.
 >
