@@ -1488,3 +1488,29 @@ class, and the reason is worth stating rather than rediscovering.
 - **Lesson:** a trace can be honest about *what it did* and still be wrong about *the answer*. A
   correctness check needs an oracle independent of the tracer; the statements now provide one per
   problem.
+
+## RCA-056 — Legal DP inputs that never reached an answer, and constraints that were declared but not enforced
+
+- **Discovered:** 2026-10-05, by an independent verification of all 56 DP problems. For each problem a reviewer wrote a brute-force reference from the problem definition (not from the tracer), checked every statement example and explanation (114), and compared the tracer with the reference on 60–80 random and edge-case valid inputs (about 5,000 runs).
+- **Status:** Fixed in #204 and #205; examples strengthened in #206.
+- **Symptom:** no tracer gave a wrong answer to an input its statement allows, and no example was wrong. But:
+  - **13 problems accepted inputs whose trace exceeded the 2 MB response budget.** The run stopped, marked "cut short", before the answer step, so a learner who entered a legal input never saw the result. Examples: knapsack-01 with 8 items and capacity 30; partition-set-min-abs-diff on most allowed inputs; edit-distance at length 15.
+  - **ninjas-training returned HTTP 500** for a grid narrower than 3 columns.
+  - **knapsack-01 / unbounded-knapsack returned HTTP 500** for unequal weight/value lists, or silently dropped the extra values.
+  - **coin-change-2 counted repeated coins as different coins:** `[2,2]`, amount 4 gave 3; the correct answer is 1.
+  - **largest-divisible-subset returned `[2,2,4]`** as a "subset".
+- **Root cause:**
+  - **Budget.** Every step carries the whole DP table, and the number of steps grows with the number of cells, so the payload grows with cells². The input limits were per field, but the cost depends on their product (rows × sum + 1).
+  - **Unenforced constraint.** `InputValidator` never implemented `minCols`. Ninjas-training and celebrity-problem declared it, and it was silently ignored.
+  - **Missing rules.** The distinct-coins and distinct-values rules were never declared.
+- **Fix:**
+  - `DpTraceSupport.requireTableFits` refuses any input whose table would exceed 225 cells (15 × 15, measured as the largest that finishes). It is a field error that names the table and what to shrink. edit-distance and wildcard-matching are limited to length 14, print-lis to 22.
+  - `minCols` is enforced.
+  - Unequal knapsack lists are refused.
+  - `distinct()` is declared for coin-change-2 and largest-divisible-subset.
+- **Guard (RED first):**
+  - `DpTableBudgetTest`: each problem's largest allowed input must finish with the brute-force answer, and one step over must be refused. All 13 over-limit rows were red.
+  - `TracerAnswerRegressionTest.dpInputsOutsideTheProblemAreRefused` and `InputValidatorTest.rejectsTooNarrow`: red on the unfixed code.
+- **Lesson:**
+  - "Truncated, and says so" is honest, but it is not the same as usable: an input the editor accepts should be able to finish. Bound inputs by what they cost, and give the reader a field error rather than a run that cannot end.
+  - A constraint a tracer *declares* is not a constraint the validator *enforces*. A declared but unknown key should be found by a test, not by a 500.
