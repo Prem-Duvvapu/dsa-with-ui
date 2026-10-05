@@ -709,6 +709,6 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
 - **Tests.**
   - 6 `StepHistory` tests: bounded page; paging without seek; final step of a 4,999-step run reachable and seekable; current-step marking and "on page N"; Jump to current; opening on the current page; no run.
   - 1 integration test on a Graph-tagged run: the list appears without a capture strip, and seeking updates the narration with no execution. It is red on `158e55d`, where Graph runs had no history disclosure.
-  - Full suite 650/650 on a quiet run.
+  - Full suite 649/649; build 352.56 kB / 112.01 kB gzip.
 - **Flaky under load.** One `Lifecycle.integration` test times out at 5 s when the host is saturated. It does so on `158e55d` too, so it is load-related, not this change.
 - **Browser.** `evidence/p6/history-journey.cjs` passes 22/22 (tracker row).
