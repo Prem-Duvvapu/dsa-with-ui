@@ -413,6 +413,30 @@ describe('Workspace input editor', () => {
 });
 
 describe('Workspace guidance and keyboard', () => {
+  it('leaves Focus before touring, so every step points at something on screen', async () => {
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Focus' }));
+    fireEvent.keyDown(window, { key: '?', code: 'Slash' });
+    fireEvent.click(screen.getByRole('button', { name: 'Take the guided tour' }));
+    expect(await screen.findByTestId('tour-guide')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Exit focus' })).not.toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: TOUR_STEPS[0].title })).toBeInTheDocument();
+  });
+
+  it('offers the tour on a phone too', async () => {
+    const original = window.innerWidth;
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 390 });
+    try {
+      renderApp();
+      await screen.findByText('two-sum step one');
+      fireEvent.click(screen.getAllByRole('button', { name: 'Help' })[0]);
+      expect(screen.getByRole('button', { name: 'Take the guided tour' })).toBeInTheDocument();
+    } finally {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: original });
+    }
+  });
+
   it('opens the tour from Help and walks through it', async () => {
     renderApp();
     await screen.findByText('two-sum step one');
