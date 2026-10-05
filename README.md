@@ -1,5 +1,10 @@
 # DSA Visualizer
 
+Part of the [Learning Hub](https://learning-hub-with-ui.vercel.app/).
+The shared **Learning network** navigation offers Learning Home and same-tab
+links between DSA, LLD, HLD, and CS fundamentals on every route. These remain
+independent apps: themes, backend state, and progress are not synchronized.
+
 [![CI](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Prem-Duvvapu/dsa-with-ui/actions/workflows/ci.yml)
 
 A full-stack visualizer for data structures and algorithms. Pick a problem, give it your
